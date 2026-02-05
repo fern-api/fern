@@ -17,12 +17,15 @@ export async function visitGeneratorsYamlAst(
         metadata: noop,
         readme: noop,
         "default-group": noop,
+        aliases: noop,
         reviewers: noop,
         openapi: noop,
         "openapi-overrides": noop,
         "spec-origin": noop,
         "async-api": noop,
         "api-settings": noop,
+        ai: noop,
+        autorelease: noop,
         groups: async (groups) => {
             await visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });
         }

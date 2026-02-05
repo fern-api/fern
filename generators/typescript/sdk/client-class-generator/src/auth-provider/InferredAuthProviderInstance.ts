@@ -8,6 +8,17 @@ export class InferredAuthProviderInstance implements AuthProviderInstance {
             namedImports: ["InferredAuthProvider"]
         });
 
-        return ts.factory.createNewExpression(ts.factory.createIdentifier("InferredAuthProvider"), undefined, params);
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier("InferredAuthProvider"),
+                "createInstance"
+            ),
+            undefined,
+            params
+        );
+    }
+
+    public getSnippetProperties(_context: SdkContext): ts.ObjectLiteralElementLike[] {
+        return [];
     }
 }

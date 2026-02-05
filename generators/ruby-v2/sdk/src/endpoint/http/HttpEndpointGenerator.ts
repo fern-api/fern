@@ -13,8 +13,8 @@ export declare namespace HttpEndpointGenerator {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = "_query";
-export const HTTP_RESPONSE_VN = "_response";
+const QUERY_PARAMETER_BAG_NAME = "query_params";
+export const HTTP_RESPONSE_VN = "response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
 export const ERROR_CLASS_VN = "error_class";
@@ -49,6 +49,22 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
+        // Normalize params to convert camelCase keys to snake_case
+        // This allows SDK methods to accept both snake_case and camelCase keys
+        statements.push(
+            ruby.codeblock((writer) => {
+                writer.write(`${PARAMS_VN} = `);
+                ruby.invokeMethod({
+                    on: ruby.classReference({
+                        name: "Utils",
+                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
+                    }),
+                    method: "normalize_keys",
+                    arguments_: [ruby.codeblock(PARAMS_VN)]
+                }).write(writer);
+            })
+        );
+
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             statements.push(requestBodyCodeBlock.code);
@@ -59,22 +75,64 @@ export class HttpEndpointGenerator {
             statements.push(queryParameterCodeBlock.code);
         }
 
+        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock?.code != null) {
+            statements.push(headerParameterCodeBlock.code);
+        }
+
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
             pathParameterReferences,
             endpoint,
             requestType: request?.getRequestType(),
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-            bodyReference: requestBodyCodeBlock?.requestBodyReference
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            baseUrlName
         });
 
-        let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
+        const isCustomPagination = endpoint.pagination?.type === "custom";
+        let requestStatements = this.generateRequestProcedure({
+            endpoint,
+            sendRequestCodeBlock,
+            storeResponseInVariable: isCustomPagination
+        });
+
+        const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
+        const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
+        const requestOptionsDocs = this.generateRequestOptionsDocs();
 
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
-                case "custom":
+                case "custom": {
+                    const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
+                    // Use snakeCase.safeName for Ruby method calls
+                    const itemField = endpoint.pagination.results.property.name.name.snakeCase.safeName;
+                    requestStatements = [
+                        ...requestStatements,
+                        ruby.invokeMethod({
+                            on: ruby.classReference({
+                                name: customPagerClassName,
+                                modules: [this.context.getRootModuleName(), "Internal"]
+                            }),
+                            method: "new",
+                            arguments_: [ruby.codeblock("parsed_response")],
+                            keywordArguments: [
+                                ruby.keywordArgument({
+                                    name: "item_field",
+                                    value: ruby.codeblock(`:${itemField}`)
+                                }),
+                                ruby.keywordArgument({
+                                    name: "raw_client",
+                                    value: ruby.codeblock("@client")
+                                })
+                            ]
+                        })
+                    ];
                     break;
+                }
                 case "cursor":
                     requestStatements = [
                         ruby.invokeMethod({
@@ -87,14 +145,21 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "cursor_field",
-                                    value: ruby.codeblock(`:${endpoint.pagination.next.property.name.wireValue}`)
+                                    // Use snakeCase.safeName for Ruby method calls (e.g., "next" -> "next_")
+                                    value: ruby.codeblock(
+                                        `:${endpoint.pagination.next.property.name.name.snakeCase.safeName}`
+                                    )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
-                                    value: ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                    // Use snakeCase.safeName for Ruby method calls
+                                    value: ruby.codeblock(
+                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                    )
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
+                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
                                     )
@@ -104,6 +169,7 @@ export class HttpEndpointGenerator {
                                 ["next_cursor"],
                                 [
                                     ruby.codeblock(
+                                        // Keep wireValue for query params (sent over HTTP)
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
                                     ),
                                     ...requestStatements
@@ -124,18 +190,25 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
+                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
                                     )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
-                                    value: ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                    // Use snakeCase.safeName for Ruby method calls
+                                    value: ruby.codeblock(
+                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                    )
                                 }),
                                 ruby.keywordArgument({
                                     name: "has_next_field",
+                                    // Use snakeCase.safeName for Ruby method calls
                                     value: endpoint.pagination.hasNextPage
-                                        ? ruby.codeblock(`:${endpoint.pagination.hasNextPage.property.name.wireValue}`)
+                                        ? ruby.codeblock(
+                                              `:${endpoint.pagination.hasNextPage.property.name.name.snakeCase.safeName}`
+                                          )
                                         : ruby.nilValue()
                                 }),
                                 ruby.keywordArgument({
@@ -147,6 +220,7 @@ export class HttpEndpointGenerator {
                                 ["next_page"],
                                 [
                                     ruby.codeblock(
+                                        // Keep wireValue for query params (sent over HTTP)
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
                                     ),
                                     ...requestStatements
@@ -164,29 +238,34 @@ export class HttpEndpointGenerator {
 
         return ruby.method({
             name: endpoint.name.snakeCase.safeName,
-            docstring: endpoint.docs,
+            docstring: enhancedDocstring,
             returnType,
             parameters: {
                 keyword: [
                     ruby.parameters.keyword({
                         name: "request_options",
+                        type: ruby.Type.class_({ name: "Hash" }),
                         initializer: ruby.TypeLiteral.hash([])
                     })
                 ],
                 keywordSplat: ruby.parameters.keywordSplat({
-                    name: PARAMS_VN
+                    name: PARAMS_VN,
+                    type: request?.getParameterType() ?? ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped())
                 })
             },
+            splatOptionDocs: [...requestOptionsDocs, ...splatOptionDocs],
             statements
         });
     }
 
     private generateRequestProcedure({
         endpoint,
-        sendRequestCodeBlock
+        sendRequestCodeBlock,
+        storeResponseInVariable
     }: {
         endpoint: HttpEndpoint;
         sendRequestCodeBlock?: ruby.CodeBlock;
+        storeResponseInVariable?: boolean;
     }): ruby.AstNode[] {
         const statements: ruby.AstNode[] = [];
 
@@ -195,7 +274,7 @@ export class HttpEndpointGenerator {
         } else {
             statements.push(
                 ruby.codeblock((writer) => {
-                    writer.write(`_request = ${PARAMS_VN}`);
+                    writer.write(`request = ${PARAMS_VN}`);
                 })
             );
         }
@@ -232,7 +311,8 @@ export class HttpEndpointGenerator {
                                     case "json":
                                         this.loadResponseBodyFromJson({
                                             writer,
-                                            typeReference: endpoint.response.body.value.responseBodyType
+                                            typeReference: endpoint.response.body.value.responseBodyType,
+                                            storeInVariable: storeResponseInVariable
                                         });
                                         break;
                                     default:
@@ -270,24 +350,107 @@ export class HttpEndpointGenerator {
     }
 
     private getPathParameterName({ pathParameter }: { pathParameter: PathParameter }): string {
-        return pathParameter.name.originalName;
+        return pathParameter.name.snakeCase.safeName;
     }
 
     private loadResponseBodyFromJson({
         writer,
-        typeReference
+        typeReference,
+        storeInVariable
     }: {
         writer: ruby.Writer;
         typeReference: TypeReference;
+        storeInVariable?: boolean;
     }): void {
         switch (typeReference.type) {
-            case "named":
-                writer.writeLine(
-                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
-                );
+            case "named": {
+                const loadExpression = `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`;
+                if (storeInVariable) {
+                    writer.writeLine(`parsed_response = ${loadExpression}`);
+                } else {
+                    writer.writeLine(loadExpression);
+                }
                 break;
+            }
             default:
                 break;
         }
+    }
+
+    private generateEnhancedDocstring({
+        endpoint
+    }: {
+        endpoint: HttpEndpoint;
+        request: ReturnType<typeof getEndpointRequest>;
+    }): string {
+        return endpoint.docs ?? "";
+    }
+
+    private generateRequestOptionsDocs(): string[] {
+        const optionTags: string[] = [];
+        optionTags.push("@option request_options [String] :base_url");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_headers");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_query_parameters");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_body_parameters");
+        optionTags.push("@option request_options [Integer] :timeout_in_seconds");
+        return optionTags;
+    }
+
+    private generateSplatOptionDocs({ endpoint }: { endpoint: HttpEndpoint }): string[] {
+        const optionTags: string[] = [];
+
+        for (const pathParam of endpoint.allPathParameters) {
+            const paramName = pathParam.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(pathParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const queryParam of endpoint.queryParameters) {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(queryParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const headerParam of endpoint.headers) {
+            const paramName = headerParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(headerParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        return optionTags;
+    }
+
+    private typeReferenceToYardString(typeReference: TypeReference): string {
+        if (typeReference.type === "named") {
+            const classRef = this.context.getClassReferenceForTypeId(typeReference.typeId);
+            const modules = classRef.modules.length > 0 ? `${classRef.modules.join("::")}::` : "";
+            return `${modules}${classRef.name}`;
+        }
+
+        const rubyType = this.context.typeMapper.convert({ reference: typeReference });
+        const writer = new ruby.Writer({ customConfig: this.context.customConfig });
+        rubyType.writeTypeDefinition(writer);
+        return this.normalizeForYard(writer.toString());
+    }
+
+    private normalizeForYard(typeString: string): string {
+        let normalized = typeString.replace(/\s*\|\s*/g, ", ");
+        normalized = normalized.replace(/\bbool\b/g, "Boolean");
+        normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
+        normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
+        return normalized;
+    }
+
+    private getBaseUrlNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+        if (!this.context.isMultipleBaseUrlsEnvironment()) {
+            return undefined;
+        }
+
+        const baseUrlId = endpoint.baseUrl ?? this.context.getDefaultBaseUrlId();
+        if (baseUrlId == null) {
+            return undefined;
+        }
+
+        return this.context.getBaseUrlName(baseUrlId);
     }
 }

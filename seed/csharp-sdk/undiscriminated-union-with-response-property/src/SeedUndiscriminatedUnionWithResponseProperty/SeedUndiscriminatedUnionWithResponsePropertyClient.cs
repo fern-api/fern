@@ -4,12 +4,14 @@ using SeedUndiscriminatedUnionWithResponseProperty.Core;
 namespace SeedUndiscriminatedUnionWithResponseProperty;
 
 public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
+    : ISeedUndiscriminatedUnionWithResponsePropertyClient
 {
     private readonly RawClient _client;
 
     public SeedUndiscriminatedUnionWithResponsePropertyClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -18,8 +20,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 { "User-Agent", "Fernundiscriminated-union-with-response-property/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,14 +30,18 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.GetUnionAsync();
-    /// </code></example>
-    public async Task<UnionResponse> GetUnionAsync(
+    private async Task<WithRawResponse<UnionResponse>> GetUnionAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers =
+            await new SeedUndiscriminatedUnionWithResponseProperty.Core.HeadersBuilder.Builder()
+                .Add(_client.Options.Headers)
+                .Add(_client.Options.AdditionalHeaders)
+                .Add(options?.AdditionalHeaders)
+                .BuildAsync()
+                .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -44,6 +49,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/union",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -54,17 +60,90 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<UnionResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<UnionResponse>(responseBody)!;
+                return new WithRawResponse<UnionResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedUndiscriminatedUnionWithResponsePropertyException(
+                throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 
+    private async Task<WithRawResponse<UnionListResponse>> ListUnionsAsyncCore(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers =
+            await new SeedUndiscriminatedUnionWithResponseProperty.Core.HeadersBuilder.Builder()
+                .Add(_client.Options.Headers)
+                .Add(_client.Options.AdditionalHeaders)
+                .Add(options?.AdditionalHeaders)
+                .BuildAsync()
+                .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/unions",
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<UnionListResponse>(responseBody)!;
+                return new WithRawResponse<UnionListResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
@@ -76,48 +155,28 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
     }
 
     /// <example><code>
-    /// await client.ListUnionsAsync();
+    /// await client.GetUnionAsync();
     /// </code></example>
-    public async Task<UnionListResponse> ListUnionsAsync(
+    public WithRawResponseTask<UnionResponse> GetUnionAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "/unions",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<UnionListResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedUndiscriminatedUnionWithResponsePropertyException(
-                    "Failed to deserialize response",
-                    e
-                );
-            }
-        }
+        return new WithRawResponseTask<UnionResponse>(
+            GetUnionAsyncCore(options, cancellationToken)
+        );
+    }
 
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+    /// <example><code>
+    /// await client.ListUnionsAsync();
+    /// </code></example>
+    public WithRawResponseTask<UnionListResponse> ListUnionsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<UnionListResponse>(
+            ListUnionsAsyncCore(options, cancellationToken)
+        );
     }
 }

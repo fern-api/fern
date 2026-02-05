@@ -31,11 +31,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/user/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "name": "GetUserRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": {
                   "foo": {
                     "name": "bar",
@@ -67,10 +67,10 @@
       method: GET
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       request:
         name: GetUserRequest
+        path-parameters:
+          id: string
         query-parameters:
           foo:
             type: string

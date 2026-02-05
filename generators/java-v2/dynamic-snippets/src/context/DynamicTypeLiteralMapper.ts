@@ -15,7 +15,7 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = "mapKey" | "mapValue";
+    type ConvertedAs = "mapKey" | "mapValue" | "request";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -30,9 +30,16 @@ export class DynamicTypeLiteralMapper {
         return valueWithInternal.internalType?.type === "nop";
     }
 
+    private usesOptionalNullable(): boolean {
+        return this.context.customConfig?.["collapse-optional-nullable"] === true;
+    }
+
     private wrapInOptionalIfNotNop(value: java.TypeLiteral, useOf: boolean = false): java.TypeLiteral {
         if (this.isNopTypeLiteral(value)) {
             return value;
+        }
+        if (this.usesOptionalNullable()) {
+            return this.context.getOptionalNullableOf(value);
         }
         return java.TypeLiteral.optional({ value, useOf });
     }
@@ -54,11 +61,11 @@ export class DynamicTypeLiteralMapper {
         }
         switch (args.typeReference.type) {
             case "list":
-                return this.convertList({ list: args.typeReference.value, value: args.value });
+                return this.convertList({ list: args.typeReference.value, value: args.value, as: args.as });
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value, value: args.value });
             case "map":
-                return this.convertMap({ map: args.typeReference, value: args.value });
+                return this.convertMap({ map: args.typeReference, value: args.value, as: args.as });
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
                 if (named == null) {
@@ -80,22 +87,41 @@ export class DynamicTypeLiteralMapper {
                         Object.keys(args.value).length === 0 &&
                         args.typeReference.value.type === "named")
                 ) {
-                    return java.TypeLiteral.reference(
-                        java.invokeMethod({
-                            on: java.classReference({
-                                name: "Optional",
-                                packageName: "java.util"
-                            }),
-                            method: "empty",
-                            arguments_: []
-                        })
-                    );
+                    if (this.usesOptionalNullable()) {
+                        return this.context.getOptionalNullableAbsent();
+                    } else {
+                        return java.TypeLiteral.reference(
+                            java.invokeMethod({
+                                on: java.classReference({
+                                    name: "Optional",
+                                    packageName: "java.util"
+                                }),
+                                method: "empty",
+                                arguments_: []
+                            })
+                        );
+                    }
                 }
 
                 if (args.typeReference.value.type === "list") {
                     const listLiteral = this.convertList({ list: args.typeReference.value.value, value: args.value });
                     return this.wrapInOptionalIfNotNop(listLiteral, true);
                 }
+
+                // When using OptionalNullable mode and we have nested optional/nullable,
+                // skip wrapping since they collapse into a single OptionalNullable<T>
+                if (
+                    this.usesOptionalNullable() &&
+                    (args.typeReference.value.type === "optional" || args.typeReference.value.type === "nullable")
+                ) {
+                    return this.convert({
+                        typeReference: args.typeReference.value,
+                        value: args.value,
+                        as: args.as,
+                        inUndiscriminatedUnion: args.inUndiscriminatedUnion
+                    });
+                }
+
                 const convertedValue = this.convert({
                     typeReference: args.typeReference.value,
                     value: args.value,
@@ -113,7 +139,7 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
-                return this.convertSet({ set: args.typeReference.value, value: args.value });
+                return this.convertSet({ set: args.typeReference.value, value: args.value, as: args.as });
             case "unknown":
                 return this.convertUnknown({ value: args.value });
             default:
@@ -121,7 +147,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): java.TypeLiteral {
+    private convertList({
+        list,
+        value,
+        as
+    }: {
+        list: FernIr.dynamic.TypeReference;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -138,10 +172,10 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope({ index });
                 try {
                     if (isItemOptional) {
-                        const itemValue = this.convert({ typeReference: list.value, value: v });
+                        const itemValue = this.convert({ typeReference: list.value, value: v, as });
                         return this.wrapInOptionalIfNotNop(itemValue, true);
                     }
-                    return this.convert({ typeReference: list, value: v });
+                    return this.convert({ typeReference: list, value: v, as });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -177,7 +211,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertSet({ set, value }: { set: FernIr.dynamic.TypeReference; value: unknown }): java.TypeLiteral {
+    private convertSet({
+        set,
+        value,
+        as
+    }: {
+        set: FernIr.dynamic.TypeReference;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -190,7 +232,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: set, value: v });
+                    return this.convert({ typeReference: set, value: v, as });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -198,7 +240,15 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): java.TypeLiteral {
+    private convertMap({
+        map,
+        value,
+        as
+    }: {
+        map: FernIr.dynamic.MapType;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -214,7 +264,11 @@ export class DynamicTypeLiteralMapper {
                 try {
                     return {
                         key: this.convert({ typeReference: map.key, value: key, as: "mapKey" }),
-                        value: this.convert({ typeReference: map.value, value, as: "mapValue" })
+                        value: this.convert({
+                            typeReference: map.value,
+                            value,
+                            as: "mapValue"
+                        })
                     };
                 } finally {
                     this.context.errors.unscope();
@@ -296,6 +350,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 try {
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    // For primitive union variants, the property key is always "value"
+                    const propertyKey = "value";
                     return java.TypeLiteral.reference(
                         java.invokeMethod({
                             on: classReference,
@@ -303,7 +359,7 @@ export class DynamicTypeLiteralMapper {
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: record[unionVariant.discriminantValue.wireValue]
+                                    value: record[propertyKey]
                                 })
                             ]
                         })
@@ -338,11 +394,15 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
+        const filteredProperties =
+            as === "request"
+                ? properties.filter((property) => !this.context.isDirectLiteral(property.typeReference))
+                : properties;
         return java.TypeLiteral.builder({
             classReference: this.context.getJavaClassReferenceFromDeclaration({
                 declaration: object_.declaration
             }),
-            parameters: properties.map((property) => {
+            parameters: filteredProperties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
@@ -435,8 +495,12 @@ export class DynamicTypeLiteralMapper {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
+        const attemptedVariants: string[] = [];
+        const variantErrors: string[] = [];
+
         for (const typeReference of undiscriminatedUnion.types) {
             try {
+                attemptedVariants.push(JSON.stringify(typeReference));
                 const typeInstantiation = this.convert({
                     typeReference,
                     value,
@@ -445,14 +509,28 @@ export class DynamicTypeLiteralMapper {
 
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
+                variantErrors.push(
+                    `Type ${JSON.stringify(typeReference)}: ${e instanceof Error ? e.message : String(e)}`
+                );
                 continue;
             }
         }
+
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value. Tried ${attemptedVariants.length} variants. Errors: ${variantErrors.join("; ")}`
         });
-        return undefined;
+
+        // Instead of returning undefined (which causes invalid code generation),
+        // throw an error to fail fast with a clear message
+        const unionName = undiscriminatedUnion.declaration.name ?? "UnknownUnion";
+        const detailedErrors = variantErrors.map((error, index) => `  ${index + 1}. ${error}`).join("\n");
+        throw new Error(
+            `Failed to match undiscriminated union "${unionName}" for ${typeof value} value.\n` +
+                `Value: ${JSON.stringify(value)}\n` +
+                `Attempted ${attemptedVariants.length} variants:\n${detailedErrors}\n\n` +
+                `This prevents invalid snippet code generation that would cause formatter errors.`
+        );
     }
 
     private getUndiscriminatedUnionFieldName({
@@ -594,6 +672,105 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertUnknown({ value }: { value: unknown }): java.TypeLiteral {
+        if (this.context.customConfig?.["generate-unknown-as-json-node"] === true) {
+            return this.convertToJsonNode({ value });
+        }
+        return java.TypeLiteral.unknown(value);
+    }
+
+    private convertToJsonNode({ value }: { value: unknown }): java.TypeLiteral {
+        const objectMappersClass = java.classReference({
+            name: "ObjectMappers",
+            packageName: this.context.getCorePackageName()
+        });
+
+        // For primitive values, wrap directly in valueToTree
+        if (typeof value === "string") {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.string(value)]
+                })
+            );
+        }
+
+        if (typeof value === "number") {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.integer(value)]
+                })
+            );
+        }
+
+        if (typeof value === "boolean") {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.boolean(value)]
+                })
+            );
+        }
+
+        if (value === null) {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.raw(java.codeblock("null"))]
+                })
+            );
+        }
+
+        if (Array.isArray(value)) {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [
+                        java.TypeLiteral.list({
+                            valueType: java.Type.object(),
+                            values: value.map((v) => java.TypeLiteral.unknown(v)),
+                            isParameter: true
+                        })
+                    ]
+                })
+            );
+        }
+
+        if (typeof value === "object" && value !== null) {
+            // For objects, create a map and wrap in valueToTree
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.unknown(value)]
+                })
+            );
+        }
+
+        // Fallback to regular unknown handling
         return java.TypeLiteral.unknown(value);
     }
 
@@ -655,6 +832,9 @@ export class DynamicTypeLiteralMapper {
                 const date = this.context.getValueAsString({ value });
                 if (date == null) {
                     return java.TypeLiteral.nop();
+                }
+                if (this.context.customConfig?.["use-local-date-for-dates"] === true) {
+                    return java.TypeLiteral.date(date);
                 }
                 return java.TypeLiteral.string(date);
             }

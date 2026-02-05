@@ -146,6 +146,20 @@ export async function collectFilesFromDocsConfig({
         });
     }
 
+    /* custom page action icons */
+    if (parsedDocsConfig.pageActions?.options?.custom != null) {
+        await Promise.all(
+            parsedDocsConfig.pageActions.options.custom.map(async (customAction) => {
+                if (customAction.icon != null) {
+                    await addIconToFilepaths({
+                        iconPath: customAction.icon,
+                        filepaths
+                    });
+                }
+            })
+        );
+    }
+
     return filepaths;
 }
 
@@ -313,6 +327,9 @@ async function collectIconsFromNavigationItem({
                     filepaths
                 });
             }
+            break;
+        case "pythonDocsSection":
+            // Python docs sections don't have icons in the minimal first iteration
             break;
     }
 }

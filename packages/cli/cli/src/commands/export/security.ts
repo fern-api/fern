@@ -18,6 +18,10 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
             apiAuth.schemes.map((scheme) => ({
                 [getNameForAuthScheme(scheme)]: []
             })),
+        endpointSecurity: () => {
+            // When auth is endpoint-security, security is defined per-endpoint, not globally
+            return [];
+        },
         _other: () => {
             throw new Error("Unknown auth scheme requirement: " + apiAuth.requirement);
         }

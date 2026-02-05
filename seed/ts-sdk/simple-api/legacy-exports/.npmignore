@@ -4,8 +4,14 @@ tests
 .gitignore
 .github
 .fernignore
+.fern
 .prettierrc.yml
 biome.json
 tsconfig.json
 yarn.lock
 pnpm-lock.yaml
+.mock
+dist
+scripts
+jest.config.*
+vitest.config.*

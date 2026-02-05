@@ -43,4 +43,22 @@ public interface IDownloadFilesCustomConfig {
     default ICustomConfig.PackageLayout packageLayout() {
         return ICustomConfig.PackageLayout.NESTED;
     }
+
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
+
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
+    @Value.Default
+    @JsonProperty("gradle-central-dependency-management")
+    default Boolean gradleCentralDependencyManagement() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("output-directory")
+    default ICustomConfig.OutputDirectory outputDirectory() {
+        return ICustomConfig.OutputDirectory.PROJECT_ROOT;
+    }
 }

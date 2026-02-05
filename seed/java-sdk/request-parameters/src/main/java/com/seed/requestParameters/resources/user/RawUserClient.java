@@ -18,8 +18,6 @@ import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
 import com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptionalProperties;
 import com.seed.requestParameters.resources.user.types.User;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -47,14 +45,15 @@ public class RawUserClient {
                 .addPathSegments("user")
                 .addPathSegments("username");
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), false);
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("username", request.getUsername());
-        properties.put("password", request.getPassword());
-        properties.put("name", request.getName());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -94,6 +93,11 @@ public class RawUserClient {
                 .addPathSegments("user")
                 .addPathSegments("username-referenced");
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -129,6 +133,10 @@ public class RawUserClient {
         return createUsernameOptional(Optional.empty());
     }
 
+    public SeedRequestParametersHttpResponse<Void> createUsernameOptional(RequestOptions requestOptions) {
+        return createUsernameOptional(Optional.empty(), requestOptions);
+    }
+
     public SeedRequestParametersHttpResponse<Void> createUsernameOptional(
             Optional<CreateUsernameBodyOptionalProperties> request) {
         return createUsernameOptional(request, null);
@@ -136,11 +144,15 @@ public class RawUserClient {
 
     public SeedRequestParametersHttpResponse<Void> createUsernameOptional(
             Optional<CreateUsernameBodyOptionalProperties> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("user")
-                .addPathSegments("username-optional")
-                .build();
+                .addPathSegments("username-optional");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -152,7 +164,7 @@ public class RawUserClient {
             throw new SeedRequestParametersException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -208,6 +220,11 @@ public class RawUserClient {
         QueryStringMapper.addQueryParameter(httpUrl, "bigIntParam", request.getBigIntParam(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "excludeUser", request.getExcludeUser(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), true);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

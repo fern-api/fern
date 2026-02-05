@@ -22,7 +22,7 @@ Seed is Fern's **comprehensive generator testing framework** that validates gene
 - `src/config/` - Configuration loading and validation
 - `src/utils/` - Utilities for workspace management, logging, etc.
 - `fern/` - Seed's own Fern API definitions
-- `build.cjs` - CLI distribution build script
+- `build.mjs` - CLI distribution build script
 
 ### Command Structure
 - `test/` - Run predefined fixtures against generators

@@ -2,6 +2,7 @@ import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-sch
 import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
+import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getAvailability } from "../../utils/getAvailability";
 import { getDisplayName } from "../../utils/getDisplayName";
@@ -153,12 +154,20 @@ export function getSingleUnionTypeProperties({
     const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
 
     const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
+
+    // Check if the type is wrapped in optional/nullable - if so, we should NOT use samePropertiesAsObject
+    // because the value can be undefined/null and needs to be wrapped in a value property
+    const isOptionalOrNullable = isWrappedInOptionalOrNullable(resolvedType);
+
+    // Unwrap nullable/optional containers to check the underlying type
+    const unwrappedType = unwrapNullableAndOptional(resolvedType);
     if (
-        resolvedType._type === "named" &&
-        isRawObjectDefinition(resolvedType.declaration) &&
+        !isOptionalOrNullable &&
+        unwrappedType._type === "named" &&
+        isRawObjectDefinition(unwrappedType.declaration) &&
         singlePropertyKey == null
     ) {
-        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
+        return SingleUnionTypeProperties.samePropertiesAsObject(unwrappedType.name);
     }
     return SingleUnionTypeProperties.singleProperty({
         name: file.casingsGenerator.generateNameAndWireValue({
@@ -191,4 +200,31 @@ function getSinglePropertyKeyValue(
         return rawSingleUnionType.value;
     }
     return DEFAULT_UNION_VALUE_PROPERTY_VALUE;
+}
+
+/**
+ * Checks if the type is wrapped in optional or nullable containers.
+ * When a union variant type is optional/nullable, we should NOT use samePropertiesAsObject
+ * because the value can be undefined/null and needs proper handling with a value property.
+ */
+function isWrappedInOptionalOrNullable(resolvedType: ResolvedType): boolean {
+    if (resolvedType._type === "container") {
+        if (resolvedType.container._type === "nullable" || resolvedType.container._type === "optional") {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Unwraps nullable and optional containers to get the underlying type.
+ * This is used to check if the underlying type is an object for potential samePropertiesAsObject usage.
+ */
+function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
+    if (resolvedType._type === "container") {
+        if (resolvedType.container._type === "nullable" || resolvedType.container._type === "optional") {
+            return unwrapNullableAndOptional(resolvedType.container.itemType);
+        }
+    }
+    return resolvedType;
 }

@@ -40,7 +40,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         Authorization: "[REDACTED]",
                     }),
                 }),
@@ -67,7 +67,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "X-API-KEY": "[REDACTED]",
                     }),
                 }),
@@ -94,7 +94,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         Cookie: "[REDACTED]",
                     }),
                 }),
@@ -121,7 +121,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "x-auth-token": "[REDACTED]",
                     }),
                 }),
@@ -148,7 +148,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "Proxy-Authorization": "[REDACTED]",
                     }),
                 }),
@@ -175,7 +175,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "X-CSRF-Token": "[REDACTED]",
                     }),
                 }),
@@ -202,7 +202,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "WWW-Authenticate": "[REDACTED]",
                     }),
                 }),
@@ -229,7 +229,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "X-Session-Token": "[REDACTED]",
                     }),
                 }),
@@ -260,7 +260,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "Content-Type": "application/json",
                         "User-Agent": "Test/1.0",
                         Accept: "application/json",
@@ -294,7 +294,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         Authorization: "[REDACTED]",
                         "X-API-Key": "[REDACTED]",
                         Cookie: "[REDACTED]",
@@ -336,7 +336,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "HTTP request succeeded",
                 expect.objectContaining({
-                    responseHeaders: expect.objectContaining({
+                    responseHeaders: expect.toContainHeaders({
                         "set-cookie": "[REDACTED]",
                         "content-type": "application/json",
                     }),
@@ -374,7 +374,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "HTTP request succeeded",
                 expect.objectContaining({
-                    responseHeaders: expect.objectContaining({
+                    responseHeaders: expect.toContainHeaders({
                         authorization: "[REDACTED]",
                         "content-type": "application/json",
                     }),
@@ -412,7 +412,7 @@ describe("Redacting Logic", () => {
             expect(mockLogger.error).toHaveBeenCalledWith(
                 "HTTP request failed with error status",
                 expect.objectContaining({
-                    responseHeaders: expect.objectContaining({
+                    responseHeaders: expect.toContainHeaders({
                         "www-authenticate": "[REDACTED]",
                         "content-type": "application/json",
                     }),

@@ -27,7 +27,9 @@ export async function runRemoteGenerationForAPIWorkspace({
     token,
     whitelabel,
     absolutePathToPreview,
-    mode
+    mode,
+    fernignorePath,
+    dynamicIrOnly
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -40,6 +42,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: "pull-request" | undefined;
+    fernignorePath: string | undefined;
+    dynamicIrOnly: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -54,7 +58,11 @@ export async function runRemoteGenerationForAPIWorkspace({
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation);
 
-                const fernWorkspace = await workspace.toFernWorkspace({ context }, settings);
+                const fernWorkspace = await workspace.toFernWorkspace(
+                    { context },
+                    settings,
+                    generatorInvocation.apiOverride?.specs
+                );
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
@@ -91,7 +99,9 @@ export async function runRemoteGenerationForAPIWorkspace({
                     whitelabel,
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
-                    absolutePathToPreview
+                    absolutePathToPreview,
+                    fernignorePath,
+                    dynamicIrOnly
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

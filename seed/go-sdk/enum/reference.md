@@ -150,6 +150,7 @@ client.InlinedRequest.Send(
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
 <details><summary><code>client.PathParam.Send(Operand, OperandOrColor) -> error</code></summary>
 <dl>

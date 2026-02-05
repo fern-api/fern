@@ -12,41 +12,49 @@ from .raw_client import AsyncRawQueryParamClient, RawQueryParamClient
 class QueryParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawQueryParamClient(client_wrapper=client_wrapper)
-    
+
     @property
     def with_raw_response(self) -> RawQueryParamClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
-        
+
         Returns
         -------
         RawQueryParamClient
         """
         return self._raw_client
-    
-    def send(self, *, operand: Operand, operand_or_color: ColorOrOperand, maybe_operand: typing.Optional[Operand] = None, maybe_operand_or_color: typing.Optional[ColorOrOperand] = None, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    def send(
+        self,
+        *,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         maybe_operand : typing.Optional[Operand]
-        
+
         maybe_operand_or_color : typing.Optional[ColorOrOperand]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         from seed import Color, Operand, SeedEnum
-        
+
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
@@ -55,32 +63,46 @@ class QueryParamClient:
             operand_or_color=Color.RED,
         )
         """
-        _response = self._raw_client.send(operand=operand, operand_or_color=operand_or_color, maybe_operand=maybe_operand, maybe_operand_or_color=maybe_operand_or_color, request_options=request_options)
+        _response = self._raw_client.send(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
+            request_options=request_options,
+        )
         return _response.data
-    
-    def send_list(self, *, operand: typing.Union[Operand, typing.Sequence[Operand]], operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]], maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None, maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    def send_list(
+        self,
+        *,
+        operand: typing.Union[Operand, typing.Sequence[Operand]],
+        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : typing.Union[Operand, typing.Sequence[Operand]]
-        
+
         operand_or_color : typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
-        
+
         maybe_operand : typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]
-        
+
         maybe_operand_or_color : typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         from seed import Color, Operand, SeedEnum
-        
+
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
@@ -91,95 +113,125 @@ class QueryParamClient:
             maybe_operand_or_color=Color.RED,
         )
         """
-        _response = self._raw_client.send_list(operand=operand, operand_or_color=operand_or_color, maybe_operand=maybe_operand, maybe_operand_or_color=maybe_operand_or_color, request_options=request_options)
+        _response = self._raw_client.send_list(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
+            request_options=request_options,
+        )
         return _response.data
+
+
 class AsyncQueryParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawQueryParamClient(client_wrapper=client_wrapper)
-    
+
     @property
     def with_raw_response(self) -> AsyncRawQueryParamClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
-        
+
         Returns
         -------
         AsyncRawQueryParamClient
         """
         return self._raw_client
-    
-    async def send(self, *, operand: Operand, operand_or_color: ColorOrOperand, maybe_operand: typing.Optional[Operand] = None, maybe_operand_or_color: typing.Optional[ColorOrOperand] = None, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    async def send(
+        self,
+        *,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         maybe_operand : typing.Optional[Operand]
-        
+
         maybe_operand_or_color : typing.Optional[ColorOrOperand]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         import asyncio
-        
+
         from seed import AsyncSeedEnum, Color, Operand
-        
+
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
-        
-        
+
+
         async def main() -> None:
             await client.query_param.send(
                 operand=Operand.GREATER_THAN,
                 operand_or_color=Color.RED,
             )
-        
-        
+
+
         asyncio.run(main())
         """
-        _response = await self._raw_client.send(operand=operand, operand_or_color=operand_or_color, maybe_operand=maybe_operand, maybe_operand_or_color=maybe_operand_or_color, request_options=request_options)
+        _response = await self._raw_client.send(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
+            request_options=request_options,
+        )
         return _response.data
-    
-    async def send_list(self, *, operand: typing.Union[Operand, typing.Sequence[Operand]], operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]], maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None, maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    async def send_list(
+        self,
+        *,
+        operand: typing.Union[Operand, typing.Sequence[Operand]],
+        operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
+        maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : typing.Union[Operand, typing.Sequence[Operand]]
-        
+
         operand_or_color : typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
-        
+
         maybe_operand : typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]
-        
+
         maybe_operand_or_color : typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         import asyncio
-        
+
         from seed import AsyncSeedEnum, Color, Operand
-        
+
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
-        
-        
+
+
         async def main() -> None:
             await client.query_param.send_list(
                 operand=Operand.GREATER_THAN,
@@ -187,9 +239,15 @@ class AsyncQueryParamClient:
                 operand_or_color=Color.RED,
                 maybe_operand_or_color=Color.RED,
             )
-        
-        
+
+
         asyncio.run(main())
         """
-        _response = await self._raw_client.send_list(operand=operand, operand_or_color=operand_or_color, maybe_operand=maybe_operand, maybe_operand_or_color=maybe_operand_or_color, request_options=request_options)
+        _response = await self._raw_client.send_list(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
+            request_options=request_options,
+        )
         return _response.data

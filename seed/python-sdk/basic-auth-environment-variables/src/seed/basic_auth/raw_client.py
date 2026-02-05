@@ -65,14 +65,14 @@ class RawBasicAuthClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def post_with_basic_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[bool]:
         """
         POST request with basic auth scheme
 
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -168,14 +168,14 @@ class AsyncRawBasicAuthClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def post_with_basic_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[bool]:
         """
         POST request with basic auth scheme
 
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

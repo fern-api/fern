@@ -5,6 +5,7 @@ package com.seed.literal.resources.headers.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,12 +29,12 @@ public final class SendLiteralsInHeadersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("X-Endpoint-Version")
+    @JsonIgnore
     public String getEndpointVersion() {
         return "02-12-2024";
     }
 
-    @JsonProperty("X-Async")
+    @JsonIgnore
     public Boolean getAsync() {
         return true;
     }

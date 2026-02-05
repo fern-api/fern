@@ -55,6 +55,20 @@ export interface UsersServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    listWithTopLevelBodyCursorPagination(
+        req: express.Request<
+            never,
+            SeedPagination.ListUsersTopLevelCursorPaginationResponse,
+            SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedPagination.ListUsersTopLevelCursorPaginationResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
     listWithOffsetPagination(
         req: express.Request<
             never,
@@ -191,6 +205,22 @@ export interface UsersServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    listUsernamesWithOptionalResponse(
+        req: express.Request<
+            never,
+            SeedPagination.UsernameCursor | undefined,
+            never,
+            {
+                starting_after?: string;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedPagination.UsernameCursor | undefined) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
     listWithGlobalConfig(
         req: express.Request<
             never,
@@ -202,6 +232,22 @@ export interface UsersServiceMethods {
         >,
         res: {
             send: (responseBody: SeedPagination.UsernameContainer) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    listWithOptionalData(
+        req: express.Request<
+            never,
+            SeedPagination.ListUsersOptionalDataPaginationResponse,
+            never,
+            {
+                page?: number;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedPagination.ListUsersOptionalDataPaginationResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
@@ -321,6 +367,49 @@ export class UsersService {
                     if (error instanceof errors.SeedPaginationError) {
                         console.warn(
                             `Endpoint 'listWithBodyCursorPagination' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/top-level-cursor", async (req, res, next) => {
+            const request = serializers.ListUsersTopLevelBodyCursorPaginationRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.listWithTopLevelBodyCursorPagination(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.ListUsersTopLevelCursorPaginationResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedPaginationError) {
+                        console.warn(
+                            `Endpoint 'listWithTopLevelBodyCursorPagination' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                         );
                         await error.send(res);
                     } else {
@@ -606,6 +695,38 @@ export class UsersService {
         });
         this.router.get("", async (req, res, next) => {
             try {
+                await this.methods.listUsernamesWithOptionalResponse(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.users.listUsernamesWithOptionalResponse.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedPaginationError) {
+                    console.warn(
+                        `Endpoint 'listUsernamesWithOptionalResponse' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("", async (req, res, next) => {
+            try {
                 await this.methods.listWithGlobalConfig(
                     req as any,
                     {
@@ -628,6 +749,38 @@ export class UsersService {
                 if (error instanceof errors.SeedPaginationError) {
                     console.warn(
                         `Endpoint 'listWithGlobalConfig' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/optional-data", async (req, res, next) => {
+            try {
+                await this.methods.listWithOptionalData(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.ListUsersOptionalDataPaginationResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedPaginationError) {
+                    console.warn(
+                        `Endpoint 'listWithOptionalData' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                     );
                     await error.send(res);
                 } else {

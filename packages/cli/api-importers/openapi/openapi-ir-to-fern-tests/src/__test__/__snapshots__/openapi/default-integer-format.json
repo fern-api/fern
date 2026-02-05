@@ -1,0 +1,511 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createIntegerResource": {
+              "auth": undefined,
+              "display-name": "Create integer resource",
+              "docs": "Test unformatted integers in request body using int64 default",
+              "examples": [
+                {
+                  "request": {
+                    "explicitInt32": 2147483647,
+                    "explicitInt64": 9223372036854776000,
+                    "integerArray": [
+                      1,
+                      2,
+                      3,
+                      9223372036854776000,
+                    ],
+                    "unformattedInteger": 9223372036854776000,
+                  },
+                  "response": {
+                    "body": {
+                      "metadata": {
+                        "count": 1000000000000,
+                        "maxValue": 9223372036854776000,
+                        "minValue": -2147483648,
+                      },
+                      "responseInteger": 9223372036854776000,
+                      "results": [
+                        9223372036854776000,
+                        1000000000000,
+                        500000000000,
+                      ],
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/integers",
+              "request": {
+                "body": {
+                  "properties": {
+                    "explicitInt32": {
+                      "docs": "Explicit int32 format (should override default)",
+                      "type": "integer",
+                    },
+                    "explicitInt64": {
+                      "docs": "Explicit int64 format (same as default)",
+                      "type": "long",
+                    },
+                    "explicitUint32": {
+                      "docs": "Explicit uint32 format (should override default)",
+                      "type": "optional<uint>",
+                    },
+                    "explicitUint64": {
+                      "docs": "Explicit uint64 format (should override default)",
+                      "type": "optional<uint64>",
+                    },
+                    "integerArray": {
+                      "docs": "Array of unformatted integers (should use int64 default)",
+                      "type": "list<long>",
+                    },
+                    "mixedFormatArray": {
+                      "docs": "Array with mixed explicit formats",
+                      "type": "optional<list<IntegerRequestMixedFormatArrayItem>>",
+                    },
+                    "nestedObject": {
+                      "docs": "Nested object with integer properties",
+                      "type": "optional<IntegerRequestNestedObject>",
+                    },
+                    "optionalInteger": {
+                      "docs": "Optional unformatted integer (should use int64 default)",
+                      "type": "optional<nullable<long>>",
+                    },
+                    "unformattedInteger": {
+                      "docs": "Unformatted integer property (should use int64 default)",
+                      "type": "long",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "IntegerRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "IntegerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getIntegerById": {
+              "auth": undefined,
+              "display-name": "Get integer by ID",
+              "docs": "Test unformatted integer in path parameter using int64 default",
+              "examples": [
+                {
+                  "path-parameters": {
+                    "integerId": 1000000,
+                  },
+                  "response": {
+                    "body": {
+                      "metadata": {
+                        "count": 1000000000000,
+                        "maxValue": 9223372036854776000,
+                        "minValue": -2147483648,
+                      },
+                      "responseInteger": 9223372036854776000,
+                      "results": [
+                        9223372036854776000,
+                        1000000000000,
+                        500000000000,
+                      ],
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/integers/{integerId}",
+              "request": {
+                "name": "GetIntegersIntegerIdRequest",
+                "path-parameters": {
+                  "integerId": {
+                    "docs": "Path parameter with unformatted integer (should use int64 default)",
+                    "type": "long",
+                  },
+                },
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "IntegerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getIntegersWithParameters": {
+              "auth": undefined,
+              "display-name": "Get integers with parameters",
+              "docs": "Test unformatted integers in query/path parameters using int64 default",
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "metadata": {
+                        "count": 1000000000000,
+                        "maxValue": 9223372036854776000,
+                        "minValue": -2147483648,
+                      },
+                      "responseInteger": 9223372036854776000,
+                      "results": [
+                        9223372036854776000,
+                        1000000000000,
+                        500000000000,
+                      ],
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/integers",
+              "request": {
+                "name": "GetIntegersRequest",
+                "query-parameters": {
+                  "explicitInt32Param": {
+                    "docs": "Query parameter with explicit int32 format (should override default)",
+                    "type": "optional<integer>",
+                  },
+                  "explicitInt64Param": {
+                    "docs": "Query parameter with explicit int64 format (same as default)",
+                    "type": "optional<long>",
+                  },
+                  "explicitUint32Param": {
+                    "docs": "Query parameter with explicit uint32 format (should override default)",
+                    "type": "optional<uint>",
+                  },
+                  "explicitUint64Param": {
+                    "docs": "Query parameter with explicit uint64 format (should override default)",
+                    "type": "optional<uint64>",
+                  },
+                  "unformattedParam": {
+                    "docs": "Query parameter with unformatted integer (should use int64 default)",
+                    "type": "optional<long>",
+                  },
+                },
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "IntegerResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "IntegerRequestMixedFormatArrayItem": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "integer",
+              "long",
+            ],
+          },
+          "IntegerRequestNestedObject": {
+            "docs": "Nested object with integer properties",
+            "inline": true,
+            "properties": {
+              "nestedExplicit": {
+                "docs": "Nested explicit format (should override default)",
+                "type": "optional<integer>",
+              },
+              "nestedUnformatted": {
+                "docs": "Nested unformatted integer (should use int64 default)",
+                "type": "optional<long>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "IntegerResponse": {
+            "docs": "Response schema testing integer scenarios",
+            "inline": undefined,
+            "properties": {
+              "metadata": {
+                "docs": "Metadata with integer properties",
+                "type": "IntegerResponseMetadata",
+              },
+              "responseInteger": {
+                "docs": "Response unformatted integer (should use int64 default)",
+                "type": "long",
+              },
+              "results": {
+                "docs": "Array of unformatted integer results (should use int64 default)",
+                "type": "list<long>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "IntegerResponseMetadata": {
+            "docs": "Metadata with integer properties",
+            "inline": true,
+            "properties": {
+              "count": {
+                "docs": "Count as unformatted integer (should use int64 default)",
+                "type": "optional<long>",
+              },
+              "maxValue": {
+                "docs": "Max value as explicit int64 (same as default)",
+                "type": "optional<long>",
+              },
+              "minValue": {
+                "docs": "Min value as explicit int32 (should override default)",
+                "type": "optional<integer>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getIntegersWithParameters:
+      path: /integers
+      method: GET
+      docs: Test unformatted integers in query/path parameters using int64 default
+      source:
+        openapi: ../openapi.yml
+      display-name: Get integers with parameters
+      request:
+        name: GetIntegersRequest
+        query-parameters:
+          unformattedParam:
+            type: optional<long>
+            docs: >-
+              Query parameter with unformatted integer (should use int64
+              default)
+          explicitInt32Param:
+            type: optional<integer>
+            docs: >-
+              Query parameter with explicit int32 format (should override
+              default)
+          explicitInt64Param:
+            type: optional<long>
+            docs: Query parameter with explicit int64 format (same as default)
+          explicitUint32Param:
+            type: optional<uint>
+            docs: >-
+              Query parameter with explicit uint32 format (should override
+              default)
+          explicitUint64Param:
+            type: optional<uint64>
+            docs: >-
+              Query parameter with explicit uint64 format (should override
+              default)
+      response:
+        docs: Success
+        type: IntegerResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              responseInteger: 9223372036854776000
+              metadata:
+                count: 1000000000000
+                maxValue: 9223372036854776000
+                minValue: -2147483648
+              results:
+                - 9223372036854776000
+                - 1000000000000
+                - 500000000000
+    createIntegerResource:
+      path: /integers
+      method: POST
+      docs: Test unformatted integers in request body using int64 default
+      source:
+        openapi: ../openapi.yml
+      display-name: Create integer resource
+      request:
+        name: IntegerRequest
+        body:
+          properties:
+            unformattedInteger:
+              type: long
+              docs: Unformatted integer property (should use int64 default)
+            explicitInt32:
+              type: integer
+              docs: Explicit int32 format (should override default)
+            explicitInt64:
+              type: long
+              docs: Explicit int64 format (same as default)
+            explicitUint32:
+              type: optional<uint>
+              docs: Explicit uint32 format (should override default)
+            explicitUint64:
+              type: optional<uint64>
+              docs: Explicit uint64 format (should override default)
+            integerArray:
+              docs: Array of unformatted integers (should use int64 default)
+              type: list<long>
+            mixedFormatArray:
+              type: optional<list<IntegerRequestMixedFormatArrayItem>>
+              docs: Array with mixed explicit formats
+            nestedObject:
+              type: optional<IntegerRequestNestedObject>
+              docs: Nested object with integer properties
+            optionalInteger:
+              type: optional<nullable<long>>
+              docs: Optional unformatted integer (should use int64 default)
+        content-type: application/json
+      response:
+        docs: Success
+        type: IntegerResponse
+        status-code: 200
+      examples:
+        - request:
+            unformattedInteger: 9223372036854776000
+            explicitInt32: 2147483647
+            explicitInt64: 9223372036854776000
+            integerArray:
+              - 1
+              - 2
+              - 3
+              - 9223372036854776000
+          response:
+            body:
+              responseInteger: 9223372036854776000
+              metadata:
+                count: 1000000000000
+                maxValue: 9223372036854776000
+                minValue: -2147483648
+              results:
+                - 9223372036854776000
+                - 1000000000000
+                - 500000000000
+    getIntegerById:
+      path: /integers/{integerId}
+      method: GET
+      docs: Test unformatted integer in path parameter using int64 default
+      source:
+        openapi: ../openapi.yml
+      display-name: Get integer by ID
+      request:
+        name: GetIntegersIntegerIdRequest
+        path-parameters:
+          integerId:
+            type: long
+            docs: Path parameter with unformatted integer (should use int64 default)
+      response:
+        docs: Success
+        type: IntegerResponse
+        status-code: 200
+      examples:
+        - path-parameters:
+            integerId: 1000000
+          response:
+            body:
+              responseInteger: 9223372036854776000
+              metadata:
+                count: 1000000000000
+                maxValue: 9223372036854776000
+                minValue: -2147483648
+              results:
+                - 9223372036854776000
+                - 1000000000000
+                - 500000000000
+  source:
+    openapi: ../openapi.yml
+types:
+  IntegerRequestMixedFormatArrayItem:
+    discriminated: false
+    union:
+      - integer
+      - long
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  IntegerRequestNestedObject:
+    docs: Nested object with integer properties
+    properties:
+      nestedUnformatted:
+        type: optional<long>
+        docs: Nested unformatted integer (should use int64 default)
+      nestedExplicit:
+        type: optional<integer>
+        docs: Nested explicit format (should override default)
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  IntegerResponseMetadata:
+    docs: Metadata with integer properties
+    properties:
+      count:
+        type: optional<long>
+        docs: Count as unformatted integer (should use int64 default)
+      maxValue:
+        type: optional<long>
+        docs: Max value as explicit int64 (same as default)
+      minValue:
+        type: optional<integer>
+        docs: Min value as explicit int32 (should override default)
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  IntegerResponse:
+    docs: Response schema testing integer scenarios
+    properties:
+      responseInteger:
+        type: long
+        docs: Response unformatted integer (should use int64 default)
+      metadata:
+        type: IntegerResponseMetadata
+        docs: Metadata with integer properties
+      results:
+        docs: Array of unformatted integer results (should use int64 default)
+        type: list<long>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Default Integer Format Test API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Default Integer Format Test API
+",
+  },
+}

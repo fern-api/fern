@@ -65,6 +65,15 @@ export interface UnionServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    testCamelCaseProperties(
+        req: express.Request<never, string, SeedUndiscriminatedUnions.PaymentRequest, never>,
+        res: {
+            send: (responseBody: string) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class UnionService {
@@ -315,6 +324,49 @@ export class UnionService {
                     if (error instanceof errors.SeedUndiscriminatedUnionsError) {
                         console.warn(
                             `Endpoint 'nestedUnions' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/camel-case", async (req, res, next) => {
+            const request = serializers.PaymentRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.testCamelCaseProperties(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.union.testCamelCaseProperties.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                        console.warn(
+                            `Endpoint 'testCamelCaseProperties' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                         );
                         await error.send(res);
                     } else {

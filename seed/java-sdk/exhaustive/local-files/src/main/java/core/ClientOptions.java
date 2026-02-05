@@ -32,7 +32,7 @@ public final class ClientOptions {
     this.environment = environment;
     this.headers = new HashMap<>();
     this.headers.putAll(headers);
-    this.headers.putAll(new HashMap<String,String>() {{put("X-Fern-Language", "JAVA");}});
+    this.headers.putAll(new HashMap<String,String>() {{put("X-Fern-Language", "JAVA");put("X-Fern-SDK-Name", "com.seed.fern:exhaustive-sdk");}});
     this.headerSuppliers = headerSuppliers;
     this.httpClient = httpClient;
     this.timeout = timeout;
@@ -161,6 +161,9 @@ public final class ClientOptions {
       builder.environment = clientOptions.environment();
       builder.timeout = Optional.of(clientOptions.timeout(null));
       builder.httpClient = clientOptions.httpClient();
+      builder.headers.putAll(clientOptions.headers);
+      builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
+      builder.maxRetries = clientOptions.maxRetries();
       return builder;
     }
   }

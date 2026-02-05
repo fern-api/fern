@@ -1310,7 +1310,9 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1345,6 +1347,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -1508,6 +1512,7 @@
                     }
                 },
                 "properties": [],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_a/aa:B": {
@@ -1617,6 +1622,7 @@
                     }
                 },
                 "properties": [],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_a/aa:SubTestType": {
@@ -1787,6 +1793,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_b:TestType": {
@@ -1919,6 +1926,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_tasktest:Task": {
@@ -2019,6 +2027,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -2112,6 +2121,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_a": {
             "name": {

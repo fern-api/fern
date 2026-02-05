@@ -2,13 +2,20 @@ using SeedWebsocketAuth.Core;
 
 namespace SeedWebsocketAuth;
 
-public partial class SeedWebsocketAuthClient
+public partial class SeedWebsocketAuthClient : ISeedWebsocketAuthClient
 {
     private readonly RawClient _client;
 
-    public SeedWebsocketAuthClient(ClientOptions? clientOptions = null)
+    public SeedWebsocketAuthClient(
+        string xApiKey,
+        string clientId,
+        string clientSecret,
+        string? scope = null,
+        ClientOptions? clientOptions = null
+    )
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,17 +24,30 @@ public partial class SeedWebsocketAuthClient
                 { "User-Agent", "Fernwebsocket-inferred-auth/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var inferredAuthProvider = new InferredAuthTokenProvider(
+            xApiKey,
+            clientId,
+            clientSecret,
+            scope,
+            new AuthClient(new RawClient(clientOptions))
+        );
+        clientOptionsWithAuth.Headers["Authorization"] =
+            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
+                    .First()
+                    .Value
+            );
+        _client = new RawClient(clientOptionsWithAuth);
         Auth = new AuthClient(_client);
     }
 
-    public AuthClient Auth { get; }
+    public IAuthClient Auth { get; }
 }

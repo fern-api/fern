@@ -8,6 +8,9 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
+
+import { getExtension } from "../getExtension";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -48,6 +51,7 @@ export function convertDiscriminatedOneOf({
     source: Source;
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
+    const discriminantNameOverride = getExtension<string>(discriminator, FernOpenAPIExtension.FERN_PROPERTY_NAME);
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
             const subtypeReference = convertReferenceObject(
@@ -105,6 +109,7 @@ export function convertDiscriminatedOneOf({
         description,
         availability,
         discriminant,
+        discriminantNameOverride,
         subtypes: unionSubTypes,
         namespace,
         groupName,
@@ -213,6 +218,7 @@ export function convertDiscriminatedOneOfWithVariants({
         description,
         availability,
         discriminant,
+        discriminantNameOverride: undefined,
         subtypes: unionSubTypes,
         namespace,
         groupName,
@@ -230,6 +236,7 @@ export function wrapDiscriminatedOneOf({
     description,
     availability,
     discriminant,
+    discriminantNameOverride,
     subtypes,
     namespace,
     groupName,
@@ -244,6 +251,7 @@ export function wrapDiscriminatedOneOf({
     description: string | undefined;
     availability: Availability | undefined;
     discriminant: string;
+    discriminantNameOverride: string | undefined;
     subtypes: Record<string, SchemaWithExample>;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -254,6 +262,7 @@ export function wrapDiscriminatedOneOf({
             description,
             availability,
             discriminantProperty: discriminant,
+            discriminantPropertyNameOverride: discriminantNameOverride,
             nameOverride,
             generatedName,
             title,

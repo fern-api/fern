@@ -15,9 +15,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body: []
       method: GET
       path: /list-all
@@ -47,10 +45,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200

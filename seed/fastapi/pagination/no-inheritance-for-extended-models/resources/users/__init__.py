@@ -2,12 +2,18 @@
 
 # isort: skip_file
 
-from .service import ListUsersBodyCursorPaginationRequest, ListUsersBodyOffsetPaginationRequest
+from .service import (
+    ListUsersBodyCursorPaginationRequest,
+    ListUsersBodyOffsetPaginationRequest,
+    ListUsersTopLevelBodyCursorPaginationRequest,
+)
 from .types import (
     ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersMixedTypePaginationResponse,
+    ListUsersOptionalDataPaginationResponse,
     ListUsersPaginationResponse,
+    ListUsersTopLevelCursorPaginationResponse,
     NextPage,
     Order,
     Page,
@@ -27,7 +33,10 @@ __all__ = [
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersMixedTypePaginationResponse",
+    "ListUsersOptionalDataPaginationResponse",
     "ListUsersPaginationResponse",
+    "ListUsersTopLevelBodyCursorPaginationRequest",
+    "ListUsersTopLevelCursorPaginationResponse",
     "NextPage",
     "Order",
     "Page",

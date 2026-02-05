@@ -2,7 +2,7 @@
     "name": "@fern/simple-api",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:simple-api/fern",
+    "repository": "git+https://github.com/simple-api/fern",
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
@@ -50,7 +50,7 @@
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
-        "@biomejs/biome": "2.3.1"
+        "@biomejs/biome": "2.3.11"
     },
     "browser": {
         "fs": false,

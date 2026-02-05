@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { vi } from "vitest";
 
@@ -31,7 +31,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test2.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -60,7 +60,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test2" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -101,14 +101,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.mdx" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.mdx")) {
-                    return "This feature is only available on the {plan} plan.";
+                    return "This feature is only available on the {{plan}} plan.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -124,14 +124,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="pricing.md" tier="enterprise" price="$999" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/pricing.md")) {
-                    return "The {tier} tier costs {price} per month.";
+                    return "The {{tier}} tier costs {{price}} per month.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -145,14 +145,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" name="authentication" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
-                    return "The {name} feature is powerful. Learn more about {name} in our docs.";
+                    return "The {{name}} feature is powerful. Learn more about {{name}} in our docs.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -169,7 +169,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -179,7 +179,7 @@ describe("replaceReferencedMarkdown", () => {
                     return "Welcome to our docs!";
                 }
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
-                    return "Available on {plan} plan.";
+                    return "Available on {{plan}} plan.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -196,14 +196,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test.md" prop1="value1" prop2='value2' prop3={"value3"} />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
-                    return "{prop1}, {prop2}, {prop3}";
+                    return "{{prop1}}, {{prop2}}, {{prop3}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -219,21 +219,21 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
-                    return "Plan: {plan}, Tier: {tier}";
+                    return "Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
         });
 
         expect(result).toBe(`
-            Plan: pro, Tier: {tier}
+            Plan: pro, Tier: {{tier}}
         `);
     });
 
@@ -242,14 +242,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" name="API Keys" level="enterprise" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
-                    return "# {name}\n\nThis feature is available on the {level} plan.\n\nLearn more about {name} below.";
+                    return "# {{name}}\n\nThis feature is available on the {{level}} plan.\n\nLearn more about {{name}} below.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -271,14 +271,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="plan-tier.mdx" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context: testContext,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/plan-tier.mdx")) {
-                    return "Plan: {plan}, Tier: {tier}";
+                    return "Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -290,7 +290,7 @@ describe("replaceReferencedMarkdown", () => {
             )
         );
         expect(warnSpy).toHaveBeenCalledTimes(1);
-        expect(result.trim()).toBe("Plan: pro, Tier: {tier}");
+        expect(result.trim()).toBe("Plan: pro, Tier: {{tier}}");
     });
 
     it("should warn for multiple missing variables", async () => {
@@ -300,14 +300,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="details.md" name="API" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context: testContext,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/details.md")) {
-                    return "{name} - Plan: {plan}, Tier: {tier}";
+                    return "{{name}} - Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -324,7 +324,7 @@ describe("replaceReferencedMarkdown", () => {
             )
         );
         expect(warnSpy).toHaveBeenCalledTimes(2);
-        expect(result.trim()).toBe("API - Plan: {plan}, Tier: {tier}");
+        expect(result.trim()).toBe("API - Plan: {{plan}}, Tier: {{tier}}");
     });
 
     it("should not warn when all variables are provided", async () => {
@@ -334,14 +334,14 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="plan-tier.mdx" plan="pro" tier="enterprise" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
             context: testContext,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/plan-tier.mdx")) {
-                    return "Plan: {plan}, Tier: {tier}";
+                    return "Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -358,7 +358,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="static.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -373,5 +373,381 @@ describe("replaceReferencedMarkdown", () => {
 
         expect(warnSpy).not.toHaveBeenCalled();
         expect(result.trim()).toBe("This is static content with no variables.");
+    });
+
+    it("should recursively replace nested markdown snippets", async () => {
+        const markdown = `
+            <Markdown src="outer.md" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/outer.md")) {
+                    return 'Outer content\n<Markdown src="inner.md" />\nMore outer content';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/inner.md")) {
+                    return "Inner content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.trim()).toBe("Outer content\n            Inner content\n            More outer content");
+    });
+
+    it("should recursively replace deeply nested markdown snippets", async () => {
+        const markdown = `
+            <Markdown src="level1.md" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/level1.md")) {
+                    return 'Level 1\n<Markdown src="level2.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/level2.md")) {
+                    return 'Level 2\n<Markdown src="level3.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/level3.md")) {
+                    return "Level 3";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.trim()).toContain("Level 1");
+        expect(result.trim()).toContain("Level 2");
+        expect(result.trim()).toContain("Level 3");
+    });
+
+    it("should detect and warn about circular references (A -> B -> A)", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetA.md" />';
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetA\.md.*already being processed/)
+        );
+        expect(result.trim()).toContain("Content A");
+        expect(result.trim()).toContain("Content B");
+    });
+
+    it("should detect and warn about self-referencing snippets", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="self-ref.md" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/self-ref.md")) {
+                    return 'Self content\n<Markdown src="self-ref.md" />';
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*self-ref\.md.*already being processed/)
+        );
+        expect(result.trim()).toContain("Self content");
+    });
+
+    it("should handle recursive snippets with variable substitution", async () => {
+        const markdown = `
+            <Markdown src="outer.md" name="Fern" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/outer.md")) {
+                    return 'Welcome to {{name}}!\n<Markdown src="inner.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/inner.md")) {
+                    return "Inner content here";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.trim()).toContain("Welcome to Fern!");
+        expect(result.trim()).toContain("Inner content here");
+    });
+
+    it("should handle multiple snippets at the same level with one being circular", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="parent.md" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/parent.md")) {
+                    return 'Parent\n<Markdown src="child1.md" />\n<Markdown src="child2.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/child1.md")) {
+                    return 'Child 1\n<Markdown src="parent.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/child2.md")) {
+                    return "Child 2";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*parent\.md.*already being processed/)
+        );
+        expect(result.trim()).toContain("Parent");
+        expect(result.trim()).toContain("Child 1");
+        expect(result.trim()).toContain("Child 2");
+    });
+
+    it("should detect circular references in longer chains (A -> B -> C -> A)", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetC.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetC.md")) {
+                    return 'Content C\n<Markdown src="snippetA.md" />';
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetA\.md.*already being processed/)
+        );
+        expect(result.trim()).toContain("Content A");
+        expect(result.trim()).toContain("Content B");
+        expect(result.trim()).toContain("Content C");
+    });
+
+    it("should detect circular references that don't go back to the first snippet (A -> B -> C -> B)", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetC.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetC.md")) {
+                    return 'Content C\n<Markdown src="snippetB.md" />';
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetB\.md.*already being processed/)
+        );
+        expect(result.trim()).toContain("Content A");
+        expect(result.trim()).toContain("Content B");
+        expect(result.trim()).toContain("Content C");
+    });
+
+    it("should track referenced markdown files with their paths and raw content", async () => {
+        const markdown = `
+            <Markdown src="snippet.md" />
+            <Markdown src="nested/other.mdx" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippet.md")) {
+                    return "Snippet content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/nested/other.mdx")) {
+                    return "Other content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.markdown).toContain("Snippet content");
+        expect(result.markdown).toContain("Other content");
+
+        expect(result.referencedFiles).toHaveLength(2);
+
+        expect(result.referencedFiles).toEqual(
+            expect.arrayContaining([
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippet.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippet.md"),
+                    content: "Snippet content"
+                },
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/nested/other.mdx"),
+                    relativeFilePath: RelativeFilePath.of("pages/nested/other.mdx"),
+                    content: "Other content"
+                }
+            ])
+        );
+    });
+
+    it("should deduplicate referenced files when the same file is referenced multiple times", async () => {
+        const markdown = `
+            <Markdown src="snippet.md" />
+            <Markdown src="snippet.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippet.md")) {
+                    return "Snippet content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.referencedFiles).toHaveLength(1);
+        expect(result.referencedFiles[0]).toEqual({
+            absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippet.md"),
+            relativeFilePath: RelativeFilePath.of("pages/snippet.md"),
+            content: "Snippet content"
+        });
+    });
+
+    it("should store raw content before variable substitution in referenced files", async () => {
+        const markdown = `
+            <Markdown src="feature.md" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
+                    return "This feature is only available on the {{plan}} plan.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.markdown).toContain("This feature is only available on the pro plan.");
+
+        expect(result.referencedFiles).toHaveLength(1);
+        expect(result.referencedFiles[0]?.content).toBe("This feature is only available on the {{plan}} plan.");
+    });
+
+    it("should track all referenced files even when circular references are detected", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetA.md" />'; // Circular!
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        // Circular reference should be detected
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetA\.md.*already being processed/)
+        );
+
+        // Both files should still be tracked in referencedFiles
+        expect(result.referencedFiles).toHaveLength(2);
+        expect(result.referencedFiles).toEqual(
+            expect.arrayContaining([
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippetA.md"),
+                    content: 'Content A\n<Markdown src="snippetB.md" />'
+                },
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippetB.md"),
+                    content: 'Content B\n<Markdown src="snippetA.md" />'
+                }
+            ])
+        );
     });
 });

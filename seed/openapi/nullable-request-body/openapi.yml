@@ -1,0 +1,73 @@
+openapi: 3.0.1
+info:
+  title: nullable-request-body
+  version: ''
+paths:
+  /optional-request-body/{path_param}:
+    post:
+      description: Post a nullable request body
+      operationId: testGroup_test_method_name
+      tags:
+        - TestGroup
+      parameters:
+        - name: path_param
+          in: path
+          required: true
+          schema:
+            type: string
+          example: path_param
+          examples:
+            Example1:
+              value: path_param
+        - name: query_param_object
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PlainObject'
+            nullable: true
+        - name: query_param_integer
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+              examples:
+                Example1:
+                  value:
+                    key: value
+        '422':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlainObject'
+      summary: Post Nullable Request Body
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlainObject'
+              nullable: true
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    PlainObject:
+      title: PlainObject
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+  securitySchemes: {}

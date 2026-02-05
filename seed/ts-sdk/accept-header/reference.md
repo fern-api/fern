@@ -29,7 +29,7 @@ await client.service.endpoint();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>

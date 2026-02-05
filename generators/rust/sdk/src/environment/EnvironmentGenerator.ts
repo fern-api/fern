@@ -96,12 +96,16 @@ export class EnvironmentGenerator {
         // Create impl block for environment methods
         const implBlock = this.createMultiUrlImplBlock(config);
 
+        // Create Default impl block
+        const defaultImplBlock = this.createMultiUrlDefaultImplBlock(config);
+
         const module = rust.module({
             useStatements,
             rawDeclarations: [
                 ...urlStructs.map((struct) => struct.toString()),
                 environmentEnum.toString(),
-                implBlock.toString()
+                implBlock.toString(),
+                defaultImplBlock.toString()
             ]
         });
 
@@ -255,6 +259,41 @@ export class EnvironmentGenerator {
             ],
             returnType: Type.reference(new Reference({ name: "&str" })),
             body: CodeBlock.fromStatements([matchStatement])
+        });
+    }
+
+    private createMultiUrlDefaultImplBlock(config: MultipleBaseUrlsEnvironments): ImplBlock {
+        const defaultEnvId = this.context.ir.environments?.defaultEnvironment;
+        const defaultEnv = config.environments.find((env) => env.id === defaultEnvId) || config.environments[0];
+        const environmentEnumName = this.getEnvironmentEnumName();
+
+        if (!defaultEnv) {
+            throw new Error("No environments found for Default implementation");
+        }
+
+        // Create the URL struct instance with all base URLs
+        const urlFields = config.baseUrls
+            .map((baseUrl) => {
+                const fieldName = baseUrl.name.snakeCase.safeName;
+                const url = defaultEnv.urls[baseUrl.id] || "";
+                return `${fieldName}: "${url}".to_string()`;
+            })
+            .join(", ");
+
+        const structName = `${defaultEnv.name.pascalCase.safeName}Urls`;
+        const defaultExpr = `Self::${defaultEnv.name.pascalCase.safeName}(${structName} { ${urlFields} })`;
+
+        const defaultMethod = rust.method({
+            name: "default",
+            parameters: [],
+            returnType: Type.reference(new Reference({ name: "Self" })),
+            body: CodeBlock.fromExpression(Expression.raw(defaultExpr))
+        });
+
+        return rust.implBlock({
+            targetType: Type.reference(new Reference({ name: environmentEnumName })),
+            traitName: "Default",
+            methods: [defaultMethod]
         });
     }
 

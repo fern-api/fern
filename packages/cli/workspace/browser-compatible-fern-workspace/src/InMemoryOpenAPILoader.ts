@@ -1,5 +1,5 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
-import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
+import { applyOpenAPIOverlay, mergeWithOverrides as coreMergeWithOverrides, type Overlay } from "@fern-api/core-utils";
 import { getParseOptions, OpenAPIDocument } from "@fern-api/openapi-ir-parser";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
 
@@ -11,7 +11,8 @@ export class InMemoryOpenAPILoader {
             type: "openapi",
             value: this.loadParsedOpenAPI({
                 openapi: spec.parsed,
-                overrides: spec.overrides
+                overrides: spec.overrides,
+                overlays: spec.overlays
             }),
             settings: getParseOptions({ options: spec.settings })
         };
@@ -19,18 +20,28 @@ export class InMemoryOpenAPILoader {
 
     private loadParsedOpenAPI({
         openapi,
-        overrides
+        overrides,
+        overlays
     }: {
         openapi: OpenAPI.Document;
         overrides: Partial<OpenAPI.Document> | undefined;
+        overlays: Overlay | undefined;
     }): OpenAPIV3.Document {
         if (isOpenAPIV2(openapi)) {
             throw new Error("Swagger v2.0 is not supported in the browser");
         }
-        const v3 = openapi as OpenAPIV3.Document;
+        let result = openapi as OpenAPIV3.Document;
+
+        // Apply overrides first
         if (overrides != null) {
-            return coreMergeWithOverrides({ data: v3, overrides });
+            result = coreMergeWithOverrides({ data: result, overrides });
         }
-        return v3;
+
+        // Apply overlays after overrides (same order as file-based loading)
+        if (overlays != null) {
+            result = applyOpenAPIOverlay({ data: result, overlay: overlays });
+        }
+
+        return result;
     }
 }

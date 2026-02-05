@@ -1,4 +1,0 @@
-*
-!generators/typescript/express/cli/docker/cache_heavy_dependencies.sh
-!generators/typescript/utils/core-utilities/
-!generators/typescript/express/cli/docker/dist/

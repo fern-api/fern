@@ -91,6 +91,7 @@ await client.InlinedRequest.SendAsync(
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
 <details><summary><code>client.PathParam.<a href="/src/SeedEnum/PathParam/PathParamClient.cs">SendAsync</a>(operand, operandOrColor)</code></summary>
 <dl>

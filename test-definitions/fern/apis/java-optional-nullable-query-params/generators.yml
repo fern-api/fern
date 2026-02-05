@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: latest
+        output:
+          location: local-file-system
+          path: ../../../seed/java-sdk/java-optional-nullable-query-params
+        config:
+          collapse-optional-nullable: true
+          package-prefix: com.seed.optionalnullablequeryparams

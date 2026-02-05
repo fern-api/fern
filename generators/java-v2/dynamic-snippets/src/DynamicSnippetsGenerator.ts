@@ -1,6 +1,6 @@
 import {
+    AbstractAstNode,
     AbstractDynamicSnippetsGenerator,
-    AbstractFormatter,
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
@@ -12,8 +12,6 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     DynamicSnippetsGeneratorContext,
     EndpointSnippetGenerator
 > {
-    private formatter: AbstractFormatter | undefined;
-
     constructor({
         ir,
         config,
@@ -38,6 +36,10 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         options: Options = {}
     ): FernIr.dynamic.EndpointSnippetResponse {
         return super.generateSync(request, options);
+    }
+
+    public async generateSnippetAst(request: FernIr.dynamic.EndpointSnippetRequest): Promise<AbstractAstNode> {
+        return super.generateSnippetAst(request);
     }
 
     protected createSnippetGenerator(context: DynamicSnippetsGeneratorContext): EndpointSnippetGenerator {

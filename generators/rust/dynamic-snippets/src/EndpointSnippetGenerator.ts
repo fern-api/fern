@@ -1,4 +1,4 @@
-import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
@@ -43,15 +43,27 @@ export class EndpointSnippetGenerator {
         return formattedCode;
     }
 
-    private buildCodeComponents({
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<AbstractAstNode> {
+        throw new Error("Unsupported");
+    }
+
+    public buildCodeComponents({
         endpoint,
         snippet
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): string[] {
-        // Get use statements
-        const useStatements = this.getUseStatements();
+        // Get use statements, passing endpoint to collect type imports
+        const useStatements = this.getUseStatements({ endpoint });
 
         // Create the main function body
         const mainBody = rust.CodeBlock.fromStatements([
@@ -99,10 +111,12 @@ export class EndpointSnippetGenerator {
         return components;
     }
 
-    private getUseStatements(): rust.UseStatement[] {
+    private getUseStatements({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): rust.UseStatement[] {
         const useStatements: rust.UseStatement[] = [];
 
         // Use prelude import for all crate types
+        // The prelude re-exports all types via `pub use crate::api::*;`
+        // so no additional type imports are needed
         useStatements.push(
             new rust.UseStatement({
                 path: `${this.context.getCrateName()}::prelude`,
@@ -111,6 +125,73 @@ export class EndpointSnippetGenerator {
         );
 
         return useStatements;
+    }
+
+    /**
+     * Collect all type imports needed for an endpoint's request parameters.
+     * Note: Currently unused as prelude::* exports all types, but kept for potential future use.
+     */
+    private collectEndpointTypeImports(endpoint: FernIr.dynamic.Endpoint, imports: Set<string>): void {
+        const request = endpoint.request;
+
+        // Collect from path parameters
+        if (request.pathParameters) {
+            for (const param of request.pathParameters) {
+                this.collectTypeReferenceImports(param.typeReference, imports);
+            }
+        }
+
+        // Collect from inlined request
+        if (request.type === "inlined") {
+            // Query parameters
+            if (request.queryParameters) {
+                for (const param of request.queryParameters) {
+                    this.collectTypeReferenceImports(param.typeReference, imports);
+                }
+            }
+
+            // Headers
+            if (request.headers) {
+                for (const header of request.headers) {
+                    this.collectTypeReferenceImports(header.typeReference, imports);
+                }
+            }
+
+            // Body
+            if (request.body) {
+                this.collectRequestBodyTypeImports(request.body, imports);
+            }
+        } else if (request.type === "body") {
+            // Referenced body type
+            if (request.body?.type === "typeReference") {
+                this.collectTypeReferenceImports(request.body.value, imports);
+            }
+        }
+    }
+
+    /**
+     * Collect type imports from a request body.
+     */
+    private collectRequestBodyTypeImports(body: FernIr.dynamic.InlinedRequestBody, imports: Set<string>): void {
+        switch (body.type) {
+            case "properties":
+                for (const prop of body.value) {
+                    this.collectTypeReferenceImports(prop.typeReference, imports);
+                }
+                break;
+            case "referenced":
+                if (body.bodyType.type === "typeReference") {
+                    this.collectTypeReferenceImports(body.bodyType.value, imports);
+                }
+                break;
+            case "fileUpload":
+                for (const prop of body.properties) {
+                    if (prop.type === "bodyProperty") {
+                        this.collectTypeReferenceImports(prop.typeReference, imports);
+                    }
+                }
+                break;
+        }
     }
 
     // Helper to collect type imports from a value by analyzing its structure
@@ -282,6 +363,25 @@ export class EndpointSnippetGenerator {
                 const listElementType = (typeReference as FernIr.dynamic.TypeReference.List).value;
                 if (listElementType) {
                     this.collectTypeReferenceImports(listElementType, imports, visited);
+                }
+                break;
+            }
+            case "set": {
+                // Recursively collect from the set element type
+                const setElementType = (typeReference as FernIr.dynamic.TypeReference.Set).value;
+                if (setElementType) {
+                    this.collectTypeReferenceImports(setElementType, imports, visited);
+                }
+                break;
+            }
+            case "map": {
+                // Recursively collect from map key and value types
+                const mapType = typeReference as FernIr.dynamic.MapType;
+                if (mapType.key) {
+                    this.collectTypeReferenceImports(mapType.key, imports, visited);
+                }
+                if (mapType.value) {
+                    this.collectTypeReferenceImports(mapType.value, imports, visited);
                 }
                 break;
             }
@@ -526,13 +626,35 @@ export class EndpointSnippetGenerator {
         const hasQueryParams = (request.queryParameters ?? []).length > 0;
         const hasBody = request.body != null;
 
-        if (hasQueryParams || hasBody) {
-            // Create request struct only if it has actual parameters (query params or body, not just headers)
+        // SDK generator behavior (from SubClientGenerator.ts):
+        // - Referenced body WITHOUT query params → uses inner type directly
+        // - Referenced body WITH query params → creates wrapper type
+        // - Inlined body (properties) → creates wrapper type
+        const body = request.body;
+        const isReferencedBodyOnly = body != null && !hasQueryParams && body.type === "referenced";
+
+        if (isReferencedBodyOnly && body.type === "referenced") {
+            // Use inner type directly - match SDK generator's behavior for referenced body without query params
+            const bodyExpr = this.getReferencedRequestBodyPropertyExpression({
+                body: body.bodyType,
+                value: snippet.requestBody
+            });
+            args.push(rust.Expression.referenceOf(bodyExpr));
+        } else if (hasQueryParams || hasBody) {
+            // Create request struct for:
+            // - Query params only
+            // - Query params + body (referenced or properties)
+            // - Body with properties type
             args.push(rust.Expression.referenceOf(this.getInlinedRequestArg({ endpoint, request, snippet })));
         }
 
-        // Add default None for RequestOptions parameter
-        args.push(rust.Expression.raw("None"));
+        // Add RequestOptions with headers if present, otherwise None
+        const hasHeaders = (request.headers ?? []).length > 0 && Object.keys(snippet.headers ?? {}).length > 0;
+        if (hasHeaders) {
+            args.push(rust.Expression.functionCall("Some", [this.getRequestOptionsWithHeaders({ request, snippet })]));
+        } else {
+            args.push(rust.Expression.raw("None"));
+        }
 
         return args;
     }
@@ -575,6 +697,7 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
+        const providedFieldNames = new Set<string>();
 
         // Query parameters with enhanced error scoping
         this.context.errors.scope(Scope.QueryParameters);
@@ -587,10 +710,12 @@ export class EndpointSnippetGenerator {
             for (const queryParameter of queryParameters) {
                 this.context.scopeError(queryParameter.name.wireValue);
                 try {
+                    const fieldName = this.context.getPropertyName(queryParameter.name.name);
                     structFields.push({
-                        name: this.context.getPropertyName(queryParameter.name.name),
+                        name: fieldName,
                         value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
                     });
+                    providedFieldNames.add(fieldName);
                 } finally {
                     this.context.unscopeError();
                 }
@@ -600,19 +725,8 @@ export class EndpointSnippetGenerator {
             this.context.errors.unscope();
         }
 
-        // Headers
-        this.context.errors.scope(Scope.Headers);
-        const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
-            values: snippet.headers ?? {}
-        });
-        for (const header of headers) {
-            structFields.push({
-                name: this.context.getPropertyName(header.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(header)
-            });
-        }
-        this.context.errors.unscope();
+        // Headers are handled via RequestOptions, not in the request struct
+        // Skip headers here
 
         // Request body
         this.context.errors.scope(Scope.RequestBody);
@@ -621,13 +735,156 @@ export class EndpointSnippetGenerator {
                 body: request.body,
                 value: snippet.requestBody
             });
-            structFields.push(...requestBodyFields);
+            for (const field of requestBodyFields) {
+                structFields.push(field);
+                providedFieldNames.add(field.name);
+            }
         }
         this.context.errors.unscope();
 
         // Use organized struct construction for better readability
         const structName = this.getCorrectRequestStructName(endpoint, request);
-        return this.createStructExpression(structName, structFields);
+
+        // For wire tests, we always explicitly provide all fields instead of using ..Default::default()
+        // This is more robust and avoids compilation errors when types don't derive Default.
+        // The model generator only derives Default when ALL properties are optional AND there are no
+        // extended properties, which is a complex condition that's hard to perfectly mirror in dynamic snippets.
+        // By always providing explicit values, we ensure the generated tests always compile.
+        const useDefault = false;
+
+        // Always add missing fields with explicit values
+        this.addMissingFields({
+            request,
+            structFields,
+            providedFieldNames
+        });
+
+        return this.createStructExpression(structName, structFields, useDefault);
+    }
+
+    private addMissingFields({
+        request,
+        structFields,
+        providedFieldNames
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        structFields: Array<{ name: string; value: rust.Expression }>;
+        providedFieldNames: Set<string>;
+    }): void {
+        // Add missing query parameters (both optional and required)
+        const allQueryParams = request.queryParameters ?? [];
+        for (const param of allQueryParams) {
+            const fieldName = this.context.getPropertyName(param.name.name);
+            if (!providedFieldNames.has(fieldName)) {
+                if (this.context.isOptionalType(param.typeReference)) {
+                    structFields.push({
+                        name: fieldName,
+                        value: rust.Expression.raw("None")
+                    });
+                } else {
+                    // Required field is missing - generate a default value
+                    structFields.push({
+                        name: fieldName,
+                        value: this.generateDefaultValueForType(param.typeReference)
+                    });
+                }
+            }
+        }
+
+        // Add missing body parameters (both optional and required)
+        if (request.body != null && request.body.type === "properties") {
+            for (const param of request.body.value) {
+                const fieldName = this.context.getPropertyName(param.name.name);
+                if (!providedFieldNames.has(fieldName)) {
+                    if (this.context.isOptionalType(param.typeReference)) {
+                        structFields.push({
+                            name: fieldName,
+                            value: rust.Expression.raw("None")
+                        });
+                    } else {
+                        // Required field is missing - generate a default value
+                        structFields.push({
+                            name: fieldName,
+                            value: this.generateDefaultValueForType(param.typeReference)
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    private generateDefaultValueForType(typeRef: FernIr.dynamic.TypeReference): rust.Expression {
+        switch (typeRef.type) {
+            case "primitive":
+                switch (typeRef.value) {
+                    case "STRING":
+                        return rust.Expression.stringLiteral("string");
+                    case "INTEGER":
+                    case "LONG":
+                    case "UINT":
+                    case "UINT_64":
+                        return rust.Expression.raw("0");
+                    case "FLOAT":
+                    case "DOUBLE":
+                        return rust.Expression.raw("0.0");
+                    case "BOOLEAN":
+                        return rust.Expression.raw("false");
+                    default:
+                        return rust.Expression.stringLiteral("default");
+                }
+            case "list":
+                return rust.Expression.raw("vec![]");
+            case "map":
+                return rust.Expression.raw("std::collections::HashMap::new()");
+            case "set":
+                return rust.Expression.raw("std::collections::HashSet::new()");
+            case "named": {
+                // For named types, we need to construct them properly.
+                // Named types can be aliases (newtypes), enums, objects, or unions.
+                // For aliases, we recursively generate the default value for the underlying type
+                // and wrap it with the alias type constructor.
+                const typeId = typeRef.value;
+                const namedType = this.context.ir.types[typeId];
+                const typeName = this.context.getTypeNameById(typeId);
+
+                if (!namedType) {
+                    // If we can't find the type, fall back to string wrapper assumption
+                    return rust.Expression.raw(`${typeName}("value".to_string())`);
+                }
+
+                // Handle different kinds of named types
+                switch (namedType.type) {
+                    case "alias":
+                        // For alias types (newtypes), recursively generate the inner value
+                        // and wrap it with the type constructor
+                        const innerValue = this.generateDefaultValueForType(namedType.typeReference);
+                        return rust.Expression.raw(`${typeName}(${innerValue.toString()})`);
+                    case "enum":
+                        // For enums, use the first variant if available
+                        if (namedType.values.length > 0) {
+                            const firstVariant = namedType.values[0];
+                            if (firstVariant) {
+                                const rawVariantName = firstVariant.name.pascalCase.unsafeName;
+                                const variantName = this.context.escapeRustReservedType(rawVariantName);
+                                return rust.Expression.raw(`${typeName}::${variantName}`);
+                            }
+                        }
+                        // Fallback if no variants (shouldn't happen)
+                        return rust.Expression.raw(`${typeName}::default()`);
+                    case "object":
+                    case "discriminatedUnion":
+                    case "undiscriminatedUnion":
+                        // For complex types, try Default::default() or use a placeholder
+                        return rust.Expression.raw(`${typeName}::default()`);
+                    default:
+                        // Unknown named type, fall back to string wrapper assumption
+                        return rust.Expression.raw(`${typeName}("value".to_string())`);
+                }
+            }
+            default:
+                // For complex types (unions, etc.), use Default::default() to avoid compilation errors
+                return rust.Expression.raw("Default::default()");
+        }
     }
 
     private getInlinedRequestBodyStructFields({
@@ -745,10 +1002,88 @@ export class EndpointSnippetGenerator {
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
-            args.push(rust.Expression.referenceOf(this.context.dynamicTypeLiteralMapper.convert(parameter)));
+            const expr = this.context.dynamicTypeLiteralMapper.convert(parameter);
+            // Copy types (numeric primitives and booleans) should be passed by value, not by reference
+            if (this.isCopyPrimitive(parameter.typeReference)) {
+                args.push(expr);
+            } else {
+                args.push(rust.Expression.referenceOf(expr));
+            }
         }
 
         return args;
+    }
+
+    /**
+     * Check if a type reference is a Copy primitive type that should be passed by value.
+     * In Rust, numeric types (i32, i64, u32, u64, f32, f64) and bool are Copy types
+     * that don't need to be borrowed.
+     */
+    private isCopyPrimitive(typeReference: FernIr.dynamic.TypeReference): boolean {
+        if (typeReference.type !== "primitive") {
+            return false;
+        }
+        switch (typeReference.value) {
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+            case "FLOAT":
+            case "DOUBLE":
+            case "BOOLEAN":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private getRequestOptionsWithHeaders({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): rust.Expression {
+        // Create RequestOptions with additional headers
+        const headers = this.context.associateByWireValue({
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {}
+        });
+
+        // Build the RequestOptions::new().additional_header("key", "value") chain
+        let optionsExpr = rust.Expression.functionCall("RequestOptions::new", []);
+
+        for (const header of headers) {
+            this.context.scopeError(header.name.wireValue);
+            try {
+                // Headers should always be passed as plain strings to additional_header,
+                // regardless of their type reference (e.g., optional, named types like IdempotencyKey).
+                // The additional_header method expects `impl Into<String>`.
+                const headerValue = this.getHeaderValueAsString(header.value);
+                optionsExpr = rust.Expression.methodCall({
+                    target: optionsExpr,
+                    method: "additional_header",
+                    args: [rust.Expression.stringLiteral(header.name.wireValue), headerValue]
+                });
+            } finally {
+                this.context.unscopeError();
+            }
+        }
+
+        return optionsExpr;
+    }
+
+    /**
+     * Convert a header value to a plain string expression.
+     * Headers are always strings in HTTP, so we extract the raw string value
+     * regardless of the type reference (e.g., optional, named types).
+     */
+    private getHeaderValueAsString(value: unknown): rust.Expression {
+        if (value == null) {
+            return rust.Expression.stringLiteral("");
+        }
+        const strValue = String(value);
+        return rust.Expression.stringLiteral(strValue);
     }
 
     private buildRequestComponents({
@@ -794,30 +1129,25 @@ export class EndpointSnippetGenerator {
 
     private createStructExpression(
         structName: string,
-        structFields: Array<{ name: string; value: rust.Expression }>
+        structFields: Array<{ name: string; value: rust.Expression }>,
+        shouldUseDefault: boolean = false
     ): rust.Expression {
         // For complex objects with many fields or nested structures,
         // prefer struct construction over JSON for better type safety and readability
         if (this.shouldUseStructConstruction(structFields)) {
             return rust.Expression.structConstruction(
                 structName,
-                structFields.map((field) => ({ name: field.name, value: field.value }))
+                structFields.map((field) => ({ name: field.name, value: field.value })),
+                shouldUseDefault // Use ..Default::default() only when we know the type has Default derived
             );
         }
         return rust.Expression.structLiteral(structName, structFields);
     }
 
     private shouldUseStructConstruction(structFields: Array<{ name: string; value: rust.Expression }>): boolean {
-        // Use struct construction for more than 2 fields
-        if (structFields.length > 2) {
-            return true;
-        }
-
-        // Check for complex nested objects
-        return structFields.some((field) => {
-            const fieldString = field.value.toString();
-            return fieldString.includes("json!") || fieldString.includes("{") || fieldString.length > 30;
-        });
+        // Always use struct construction (multiline format) so we can include ..Default::default()
+        // This ensures optional fields are properly initialized for all request types
+        return true;
     }
 
     private getCorrectRequestStructName(
@@ -826,13 +1156,55 @@ export class EndpointSnippetGenerator {
     ): string {
         const hasQueryParams = (request.queryParameters ?? []).length > 0;
         const hasBody = request.body != null;
+        const methodName = endpoint.declaration.name.pascalCase.safeName;
 
         if (hasQueryParams && !hasBody) {
-            // Query-only: use QueryRequest suffix like SDK generator
-            const methodName = endpoint.declaration.name.pascalCase.safeName;
+            // Query-only: look up the pre-registered deduplicated name from the context
+            const queryRequestName = this.context.getQueryRequestNameByEndpoint(endpoint.declaration);
+            if (queryRequestName) {
+                return queryRequestName;
+            }
+            // Fallback to manual construction if not found (shouldn't happen)
             return `${methodName}QueryRequest`;
         }
-        // Default: use regular naming for body requests or mixed requests
-        return this.context.getStructName(request.declaration.name);
+
+        // For inlined requests with body, check if it's a referenced type
+        // If so, use the referenced type name directly instead of creating a wrapper
+        if (hasBody && request.body != null) {
+            // Check if this is a referenced body (even if it has query params)
+            if (request.body.type === "referenced" && request.body.bodyType.type === "typeReference") {
+                const typeRef = request.body.bodyType.value;
+                if (typeRef.type === "named") {
+                    // Use the actual referenced type name from the IR
+                    const typeId = typeRef.value;
+                    const typeName = this.context.getTypeNameById(typeId);
+                    if (typeName) {
+                        // If there are query params, the SDK creates a wrapper type
+                        // Otherwise, use the referenced type directly
+                        if (hasQueryParams) {
+                            // SDK creates {EndpointName}Request wrapper for referenced body + query params
+                            return `${methodName}Request`;
+                        }
+                        // No query params: use the referenced type directly
+                        // But this case is already handled in getMethodArgsForInlinedRequest (lines 645-653)
+                        // so we shouldn't reach here. Fall through to default.
+                    }
+                }
+            }
+            
+            // For inlined requests with properties body, use the declaration name from the IR
+            // This ensures we use the actual type name (e.g., ResponseChargeBack) instead of
+            // a synthetic name (e.g., AddResponseRequest)
+            if (request.body.type === "properties") {
+                // Use the request struct's declaration name from the IR
+                return this.context.getStructNameByDeclaration(request.declaration);
+            }
+            
+            // For other body types (e.g., fileUpload), fall back to endpoint-based naming
+            return `${methodName}Request`;
+        }
+
+        // Default fallback: use the request struct's declaration name
+        return this.context.getStructNameByDeclaration(request.declaration);
     }
 }

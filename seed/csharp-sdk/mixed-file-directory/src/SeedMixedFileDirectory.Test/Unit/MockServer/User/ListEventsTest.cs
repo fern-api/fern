@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.Test.Unit.MockServer;
+using SeedMixedFileDirectory.Test.Utils;
 using SeedMixedFileDirectory.User_;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User;
@@ -42,9 +42,6 @@ public class ListEventsTest : BaseMockServerTest
         var response = await Client.User.Events.ListEventsAsync(
             new ListUserEventsRequest { Limit = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Event>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

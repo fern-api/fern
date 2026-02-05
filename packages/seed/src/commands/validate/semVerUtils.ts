@@ -110,11 +110,10 @@ export function isValidSemVerChange(currentVersion: SemVer, previousVersion: Sem
             (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }
-    // If minor version has changed, it should only be incremented by 1, and patch and prerelease should be reset
+    // If minor version has changed, it should only be incremented by 1, and prerelease should be reset
     if (currentVersion.minor !== previousVersion.minor) {
         return (
             currentVersion.minor === previousVersion.minor + 1 &&
-            currentVersion.patch === 0 &&
             (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }

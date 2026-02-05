@@ -16,6 +16,7 @@ from ..types.my_union import MyUnion
 from ..types.nested_union_root import NestedUnionRoot
 from ..types.request import Request
 from ..types.union_with_duplicate_types import UnionWithDuplicateTypes
+from .payment_request import PaymentRequest
 
 
 class AbstractUnionService(AbstractFernService):
@@ -45,6 +46,9 @@ class AbstractUnionService(AbstractFernService):
     @abc.abstractmethod
     def nested_unions(self, *, body: NestedUnionRoot) -> str: ...
 
+    @abc.abstractmethod
+    def test_camel_case_properties(self, *, body: PaymentRequest) -> str: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -58,16 +62,24 @@ class AbstractUnionService(AbstractFernService):
         cls.__init_call(router=router)
         cls.__init_duplicate_types_union(router=router)
         cls.__init_nested_unions(router=router)
+        cls.__init_test_camel_case_properties(router=router)
 
     @classmethod
     def __init_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get)
+        type_hints = typing.get_type_hints(cls.get)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -84,13 +96,9 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get.__globals__)
-
         router.post(
             path="/",
-            response_model=MyUnion,
+            response_model=None,
             description=AbstractUnionService.get.__doc__,
             **get_route_args(cls.get, default_tag="union"),
         )(wrapper)
@@ -98,8 +106,13 @@ class AbstractUnionService(AbstractFernService):
     @classmethod
     def __init_get_metadata(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_metadata)
+        type_hints = typing.get_type_hints(cls.get_metadata)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
@@ -118,13 +131,9 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_metadata.__globals__)
-
         router.get(
             path="/metadata",
-            response_model=Metadata,
+            response_model=None,
             description=AbstractUnionService.get_metadata.__doc__,
             **get_route_args(cls.get_metadata, default_tag="union"),
         )(wrapper)
@@ -132,12 +141,19 @@ class AbstractUnionService(AbstractFernService):
     @classmethod
     def __init_update_metadata(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_metadata)
+        type_hints = typing.get_type_hints(cls.update_metadata)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -154,13 +170,9 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_metadata.__globals__)
-
         router.put(
             path="/metadata",
-            response_model=bool,
+            response_model=None,
             description=AbstractUnionService.update_metadata.__doc__,
             **get_route_args(cls.update_metadata, default_tag="union"),
         )(wrapper)
@@ -168,12 +180,19 @@ class AbstractUnionService(AbstractFernService):
     @classmethod
     def __init_call(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.call)
+        type_hints = typing.get_type_hints(cls.call)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.call, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -190,13 +209,9 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.call.__globals__)
-
         router.post(
             path="/call",
-            response_model=bool,
+            response_model=None,
             description=AbstractUnionService.call.__doc__,
             **get_route_args(cls.call, default_tag="union"),
         )(wrapper)
@@ -204,12 +219,19 @@ class AbstractUnionService(AbstractFernService):
     @classmethod
     def __init_duplicate_types_union(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.duplicate_types_union)
+        type_hints = typing.get_type_hints(cls.duplicate_types_union)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.duplicate_types_union, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -226,13 +248,9 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.duplicate_types_union.__globals__)
-
         router.post(
             path="/duplicate",
-            response_model=UnionWithDuplicateTypes,
+            response_model=None,
             description=AbstractUnionService.duplicate_types_union.__doc__,
             **get_route_args(cls.duplicate_types_union, default_tag="union"),
         )(wrapper)
@@ -240,12 +258,19 @@ class AbstractUnionService(AbstractFernService):
     @classmethod
     def __init_nested_unions(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.nested_unions)
+        type_hints = typing.get_type_hints(cls.nested_unions)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.nested_unions, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -262,13 +287,48 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.nested_unions.__globals__)
-
         router.post(
             path="/nested",
-            response_model=str,
+            response_model=None,
             description=AbstractUnionService.nested_unions.__doc__,
             **get_route_args(cls.nested_unions, default_tag="union"),
+        )(wrapper)
+
+    @classmethod
+    def __init_test_camel_case_properties(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.test_camel_case_properties)
+        type_hints = typing.get_type_hints(cls.test_camel_case_properties)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.test_camel_case_properties, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.test_camel_case_properties)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.test_camel_case_properties(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'test_camel_case_properties' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(
+            path="/camel-case",
+            response_model=None,
+            description=AbstractUnionService.test_camel_case_properties.__doc__,
+            **get_route_args(cls.test_camel_case_properties, default_tag="union"),
         )(wrapper)

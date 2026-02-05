@@ -6,6 +6,7 @@ import { InlinedRequestBodyGenerator } from "./inlined-request-body";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StructGenerator } from "./object";
 import { QueryParameterRequestGenerator } from "./query-request";
+import { ReferencedRequestWithQueryGenerator } from "./referenced-request-with-query";
 import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
@@ -54,6 +55,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     // Generate query parameter request structs for query-only endpoints
     const queryRequestGenerator = new QueryParameterRequestGenerator(context);
     files.push(...queryRequestGenerator.generateFiles());
+
+    // Generate request types for endpoints with referenced body + query parameters
+    const referencedRequestWithQueryGenerator = new ReferencedRequestWithQueryGenerator(context);
+    files.push(...referencedRequestWithQueryGenerator.generateFiles());
 
     // Deduplicate files by filename to prevent file collisions
     // This is a safety net for tracing logs - ideally generators shouldn't create duplicates

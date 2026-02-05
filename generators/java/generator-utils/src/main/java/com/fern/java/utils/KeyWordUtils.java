@@ -33,7 +33,7 @@ public final class KeyWordUtils {
             "assert",
             "switch");
 
-    private static final Set<String> RESERVED_METHOD_NAMES = Set.of("getClass");
+    private static final Set<String> RESERVED_METHOD_NAMES = Set.of("getClass", "notify", "notifyAll", "wait");
 
     private KeyWordUtils() {}
 

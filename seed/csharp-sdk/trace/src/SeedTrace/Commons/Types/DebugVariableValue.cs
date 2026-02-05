@@ -663,12 +663,12 @@ public record DebugVariableValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<DebugVariableValue>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(DebugVariableValue).IsAssignableFrom(typeToConvert);
 
         public override DebugVariableValue Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -15,5 +15,13 @@
     "resolveJsonModule": true
   },
   "include": ["src/**/*", "test/**/*", "index.ts"],
-  "exclude": ["node_modules", "lib"]
+  "exclude": ["node_modules", "lib"],
+  "references": [
+    {
+      "path": "../ir-utils"
+    },
+    {
+      "path": "../../../generators/base"
+    }
+  ]
 }

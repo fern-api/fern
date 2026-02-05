@@ -14,6 +14,8 @@ export declare namespace Streamer {
         streamingResponse: StreamingResponse;
         request?: go.AstNode;
         errorCodes?: go.AstNode;
+        /** The import path of the namespace where the endpoint is defined. Used to reference namespace-specific ErrorCodes. */
+        namespaceImportPath?: string;
     }
 }
 
@@ -145,13 +147,15 @@ export class Streamer {
                 value: go.TypeInstantiation.reference(args.request)
             });
         }
+        // In per-endpoint mode, use the locally generated error codes variable.
+        // In global mode, use the ErrorCodes variable from the namespace where the endpoint is defined.
+        const errorCodesReference =
+            this.context.isPerEndpointErrorCodes() && args.errorCodes != null
+                ? args.errorCodes
+                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
         arguments_.push({
             name: "ErrorDecoder",
-            value: go.TypeInstantiation.reference(
-                this.context.callNewErrorDecoder([
-                    go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
-                ])
-            )
+            value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
         });
         return go.codeblock((writer) => {
             writer.writeNode(

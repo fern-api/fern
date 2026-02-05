@@ -148,12 +148,12 @@ public record UnionWithDuplicateTypes
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithDuplicateTypes>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithDuplicateTypes).IsAssignableFrom(typeToConvert);
 
         public override UnionWithDuplicateTypes Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

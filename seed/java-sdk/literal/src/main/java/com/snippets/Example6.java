@@ -9,17 +9,14 @@ public class Example6 {
                 SeedLiteralClient.builder().url("https://api.fern.com").build();
 
         client.query()
-                .send(
-                        SendLiteralsInQueryRequest.builder()
-                                .prompt("You are a helpful assistant")
-                                .aliasPrompt("You are a helpful assistant")
-                                .stream(false)
-                                .aliasStream(false)
-                                .query("What is the weather today")
-                                .optionalPrompt("You are a helpful assistant")
-                                .aliasOptionalPrompt("You are a helpful assistant")
-                                .optionalStream(false)
-                                .aliasOptionalStream(false)
-                                .build());
+                .send(SendLiteralsInQueryRequest.builder()
+                        .aliasPrompt("You are a helpful assistant")
+                        .query("What is the weather today")
+                        .aliasStream(false)
+                        .optionalPrompt("You are a helpful assistant")
+                        .aliasOptionalPrompt("You are a helpful assistant")
+                        .optionalStream(false)
+                        .aliasOptionalStream(false)
+                        .build());
     }
 }

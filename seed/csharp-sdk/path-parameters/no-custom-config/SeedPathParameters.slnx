@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedPathParameters.Test/SeedPathParameters.Test.csproj" />
+  <Project Path="src/SeedPathParameters/SeedPathParameters.csproj" />
+</Solution>

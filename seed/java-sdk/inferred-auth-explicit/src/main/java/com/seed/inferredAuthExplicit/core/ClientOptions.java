@@ -21,12 +21,15 @@ public final class ClientOptions {
 
     private final int timeout;
 
+    private final int maxRetries;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
-            int timeout) {
+            int timeout,
+            int maxRetries) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -34,11 +37,13 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:inferred-auth-explicit/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:inferred-auth-explicit-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
+        this.maxRetries = maxRetries;
     }
 
     public Environment environment() {
@@ -78,6 +83,10 @@ public final class ClientOptions {
                 .writeTimeout(0, TimeUnit.SECONDS)
                 .readTimeout(0, TimeUnit.SECONDS)
                 .build();
+    }
+
+    public int maxRetries() {
+        return this.maxRetries;
     }
 
     public static Builder builder() {
@@ -163,7 +172,8 @@ public final class ClientOptions {
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
-            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get());
+            return new ClientOptions(
+                    environment, headers, headerSuppliers, httpClient, this.timeout.get(), this.maxRetries);
         }
 
         /**
@@ -174,6 +184,9 @@ public final class ClientOptions {
             builder.environment = clientOptions.environment();
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
+            builder.headers.putAll(clientOptions.headers);
+            builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
+            builder.maxRetries = clientOptions.maxRetries();
             return builder;
         }
     }

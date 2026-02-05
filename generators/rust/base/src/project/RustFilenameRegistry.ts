@@ -153,6 +153,32 @@ export class RustFilenameRegistry {
     }
 
     /**
+     * Register filename for referenced request with query types
+     * @param endpointId - Unique endpoint ID from IR
+     * @param baseFilename - Base filename in snake_case (without .rs extension)
+     * @returns The registered unique filename (without .rs extension)
+     */
+    public registerReferencedRequestWithQueryFilename(endpointId: string, baseFilename: string): string {
+        return this.filenameRegistry.registerSymbol(this.getReferencedRequestWithQueryFilenameId(endpointId), [
+            baseFilename,
+            `${baseFilename}_request`,
+            `${baseFilename}_with_query`
+        ]);
+    }
+
+    /**
+     * Register type name for referenced request with query
+     * @param endpointId - Unique endpoint ID from IR
+     * @param baseTypeName - Base type name in PascalCase
+     * @returns The registered unique type name
+     */
+    public registerReferencedRequestWithQueryTypeName(endpointId: string, baseTypeName: string): string {
+        return this.typenameRegistry.registerSymbol(this.getReferencedRequestWithQueryTypeNameId(endpointId), [
+            baseTypeName
+        ]);
+    }
+
+    /**
      * Register client name for a subpackage or root client
      * @param clientId - Unique identifier for the client (subpackage ID or "root")
      * @param baseClientName - Base client name in PascalCase
@@ -283,6 +309,34 @@ export class RustFilenameRegistry {
         return this.clientNameRegistry.getSymbolNameById(this.getClientNameId(clientId));
     }
 
+    /**
+     * Get registered filename for referenced request with query
+     * @param endpointId - Unique endpoint ID from IR
+     * @returns Filename with .rs extension
+     * @throws Error if filename not registered
+     */
+    public getReferencedRequestWithQueryFilenameOrThrow(endpointId: string): string {
+        const filename = this.filenameRegistry.getSymbolNameById(
+            this.getReferencedRequestWithQueryFilenameId(endpointId)
+        );
+        assertDefined(filename, `Filename not found for referenced request with query ${endpointId}`);
+        return `${filename}.rs`;
+    }
+
+    /**
+     * Get registered type name for referenced request with query
+     * @param endpointId - Unique endpoint ID from IR
+     * @returns The unique type name
+     * @throws Error if type name not registered
+     */
+    public getReferencedRequestWithQueryTypeNameOrThrow(endpointId: string): string {
+        const typename = this.typenameRegistry.getSymbolNameById(
+            this.getReferencedRequestWithQueryTypeNameId(endpointId)
+        );
+        assertDefined(typename, `Type name not found for referenced request with query ${endpointId}`);
+        return typename;
+    }
+
     // =====================================
     // Private Helper Methods
     // =====================================
@@ -321,5 +375,13 @@ export class RustFilenameRegistry {
 
     private getClientNameId(clientId: string): string {
         return `${CLIENTNAME_ID_PREFIX}${clientId}`;
+    }
+
+    private getReferencedRequestWithQueryFilenameId(endpointId: string): string {
+        return `${FILENAME_ID_PREFIX}referenced_request_with_query_${endpointId}`;
+    }
+
+    private getReferencedRequestWithQueryTypeNameId(endpointId: string): string {
+        return `${TYPENAME_ID_PREFIX}referenced_request_with_query_${endpointId}`;
     }
 }

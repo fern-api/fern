@@ -14,6 +14,8 @@ func do() {
         ),
     )
     request := &path.UpdateUserRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
         Body: &path.User{
             Name: "name",
             Tags: []string{
@@ -24,8 +26,6 @@ func do() {
     }
     client.User.UpdateUser(
         context.TODO(),
-        "tenant_id",
-        "user_id",
         request,
     )
 }

@@ -1,0 +1,184 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "production",
+      "url": "wss://api.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "/users/{userId}/messages": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": [
+          {
+            "name": "userId",
+            "description": "The user ID",
+            "parameterNameOverride": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "Websocket",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ]
+      },
+      "groupName": [
+        "/users/{userId}/messages"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "publish",
+          "body": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "usersUserIdMessagesPublishContent",
+                "key": "content",
+                "schema": {
+                  "generatedName": "UsersUserIdMessagesPublishContent",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "UsersUserIdMessagesPublishContent",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "UsersUserIdMessagesPublish",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          }
+        },
+        {
+          "origin": "server",
+          "name": "subscribe",
+          "body": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "usersUserIdMessagesSubscribeContent",
+                "key": "content",
+                "schema": {
+                  "generatedName": "UsersUserIdMessagesSubscribeContent",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "UsersUserIdMessagesSubscribeContent",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              },
+              {
+                "conflict": {},
+                "generatedName": "usersUserIdMessagesSubscribeTimestamp",
+                "key": "timestamp",
+                "schema": {
+                  "generatedName": "UsersUserIdMessagesSubscribeTimestamp",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "UsersUserIdMessagesSubscribeTimestamp",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "UsersUserIdMessagesSubscribe",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/users/{userId}/messages",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "publish",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "subscribe",
+              "payload": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

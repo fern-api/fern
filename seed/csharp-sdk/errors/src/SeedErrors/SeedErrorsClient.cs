@@ -2,13 +2,14 @@ using SeedErrors.Core;
 
 namespace SeedErrors;
 
-public partial class SeedErrorsClient
+public partial class SeedErrorsClient : ISeedErrorsClient
 {
     private readonly RawClient _client;
 
     public SeedErrorsClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedErrorsClient
                 { "User-Agent", "Fernerrors/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedErrorsClient
         Simple = new SimpleClient(_client);
     }
 
-    public SimpleClient Simple { get; }
+    public ISimpleClient Simple { get; }
 }

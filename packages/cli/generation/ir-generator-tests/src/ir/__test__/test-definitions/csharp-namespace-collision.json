@@ -1258,7 +1258,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1902,6 +1904,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -2086,7 +2090,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -2730,6 +2736,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -3101,7 +3109,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -4602,6 +4612,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -4906,7 +4918,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -6982,6 +6996,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -7191,6 +7207,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:Task": {
@@ -7343,6 +7360,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_System:Task": {
@@ -7475,6 +7493,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_System:User": {
@@ -7733,6 +7752,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -8018,6 +8038,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_System": {
             "name": {

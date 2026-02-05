@@ -5,7 +5,12 @@ import type express from "express";
 export abstract class SeedSingleUrlEnvironmentNoDefaultError extends Error {
     constructor(public readonly errorName?: string) {
         super();
-        Object.setPrototypeOf(this, SeedSingleUrlEnvironmentNoDefaultError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public abstract send(res: express.Response): Promise<void>;

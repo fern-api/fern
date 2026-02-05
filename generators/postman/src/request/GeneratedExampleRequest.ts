@@ -31,13 +31,20 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
             if (queryParameterDeclaration == null) {
                 throw new Error(`Cannot find query parameter ${exampleQueryParameter.name.wireValue}`);
             }
+
+            // Optional parameters should be disabled by default in Postman UI
+            const isOptional =
+                queryParameterDeclaration.valueType.type === "container" &&
+                queryParameterDeclaration.valueType.container.type === "optional";
+
             return {
                 key: exampleQueryParameter.name.wireValue,
                 description: queryParameterDeclaration.docs ?? undefined,
                 value:
                     typeof exampleQueryParameter.value.jsonExample !== "string"
                         ? JSON.stringify(exampleQueryParameter.value.jsonExample)
-                        : exampleQueryParameter.value.jsonExample
+                        : exampleQueryParameter.value.jsonExample,
+                disabled: isOptional ? true : undefined
             };
         });
     }

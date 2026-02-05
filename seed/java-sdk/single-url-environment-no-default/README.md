@@ -5,6 +5,22 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -142,7 +158,6 @@ SeedSingleUrlEnvironmentNoDefaultClient client = SeedSingleUrlEnvironmentNoDefau
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.singleUrlEnvironmentNoDefault.SeedSingleUrlEnvironmentNoDefaultClient;
 import com.seed.singleUrlEnvironmentNoDefault.core.RequestOptions;
@@ -150,7 +165,7 @@ import com.seed.singleUrlEnvironmentNoDefault.core.RequestOptions;
 // Client level
 SeedSingleUrlEnvironmentNoDefaultClient client = SeedSingleUrlEnvironmentNoDefaultClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -158,7 +173,7 @@ client.dummy().getDummy(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

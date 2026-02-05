@@ -13,7 +13,7 @@ import {
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ConvertOpenAPIOptions } from "./ConvertOpenAPIOptions";
+import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions";
 import { State } from "./State";
 
 export interface OpenApiIrConverterContextOpts {
@@ -34,17 +34,7 @@ export class OpenApiIrConverterContext {
     public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
-    public detectGlobalHeaders: boolean;
-    public objectQueryParameters: boolean;
-    public respectReadonlySchemas: boolean;
-    public respectNullableSchemas: boolean;
-    public onlyIncludeReferencedSchemas: boolean;
-    public inlinePathParameters: boolean;
-    public useBytesForBinaryResponse: boolean;
-    public respectForwardCompatibleEnums: boolean;
-    public wrapReferencesToNullableInOptional: boolean;
-    public coerceOptionalSchemasToNullable: boolean;
-    public groupEnvironmentsByHost: boolean;
+    public readonly options: ConvertOpenAPIOptions;
 
     private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
@@ -92,19 +82,10 @@ export class OpenApiIrConverterContext {
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
-        this.detectGlobalHeaders = options?.detectGlobalHeaders ?? true;
-        this.objectQueryParameters = options?.objectQueryParameters ?? false;
-        this.respectReadonlySchemas = options?.respectReadonlySchemas ?? false;
-        this.respectNullableSchemas = options?.respectNullableSchemas ?? false;
-        this.onlyIncludeReferencedSchemas = options?.onlyIncludeReferencedSchemas ?? false;
-        this.inlinePathParameters = options?.inlinePathParameters ?? false;
-        this.useBytesForBinaryResponse = options?.useBytesForBinaryResponse ?? false;
-        this.respectForwardCompatibleEnums = options?.respectForwardCompatibleEnums ?? false;
-        this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;
-        this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
-        this.wrapReferencesToNullableInOptional = options?.wrapReferencesToNullableInOptional ?? true;
-        this.coerceOptionalSchemasToNullable = options?.coerceOptionalSchemasToNullable ?? true;
-        this.groupEnvironmentsByHost = options?.groupEnvironmentsByHost ?? false;
+
+        this.options = getConvertOptions({ options });
+        this.enableUniqueErrorsPerEndpoint = this.options.enableUniqueErrorsPerEndpoint;
+        this.referencedSchemaIds = this.options.onlyIncludeReferencedSchemas ? new Set() : undefined;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });
@@ -224,7 +205,9 @@ export class OpenApiIrConverterContext {
     }
 
     public shouldMarkSchemaAsReferenced(): boolean {
-        return this.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook);
+        return (
+            this.options.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook)
+        );
     }
 
     /**

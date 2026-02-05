@@ -87,6 +87,17 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n\t\u0026fern.SearchUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserSpecifics"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserSpecifics(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n\t1,\n\t\"thought\",\n)\n"
+            }
         }
     ]
 }

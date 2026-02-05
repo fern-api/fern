@@ -428,6 +428,131 @@ func (j *JsonLike) Accept(visitor JsonLikeVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", j)
 }
 
+type JsonLikeWithNullAndUndefined struct {
+	JsonLikeWithNullAndUndefinedOptionalList      []*JsonLikeWithNullAndUndefined
+	StringJsonLikeWithNullAndUndefinedOptionalMap map[string]*JsonLikeWithNullAndUndefined
+	StringOptional                                *string
+	IntegerOptional                               *int
+	BooleanOptional                               *bool
+
+	typ string
+}
+
+func (j *JsonLikeWithNullAndUndefined) GetJsonLikeWithNullAndUndefinedOptionalList() []*JsonLikeWithNullAndUndefined {
+	if j == nil {
+		return nil
+	}
+	return j.JsonLikeWithNullAndUndefinedOptionalList
+}
+
+func (j *JsonLikeWithNullAndUndefined) GetStringJsonLikeWithNullAndUndefinedOptionalMap() map[string]*JsonLikeWithNullAndUndefined {
+	if j == nil {
+		return nil
+	}
+	return j.StringJsonLikeWithNullAndUndefinedOptionalMap
+}
+
+func (j *JsonLikeWithNullAndUndefined) GetStringOptional() *string {
+	if j == nil {
+		return nil
+	}
+	return j.StringOptional
+}
+
+func (j *JsonLikeWithNullAndUndefined) GetIntegerOptional() *int {
+	if j == nil {
+		return nil
+	}
+	return j.IntegerOptional
+}
+
+func (j *JsonLikeWithNullAndUndefined) GetBooleanOptional() *bool {
+	if j == nil {
+		return nil
+	}
+	return j.BooleanOptional
+}
+
+func (j *JsonLikeWithNullAndUndefined) UnmarshalJSON(data []byte) error {
+	var valueJsonLikeWithNullAndUndefinedOptionalList []*JsonLikeWithNullAndUndefined
+	if err := json.Unmarshal(data, &valueJsonLikeWithNullAndUndefinedOptionalList); err == nil {
+		j.typ = "JsonLikeWithNullAndUndefinedOptionalList"
+		j.JsonLikeWithNullAndUndefinedOptionalList = valueJsonLikeWithNullAndUndefinedOptionalList
+		return nil
+	}
+	var valueStringJsonLikeWithNullAndUndefinedOptionalMap map[string]*JsonLikeWithNullAndUndefined
+	if err := json.Unmarshal(data, &valueStringJsonLikeWithNullAndUndefinedOptionalMap); err == nil {
+		j.typ = "StringJsonLikeWithNullAndUndefinedOptionalMap"
+		j.StringJsonLikeWithNullAndUndefinedOptionalMap = valueStringJsonLikeWithNullAndUndefinedOptionalMap
+		return nil
+	}
+	var valueStringOptional *string
+	if err := json.Unmarshal(data, &valueStringOptional); err == nil {
+		j.typ = "StringOptional"
+		j.StringOptional = valueStringOptional
+		return nil
+	}
+	var valueIntegerOptional *int
+	if err := json.Unmarshal(data, &valueIntegerOptional); err == nil {
+		j.typ = "IntegerOptional"
+		j.IntegerOptional = valueIntegerOptional
+		return nil
+	}
+	var valueBooleanOptional *bool
+	if err := json.Unmarshal(data, &valueBooleanOptional); err == nil {
+		j.typ = "BooleanOptional"
+		j.BooleanOptional = valueBooleanOptional
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, j)
+}
+
+func (j JsonLikeWithNullAndUndefined) MarshalJSON() ([]byte, error) {
+	if j.typ == "JsonLikeWithNullAndUndefinedOptionalList" || j.JsonLikeWithNullAndUndefinedOptionalList != nil {
+		return json.Marshal(j.JsonLikeWithNullAndUndefinedOptionalList)
+	}
+	if j.typ == "StringJsonLikeWithNullAndUndefinedOptionalMap" || j.StringJsonLikeWithNullAndUndefinedOptionalMap != nil {
+		return json.Marshal(j.StringJsonLikeWithNullAndUndefinedOptionalMap)
+	}
+	if j.typ == "StringOptional" || j.StringOptional != nil {
+		return json.Marshal(j.StringOptional)
+	}
+	if j.typ == "IntegerOptional" || j.IntegerOptional != nil {
+		return json.Marshal(j.IntegerOptional)
+	}
+	if j.typ == "BooleanOptional" || j.BooleanOptional != nil {
+		return json.Marshal(j.BooleanOptional)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", j)
+}
+
+type JsonLikeWithNullAndUndefinedVisitor interface {
+	VisitJsonLikeWithNullAndUndefinedOptionalList([]*JsonLikeWithNullAndUndefined) error
+	VisitStringJsonLikeWithNullAndUndefinedOptionalMap(map[string]*JsonLikeWithNullAndUndefined) error
+	VisitStringOptional(*string) error
+	VisitIntegerOptional(*int) error
+	VisitBooleanOptional(*bool) error
+}
+
+func (j *JsonLikeWithNullAndUndefined) Accept(visitor JsonLikeWithNullAndUndefinedVisitor) error {
+	if j.typ == "JsonLikeWithNullAndUndefinedOptionalList" || j.JsonLikeWithNullAndUndefinedOptionalList != nil {
+		return visitor.VisitJsonLikeWithNullAndUndefinedOptionalList(j.JsonLikeWithNullAndUndefinedOptionalList)
+	}
+	if j.typ == "StringJsonLikeWithNullAndUndefinedOptionalMap" || j.StringJsonLikeWithNullAndUndefinedOptionalMap != nil {
+		return visitor.VisitStringJsonLikeWithNullAndUndefinedOptionalMap(j.StringJsonLikeWithNullAndUndefinedOptionalMap)
+	}
+	if j.typ == "StringOptional" || j.StringOptional != nil {
+		return visitor.VisitStringOptional(j.StringOptional)
+	}
+	if j.typ == "IntegerOptional" || j.IntegerOptional != nil {
+		return visitor.VisitIntegerOptional(j.IntegerOptional)
+	}
+	if j.typ == "BooleanOptional" || j.BooleanOptional != nil {
+		return visitor.VisitBooleanOptional(j.BooleanOptional)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", j)
+}
+
 type ObjectValue struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted

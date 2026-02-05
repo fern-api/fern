@@ -30,6 +30,21 @@ client.user().getUsername(
                 )
                 .build()
         )
+        .nestedUser(
+            NestedUser
+                .builder()
+                .name("name")
+                .user(
+                    User
+                        .builder()
+                        .name("name")
+                        .tags(
+                            Arrays.asList("tags", "tags")
+                        )
+                        .build()
+                )
+                .build()
+        )
         .userList(
             Arrays.asList(
                 User
@@ -52,21 +67,6 @@ client.user().getUsername(
             new HashMap<String, String>() {{
                 put("keyValue", "keyValue");
             }}
-        )
-        .nestedUser(
-            NestedUser
-                .builder()
-                .name("name")
-                .user(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            Arrays.asList("tags", "tags")
-                        )
-                        .build()
-                )
-                .build()
         )
         .excludeUser(
             Arrays.asList(

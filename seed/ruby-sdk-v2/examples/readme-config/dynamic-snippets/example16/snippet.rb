@@ -5,7 +5,7 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.create_movie({
+client.service.create_movie(
   id: 'id',
   prequel: 'prequel',
   title: 'title',
@@ -16,4 +16,4 @@ client.service.create_movie({
   book: 'book',
   metadata: {},
   revenue: 1000000
-});
+);

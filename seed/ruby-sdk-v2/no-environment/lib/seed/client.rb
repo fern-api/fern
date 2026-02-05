@@ -2,13 +2,16 @@
 
 module Seed
   class Client
-    # @return [Seed::Client]
-    def initialize(base_url:, token:)
+    # @param base_url [String, nil]
+    # @param token [String]
+    #
+    # @return [void]
+    def initialize(token:, base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "User-Agent": "fern_no-environment/0.0.1",
-          "X-Fern-Language": "Ruby",
+          "User-Agent" => "fern_no-environment/0.0.1",
+          "X-Fern-Language" => "Ruby",
           Authorization: "Bearer #{token}"
         }
       )

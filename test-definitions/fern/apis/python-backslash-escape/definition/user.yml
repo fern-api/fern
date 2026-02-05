@@ -1,0 +1,49 @@
+docs: |
+  This service handles user authentication.
+  Use DOMAIN\username format for Windows authentication.
+  Other escape sequences: \n \t \r \x00 \u0000
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    get:
+      docs: |
+        Get a user by their ID.
+        For Windows authentication, use DOMAIN\username format.
+        Other backslash examples: FOO\_BAR, path\to\file, C:\Users\name
+      method: GET
+      path: /{id}
+      path-parameters:
+        id:
+          type: string
+          docs: |
+            The user ID.
+            Can be in DOMAIN\username format for Windows users.
+      request:
+        name: GetUserRequest
+        query-parameters:
+          domain:
+            type: optional<string>
+            docs: |
+              The domain name.
+              Example: CORP\username or DOMAIN\user
+      response: User
+
+types:
+  User:
+    docs: |
+      Represents a user in the system.
+      Windows users should use DOMAIN\username format.
+    properties:
+      id:
+        type: string
+        docs: The unique identifier
+      name:
+        type: string
+        docs: |
+          The user's name.
+          For Windows: DOMAIN\username
+      email:
+        type: string
+        docs: The user's email address

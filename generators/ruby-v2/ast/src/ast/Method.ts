@@ -44,6 +44,8 @@ export declare namespace Method {
         returnType?: Type;
         /* The statements of the method. */
         statements?: AstNode[];
+        /* YARD @option tags for the keyword splat parameter. */
+        splatOptionDocs?: string[];
     }
 }
 
@@ -59,8 +61,18 @@ export class Method extends AstNode {
     private readonly visibility: MethodVisibility;
     private readonly statements: AstNode[];
     public readonly returnType: Type;
+    private readonly splatOptionDocs: string[];
 
-    constructor({ name, docstring, kind, visibility, parameters, returnType, statements }: Method.Args) {
+    constructor({
+        name,
+        docstring,
+        kind,
+        visibility,
+        parameters,
+        returnType,
+        statements,
+        splatOptionDocs
+    }: Method.Args) {
         super();
 
         this.name = name;
@@ -74,6 +86,7 @@ export class Method extends AstNode {
         this.yieldParameter = parameters?.yield;
         this.returnType = returnType ?? Type.untyped();
         this.statements = statements ?? [];
+        this.splatOptionDocs = splatOptionDocs ?? [];
     }
 
     public addStatement(statement: AstNode): void {
@@ -85,22 +98,60 @@ export class Method extends AstNode {
             new Comment({ docs: this.docstring }).write(writer);
         }
 
+        const hasAnyParameters =
+            this.positionalParameters.length > 0 ||
+            this.keywordParameters.length > 0 ||
+            this.keywordSplatParameter != null;
+
+        if (this.docstring && hasAnyParameters) {
+            writer.writeLine("#");
+        }
+
         for (const positionalParameter of this.positionalParameters) {
-            if (this.docstring) {
-                writer.writeLine("#");
-            }
             writer.write(`# @option ${positionalParameter.name} [`);
-            positionalParameter.type.writeTypeDefinition(writer);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            positionalParameter.type.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
             writer.write("]");
             writer.newLine();
         }
 
+        for (const keywordParameter of this.keywordParameters) {
+            writer.write(`# @param ${keywordParameter.name} [`);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            keywordParameter.type.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
+            writer.write("]");
+            if (keywordParameter.docs) {
+                writer.write(` ${keywordParameter.docs}`);
+            }
+            writer.newLine();
+        }
+
+        if (this.keywordSplatParameter != null) {
+            writer.write(`# @param ${this.keywordSplatParameter.name} [`);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            this.keywordSplatParameter.type.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
+            writer.write("]");
+            if (this.keywordSplatParameter.docs) {
+                writer.write(` ${this.keywordSplatParameter.docs}`);
+            }
+            writer.newLine();
+        }
+
+        for (const optionDoc of this.splatOptionDocs) {
+            writer.writeLine(`# ${optionDoc}`);
+        }
+
         if (this.returnType != null) {
-            if (this.positionalParameters.length > 0 || this.docstring) {
+            if (hasAnyParameters || this.docstring) {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);
-            this.returnType.writeTypeDefinition(writer);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            this.returnType.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
             writer.write("]");
             writer.newLine();
         }
@@ -173,6 +224,14 @@ export class Method extends AstNode {
         writer.write(") -> ");
 
         this.returnType.writeTypeDefinition(writer);
+    }
+
+    private normalizeForYard(typeString: string): string {
+        let normalized = typeString.replace(/\s*\|\s*/g, ", ");
+        normalized = normalized.replace(/\bbool\b/g, "Boolean");
+        normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
+        normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
+        return normalized;
     }
 
     /*

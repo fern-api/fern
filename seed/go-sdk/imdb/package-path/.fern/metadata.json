@@ -5,5 +5,6 @@
   "generatorConfig": {
     "enableWireTests": false,
     "packagePath": "inhereplease"
-  }
+  },
+  "sdkVersion": "v0.0.1"
 }

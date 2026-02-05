@@ -43,12 +43,19 @@ class AbstractAuthService(AbstractFernService):
     @classmethod
     def __init_get_token_with_client_credentials(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_token_with_client_credentials)
+        type_hints = typing.get_type_hints(cls.get_token_with_client_credentials)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -67,13 +74,9 @@ class AbstractAuthService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_token_with_client_credentials.__globals__)
-
         router.post(
             path="/token",
-            response_model=TokenResponse,
+            response_model=None,
             description=AbstractAuthService.get_token_with_client_credentials.__doc__,
             **get_route_args(cls.get_token_with_client_credentials, default_tag="auth"),
         )(wrapper)
@@ -81,12 +84,19 @@ class AbstractAuthService(AbstractFernService):
     @classmethod
     def __init_refresh_token(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.refresh_token)
+        type_hints = typing.get_type_hints(cls.refresh_token)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.refresh_token, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -103,13 +113,9 @@ class AbstractAuthService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.refresh_token.__globals__)
-
         router.post(
             path="/token",
-            response_model=TokenResponse,
+            response_model=None,
             description=AbstractAuthService.refresh_token.__doc__,
             **get_route_args(cls.refresh_token, default_tag="auth"),
         )(wrapper)

@@ -1,4 +1,5 @@
-import { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
+import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment";
 import { GenerationRunner } from "./GenerationRunner";
 import { NativeExecutionEnvironment } from "./NativeExecutionEnvironment";
 
@@ -6,11 +7,13 @@ export async function runContainerizedGenerationForSeed(
     args: GenerationRunner.RunArgs & {
         keepDocker: boolean;
         dockerImage: string;
+        runner?: ContainerRunner;
     }
 ): Promise<void> {
-    const executionEnv = new DockerExecutionEnvironment({
-        dockerImage: args.dockerImage,
-        keepDocker: args.keepDocker
+    const executionEnv = new ContainerExecutionEnvironment({
+        containerImage: args.dockerImage,
+        keepContainer: args.keepDocker,
+        runner: args.runner ?? "podman"
     });
     const runner = new GenerationRunner(executionEnv);
     await runner.run(args);
@@ -19,9 +22,10 @@ export async function runContainerizedGenerationForSeed(
 export async function runNativeGenerationForSeed(
     args: GenerationRunner.RunArgs,
     commands: string[],
-    workingDirectory?: string
+    workingDirectory?: string,
+    env?: Record<string, string>
 ): Promise<void> {
-    const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory });
+    const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory, env });
     const runner = new GenerationRunner(executionEnv);
     await runner.run(args);
 }

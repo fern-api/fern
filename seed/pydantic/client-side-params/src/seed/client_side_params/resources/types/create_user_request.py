@@ -13,8 +13,8 @@ class CreateUserRequest(UniversalBaseModel):
     password: typing.Optional[str] = None
     phone_number: typing.Optional[str] = None
     phone_verified: typing.Optional[bool] = None
-    user_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    app_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    user_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    app_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     connection: str
 
     if IS_PYDANTIC_V2:

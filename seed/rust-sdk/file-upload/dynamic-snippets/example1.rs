@@ -11,7 +11,7 @@ async fn main() {
         .service
         .optional_args(
             &OptionalArgsRequest {
-                image_file: std::fs::read("path/to/file").expect("Failed to read file"),
+                image_file: b"test file content".to_vec(),
                 request: None,
             },
             None,

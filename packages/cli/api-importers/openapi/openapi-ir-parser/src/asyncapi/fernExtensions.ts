@@ -33,6 +33,21 @@ export const FernAsyncAPIExtension = {
     FERN_SDK_GROUP_NAME: "x-fern-sdk-group-name",
 
     /**
+     * The x-fern-sdk-method-name allows you to specify the SDK method name for an AsyncAPI operation.
+     * This extension is applied to AsyncAPI v3 operations to customize the generated method names.
+     *
+     * operations:
+     *   SendMessage:
+     *     action: send
+     *     x-fern-sdk-method-name: sendChatMessage
+     *     channel:
+     *       $ref: '#/channels/chat'
+     *     messages:
+     *       - $ref: '#/channels/chat/messages/userMessage'
+     */
+    FERN_SDK_METHOD_NAME: "x-fern-sdk-method-name",
+
+    /**
      * The x-fern-examples allows you to specify examples for the websocket session.
      *
      * channels:
@@ -89,7 +104,20 @@ export const FernAsyncAPIExtension = {
      *   /my-channel:
      *     x-fern-ignore: true
      */
-    IGNORE: "x-fern-ignore"
+    IGNORE: "x-fern-ignore",
+
+    /**
+     * Used to customize the name of a channel parameter in generated SDKs.
+     * The original parameter name is preserved as the wire value.
+     *
+     * channels:
+     *   /my-channel/{userId}:
+     *     parameters:
+     *       userId:
+     *         description: The user ID
+     *         x-fern-parameter-name: id
+     */
+    FERN_PARAMETER_NAME: "x-fern-parameter-name"
 } as const;
 
 export type FernAsyncAPIExtension = Values<typeof FernAsyncAPIExtension>;

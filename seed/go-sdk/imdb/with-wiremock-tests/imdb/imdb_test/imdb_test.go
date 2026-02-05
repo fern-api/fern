@@ -11,31 +11,31 @@ import (
 	option "github.com/imdb/fern/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
+	os "os"
 	testing "testing"
 )
 
-func ResetWireMockRequests(
-	t *testing.T,
-) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
-	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
-	require.NoError(t, err)
-}
-
 func VerifyRequestCount(
 	t *testing.T,
+	testId string,
 	method string,
 	urlPath string,
 	queryParams map[string]string,
 	expected int,
 ) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
 	reqBody.WriteString(`","urlPath":"`)
 	reqBody.WriteString(urlPath)
-	reqBody.WriteString(`"}`)
+	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
+	reqBody.WriteString(testId)
+	reqBody.WriteString(`"}}`)
 	if len(queryParams) > 0 {
 		reqBody.WriteString(`,"queryParameters":{`)
 		first := true
@@ -52,6 +52,7 @@ func VerifyRequestCount(
 		}
 		reqBody.WriteString("}")
 	}
+	reqBody.WriteString("}")
 	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
 	require.NoError(t, err)
 	var result struct {
@@ -64,12 +65,13 @@ func VerifyRequestCount(
 func TestImdbCreateMovieWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
-	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewIMDBClient(
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &testPackageName.CreateMovieRequest{
 		Title:  "title",
@@ -78,27 +80,34 @@ func TestImdbCreateMovieWithWireMock(
 	_, invocationErr := client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestImdbCreateMovieWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "POST", "/movies/create-movie", nil, 1)
+	VerifyRequestCount(t, "TestImdbCreateMovieWithWireMock", "POST", "/movies/create-movie", nil, 1)
 }
 
 func TestImdbGetMovieWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
-	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewIMDBClient(
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Imdb.GetMovie(
 		context.TODO(),
 		"movieId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestImdbGetMovieWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/movies/movieId", nil, 1)
+	VerifyRequestCount(t, "TestImdbGetMovieWithWireMock", "GET", "/movies/movieId", nil, 1)
 }

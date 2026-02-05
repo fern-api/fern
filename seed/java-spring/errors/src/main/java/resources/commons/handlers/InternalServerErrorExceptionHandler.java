@@ -14,6 +14,6 @@ import resources.commons.exceptions.InternalServerError;
 public final class InternalServerErrorExceptionHandler {
   @ExceptionHandler(InternalServerError.class)
   ResponseEntity<Object> handle(InternalServerError internalServerError) {
-    return new ResponseEntity<>(internalServerError.getBody(), null, InternalServerError.STATUS_CODE);
+    return ResponseEntity.status(InternalServerError.STATUS_CODE).body(internalServerError.getBody());
   }
 }

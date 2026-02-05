@@ -18,8 +18,8 @@ class RawServiceClient:
         self,
         path_param: str,
         service_param: str,
-        resource_param: str,
         endpoint_param: int,
+        resource_param: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
@@ -30,9 +30,9 @@ class RawServiceClient:
 
         service_param : str
 
-        resource_param : str
-
         endpoint_param : int
+
+        resource_param : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -63,8 +63,8 @@ class AsyncRawServiceClient:
         self,
         path_param: str,
         service_param: str,
-        resource_param: str,
         endpoint_param: int,
+        resource_param: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
@@ -75,9 +75,9 @@ class AsyncRawServiceClient:
 
         service_param : str
 
-        resource_param : str
-
         endpoint_param : int
+
+        resource_param : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

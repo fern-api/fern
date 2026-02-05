@@ -22,6 +22,7 @@ import {
     Subpackage
 } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType";
 import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { Caller } from "./internal/Caller";
 import { Streamer } from "./internal/Streamer";
@@ -65,6 +66,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
         if (this.needsPaginationHelpers()) {
             files.push(AsIsFiles.Page);
+        }
+
+        if (this.customConfig.customPagerName != null) {
+            files.push(AsIsFiles.CustomPagination);
         }
 
         if (this.ir.sdkConfig.hasStreamingEndpoints) {
@@ -186,6 +191,34 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             default:
                 assertNever(environments);
         }
+    }
+
+    public isMultipleBaseUrlsEnvironment(): boolean {
+        return this.ir.environments?.environments.type === "multipleBaseUrls";
+    }
+
+    public getBaseUrlNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+        if (!this.isMultipleBaseUrlsEnvironment() || this.ir.environments == null) {
+            return undefined;
+        }
+        const baseUrlId = endpoint.baseUrl;
+        if (baseUrlId == null) {
+            return undefined;
+        }
+        const environments = this.ir.environments.environments;
+        if (environments.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+        for (const baseUrl of environments.baseUrls) {
+            if (baseUrl.id === baseUrlId) {
+                return baseUrl.name.pascalCase.unsafeName;
+            }
+        }
+        return undefined;
+    }
+
+    public callResolveEnvironmentBaseURL(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc({ name: "ResolveEnvironmentBaseURL", arguments_ });
     }
 
     public getRootClientDirectory(): RelativeFilePath {
@@ -441,11 +474,27 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public getErrorCodesVariableReference(): go.TypeReference {
+    public getErrorCodesVariableReference(importPath?: string): go.TypeReference {
         return go.typeReference({
             name: "ErrorCodes",
-            importPath: this.getRootImportPath()
+            importPath: importPath ?? this.getRootImportPath()
         });
+    }
+
+    /**
+     * Gets the import path for the namespace where error_codes.go is generated.
+     * For subpackages, this is the package location based on the fernFilepath.
+     * For the root package (when subpackage is undefined), this is the root import path.
+     */
+    public getNamespaceImportPath(subpackage: Subpackage | undefined): string {
+        if (subpackage == null) {
+            return this.getRootImportPath();
+        }
+        return this.getPackageLocation(subpackage.fernFilepath).importPath;
+    }
+
+    public isPerEndpointErrorCodes(): boolean {
+        return this.customConfig.errorCodes === "per-endpoint";
     }
 
     public callNewMultipartWriter(arguments_: go.AstNode[]): go.FuncInvocation {
@@ -478,11 +527,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "QueryValuesWithDefaults", arguments_, multiline: true });
     }
 
-    public getPageTypeReference(cursorType: go.Type, valueType: go.Type): go.TypeReference {
+    public getPageTypeReference(cursorType: go.Type, valueType: go.Type, responseType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Page",
             importPath: this.getCoreImportPath(),
-            generics: [cursorType, valueType]
+            generics: [cursorType, valueType, responseType]
         });
     }
 
@@ -499,6 +548,15 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             name: "Stream",
             importPath: this.getCoreImportPath(),
             generics: [valueType]
+        });
+    }
+
+    public getCustomPagerTypeReference(responseType: go.Type): go.TypeReference {
+        const pagerName = this.customConfig.customPagerName ?? "CustomPager";
+        return go.typeReference({
+            name: pagerName,
+            importPath: this.getCoreImportPath(),
+            generics: [responseType]
         });
     }
 
@@ -525,6 +583,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             // To preserve compatibility, we generate a delegating endpoint for these cases.
             //
             // We'll need to add an opt-in feature flag to resolve this gap.
+            return false;
+        }
+        const pagination = this.getPagination(endpoint);
+        if (pagination?.type === "custom") {
             return false;
         }
         return this.isPaginationEndpoint(endpoint);
@@ -770,6 +832,18 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
         if (responseBody == null) {
             return go.Type.error(); // no explicit void in golang, just need to handle the error
+        }
+
+        const pagination = this.getPagination(httpEndpoint);
+        if (pagination?.type === "custom" && this.customConfig.customPagerName != null) {
+            // For custom pagination, delegate to getEndpointPageReturnType which handles all three generics
+            // This avoids code duplication and ensures consistency
+            const pageReturnType = getEndpointPageReturnType({ context: this, endpoint: httpEndpoint });
+            if (pageReturnType != null) {
+                return pageReturnType;
+            }
+            // Fallback to error if pageReturnType is undefined
+            return go.Type.error();
         }
 
         switch (responseBody.type) {

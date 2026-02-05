@@ -143,12 +143,12 @@ public record UnionWithNoProperties
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithNoProperties>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithNoProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithNoProperties Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -4,7 +4,14 @@
   "servers": [
     {
       "url": "https://example.ada.support/api",
-      "description": "The subdomain of the client"
+      "description": "The subdomain of the client",
+      "urlTemplate": "https://{handle}.ada.support/api",
+      "variables": [
+        {
+          "id": "handle",
+          "default": "example"
+        }
+      ]
     }
   ],
   "websocketServers": [],
@@ -615,7 +622,7 @@
       "generatedRequestName": "UpdateEndUserByIdRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateEndUserByIdRequest",
+          "generatedName": "UpdateEndUserByIdRequestBody",
           "schema": "EndUserRequest",
           "source": {
             "file": "../openapi.json",
@@ -1421,7 +1428,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -1445,7 +1452,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",

@@ -10,44 +10,54 @@ from .raw_client import AsyncRawInlinedRequestClient, RawInlinedRequestClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
+
+
 class InlinedRequestClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawInlinedRequestClient(client_wrapper=client_wrapper)
-    
+
     @property
     def with_raw_response(self) -> RawInlinedRequestClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
-        
+
         Returns
         -------
         RawInlinedRequestClient
         """
         return self._raw_client
-    
-    def send(self, *, operand: Operand, operand_or_color: ColorOrOperand, maybe_operand: typing.Optional[Operand] = OMIT, maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    def send(
+        self,
+        *,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = OMIT,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         maybe_operand : typing.Optional[Operand]
-        
+
         maybe_operand_or_color : typing.Optional[ColorOrOperand]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         from seed import Color, Operand, SeedEnum
-        
+
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
@@ -56,61 +66,83 @@ class InlinedRequestClient:
             operand_or_color=Color.RED,
         )
         """
-        _response = self._raw_client.send(operand=operand, operand_or_color=operand_or_color, maybe_operand=maybe_operand, maybe_operand_or_color=maybe_operand_or_color, request_options=request_options)
+        _response = self._raw_client.send(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
+            request_options=request_options,
+        )
         return _response.data
+
+
 class AsyncInlinedRequestClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawInlinedRequestClient(client_wrapper=client_wrapper)
-    
+
     @property
     def with_raw_response(self) -> AsyncRawInlinedRequestClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
-        
+
         Returns
         -------
         AsyncRawInlinedRequestClient
         """
         return self._raw_client
-    
-    async def send(self, *, operand: Operand, operand_or_color: ColorOrOperand, maybe_operand: typing.Optional[Operand] = OMIT, maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    async def send(
+        self,
+        *,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = OMIT,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         maybe_operand : typing.Optional[Operand]
-        
+
         maybe_operand_or_color : typing.Optional[ColorOrOperand]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         import asyncio
-        
+
         from seed import AsyncSeedEnum, Color, Operand
-        
+
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
-        
-        
+
+
         async def main() -> None:
             await client.inlined_request.send(
                 operand=Operand.GREATER_THAN,
                 operand_or_color=Color.RED,
             )
-        
-        
+
+
         asyncio.run(main())
         """
-        _response = await self._raw_client.send(operand=operand, operand_or_color=operand_or_color, maybe_operand=maybe_operand, maybe_operand_or_color=maybe_operand_or_color, request_options=request_options)
+        _response = await self._raw_client.send(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
+            request_options=request_options,
+        )
         return _response.data

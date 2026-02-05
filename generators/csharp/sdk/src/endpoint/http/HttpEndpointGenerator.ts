@@ -11,6 +11,7 @@ import {
     ResponseProperty,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
+import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
@@ -105,32 +106,73 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             rawClient: RawClient;
         }
     ) {
-        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(this.getRequestOptionsParameter({ endpoint }));
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.reference(this.extern.System.Threading.CancellationToken),
+                type: this.System.Threading.CancellationToken,
                 name: this.names.parameters.cancellationToken,
                 initializer: "default"
             })
         );
         const return_ = getEndpointReturnType({ context: this.context, endpoint });
         const snippet = this.getHttpMethodSnippet({ endpoint });
+
+        // WithRawResponseTask methods use a different pattern:
+        // - Public method is non-async and returns WithRawResponseTask<T>
+        // - Private "Core" method is async and contains the actual implementation
+        // - No exception handler wrapping (Core method handles it)
+        const isWithRawResponseTask = return_ != null && "name" in return_ && return_.name === "WithRawResponseTask";
+
         const body = this.csharp.codeblock((writer) => {
-            this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
+            if (isWithRawResponseTask) {
+                this.writeWithRawResponseTaskMethodBody(
+                    endpointSignatureInfo,
+                    writer,
+                    rawClient,
+                    endpoint,
+                    rawClientReference
+                );
+            } else {
+                this.writeUnpagedMethodBody(
+                    endpointSignatureInfo,
+                    writer,
+                    rawClient,
+                    endpoint,
+                    rawClientReference,
+                    serviceId
+                );
+            }
         });
 
-        return cls.addMethod({
+        const publicMethod = cls.addMethod({
             name: this.getUnpagedEndpointMethodName(endpoint),
             access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
-            isAsync: true,
+            isAsync: !isWithRawResponseTask,
             parameters,
             summary: endpoint.docs,
             return_,
-            body: this.wrapWithExceptionHandler({ body, returnType: return_ }),
+            body: isWithRawResponseTask ? body : this.wrapWithExceptionHandler({ body, returnType: return_ }),
             codeExample: snippet?.endpointCall
         });
+
+        // For WithRawResponseTask methods, add a private async overload that does the actual work
+        if (isWithRawResponseTask) {
+            this.addWithRawResponseTaskCoreMethod(
+                cls,
+                endpointSignatureInfo,
+                rawClient,
+                endpoint,
+                rawClientReference,
+                parameters
+            );
+        }
+
+        return publicMethod;
     }
 
     private getUnpagedEndpointMethodName(endpoint: HttpEndpoint): string {
@@ -146,16 +188,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer: Writer,
         rawClient: RawClient,
         endpoint: HttpEndpoint,
-        rawClientReference: string
+        rawClientReference: string,
+        serviceId: ServiceId
     ) {
         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
         if (queryParameterCodeBlock != null) {
             queryParameterCodeBlock.code.write(writer);
         }
-        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            headerParameterCodeBlock.code.write(writer);
-        }
+        const headerParameterCodeBlock =
+            endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+        headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
@@ -166,8 +209,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
+            queryString: queryParameterCodeBlock?.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -186,6 +229,386 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNode(successResponseStatements);
         }
         writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
+    }
+
+    /**
+     * Adds a private async overload method that does the actual async work for WithRawResponseTask methods.
+     * This follows the C# pattern of having a public non-async method that calls a private async "Core" method.
+     */
+    private addWithRawResponseTaskCoreMethod(
+        cls: ast.Class,
+        endpointSignatureInfo: EndpointSignatureInfo,
+        rawClient: RawClient,
+        endpoint: HttpEndpoint,
+        rawClientReference: string,
+        parameters: ast.Parameter[]
+    ) {
+        const baseType = this.getBaseResponseType(endpoint);
+        // For async methods, we don't wrap in Task<> because the C# compiler does that automatically
+        const asyncReturnType = baseType
+            ? this.csharp.classReference({
+                  name: "WithRawResponse",
+                  namespace: this.namespaces.root,
+                  generics: [baseType]
+              })
+            : undefined;
+
+        const body = this.csharp.codeblock((writer) => {
+            const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
+            if (queryParameterCodeBlock != null) {
+                queryParameterCodeBlock.code.write(writer);
+            }
+            const headerParameterCodeBlock =
+                endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+                this.getDefaultHeaderParameterCodeBlock({ endpoint });
+            headerParameterCodeBlock.code.write(writer);
+            const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
+            if (requestBodyCodeBlock?.code != null) {
+                writer.writeNode(requestBodyCodeBlock.code);
+            }
+            const apiRequestCodeBlock = rawClient.createHttpRequestWrapper({
+                baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+                requestType: endpointSignatureInfo.request?.getRequestType(),
+                endpoint,
+                bodyReference: requestBodyCodeBlock?.requestBodyReference,
+                pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+                headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
+                queryString: queryParameterCodeBlock?.queryStringReference,
+                endpointRequest: endpointSignatureInfo.request
+            });
+            if (apiRequestCodeBlock.code) {
+                writer.writeNode(apiRequestCodeBlock.code);
+            }
+
+            // Call SendRequestAsync with await
+            writer.write(`var ${this.names.variables.response} = `);
+            writer.writeNode(
+                rawClient.sendRequestWithRequestWrapper({
+                    request: apiRequestCodeBlock.requestReference,
+                    clientReference: rawClientReference
+                })
+            );
+            writer.writeSemicolonIfLastCharacterIsNot();
+            writer.writeLine();
+
+            // Generate success and error handling that returns WithRawResponse<T>
+            this.writeWithRawResponseSuccessAndErrorHandling(endpoint, writer);
+        });
+
+        cls.addMethod({
+            name: this.getUnpagedEndpointMethodName(endpoint) + "Core",
+            access: ast.Access.Private,
+            isAsync: true,
+            parameters,
+            return_: asyncReturnType,
+            body: this.wrapWithExceptionHandler({ body, returnType: asyncReturnType })
+        });
+    }
+
+    private writeWithRawResponseTaskMethodBody(
+        endpointSignatureInfo: EndpointSignatureInfo,
+        writer: Writer,
+        rawClient: RawClient,
+        endpoint: HttpEndpoint,
+        rawClientReference: string
+    ) {
+        // Generate synchronous method that returns WithRawResponseTask<T>
+        // It calls a private async "Core" method that does the actual work
+
+        // Return WithRawResponseTask<T> wrapping call to private Core method
+        writer.write("return new ");
+        const returnType = getEndpointReturnType({ context: this.context, endpoint });
+        if (returnType) {
+            writer.writeNode(returnType);
+        }
+        writer.write("(");
+        writer.write(this.getUnpagedEndpointMethodName(endpoint) + "Core(");
+
+        // Pass all parameters to the Core method
+        // baseParameters already includes path parameters and request parameter
+        const allParams = endpointSignatureInfo.baseParameters.map((p) => p.name);
+        // Add the options and cancellation token parameters
+        allParams.push(this.names.parameters.requestOptions);
+        allParams.push(this.names.parameters.cancellationToken);
+
+        writer.write(allParams.join(", "));
+        writer.writeTextStatement("));");
+    }
+
+    /**
+     * Gets the base response type (unwrapped from WithRawResponseTask) for an endpoint.
+     * This is the inner T in WithRawResponseTask<T> or WithRawResponse<T>.
+     */
+    private getBaseResponseType(endpoint: HttpEndpoint): ast.Type | undefined {
+        if (endpoint.response?.body == null) {
+            if (endpoint.method === FernIr.HttpMethod.Head) {
+                return this.System.Net.Http.HttpResponseHeaders;
+            }
+            return undefined;
+        }
+
+        return endpoint.response.body._visit<ast.Type | undefined>({
+            streaming: () => undefined, // Streaming endpoints don't use WithRawResponseTask
+            streamParameter: () => undefined,
+            fileDownload: () => this.System.IO.Stream.asFullyQualified(),
+            json: (reference) =>
+                this.context.csharpTypeMapper.convert({
+                    reference: reference.responseBodyType
+                }),
+            text: () => this.generation.Primitive.string,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+    }
+
+    private writeWithRawResponseSuccessAndErrorHandling(endpoint: HttpEndpoint, writer: Writer) {
+        // Generate success and error handling that returns WithRawResponse<T>
+        // This is used inside the local async function for WithRawResponseTask methods
+
+        writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
+        writer.pushScope();
+
+        const response = endpoint.response;
+        if (response?.body != null) {
+            response.body._visit({
+                json: (reference) => {
+                    const astType = this.context.csharpTypeMapper.convert({
+                        reference: reference.responseBodyType
+                    });
+
+                    writer.writeTextStatement(
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                    );
+                    writer.writeLine("try");
+                    writer.pushScope();
+
+                    writer.write("var responseData = ");
+                    writer.writeNode(this.Types.JsonUtils);
+                    writer.write(".Deserialize<");
+                    writer.writeNode(astType);
+                    writer.writeTextStatement(`>(${this.names.variables.responseBody})!`);
+
+                    // Return WithRawResponse<T>
+                    writer.write("return new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponse",
+                            namespace: this.context.namespaces.root,
+                            generics: [astType]
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine("Data = responseData,");
+                    writer.write("RawResponse = new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "RawResponse",
+                            namespace: this.context.namespaces.root
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+                    writer.writeLine(
+                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+                    );
+                    writer.write("Headers = ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "ResponseHeaders",
+                            namespace: this.context.namespaces.core
+                        })
+                    );
+                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+                    writer.popScope(); // Close RawResponse{}
+                    writer.popScope(); // Close WithRawResponse{}
+                    writer.writeTextStatement(";");
+
+                    writer.popScope();
+                    writer.write("catch (", this.System.Text.Json.JsonException, " e)");
+                    writer.pushScope();
+                    writer.write("throw new ");
+                    writer.writeNode(this.Types.BaseApiException);
+                    writer.write('("Failed to deserialize response", ');
+                    writer.write(`${this.names.variables.response}.StatusCode, `);
+                    writer.write(`${this.names.variables.responseBody}, `);
+                    writer.write("e");
+                    writer.writeTextStatement(")");
+                    writer.popScope();
+                },
+                text: () => {
+                    writer.writeTextStatement(
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                    );
+
+                    // Return WithRawResponse<string>
+                    writer.write("return new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponse",
+                            namespace: this.context.namespaces.root,
+                            generics: [this.Primitive.string]
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`Data = ${this.names.variables.responseBody},`);
+                    writer.write("RawResponse = new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "RawResponse",
+                            namespace: this.context.namespaces.root
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+                    writer.writeLine(
+                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+                    );
+                    writer.write("Headers = ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "ResponseHeaders",
+                            namespace: this.context.namespaces.core
+                        })
+                    );
+                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+                    writer.popScope(); // Close RawResponse{}
+                    writer.popScope(); // Close WithRawResponse{}
+                    writer.writeTextStatement(";");
+                },
+                fileDownload: () => {
+                    writer.writeTextStatement(
+                        `var stream = await ${this.names.variables.response}.Raw.Content.ReadAsStreamAsync()`
+                    );
+
+                    // Return WithRawResponse<Stream>
+                    writer.write("return new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponse",
+                            namespace: this.context.namespaces.root,
+                            generics: [this.System.IO.Stream.asFullyQualified()]
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine("Data = stream,");
+                    writer.write("RawResponse = new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "RawResponse",
+                            namespace: this.context.namespaces.root
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+                    writer.writeLine(
+                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+                    );
+                    writer.write("Headers = ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "ResponseHeaders",
+                            namespace: this.context.namespaces.core
+                        })
+                    );
+                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+                    writer.popScope(); // Close RawResponse{}
+                    writer.popScope(); // Close WithRawResponse{}
+                    writer.writeTextStatement(";");
+                },
+                bytes: () => this.context.logger.error("Bytes not supported"),
+                streaming: () => this.context.logger.error("Streaming not supported with WithRawResponseTask"),
+                streamParameter: () =>
+                    this.context.logger.error("Stream parameter not supported with WithRawResponseTask"),
+                _other: () => undefined
+            });
+        } else if (endpoint.method === FernIr.HttpMethod.Head) {
+            // HEAD requests return headers wrapped in WithRawResponse
+            writer.write("return new ");
+            writer.writeNode(
+                this.csharp.classReference({
+                    name: "WithRawResponse",
+                    namespace: this.context.namespaces.root,
+                    generics: [this.System.Net.Http.HttpResponseHeaders]
+                })
+            );
+            writer.writeLine("()");
+            writer.pushScope();
+            writer.writeLine(`Data = ${this.names.variables.response}.Raw.Headers,`);
+            writer.write("RawResponse = new ");
+            writer.writeNode(
+                this.csharp.classReference({
+                    name: "RawResponse",
+                    namespace: this.context.namespaces.root
+                })
+            );
+            writer.writeLine("()");
+            writer.pushScope();
+            writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+            writer.writeLine(
+                `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+            );
+            writer.write("Headers = ");
+            writer.writeNode(
+                this.csharp.classReference({
+                    name: "ResponseHeaders",
+                    namespace: this.context.namespaces.core
+                })
+            );
+            writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+            writer.popScope(); // Close RawResponse{}
+            writer.popScope(); // Close WithRawResponse{}
+            writer.writeTextStatement(";");
+        }
+
+        writer.popScope();
+
+        // Error handling
+        writer.pushScope();
+        writer.writeTextStatement(
+            `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+        );
+
+        if (
+            endpoint.errors.length > 0 &&
+            this.context.ir.errorDiscriminationStrategy.type === "statusCode" &&
+            this.settings.generateErrorTypes
+        ) {
+            writer.writeLine("try");
+            writer.pushScope();
+            writer.write("switch (", this.names.variables.response, ".StatusCode)");
+            writer.pushScope();
+
+            const handled = new Set<number>();
+            for (const error of endpoint.errors) {
+                const errorDeclaration = this.context.ir.errors[error.error.errorId];
+                if (errorDeclaration == null || handled.has(errorDeclaration.statusCode)) {
+                    continue;
+                }
+                handled.add(errorDeclaration.statusCode);
+                this.writeErrorCase(error, writer);
+            }
+
+            writer.popScope();
+            writer.popScope();
+            writer.write("catch (", this.System.Text.Json.JsonException, ")");
+            writer.pushScope();
+            writer.writeLine("// unable to map error response, throwing generic error");
+            writer.popScope();
+        }
+
+        writer.write(
+            "throw new ",
+            this.Types.BaseApiException,
+            `($"Error with status code {${this.names.variables.response}.StatusCode}", ${this.names.variables.response}.StatusCode, `
+        );
+        writer.writeTextStatement(`${this.names.variables.responseBody})`);
+        writer.popScope();
     }
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
@@ -229,14 +652,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 writer.popScope();
                 writer.popScope();
-                writer.write("catch (", this.extern.System.Text.Json.JsonException, ")");
+                writer.write("catch (", this.System.Text.Json.JsonException, ")");
                 writer.pushScope();
                 writer.writeLine("// unable to map error response, throwing generic error");
                 writer.popScope();
             }
             writer.write(
                 "throw new ",
-                this.types.BaseApiException,
+                this.Types.BaseApiException,
                 `($"Error with status code {${this.names.variables.response}.StatusCode}", ${this.names.variables.response}.StatusCode, `
             );
             writer.writeTextStatement(`${this.names.variables.responseBody})`);
@@ -254,12 +677,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.write("throw new ");
         writer.writeNode(this.context.getExceptionClassReference(fullError.name));
         writer.write("(");
-        writer.writeNode(this.types.JsonUtils);
+        writer.writeNode(this.Types.JsonUtils);
         writer.write(".Deserialize<");
         writer.writeNode(
             fullError.type != null
                 ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
-                : this.csharp.Type.object
+                : this.Primitive.object
         );
         writer.writeTextStatement(`>(${this.names.variables.responseBody}))`);
     }
@@ -312,10 +735,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     jsonString: string,
                     yieldResult: boolean
                 ) {
-                    if (is.Type.oneOf(payloadType)) {
+                    if (is.OneOf.OneOf(payloadType)) {
                         // we have to tear this apart and figure out which one to deserialize
                         // based on the union type?
-                        for (const each of payloadType.oneOfTypes()) {
+                        for (const each of payloadType.generics) {
                             writer.pushScope();
                             writer.write(
                                 `if(`,
@@ -339,7 +762,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return;
                     }
 
-                    writer.writeStatement(payloadType.toOptionalIfNotAlready(), `result`);
+                    writer.writeStatement(payloadType.asOptional(), `result`);
                     writer.writeLine("try");
                     writer.pushScope();
 
@@ -364,11 +787,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 value._visit({
                     json: (jsonChunk) => {
                         readLineFromResponse();
-                        const payloadType = context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
+                        const payloadType = context.csharpTypeMapper.convert({
+                            reference: jsonChunk.payload
+                        });
                         deserializeJsonChunk(
                             payloadType,
-                            context.generation.types.JsonUtils,
-                            context.generation.types.BaseException,
+                            context.generation.Types.JsonUtils,
+                            context.generation.Types.BaseException,
                             "line",
                             true
                         );
@@ -388,7 +813,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.popScope();
                     },
                     sse: (sseChunk) => {
-                        const payloadType = context.csharpTypeMapper.convert({ reference: sseChunk.payload });
+                        const payloadType = context.csharpTypeMapper.convert({
+                            reference: sseChunk.payload
+                        });
                         writer.writeLine(`if (${names.variables.response}.StatusCode is >= 200 and < 400)`);
                         writer.pushScope();
 
@@ -411,8 +838,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                         deserializeJsonChunk(
                             payloadType,
-                            context.generation.types.JsonUtils,
-                            context.generation.types.BaseException,
+                            context.generation.Types.JsonUtils,
+                            context.generation.Types.BaseException,
                             "item.Data",
                             true
                         );
@@ -439,12 +866,61 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
                     writer.pushScope();
                     writer.writeTextStatement(
-                        `return await ${this.names.variables.response}.Raw.Content.ReadAsStreamAsync()`
+                        `var stream = await ${this.names.variables.response}.Raw.Content.ReadAsStreamAsync()`
                     );
+
+                    // Wrap in WithRawResponseTask
+                    writer.write("return new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponseTask",
+                            namespace: this.context.namespaces.root,
+                            generics: [this.System.IO.Stream.asFullyQualified()]
+                        })
+                    );
+                    writer.writeLine("(");
+                    writer.write(this.System.Threading.Tasks.Task());
+                    writer.write(".FromResult(new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponse",
+                            namespace: this.context.namespaces.root,
+                            generics: [this.System.IO.Stream.asFullyQualified()]
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine("Data = stream,");
+                    writer.write("RawResponse = new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "RawResponse",
+                            namespace: this.context.namespaces.root
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+                    writer.writeLine(
+                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+                    );
+                    writer.write("Headers = ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "ResponseHeaders",
+                            namespace: this.context.namespaces.core
+                        })
+                    );
+                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+                    writer.popScope(); // Close RawResponse{}
+                    writer.popScope(); // Close WithRawResponse{}
+                    writer.writeLine("));");
                     writer.popScope();
                 },
                 json: (reference) => {
-                    const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
+                    const astType = this.context.csharpTypeMapper.convert({
+                        reference: reference.responseBodyType
+                    });
                     writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
                     writer.pushScope();
 
@@ -455,23 +931,73 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("try");
                     writer.pushScope();
 
-                    writer.write("return ");
-                    writer.writeNode(this.types.JsonUtils);
+                    writer.write("var responseData = ");
+                    writer.writeNode(this.Types.JsonUtils);
                     writer.write(".Deserialize<");
                     writer.writeNode(astType);
                     // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its
                     // nullable.
                     writer.writeLine(`>(${this.names.variables.responseBody})!;`);
+
+                    // Wrap in WithRawResponseTask
+                    writer.write("return new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponseTask",
+                            namespace: this.context.namespaces.root,
+                            generics: [astType]
+                        })
+                    );
+                    writer.writeLine("(");
+                    writer.write(this.System.Threading.Tasks.Task());
+                    writer.write(".FromResult(new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponse",
+                            namespace: this.context.namespaces.root,
+                            generics: [astType]
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine("Data = responseData,");
+                    writer.write("RawResponse = new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "RawResponse",
+                            namespace: this.context.namespaces.root
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+                    writer.writeLine(
+                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+                    );
+                    writer.write("Headers = ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "ResponseHeaders",
+                            namespace: this.context.namespaces.core
+                        })
+                    );
+                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+                    writer.popScope(); // Close RawResponse{}
+                    writer.popScope(); // Close WithRawResponse{}
+                    writer.writeLine("));");
                     writer.popScope();
 
                     writer.write("catch (");
-                    writer.writeNode(this.extern.System.Text.Json.JsonException);
+                    writer.writeNode(this.System.Text.Json.JsonException);
                     writer.writeLine(" e)");
                     writer.pushScope();
 
                     writer.write("throw new ");
-                    writer.writeNode(this.types.BaseException);
-                    writer.writeTextStatement('("Failed to deserialize response", e)');
+                    writer.writeNode(this.Types.BaseApiException);
+                    writer.write('("Failed to deserialize response", ');
+                    writer.write(`${this.names.variables.response}.StatusCode, `);
+                    writer.write(`${this.names.variables.responseBody}`);
+                    writer.writeTextStatement(")");
                     writer.popScope();
 
                     writer.popScope();
@@ -486,7 +1012,53 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(
                         `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
                     );
-                    writer.writeTextStatement(`return ${this.names.variables.responseBody}`);
+
+                    // Wrap in WithRawResponseTask
+                    writer.write("return new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponseTask",
+                            namespace: this.context.namespaces.root,
+                            generics: [this.Primitive.string]
+                        })
+                    );
+                    writer.writeLine("(");
+                    writer.write(this.System.Threading.Tasks.Task());
+                    writer.write(".FromResult(new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "WithRawResponse",
+                            namespace: this.context.namespaces.root,
+                            generics: [this.Primitive.string]
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`Data = ${this.names.variables.responseBody},`);
+                    writer.write("RawResponse = new ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "RawResponse",
+                            namespace: this.context.namespaces.root
+                        })
+                    );
+                    writer.writeLine("()");
+                    writer.pushScope();
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+                    writer.writeLine(
+                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+                    );
+                    writer.write("Headers = ");
+                    writer.writeNode(
+                        this.csharp.classReference({
+                            name: "ResponseHeaders",
+                            namespace: this.context.namespaces.core
+                        })
+                    );
+                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+                    writer.popScope(); // Close RawResponse{}
+                    writer.popScope(); // Close WithRawResponse{}
+                    writer.writeLine("));");
                     writer.popScope();
                 },
                 bytes: () => this.context.logger.error("Bytes not supported"),
@@ -510,14 +1082,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     ) {
         this.assertHasPagination(endpoint);
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
         const parameters = [...endpointSignatureInfo.baseParameters];
-        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({
+            endpoint
+        });
         const requestOptionsParam = this.getRequestOptionsParameter({ endpoint });
         parameters.push(requestOptionsParam);
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.reference(this.extern.System.Threading.CancellationToken),
+                type: this.System.Threading.CancellationToken,
                 name: this.names.parameters.cancellationToken,
                 initializer: "default"
             })
@@ -528,7 +1105,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const snippet = this.getHttpPagerMethodSnippet({ endpoint });
         const body = this.csharp.codeblock((writer) => {
             const requestParameter = endpointSignatureInfo.requestParameter;
-            const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
+            // For pagination, we need the base response type (unwrapped from WithRawResponseTask)
+            // because the pager lambdas work with the actual response data, not the task wrapper
+            const unpagedEndpointResponseType = this.getBaseResponseType(endpoint);
             if (!unpagedEndpointResponseType) {
                 throw new Error("Internal error; a response type is required for pagination endpoints");
             }
@@ -544,7 +1123,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         itemType,
                         writer,
                         optionsParamName,
-                        endpoint
+                        endpoint,
+                        serviceId
                     });
                     break;
                 case "cursor":
@@ -557,7 +1137,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         itemType,
                         writer,
                         optionsParamName,
-                        endpoint
+                        endpoint,
+                        serviceId
                     });
                     break;
                 case "custom":
@@ -594,17 +1175,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         itemType,
         writer,
         optionsParamName,
-        endpoint
+        endpoint,
+        serviceId
     }: {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: OffsetPagination;
         requestParameter?: ast.Parameter;
-        requestOptionsType: ast.Type | ast.TypeParameter;
+        requestOptionsType: ast.Type;
         unpagedEndpointResponseType: ast.Type;
         itemType: ast.Type;
         writer: Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
+        serviceId: ServiceId;
     }) {
         if (!requestParameter) {
             throw new Error("Request parameter is required for pagination");
@@ -622,15 +1205,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         const offsetType = this.context.csharpTypeMapper.convert({
-            reference: pagination.page.property.valueType
+            reference: pagination.page.property.valueType,
+            unboxOptionals: true
         });
         // use specified type or fallback to object
         const stepType = pagination.step
             ? this.context.csharpTypeMapper.convert({
-                  reference: pagination.step?.property.valueType
+                  reference: pagination.step?.property.valueType,
+                  unboxOptionals: true
               })
-            : this.csharp.Type.object;
-        const offsetPagerClassReference = this.types.OffsetPager({
+            : this.Primitive.object;
+        const offsetPagerClassReference = this.Types.OffsetPager({
             requestType: requestParameter.type,
             requestOptionsType,
             responseType: unpagedEndpointResponseType,
@@ -638,16 +1223,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             stepType,
             itemType
         });
-        const responseType = is.Type.reference(unpagedEndpointResponseType)
-            ? (unpagedEndpointResponseType.value as ast.ClassReference)
-            : (null as unknown as ast.ClassReference);
-
-        const requestType =
-            requestParameter.type instanceof ast.Type
-                ? is.Type.reference(requestParameter.type)
-                    ? (requestParameter.type.value as ast.ClassReference)
-                    : (null as unknown as ast.ClassReference)
-                : (null as unknown as ast.ClassReference);
 
         writer.write("var pager = ");
         writer.writeNodeStatement(
@@ -662,7 +1237,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         requestParameter,
                         endpoint
                     }),
-                    this.csharp.codeblock(`request => ${this.dotAccess(requestType, "request", pagination.page)} ?? 0`),
+                    this.csharp.codeblock(
+                        `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.page, 0)}`
+                    ),
                     this.csharp.codeblock((writer) => {
                         writer.writeLine("(request, offset) =>");
                         writer.pushScope();
@@ -670,27 +1247,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         if (pagination.page.propertyPath && pagination.page.propertyPath.length > 0) {
                             writer.writeStatement(
                                 "request.",
-                                this.getDotAccess(responseType, pagination.page, false).code,
+                                this.getDotAccess(unpagedEndpointResponseType, pagination.page, false).code,
                                 " ??= new ()"
                             );
                         }
 
                         writer.writeTextStatement(
-                            `${this.dotAccess(requestType, "request", pagination.page, false)} = offset`
+                            `${this.dotAccess(requestParameter.type, "request", pagination.page, false)} = offset`
                         );
                         writer.popScope();
                     }),
                     this.csharp.codeblock(
                         pagination.step
-                            ? `request => ${this.dotAccess(requestType, "request", pagination.step)} ?? 0`
+                            ? `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.step, 0)}`
                             : "null"
                     ),
                     this.csharp.codeblock(
-                        `response => ${this.dotAccess(responseType, "response", pagination.results)}?.ToList()`
+                        `response => ${this.dotAccess(requestParameter.type, "response", pagination.results)}?.ToList()`
                     ),
                     this.csharp.codeblock(
                         pagination.hasNextPage
-                            ? `response => ${this.dotAccess(responseType, "response", pagination.hasNextPage)}`
+                            ? `response => ${this.dotAccess(requestParameter.type, "response", pagination.hasNextPage)}`
                             : "null"
                     ),
                     this.csharp.codeblock(this.names.parameters.cancellationToken)
@@ -711,22 +1288,30 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             requestParameter
         });
-        if (pathParameters.length === 0) {
-            return this.csharp.codeblock(this.getUnpagedEndpointMethodName(endpoint));
-        }
+        // For pagination, the pager expects a function that returns Task<T> (the unwrapped response type).
+        // Our unpaged methods return WithRawResponseTask<T>, which has an implicit conversion to Task<T>,
+        // but older .NET frameworks don't handle this well with delegate type inference.
+        // So we wrap the call in a lambda that uses the implicit conversion operator explicitly.
         return this.csharp.codeblock((writer) => {
-            writer.write("(request, options, cancellationToken) => ");
-            writer.writeNode(
-                this.csharp.invokeMethod({
-                    method: this.getUnpagedEndpointMethodName(endpoint),
-                    arguments_: [
-                        ...pathParameters.map((parameter) => this.csharp.codeblock(parameter.name)),
-                        this.csharp.codeblock("request"),
-                        this.csharp.codeblock("options"),
-                        this.csharp.codeblock("cancellationToken")
-                    ]
-                })
-            );
+            writer.write("async (request, options, cancellationToken) => ");
+            if (pathParameters.length === 0) {
+                writer.write(
+                    `await ${this.getUnpagedEndpointMethodName(endpoint)}(request, options, cancellationToken)`
+                );
+            } else {
+                writer.writeNode(
+                    this.csharp.invokeMethod({
+                        async: true,
+                        method: this.getUnpagedEndpointMethodName(endpoint),
+                        arguments_: [
+                            ...pathParameters.map((parameter) => this.csharp.codeblock(parameter.name)),
+                            this.csharp.codeblock("request"),
+                            this.csharp.codeblock("options"),
+                            this.csharp.codeblock("cancellationToken")
+                        ]
+                    })
+                );
+            }
         });
     }
 
@@ -739,17 +1324,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         itemType,
         writer,
         optionsParamName,
-        endpoint
+        endpoint,
+        serviceId
     }: {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: CursorPagination;
         requestParameter?: ast.Parameter;
-        requestOptionsType: ast.Type | ast.TypeParameter;
-        unpagedEndpointResponseType: ast.Type | ast.TypeParameter;
-        itemType: ast.Type | ast.TypeParameter;
+        requestOptionsType: ast.Type;
+        unpagedEndpointResponseType: ast.Type;
+        itemType: ast.Type;
         writer: Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
+        serviceId: ServiceId;
     }) {
         if (!requestParameter) {
             throw new Error("Request parameter is required for pagination");
@@ -763,26 +1350,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const cursorType = this.context.csharpTypeMapper.convert({
             reference: pagination.next.property.valueType
         });
-        const cursorPagerClassReference = this.types.CursorPager({
+        const cursorPagerClassReference = this.Types.CursorPager({
             requestType: requestParameter.type,
             requestOptionsType,
             responseType: unpagedEndpointResponseType,
             cursorType,
             itemType
         });
-        const responseType =
-            unpagedEndpointResponseType instanceof ast.TypeParameter
-                ? (null as unknown as ast.ClassReference)
-                : is.Type.reference(unpagedEndpointResponseType)
-                  ? (unpagedEndpointResponseType.value as ast.ClassReference)
-                  : (null as unknown as ast.ClassReference);
-
-        const requestType =
-            requestParameter.type instanceof ast.Type
-                ? is.Type.reference(requestParameter.type)
-                    ? (requestParameter.type.value as ast.ClassReference)
-                    : (null as unknown as ast.ClassReference)
-                : (null as unknown as ast.ClassReference);
 
         writer.write("var pager = ");
         writer.writeNodeStatement(
@@ -805,7 +1379,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine("(request, cursor) =>");
                         writer.pushScope();
                         if (pagination.page.propertyPath && pagination.page.propertyPath.length > 0) {
-                            const { code, enclosingType } = this.getDotAccess(requestType, pagination.page, false);
+                            const { code, enclosingType } = this.getDotAccess(
+                                requestParameter.type,
+                                pagination.page,
+                                false
+                            );
                             writer.writeStatement(
                                 "request.",
                                 code,
@@ -827,15 +1405,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             );
                         }
                         writer.writeTextStatement(
-                            `${this.dotAccess(requestType, "request", pagination.page, false)} = cursor`
+                            `${this.dotAccess(requestParameter.type, "request", pagination.page, false)} = cursor`
                         );
                         writer.popScope();
                     }),
                     // GetNextCursor
-                    this.csharp.codeblock(`response => ${this.dotAccess(responseType, "response", pagination.next)}`),
+                    this.csharp.codeblock(
+                        `response => ${this.dotAccess(unpagedEndpointResponseType, "response", pagination.next)}`
+                    ),
                     // GetItems
                     this.csharp.codeblock(
-                        `response => ${this.dotAccess(responseType, "response", pagination.results)}?.ToList()`
+                        `response => ${this.dotAccess(unpagedEndpointResponseType, "response", pagination.results)}?.ToList()`
                     ),
                     // CancellationToken
                     this.csharp.codeblock(this.names.parameters.cancellationToken)
@@ -858,10 +1438,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string;
         writer: Writer;
     }): void {
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
-        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
+        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({
+            endpoint
+        });
         const itemType = this.getPaginationItemType(endpoint);
-        const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
+        // For pagination, we need the base response type (unwrapped from WithRawResponseTask)
+        // because the pager lambdas work with the actual response data, not the task wrapper
+        const unpagedEndpointResponseType = this.getBaseResponseType(endpoint);
         if (!unpagedEndpointResponseType) {
             throw new Error("Internal error; a response type is required for pagination endpoints");
         }
@@ -870,10 +1457,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (queryParameterCodeBlock != null) {
             queryParameterCodeBlock.code.write(writer);
         }
-        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
-        if (headerParameterCodeBlock != null) {
-            headerParameterCodeBlock.code.write(writer);
-        }
+        const headerParameterCodeBlock =
+            endpointSignatureInfo.request?.getHeaderParameterCodeBlock() ??
+            this.getDefaultHeaderParameterCodeBlock({ endpoint });
+        headerParameterCodeBlock.code.write(writer);
         const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             writer.writeNode(requestBodyCodeBlock.code);
@@ -885,8 +1472,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
-            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
-            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {
@@ -894,7 +1480,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
         writer.write(`var ${this.names.variables.httpRequest} = `);
         writer.writeNodeStatement(
-            rawClient.createHttpRequest({
+            rawClient.createHttpRequestAsync({
                 request: apiRequestCodeBlock.requestReference,
                 clientReference: rawClientReference
             })
@@ -944,12 +1530,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getDotAccess(
-        enclosingType: ast.ClassReference,
+        encType: ast.Type,
         { property, propertyPath }: RequestProperty | ResponseProperty,
         allowOptional: boolean = true
     ): { code: string; enclosingType: ast.ClassReference } {
+        encType = encType.asNonOptional();
+        let enclosingType = is.ClassReference(encType)
+            ? encType
+            : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
+
         if (!propertyPath || propertyPath.length === 0) {
-            return { code: this.csharp.getPropertyName(enclosingType, property), enclosingType };
+            return {
+                code: this.csharp.getPropertyName(enclosingType, property),
+                enclosingType
+            };
         }
         let optional = "";
 
@@ -960,13 +1554,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     const propertyName = this.csharp.getPropertyName(enclosingType, val);
 
                     // get the type of the current property
-                    let typeOfValue = this.context.csharpTypeMapper.convert({ reference: val.type });
-                    optional = allowOptional && is.Type.optional(typeOfValue) ? "?" : "";
-                    typeOfValue = typeOfValue.unwrapIfOptional();
+                    let typeOfValue = this.context.csharpTypeMapper.convert({
+                        reference: val.type
+                    });
+                    optional = allowOptional && is.Optional(typeOfValue) ? "?" : "";
+                    typeOfValue = typeOfValue.asNonOptional();
 
                     // find the classRef for that type
-                    if (is.Type.reference(typeOfValue)) {
-                        enclosingType = typeOfValue.value;
+                    if (is.ClassReference(typeOfValue)) {
+                        enclosingType = typeOfValue;
                     }
                     // return the property name
                     return `${propertyName}${optional}`;
@@ -977,11 +1573,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private dotAccess(
-        enclosingType: ast.ClassReference,
+        encType: ast.Type,
         variableName: string,
         property: RequestProperty | ResponseProperty,
         allowOptional: boolean = true
     ): string {
+        encType = encType.asNonOptional();
+        let enclosingType = is.ClassReference(encType)
+            ? encType
+            : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
+
         if (!property.propertyPath || property.propertyPath.length === 0) {
             return `${variableName}.${this.csharp.getPropertyName(enclosingType, property.property)}`;
         }
@@ -989,35 +1590,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return `${variableName}.${dotAccess.code}.${this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
     }
 
-    private dotAccess2(
-        enclosingType: ast.ClassReference,
+    private getPropertyWithDefault(
+        encType: ast.Type,
         variableName: string,
-        { property, propertyPath }: RequestProperty | ResponseProperty,
-        allowOptional: boolean = true
+        property: RequestProperty | ResponseProperty,
+        defaultValue: number
     ): string {
-        if (!propertyPath || propertyPath.length === 0) {
-            return `${variableName}.${this.csharp.getPropertyName(enclosingType, property)}`;
+        const propertyAccess = this.dotAccess(encType, variableName, property);
+
+        if (this.context.generation.settings.enableExplicitNullableOptional) {
+            return `${propertyAccess}.GetValueOrDefault(${defaultValue})`;
         }
-        let optional = "";
-
-        return `${variableName}.${propertyPath
-            .map((val) => {
-                // get the property name for the current property
-                const propertyName = this.csharp.getPropertyName(enclosingType, val);
-
-                // get the type of the current property
-                let typeOfValue = this.context.csharpTypeMapper.convert({ reference: val.type });
-                optional = allowOptional && is.Type.optional(typeOfValue) ? "?" : "";
-                typeOfValue = typeOfValue.unwrapIfOptional();
-
-                // find the classRef for that type
-                if (is.Type.reference(typeOfValue)) {
-                    enclosingType = typeOfValue.value;
-                }
-                // return the property name
-                return `${propertyName}${optional}`;
-            })
-            .join(".")}.${this.csharp.getPropertyName(enclosingType, property)}`;
+        return `${propertyAccess} ?? ${defaultValue}`;
     }
 
     public override generateEndpointSnippet({
@@ -1131,9 +1715,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         additionalEndParameters?: ast.CodeBlock[];
         getResult?: boolean;
     }): ast.MethodInvocation | undefined {
-        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const service = this.context.getHttpService(serviceId) ?? fail(`Service with id ${serviceId} not found`);
         const serviceFilePath = service.name.fernFilepath;
-        const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
+        const args = this.getNonEndpointArguments({
+            endpoint,
+            example,
+            parseDatetimes
+        });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
@@ -1163,13 +1751,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const name = this.getRequestOptionsParamNameForEndpoint({ endpoint });
         if (endpoint.idempotent) {
             return this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.types.IdempotentRequestOptions)),
+                type: this.Types.IdempotentRequestOptions.asOptional(),
                 name,
                 initializer: "null"
             });
         } else {
             return this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.types.RequestOptions)),
+                type: this.Types.RequestOptions.asOptional(),
                 name,
                 initializer: "null"
             });
@@ -1182,5 +1770,40 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         } else {
             return this.names.parameters.requestOptions;
         }
+    }
+
+    /**
+     * Generates header code block for endpoints without a request parameter.
+     * This ensures client-level headers (API key, SDK version, etc.) are always included.
+     */
+    private getDefaultHeaderParameterCodeBlock({ endpoint }: { endpoint: HttpEndpoint }): {
+        code: ast.CodeBlock;
+        headerParameterBagReference: string;
+    } {
+        const requestOptionsVar = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+
+        return {
+            code: this.csharp.codeblock((writer) => {
+                writer.write(
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                );
+                writer.indent();
+                writer.writeLine(".Add(_client.Options.Headers)");
+                writer.writeLine(".Add(_client.Options.AdditionalHeaders)");
+
+                if (endpoint.idempotent) {
+                    writer.writeLine(
+                        `.Add(((${this.Types.IdempotentRequestOptionsInterface.name}?)${requestOptionsVar})?.GetIdempotencyHeaders())`
+                    );
+                }
+
+                writer.writeLine(`.Add(${requestOptionsVar}?.AdditionalHeaders)`);
+                writer.writeLine(".BuildAsync()");
+                writer.writeLine(".ConfigureAwait(false);");
+
+                writer.dedent();
+            }),
+            headerParameterBagReference: this.names.variables.headers
+        };
     }
 }

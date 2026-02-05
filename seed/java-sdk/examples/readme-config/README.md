@@ -7,6 +7,25 @@
 
 The CustomName Java library provides convenient access to the CustomName APIs from Java.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Custom Section](#custom-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Override Section](#override-section)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
@@ -77,8 +96,8 @@ public class Example {
                 .title("title")
                 .from("from")
                 .rating(1.1)
-                .type("movie")
                 .tag("tag")
+                .revenue(1000000L)
                 .metadata(
                     new HashMap<String, Object>() {{
                         put("metadata", new 
@@ -86,7 +105,6 @@ public class Example {
                         }});
                     }}
                 )
-                .revenue(1000000L)
                 .build()
         );
     }
@@ -181,7 +199,6 @@ SeedExamplesClient client = SeedExamplesClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.core.RequestOptions;
@@ -189,7 +206,7 @@ import com.seed.examples.core.RequestOptions;
 // Client level
 SeedExamplesClient client = SeedExamplesClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -197,7 +214,7 @@ client.service().getMovie(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```
@@ -209,7 +226,7 @@ import com.seed.examples.core.RequestOptions;
 // Client level
 SeedExamplesClient client = SeedExamplesClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -217,7 +234,7 @@ client.service().createMovie(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

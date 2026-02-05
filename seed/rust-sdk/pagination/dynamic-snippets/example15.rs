@@ -11,7 +11,7 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {},
+            &ListWithMixedTypeCursorPaginationQueryRequest2 { cursor: None },
             None,
         )
         .await;

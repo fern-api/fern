@@ -7,7 +7,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LangServerResponse(UniversalBaseModel):
-    response: typing.Optional[typing.Any] = None
+    response: typing.Any
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

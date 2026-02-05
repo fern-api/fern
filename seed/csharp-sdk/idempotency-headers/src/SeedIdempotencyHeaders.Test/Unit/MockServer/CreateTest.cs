@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedIdempotencyHeaders;
-using SeedIdempotencyHeaders.Core;
+using SeedIdempotencyHeaders.Test.Utils;
 
 namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 
@@ -39,6 +39,6 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Payment.CreateAsync(
             new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

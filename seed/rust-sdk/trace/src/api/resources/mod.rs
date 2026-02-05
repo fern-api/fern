@@ -1,5 +1,21 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **V2**
+//! - **Admin**
+//! - **Commons**
+//! - **Homepage**
+//! - **LangServer**
+//! - **Migration**
+//! - **Playlist**
+//! - **Problem**
+//! - **Submission**
+//! - **Sysprop**
 
+use crate::{ClientConfig, ApiError};
+
+pub mod v_2;
 pub mod admin;
 pub mod commons;
 pub mod homepage;
@@ -9,7 +25,6 @@ pub mod playlist;
 pub mod problem;
 pub mod submission;
 pub mod sysprop;
-pub mod v_2;
 pub struct TraceClient {
     pub config: ClientConfig,
     pub v_2: V2Client,
@@ -33,11 +48,13 @@ impl TraceClient {
             playlist: PlaylistClient::new(config.clone())?,
             problem: ProblemClient::new(config.clone())?,
             submission: SubmissionClient::new(config.clone())?,
-            sysprop: SyspropClient::new(config.clone())?,
+            sysprop: SyspropClient::new(config.clone())?
         })
     }
+
 }
 
+pub use v_2::V2Client;
 pub use admin::AdminClient;
 pub use commons::CommonsClient;
 pub use homepage::HomepageClient;
@@ -47,4 +64,3 @@ pub use playlist::PlaylistClient;
 pub use problem::ProblemClient;
 pub use submission::SubmissionClient;
 pub use sysprop::SyspropClient;
-pub use v_2::V2Client;

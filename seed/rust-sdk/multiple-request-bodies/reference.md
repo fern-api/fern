@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">upload_json_document</a>(request: UploadDocumentRequest) -> Result<UploadDocumentResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">upload_json_document</a>(request: UploadDocumentRequest) -> Result&lt;UploadDocumentResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -22,7 +22,14 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .upload_json_document(&UploadDocumentRequest {}, None)
+        .upload_json_document(
+            &UploadDocumentRequest {
+                author: None,
+                tags: None,
+                title: None,
+            },
+            None,
+        )
         .await;
 }
 ```

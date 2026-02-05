@@ -5,6 +5,21 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Oauth Token Override](#oauth-token-override)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -23,14 +38,11 @@ Instantiate and use the client with the following:
 from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
-    scope="scope",
 )
 ```
 
@@ -44,9 +56,7 @@ import asyncio
 from seed import AsyncSeedAnyAuth
 
 client = AsyncSeedAnyAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 
 
@@ -54,7 +64,6 @@ async def main() -> None:
     await client.auth.get_token(
         client_id="client_id",
         client_secret="client_secret",
-        scope="scope",
     )
 
 
@@ -76,6 +85,24 @@ except ApiError as e:
     print(e.body)
 ```
 
+## Oauth Token Override
+
+This SDK supports two authentication methods: OAuth client credentials flow (automatic token management) or direct bearer token authentication. You can choose between these options when initializing the client:
+
+```python
+from seed import SeedAnyAuth
+
+# Option 1: Direct bearer token (bypass OAuth flow)
+client = SeedAnyAuth(..., token="my-pre-generated-bearer-token")
+
+from seed import SeedAnyAuth
+
+# Option 2: OAuth client credentials flow (automatic token management)
+client = SeedAnyAuth(
+    ..., client_id="your-client-id", client_secret="your-client-secret"
+)
+```
+
 ## Advanced
 
 ### Access Raw Response Data
@@ -91,6 +118,7 @@ client = SeedAnyAuth(
 )
 response = client.auth.with_raw_response.get_token(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

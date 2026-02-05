@@ -38,8 +38,9 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/docs-parsers": "0.0.65",
-    "@fern-api/fdr-sdk": "0.139.44-44071b8e4",
+    "@fern-api/fdr-sdk": "0.145.4-0ea6e08bf",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/graphql-to-fdr": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
@@ -65,6 +66,6 @@
     "@types/url-join": "^4.0.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

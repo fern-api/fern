@@ -48,15 +48,25 @@ public class AsyncRawDeepCursorPathClient {
         return doThing(A.builder().build());
     }
 
+    public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThing(
+            RequestOptions requestOptions) {
+        return doThing(A.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThing(A request) {
         return doThing(request, null);
     }
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThing(
             A request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -65,7 +75,7 @@ public class AsyncRawDeepCursorPathClient {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -142,9 +152,14 @@ public class AsyncRawDeepCursorPathClient {
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingRequired(
             MainRequired request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -153,7 +168,7 @@ public class AsyncRawDeepCursorPathClient {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -223,15 +238,25 @@ public class AsyncRawDeepCursorPathClient {
     }
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingInline(
+            RequestOptions requestOptions) {
+        return doThingInline(InlineA.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingInline(
             InlineA request) {
         return doThingInline(request, null);
     }
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingInline(
             InlineA request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -240,7 +265,7 @@ public class AsyncRawDeepCursorPathClient {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

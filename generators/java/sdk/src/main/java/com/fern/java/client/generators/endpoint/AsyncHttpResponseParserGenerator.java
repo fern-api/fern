@@ -70,9 +70,93 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec) {
-        endpointWithoutRequestBuilder.addStatement(
-                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                bodyParameterSpec.type);
+        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
+        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
+            endpointWithoutRequestBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                    paramType.rawType,
+                    paramType.typeArguments.get(0));
+        } else {
+            endpointWithoutRequestBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                    bodyParameterSpec.type);
+        }
+    }
+
+    @Override
+    public void addEndpointWithoutRequestWithRequestOptionsReturnStatement(
+            MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> paramNamesWoBodyWithRequestOptions,
+            ParameterSpec bodyParameterSpec) {
+        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
+        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
+            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "("
+                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
+                    paramType.rawType,
+                    paramType.typeArguments.get(0));
+        } else {
+            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "("
+                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
+                    bodyParameterSpec.type);
+        }
+    }
+
+    @Override
+    public void addBodyOnlyReturnStatement(
+            MethodSpec.Builder bodyOnlyMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyParamNames,
+            ParameterSpec bodyParam,
+            TypeName wrapperTypeName,
+            String bodyPropertyName) {
+        StringBuilder paramList = new StringBuilder();
+        for (int i = 0; i < bodyOnlyParamNames.size() - 1; i++) {
+            if (paramList.length() > 0) {
+                paramList.append(", ");
+            }
+            paramList.append(bodyOnlyParamNames.get(i));
+        }
+        if (paramList.length() > 0) {
+            paramList.append(", ");
+        }
+        paramList.append("$T.builder().$L($L).build()");
+        bodyOnlyMethodBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + paramList + ")",
+                wrapperTypeName,
+                bodyPropertyName,
+                bodyParam.name);
+    }
+
+    @Override
+    public void addBodyOnlyWithRequestOptionsReturnStatement(
+            MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyWithRequestOptionsParamNames,
+            ParameterSpec bodyParam,
+            TypeName wrapperTypeName,
+            String bodyPropertyName) {
+        StringBuilder paramList = new StringBuilder();
+        for (int i = 0; i < bodyOnlyWithRequestOptionsParamNames.size() - 1; i++) {
+            if (paramList.length() > 0) {
+                paramList.append(", ");
+            }
+            paramList.append(bodyOnlyWithRequestOptionsParamNames.get(i));
+        }
+        if (paramList.length() > 0) {
+            paramList.append(", ");
+        }
+        paramList.append("$T.builder().$L($L).build(), ");
+        paramList.append(AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        bodyOnlyWithRequestOptionsMethodBuilder.addStatement(
+                "return " + endpointWithRequestOptions.name + "(" + paramList + ")",
+                wrapperTypeName,
+                bodyPropertyName,
+                bodyParam.name);
     }
 
     @Override

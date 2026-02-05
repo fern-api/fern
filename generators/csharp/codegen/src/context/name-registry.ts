@@ -15,7 +15,6 @@
  */
 
 import { fail } from "node:assert";
-import { at } from "@fern-api/browser-compatible-base-generator";
 import { type Field as AstField, ClassReference } from "../ast";
 import { Generation } from "../context/generation-info";
 import { Origin } from "../context/model-navigator";
@@ -881,10 +880,6 @@ export class NameRegistry {
      */
     registerNamespace(from: string, to: string): void {
         if (this.namespaceRegistry.has(from) && this.namespaceRegistry.get(from) !== to) {
-            this.generation.logger.warn(
-                `NAMESPACE ALIAS: ${from} to ${to} already exists as ${this.namespaceRegistry.get(from)}`
-            );
-            this.generation.logger.warn(at({ filterFunctions: ["LoggerImpl", "Array.forEach"], multiline: true }));
             return;
         }
 
@@ -1118,7 +1113,11 @@ export class NameRegistry {
                     fullyQualified: classReferenceArgs.fullyQualified,
                     generics: classReferenceArgs.generics,
                     global: classReferenceArgs.global,
-                    origin: classRef.origin ?? origin
+                    origin: classRef.origin ?? origin,
+                    isCollection: classRef.isCollection,
+                    isReferenceType: classRef.isReferenceType,
+                    multipartMethodName: classRef.multipartMethodName,
+                    multipartMethodNameForCollection: classRef.multipartMethodNameForCollection
                 },
                 // reuse the type scope from the existing class reference, because it's the common data across all copies of a class reference
                 classRef.scope,
@@ -1199,7 +1198,11 @@ export class NameRegistry {
                     generics: classReferenceArgs.generics,
                     global: classReferenceArgs.global,
                     fullyQualifiedName,
-                    origin
+                    origin,
+                    isCollection: classReferenceArgs.isCollection,
+                    isReferenceType: classReferenceArgs.isReferenceType,
+                    multipartMethodName: classReferenceArgs.multipartMethodName,
+                    multipartMethodNameForCollection: classReferenceArgs.multipartMethodNameForCollection
                 },
                 // the typescope is the common data across all copies of a class referecne
                 new TypeScope(this, name, namespace, fullyQualifiedName),

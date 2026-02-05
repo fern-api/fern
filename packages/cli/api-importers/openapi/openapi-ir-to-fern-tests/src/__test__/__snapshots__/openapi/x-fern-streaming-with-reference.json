@@ -79,7 +79,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "ChatCompletionsCreateRequest",
+                "name": "CreateChatCompletionsRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -122,7 +122,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "ChatCompletionsCreateStreamRequest",
+                "name": "CreateChatCompletionsStreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -153,7 +153,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: ChatCompletionsCreateStreamRequest
+        name: CreateChatCompletionsStreamRequest
         body:
           properties:
             stream: literal<true>
@@ -176,7 +176,7 @@ service:
       source:
         openapi: ../openapi.yml
       request:
-        name: ChatCompletionsCreateRequest
+        name: CreateChatCompletionsRequest
         body:
           properties:
             stream: literal<false>

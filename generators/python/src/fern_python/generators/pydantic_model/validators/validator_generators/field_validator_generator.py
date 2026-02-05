@@ -32,7 +32,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
             self._model.add_field_validator(
                 validator_name=f"_{prefix}_validate_{self.field.name}",
                 field_name=self.field.name,
-                field_type=self.field.type_hint,
+                field_type=self.field.get_type_hint_for_validators(),
                 body=AST.CodeWriter(self._get_write_validator_body(pre, validator_name)),
                 pre=pre,
             )
@@ -119,7 +119,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
         reference_to_decorator: Tuple[str, ...],
     ) -> None:
         field_name = self.field.name
-        field_type = self.field.type_hint
+        field_type = self.field.get_type_hint_for_validators()
 
         with writer.indent():
             writer.write("@")
@@ -161,7 +161,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
                         AST.FunctionParameter(
                             name=FieldValidatorGenerator._CALLABLE_PARAMETER_PREFIX
                             + PydanticModel.VALIDATOR_FIELD_VALUE_PARAMETER_NAME,
-                            type_hint=AST.TypeHint.any() if pre else self.field.type_hint,
+                            type_hint=AST.TypeHint.any() if pre else self.field.get_type_hint_for_validators(),
                         ),
                         AST.FunctionParameter(
                             name=FieldValidatorGenerator._CALLABLE_PARAMETER_PREFIX
@@ -169,7 +169,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
                             type_hint=AST.TypeHint(type=self._model.get_reference_to_partial_class()),
                         ),
                     ],
-                    return_type=AST.TypeHint.any() if pre else self.field.type_hint,
+                    return_type=AST.TypeHint.any() if pre else self.field.get_type_hint_for_validators(),
                 ),
                 body=AST.CodeWriter("..."),
             )

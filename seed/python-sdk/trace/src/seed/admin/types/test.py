@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -34,4 +35,4 @@ class Test_Or(UniversalBaseModel):
             smart_union = True
 
 
-Test = typing.Union[Test_And, Test_Or]
+Test = typing_extensions.Annotated[typing.Union[Test_And, Test_Or], pydantic.Field(discriminator="type")]

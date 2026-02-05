@@ -12,6 +12,11 @@ export class MovieDoesNotExistError extends errors.SeedApiError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, MovieDoesNotExistError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

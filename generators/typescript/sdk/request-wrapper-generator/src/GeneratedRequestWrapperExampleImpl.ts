@@ -112,7 +112,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
-        if (!generatedType.shouldInlinePathParameters()) {
+        if (!generatedType.shouldInlinePathParameters(context)) {
             return [];
         }
 

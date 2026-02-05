@@ -995,7 +995,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1344,6 +1346,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -1499,7 +1503,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -2122,6 +2128,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -2241,6 +2249,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:UnionListResponse": {
@@ -2306,6 +2315,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:MyUnion": {
@@ -2444,6 +2454,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:VariantB": {
@@ -2539,6 +2550,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:VariantC": {
@@ -2634,6 +2646,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -2731,6 +2744,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

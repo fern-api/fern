@@ -207,12 +207,12 @@ public record UserOrAdminDiscriminated
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UserOrAdminDiscriminated>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UserOrAdminDiscriminated).IsAssignableFrom(typeToConvert);
 
         public override UserOrAdminDiscriminated Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

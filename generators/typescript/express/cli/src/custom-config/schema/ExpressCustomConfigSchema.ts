@@ -15,11 +15,12 @@ export const ExpressCustomConfigSchema = z.strictObject({
     packagePath: z.optional(z.string()),
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
     linter: z.optional(z.enum(["biome", "oxlint", "none"])),
-    formatter: z.optional(z.enum(["prettier", "biome"])),
+    formatter: z.optional(z.enum(["prettier", "biome", "none"])),
     enableForwardCompatibleEnums: z.optional(z.boolean()),
 
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),
+    outputSrcOnly: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
     includeOtherInUnionTypes: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),

@@ -91,6 +91,16 @@ public class AsyncPlaylistClient {
      * Updates a playlist
      */
     public CompletableFuture<Optional<Playlist>> updatePlaylist(
+            int serviceParam, String playlistId, RequestOptions requestOptions) {
+        return this.rawClient
+                .updatePlaylist(serviceParam, playlistId, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Updates a playlist
+     */
+    public CompletableFuture<Optional<Playlist>> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
         return this.rawClient.updatePlaylist(serviceParam, playlistId, request).thenApply(response -> response.body());
     }

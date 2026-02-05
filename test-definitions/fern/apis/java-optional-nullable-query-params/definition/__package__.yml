@@ -1,0 +1,55 @@
+service:
+  base-path: /api
+  auth: false
+  endpoints:
+    search:
+      docs: Search endpoint with optional nullable query params with defaults
+      method: GET
+      path: /search
+      request:
+        name: SearchRequest
+        query-parameters:
+          query:
+            type: optional<nullable<string>>
+            docs: Search query - defaults to empty string when absent
+            default: ""
+          limit:
+            type: optional<nullable<integer>>
+            docs: Max results - defaults to 10 when absent
+            default: 10
+          includeArchived:
+            type: optional<nullable<boolean>>
+            docs: Include archived items - defaults to false when absent
+            default: false
+          sortOrder:
+            type: optional<nullable<SortOrder>>
+            docs: Sort order - defaults to ASC when absent
+            default: ASC
+          optionalWithoutDefault:
+            type: optional<nullable<string>>
+            docs: Optional nullable without default - should check wasSpecified
+          regularOptional:
+            type: optional<nullable<string>>
+            docs: Another optional nullable with default for comparison
+            default: "default-value"
+          regularOptionalNoDefault:
+            type: optional<nullable<string>>
+            docs: Another optional nullable without default for comparison
+      response: SearchResponse
+
+types:
+  SortOrder:
+    docs: Sort order enum
+    enum:
+      - ASC
+      - DESC
+
+  SearchResponse:
+    docs: Search response
+    properties:
+      results: list<string>
+      totalCount: integer
+      query: optional<nullable<string>>
+      limit: optional<nullable<integer>>
+      includeArchived: optional<nullable<boolean>>
+      sortOrder: optional<nullable<SortOrder>>

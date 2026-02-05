@@ -7,5 +7,6 @@
     "module": {
       "path": "github.com/fern-api/stream-go"
     }
-  }
+  },
+  "sdkVersion": "v2.0.0"
 }

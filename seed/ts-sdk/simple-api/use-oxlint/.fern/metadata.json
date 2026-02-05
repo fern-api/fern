@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "linter": "oxlint"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

@@ -118,7 +118,7 @@
         "plain-text",
         "any-auth",
         "basic-auth",
-        "custom-auth",
+        "header-auth",
         "errors",
         "imdb",
         "mixed-file-directory",
@@ -132,7 +132,7 @@
     {
       "fixtures": [
         "alias-extends",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "objects-with-imports",
         "websocket-bearer-auth",
         "server-sent-event-examples"

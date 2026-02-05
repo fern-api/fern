@@ -17,6 +17,41 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     value: "STRING"
 };
 
+/**
+ * For query parameters with allow-multiple and optional types, the Dynamic IR produces
+ * optional<list<optional<T>>> or list<optional<T>>. However, Java SDK builders have
+ * convenience overloads that accept List<T> directly. This function unwraps the optional
+ * from list items so we generate List<T> instead of List<Optional<T>>.
+ *
+ * Note: We only unwrap "optional", not "nullable". Nullable list items (list<nullable<T>>)
+ * are a distinct case where items genuinely can be null, and the SDK expects List<Optional<T>>.
+ */
+function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+    if (typeReference.type === "optional" && typeReference.value.type === "list") {
+        const listType = typeReference.value;
+        const itemType = listType.value;
+        if (itemType.type === "optional") {
+            return {
+                type: "optional",
+                value: {
+                    type: "list",
+                    value: itemType.value
+                }
+            };
+        }
+    }
+    if (typeReference.type === "list") {
+        const itemType = typeReference.value;
+        if (itemType.type === "optional") {
+            return {
+                type: "list",
+                value: itemType.value
+            };
+        }
+    }
+    return typeReference;
+}
+
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
@@ -62,6 +97,18 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<java.AstNode> {
+        throw new Error("Unsupported");
+    }
+
     private buildCodeBlock({
         endpoint,
         snippet,
@@ -94,16 +141,106 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): java.CodeBlock {
+        // For OAuth APIs, use withCredentials() instead of builder()
+        const isOAuth = endpoint.auth?.type === "oauth";
+
         return java.codeblock((writer) => {
             writer.writeNode(this.context.getRootClientClassReference());
             writer.write(` ${CLIENT_VAR_NAME} = `);
-            writer.writeNode(
-                java.TypeLiteral.builder({
-                    classReference: this.context.getRootClientClassReference(),
-                    parameters: this.getRootClientBuilderArgs({ endpoint, snippet })
-                })
-            );
+
+            if (isOAuth && snippet.auth?.type === "oauth") {
+                // OAuth: use withCredentials(clientId, clientSecret) pattern
+                const oauthValues = snippet.auth as FernIr.dynamic.OAuthValues;
+                writer.writeNode(this.context.getRootClientClassReference());
+                writer.write(`.withCredentials("${oauthValues.clientId}", "${oauthValues.clientSecret}")`);
+                writer.writeNewLineIfLastLineNot();
+                writer.indent();
+
+                // Add remaining builder args (url, environment, headers, etc.)
+                const otherArgs = this.getRootClientBuilderArgsExcludingAuth({ endpoint, snippet });
+                for (const arg of otherArgs) {
+                    writer.write(`.${arg.name}(`);
+                    if (!arg.value.shouldWriteInLine()) {
+                        writer.newLine();
+                    }
+                    writer.writeNode(arg.value);
+                    if (!arg.value.shouldWriteInLine()) {
+                        writer.newLine();
+                    }
+                    writer.writeLine(")");
+                }
+
+                writer.writeLine(".build()");
+                writer.dedent();
+            } else {
+                // Standard builder() pattern
+                writer.writeNode(
+                    java.TypeLiteral.builder({
+                        classReference: this.context.getRootClientClassReference(),
+                        parameters: this.getRootClientBuilderArgs({ endpoint, snippet })
+                    })
+                );
+            }
         });
+    }
+
+    private getRootClientBuilderArgsExcludingAuth({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): java.BuilderParameter[] {
+        const builderArgs: java.BuilderParameter[] = [];
+
+        // Skip auth - it's handled by withCredentials()
+
+        const baseUrlArg = this.getRootClientBaseUrlArg({
+            baseUrl: snippet.baseURL,
+            environment: snippet.environment
+        });
+        if (baseUrlArg != null) {
+            builderArgs.push(baseUrlArg);
+        }
+        this.context.errors.scope(Scope.Headers);
+        if (this.context.ir.headers != null && snippet.headers != null) {
+            builderArgs.push(
+                ...this.getRootClientHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+            );
+        }
+        this.context.errors.unscope();
+
+        const usedVariables = new Set<string>();
+        const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(endpoint.request.pathParameters ?? [])];
+
+        allPathParams.forEach((param) => {
+            if (param.variable != null) {
+                usedVariables.add(param.variable);
+            }
+        });
+
+        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
+            for (const variable of this.context.ir.variables) {
+                if (usedVariables.has(variable.id)) {
+                    const variableName = variable.name.camelCase.unsafeName;
+                    builderArgs.push({
+                        name: variableName,
+                        value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                    });
+                }
+            }
+        }
+
+        this.context.errors.scope(Scope.PathParameters);
+        if (this.context.ir.pathParameters != null && this.context.ir.pathParameters.length > 0) {
+            const apiPathParams = this.context.ir.pathParameters.filter((param) => param.variable == null);
+            if (apiPathParams.length > 0) {
+                builderArgs.push(...this.getPathParameters({ namedParameters: apiPathParams, snippet }));
+            }
+        }
+        this.context.errors.unscope();
+
+        return builderArgs;
     }
 
     private buildFullCodeBlock({ body, options }: { body: java.CodeBlock; options: Options }): java.AstNode {
@@ -467,6 +604,10 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
+    private usesOptionalNullable(): boolean {
+        return this.context.customConfig?.["collapse-optional-nullable"] === true;
+    }
+
     private getBodyRequestArg({
         body,
         value
@@ -486,41 +627,57 @@ export class EndpointSnippetGenerator {
                     // We should fix the generator to permit the non-Optional type and
                     // remove this special case.
 
-                    // Check if value is undefined/null and use Optional.empty() in that case
+                    // Check if value is undefined/null and use Optional.empty() or OptionalNullable.absent()
                     if (value === undefined || value === null) {
-                        return java.TypeLiteral.reference(
-                            java.invokeMethod({
-                                on: java.classReference({
-                                    name: "Optional",
-                                    packageName: "java.util"
-                                }),
-                                method: "empty",
-                                arguments_: []
-                            })
-                        );
+                        if (this.usesOptionalNullable()) {
+                            return this.context.getOptionalNullableAbsent();
+                        } else {
+                            return java.TypeLiteral.reference(
+                                java.invokeMethod({
+                                    on: java.classReference({
+                                        name: "Optional",
+                                        packageName: "java.util"
+                                    }),
+                                    method: "empty",
+                                    arguments_: []
+                                })
+                            );
+                        }
                     }
 
                     const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
                         typeReference: body.value.value,
-                        value
+                        value,
+                        as: "request"
                     });
 
-                    // Check if the converted value is already Optional.empty() to avoid double-wrapping
+                    // Check if the converted value is already Optional.empty() or OptionalNullable.absent() to avoid double-wrapping
                     const convertedValueStr = convertedValue.toString({
                         packageName: "com.example",
                         customConfig: this.context.customConfig
                     });
 
-                    if (convertedValueStr.includes("Optional.empty()")) {
+                    if (
+                        convertedValueStr.includes("Optional.empty()") ||
+                        convertedValueStr.includes("OptionalNullable.absent()")
+                    ) {
                         return convertedValue;
                     }
 
-                    return java.TypeLiteral.optional({
-                        value: convertedValue,
-                        useOf: true
-                    });
+                    if (this.usesOptionalNullable()) {
+                        return this.context.getOptionalNullableOf(convertedValue);
+                    } else {
+                        return java.TypeLiteral.optional({
+                            value: convertedValue,
+                            useOf: true
+                        });
+                    }
                 }
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    as: "request"
+                });
             }
             default:
                 assertNever(body);
@@ -528,6 +685,9 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): java.TypeLiteral {
+        if (value === undefined || value === null) {
+            return java.TypeLiteral.bytes("");
+        }
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -632,9 +792,22 @@ export class EndpointSnippetGenerator {
             parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
-        const queryParameterFields = queryParameters.map((queryParameter) => ({
+        const filteredQueryParameters = queryParameters.filter(
+            (queryParameter) => !this.context.isDirectLiteral(queryParameter.typeReference)
+        );
+        const sortedQueryParameters = this.context.sortTypeInstancesByRequiredFirst(
+            filteredQueryParameters,
+            request.queryParameters ?? []
+        );
+        const queryParameterFields = sortedQueryParameters.map((queryParameter) => ({
             name: this.context.getMethodName(queryParameter.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                // Unwrap optional from list items for allow-multiple query params.
+                // Java SDK builders have convenience overloads that accept List<T>.
+                typeReference: unwrapOptionalFromListItems(queryParameter.typeReference),
+                value: queryParameter.value,
+                as: "request"
+            })
         }));
         this.context.errors.unscope();
 
@@ -643,9 +816,15 @@ export class EndpointSnippetGenerator {
             parameters: request.headers ?? [],
             values: snippet.headers ?? {}
         });
-        const headerFields = headers.map((header) => ({
+        const filteredHeaders = headers.filter((header) => !this.context.isDirectLiteral(header.typeReference));
+        const sortedHeaders = this.context.sortTypeInstancesByRequiredFirst(filteredHeaders, request.headers ?? []);
+        const headerFields = sortedHeaders.map((header) => ({
             name: this.context.getMethodName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(header)
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: header.typeReference,
+                value: header.value,
+                as: "request"
+            })
         }));
         this.context.errors.unscope();
 
@@ -780,7 +959,11 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    as: "request"
+                });
             default:
                 assertNever(body);
         }
@@ -793,20 +976,22 @@ export class EndpointSnippetGenerator {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
     }): java.BuilderParameter[] {
-        const fields: java.BuilderParameter[] = [];
-
         const bodyProperties = this.context.associateByWireValue({
             parameters,
             values: this.context.getRecord(value) ?? {}
         });
-        for (const parameter of bodyProperties) {
-            fields.push({
-                name: this.context.getMethodName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
-            });
-        }
-
-        return fields;
+        const filteredProperties = bodyProperties.filter(
+            (parameter) => !this.context.isDirectLiteral(parameter.typeReference)
+        );
+        const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(filteredProperties, parameters);
+        return sortedProperties.map((parameter) => ({
+            name: this.context.getMethodName(parameter.name.name),
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: parameter.typeReference,
+                value: parameter.value,
+                as: "request"
+            })
+        }));
     }
 
     private getPathParameters({

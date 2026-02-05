@@ -26,7 +26,7 @@ export function buildChannel({
     // - Otherwise, use simple server name for backward compatibility
     const urlId =
         firstServer != null
-            ? context.groupEnvironmentsByHost
+            ? context.options.groupEnvironmentsByHost
                 ? (context.getUrlId(firstServer.url) ?? generateWebsocketUrlId(firstServer.name, firstServer.url, true))
                 : firstServer.name
             : undefined;
@@ -35,8 +35,19 @@ export function buildChannel({
         `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", resolved urlId="${urlId}" (from collision map: ${context.getUrlId(firstServer?.url ?? "") != null})`
     );
 
+    // Build path with SDK names (using parameterNameOverride when available)
+    let convertedPath = channel.path;
+    for (const pathParameter of channel.handshake.pathParameters) {
+        if (pathParameter.parameterNameOverride != null) {
+            convertedPath = convertedPath.replace(
+                `{${pathParameter.name}}`,
+                `{${pathParameter.parameterNameOverride}}`
+            );
+        }
+    }
+
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
-        path: channel.path,
+        path: convertedPath,
         url: urlId,
         auth: false
     };
@@ -58,7 +69,9 @@ export function buildChannel({
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     if (channel.handshake.pathParameters.length > 0) {
         for (const pathParameter of channel.handshake.pathParameters) {
-            pathParameters[pathParameter.name] = buildPathParameter({
+            // Use SDK name (parameterNameOverride) as the key if available
+            const parameterKey = pathParameter.parameterNameOverride ?? pathParameter.name;
+            pathParameters[parameterKey] = buildPathParameter({
                 pathParameter,
                 context,
                 fileContainingReference: declarationFile,
@@ -111,18 +124,24 @@ export function buildChannel({
     });
 
     for (const message of channel.messages) {
+        const messageSchema: RawSchemas.WebSocketChannelMessageSchema = {
+            origin: message.origin,
+            body: buildTypeReference({
+                schema: message.body,
+                context,
+                fileContainingReference: declarationFile,
+                namespace: maybeChannelNamespace,
+                declarationDepth: 0
+            })
+        };
+
+        if (message.methodName != null) {
+            messageSchema["method-name"] = message.methodName;
+        }
+
         context.builder.addChannelMessage(declarationFile, {
             messageId: message.name,
-            message: {
-                origin: message.origin,
-                body: buildTypeReference({
-                    schema: message.body,
-                    context,
-                    fileContainingReference: declarationFile,
-                    namespace: maybeChannelNamespace,
-                    declarationDepth: 0
-                })
-            }
+            message: messageSchema
         });
     }
 

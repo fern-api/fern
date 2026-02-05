@@ -42,11 +42,15 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootClientClassName(): string {
-        return "Client";
+        return this.customConfig?.clientModuleName ?? "Client";
     }
 
     public getRootModuleName(): string {
-        return upperFirst(this.customConfig?.clientModuleName ?? this.config.organization);
+        // Use moduleName config first, then clientModuleName, then organization
+        // This aligns with AbstractRubyGeneratorContext.getRootModuleName()
+        return upperFirst(
+            this.customConfig?.moduleName ?? this.customConfig?.clientModuleName ?? this.config.organization
+        );
     }
 
     public isSingleEnvironmentID(
@@ -89,7 +93,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return this.getName(name.camelCase.safeName);
+        return this.getName(name.snakeCase.safeName);
     }
 
     private getName(name: string): string {

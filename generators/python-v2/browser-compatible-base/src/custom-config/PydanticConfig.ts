@@ -7,6 +7,7 @@ export const PydanticConfig = z.object({
     union_naming: z.enum(["v0", "v1"]).optional().default("v0"),
 
     // General options.
+    coerce_numbers_to_str: z.boolean().optional(),
     extra_fields: z.enum(["allow", "forbid", "ignore"]).optional(),
     include_validators: z.boolean().optional(),
     skip_formatting: z.boolean().optional(),

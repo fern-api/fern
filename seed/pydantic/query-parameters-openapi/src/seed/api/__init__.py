@@ -3,8 +3,9 @@
 # isort: skip_file
 
 from .nested_user import NestedUser
+from .search_request_neighbor import SearchRequestNeighbor
 from .search_request_neighbor_required import SearchRequestNeighborRequired
 from .search_response import SearchResponse
 from .user import User
 
-__all__ = ["NestedUser", "SearchRequestNeighborRequired", "SearchResponse", "User"]
+__all__ = ["NestedUser", "SearchRequestNeighbor", "SearchRequestNeighborRequired", "SearchResponse", "User"]

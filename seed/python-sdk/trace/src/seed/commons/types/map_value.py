@@ -11,7 +11,9 @@ from ...core.serialization import FieldMetadata
 
 
 class MapValue(UniversalBaseModel):
-    key_value_pairs: typing_extensions.Annotated[typing.List["KeyValuePair"], FieldMetadata(alias="keyValuePairs")]
+    key_value_pairs: typing_extensions.Annotated[
+        typing.List["KeyValuePair"], FieldMetadata(alias="keyValuePairs"), pydantic.Field(alias="keyValuePairs")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -24,5 +26,6 @@ class MapValue(UniversalBaseModel):
 
 
 from .key_value_pair import KeyValuePair  # noqa: E402, I001
+from .variable_value import VariableValue  # noqa: E402, I001
 
-update_forward_refs(MapValue)
+update_forward_refs(MapValue, KeyValuePair=KeyValuePair, VariableValue=VariableValue)

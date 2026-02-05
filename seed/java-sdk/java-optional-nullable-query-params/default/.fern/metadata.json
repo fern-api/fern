@@ -1,0 +1,10 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "use-default-request-parameter-values": true,
+    "collapse-optional-nullable": true
+  },
+  "sdkVersion": "0.0.1"
+}

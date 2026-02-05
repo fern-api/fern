@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using SeedExhaustive;
-using SeedExhaustive.Core;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Test.Unit.MockServer;
@@ -108,9 +108,6 @@ public class PostWithObjectBodyandResponseTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

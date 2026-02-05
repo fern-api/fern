@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "customFormat",
+        "regularString",
+        "patternString"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "customFormat"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "regularString"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "patternString"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {}
+}

@@ -144,12 +144,12 @@ public record EventInfo
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<EventInfo>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(EventInfo).IsAssignableFrom(typeToConvert);
 
         public override EventInfo Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

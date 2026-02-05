@@ -64,6 +64,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RootType": {
@@ -126,6 +127,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_a:A": {
@@ -225,6 +227,9 @@
                     "propertyAccess": null,
                     "variable": null
                 }
+            ],
+            "extends": [
+                "type_:RootType"
             ],
             "additionalProperties": false
         },
@@ -557,6 +562,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:Dog": {
@@ -657,6 +663,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:Acai": {
@@ -756,6 +763,9 @@
                     "propertyAccess": null,
                     "variable": null
                 }
+            ],
+            "extends": [
+                "type_ast:Berry"
             ],
             "additionalProperties": false
         },
@@ -857,6 +867,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:Berry": {
@@ -957,6 +968,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:BranchNode": {
@@ -1060,6 +1072,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:LeafNode": {
@@ -1129,6 +1142,7 @@
                 }
             },
             "properties": [],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:NodesWrapper": {
@@ -1235,6 +1249,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:ContainerValue": {
@@ -1574,6 +1589,7 @@
                 }
             },
             "properties": [],
+            "extends": null,
             "additionalProperties": false
         },
         "type_ast:FieldName": {
@@ -1953,6 +1969,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

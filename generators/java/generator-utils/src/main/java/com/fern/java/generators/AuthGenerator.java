@@ -20,11 +20,23 @@ public final class AuthGenerator {
         this.generatorContext = generatorContext;
     }
 
+    public boolean isEndpointSecurity() {
+        return apiAuth.getRequirement().equals(AuthSchemesRequirement.ENDPOINT_SECURITY);
+    }
+
     public Optional<GeneratedAuthFiles> generate() {
         List<AuthScheme> schemes = generatorContext.getResolvedAuthSchemes();
         if (schemes.isEmpty()) {
             return Optional.empty();
-        } else if (schemes.size() == 1) {
+        }
+
+        if (isEndpointSecurity()) {
+            // For endpoint security, we don't generate a single auth file.
+            // Instead, auth providers are generated separately and the RoutingAuthProvider handles routing.
+            return Optional.empty();
+        }
+
+        if (schemes.size() == 1) {
             AuthScheme authScheme = schemes.get(0);
             GeneratedJavaFile generatedFile = authScheme.visit(new AuthSchemeGenerator(generatorContext));
             return Optional.of(GeneratedAuthFiles.builder()

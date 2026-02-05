@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.Stream<SeedServerSentEvents.StreamedCompletion></code></summary>
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.Stream&lt;SeedServerSentEvents.StreamedCompletion&gt;</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**requestOptions:** `Completions.RequestOptions` 
+**requestOptions:** `CompletionsClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -1221,6 +1221,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test file upload",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1254,22 +1255,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test file upload",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testFileUpload",
+      "safeName": "testFileUpload"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_file_upload",
+      "safeName": "test_file_upload"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_FILE_UPLOAD",
+      "safeName": "TEST_FILE_UPLOAD"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestFileUpload",
+      "safeName": "TestFileUpload"
     }
   },
   "constants": {

@@ -1,4 +1,10 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Optional**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod optional;
 pub struct ObjectsWithImportsClient {
@@ -10,9 +16,10 @@ impl ObjectsWithImportsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            optional: OptionalClient::new(config.clone())?,
+            optional: OptionalClient::new(config.clone())?
         })
     }
+
 }
 
 pub use optional::OptionalClient;

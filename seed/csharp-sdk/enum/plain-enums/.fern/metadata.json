@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "enable-forward-compatible-enums": false
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

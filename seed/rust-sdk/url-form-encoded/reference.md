@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">submit_form_data</a>(request: PostSubmitRequest) -> Result<PostSubmitResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">submit_form_data</a>(request: PostSubmitRequest) -> Result&lt;PostSubmitResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

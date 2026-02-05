@@ -1,7 +1,9 @@
 package com.fern.java;
 
+import static com.fern.java.GeneratorLogging.log;
+import static com.fern.java.GeneratorLogging.logError;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -42,7 +44,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,57 +93,27 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
+    /** Loads and preprocesses the IR from file, handling integer overflow values. */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
-            String irJson = java.nio.file.Files.readString(irFile.toPath());
+            JsonNode rootNode = ObjectMappers.JSON_MAPPER.readTree(irFile);
 
-            String processedJson = preprocessIntegerOverflow(irJson);
+            IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
+            processor.processNodeInPlace(rootNode);
 
-            return ObjectMappers.JSON_MAPPER.readValue(processedJson, IntermediateRepresentation.class);
+            if (processor.getConversions() > 0) {
+                log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
+            }
+
+            return ObjectMappers.JSON_MAPPER.treeToValue(rootNode, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
     }
 
-    /**
-     * Preprocesses the IR JSON to handle integer overflow in example values.
-     *
-     * <p>OpenAPI specifications may contain example values that exceed Java's Integer limits (e.g., from systems using
-     * 64-bit integers). This method finds such values in fields explicitly typed as "integer" and converts them to
-     * "long" type to preserve the original value while preventing Jackson deserialization failures.
-     *
-     * <p>Note: This only processes integer fields in the IR's example values to avoid modifying actual schema
-     * definitions.
-     */
-    private static String preprocessIntegerOverflow(String json) {
-        if (json == null || json.trim().isEmpty()) {
-            return json;
-        }
-
-        try {
-            return processJsonForIntegerOverflow(json);
-        } catch (Exception e) {
-            log.warn("Failed to preprocess integer overflow, using original JSON", e);
-            return json;
-        }
-    }
-
-    private static String processJsonForIntegerOverflow(String json) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(json);
-
-        IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
-        JsonNode processedNode = processor.processNode(rootNode);
-
-        if (processor.getConversions() > 0) {
-            log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
-        }
-
-        return mapper.writeValueAsString(processedNode);
-    }
-
+    /** Processes JSON nodes in-place to convert integer overflow values to long type. */
     private static class IntegerOverflowProcessor {
         private int conversions = 0;
 
@@ -150,76 +121,79 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             return conversions;
         }
 
-        public JsonNode processNode(JsonNode node) {
+        /**
+         * Processes a node in-place, modifying the tree structure directly. For container nodes (objects/arrays), this
+         * recursively processes children. Only creates new nodes when an actual integer-to-long conversion is needed.
+         */
+        public void processNodeInPlace(JsonNode node) {
             if (node == null) {
-                return node;
+                return;
             }
 
             if (node.isObject()) {
-                return processObjectNode((ObjectNode) node);
+                processObjectNodeInPlace((ObjectNode) node);
             } else if (node.isArray()) {
-                return processArrayNode((ArrayNode) node);
-            } else if (node.isNumber()) {
-                return processNumberNode(node);
-            } else {
-                return node;
+                processArrayNodeInPlace((ArrayNode) node);
             }
+            // Number nodes are handled by their parent containers when replacement is needed
         }
 
-        private JsonNode processObjectNode(ObjectNode objectNode) {
-            ObjectNode result = objectNode.deepCopy();
-
-            if (result.has("integer")) {
-                JsonNode integerNode = result.get("integer");
+        private void processObjectNodeInPlace(ObjectNode objectNode) {
+            // Check for integer overflow pattern: {"integer": <overflow_value>} -> {"long": <value>}
+            if (objectNode.has("integer")) {
+                JsonNode integerNode = objectNode.get("integer");
                 if (integerNode.isNumber() && isIntegerOverflow(integerNode)) {
                     long value = integerNode.asLong();
                     log.debug("Integer overflow detected in IR example value: {}. Converting to long type.", value);
-                    result.remove("integer");
-                    result.put("long", value);
+                    objectNode.remove("integer");
+                    objectNode.put("long", value);
                     conversions++;
                 }
             }
 
-            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = result.fields();
-            while (fields.hasNext()) {
-                java.util.Map.Entry<String, JsonNode> field = fields.next();
-                String fieldName = field.getKey();
-                JsonNode fieldValue = field.getValue();
+            // Collect field names first to avoid ConcurrentModificationException
+            // when we need to replace values during iteration
+            List<String> fieldNames = new ArrayList<>();
+            objectNode.fieldNames().forEachRemaining(fieldNames::add);
 
+            for (String fieldName : fieldNames) {
+                // Skip the integer/long fields we just processed
                 if ("integer".equals(fieldName) || "long".equals(fieldName)) {
                     continue;
                 }
 
-                JsonNode processedValue = processNode(fieldValue);
-                if (processedValue != fieldValue) {
-                    result.set(fieldName, processedValue);
+                JsonNode fieldValue = objectNode.get(fieldName);
+                if (fieldValue == null) {
+                    continue;
+                }
+
+                if (fieldValue.isObject()) {
+                    processObjectNodeInPlace((ObjectNode) fieldValue);
+                } else if (fieldValue.isArray()) {
+                    processArrayNodeInPlace((ArrayNode) fieldValue);
+                } else if (fieldValue.isNumber() && isIntegerOverflow(fieldValue)) {
+                    objectNode.put(fieldName, fieldValue.asLong());
+                    conversions++;
                 }
             }
-
-            return result;
         }
 
-        private JsonNode processArrayNode(ArrayNode arrayNode) {
-            ArrayNode result = arrayNode.deepCopy();
+        private void processArrayNodeInPlace(ArrayNode arrayNode) {
+            for (int i = 0; i < arrayNode.size(); i++) {
+                JsonNode element = arrayNode.get(i);
+                if (element == null) {
+                    continue;
+                }
 
-            for (int i = 0; i < result.size(); i++) {
-                JsonNode element = result.get(i);
-                JsonNode processedElement = processNode(element);
-                if (processedElement != element) {
-                    result.set(i, processedElement);
+                if (element.isObject()) {
+                    processObjectNodeInPlace((ObjectNode) element);
+                } else if (element.isArray()) {
+                    processArrayNodeInPlace((ArrayNode) element);
+                } else if (element.isNumber() && isIntegerOverflow(element)) {
+                    arrayNode.set(i, JsonNodeFactory.instance.numberNode(element.asLong()));
+                    conversions++;
                 }
             }
-
-            return result;
-        }
-
-        private JsonNode processNumberNode(JsonNode numberNode) {
-            if (isIntegerOverflow(numberNode)) {
-                log.debug("Converting overflow integer {} to long", numberNode.asLong());
-                conversions++;
-                return JsonNodeFactory.instance.numberNode(numberNode.asLong());
-            }
-            return numberNode;
         }
 
         private boolean isIntegerOverflow(JsonNode numberNode) {
@@ -242,11 +216,35 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
         try {
-            Process process = runCommandAsync(command, workingDirectory, environment);
+            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
+            pb.environment().putAll(environment);
+            Process process = pb.start();
+            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
+            errorGobbler.start();
+            outputGobbler.start();
+
             int exitCode = process.waitFor();
+            errorGobbler.join();
+            outputGobbler.join();
+
             if (exitCode != 0) {
-                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
+                List<String> allOutput = new ArrayList<>();
+                allOutput.addAll(outputGobbler.getCapturedLines());
+                allOutput.addAll(errorGobbler.getCapturedLines());
+
+                int startIndex = Math.max(0, allOutput.size() - 100);
+                String outputTail =
+                        allOutput.subList(startIndex, allOutput.size()).stream().collect(Collectors.joining("\n"));
+
+                String errorMessage = "Command failed with exit code " + exitCode + ": " + Arrays.toString(command);
+                if (!outputTail.isEmpty()) {
+                    errorMessage += "\n\nLast " + (allOutput.size() - startIndex) + " lines of output:\n" + outputTail;
+                }
+                throw new RuntimeException(errorMessage);
             }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to start command: " + Arrays.toString(command), e);
         } catch (InterruptedException e) {
             throw new RuntimeException("Failed to run command", e);
         }
@@ -267,6 +265,50 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
+    private static void copyGradleWrapperFromResources(Path outputDirectory, Optional<String> customDistributionUrl) {
+        try {
+            copyResourceFile("gradle-wrapper/gradlew", outputDirectory.resolve("gradlew"), true);
+            copyResourceFile("gradle-wrapper/gradlew.bat", outputDirectory.resolve("gradlew.bat"), false);
+            Path wrapperDir = outputDirectory.resolve("gradle").resolve("wrapper");
+            Files.createDirectories(wrapperDir);
+            copyResourceFile(
+                    "gradle-wrapper/gradle/wrapper/gradle-wrapper.jar",
+                    wrapperDir.resolve("gradle-wrapper.jar"),
+                    false);
+            if (customDistributionUrl.isPresent()) {
+                // Write custom gradle-wrapper.properties with the user-provided distribution URL
+                String propertiesContent = "distributionBase=GRADLE_USER_HOME\n"
+                        + "distributionPath=wrapper/dists\n"
+                        + "distributionUrl=" + customDistributionUrl.get().replace(":", "\\:") + "\n"
+                        + "networkTimeout=10000\n"
+                        + "validateDistributionUrl=true\n"
+                        + "zipStoreBase=GRADLE_USER_HOME\n"
+                        + "zipStorePath=wrapper/dists\n";
+                Files.writeString(wrapperDir.resolve("gradle-wrapper.properties"), propertiesContent);
+            } else {
+                copyResourceFile(
+                        "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
+                        wrapperDir.resolve("gradle-wrapper.properties"),
+                        false);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to copy gradle wrapper from resources", e);
+        }
+    }
+
+    private static void copyResourceFile(String resourcePath, Path destination, boolean makeExecutable)
+            throws IOException {
+        try (var inputStream = AbstractGeneratorCli.class.getClassLoader().getResourceAsStream(resourcePath)) {
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + resourcePath);
+            }
+            Files.copy(inputStream, destination, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            if (makeExecutable) {
+                destination.toFile().setExecutable(true);
+            }
+        }
+    }
+
     private final List<GeneratedFile> generatedFiles = new ArrayList<>();
 
     private Path outputDirectory = null;
@@ -278,6 +320,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
+            log(generatorExecClient, "Starting Java SDK generation");
             IntermediateRepresentation ir = getIr(generatorConfig);
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
             generatorConfig
@@ -287,6 +330,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                         @Override
                         public Void visitPublish(GeneratorPublishConfig value) {
+                            log(generatorExecClient, "Generating Java SDK in publish mode");
                             T customConfig = getCustomConfig(generatorConfig);
                             runInPublishMode(generatorExecClient, generatorConfig, ir, customConfig, value);
                             return null;
@@ -294,6 +338,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                         @Override
                         public Void visitDownloadFiles() {
+                            log(generatorExecClient, "Generating Java SDK in download files mode");
                             K customConfig = getDownloadFilesCustomConfig(generatorConfig);
                             runInDownloadFilesMode(generatorExecClient, generatorConfig, ir, customConfig);
                             return null;
@@ -301,6 +346,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                         @Override
                         public Void visitGithub(GithubOutputMode value) {
+                            log(generatorExecClient, "Generating Java SDK in GitHub mode");
                             T customConfig = getCustomConfig(generatorConfig);
                             runInGithubMode(generatorExecClient, generatorConfig, ir, customConfig, value);
                             return null;
@@ -311,13 +357,17 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                             throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                         }
                     });
+            log(generatorExecClient, "Completed Java v1 SDK generation");
             runV2Generator(generatorExecClient, args);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
             log.error("Encountered fatal error", e);
+            String errorMessage =
+                    e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
+            logError(generatorExecClient, "Java SDK generation failed: " + errorMessage);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
-                    ErrorExitStatusUpdate.builder().message(e.getMessage()).build())));
+                    ErrorExitStatusUpdate.builder().message(errorMessage).build())));
             throw new RuntimeException(e);
         }
     }
@@ -433,17 +483,20 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         .build());
 
         if (publishResult.generateFullProject()) {
-            addRootProjectFiles(publishResult.mavenCoordinate(), true, false, generatorConfig);
+            addRootProjectFiles(
+                    publishResult.mavenCoordinate(),
+                    true,
+                    false,
+                    generatorConfig,
+                    customConfig.gradlePluginManagement(),
+                    customConfig.gradleCentralDependencyManagement());
         }
-        generatedFiles.forEach(
-                generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
+        ICustomConfig.OutputDirectory outputDirectoryMode = customConfig.outputDirectory();
+        generatedFiles.forEach(generatedFile ->
+                generatedFile.write(outputDirectory, true, customConfig.packagePrefix(), outputDirectoryMode));
+        copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
-            runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-            Path gradlewPath = outputDirectory.resolve("gradlew");
-            if (Files.exists(gradlewPath)) {
-                runCommandBlocking(
-                        new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
-            }
+            copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
         }
     }
 
@@ -478,17 +531,21 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         && mavenGithubPublishInfo.get().getSignature().isPresent())
                 || customConfigPublishToCentral(generatorConfig);
         // add project level files
-        addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock, generatorConfig);
+        addRootProjectFiles(
+                maybeMavenCoordinate,
+                true,
+                addSignatureBlock,
+                generatorConfig,
+                customConfig.gradlePluginManagement(),
+                customConfig.gradleCentralDependencyManagement());
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        Path gradlewPath = outputDirectory.resolve("gradlew");
-        if (Files.exists(gradlewPath)) {
-            runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
-        }
+        generatedFiles.forEach(generatedFile -> generatedFile.write(
+                outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT));
+        copyLicenseFile(generatorConfig);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -527,14 +584,14 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 Optional.of(mavenCoordinate),
                 false,
                 mavenRegistryConfigV2.getSignature().isPresent(),
-                generatorConfig);
+                generatorConfig,
+                customConfig.gradlePluginManagement(),
+                customConfig.gradleCentralDependencyManagement());
 
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        Path gradlewPath = outputDirectory.resolve("gradlew");
-        if (Files.exists(gradlewPath)) {
-            runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
-        }
+        generatedFiles.forEach(generatedFile -> generatedFile.write(
+                outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT));
+        copyLicenseFile(generatorConfig);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
 
         // run publish
         if (!generatorConfig.getDryRun()) {
@@ -557,7 +614,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         publishEnvVars);
             }
             runCommandBlocking(
-                    new String[] {"gradle", "publish"},
+                    new String[] {"chmod", "+x", "gradlew"},
+                    Paths.get(generatorConfig.getOutput().getPath()),
+                    publishEnvVars);
+            runCommandBlocking(
+                    new String[] {"./gradlew", "publish", "--stacktrace", "--info", "--console=plain", "--no-daemon"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
@@ -575,6 +636,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     public abstract List<String> getSubProjects();
 
+    public List<String> getAdditionalBuildGradleBlocks() {
+        return List.of();
+    }
+
     public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
     public abstract <K extends IDownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
@@ -588,7 +653,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             Optional<MavenCoordinate> maybeMavenCoordinate,
             boolean addTestBlock,
             boolean addSignaturePlugin,
-            GeneratorConfig generatorConfig) {
+            GeneratorConfig generatorConfig,
+            Optional<String> gradlePluginManagement,
+            boolean skipRepositories) {
         String repositoryUrl = addSignaturePlugin
                 ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 : "https://s01.oss.sonatype.org/content/repositories/releases/";
@@ -619,7 +686,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         + "    options.addStringOption('Xdoclint:none', '-quiet')\n"
                         + "}")
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
-                .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
+                .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
+                .addAllCustomBlocks(getAdditionalBuildGradleBlocks());
         if (maybeMavenCoordinate.isPresent()) {
             buildGradle.addCustomBlocks("group = '" + maybeMavenCoordinate.get().getGroup() + "'");
             buildGradle.addCustomBlocks(
@@ -654,20 +722,76 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     + "}");
         }
 
+        buildGradle.skipRepositories(skipRepositories);
         addGeneratedFile(buildGradle.build());
-        String settingsGradleContents = "";
-        if (maybeMavenCoordinate.isPresent()) {
-            settingsGradleContents +=
-                    "rootProject.name = '" + maybeMavenCoordinate.get().getArtifact() + "'\n\n";
+        StringBuilder settingsGradleContents = new StringBuilder();
+
+        // Add plugin management block if configured (for enterprise environments)
+        if (gradlePluginManagement.isPresent()) {
+            settingsGradleContents.append(gradlePluginManagement.get()).append("\n\n");
         }
-        settingsGradleContents += getSubProjects().stream()
+
+        if (maybeMavenCoordinate.isPresent()) {
+            settingsGradleContents
+                    .append("rootProject.name = '")
+                    .append(maybeMavenCoordinate.get().getArtifact())
+                    .append("'\n\n");
+        }
+        settingsGradleContents.append(getSubProjects().stream()
                 .map(project -> "include '" + project + "'")
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining("\n")));
 
         addGeneratedFile(RawGeneratedFile.builder()
                 .filename("settings.gradle")
-                .contents(settingsGradleContents)
+                .contents(settingsGradleContents.toString())
                 .build());
         addGeneratedFile(GitIgnoreGenerator.getGitignore());
+    }
+
+    /**
+     * Copy LICENSE file from Docker mount location to project root. For local generation, the CLI mounts the license
+     * file at /tmp/LICENSE. For remote generation (Fiddle), the license file is handled separately.
+     */
+    private void copyLicenseFile(GeneratorConfig generatorConfig) {
+        if (!generatorConfig.getLicense().isPresent()) {
+            return;
+        }
+
+        generatorConfig
+                .getLicense()
+                .get()
+                .visit(new com.fern.generator.exec.model.config.LicenseConfig.Visitor<Void>() {
+                    @Override
+                    public Void visitBasic(com.fern.generator.exec.model.config.BasicLicense basicLicense) {
+                        // Basic licenses don't need file copying
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitCustom(com.fern.generator.exec.model.config.CustomLicense customLicense) {
+                        Path dockerLicensePath = Paths.get("/tmp/LICENSE");
+                        Path destinationPath = outputDirectory.resolve(customLicense.getFilename());
+
+                        try {
+                            if (Files.exists(dockerLicensePath)) {
+                                Files.copy(dockerLicensePath, destinationPath);
+                                log.debug("Successfully copied LICENSE file to {}", destinationPath);
+                            }
+                        } catch (IOException e) {
+                            // File not found or copy failed - this is expected for remote generation where Fiddle
+                            // handles it
+                            // Silently fail to maintain backwards compatibility
+                            log.debug(
+                                    "Could not copy license file (expected for remote generation): {}", e.getMessage());
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitUnknown(String unknownType) {
+                        log.warn("Unknown license type: {}", unknownType);
+                        return null;
+                    }
+                });
     }
 }

@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { assertNever, getDuplicates, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, getDuplicates, isPlainObject, MediaType } from "@fern-api/core-utils";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/fern-definition-schema";
 import {
     DoubleValidationRules,
@@ -53,7 +53,9 @@ export function validateTypeReferenceExample({
         // This comment never reaches the user and serves as a termination condition for the recursion.
         return [
             {
-                message: "Example is too deeply nested. This may indicate a circular reference."
+                message:
+                    "Example is too deeply nested. This may indicate a circular reference. Example generation was truncated.",
+                severity: "warning"
             }
         ];
     }
@@ -241,7 +243,7 @@ export function validateTypeReferenceExample({
                         )(example);
                     case "string":
                         return createValidator(
-                            (e) => e === expectedLiteral.string,
+                            (e) => e === expectedLiteral.string || areMediaTypesCompatible(expectedLiteral.string, e),
                             `"${expectedLiteral.string}"`
                         )(example);
                     default:
@@ -554,4 +556,23 @@ function areLiteralTypesEquivalent({ expected, actual }: { expected: Literal; ac
         default:
             assertNever(expected);
     }
+}
+
+function areMediaTypesCompatible(expected: string, example: RawSchemas.ExampleTypeReferenceSchema): boolean {
+    if (typeof example !== "string") {
+        return false;
+    }
+
+    const expectedMediaType = MediaType.parse(expected);
+    const exampleMediaType = MediaType.parse(example);
+
+    if (expectedMediaType == null || exampleMediaType == null) {
+        return false;
+    }
+
+    if (expectedMediaType.isJSON() && exampleMediaType.isJSON()) {
+        return true;
+    }
+
+    return false;
 }

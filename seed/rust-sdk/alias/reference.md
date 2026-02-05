@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">get</a>(type_id: TypeId) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">get</a>(type_id: TypeId) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

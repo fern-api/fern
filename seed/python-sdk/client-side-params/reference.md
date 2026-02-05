@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -&gt; AsyncHttpResponse[typing.List[Resource]]</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +125,7 @@ client.service.list_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -&gt; AsyncHttpResponse[Resource]</code></summary>
 <dl>
 <dd>
 
@@ -214,7 +214,7 @@ client.service.get_resource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">search_resources</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">search_resources</a>(...) -&gt; AsyncHttpResponse[SearchResponse]</code></summary>
 <dl>
 <dd>
 
@@ -292,7 +292,7 @@ client.service.search_resources(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**filters:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -312,7 +312,7 @@ client.service.search_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_users</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_users</a>(...) -&gt; AsyncHttpResponse[PaginatedUserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -446,7 +446,7 @@ client.service.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_user_by_id</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_user_by_id</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -535,7 +535,7 @@ client.service.get_user_by_id(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_user</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -650,7 +650,7 @@ client.service.create_user(
 <dl>
 <dd>
 
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -658,7 +658,7 @@ client.service.create_user(
 <dl>
 <dd>
 
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -678,7 +678,7 @@ client.service.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">update_user</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">update_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -786,7 +786,7 @@ client.service.update_user(
 <dl>
 <dd>
 
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -794,7 +794,7 @@ client.service.update_user(
 <dl>
 <dd>
 
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -830,7 +830,7 @@ client.service.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">delete_user</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">delete_user</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -901,7 +901,7 @@ client.service.delete_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_connections</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_connections</a>(...) -&gt; AsyncHttpResponse[typing.List[Connection]]</code></summary>
 <dl>
 <dd>
 
@@ -990,7 +990,7 @@ client.service.list_connections(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_connection</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_connection</a>(...) -&gt; AsyncHttpResponse[Connection]</code></summary>
 <dl>
 <dd>
 
@@ -1070,7 +1070,7 @@ client.service.get_connection(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_clients</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_clients</a>(...) -&gt; AsyncHttpResponse[PaginatedClientResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1204,7 +1204,7 @@ client.service.list_clients(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_client</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_client</a>(...) -&gt; AsyncHttpResponse[Client]</code></summary>
 <dl>
 <dd>
 

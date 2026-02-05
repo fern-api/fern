@@ -38,12 +38,19 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def __init_submit_form_data(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.submit_form_data)
+        type_hints = typing.get_type_hints(cls.submit_form_data)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.submit_form_data, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -60,13 +67,9 @@ class AbstractRootService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.submit_form_data.__globals__)
-
         router.post(
             path="/submit",
-            response_model=PostSubmitResponse,
+            response_model=None,
             description=AbstractRootService.submit_form_data.__doc__,
             **get_route_args(cls.submit_form_data, default_tag=""),
         )(wrapper)

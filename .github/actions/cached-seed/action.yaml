@@ -27,6 +27,15 @@ runs:
     - name: Install
       uses: ./.github/actions/install
 
+    - name: Pre-build core dependencies
+      shell: bash
+      env:
+        FORCE_COLOR: "2"
+      run: |
+        # Build core-utils first to avoid race conditions in parallel compilation
+        # This ensures the dependency output files are fully written before dependent packages start
+        pnpm turbo run compile --filter @fern-api/core-utils
+
     - uses: bufbuild/buf-setup-action@v1.34.0
       with:
         github_token: ${{ github.token }}

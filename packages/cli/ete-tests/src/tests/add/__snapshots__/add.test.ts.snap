@@ -5,6 +5,13 @@ exports[`fern add > fern add <generator> --group sdk 1`] = `
   {
     "contents": [
       {
+        "contents": "**/.preview
+**/.definition
+",
+        "name": ".gitignore",
+        "type": "file",
+      },
+      {
         "contents": [
           {
             "contents": "name: api
@@ -21,6 +28,7 @@ service:
   auth: false
   base-path: /movies
   endpoints:
+
     createMovie:
       docs: Add a movie to the database
       method: POST
@@ -54,6 +62,7 @@ service:
             body: tt1234
 
 types:
+
   MovieId:
     type: string
     docs: The unique identifier for a Movie in the database
@@ -72,6 +81,7 @@ types:
       rating: double
 
 errors:
+
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId
@@ -97,14 +107,14 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
         version: 2.3.2
   typescript:
     generators:
-      - name: fernapi/fern-typescript
+      - name: fern-typescript
         version: 0.0.247
 ",
         "name": "generators.yml",

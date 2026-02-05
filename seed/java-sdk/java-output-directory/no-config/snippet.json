@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "e64a4fa8",
+            "id": {
+                "method": "GET",
+                "path": "/users/{userId}",
+                "identifier_override": "endpoint_service.getUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.test.sdk.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().getUser(\"userId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.test.sdk.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().getUser(\"userId\");\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

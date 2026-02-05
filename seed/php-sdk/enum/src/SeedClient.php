@@ -4,6 +4,7 @@ namespace Seed;
 
 use Seed\Headers\HeadersClient;
 use Seed\InlinedRequest\InlinedRequestClient;
+use Seed\MultipartForm\MultipartFormClient;
 use Seed\PathParam\PathParamClient;
 use Seed\QueryParam\QueryParamClient;
 use GuzzleHttp\ClientInterface;
@@ -22,6 +23,11 @@ class SeedClient
     public InlinedRequestClient $inlinedRequest;
 
     /**
+     * @var MultipartFormClient $multipartForm
+     */
+    public MultipartFormClient $multipartForm;
+
+    /**
      * @var PathParamClient $pathParam
      */
     public PathParamClient $pathParam;
@@ -38,7 +44,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -67,6 +73,7 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
@@ -78,6 +85,7 @@ class SeedClient
 
         $this->headers = new HeadersClient($this->client, $this->options);
         $this->inlinedRequest = new InlinedRequestClient($this->client, $this->options);
+        $this->multipartForm = new MultipartFormClient($this->client, $this->options);
         $this->pathParam = new PathParamClient($this->client, $this->options);
         $this->queryParam = new QueryParamClient($this->client, $this->options);
     }

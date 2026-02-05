@@ -7,6 +7,7 @@ import (
 	headers "github.com/enum/fern/headers"
 	inlinedrequest "github.com/enum/fern/inlinedrequest"
 	internal "github.com/enum/fern/internal"
+	multipartform "github.com/enum/fern/multipartform"
 	option "github.com/enum/fern/option"
 	pathparam "github.com/enum/fern/pathparam"
 	queryparam "github.com/enum/fern/queryparam"
@@ -15,6 +16,7 @@ import (
 type Client struct {
 	Headers        *headers.Client
 	InlinedRequest *inlinedrequest.Client
+	MultipartForm  *multipartform.Client
 	PathParam      *pathparam.Client
 	QueryParam     *queryparam.Client
 
@@ -28,6 +30,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	return &Client{
 		Headers:        headers.NewClient(options),
 		InlinedRequest: inlinedrequest.NewClient(options),
+		MultipartForm:  multipartform.NewClient(options),
 		PathParam:      pathparam.NewClient(options),
 		QueryParam:     queryparam.NewClient(options),
 		options:        options,

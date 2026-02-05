@@ -14,6 +14,6 @@ import resources.types.enum_.exceptions.ErrorWithEnumBody;
 public final class ErrorWithEnumBodyExceptionHandler {
   @ExceptionHandler(ErrorWithEnumBody.class)
   ResponseEntity<Object> handle(ErrorWithEnumBody errorWithEnumBody) {
-    return new ResponseEntity<>(errorWithEnumBody.getBody(), null, ErrorWithEnumBody.STATUS_CODE);
+    return ResponseEntity.status(ErrorWithEnumBody.STATUS_CODE).body(errorWithEnumBody.getBody());
   }
 }

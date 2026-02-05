@@ -1,0 +1,8 @@
+name: header-token
+auth: Header
+auth-schemes:
+  Header:
+    name: Header Token Auth
+    header: x-api-key
+    type: string
+    prefix: test_prefix

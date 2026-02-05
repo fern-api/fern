@@ -15,14 +15,18 @@ from .traced_file import TracedFile
 
 
 class TraceResponseV2(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
-    line_number: typing_extensions.Annotated[int, FieldMetadata(alias="lineNumber")]
+    submission_id: typing_extensions.Annotated[
+        SubmissionId, FieldMetadata(alias="submissionId"), pydantic.Field(alias="submissionId")
+    ]
+    line_number: typing_extensions.Annotated[int, FieldMetadata(alias="lineNumber"), pydantic.Field(alias="lineNumber")]
     file: TracedFile
     return_value: typing_extensions.Annotated[
-        typing.Optional["DebugVariableValue"], FieldMetadata(alias="returnValue")
+        typing.Optional["DebugVariableValue"], FieldMetadata(alias="returnValue"), pydantic.Field(alias="returnValue")
     ] = None
     expression_location: typing_extensions.Annotated[
-        typing.Optional[ExpressionLocation], FieldMetadata(alias="expressionLocation")
+        typing.Optional[ExpressionLocation],
+        FieldMetadata(alias="expressionLocation"),
+        pydantic.Field(alias="expressionLocation"),
     ] = None
     stack: StackInformation
     stdout: typing.Optional[str] = None
@@ -37,6 +41,13 @@ class TraceResponseV2(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
+from ...commons.types.debug_map_value import DebugMapValue  # noqa: E402, I001
 from ...commons.types.debug_variable_value import DebugVariableValue  # noqa: E402, I001
 
-update_forward_refs(TraceResponseV2)
+update_forward_refs(
+    TraceResponseV2,
+    DebugKeyValuePairs=DebugKeyValuePairs,
+    DebugMapValue=DebugMapValue,
+    DebugVariableValue=DebugVariableValue,
+)

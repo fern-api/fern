@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUsername"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedQueryParametersClient } from \"@fern/query-parameters\";\n\nconst client = new SeedQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUsername({\n    limit: 1,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2023-01-15\",\n    deadline: \"2024-01-15T09:30:00Z\",\n    bytes: \"SGVsbG8gd29ybGQh\",\n    user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    user_list: [{\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }, {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }],\n    optional_deadline: \"2024-01-15T09:30:00Z\",\n    key_value: {\n        \"keyValue\": \"keyValue\"\n    },\n    optional_string: \"optionalString\",\n    nested_user: {\n        name: \"name\",\n        user: {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }\n    },\n    optional_user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    exclude_user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    filter: \"filter\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

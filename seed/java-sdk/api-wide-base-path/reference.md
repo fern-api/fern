@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.post(pathParam, serviceParam, resourceParam, endpointParam)</code></summary>
+<details><summary><code>client.service.post(pathParam, serviceParam, endpointParam, resourceParam)</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.service().post("serviceParam", "resourceParam", 1);
+client.service().post("serviceParam", 1, "resourceParam");
 ```
 </dd>
 </dl>
@@ -44,7 +44,7 @@ client.service().post("serviceParam", "resourceParam", 1);
 <dl>
 <dd>
 
-**resourceParam:** `String` 
+**endpointParam:** `Integer` 
     
 </dd>
 </dl>
@@ -52,7 +52,7 @@ client.service().post("serviceParam", "resourceParam", 1);
 <dl>
 <dd>
 
-**endpointParam:** `Integer` 
+**resourceParam:** `String` 
     
 </dd>
 </dl>

@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: Session API
+  version: 1.0.0
+  description: API demonstrating response examples for different status codes
+paths:
+  /sessions/create:
+    post:
+      operationId: createSession
+      summary: Create Session
+      description: Creates a new session. Demonstrates response examples for multiple status codes.
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSessionRequest"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateSessionResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                validationerror:
+                  summary: ValidationError example
+                  value:
+                    error: ValidationError
+                    message: Bad Request
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                notfound:
+                  summary: NotFound example
+                  value:
+                    error: NotFound
+                    message: Resource not found
+        "405":
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                methodnotallowed:
+                  summary: MethodNotAllowed example
+                  value:
+                    error: MethodNotAllowed
+                    message: Method not allowed
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                servererror:
+                  summary: ServerError example
+                  value:
+                    error: ServerError
+                    message: Internal server error
+components:
+  schemas:
+    CreateSessionRequest:
+      type: object
+      required:
+        - amount
+      properties:
+        amount:
+          type: integer
+          description: The amount in cents
+    CreateSessionResponse:
+      type: object
+      required:
+        - id
+        - redirect_url
+      properties:
+        id:
+          type: string
+          description: The unique ID for this session
+        redirect_url:
+          type: string
+          description: The URL to redirect the user to
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: The error code
+        message:
+          type: string
+          description: The error message

@@ -1,10 +1,9 @@
-import { defineConfig } from "vitest/config";
+import { mergeConfig, defaultConfig, defineConfig } from "@fern-api/configs/vitest/base.mjs";
 
-export default defineConfig({
+export default mergeConfig(defaultConfig, defineConfig({
     test: {
-        globals: true,
         env: {
             NODE_ENV: "test"
         }
     }
-});
+}));

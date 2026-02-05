@@ -18,7 +18,7 @@ impl PackageClient {
             Method::POST,
             "",
             None,
-            QueryBuilder::new().string("for", request.for_.clone())
+            QueryBuilder::new().string("for", request.r#for.clone())
             .build(),
             options,
         ).await

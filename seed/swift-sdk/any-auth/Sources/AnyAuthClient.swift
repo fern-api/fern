@@ -11,6 +11,8 @@ public final class AnyAuthClient: Sendable {
     /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
     /// - Parameter apiKey: The API key to use for authentication.
     /// - Parameter token: Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
+    /// - Parameter username: The username to use for authentication.
+    /// - Parameter password: The password to use for authentication.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
@@ -19,6 +21,8 @@ public final class AnyAuthClient: Sendable {
         baseURL: String,
         apiKey: String? = nil,
         token: String? = nil,
+        username: String? = nil,
+        password: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -32,7 +36,7 @@ public final class AnyAuthClient: Sendable {
             bearerAuth: token.map {
                 .init(token: .staticToken($0))
             },
-            basicAuth: nil,
+            basicAuth: .init(username: username, password: password),
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
@@ -45,6 +49,8 @@ public final class AnyAuthClient: Sendable {
     /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
     /// - Parameter apiKey: The API key to use for authentication.
     /// - Parameter token: An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
+    /// - Parameter username: The username to use for authentication.
+    /// - Parameter password: The password to use for authentication.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
@@ -53,6 +59,8 @@ public final class AnyAuthClient: Sendable {
         baseURL: String,
         apiKey: String? = nil,
         token: ClientConfig.CredentialProvider? = nil,
+        username: String? = nil,
+        password: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -66,7 +74,7 @@ public final class AnyAuthClient: Sendable {
             bearerAuth: token.map {
                 .init(token: .provider($0))
             },
-            basicAuth: nil,
+            basicAuth: .init(username: username, password: password),
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

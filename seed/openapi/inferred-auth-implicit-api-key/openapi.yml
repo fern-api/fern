@@ -1,0 +1,75 @@
+openapi: 3.0.1
+info:
+  title: inferred-auth-implicit-api-key
+  version: ''
+paths:
+  /token:
+    post:
+      operationId: auth_getToken
+      tags:
+        - Auth
+      parameters:
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+  /nested-no-auth/get-something:
+    get:
+      operationId: nestedNoAuth_api_getSomething
+      tags:
+        - NestedNoAuthApi
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /nested/get-something:
+    get:
+      operationId: nested_api_getSomething
+      tags:
+        - NestedApi
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security:
+        - {}
+  /get-something:
+    get:
+      operationId: simple_getSomething
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security:
+        - {}
+components:
+  schemas:
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      description: An auth token response.
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        scope:
+          type: string
+          nullable: true
+      required:
+        - access_token
+        - token_type
+        - expires_in
+  securitySchemes: {}

@@ -6,8 +6,9 @@ namespace SeedOauthClientCredentialsDefault;
 public class SeedOauthClientCredentialsDefaultApiException(
     string message,
     int statusCode,
-    object body
-) : SeedOauthClientCredentialsDefaultException(message)
+    object body,
+    Exception? innerException = null
+) : SeedOauthClientCredentialsDefaultException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

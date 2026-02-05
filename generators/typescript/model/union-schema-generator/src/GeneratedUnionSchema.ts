@@ -134,7 +134,6 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         ts.factory.createParameterDeclaration(
                             undefined,
                             undefined,
-                            undefined,
                             ts.factory.createObjectBindingPattern([
                                 ts.factory.createBindingElement(
                                     undefined,
@@ -169,7 +168,6 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         ts.factory.createParameterDeclaration(
                             undefined,
                             undefined,
-                            undefined,
                             ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
                         )
                     ],
@@ -182,7 +180,6 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     undefined,
                     [
                         ts.factory.createParameterDeclaration(
-                            undefined,
                             undefined,
                             undefined,
                             ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
@@ -238,7 +235,6 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
             undefined,
             [
                 ts.factory.createParameterDeclaration(
-                    undefined,
                     undefined,
                     undefined,
                     ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),

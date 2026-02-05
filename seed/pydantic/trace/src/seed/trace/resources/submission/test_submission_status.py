@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
@@ -37,9 +38,12 @@ class TestSubmissionStatus_TestCaseIdToState(UniversalBaseModel):
     type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
 
 
-TestSubmissionStatus = typing.Union[
-    TestSubmissionStatus_Stopped,
-    TestSubmissionStatus_Errored,
-    TestSubmissionStatus_Running,
-    TestSubmissionStatus_TestCaseIdToState,
+TestSubmissionStatus = typing_extensions.Annotated[
+    typing.Union[
+        TestSubmissionStatus_Stopped,
+        TestSubmissionStatus_Errored,
+        TestSubmissionStatus_Running,
+        TestSubmissionStatus_TestCaseIdToState,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

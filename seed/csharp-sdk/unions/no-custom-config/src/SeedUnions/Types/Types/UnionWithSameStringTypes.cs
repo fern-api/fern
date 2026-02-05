@@ -197,12 +197,12 @@ public record UnionWithSameStringTypes
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSameStringTypes>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithSameStringTypes).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSameStringTypes Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

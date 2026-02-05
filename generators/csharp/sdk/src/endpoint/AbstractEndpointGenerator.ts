@@ -8,14 +8,16 @@ import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 
-type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
+type PagingEndpoint = HttpEndpoint & {
+    pagination: NonNullable<HttpEndpoint["pagination"]>;
+};
 
 export abstract class AbstractEndpointGenerator extends WithGeneration {
     private exampleGenerator: ExampleGenerator;
     protected readonly context: SdkGeneratorContext;
 
     public constructor({ context }: { context: SdkGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
     }
@@ -69,10 +71,17 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         endpoint: HttpEndpoint;
         endpointType: "unpaged" | "paged";
     }): EndpointSignatureInfo {
-        const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
+        const request = getEndpointRequest({
+            context: this.context,
+            endpoint,
+            serviceId
+        });
         const requestParameter =
             request != null
-                ? this.csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
+                ? this.csharp.parameter({
+                      type: request.getParameterType(),
+                      name: request.getParameterName()
+                  })
                 : undefined;
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
             endpoint,
@@ -102,9 +111,9 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
         if (endpoint.pagination?.type === "custom") {
-            return this.csharp.Type.reference(this.types.CustomPagerClass(itemType));
+            return this.Types.CustomPagerClass(itemType);
         }
-        return this.csharp.Type.reference(this.types.Pager(itemType));
+        return this.Types.Pager(itemType);
     }
 
     protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
@@ -125,11 +134,11 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             unboxOptionals: true
         });
 
-        if (is.Type.list(listItemType)) {
+        if (is.Collection.list(listItemType)) {
             return listItemType.getCollectionItemType();
         }
         throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.type}.`
+            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.fullyQualifiedName}.`
         );
     }
 
@@ -154,7 +163,9 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                     this.csharp.parameter({
                         docs: pathParam.docs,
                         name: parameterName,
-                        type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
+                        type: this.context.csharpTypeMapper.convert({
+                            reference: pathParam.valueType
+                        })
                     })
                 );
             }
@@ -226,7 +237,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             on,
             async: true,
             configureAwait: true,
-            isAsyncEnumerable: getEndpointReturnType({ context: this.context, endpoint })?.isAsyncEnumerable,
+            isAsyncEnumerable: is.AsyncEnumerable(getEndpointReturnType({ context: this.context, endpoint })),
             generics: []
         });
     }
@@ -247,12 +258,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                 }).doGenerateSnippet({ example: exampleEndpointCall, parseDatetimes });
             case "justRequestBody": {
                 if (endpoint.requestBody?.type === "bytes") {
-                    return this.extern.System.IO.MemoryStream.new({
+                    return this.System.IO.MemoryStream.new({
                         arguments_: [
                             this.csharp.invokeMethod({
-                                on: this.extern.System.Text.Encoding_UTF8,
+                                on: this.System.Text.Encoding_UTF8,
                                 method: "GetBytes",
-                                arguments_: [this.csharp.TypeLiteral.string("[bytes]")]
+                                arguments_: [this.csharp.Literal.string("[bytes]")]
                             })
                         ]
                     });

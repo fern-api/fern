@@ -13,6 +13,8 @@ use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
 use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
 use Seed\Users\Requests\ListUsersBodyCursorPaginationRequest;
 use Seed\Core\Pagination\PaginationHelper;
+use Seed\Users\Requests\ListUsersTopLevelBodyCursorPaginationRequest;
+use Seed\Users\Types\ListUsersTopLevelCursorPaginationResponse;
 use Seed\Users\Requests\ListUsersOffsetPaginationRequest;
 use Seed\Core\Pagination\OffsetPager;
 use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
@@ -25,8 +27,11 @@ use Seed\Users\Requests\ListUsersExtendedRequestForOptionalData;
 use Seed\Users\Types\ListUsersExtendedOptionalListResponse;
 use Seed\Users\Requests\ListUsernamesRequest;
 use Seed\Types\UsernameCursor;
+use Seed\Users\Requests\ListUsernamesWithOptionalResponseRequest;
 use Seed\Users\Requests\ListWithGlobalConfigRequest;
 use Seed\Users\Types\UsernameContainer;
+use Seed\Users\Requests\ListUsersOptionalDataRequest;
+use Seed\Users\Types\ListUsersOptionalDataPaginationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -44,7 +49,7 @@ class UsersClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -149,6 +154,37 @@ class UsersClient
             getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
             /* @phpstan-ignore-next-line */
             getItems: fn (ListUsersPaginationResponse $response) => $response?->data ?? [],
+        );
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     *
+     * @param ListUsersTopLevelBodyCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersTopLevelBodyCursorPaginationRequest $request) => $this->_listWithTopLevelBodyCursorPagination($request, $options),
+            setCursor: function (ListUsersTopLevelBodyCursorPaginationRequest $request, ?string $cursor) {
+                $request->cursor = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->nextCursor ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->data ?? [],
         );
     }
 
@@ -386,6 +422,33 @@ class UsersClient
     }
 
     /**
+     * @param ListUsernamesWithOptionalResponseRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest $request = new ListUsernamesWithOptionalResponseRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsernamesWithOptionalResponseRequest $request) => $this->_listUsernamesWithOptionalResponse($request, $options),
+            setCursor: function (ListUsernamesWithOptionalResponseRequest $request, ?string $cursor) {
+                $request->startingAfter = $cursor;
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?UsernameCursor $response) => $response?->cursor?->after ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?UsernameCursor $response) => $response?->cursor?->data ?? [],
+        );
+    }
+
+    /**
      * @param ListWithGlobalConfigRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -410,6 +473,36 @@ class UsersClient
             getStep: null,
             /* @phpstan-ignore-next-line */
             getItems: fn (UsernameContainer $response) => $response?->results ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersOptionalDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListUsersOptionalDataRequest $request) => $this->_listWithOptionalData($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListUsersOptionalDataRequest $request) => $request?->page ?? 0,
+            setOffset: function (ListUsersOptionalDataRequest $request, int $offset) {
+                $request->page = $offset;
+            },
+            getStep: null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (ListUsersOptionalDataPaginationResponse $response) => $response?->data ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
         );
@@ -571,6 +664,64 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return ListUsersPaginationResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     *
+     * @param ListUsersTopLevelBodyCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ListUsersTopLevelCursorPaginationResponse
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    private function _listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): ListUsersTopLevelCursorPaginationResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users/top-level-cursor",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return ListUsersTopLevelCursorPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -1085,6 +1236,67 @@ class UsersClient
     }
 
     /**
+     * @param ListUsernamesWithOptionalResponseRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?UsernameCursor
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    private function _listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest $request = new ListUsernamesWithOptionalResponseRequest(), ?array $options = null): ?UsernameCursor
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->startingAfter != null) {
+            $query['starting_after'] = $request->startingAfter;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return UsernameCursor::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * @param ListWithGlobalConfigRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -1119,6 +1331,64 @@ class UsersClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return UsernameContainer::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param ListUsersOptionalDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ListUsersOptionalDataPaginationResponse
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    private function _listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): ListUsersOptionalDataPaginationResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users/optional-data",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return ListUsersOptionalDataPaginationResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

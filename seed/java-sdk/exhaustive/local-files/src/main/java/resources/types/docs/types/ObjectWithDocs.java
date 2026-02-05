@@ -35,6 +35,11 @@ public final class ObjectWithDocs {
 
   /**
    * @return Characters that could lead to broken generated SDKs:
+   * <p>Markdown Escapes:</p>
+   * <ul>
+   * <li>_: Escaped underscore (e.g., FOO_BAR)</li>
+   * <li>*: Escaped asterisk</li>
+   * </ul>
    * <p>JSDoc (JavaScript/TypeScript):</p>
    * <ul>
    * <li>@: Used for JSDoc tags</li>
@@ -54,6 +59,10 @@ public final class ObjectWithDocs {
    * <li>/**: Block comment start</li>
    * <li>** /: Block comment end</li>
    * </ul>
+   * <p>XMLDoc (C#) (Example of actual XML tags):
+   * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+   * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+   * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
    * <p>Javadoc (Java):</p>
    * <ul>
    * <li>@: Used for Javadoc tags</li>
@@ -133,6 +142,11 @@ public final class ObjectWithDocs {
   public interface StringStage {
     /**
      * <p>Characters that could lead to broken generated SDKs:</p>
+     * <p>Markdown Escapes:</p>
+     * <ul>
+     * <li>_: Escaped underscore (e.g., FOO_BAR)</li>
+     * <li>*: Escaped asterisk</li>
+     * </ul>
      * <p>JSDoc (JavaScript/TypeScript):</p>
      * <ul>
      * <li>@: Used for JSDoc tags</li>
@@ -152,6 +166,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>
@@ -223,6 +241,11 @@ public final class ObjectWithDocs {
 
     /**
      * <p>Characters that could lead to broken generated SDKs:</p>
+     * <p>Markdown Escapes:</p>
+     * <ul>
+     * <li>_: Escaped underscore (e.g., FOO_BAR)</li>
+     * <li>*: Escaped asterisk</li>
+     * </ul>
      * <p>JSDoc (JavaScript/TypeScript):</p>
      * <ul>
      * <li>@: Used for JSDoc tags</li>
@@ -242,6 +265,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>
@@ -284,6 +311,11 @@ public final class ObjectWithDocs {
      * <li>&amp;: HTML entities</li>
      * </ul>
      * <p>Characters that could lead to broken generated SDKs:</p>
+     * <p>Markdown Escapes:</p>
+     * <ul>
+     * <li>_: Escaped underscore (e.g., FOO_BAR)</li>
+     * <li>*: Escaped asterisk</li>
+     * </ul>
      * <p>JSDoc (JavaScript/TypeScript):</p>
      * <ul>
      * <li>@: Used for JSDoc tags</li>
@@ -303,6 +335,10 @@ public final class ObjectWithDocs {
      * <li>/**: Block comment start</li>
      * <li>** /: Block comment end</li>
      * </ul>
+     * <p>XMLDoc (C#) (Example of actual XML tags):
+     * See &lt;a href=&quot;https://example.com/docs&quot;&gt;the docs&lt;/a&gt; for more info.
+     * Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+     * Note: when count &lt; 10 or count &gt; 100, special handling applies.</p>
      * <p>Javadoc (Java):</p>
      * <ul>
      * <li>@: Used for Javadoc tags</li>

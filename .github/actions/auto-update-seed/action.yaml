@@ -65,7 +65,7 @@ runs:
       if: steps.check-changes.outputs.seed-changes-generated == 'true'
       shell: bash
       run: |
-        git diff --staged > seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
+        git diff --staged --binary --full-index > seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
 
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts

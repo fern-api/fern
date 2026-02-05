@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: Test spec for anyOf with const query parameter
+  description: |
+    Tests that when generating examples for query parameters with anyOf schemas
+    containing a const value, the example generator prefers the const variant
+    over primitive types that would fall back to using the parameter name.
+  version: 1.0.0
+
+paths:
+  /v2/link/bulk_trigger_historical_pull:
+    post:
+      tags:
+        - link
+      summary: Bulk Trigger Historical Pull
+      operationId: bulk_trigger_historical_pull
+      parameters:
+        - name: team_id
+          in: query
+          required: true
+          schema:
+            anyOf:
+              - type: string
+                format: uuid
+              - const: infer_from_context
+                type: string
+            default: infer_from_context
+            title: Team Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean

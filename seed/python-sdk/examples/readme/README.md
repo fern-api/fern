@@ -9,6 +9,23 @@ This is a test introduction
 split across multiple lines.
 
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Override Section](#override-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
@@ -150,6 +167,7 @@ client = SeedExamples(
 )
 response = client.service.with_raw_response.create_movie(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

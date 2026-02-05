@@ -32,6 +32,10 @@ public class AsyncPutClient {
     return this.rawClient.add(id).thenApply(response -> response.body());
   }
 
+  public CompletableFuture<PutResponse> add(String id, RequestOptions requestOptions) {
+    return this.rawClient.add(id, requestOptions).thenApply(response -> response.body());
+  }
+
   public CompletableFuture<PutResponse> add(String id, PutRequest request) {
     return this.rawClient.add(id, request).thenApply(response -> response.body());
   }

@@ -37,7 +37,7 @@ types:
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      scripts: optional<list<DockerScriptConfig>>
+      scripts: optional<list<ContainerScriptConfig>>
       allowedFailures:
         type: optional<list<string>>
         docs: |
@@ -63,7 +63,7 @@ types:
   PublishCommand:
     docs: |
       Configuration for publishing from a command, assuming something packaged up, like with the TypeScript generator.
-      ex. `pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"`
+      ex. `pnpm turbo run dockerTagVersion --filter @fern-typescript/express-generator-cli -- "$VERSION"`
       Commands can be multi-line, we'll run them all!
     properties:
       workingDirectory: optional<string>
@@ -79,14 +79,15 @@ types:
       - PublishDocker
       - PublishCommand
 
-  TestDockerConfiguration:
+  TestContainerConfiguration:
     properties:
       image: string
       command: optional<DockerCommand>
 
   TestConfiguration:
     properties:
-      docker: TestDockerConfiguration
+      docker: TestContainerConfiguration
+      podman: optional<TestContainerConfiguration>
       local: optional<LocalBuildInfo>
 
   LocalBuildInfo:
@@ -124,17 +125,36 @@ types:
       - string
       - list<string>
 
+  ScriptCommands:
+    docs: |
+      Commands can be either a simple list of strings (legacy format, treated as build commands),
+      or an object with separate build and test command arrays.
+    discriminated: false
+    union:
+      - list<string>
+      - ScriptCommandsByPhase
+
+  ScriptCommandsByPhase:
+    docs: Commands separated by phase (build vs test)
+    properties:
+      build:
+        docs: Commands to run during the build phase
+        type: optional<list<string>>
+      test:
+        docs: Commands to run during the test phase
+        type: optional<list<string>>
+
   Script:
     properties:
       name:
         docs: The name of the script. If provided, this enables fixtures to skip certain scripts.
         type: optional<string>
-      commands: list<string>
+      commands: ScriptCommands
 
-  DockerScriptConfig:
+  ContainerScriptConfig:
     extends: Script
     properties:
-      docker: string
+      image: string
 
   Language:
     enum:
@@ -163,13 +183,27 @@ types:
       audiences: optional<list<string>>
       outputFolder: string
       outputVersion: optional<string>
+      disableDynamicSnippetTests:
+        type: optional<boolean>
+        docs: |
+          If true, dynamic snippet tests will not be generated for this fixture.
+          This is useful for situations where the main parts of the sdk are working, but the dynamic snippet tests are not.
+          Disabling the dynamic snippet tests allows the fixture to compile and run tests, surfacing issues when failures there start to occur.
       outputMode:
         type: optional<OutputMode>
         docs: Overrides the default output mode
       license: optional<unknown>
       skipScripts:
-        docs: List of script names to skip.
-        type: optional<list<string>>
+        docs: |
+          Either a boolean to skip all scripts, or a list of script names to skip.
+          When true, all build and test scripts will be skipped for this fixture.
+        type: optional<SkipScripts>
+
+  SkipScripts:
+    discriminated: false
+    union:
+      - boolean
+      - list<string>
 
   ReadmeConfig:
     properties:

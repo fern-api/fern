@@ -63,7 +63,6 @@ paths:
             type: object
             additionalProperties:
               type: string
-              nullable: true
             nullable: true
         - name: optionalString
           in: query
@@ -103,7 +102,7 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/User'
+            $ref: '#/components/schemas/SearchRequestNeighbor'
             nullable: true
         - name: neighborRequired
           in: query
@@ -119,6 +118,13 @@ paths:
                 $ref: '#/components/schemas/SearchResponse'
 components:
   schemas:
+    SearchRequestNeighbor:
+      title: SearchRequestNeighbor
+      oneOf:
+        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/NestedUser'
+        - type: string
+        - type: integer
     SearchRequestNeighborRequired:
       title: SearchRequestNeighborRequired
       oneOf:

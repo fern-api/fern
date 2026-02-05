@@ -4,7 +4,7 @@ using SeedApi.Core;
 
 namespace SeedApi.A;
 
-public partial class AClient
+public partial class AClient : IAClient
 {
     private RawClient _client;
 
@@ -15,7 +15,7 @@ public partial class AClient
         C = new CClient(_client);
     }
 
-    public BClient B { get; }
+    public IBClient B { get; }
 
-    public CClient C { get; }
+    public ICClient C { get; }
 }

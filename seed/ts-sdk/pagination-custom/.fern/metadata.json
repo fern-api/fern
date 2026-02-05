@@ -1,5 +1,9 @@
 {
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest"
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "customPagerName": "MyPager"
+    },
+    "sdkVersion": "0.0.1"
 }

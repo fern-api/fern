@@ -6,5 +6,6 @@
     "pydantic_config": {
       "use_str_enums": true
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

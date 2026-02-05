@@ -13,5 +13,6 @@
         "content": "Generator Invocation Custom Content for {{ packageName }}"
       }
     ]
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

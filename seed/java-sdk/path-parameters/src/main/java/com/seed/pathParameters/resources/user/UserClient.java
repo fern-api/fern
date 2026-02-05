@@ -6,6 +6,7 @@ package com.seed.pathParameters.resources.user;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.RequestOptions;
 import com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;
+import com.seed.pathParameters.resources.user.requests.GetUserSpecificsRequest;
 import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
 import com.seed.pathParameters.resources.user.requests.SearchUsersRequest;
 import com.seed.pathParameters.resources.user.requests.UpdateUserRequest;
@@ -31,6 +32,10 @@ public class UserClient {
 
     public User getUser(String userId) {
         return this.rawClient.getUser(userId).body();
+    }
+
+    public User getUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getUser(userId, requestOptions).body();
     }
 
     public User getUser(String userId, GetUsersRequest request) {
@@ -61,6 +66,10 @@ public class UserClient {
         return this.rawClient.searchUsers(userId).body();
     }
 
+    public List<User> searchUsers(String userId, RequestOptions requestOptions) {
+        return this.rawClient.searchUsers(userId, requestOptions).body();
+    }
+
     public List<User> searchUsers(String userId, SearchUsersRequest request) {
         return this.rawClient.searchUsers(userId, request).body();
     }
@@ -79,6 +88,13 @@ public class UserClient {
     /**
      * Test endpoint with path parameter that has a text prefix (v{version})
      */
+    public User getUserMetadata(String userId, int version, RequestOptions requestOptions) {
+        return this.rawClient.getUserMetadata(userId, version, requestOptions).body();
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
     public User getUserMetadata(String userId, int version, GetUserMetadataRequest request) {
         return this.rawClient.getUserMetadata(userId, version, request).body();
     }
@@ -90,6 +106,45 @@ public class UserClient {
             String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getUserMetadata(userId, version, request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public User getUserSpecifics(String userId, int version, String thought) {
+        return this.rawClient.getUserSpecifics(userId, version, thought).body();
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public User getUserSpecifics(String userId, int version, String thought, RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserSpecifics(userId, version, thought, requestOptions)
+                .body();
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public User getUserSpecifics(String userId, int version, String thought, GetUserSpecificsRequest request) {
+        return this.rawClient
+                .getUserSpecifics(userId, version, thought, request)
+                .body();
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public User getUserSpecifics(
+            String userId,
+            int version,
+            String thought,
+            GetUserSpecificsRequest request,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserSpecifics(userId, version, thought, request, requestOptions)
                 .body();
     }
 }

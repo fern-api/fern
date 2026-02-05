@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "_type": {
+      "type": "string",
+      "enum": [
+        "foo",
+        "bar"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "_type": {
+          "const": "foo"
+        },
+        "value": {
+          "$ref": "#/definitions/types.Foo"
+        }
+      },
+      "required": [
+        "_type"
+      ]
+    },
+    {
+      "properties": {
+        "_type": {
+          "const": "bar"
+        },
+        "value": {
+          "$ref": "#/definitions/types.Bar"
+        }
+      },
+      "required": [
+        "_type"
+      ]
+    }
+  ],
+  "definitions": {
+    "types.Foo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "types.Bar": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -3,32 +3,45 @@
 module Seed
   module S3
     class Client
-      # @return [Seed::S3::Client]
-      def initialize(client:)
+      # @param client [Seed::Internal::Http::RawClient]
+      # @param base_url [String, nil]
+      # @param environment [Hash[Symbol, String], nil]
+      #
+      # @return [void]
+      def initialize(client:, base_url: nil, environment: nil)
         @client = client
+        @base_url = base_url
+        @environment = environment
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::S3::Types::GetPresignedUrlRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [String]
       def get_presigned_url(request_options: {}, **params)
-        _body_prop_names = %i[s_3_key]
-        _body_bag = params.slice(*_body_prop_names)
-
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PRODUCTION,
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url] || @base_url || @environment&.dig(:s_3),
           method: "POST",
           path: "/s3/presigned-url",
-          body: Seed::S3::Types::GetPresignedUrlRequest.new(_body_bag).to_h
+          body: Seed::S3::Types::GetPresignedUrlRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

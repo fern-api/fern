@@ -2,7 +2,7 @@ import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
 import { type Generation } from "../../context/generation-info";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
-import { Type } from "../types/Type";
+import { Type } from "../types/IType";
 
 export declare namespace Dictionary {
     interface Args {

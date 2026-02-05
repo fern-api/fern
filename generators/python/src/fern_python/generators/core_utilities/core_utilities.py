@@ -42,6 +42,16 @@ class CoreUtilities:
             exports={"serialize_datetime"},
         )
 
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="enum.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="enum"),
+            ),
+            exports=set(),
+        )
+
         utilities_path = (
             "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py"
             if is_v1_on_v2 and self._use_pydantic_field_aliases
@@ -117,6 +127,12 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
+        )
+
+    def get_fern_enum(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=("StrEnum",),
+            import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path), named_import="enum"),
         )
 
     def get_field_metadata(self) -> FieldMetadata:

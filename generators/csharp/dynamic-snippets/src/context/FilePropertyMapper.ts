@@ -13,7 +13,7 @@ export class FilePropertyMapper extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
     }
 
@@ -142,10 +142,10 @@ export class FilePropertyMapper extends WithGeneration {
     }: {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         return this.context.getFileParameterForString(fileValue);
     }
@@ -156,13 +156,13 @@ export class FilePropertyMapper extends WithGeneration {
     }: {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray;
         record: Record<string, unknown>;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
-        return this.csharp.TypeLiteral.list({
-            valueType: this.csharp.Type.reference(this.types.FileParameter),
+        return this.csharp.Literal.list({
+            valueType: this.Types.FileParameter,
             values: fileValues.map((value) => this.context.getFileParameterForString(value))
         });
     }
@@ -173,12 +173,12 @@ export class FilePropertyMapper extends WithGeneration {
     }: {
         property: FernIr.dynamic.NamedParameter;
         record: Record<string, unknown>;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
-        return this.context.dynamicTypeLiteralMapper.convert({
+        return this.context.dynamicLiteralMapper.convert({
             typeReference: property.typeReference,
             value: bodyPropertyValue
         });

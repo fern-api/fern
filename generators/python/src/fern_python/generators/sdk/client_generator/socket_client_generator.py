@@ -167,9 +167,14 @@ class SocketClientGenerator:
         def _get_iterator_method_body(writer: AST.NodeWriter) -> None:
             writer.write_line(f"{'async ' if is_async else ''}for message in self.{self.WEBSOCKET_MEMBER_NAME}:")
             with writer.indent():
-                writer.write("yield ")
-                writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-                writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
+                writer.write_line("if isinstance(message, bytes):")
+                with writer.indent():
+                    writer.write_line("yield message")
+                writer.write_line("else:")
+                with writer.indent():
+                    writer.write("yield ")
+                    writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                    writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
 
         return _get_iterator_method_body
 
@@ -207,11 +212,16 @@ class SocketClientGenerator:
                     f"{'async ' if is_async else ''}for raw_message in self.{self.WEBSOCKET_MEMBER_NAME}:"
                 )
                 with writer.indent():
-                    writer.write_line("json_data = json.loads(raw_message)")
-                    writer.write("parsed = ")
-                    writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-                    writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
-                    writer.write_line()
+                    writer.write_line("if isinstance(raw_message, bytes):")
+                    with writer.indent():
+                        writer.write_line("parsed = raw_message")
+                    writer.write_line("else:")
+                    with writer.indent():
+                        writer.write_line("json_data = json.loads(raw_message)")
+                        writer.write("parsed = ")
+                        writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                        writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+                        writer.write_line()
                     writer.write(emit_call_start)
                     writer.write_reference(self._context.core_utilities.get_event_type())
                     writer.write(".MESSAGE, parsed)")
@@ -236,12 +246,24 @@ class SocketClientGenerator:
 
         return _get_start_listening_method_body
 
+    def _is_pydantic_model_type(self, type_reference: ir_types.TypeReference) -> bool:
+        """Check if the type reference is a Pydantic model (not a primitive or container)."""
+        return type_reference.visit(
+            container=lambda _: False,
+            named=lambda _: True,
+            primitive=lambda _: False,
+            unknown=lambda: False,
+        )
+
     def _get_send_message_method(self, message: ir_types.WebSocketMessage, is_async: bool) -> AST.FunctionDeclaration:
+        # Use custom method_name if provided, otherwise default to send_{message_type}
+        method_name = snake_case(message.method_name) if message.method_name else f"send_{snake_case(message.type)}"
+
         union = message.body.get_as_union()
         if not hasattr(union, "body_type"):
             # Create a fallback for non-reference messages
             return AST.FunctionDeclaration(
-                name=f"send_{snake_case(message.type)}",
+                name=method_name,
                 is_async=is_async,
                 signature=AST.FunctionSignature(
                     parameters=[
@@ -252,14 +274,15 @@ class SocketClientGenerator:
                     ],
                     return_type=AST.TypeHint.none(),
                 ),
-                body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
+                body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async, use_send_model=True)),
                 docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=AST.TypeHint.any())),
             )
 
         message_type = union.body_type
         message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(message_type)
+        use_send_model = self._is_pydantic_model_type(message_type)
         return AST.FunctionDeclaration(
-            name=f"send_{snake_case(message.type)}",
+            name=method_name,
             is_async=is_async,
             signature=AST.FunctionSignature(
                 parameters=[
@@ -270,7 +293,7 @@ class SocketClientGenerator:
                 ],
                 return_type=AST.TypeHint.none(),
             ),
-            body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
+            body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async, use_send_model=use_send_model)),
             docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=message_type_hint)),
         )
 
@@ -283,9 +306,12 @@ class SocketClientGenerator:
 
         return _write_docstring
 
-    def _get_send_message_method_body(self, is_async: bool) -> CodeWriterFunction:
+    def _get_send_message_method_body(self, is_async: bool, use_send_model: bool) -> CodeWriterFunction:
         def _get_send_message_method_body(writer: AST.NodeWriter) -> None:
-            writer.write_line(f"{'await ' if is_async else ''}self._send_model(message)")
+            if use_send_model:
+                writer.write_line(f"{'await ' if is_async else ''}self._send_model(message)")
+            else:
+                writer.write_line(f"{'await ' if is_async else ''}self._send(message)")
 
         return _get_send_message_method_body
 
@@ -309,6 +335,9 @@ class SocketClientGenerator:
     def _get_recv_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_recv_method_body(writer: AST.NodeWriter) -> None:
             writer.write_line(f"data = {'await ' if is_async else ''}self.{self.WEBSOCKET_MEMBER_NAME}.recv()")
+            writer.write_line("if isinstance(data, bytes):")
+            with writer.indent():
+                writer.write_line("return data  # type: ignore")
             writer.write_line("json_data = json.loads(data)")
             writer.write("return ")
             writer.write_reference(self._context.core_utilities.get_parse_obj_as())

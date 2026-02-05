@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "parentId": {
+      "type": "string"
+    },
+    "child": {
+      "$ref": "#/definitions/types.Child"
+    },
+    "parentName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "parentId",
+    "child",
+    "parentName"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "types.Child": {
+      "type": "object",
+      "properties": {
+        "childId": {
+          "type": "string"
+        },
+        "childValue": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "childId",
+        "childValue"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

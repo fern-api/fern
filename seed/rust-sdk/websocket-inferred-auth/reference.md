@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token_with_client_credentials</a>(request: GetTokenRequest) -> Result<TokenResponse, ApiError></code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token_with_client_credentials</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -25,14 +25,13 @@ async fn main() {
         .auth
         .get_token_with_client_credentials(
             &GetTokenRequest {
-                x_api_key: "X-Api-Key".to_string(),
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
                 audience: "https://api.example.com".to_string(),
                 grant_type: "client_credentials".to_string(),
                 scope: Some("scope".to_string()),
             },
-            None,
+            Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key")),
         )
         .await;
 }
@@ -94,7 +93,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refresh_token</a>(request: RefreshTokenRequest) -> Result<TokenResponse, ApiError></code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refresh_token</a>(request: RefreshTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +118,6 @@ async fn main() {
         .auth
         .refresh_token(
             &RefreshTokenRequest {
-                x_api_key: "X-Api-Key".to_string(),
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
                 refresh_token: "refresh_token".to_string(),
@@ -127,7 +125,7 @@ async fn main() {
                 grant_type: "refresh_token".to_string(),
                 scope: Some("scope".to_string()),
             },
-            None,
+            Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key")),
         )
         .await;
 }

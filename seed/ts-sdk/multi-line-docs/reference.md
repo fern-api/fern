@@ -55,7 +55,7 @@ This ID is unique to each user.
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -122,7 +122,7 @@ await client.user.createUser({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>

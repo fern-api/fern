@@ -8,16 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.mjs";
+import { normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
+import { mergeHeaders } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
-export class Primitive {
-    constructor(_options) {
-        this._options = _options;
+export class PrimitiveClient {
+    constructor(options) {
+        this._options = normalizeClientOptionsWithAuth(options);
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnString("string")
@@ -28,7 +30,8 @@ export class Primitive {
     __getAndReturnString(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/string"),
                 method: "POST",
@@ -53,26 +56,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/string.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/string");
         });
     }
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
@@ -83,7 +72,8 @@ export class Primitive {
     __getAndReturnInt(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/integer"),
                 method: "POST",
@@ -108,26 +98,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/integer.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/integer");
         });
     }
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
@@ -138,7 +114,8 @@ export class Primitive {
     __getAndReturnLong(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/long"),
                 method: "POST",
@@ -163,26 +140,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/long.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/long");
         });
     }
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
@@ -193,7 +156,8 @@ export class Primitive {
     __getAndReturnDouble(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/double"),
                 method: "POST",
@@ -218,26 +182,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/double.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/double");
         });
     }
     /**
      * @param {boolean} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnBool(true)
@@ -248,7 +198,8 @@ export class Primitive {
     __getAndReturnBool(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/boolean"),
                 method: "POST",
@@ -273,26 +224,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/boolean.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/boolean");
         });
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
@@ -303,7 +240,8 @@ export class Primitive {
     __getAndReturnDatetime(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/datetime"),
                 method: "POST",
@@ -328,26 +266,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/datetime.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/datetime");
         });
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
@@ -358,7 +282,8 @@ export class Primitive {
     __getAndReturnDate(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/date"),
                 method: "POST",
@@ -383,26 +308,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/date.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/date");
         });
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
@@ -413,7 +324,8 @@ export class Primitive {
     __getAndReturnUuid(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/uuid"),
                 method: "POST",
@@ -438,26 +350,12 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/uuid.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/uuid");
         });
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
@@ -468,7 +366,8 @@ export class Primitive {
     __getAndReturnBase64(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/primitive/base64"),
                 method: "POST",
@@ -493,30 +392,7 @@ export class Primitive {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/base64.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        });
-    }
-    _getAuthorizationHeader() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const bearer = yield core.Supplier.get(this._options.token);
-            if (bearer != null) {
-                return `Bearer ${bearer}`;
-            }
-            return undefined;
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/primitive/base64");
         });
     }
 }

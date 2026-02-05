@@ -156,12 +156,12 @@ public record TestCaseImplementationDescriptionBoard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseImplementationDescriptionBoard>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(TestCaseImplementationDescriptionBoard).IsAssignableFrom(typeToConvert);
 
         public override TestCaseImplementationDescriptionBoard Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

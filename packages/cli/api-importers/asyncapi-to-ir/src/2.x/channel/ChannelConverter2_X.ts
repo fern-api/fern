@@ -220,7 +220,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     node: operation,
                     breadcrumbs: this.breadcrumbs
                 }),
-                docs: operation.description
+                docs: operation.description,
+                methodName: undefined // AsyncAPI v2 doesn't support x-fern-sdk-method-name extension
             };
         }
 

@@ -8,6 +8,7 @@
     <IsTestProject>true</IsTestProject>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="PolySharp" Version="1.15.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,9 +27,11 @@
     </PackageReference>
     <PackageReference Include="WireMock.Net" Version="1.7.4" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\SeedNurseryApi\SeedNurseryApi.csproj" />
   </ItemGroup>
+
   <Import
     Project="SeedNurseryApi.Test.Custom.props"
     Condition="Exists('SeedNurseryApi.Test.Custom.props')"

@@ -1,0 +1,53 @@
+openapi: 3.1.0
+info:
+  title: test
+  version: 1.0.0
+paths:
+  /companies:
+    post:
+      summary: Create a company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Company"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Company"
+components:
+  schemas:
+    Company:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          examples:
+            - Acme Inc.
+        logo:
+          $ref: "#/components/schemas/File"
+          examples:
+            - url: https://images.example.com/logo.png
+              mimetype: image/png
+              display_name: ""
+    File:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          examples:
+            - https://example.com/path/to/invoice.pdf
+        mimetype:
+          type: string
+          examples:
+            - application/pdf
+        display_name:
+          type: string
+          examples:
+            - INV-00042

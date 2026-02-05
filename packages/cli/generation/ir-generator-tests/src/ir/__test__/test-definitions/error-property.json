@@ -252,6 +252,7 @@
                 "wireValue": "PropertyBasedErrorTest"
             },
             "statusCode": 400,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -324,6 +325,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
@@ -454,7 +456,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -835,6 +839,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "GET request that always throws an error"
                 }
@@ -1029,6 +1035,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -1122,6 +1129,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_errors": {
             "name": {

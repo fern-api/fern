@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "follow_redirects_by_default": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

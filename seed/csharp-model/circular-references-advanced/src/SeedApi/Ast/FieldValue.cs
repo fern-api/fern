@@ -191,12 +191,12 @@ public record FieldValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FieldValue>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(FieldValue).IsAssignableFrom(typeToConvert);
 
         public override FieldValue Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -10,11 +10,15 @@ import (
 )
 
 var (
-	objectWithDocsFieldString = big.NewInt(1 << 0)
+	objectWithDocsFieldFieldString = big.NewInt(1 << 0)
 )
 
 type ObjectWithDocs struct {
 	// Characters that could lead to broken generated SDKs:
+	//
+	// Markdown Escapes:
+	// - \_: Escaped underscore (e.g., FOO\_BAR)
+	// - \*: Escaped asterisk
 	//
 	// JSDoc (JavaScript/TypeScript):
 	// - @: Used for JSDoc tags
@@ -32,6 +36,11 @@ type ObjectWithDocs struct {
 	// - ///: Comment marker
 	// - /**: Block comment start
 	// - ** /: Block comment end
+	//
+	// XMLDoc (C#) (Example of actual XML tags):
+	// See <a href="https://example.com/docs">the docs</a> for more info.
+	// Use <code>getValue()</code> to retrieve the value.
+	// Note: when count < 10 or count > 100, special handling applies.
 	//
 	// Javadoc (Java):
 	// - @: Used for Javadoc tags
@@ -69,7 +78,7 @@ type ObjectWithDocs struct {
 	// - ** /: PHPDoc comment end
 	// - *: Can interfere with comment blocks
 	// - &: HTML entities
-	String string `json:"string" url:"string"`
+	FieldString string `json:"string" url:"string"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -77,11 +86,11 @@ type ObjectWithDocs struct {
 	extraProperties map[string]interface{}
 }
 
-func (o *ObjectWithDocs) GetString() string {
+func (o *ObjectWithDocs) GetFieldString() string {
 	if o == nil {
 		return ""
 	}
-	return o.String
+	return o.FieldString
 }
 
 func (o *ObjectWithDocs) GetExtraProperties() map[string]interface{} {
@@ -95,11 +104,11 @@ func (o *ObjectWithDocs) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetString sets the String field and marks it as non-optional;
+// SetFieldString sets the FieldString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *ObjectWithDocs) SetString(string_ string) {
-	o.String = string_
-	o.require(objectWithDocsFieldString)
+func (o *ObjectWithDocs) SetFieldString(string_ string) {
+	o.FieldString = string_
+	o.require(objectWithDocsFieldFieldString)
 }
 
 func (o *ObjectWithDocs) UnmarshalJSON(data []byte) error {

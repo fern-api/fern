@@ -2,31 +2,25 @@
 
 package multiurlenvironment
 
+// Environment defines the environment with multiple base URLs.
+type Environment struct {
+	Ec2 string
+	S3  string
+}
+
 // Environments defines all of the API environments.
 // These values can be used with the WithBaseURL
 // RequestOption to override the client's default environment,
 // if any.
 var Environments = struct {
-	Production struct {
-		Ec2 string
-		S3  string
-	}
-	Staging struct {
-		Ec2 string
-		S3  string
-	}
+	Production Environment
+	Staging    Environment
 }{
-	Production: struct {
-		Ec2 string
-		S3  string
-	}{
+	Production: Environment{
 		Ec2: "https://ec2.aws.com",
 		S3:  "https://s3.aws.com",
 	},
-	Staging: struct {
-		Ec2 string
-		S3  string
-	}{
+	Staging: Environment{
 		Ec2: "https://staging.ec2.aws.com",
 		S3:  "https://staging.s3.aws.com",
 	},

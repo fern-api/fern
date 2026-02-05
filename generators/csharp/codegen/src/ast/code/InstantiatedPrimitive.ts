@@ -112,16 +112,16 @@ export class PrimitiveInstantiation extends AstNode {
                 break;
             case "date": {
                 const date = new Date(this.internalType.value);
-                const year = date.getUTCFullYear();
-                const month = date.getUTCMonth() + 1;
-                const day = date.getUTCDate();
-                writer.write(`new DateOnly(${year}, ${month}, ${day})`);
+                const year = this.csharp.Literal.integer(date.getUTCFullYear());
+                const month = this.csharp.Literal.integer(date.getUTCMonth() + 1);
+                const day = this.csharp.Literal.integer(date.getUTCDate());
+                writer.write(this.System.DateOnly.new({ arguments_: [year, month, day] }));
                 break;
             }
             case "dateTime": {
                 if (this.internalType.parse) {
                     writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, `);
-                    writer.writeNode(this.extern.System.Globalization.DateTimeStyles);
+                    writer.writeNode(this.System.Globalization.DateTimeStyles);
                     writer.write(".AdjustToUniversal)");
                 } else {
                     writer.write(this.constructDatetimeWithoutParse(this.internalType.value));

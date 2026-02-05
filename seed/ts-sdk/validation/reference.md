@@ -1,4 +1,58 @@
 # Reference
+<details><summary><code>client.<a href="/src/Client.ts">create</a>({ ...params }) -> SeedValidation.Type</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.create({
+    decimal: 2.2,
+    even: 100,
+    name: "fern",
+    shape: "SQUARE"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedValidation.CreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SeedValidationClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="/src/Client.ts">get</a>({ ...params }) -> SeedValidation.Type</code></summary>
 <dl>
 <dd>
@@ -51,5 +105,3 @@ await client.get({
 </dd>
 </dl>
 </details>
-
-## 

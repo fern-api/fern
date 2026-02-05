@@ -203,12 +203,12 @@ public record FunctionSignature
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FunctionSignature>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(FunctionSignature).IsAssignableFrom(typeToConvert);
 
         public override FunctionSignature Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

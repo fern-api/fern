@@ -2,7 +2,7 @@ using SeedApiWideBasePath.Core;
 
 namespace SeedApiWideBasePath;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 
@@ -12,17 +12,23 @@ public partial class ServiceClient
     }
 
     /// <example><code>
-    /// await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
+    /// await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
     /// </code></example>
     public async Task PostAsync(
         string pathParam,
         string serviceParam,
-        string resourceParam,
         int endpointParam,
+        string resourceParam,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApiWideBasePath.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -36,6 +42,7 @@ public partial class ServiceClient
                         ValueConvert.ToPathParameterString(endpointParam),
                         ValueConvert.ToPathParameterString(resourceParam)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

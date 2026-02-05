@@ -4,7 +4,6 @@ import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
-import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
@@ -24,14 +23,14 @@ export declare namespace SdkClientClassGenerator {
         inlineFileProperties: boolean;
         omitUndefined: boolean;
         allowExtraFields: boolean;
-        oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
         exportsManager: ExportsManager;
-        omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        offsetSemantics: "item-index" | "page-index";
     }
 
     export namespace generateService {
@@ -61,14 +60,14 @@ export class SdkClientClassGenerator {
     private readonly inlineFileProperties: boolean;
     private readonly omitUndefined: boolean;
     private readonly allowExtraFields: boolean;
-    private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private readonly streamType: "wrapper" | "web";
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly exportsManager: ExportsManager;
-    private readonly omitFernHeaders: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
     private readonly generateEndpointMetadata: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly offsetSemantics: "item-index" | "page-index";
 
     constructor({
         intermediateRepresentation,
@@ -85,16 +84,16 @@ export class SdkClientClassGenerator {
         includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
-        oauthTokenProviderGenerator,
         omitUndefined,
         allowExtraFields,
         streamType,
         fileResponseType,
         exportsManager,
         formDataSupport,
-        omitFernHeaders,
         useDefaultRequestParameterValues,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        parameterNaming,
+        offsetSemantics
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -110,16 +109,16 @@ export class SdkClientClassGenerator {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
-        this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
         this.exportsManager = exportsManager;
         this.formDataSupport = formDataSupport;
-        this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.parameterNaming = parameterNaming;
+        this.offsetSemantics = offsetSemantics;
     }
 
     public generateService({
@@ -143,20 +142,19 @@ export class SdkClientClassGenerator {
             shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
-            npmPackage: this.npmPackage,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
-            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: this.omitUndefined,
             allowExtraFields: this.allowExtraFields,
             streamType: this.streamType,
             fileResponseType: this.fileResponseType,
             formDataSupport: this.formDataSupport,
-            omitFernHeaders: this.omitFernHeaders,
             useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
-            generateEndpointMetadata: this.generateEndpointMetadata
+            generateEndpointMetadata: this.generateEndpointMetadata,
+            parameterNaming: this.parameterNaming,
+            offsetSemantics: this.offsetSemantics
         });
     }
 }

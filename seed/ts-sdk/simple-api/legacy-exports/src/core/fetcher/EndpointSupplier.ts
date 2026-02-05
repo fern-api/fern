@@ -1,10 +1,10 @@
 import type { EndpointMetadata } from "./EndpointMetadata";
 import type { Supplier } from "./Supplier";
 
-type EndpointSupplierFn<T> = (arg: { endpointMetadata: EndpointMetadata }) => T | Promise<T>;
+type EndpointSupplierFn<T> = (arg: { endpointMetadata?: EndpointMetadata }) => T | Promise<T>;
 export type EndpointSupplier<T> = Supplier<T> | EndpointSupplierFn<T>;
 export const EndpointSupplier = {
-    get: async <T>(supplier: EndpointSupplier<T>, arg: { endpointMetadata: EndpointMetadata }): Promise<T> => {
+    get: async <T>(supplier: EndpointSupplier<T>, arg: { endpointMetadata?: EndpointMetadata }): Promise<T> => {
         if (typeof supplier === "function") {
             return (supplier as EndpointSupplierFn<T>)(arg);
         } else {

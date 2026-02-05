@@ -1,10 +1,9 @@
+import { fail } from "node:assert";
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
-
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";
@@ -47,8 +46,8 @@ export declare namespace RawClient {
         pathParameterReferences?: Record<string, string>;
         /** the headers to pass to the endpoint */
         headerBagReference?: string;
-        /** the query parameters to pass to the endpoint */
-        queryBagReference?: string;
+        /** query string (including the leading '?' if non-empty) */
+        queryString?: string;
         endpointRequest?: EndpointRequest;
         /** the request type, defaults to Json if none */
         requestType: RequestBodyType | undefined;
@@ -65,7 +64,7 @@ export declare namespace RawClient {
  */
 export class RawClient extends WithGeneration {
     public constructor(private readonly context: SdkGeneratorContext) {
-        super(context);
+        super(context.generation);
     }
 
     /**
@@ -77,7 +76,7 @@ export class RawClient extends WithGeneration {
         bodyReference,
         pathParameterReferences,
         headerBagReference,
-        queryBagReference,
+        queryString,
         endpointRequest,
         requestType
     }: RawClient.CreateHttpRequestWrapperArgs): RawClient.CreateHttpRequestWrapperCodeBlock {
@@ -108,10 +107,10 @@ export class RawClient extends WithGeneration {
                 assignment: this.csharp.codeblock(bodyReference)
             });
         }
-        if (queryBagReference != null) {
+        if (queryString != null) {
             args.push({
-                name: "Query",
-                assignment: this.csharp.codeblock(queryBagReference)
+                name: "QueryString",
+                assignment: this.csharp.codeblock(queryString)
             });
         }
         if (headerBagReference != null) {
@@ -190,7 +189,7 @@ export class RawClient extends WithGeneration {
 
             case "urlencoded":
                 return {
-                    requestReference: this.types.FormRequest.new({ arguments_: args })
+                    requestReference: this.Types.FormRequest.new({ arguments_: args })
                 };
 
             case "json":
@@ -198,7 +197,7 @@ export class RawClient extends WithGeneration {
                 return {
                     requestReference: this.csharp.instantiateClass({
                         arguments_: args,
-                        classReference: this.types.JsonRequest
+                        classReference: this.Types.JsonRequest
                     })
                 };
         }
@@ -221,7 +220,9 @@ export class RawClient extends WithGeneration {
                 propertyName = property.value.key.name.pascalCase.safeName;
                 partName = property.value.key.wireValue;
                 contentType = property.value.contentType;
-                csharpType = this.context.csharpTypeMapper.convertFromFileProperty({ property: property.value });
+                csharpType = this.context.csharpTypeMapper.convertFromFileProperty({
+                    property: property.value
+                });
                 break;
             case "bodyProperty": {
                 propertyName = property.name.name.pascalCase.safeName;
@@ -255,29 +256,34 @@ export class RawClient extends WithGeneration {
         if (encoding != null) {
             switch (encoding) {
                 case "exploded":
-                    return csharpType.unwrapIfOptional().isCollection
+                    return csharpType.asNonOptional().isCollection
                         ? "AddExplodedFormEncodedParts"
                         : "AddExplodedFormEncodedPart";
                 case "form":
-                    return csharpType.unwrapIfOptional().isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
+                    return csharpType.asNonOptional().isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
                 case "json":
-                    return csharpType.unwrapIfOptional().isCollection ? "AddJsonParts" : "AddJsonPart";
+                    return csharpType.asNonOptional().isCollection ? "AddJsonParts" : "AddJsonPart";
                 default:
                     assertNever(encoding);
             }
         } else {
-            return csharpType.multipartMethodName;
+            return (
+                csharpType.multipartMethodName ??
+                fail(`Type ${csharpType.fullyQualifiedName} does not support adding to a multipart form`)
+            );
         }
     }
 
     /**
      * Creates an HTTP request using the RawClient.
      */
-    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): ast.MethodInvocation {
+    public createHttpRequestAsync({ clientReference, request }: RawClient.CreateHttpRequestArgs): ast.MethodInvocation {
         return this.csharp.invokeMethod({
             on: this.csharp.codeblock(clientReference),
-            method: "CreateHttpRequest",
-            arguments_: [request]
+            method: "CreateHttpRequestAsync",
+            arguments_: [request],
+            async: true,
+            configureAwait: true
         });
     }
 
@@ -292,7 +298,8 @@ export class RawClient extends WithGeneration {
             on: this.csharp.codeblock(clientReference),
             method: "SendRequestAsync",
             arguments_: [request, this.csharp.codeblock(this.names.parameters.cancellationToken)],
-            async: true
+            async: true,
+            configureAwait: false
         });
     }
 
@@ -324,8 +331,7 @@ export class RawClient extends WithGeneration {
                 break;
             case "PATCH":
                 return this.csharp.codeblock((writer) => {
-                    writer.writeNode(this.csharp.coreClassReference({ name: "HttpMethodExtensions" }));
-                    writer.write(".Patch");
+                    writer.write(this.Types.HttpMethodExtensions, ".Patch");
                 });
             case "GET":
                 method = "Get";
@@ -340,7 +346,7 @@ export class RawClient extends WithGeneration {
                 assertNever(irMethod);
         }
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.extern.System.Net.Http.HttpMethod);
+            writer.writeNode(this.System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }
@@ -372,7 +378,7 @@ export class RawClient extends WithGeneration {
             }
             formatParams.push(
                 this.csharp.codeblock((writer) => {
-                    writer.writeNode(this.types.ValueConvert);
+                    writer.writeNode(this.Types.ValueConvert);
                     writer.write(`.ToPathParameterString(${reference})`);
                 })
             );

@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
@@ -35,7 +37,9 @@ class TestSubmissionUpdateInfo_Errored(UniversalBaseModel):
 
 class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
     type: typing.Literal["gradedTestCase"] = "gradedTestCase"
-    test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
+    test_case_id: typing_extensions.Annotated[
+        TestCaseId, FieldMetadata(alias="testCaseId"), pydantic.Field(alias="testCaseId")
+    ]
     grade: TestCaseGrade
 
     if IS_PYDANTIC_V2:
@@ -48,8 +52,12 @@ class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
 
 class TestSubmissionUpdateInfo_RecordedTestCase(UniversalBaseModel):
     type: typing.Literal["recordedTestCase"] = "recordedTestCase"
-    test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
-    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
+    test_case_id: typing_extensions.Annotated[
+        TestCaseId, FieldMetadata(alias="testCaseId"), pydantic.Field(alias="testCaseId")
+    ]
+    trace_responses_size: typing_extensions.Annotated[
+        int, FieldMetadata(alias="traceResponsesSize"), pydantic.Field(alias="traceResponsesSize")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -70,12 +78,15 @@ class TestSubmissionUpdateInfo_Finished(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-TestSubmissionUpdateInfo = typing.Union[
-    TestSubmissionUpdateInfo_Running,
-    TestSubmissionUpdateInfo_Stopped,
-    TestSubmissionUpdateInfo_Errored,
-    TestSubmissionUpdateInfo_GradedTestCase,
-    TestSubmissionUpdateInfo_RecordedTestCase,
-    TestSubmissionUpdateInfo_Finished,
+TestSubmissionUpdateInfo = typing_extensions.Annotated[
+    typing.Union[
+        TestSubmissionUpdateInfo_Running,
+        TestSubmissionUpdateInfo_Stopped,
+        TestSubmissionUpdateInfo_Errored,
+        TestSubmissionUpdateInfo_GradedTestCase,
+        TestSubmissionUpdateInfo_RecordedTestCase,
+        TestSubmissionUpdateInfo_Finished,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(TestSubmissionUpdateInfo_GradedTestCase)

@@ -43,17 +43,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Object_ = void 0;
+exports.ObjectClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
+const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Object_ {
-    constructor(_options) {
-        this._options = _options;
+class ObjectClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
@@ -80,7 +82,8 @@ class Object_ {
     __getAndReturnWithOptionalField(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-optional-field"),
                 method: "POST",
@@ -108,26 +111,12 @@ class Object_ {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-with-optional-field.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-optional-field");
         });
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithRequiredField({
@@ -140,7 +129,8 @@ class Object_ {
     __getAndReturnWithRequiredField(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-required-field"),
                 method: "POST",
@@ -168,26 +158,12 @@ class Object_ {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-with-required-field.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-required-field");
         });
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
@@ -204,7 +180,8 @@ class Object_ {
     __getAndReturnWithMapOfMap(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-map-of-map"),
                 method: "POST",
@@ -232,26 +209,12 @@ class Object_ {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-with-map-of-map.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-map-of-map");
         });
     }
     /**
      * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
@@ -281,7 +244,8 @@ class Object_ {
     __getAndReturnNestedWithOptionalField(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-nested-with-optional-field"),
                 method: "POST",
@@ -309,27 +273,13 @@ class Object_ {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-nested-with-optional-field.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-nested-with-optional-field");
         });
     }
     /**
-     * @param {string} string_
+     * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
@@ -353,15 +303,16 @@ class Object_ {
      *         }
      *     })
      */
-    getAndReturnNestedWithRequiredField(string_, request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithRequiredField(string_, request, requestOptions));
+    getAndReturnNestedWithRequiredField(string, request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithRequiredField(string, request, requestOptions));
     }
-    __getAndReturnNestedWithRequiredField(string_, request, requestOptions) {
+    __getAndReturnNestedWithRequiredField(string, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string_)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
@@ -387,26 +338,12 @@ class Object_ {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field/{string}.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-nested-with-required-field/{string}");
         });
     }
     /**
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
@@ -455,7 +392,8 @@ class Object_ {
     __getAndReturnNestedWithRequiredFieldAsList(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-nested-with-required-field-list"),
                 method: "POST",
@@ -483,31 +421,60 @@ class Object_ {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field-list.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-nested-with-required-field-list");
         });
     }
-    _getAuthorizationHeader() {
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+     * without being converted to "2023-08-31T14:15:22.000Z".
+     *
+     * @param {SeedExhaustive.types.ObjectWithDatetimeLikeString} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithDatetimeLikeString({
+     *         datetimeLikeString: "2023-08-31T14:15:22Z",
+     *         actualDatetime: "2023-08-31T14:15:22Z"
+     *     })
+     */
+    getAndReturnWithDatetimeLikeString(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithDatetimeLikeString(request, requestOptions));
+    }
+    __getAndReturnWithDatetimeLikeString(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-            const bearer = yield core.Supplier.get(this._options.token);
-            if (bearer != null) {
-                return `Bearer ${bearer}`;
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _response = yield core.fetcher({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-datetime-like-string"),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
+                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
+                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
+                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
+            });
+            if (_response.ok) {
+                return {
+                    data: _response.body,
+                    rawResponse: _response.rawResponse,
+                };
             }
-            return undefined;
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse,
+                });
+            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-datetime-like-string");
         });
     }
 }
-exports.Object_ = Object_;
+exports.ObjectClient = ObjectClient;

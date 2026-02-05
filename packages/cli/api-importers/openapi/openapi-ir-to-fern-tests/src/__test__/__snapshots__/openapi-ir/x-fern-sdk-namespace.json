@@ -22,11 +22,11 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetRequest",
+      "generatedRequestName": "GetUserRequest",
       "response": {
         "description": "Success",
         "schema": {
-          "generatedName": "UserGetResponse",
+          "generatedName": "GetUserResponse",
           "schema": "User",
           "source": {
             "file": "../openapi.yml",
@@ -46,7 +46,6 @@
       "servers": [],
       "description": "This endpoint should be in `auth/user.yml`",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/auth/user",
       "examples": [

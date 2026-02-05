@@ -23,7 +23,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -101,7 +101,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -179,7 +179,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -256,7 +256,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -332,7 +332,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -409,7 +409,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -486,7 +486,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -568,7 +568,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -660,7 +660,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -748,7 +748,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -847,7 +847,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -920,7 +920,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
@@ -997,7 +997,7 @@ import Testing
             _ = try await client.search(
                 limit: 1,
                 id: "id",
-                date: "date",
+                date: CalendarDate("2023-01-15")!,
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(

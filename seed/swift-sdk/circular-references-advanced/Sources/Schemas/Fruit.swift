@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Fruit: Codable, Hashable, Sendable {
+public indirect enum Fruit: Codable, Hashable, Sendable {
     case acai(Acai)
     case fig(Fig)
 

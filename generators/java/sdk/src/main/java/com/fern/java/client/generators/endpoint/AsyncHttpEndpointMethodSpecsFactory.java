@@ -9,14 +9,28 @@ public class AsyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSp
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
+            MethodSpec noRequestBodyWithRequestOptionsMethodSpec,
+            MethodSpec bodyOnlyMethodSpec,
+            MethodSpec bodyOnlyWithRequestOptionsMethodSpec,
             MethodSpec byteArrayMethodSpec,
-            MethodSpec nonRequestOptionsByteArrayMethodSpec) {
+            MethodSpec nonRequestOptionsByteArrayMethodSpec,
+            MethodSpec inputStreamMethodSpec,
+            MethodSpec inputStreamWithMediaTypeMethodSpec,
+            MethodSpec inputStreamWithRequestOptionsMethodSpec,
+            MethodSpec inputStreamWithMediaTypeAndRequestOptionsMethodSpec) {
         return new DefaultHttpEndpointMethodSpecs(
                 wrapReturnTypeInCompletableFuture(requestOptionsMethodSpec),
                 wrapReturnTypeInCompletableFuture(nonRequestOptionsMethodSpec),
                 wrapReturnTypeInCompletableFuture(noRequestBodyMethodSpec),
+                wrapReturnTypeInCompletableFuture(noRequestBodyWithRequestOptionsMethodSpec),
+                wrapReturnTypeInCompletableFuture(bodyOnlyMethodSpec),
+                wrapReturnTypeInCompletableFuture(bodyOnlyWithRequestOptionsMethodSpec),
                 wrapReturnTypeInCompletableFuture(byteArrayMethodSpec),
-                wrapReturnTypeInCompletableFuture(nonRequestOptionsByteArrayMethodSpec));
+                wrapReturnTypeInCompletableFuture(nonRequestOptionsByteArrayMethodSpec),
+                wrapReturnTypeInCompletableFuture(inputStreamMethodSpec),
+                wrapReturnTypeInCompletableFuture(inputStreamWithMediaTypeMethodSpec),
+                wrapReturnTypeInCompletableFuture(inputStreamWithRequestOptionsMethodSpec),
+                wrapReturnTypeInCompletableFuture(inputStreamWithMediaTypeAndRequestOptionsMethodSpec));
     }
 
     private MethodSpec wrapReturnTypeInCompletableFuture(MethodSpec rawSpec) {

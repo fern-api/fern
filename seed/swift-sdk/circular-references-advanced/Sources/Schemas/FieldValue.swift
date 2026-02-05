@@ -1,6 +1,6 @@
 import Foundation
 
-public enum FieldValue: Codable, Hashable, Sendable {
+public indirect enum FieldValue: Codable, Hashable, Sendable {
     case containerValue(ContainerValue)
     case objectValue(ObjectValue)
     case primitiveValue(PrimitiveValue)

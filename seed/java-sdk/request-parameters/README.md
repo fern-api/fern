@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -53,12 +68,12 @@ public class Example {
         client.user().createUsername(
             CreateUsernameRequest
                 .builder()
-                .tags(
-                    Arrays.asList("tags", "tags")
-                )
                 .username("username")
                 .password("password")
                 .name("test")
+                .tags(
+                    Arrays.asList("tags", "tags")
+                )
                 .build()
         );
     }
@@ -139,7 +154,6 @@ SeedRequestParametersClient client = SeedRequestParametersClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.requestParameters.SeedRequestParametersClient;
 import com.seed.requestParameters.core.RequestOptions;
@@ -147,7 +161,7 @@ import com.seed.requestParameters.core.RequestOptions;
 // Client level
 SeedRequestParametersClient client = SeedRequestParametersClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -155,7 +169,7 @@ client.user().createUsername(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

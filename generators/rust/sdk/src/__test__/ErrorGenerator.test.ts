@@ -65,7 +65,7 @@ function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext 
     return {
         ir,
         getClientName: () => "TestClient",
-        customConfig: { generateExamples: false }
+        customConfig: {}
     } as SdkGeneratorContext;
 }
 

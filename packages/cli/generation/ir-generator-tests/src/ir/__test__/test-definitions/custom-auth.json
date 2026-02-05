@@ -293,6 +293,7 @@
                 "wireValue": "UnauthorizedRequest"
             },
             "statusCode": 401,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -456,6 +457,7 @@
                 "wireValue": "BadRequest"
             },
             "statusCode": 400,
+            "isWildcardStatusCode": null,
             "type": null,
             "examples": [],
             "v2Examples": null,
@@ -593,7 +595,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -1005,6 +1008,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "GET request with custom auth scheme"
                 },
@@ -1116,7 +1120,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -1724,6 +1729,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "POST request with custom auth scheme"
                 }
@@ -2116,6 +2122,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_custom-auth": {
             "name": {

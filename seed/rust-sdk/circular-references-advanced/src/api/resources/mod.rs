@@ -1,4 +1,11 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **A**
+//! - **Ast**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod a;
 pub mod ast;
@@ -10,8 +17,10 @@ impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            
         })
     }
+
 }
 
 pub use a::AClient;

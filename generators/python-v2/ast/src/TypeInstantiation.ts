@@ -283,9 +283,13 @@ export class TypeInstantiation extends AstNode {
             case "date":
                 writer.write(`date.fromisoformat("${this.internalType.value}")`);
                 break;
-            case "datetime":
-                writer.write(`datetime.fromisoformat("${this.internalType.value}")`);
+            case "datetime": {
+                // Convert 'Z' suffix to '+00:00' for Python 3.8 compatibility
+                // datetime.fromisoformat() doesn't support 'Z' until Python 3.11
+                const datetimeValue = this.internalType.value.replace(/Z$/, "+00:00");
+                writer.write(`datetime.fromisoformat("${datetimeValue}")`);
                 break;
+            }
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
                 break;
@@ -519,36 +523,38 @@ export class TypeInstantiation extends AstNode {
     }
 
     /**
-     * Escapes certain special characters if they're NOT already preceded
-     * by a backslash. Specifically:
+     * Escapes special characters in a string for use in Python string literals.
      *
+     * This function always escapes:
+     *   - \  -> \\  (backslash - MUST be escaped first!)
      *   - "  -> \"
      *   - '  -> \'
-     *   - \  -> \\
-     *   - literal \t -> \t
-     *   - literal \n -> \n
-     *   - literal \r -> \r
+     *   - literal tab -> \t
+     *   - literal newline -> \n
+     *   - literal carriage return -> \r
      *
-     * Uses a negative lookbehind `(?<!\\)` to handle consecutive matches like
-     * \n\n correctly, since each \n is independently matched in the original string.
+     * Important: Backslashes must be escaped first to avoid double-escaping.
+     * For example, if we escaped quotes first:
+     *   Input: \"  (backslash-quote, 2 chars)
+     *   After quote escape: \" stays \" (not matched if already escaped)
+     *   After backslash escape: \\" (wrong!)
+     *
+     * By escaping backslashes first:
+     *   Input: \"  (backslash-quote, 2 chars)
+     *   After backslash escape: \\"  (4 chars: \\, \, ", becomes \\\" in output)
+     *   After quote escape: \\\"  (correct: escaped backslash + escaped quote)
      *
      * @param input The input string to be escaped
      */
     private escapeString(input: string): string {
-        // Negative lookbehind ensures the character is NOT preceded by a backslash
-        // in the original string.
-        const pattern = /(?<!\\)(["'\\\t\n\r])/g;
-
-        const replacements: Record<string, string> = {
-            '"': '\\"',
-            "'": "\\'",
-            "\\": "\\\\",
-            "\t": "\\t",
-            "\n": "\\n",
-            "\r": "\\r"
-        };
-
-        return input.replace(pattern, (char) => replacements[char] ?? char);
+        // Escape backslashes first, then other special characters
+        return input
+            .replace(/\\/g, "\\\\") // Escape backslashes first
+            .replace(/"/g, '\\"') // Escape double quotes
+            .replace(/'/g, "\\'") // Escape single quotes
+            .replace(/\t/g, "\\t") // Escape tabs
+            .replace(/\n/g, "\\n") // Escape newlines
+            .replace(/\r/g, "\\r"); // Escape carriage returns
     }
 
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {

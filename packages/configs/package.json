@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./*": "./*"
+  },
   "devDependencies": {
-    "vitest": "^2.1.9"
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "tsup": "^8.5.0",
+    "vitest": "^4.0.8"
   }
 }

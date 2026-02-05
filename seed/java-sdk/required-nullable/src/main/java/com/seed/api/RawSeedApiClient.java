@@ -15,8 +15,6 @@ import com.seed.api.requests.GetFooRequest;
 import com.seed.api.requests.UpdateFooRequest;
 import com.seed.api.types.Foo;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -59,6 +57,11 @@ public class RawSeedApiClient {
                     request.getRequiredNullableBaz().get(),
                     false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -89,24 +92,24 @@ public class RawSeedApiClient {
     }
 
     public SeedApiHttpResponse<Foo> updateFoo(String id, UpdateFooRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("foo")
-                .addPathSegment(id)
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("nullable_text", request.getNullableText());
-        properties.put("nullable_number", request.getNullableNumber());
-        properties.put("non_nullable_text", request.getNonNullableText());
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

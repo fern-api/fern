@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">search</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">search</a>(...) -&gt; AsyncHttpResponse[SearchResponse]</code></summary>
 <dl>
 <dd>
 
@@ -22,7 +22,9 @@ client = SeedApi(
 client.search(
     limit=1,
     id="id",
-    date="date",
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
     deadline=datetime.datetime.fromisoformat(
         "2024-01-15 09:30:00+00:00",
     ),
@@ -96,7 +98,7 @@ client.search(
 <dl>
 <dd>
 
-**date:** `str` 
+**date:** `dt.date` 
     
 </dd>
 </dl>
@@ -152,7 +154,7 @@ client.search(
 <dl>
 <dd>
 
-**key_value:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` 
+**key_value:** `typing.Optional[typing.Dict[str, str]]` 
     
 </dd>
 </dl>

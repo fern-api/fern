@@ -997,6 +997,85 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.Users.ListWithTopLevelBodyCursorPagination(request) -> *fern.ListUsersTopLevelCursorPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersTopLevelBodyCursorPaginationRequest{
+        Cursor: fern.String(
+            "initial_cursor",
+        ),
+        Filter: fern.String(
+            "active",
+        ),
+    }
+client.Users.ListWithTopLevelBodyCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `*string` — An optional filter to apply to the results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Users.ListWithOffsetPagination() -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
@@ -1511,6 +1590,58 @@ the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.Users.ListUsernamesWithOptionalResponse() -> *fern.UsernameCursor</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersCursorPaginationRequest{
+        StartingAfter: fern.String(
+            "starting_after",
+        ),
+    }
+client.Users.ListWithCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Users.ListWithGlobalConfig() -> *fern.UsernameContainer</code></summary>
 <dl>
 <dd>
@@ -1549,6 +1680,55 @@ client.Users.ListWithGlobalConfig(
 <dd>
 
 **offset:** `*int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.ListWithOptionalData() -> *fern.ListUsersOptionalDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersOptionalDataRequest{
+        Page: fern.Int(
+            1,
+        ),
+    }
+client.Users.ListWithOptionalData(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
     
 </dd>
 </dl>

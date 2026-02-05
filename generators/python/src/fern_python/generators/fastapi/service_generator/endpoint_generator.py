@@ -13,7 +13,6 @@ from .endpoint_parameters import (
 )
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
-from fern_python.external_dependencies.starlette import Starlette
 from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
     FileUploadRequestEndpointParameters,
 )
@@ -183,36 +182,27 @@ class EndpointGenerator:
             )
             writer.write_line()
 
-            writer.write_line("# this is necessary for FastAPI to find forward-ref'ed type hints.")
-            writer.write_line("# https://github.com/tiangolo/fastapi/pull/5077")
-            writer.write_line(
-                f"{_TRY_EXCEPT_WRAPPER_NAME}.__globals__.update("
-                + self._get_reference_to_method_on_cls()
-                + ".__globals__)"
-            )
-            writer.write_line()
-
             writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
             writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
             writer.write_line("(")
             with writer.indent():
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
 
-                # Void responses make more sense as response_class, but keeping as response_model to not modify existing users
+                # Disable response model validation/serialization
+                # See: https://fastapi.tiangolo.com/tutorial/response-model/#disable-response-model
                 if not self._get_is_return_type_pydantic_model():
                     writer.write("response_class=")
+                    if self._endpoint.response is not None:
+                        writer.write_node(self._get_return_type())
+                    else:
+                        writer.write("None")
+                    writer.write_line(",")
                 else:
-                    writer.write("response_model=")
-
-                if self._endpoint.response is not None:
-                    writer.write_node(self._get_return_type())
-                else:
-                    writer.write("None")
-                writer.write_line(",")
+                    writer.write_line("response_model=None,")
 
                 if self._endpoint.response is None or self._endpoint.response.body is None:
                     writer.write("status_code=")
-                    writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
+                    writer.write_node(AST.TypeHint(FastAPI.HTTP_204_NO_CONTENT))
                     writer.write_line(",")
                 writer.write(f"description={class_declaration.name}.{self._get_method_name()}.__doc__")
                 writer.write_line(",")
@@ -247,6 +237,13 @@ class EndpointGenerator:
         )
         writer.write_line()
 
+        # Get resolved type hints for all parameters at once
+        # This handles forward references that FastAPI doesn't resolve in all cases
+        TYPE_HINTS_VARIABLE_NAME = "type_hints"
+        writer.write(f"{TYPE_HINTS_VARIABLE_NAME} = typing.get_type_hints({method_on_cls})")
+        writer.write_line()
+        writer.write_line()
+
         NEW_PARAMETERS_VARIABLE_NAME = "new_parameters"
         writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}: ")
         writer.write_node(
@@ -269,7 +266,16 @@ class EndpointGenerator:
             + f"in enumerate({ENDPOINT_FUNCTION_VARIABLE_NAME}.parameters.items()):"
         )
 
+        RESOLVED_ANNOTATION_VARIABLE_NAME = "resolved_annotation"
         with writer.indent():
+            # Get the resolved type hint for this parameter
+            writer.write_line(
+                "# Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases"
+            )
+            writer.write_line(
+                f"{RESOLVED_ANNOTATION_VARIABLE_NAME} = {TYPE_HINTS_VARIABLE_NAME}.get({PARAMETER_NAME_VARIABLE_NAME}, {PARAMETER_VALUE_VARIABLE_NAME}.annotation)"
+            )
+            writer.write_line()
             writer.write_line(f"if {INDEX_VARIABLE_NAME} == 0:")
             with writer.indent():
                 writer.write(
@@ -280,10 +286,15 @@ class EndpointGenerator:
             for i, parameter in enumerate(self._parameters):
                 writer.write_line(f'elif {PARAMETER_NAME_VARIABLE_NAME} == "{parameter.get_name()}":')
                 with writer.indent():
-                    writer.write(
-                        f"{NEW_PARAMETERS_VARIABLE_NAME}.append(" + f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(default="
-                    )
-                    writer.write_node(parameter.get_default())
+                    python_default = parameter.get_python_default()
+                    writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
+                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
+                    writer.write(f"annotation=typing.Annotated[{RESOLVED_ANNOTATION_VARIABLE_NAME}, ")
+                    writer.write_node(parameter.get_fastapi_marker())
+                    writer.write("]")
+                    if python_default is not None:
+                        writer.write(", default=")
+                        writer.write_node(python_default)
                     writer.write_line("))")
             writer.write_line("else:")
             with writer.indent():

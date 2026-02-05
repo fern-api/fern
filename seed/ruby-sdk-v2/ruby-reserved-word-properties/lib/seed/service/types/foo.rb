@@ -22,16 +22,10 @@ module Seed
         field :extend_, -> { String }, optional: false, nullable: false, api_name: "extend"
         field :singleton_class_, -> { String }, optional: false, nullable: false, api_name: "singleton_class"
         field :instance_variables_, -> { String }, optional: false, nullable: false, api_name: "instance_variables"
-        field :instance_variable_get_, lambda {
-          String
-        }, optional: false, nullable: false, api_name: "instance_variable_get"
-        field :instance_variable_set_, lambda {
-          String
-        }, optional: false, nullable: false, api_name: "instance_variable_set"
+        field :instance_variable_get_, -> { String }, optional: false, nullable: false, api_name: "instance_variable_get"
+        field :instance_variable_set_, -> { String }, optional: false, nullable: false, api_name: "instance_variable_set"
         field :instance_variable_defined, -> { String }, optional: false, nullable: false
-        field :remove_instance_variable_, lambda {
-          String
-        }, optional: false, nullable: false, api_name: "remove_instance_variable"
+        field :remove_instance_variable_, -> { String }, optional: false, nullable: false, api_name: "remove_instance_variable"
         field :public_methods_, -> { String }, optional: false, nullable: false, api_name: "public_methods"
         field :private_methods_, -> { String }, optional: false, nullable: false, api_name: "private_methods"
         field :protected_methods_, -> { String }, optional: false, nullable: false, api_name: "protected_methods"

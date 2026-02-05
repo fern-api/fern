@@ -58,13 +58,15 @@ export class WireTestSetupGenerator {
 
     /**
      * Builds the content for the docker-compose.test.yml file
+     * Uses ephemeral port (0:8080) to avoid port collisions when running tests in parallel.
+     * The actual port is discovered at runtime and passed via WIREMOCK_PORT environment variable.
      */
     private buildDockerComposeContent(): string {
         return `services:
   wiremock:
     image: wiremock/wiremock:3.9.1
     ports:
-      - "8080:8080"
+      - "0:8080"
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]

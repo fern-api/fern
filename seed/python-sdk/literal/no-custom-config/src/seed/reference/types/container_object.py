@@ -11,7 +11,9 @@ from .nested_object_with_literals import NestedObjectWithLiterals
 
 class ContainerObject(UniversalBaseModel):
     nested_objects: typing_extensions.Annotated[
-        typing.List[NestedObjectWithLiterals], FieldMetadata(alias="nestedObjects")
+        typing.List[NestedObjectWithLiterals],
+        FieldMetadata(alias="nestedObjects"),
+        pydantic.Field(alias="nestedObjects"),
     ]
 
     if IS_PYDANTIC_V2:

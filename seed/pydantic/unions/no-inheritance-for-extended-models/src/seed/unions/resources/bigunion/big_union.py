@@ -6,7 +6,9 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 
 
 class Base(UniversalBaseModel):
@@ -21,8 +23,12 @@ class Base(UniversalBaseModel):
     """
 
     id: str
-    created_at: dt.datetime = pydantic.Field(alias="created-at")
-    archived_at: typing.Optional[dt.datetime] = pydantic.Field(alias="archived-at", default=None)
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="created-at"), pydantic.Field(alias="created-at")
+    ]
+    archived_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="archived-at"), pydantic.Field(alias="archived-at")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -677,34 +683,37 @@ BigUnion_NormalSweet(
     value="example1",
 )
 """
-BigUnion = typing.Union[
-    BigUnion_NormalSweet,
-    BigUnion_ThankfulFactor,
-    BigUnion_JumboEnd,
-    BigUnion_HastyPain,
-    BigUnion_MistySnow,
-    BigUnion_DistinctFailure,
-    BigUnion_PracticalPrinciple,
-    BigUnion_LimpingStep,
-    BigUnion_VibrantExcitement,
-    BigUnion_ActiveDiamond,
-    BigUnion_PopularLimit,
-    BigUnion_FalseMirror,
-    BigUnion_PrimaryBlock,
-    BigUnion_RotatingRatio,
-    BigUnion_ColorfulCover,
-    BigUnion_DisloyalValue,
-    BigUnion_GruesomeCoach,
-    BigUnion_TotalWork,
-    BigUnion_HarmoniousPlay,
-    BigUnion_UniqueStress,
-    BigUnion_UnwillingSmoke,
-    BigUnion_FrozenSleep,
-    BigUnion_DiligentDeal,
-    BigUnion_AttractiveScript,
-    BigUnion_HoarseMouse,
-    BigUnion_CircularCard,
-    BigUnion_PotableBad,
-    BigUnion_TriangularRepair,
-    BigUnion_GaseousRoad,
+BigUnion = typing_extensions.Annotated[
+    typing.Union[
+        BigUnion_NormalSweet,
+        BigUnion_ThankfulFactor,
+        BigUnion_JumboEnd,
+        BigUnion_HastyPain,
+        BigUnion_MistySnow,
+        BigUnion_DistinctFailure,
+        BigUnion_PracticalPrinciple,
+        BigUnion_LimpingStep,
+        BigUnion_VibrantExcitement,
+        BigUnion_ActiveDiamond,
+        BigUnion_PopularLimit,
+        BigUnion_FalseMirror,
+        BigUnion_PrimaryBlock,
+        BigUnion_RotatingRatio,
+        BigUnion_ColorfulCover,
+        BigUnion_DisloyalValue,
+        BigUnion_GruesomeCoach,
+        BigUnion_TotalWork,
+        BigUnion_HarmoniousPlay,
+        BigUnion_UniqueStress,
+        BigUnion_UnwillingSmoke,
+        BigUnion_FrozenSleep,
+        BigUnion_DiligentDeal,
+        BigUnion_AttractiveScript,
+        BigUnion_HoarseMouse,
+        BigUnion_CircularCard,
+        BigUnion_PotableBad,
+        BigUnion_TriangularRepair,
+        BigUnion_GaseousRoad,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

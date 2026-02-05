@@ -5,7 +5,8 @@ pub use crate::prelude::*;
 pub struct DeserializationTestResponse {
     pub echo: DeserializationTestRequest,
     #[serde(rename = "processedAt")]
-    pub processed_at: DateTime<Utc>,
+    #[serde(with = "crate::core::flexible_datetime::offset")]
+    pub processed_at: DateTime<FixedOffset>,
     #[serde(rename = "nullCount")]
     pub null_count: i64,
     #[serde(rename = "presentFieldsCount")]

@@ -42,12 +42,21 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_get_resource(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_resource)
+        type_hints = typing.get_type_hints(cls.get_resource)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "resource_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="ResourceID")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_resource, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -64,13 +73,9 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_resource.__globals__)
-
         router.get(
             path="/resource/{resource_id}",
-            response_model=Resource,
+            response_model=None,
             description=AbstractServiceService.get_resource.__doc__,
             **get_route_args(cls.get_resource, default_tag="service"),
         )(wrapper)
@@ -78,14 +83,25 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_list_resources(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_resources)
+        type_hints = typing.get_type_hints(cls.list_resources)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page_limit":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
+                )
             elif parameter_name == "before_date":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="beforeDate")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="beforeDate")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.list_resources, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -102,13 +118,9 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_resources.__globals__)
-
         router.get(
             path="/resource",
-            response_model=typing.Sequence[Resource],
+            response_model=None,
             description=AbstractServiceService.list_resources.__doc__,
             **get_route_args(cls.list_resources, default_tag="service"),
         )(wrapper)

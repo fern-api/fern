@@ -49,7 +49,7 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.Username != "" && r.AccessToken != "" {
-		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+": "+r.AccessToken)))
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.AccessToken)))
 	}
 	return header
 }
@@ -58,7 +58,7 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/basic-auth-environment-variables/fern")
-	headers.Set("X-Fern-SDK-Version", "0.0.1")
+	headers.Set("X-Fern-SDK-Version", "v0.0.1")
 	headers.Set("User-Agent", "github.com/basic-auth-environment-variables/fern/0.0.1")
 	return headers
 }

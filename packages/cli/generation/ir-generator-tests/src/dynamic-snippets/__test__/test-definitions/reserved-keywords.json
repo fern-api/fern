@@ -99,6 +99,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_package:Record": {
@@ -236,6 +237,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

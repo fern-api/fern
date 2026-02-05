@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -55,13 +70,35 @@ public class Example {
                 .builder()
                 .clientId("client_id")
                 .clientSecret("client_secret")
-                .audience("https://api.example.com")
-                .grantType("client_credentials")
-                .scope("scope")
                 .build()
         );
     }
 }
+```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedAnyAuthClient client = SeedAnyAuthClient.builder()
+    .token("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedAnyAuthClient client = SeedAnyAuthClient.builder()
+    .credentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Base Url
@@ -138,7 +175,6 @@ SeedAnyAuthClient client = SeedAnyAuthClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.anyAuth.SeedAnyAuthClient;
 import com.seed.anyAuth.core.RequestOptions;
@@ -146,7 +182,7 @@ import com.seed.anyAuth.core.RequestOptions;
 // Client level
 SeedAnyAuthClient client = SeedAnyAuthClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -154,7 +190,7 @@ client.auth().getToken(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

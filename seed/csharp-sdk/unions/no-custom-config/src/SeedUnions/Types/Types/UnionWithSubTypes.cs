@@ -147,12 +147,12 @@ public record UnionWithSubTypes
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSubTypes>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithSubTypes).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSubTypes Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,24 +1,25 @@
 {
   "apiName": {
-    "originalName": "",
+    "originalName": "Test file upload v1",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testFileUploadV1",
+      "safeName": "testFileUploadV1"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_file_upload_v_1",
+      "safeName": "test_file_upload_v_1"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_FILE_UPLOAD_V_1",
+      "safeName": "TEST_FILE_UPLOAD_V_1"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestFileUploadV1",
+      "safeName": "TestFileUploadV1"
     }
   },
   "selfHosted": false,
+  "apiDisplayName": "Test file upload v1",
   "auth": {
     "requirement": "ALL",
     "schemes": []

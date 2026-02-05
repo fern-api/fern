@@ -138,7 +138,10 @@ export class DynamicTypeLiteralMapper {
             });
             return python.TypeInstantiation.nop();
         }
-        return python.TypeInstantiation.set(
+        // Use list syntax instead of set literals because:
+        // 1. SDK request parameters use typing.Sequence which expects lists
+        // 2. Sets can't contain unhashable types like dicts in Python
+        return python.TypeInstantiation.list(
             value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
@@ -411,8 +414,12 @@ export class DynamicTypeLiteralMapper {
     }): python.TypeInstantiation | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                return this.convert({ typeReference, value });
-            } catch (e) {
+                const instantiation = this.convert({ typeReference, value });
+                if (python.TypeInstantiation.isNop(instantiation)) {
+                    continue;
+                }
+                return instantiation;
+            } catch {
                 continue;
             }
         }
@@ -428,7 +435,7 @@ export class DynamicTypeLiteralMapper {
         value,
         as
     }: {
-        primitive: FernIr.PrimitiveTypeV1;
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): python.TypeInstantiation {

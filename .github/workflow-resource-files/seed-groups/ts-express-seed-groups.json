@@ -55,7 +55,7 @@
         "oauth-client-credentials",
         "circular-references-advanced",
         "multi-url-environment",
-        "custom-auth",
+        "header-auth",
         "empty-clients",
         "websocket",
         "simple-fhir",
@@ -67,7 +67,7 @@
     {
       "fixtures": [
         "content-type",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "mixed-case:no-custom-config",
         "oauth-client-credentials-custom",
         "pagination-custom",

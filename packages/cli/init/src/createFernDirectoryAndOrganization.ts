@@ -13,6 +13,8 @@ import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
 
+const GITIGNORE_CONTENT = "**/.preview\n**/.definition\n";
+
 export async function createFernDirectoryAndWorkspace({
     organization,
     taskContext,
@@ -57,6 +59,7 @@ export async function createFernDirectoryAndWorkspace({
             organization,
             versionOfCli
         });
+        await writeGitignore({ absolutePathToFernDirectory: pathToFernDirectory });
     } else {
         const projectConfig = await loadProjectConfig({
             directory: pathToFernDirectory,
@@ -85,4 +88,13 @@ async function writeProjectConfig({
         version: versionOfCli
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
+}
+
+async function writeGitignore({
+    absolutePathToFernDirectory
+}: {
+    absolutePathToFernDirectory: AbsoluteFilePath;
+}): Promise<void> {
+    const gitignorePath = join(absolutePathToFernDirectory, RelativeFilePath.of(".gitignore"));
+    await writeFile(gitignorePath, GITIGNORE_CONTENT);
 }

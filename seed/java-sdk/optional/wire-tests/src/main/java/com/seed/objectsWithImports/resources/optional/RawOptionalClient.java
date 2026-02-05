@@ -11,6 +11,8 @@ import com.seed.objectsWithImports.core.RequestOptions;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiException;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsException;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsHttpResponse;
+import com.seed.objectsWithImports.resources.optional.types.DeployParams;
+import com.seed.objectsWithImports.resources.optional.types.DeployResponse;
 import com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;
 import java.io.IOException;
 import java.util.Map;
@@ -34,16 +36,24 @@ public class RawOptionalClient {
         return sendOptionalBody(Optional.empty());
     }
 
+    public SeedObjectsWithImportsHttpResponse<String> sendOptionalBody(RequestOptions requestOptions) {
+        return sendOptionalBody(Optional.empty(), requestOptions);
+    }
+
     public SeedObjectsWithImportsHttpResponse<String> sendOptionalBody(Optional<Map<String, Object>> request) {
         return sendOptionalBody(request, null);
     }
 
     public SeedObjectsWithImportsHttpResponse<String> sendOptionalBody(
             Optional<Map<String, Object>> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("send-optional-body")
-                .build();
+                .addPathSegments("send-optional-body");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -55,7 +65,7 @@ public class RawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -84,16 +94,24 @@ public class RawOptionalClient {
         return sendOptionalTypedBody(Optional.empty());
     }
 
+    public SeedObjectsWithImportsHttpResponse<String> sendOptionalTypedBody(RequestOptions requestOptions) {
+        return sendOptionalTypedBody(Optional.empty(), requestOptions);
+    }
+
     public SeedObjectsWithImportsHttpResponse<String> sendOptionalTypedBody(Optional<SendOptionalBodyRequest> request) {
         return sendOptionalTypedBody(request, null);
     }
 
     public SeedObjectsWithImportsHttpResponse<String> sendOptionalTypedBody(
             Optional<SendOptionalBodyRequest> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("send-optional-typed-body")
-                .build();
+                .addPathSegments("send-optional-typed-body");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -105,7 +123,7 @@ public class RawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -121,6 +139,86 @@ public class RawOptionalClient {
             if (response.isSuccessful()) {
                 return new SeedObjectsWithImportsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedObjectsWithImportsApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedObjectsWithImportsException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public SeedObjectsWithImportsHttpResponse<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id) {
+        return sendOptionalNullableWithAllOptionalProperties(actionId, id, Optional.empty());
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public SeedObjectsWithImportsHttpResponse<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, RequestOptions requestOptions) {
+        return sendOptionalNullableWithAllOptionalProperties(actionId, id, Optional.empty(), requestOptions);
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public SeedObjectsWithImportsHttpResponse<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, Optional<DeployParams> request) {
+        return sendOptionalNullableWithAllOptionalProperties(actionId, id, request, null);
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public SeedObjectsWithImportsHttpResponse<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, Optional<DeployParams> request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("deploy")
+                .addPathSegment(actionId)
+                .addPathSegments("versions")
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectsWithImportsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedObjectsWithImportsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, DeployResponse.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedObjectsWithImportsApiException(

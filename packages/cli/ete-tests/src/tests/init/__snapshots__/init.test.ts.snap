@@ -5,6 +5,13 @@ exports[`fern init > init docs 1`] = `
   {
     "contents": [
       {
+        "contents": "**/.preview
+**/.definition
+",
+        "name": ".gitignore",
+        "type": "file",
+      },
+      {
         "contents": [
           {
             "contents": "name: api
@@ -21,6 +28,7 @@ service:
   auth: false
   base-path: /movies
   endpoints:
+
     createMovie:
       docs: Add a movie to the database
       method: POST
@@ -54,6 +62,7 @@ service:
             body: tt1234
 
 types:
+
   MovieId:
     type: string
     docs: The unique identifier for a Movie in the database
@@ -72,6 +81,7 @@ types:
       rating: double
 
 errors:
+
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId
@@ -93,9 +103,6 @@ navigation:
 colors:
   accentPrimary: '#ffffff'
   background: '#000000'
-ai-search:
-  location:
-    - docs
 ",
         "name": "docs.yml",
         "type": "file",
@@ -114,7 +121,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
@@ -187,6 +194,13 @@ exports[`fern init > init openapi 1`] = `
   {
     "contents": [
       {
+        "contents": "**/.preview
+**/.definition
+",
+        "name": ".gitignore",
+        "type": "file",
+      },
+      {
         "contents": "{
     "organization": "fern",
     "version": "0.0.0"
@@ -203,7 +217,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
@@ -340,6 +354,13 @@ components:
 exports[`fern init > no existing fern directory 1`] = `
 [
   {
+    "contents": "**/.preview
+**/.definition
+",
+    "name": ".gitignore",
+    "type": "file",
+  },
+  {
     "contents": [
       {
         "contents": "name: api
@@ -356,6 +377,7 @@ service:
   auth: false
   base-path: /movies
   endpoints:
+
     createMovie:
       docs: Add a movie to the database
       method: POST
@@ -389,6 +411,7 @@ service:
             body: tt1234
 
 types:
+
   MovieId:
     type: string
     docs: The unique identifier for a Movie in the database
@@ -407,6 +430,7 @@ types:
       rating: double
 
 errors:
+
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId
@@ -432,7 +456,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript

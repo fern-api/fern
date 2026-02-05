@@ -106,9 +106,6 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/user/{userId}",
-              "path-parameters": {
-                "userId": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -123,8 +120,10 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "UserGetRequest",
-                "path-parameters": undefined,
+                "name": "GetUserRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -167,9 +166,6 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/user/{userId}",
-              "path-parameters": {
-                "userId": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -184,8 +180,10 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "UserGetStreamRequest",
-                "path-parameters": undefined,
+                "name": "GetUserStreamRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
                 "query-parameters": undefined,
               },
               "response-stream": {
@@ -214,10 +212,10 @@ service:
       method: POST
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId: string
       request:
-        name: UserGetStreamRequest
+        name: GetUserStreamRequest
+        path-parameters:
+          userId: string
         body:
           properties:
             stream:
@@ -249,10 +247,10 @@ service:
       method: POST
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId: string
       request:
-        name: UserGetRequest
+        name: GetUserRequest
+        path-parameters:
+          userId: string
         body:
           properties:
             stream:

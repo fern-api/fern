@@ -1,7 +1,7 @@
 import { type Generation } from "../../context/generation-info";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
-import { Type } from "../types/Type";
+import { Type } from "../types/IType";
 
 export declare namespace List {
     interface Args {
@@ -22,7 +22,7 @@ export class List extends AstNode {
 
     public write(writer: Writer): void {
         if (this.itemType != null) {
-            writer.write("new ", this.System.Collections.Generic.List(this.itemType), "()");
+            writer.write(this.System.Collections.Generic.List(this.itemType).new());
             writer.pushScope();
         } else {
             writer.write("[");

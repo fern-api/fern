@@ -1,0 +1,32 @@
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+      expires_in: integer
+
+  GetTokenRequest:
+    docs: |
+      The request body for getting an OAuth token.
+    properties:
+      client_id: string
+      client_secret: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      request: GetTokenRequest
+      response: TokenResponse
+      examples:
+        - request:
+            client_id: "client_id"
+            client_secret: "client_secret"
+          response:
+            body:
+              access_token: "access_token"
+              expires_in: 3600

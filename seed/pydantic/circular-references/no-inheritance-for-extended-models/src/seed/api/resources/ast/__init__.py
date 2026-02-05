@@ -5,6 +5,7 @@
 from .container_value import ContainerValue, ContainerValue_List, ContainerValue_Optional
 from .field_value import FieldValue, FieldValue_ContainerValue, FieldValue_ObjectValue, FieldValue_PrimitiveValue
 from .json_like import JsonLike
+from .json_like_with_null_and_undefined import JsonLikeWithNullAndUndefined
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 from .t import T
@@ -20,6 +21,7 @@ __all__ = [
     "FieldValue_ObjectValue",
     "FieldValue_PrimitiveValue",
     "JsonLike",
+    "JsonLikeWithNullAndUndefined",
     "ObjectValue",
     "PrimitiveValue",
     "T",

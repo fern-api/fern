@@ -84,14 +84,25 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 parse: serialization.IntermediateRepresentation.parse
             });
 
-            const npmPackage = ir.selfHosted
-                ? constructNpmPackageFromArgs(
-                      npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
-                  )
-                : constructNpmPackage({
-                      generatorConfig: config,
-                      isPackagePrivate: this.isPackagePrivate(customConfig)
-                  });
+            let npmPackage: NpmPackage | undefined;
+            if (ir.selfHosted) {
+                // Try to construct package from publish config
+                npmPackage = constructNpmPackageFromArgs(
+                    npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
+                );
+                // Fall back to generator config if publish config doesn't have the necessary info
+                if (npmPackage == null) {
+                    npmPackage = constructNpmPackage({
+                        generatorConfig: config,
+                        isPackagePrivate: this.isPackagePrivate(customConfig)
+                    });
+                }
+            } else {
+                npmPackage = constructNpmPackage({
+                    generatorConfig: config,
+                    isPackagePrivate: this.isPackagePrivate(customConfig)
+                });
+            }
 
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
@@ -128,10 +139,16 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 if (ir.generationMetadata) {
                     await writeGenerationMetadata({
                         generationMetadata: ir.generationMetadata,
-                        pathToProject
+                        pathToProject,
+                        sdkVersion: version
                     });
                 }
             });
+
+            // Run npm pkg fix to normalize package.json (enabled by default)
+            if (!this.shouldSkipNpmPkgFix(customConfig)) {
+                await typescriptProject.fixPackageJson(logger);
+            }
 
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
@@ -146,12 +163,21 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
-                    await typescriptProject.npmPackTo({
-                        logger,
-                        destinationPath,
-                        zipFilename: OUTPUT_ZIP_FILENAME,
-                        unzipOutput: options?.unzipOutput
-                    });
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                    } else {
+                        await typescriptProject.npmPackTo({
+                            logger,
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput
+                        });
+                    }
                 },
                 github: async (githubOutputMode) => {
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
@@ -167,27 +193,35 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     await typescriptProject.generateLockfile(logger);
                     await typescriptProject.checkFix(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
-                    await typescriptProject.copyProjectTo({
-                        logger,
-                        destinationPath,
-                        zipFilename: OUTPUT_ZIP_FILENAME,
-                        unzipOutput: options?.unzipOutput
-                    });
-                    if (ir.selfHosted) {
-                        const tmpDir = await tmp.dir();
-                        await typescriptProject.copyProjectTo({
-                            destinationPath: AbsoluteFilePath.of(tmpDir.path),
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
                             zipFilename: OUTPUT_ZIP_FILENAME,
-                            unzipOutput: true,
+                            unzipOutput: options?.unzipOutput,
                             logger
                         });
-                        await this.pushToGitHub(ir, tmpDir.path, logger);
+                    } else {
+                        await typescriptProject.copyProjectTo({
+                            logger,
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput
+                        });
                     }
                 },
                 downloadFiles: async () => {
                     await typescriptProject.installDependencies(logger);
                     await typescriptProject.checkFix(logger);
 
+                    if (this.outputSrcOnly(customConfig)) {
+                        await typescriptProject.copySrcContentsTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                        return;
+                    }
                     if (this.shouldGenerateFullProject(ir)) {
                         await typescriptProject.copyProjectTo({
                             destinationPath,
@@ -257,7 +291,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract getPackageManager(customConfig: CustomConfig): "pnpm" | "yarn";
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
+    protected abstract outputSrcOnly(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
+    protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
 
     private shouldGenerateFullProject(ir: IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;
@@ -314,22 +350,50 @@ function npmPackageInfoFromPublishConfig(
     publishConfig: FernIr.PublishingConfig | undefined,
     isPackagePrivate: boolean
 ): constructNpmPackageArgs {
-    let args = {};
-    if (publishConfig?.type === "github") {
-        if (publishConfig.target?.type === "npm") {
-            const repoUrl =
-                publishConfig.repo != null && publishConfig.owner != null
-                    ? `https://github.com/${publishConfig.owner}/${publishConfig.repo}`
-                    : publishConfig.uri;
-            args = {
-                packageName: publishConfig.target.packageName,
-                version: publishConfig.target.version,
-                repoUrl,
-                publishInfo: undefined,
-                licenseConfig: config.license
-            };
+    let args: Partial<constructNpmPackageArgs> = {};
+
+    if (publishConfig != null) {
+        switch (publishConfig.type) {
+            case "github":
+                if (publishConfig.target?.type === "npm") {
+                    const repoUrl =
+                        publishConfig.repo != null && publishConfig.owner != null
+                            ? `https://github.com/${publishConfig.owner}/${publishConfig.repo}`
+                            : publishConfig.uri;
+                    args = {
+                        packageName: publishConfig.target.packageName,
+                        version: publishConfig.target.version,
+                        repoUrl,
+                        publishInfo: undefined,
+                        licenseConfig: config.license
+                    };
+                }
+                break;
+            case "direct":
+                if (publishConfig.target?.type === "npm") {
+                    args = {
+                        packageName: publishConfig.target.packageName,
+                        version: publishConfig.target.version,
+                        repoUrl: undefined,
+                        publishInfo: undefined,
+                        licenseConfig: config.license
+                    };
+                }
+                break;
+            case "filesystem":
+                if (publishConfig.publishTarget?.type === "npm") {
+                    args = {
+                        packageName: publishConfig.publishTarget.packageName,
+                        version: publishConfig.publishTarget.version,
+                        repoUrl: undefined,
+                        publishInfo: undefined,
+                        licenseConfig: config.license
+                    };
+                }
+                break;
         }
     }
+
     return {
         ...args,
         isPackagePrivate

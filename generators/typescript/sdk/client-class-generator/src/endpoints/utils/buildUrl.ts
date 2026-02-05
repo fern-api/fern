@@ -15,7 +15,9 @@ export function buildUrl({
     includeSerdeLayer,
     retainOriginalCasing,
     omitUndefined,
-    getReferenceToPathParameterVariableFromRequest
+    parameterNaming,
+    getReferenceToPathParameterVariableFromRequest,
+    forceInlinePathParameters = false
 }: {
     endpoint: {
         sdkRequest: SdkRequest | undefined;
@@ -27,8 +29,10 @@ export function buildUrl({
     context: SdkContext;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
+    parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     omitUndefined: boolean;
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
+    forceInlinePathParameters?: boolean;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {
@@ -50,7 +54,9 @@ export function buildUrl({
                 pathParameter,
                 generatedClientClass,
                 retainOriginalCasing,
-                shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
+                parameterNaming,
+                shouldInlinePathParameters:
+                    forceInlinePathParameters || context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
                 getReferenceToPathParameterVariableFromRequest
             });
 
@@ -84,12 +90,14 @@ function getReferenceToPathParameter({
     generatedClientClass,
     retainOriginalCasing,
     shouldInlinePathParameters,
+    parameterNaming,
     getReferenceToPathParameterVariableFromRequest
 }: {
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
     retainOriginalCasing: boolean;
     shouldInlinePathParameters: boolean;
+    parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression {
     if (pathParameter.variable != null) {
@@ -103,7 +111,8 @@ function getReferenceToPathParameter({
             } else {
                 const pathParamName = getParameterNameForPositionalPathParameter({
                     pathParameter,
-                    retainOriginalCasing
+                    retainOriginalCasing,
+                    parameterNaming
                 });
                 return ts.factory.createIdentifier(pathParamName);
             }

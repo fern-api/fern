@@ -45,12 +45,12 @@
           "file": "../openapi-v1.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload",
       "examples": [
@@ -109,12 +109,12 @@
           "file": "../openapi-v2.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload-list",
       "examples": [
@@ -252,12 +252,12 @@
           "file": "../openapi-v3.yml",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload-with-content-type",
       "examples": [

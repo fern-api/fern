@@ -17,10 +17,16 @@ export declare namespace runMigrations {
         fromVersion: string;
         toVersion: string;
         context: TaskContext;
+        yes?: boolean;
     }
 }
 
-export async function runMigrations({ fromVersion, toVersion, context }: runMigrations.Args): Promise<void> {
+export async function runMigrations({
+    fromVersion,
+    toVersion,
+    context,
+    yes = false
+}: runMigrations.Args): Promise<void> {
     context.logger.debug(`Checking if any migrations need to be run (from=${fromVersion}, to=${toVersion})`);
 
     const migrationsToRun = getMigrationsToRun({ fromVersion, toVersion });
@@ -37,14 +43,18 @@ export async function runMigrations({ fromVersion, toVersion, context }: runMigr
         );
     }
 
-    await context.takeOverTerminal(async () => {
-        const wantsToContinue = await askForConfirmation(migrationsToRun);
-        if (!wantsToContinue) {
-            context.failAndThrow("Canceled.");
+    if (yes) {
+        context.logger.debug("Skipping migration confirmation prompt because --yes was provided.");
+    } else {
+        await context.takeOverTerminal(async () => {
+            const wantsToContinue = await askForConfirmation(migrationsToRun);
+            if (!wantsToContinue) {
+                context.failAndThrow("Canceled.");
+            }
+        });
+        if (context.getResult() === TaskResult.Failure) {
+            return;
         }
-    });
-    if (context.getResult() === TaskResult.Failure) {
-        return;
     }
 
     const migrationsWithTasks = migrationsToRun.flatMap(({ migrations, version }) =>

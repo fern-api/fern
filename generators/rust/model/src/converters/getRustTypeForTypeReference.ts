@@ -8,6 +8,8 @@ export interface RustTypeGeneratorContext {
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
         name: { pascalCase: { safeName: string } };
     }): string;
+    /** DateTime type to use: "offset" for DateTime<FixedOffset> (default), "utc" for DateTime<Utc> */
+    getDateTimeType(): "offset" | "utc";
 }
 
 export function generateRustTypeForTypeReference(
@@ -31,19 +33,21 @@ export function generateRustTypeForTypeReference(
                 map: (mapType) =>
                     rust.Type.hashMap(
                         generateRustTypeForTypeReference(mapType.keyType, context, false),
-                        generateRustTypeForTypeReference(mapType.valueType, context, false)
+                        // Propagate wrapInBox to the value type for recursive maps
+                        generateRustTypeForTypeReference(mapType.valueType, context, wrapInBox)
                     ),
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
+                    // Propagate wrapInBox to the element type
                     const elementType = isFloatingPointType(setType)
                         ? rust.Type.reference(
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType, context, false)]
+                                  genericArgs: [generateRustTypeForTypeReference(setType, context, wrapInBox)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType, context, false);
+                        : generateRustTypeForTypeReference(setType, context, wrapInBox);
 
                     return rust.Type.reference(
                         rust.reference({
@@ -57,8 +61,9 @@ export function generateRustTypeForTypeReference(
                 optional: (optionalType) =>
                     rust.Type.option(generateRustTypeForTypeReference(optionalType, context, wrapInBox)),
                 list: (listType) =>
-                    // Vec already heap-allocates, no need to propagate Box into Vec
-                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, false)),
+                    // Vec is heap-allocated, but we need to Box the inner type if it's recursive
+                    // This generates Vec<Box<T>> for recursive types, not Box<Vec<T>>
+                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, wrapInBox)),
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(
@@ -97,14 +102,29 @@ export function generateRustTypeForTypeReference(
                     );
                 },
                 dateTime: () => {
-                    // Use DateTime<Utc> for timestamps (imported from chrono)
+                    // Use DateTime<Utc> when "utc" config is set, otherwise DateTime<FixedOffset> (default)
+                    if (context.getDateTimeType() === "utc") {
+                        return rust.Type.reference(
+                            rust.reference({
+                                name: "DateTime",
+                                genericArgs: [
+                                    rust.Type.reference(
+                                        rust.reference({
+                                            name: "Utc"
+                                        })
+                                    )
+                                ]
+                            })
+                        );
+                    }
+                    // Default: DateTime<FixedOffset> - preserves original timezone
                     return rust.Type.reference(
                         rust.reference({
                             name: "DateTime",
                             genericArgs: [
                                 rust.Type.reference(
                                     rust.reference({
-                                        name: "Utc"
+                                        name: "FixedOffset"
                                     })
                                 )
                             ]

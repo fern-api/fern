@@ -5,13 +5,17 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import UniversalBaseModel
+from .....core.serialization import FieldMetadata
 
 
 class Animal_Dog(UniversalBaseModel):
     animal: typing.Literal["dog"] = "dog"
     name: str
-    likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
+    likes_to_woof: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="likesToWoof"), pydantic.Field(alias="likesToWoof")
+    ]
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
 
@@ -19,9 +23,11 @@ class Animal_Dog(UniversalBaseModel):
 class Animal_Cat(UniversalBaseModel):
     animal: typing.Literal["cat"] = "cat"
     name: str
-    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
+    likes_to_meow: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="likesToMeow"), pydantic.Field(alias="likesToMeow")
+    ]
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")
 
 
-Animal = typing.Union[Animal_Dog, Animal_Cat]
+Animal = typing_extensions.Annotated[typing.Union[Animal_Dog, Animal_Cat], pydantic.Field(discriminator="animal")]

@@ -20,7 +20,7 @@ export interface RootServiceMethods {
                 user: SeedApi.User;
                 userList?: SeedApi.User;
                 optionalDeadline?: Date;
-                keyValue?: Record<string, string | undefined>;
+                keyValue?: Record<string, string>;
                 optionalString?: string;
                 nestedUser?: SeedApi.NestedUser;
                 optionalUser?: SeedApi.User;

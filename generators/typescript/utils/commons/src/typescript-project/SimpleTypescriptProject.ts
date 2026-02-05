@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { produce } from "immer";
-import { IPackageJson } from "package-json-type";
+import { produce, WritableDraft } from "immer";
+import { IPackageJson, IPeerDependenciesMeta } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
 import { DependencyType } from "../dependency-manager/DependencyManager";
@@ -30,7 +30,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
     protected async addFilesToVolume(): Promise<void> {
         this.addCommonFilesToVolume();
         await this.generateGitIgnore();
-        await this.generateNpmIgnore();
+        if (this.useLegacyExports) {
+            await this.generateNpmIgnore();
+        }
         await this.generateTsConfig();
         await this.generatePackageJson();
     }
@@ -52,11 +54,17 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
+                ".fern",
                 SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "biome.json",
                 "tsconfig.json",
                 "yarn.lock",
-                "pnpm-lock.yaml"
+                "pnpm-lock.yaml",
+                ".mock",
+                "dist",
+                "scripts",
+                "jest.config.*",
+                "vitest.config.*"
             ].join("\n")
         );
     }
@@ -232,16 +240,22 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         default: defaultExport
                     },
                     ...this.getFoldersForExports().reduce((acc, folder) => {
-                        const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/index.js`;
-                        const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/index.d.ts`;
-                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.mjs`;
-                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.d.mts`;
+                        const subpackageExport = this.generateSubpackageExports
+                            ? this.subpackageExportPaths.find((p) => p.relPath === folder)
+                            : undefined;
+                        const isSubpackageExport = subpackageExport !== undefined;
+                        const fileName = isSubpackageExport ? "exports" : "index";
+                        const exportKey = isSubpackageExport ? subpackageExport.key : folder;
+                        const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.js`;
+                        const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.d.ts`;
+                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.mjs`;
+                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.d.mts`;
                         const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
                         const defaultExport = this.outputEsm ? mjsFile : cjsFile;
 
                         return {
                             ...acc,
-                            [`./${folder}`]: {
+                            [`./${exportKey}`]: {
                                 types: defaultTypesExport,
                                 import: {
                                     types: mjsTypesFile,
@@ -292,9 +306,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
             }
 
             if (Object.keys(this.extraPeerDependenciesMeta).length > 0) {
-                draft.peerDependenciesMeta = {
-                    ...this.extraPeerDependenciesMeta
-                };
+                draft.peerDependenciesMeta = { ...this.extraPeerDependenciesMeta } as
+                    | WritableDraft<IPeerDependenciesMeta>
+                    | undefined;
             }
 
             const devDependencies = {

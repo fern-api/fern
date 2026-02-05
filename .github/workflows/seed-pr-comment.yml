@@ -1,0 +1,357 @@
+name: Seed PR Comment Trigger
+
+on:
+  pull_request:
+    types: [opened, reopened]
+  issue_comment:
+    types: [created, edited]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+
+# Prevent concurrent runs on the same PR
+concurrency:
+  group: seed-pr-comment-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  post-seed-selector:
+    name: Post Seed Selector Comment
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Post seed selector comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- seed-selector -->';
+            const prNumber = context.payload.pull_request.number;
+
+            // Check if comment already exists
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber
+            });
+
+            const existingComment = comments.find(c => c.body && c.body.includes(marker));
+            if (existingComment) {
+              console.log('Seed selector comment already exists');
+              return;
+            }
+
+            // Create the comment with checkboxes
+            const body = `${marker}
+            ## 🌱 Seed Test Selector
+
+            Select languages to run seed tests for:
+
+            - [ ] Python
+            - [ ] TypeScript
+            - [ ] Java
+            - [ ] Go
+            - [ ] Ruby
+            - [ ] C#
+            - [ ] PHP
+            - [ ] Swift
+            - [ ] Rust
+            - [ ] OpenAPI
+            - [ ] Postman
+
+            ---
+            **How to use:** Click the ⋯ menu above → "Edit" → check the boxes you want → click "Update comment". Tests will run automatically and snapshots will be committed to this PR.`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body
+            });
+
+            console.log('Posted seed selector comment');
+
+  handle-seed-selection:
+    name: Handle Seed Selection
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    if: |
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request
+    steps:
+      - name: Parse checked languages
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commentBody = context.payload.comment.body;
+            const commentId = context.payload.comment.id;
+            const prNumber = context.issue.number;
+            const marker = '<!-- seed-selector -->';
+            
+            // Validate this is the seed selector comment
+            if (!commentBody.includes(marker)) {
+              console.log('Comment does not contain seed-selector marker, skipping');
+              return;
+            }
+            
+            // Only process comments originally authored by the github-actions bot
+            if (context.payload.comment.user?.login !== 'github-actions[bot]') {
+              console.log('Comment not originally authored by github-actions bot, skipping');
+              return;
+            }
+            
+            // Skip if the edit was made by the bot itself (to prevent loops when we update status)
+            if (context.payload.sender?.login === 'github-actions[bot]') {
+              console.log('Edit made by bot (likely our own status update), skipping to prevent loops');
+              return;
+            }
+
+            // Language to generators mapping
+            const languageMap = {
+              'Python': ['python-sdk', 'pydantic', 'pydantic-v2', 'fastapi'],
+              'TypeScript': ['ts-sdk', 'ts-express'],
+              'Java': ['java-sdk', 'java-model', 'java-spring'],
+              'Go': ['go-sdk', 'go-model', 'go-fiber'],
+              'Ruby': ['ruby-sdk', 'ruby-model', 'ruby-sdk-v2'],
+              'C#': ['csharp-sdk', 'csharp-model'],
+              'PHP': ['php-sdk', 'php-model'],
+              'Swift': ['swift-sdk'],
+              'Rust': ['rust-sdk', 'rust-model'],
+              'OpenAPI': ['openapi'],
+              'Postman': ['postman']
+            };
+
+            // Generator to path mapping
+            const generatorPathMap = {
+              'python-sdk': 'generators/python',
+              'pydantic': 'generators/python',
+              'pydantic-v2': 'generators/python-v2',
+              'fastapi': 'generators/python',
+              'ts-sdk': 'generators/typescript',
+              'ts-express': 'generators/typescript',
+              'java-sdk': 'generators/java',
+              'java-spring': 'generators/java',
+              'java-model': 'generators/java',
+              'go-sdk': 'generators/go',
+              'go-fiber': 'generators/go',
+              'go-model': 'generators/go',
+              'ruby-sdk': 'generators/ruby',
+              'ruby-model': 'generators/ruby',
+              'ruby-sdk-v2': 'generators/ruby-v2',
+              'csharp-sdk': 'generators/csharp',
+              'csharp-model': 'generators/csharp',
+              'php-sdk': 'generators/php',
+              'php-model': 'generators/php',
+              'swift-sdk': 'generators/swift',
+              'rust-sdk': 'generators/rust',
+              'rust-model': 'generators/rust',
+              'openapi': 'generators/openapi',
+              'postman': 'generators/postman'
+            };
+
+            // Parse checked languages
+            const lines = commentBody.split('\n');
+            const checkedLanguages = [];
+
+            for (const line of lines) {
+              const match = line.match(/^- \[x\] (.+)$/i);
+              if (match) {
+                const language = match[1].trim();
+                if (languageMap[language]) {
+                  checkedLanguages.push(language);
+                }
+              }
+            }
+
+            if (checkedLanguages.length === 0) {
+              console.log('No languages checked');
+              return;
+            }
+
+            console.log('Checked languages:', checkedLanguages.join(', '));
+
+            // Get PR details
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+
+            // Store outputs
+            core.setOutput('checked-languages', JSON.stringify(checkedLanguages));
+            core.setOutput('language-map', JSON.stringify(languageMap));
+            core.setOutput('generator-path-map', JSON.stringify(generatorPathMap));
+            core.setOutput('comment-id', commentId);
+            core.setOutput('pr-number', prNumber);
+            core.setOutput('pr-ref', pr.data.head.ref);
+            core.setOutput('pr-sha', pr.data.head.sha);
+            core.setOutput('pr-repo-full-name', pr.data.head.repo.full_name);
+            core.setOutput('base-repo-full-name', pr.data.base.repo.full_name);
+
+      - name: Check if we can push to PR branch
+        id: check-push
+        if: steps.parse.outputs.checked-languages != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prRepoFullName = '${{ steps.parse.outputs.pr-repo-full-name }}';
+            const baseRepoFullName = '${{ steps.parse.outputs.base-repo-full-name }}';
+
+            const canPush = prRepoFullName === baseRepoFullName;
+            core.setOutput('can-push', canPush ? 'true' : 'false');
+
+            if (!canPush) {
+              console.log('Cannot push to fork PR branch. Will run tests only.');
+            }
+
+      - name: Checkout PR branch
+        if: steps.parse.outputs.checked-languages != ''
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.parse.outputs.pr-ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install
+        if: steps.parse.outputs.checked-languages != ''
+        uses: ./.github/actions/install
+
+      - name: Run seed tests for selected languages
+        if: steps.parse.outputs.checked-languages != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const { execSync } = require('child_process');
+
+            const checkedLanguages = JSON.parse('${{ steps.parse.outputs.checked-languages }}');
+            const languageMap = JSON.parse('${{ steps.parse.outputs.language-map }}');
+            const generatorPathMap = JSON.parse('${{ steps.parse.outputs.generator-path-map }}');
+            const commentId = '${{ steps.parse.outputs.comment-id }}';
+            const prNumber = '${{ steps.parse.outputs.pr-number }}';
+            const canPush = '${{ steps.check-push.outputs.can-push }}' === 'true';
+
+            // Update comment to show running status
+            async function updateComment(statusMap) {
+              const marker = '<!-- seed-selector -->';
+              const checkboxes = Object.keys(languageMap).map(lang => {
+                const status = statusMap[lang];
+                const checkbox = status ? '[x]' : '[ ]';
+                let statusEmoji = '';
+                
+                if (status === 'running') {
+                  statusEmoji = ' ⏳';
+                } else if (status === 'success') {
+                  statusEmoji = ' ✅';
+                } else if (status === 'failure') {
+                  statusEmoji = ' ❌';
+                }
+                
+                return `- ${checkbox} ${lang}${statusEmoji}`;
+              }).join('\n');
+              
+              const body = `${marker}
+              ## 🌱 Seed Test Selector
+              
+              Select languages to run seed tests for:
+              
+              ${checkboxes}
+              
+              ---
+              **How to use:** Click the ⋯ menu above → "Edit" → check the boxes you want → click "Update comment". Tests will run automatically and snapshots will be committed to this PR.`;
+              
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: commentId,
+                body
+              });
+            }
+
+            // Initialize status map
+            const statusMap = {};
+            for (const lang of checkedLanguages) {
+              statusMap[lang] = 'running';
+            }
+            await updateComment(statusMap);
+
+            // Run seed tests for each language
+            for (const language of checkedLanguages) {
+              const generators = languageMap[language];
+              console.log(`\n=== Running seed tests for ${language} ===`);
+              
+              let languageSuccess = true;
+              
+              for (const generator of generators) {
+                const generatorPath = generatorPathMap[generator];
+                console.log(`Running seed test for ${generator} (path: ${generatorPath})`);
+                
+                try {
+                  // Run seed test using the auto-update-seed action logic
+                  execSync(
+                    `pnpm seed:local test --generator ${generator} --fixture all`,
+                    { stdio: 'inherit', cwd: process.cwd() }
+                  );
+                  
+                  // Check if there are changes
+                  const gitStatus = execSync('git status --porcelain', { encoding: 'utf-8' });
+                  const hasChanges = gitStatus.trim().length > 0;
+                  
+                  if (hasChanges && canPush) {
+                    // Commit and push changes
+                    execSync(`git add seed/${generator}/*`, { stdio: 'inherit' });
+                    execSync(
+                      `git commit -m "chore(${language.toLowerCase()}): update ${generator} seed"`,
+                      { stdio: 'inherit' }
+                    );
+                    console.log(`Committed changes for ${generator}`);
+                  } else if (hasChanges && !canPush) {
+                    console.log(`Changes detected for ${generator} but cannot push to fork`);
+                  } else {
+                    console.log(`No changes for ${generator}`);
+                  }
+                } catch (error) {
+                  console.error(`Failed to run seed test for ${generator}:`, error.message);
+                  languageSuccess = false;
+                  break;
+                }
+              }
+              
+              // Update status for this language
+              statusMap[language] = languageSuccess ? 'success' : 'failure';
+              await updateComment(statusMap);
+            }
+
+            // Push all commits at once if we can
+            if (canPush) {
+              try {
+                execSync('git push', { stdio: 'inherit' });
+                console.log('Pushed all seed updates to PR branch');
+              } catch (error) {
+                console.error('Failed to push changes:', error.message);
+                
+                // Update comment with error
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body: '❌ Failed to push seed updates to PR branch. Please check the workflow logs for details.'
+                });
+              }
+            } else {
+              // Post a comment explaining we can't push to forks
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: '⚠️ Seed tests completed but cannot commit to fork PR branches. Please run seed tests locally and commit the changes.'
+              });
+            }
+
+            // Check if any language failed
+            const anyFailed = Object.values(statusMap).some(status => status === 'failure');
+            if (anyFailed) {
+              core.setFailed('Some seed tests failed');
+            }

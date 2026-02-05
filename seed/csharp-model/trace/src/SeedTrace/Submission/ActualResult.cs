@@ -191,12 +191,12 @@ public record ActualResult
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ActualResult>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(ActualResult).IsAssignableFrom(typeToConvert);
 
         public override ActualResult Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

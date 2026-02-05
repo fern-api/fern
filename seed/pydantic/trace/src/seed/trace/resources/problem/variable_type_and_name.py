@@ -5,11 +5,15 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 
 
 class VariableTypeAndName(UniversalBaseModel):
-    variable_type: "VariableType" = pydantic.Field(alias="variableType")
+    variable_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="variableType"), pydantic.Field(alias="variableType")
+    ]
     name: str
 
     if IS_PYDANTIC_V2:
@@ -20,6 +24,8 @@ class VariableTypeAndName(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ..commons.list_type import ListType  # noqa: E402, I001
+from ..commons.map_type import MapType  # noqa: E402, I001
 from ..commons.variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(VariableTypeAndName)
+update_forward_refs(VariableTypeAndName, ListType=ListType, MapType=MapType, VariableType=VariableType)

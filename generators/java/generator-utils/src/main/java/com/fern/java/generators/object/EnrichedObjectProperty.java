@@ -135,12 +135,26 @@ public interface EnrichedObjectProperty {
         } else {
             getterBuilder.addStatement("return $L", fieldSpec().get().name);
         }
-        if (wireKey().isPresent() && !nullable() && !aliasOfNullable()) {
+        // Headers have empty wireKey to avoid JSON serialization
+        boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
+        if (hasWireKey && !nullable() && !aliasOfNullable() && !isOptionalNullableField()) {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
                     .build());
         } else {
-            getterBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnore.class).build());
+            // Check if this is an OptionalNullable field - if so, add @JsonInclude + @JsonProperty
+            if (hasWireKey && isOptionalNullableField()) {
+                getterBuilder.addAnnotation(AnnotationSpec.builder(JsonInclude.class)
+                        .addMember("value", "$T.Include.CUSTOM", JsonInclude.class)
+                        .addMember("valueFilter", "$T.class", nullableNonemptyFilterClassName())
+                        .build());
+                getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                        .addMember("value", "$S", wireKey().get())
+                        .build());
+            } else {
+                getterBuilder.addAnnotation(
+                        AnnotationSpec.builder(JsonIgnore.class).build());
+            }
         }
         if (fromInterface() && !inline()) {
             getterBuilder.addAnnotation(ClassName.get("", "java.lang.Override"));
@@ -153,7 +167,9 @@ public interface EnrichedObjectProperty {
 
     @Value.Lazy
     default Optional<MethodSpec> getterForSerialization() {
-        if (wireKey().isEmpty() || (!nullable() && !aliasOfNullable())) {
+        // Headers have empty wireKey and should not have serialization getter
+        boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
+        if (!hasWireKey || (!nullable() && !aliasOfNullable())) {
             return Optional.empty();
         }
 

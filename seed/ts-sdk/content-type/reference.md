@@ -40,7 +40,7 @@ await client.service.patch({
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -133,7 +133,7 @@ await client.service.patchComplex("id", {
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -209,7 +209,7 @@ await client.service.namedPatchWithMixed("id", {
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -281,7 +281,7 @@ await client.service.optionalMergePatchTest({
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -355,7 +355,7 @@ await client.service.regularPatch("id", {
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>

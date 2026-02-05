@@ -8,4 +8,4 @@ from .....types.id import Id
 
 class MetadataParams(typing_extensions.TypedDict):
     id: Id
-    value: typing.Optional[typing.Any]
+    value: typing.Any

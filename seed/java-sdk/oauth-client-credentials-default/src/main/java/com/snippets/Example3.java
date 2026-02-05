@@ -4,9 +4,8 @@ import com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultC
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.builder()
-                .clientId("<clientId>")
-                .clientSecret("<clientSecret>")
+        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withCredentials(
+                        "<clientId>", "<clientSecret>")
                 .url("https://api.fern.com")
                 .build();
 

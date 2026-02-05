@@ -5,13 +5,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersDoubleOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
+import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForOptionalData;
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
+import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
+import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.Order;
 import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.WithCursor;
@@ -108,7 +115,59 @@ public class UsersWireTest {
                 "" + "{\n" + "  \"pagination\": {\n" + "    \"cursor\": \"cursor\"\n" + "  }\n" + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Pagination response validated via MockWebServer
+        // The SDK correctly parses the response into a SyncPagingIterable
+    }
+
+    @Test
+    public void testListWithTopLevelBodyCursorPagination() throws Exception {
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"next_cursor\":\"next_cursor_value\",\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}]}"));
+        SyncPagingIterable<User> response = client.users()
+                .listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest.builder()
+                        .cursor("initial_cursor")
+                        .filter("active")
+                        .build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody =
+                "" + "{\n" + "  \"cursor\": \"initial_cursor\",\n" + "  \"filter\": \"active\"\n" + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -147,7 +206,7 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                .listWithOffsetPagination(ListUsersOffsetPaginationRequest.builder()
                         .page(1)
                         .perPage(1)
                         .order(Order.ASC)
@@ -171,9 +230,9 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
-                        .page(1)
-                        .perPage(1)
+                .listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest.builder()
+                        .page(1.1)
+                        .perPage(1.1)
                         .order(Order.ASC)
                         .startingAfter("starting_after")
                         .build());
@@ -206,7 +265,7 @@ public class UsersWireTest {
         String expectedRequestBody = "" + "{\n" + "  \"pagination\": {\n" + "    \"page\": 1\n" + "  }\n" + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -268,7 +327,7 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest.builder()
+                .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
                         .page(1)
                         .limit(1)
                         .order(Order.ASC)
@@ -312,7 +371,7 @@ public class UsersWireTest {
                         .setBody(
                                 "{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
         SyncPagingIterable<User> response = client.users()
-                .listWithExtendedResults(ListUsersExtendedRequest.builder()
+                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
                         .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                         .build());
         RecordedRequest request = server.takeRequest();
@@ -345,6 +404,25 @@ public class UsersWireTest {
     }
 
     @Test
+    public void testListUsernamesWithOptionalResponse() throws Exception {
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"cursor\":{\"after\":\"after\",\"data\":[\"data\",\"data\"]}}"));
+        SyncPagingIterable<String> response = client.users()
+                .listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest.builder()
+                        .startingAfter("starting_after")
+                        .build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Pagination response validated via MockWebServer
+        // The SDK correctly parses the response into a SyncPagingIterable
+    }
+
+    @Test
     public void testListWithGlobalConfig() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"results\":[\"results\",\"results\"]}"));
         SyncPagingIterable<String> response = client.users()
@@ -358,5 +436,55 @@ public class UsersWireTest {
         Assertions.assertNotNull(response, "Response should not be null");
         // Pagination response validated via MockWebServer
         // The SDK correctly parses the response into a SyncPagingIterable
+    }
+
+    @Test
+    public void testListWithOptionalData() throws Exception {
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":2,\"starting_after\":\"next_cursor\"},\"per_page\":10,\"total_page\":5},\"total_count\":50,\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}]}"));
+        SyncPagingIterable<User> response = client.users()
+                .listWithOptionalData(
+                        ListUsersOptionalDataRequest.builder().page(1).build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Pagination response validated via MockWebServer
+        // The SDK correctly parses the response into a SyncPagingIterable
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence and null safety.
+     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
+     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
+     */
+    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
+        if (expected == null && actual == null) return true;
+        if (expected == null || actual == null) return false;
+        if (expected.equals(actual)) return true;
+        if (expected.isNumber() && actual.isNumber())
+            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
+        if (expected.isObject() && actual.isObject()) {
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                JsonNode actualValue = actual.get(entry.getKey());
+                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+            }
+            return true;
+        }
+        if (expected.isArray() && actual.isArray()) {
+            if (expected.size() != actual.size()) return false;
+            for (int i = 0; i < expected.size(); i++) {
+                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

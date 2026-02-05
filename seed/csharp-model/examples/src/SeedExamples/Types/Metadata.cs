@@ -157,12 +157,12 @@ public record Metadata
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Metadata>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(Metadata).IsAssignableFrom(typeToConvert);
 
         public override Metadata Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import UniversalBaseModel
 
 
@@ -22,4 +24,4 @@ from seed.examples.resources.commons.resources import Data_String
 
 Data_String(value="data")
 """
-Data = typing.Union[Data_String, Data_Base64]
+Data = typing_extensions.Annotated[typing.Union[Data_String, Data_Base64], pydantic.Field(discriminator="type")]

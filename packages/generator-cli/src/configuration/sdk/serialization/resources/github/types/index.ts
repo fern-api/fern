@@ -1,1 +1,1 @@
-export * from "./GitHubConfig";
+export * from "./GitHubConfig.js";

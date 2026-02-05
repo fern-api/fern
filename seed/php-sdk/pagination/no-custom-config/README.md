@@ -5,6 +5,19 @@
 
 The Seed PHP library provides convenient access to the Seed APIs from PHP.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires PHP ^8.1.

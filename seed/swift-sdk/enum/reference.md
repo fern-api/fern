@@ -112,6 +112,7 @@ try await main()
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
 <details><summary><code>client.pathParam.<a href="/Sources/Resources/PathParam/PathParamClient.swift">send</a>(operand: String, operandOrColor: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>

@@ -52,9 +52,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body:
               - id: 1000000
                 name: name
@@ -87,10 +85,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200
@@ -163,8 +163,6 @@ service:
       examples:
         - headers:
             X-Dummy-Header: X-Dummy-Header
-          query-parameters:
-            limit: 1
           response:
             body:
               - id: 1000000
@@ -200,10 +198,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200
@@ -553,7 +553,7 @@ name: api
         "contents": "imports:
   neopetsRoot: __package__.yml
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     createPets:
@@ -567,9 +567,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body:
               - id: 1000000
                 messages:
@@ -606,10 +604,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200
@@ -711,7 +711,13 @@ service:
     extends:
       - Default
     properties:
-      type: literal<"heartbeat">
+      type: HeartbeatType
+    source:
+      openapi: asyncapi/sample.yml
+  HeartbeatType:
+    enum:
+      - heartbeat
+    inline: true
     source:
       openapi: asyncapi/sample.yml
   Market:
@@ -741,7 +747,13 @@ service:
       timestamps:
         docs: The timestamp in milliseconds for this group of events.
         type: double
-      type: literal<"update">
+      type: UpdateType
+    source:
+      openapi: asyncapi/sample.yml
+  UpdateType:
+    enum:
+      - update
+    inline: true
     source:
       openapi: asyncapi/sample.yml
 ",
@@ -943,7 +955,7 @@ channel:
         type: BookingPaymentSourceBankAccount
       card:
         docs: A card (debit or credit) to take payment from.
-        type: Card
+        type: BookingPaymentSourceCard
   BookingPaymentSourceBankAccount:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
@@ -984,16 +996,7 @@ channel:
     inline: true
     source:
       openapi: openapi/trains/openapi.yml
-  BookingPaymentStatus:
-    docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
-    enum:
-      - pending
-      - succeeded
-      - failed
-    inline: true
-    source:
-      openapi: openapi/trains/openapi.yml
-  Card:
+  BookingPaymentSourceCard:
     docs: A card (debit or credit) to take payment from.
     inline: true
     properties:
@@ -1026,6 +1029,15 @@ channel:
           The card number, as a string without any separators. On read all but
           the last four digits will be masked for security.
         type: string
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentStatus:
+    docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
+    enum:
+      - pending
+      - succeeded
+      - failed
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   LinksBooking:
@@ -1336,13 +1348,16 @@ service:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
       method: DELETE
       path: /bookings/{bookingId}
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to retrieve.
-          type: string
+      request:
+        name: DeleteBookingRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to retrieve.
+            type: string
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
+      auth: true
       display-name: Get a booking
       docs: Returns the details of a specific booking.
       errors:
@@ -1367,10 +1382,12 @@ service:
               trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
       method: GET
       path: /bookings/{bookingId}
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to retrieve.
-          type: string
+      request:
+        name: GetBookingRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to retrieve.
+            type: string
       response:
         docs: The booking details
         status-code: 200
@@ -1378,6 +1395,7 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     get-bookings:
+      auth: true
       display-name: List existing bookings
       docs: Returns a list of all trip bookings by the authenticated user.
       errors:
@@ -1437,7 +1455,7 @@ docs: |
   > Bookings usually expire within 1 hour so you'll need to make your payment
   > before the expiry date
 service:
-  auth: false
+  auth: true
   base-path: ''
   display-name: Payments
   endpoints:
@@ -1603,13 +1621,14 @@ service:
               status: succeeded
       method: POST
       path: /bookings/{bookingId}/payment
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to pay for.
-          type: string
       request:
         body: trainsRoot.BookingPayment
         content-type: application/json
+        name: CreateBookingPaymentRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to pay for.
+            type: string
       response:
         docs: Payment successful
         status-code: 200
@@ -1644,7 +1663,7 @@ docs: |
   Find and filter train stations across Europe, including their location
   and local timezone.
 service:
-  auth: false
+  auth: true
   base-path: ''
   display-name: Stations
   endpoints:
@@ -1760,7 +1779,7 @@ docs: |
   Timetables and routes for train trips between stations, including pricing
   and availability.
 service:
-  auth: false
+  auth: true
   base-path: ''
   display-name: Trips
   endpoints:
@@ -1778,10 +1797,8 @@ service:
         - trainsRoot.InternalServerError
       examples:
         - query-parameters:
-            bicycles: true
             date: '2024-02-01T09:00:00Z'
             destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
-            dogs: true
             origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
           response:
             body:
@@ -1890,6 +1907,12 @@ name: api
   BadRequestErrorBody:
     properties:
       data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  ChatRequestAccepts:
+    enum:
+      - name: TextEventStream
+        value: text/event-stream
     source:
       openapi: openapi/cohere.yaml
   ChatRequestPromptTruncation:
@@ -2118,7 +2141,7 @@ errors:
     status-code: 422
     type: unknown
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     chat:
@@ -2144,9 +2167,7 @@ service:
         - ServiceUnavailableError
         - GatewayTimeoutError
       examples:
-        - headers:
-            Accepts: text/event-stream
-          request:
+        - request:
             message: message
           response:
             body:
@@ -2330,7 +2351,7 @@ service:
               Pass text/event-stream to receive the streamed response as
               server-sent events. The default is \`\\n\` delimited events.
             name: accepts
-            type: optional<literal<"text/event-stream">>
+            type: optional<ChatRequestAccepts>
         name: ChatRequest
       response:
         docs: OK
@@ -2526,7 +2547,7 @@ errors:
         "contents": "imports:
   v2Root: __package__.yml
 types:
-  V2ChatRequestSafetyMode:
+  ChatV2RequestSafetyMode:
     docs: >
       Used to select the [safety instruction](/docs/safety-modes) inserted into
       the prompt. Defaults to \`CONTEXTUAL\`.
@@ -2553,7 +2574,7 @@ types:
     source:
       openapi: openapi/cohere-v2.yaml
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     chat:
@@ -2631,7 +2652,7 @@ service:
 
                 Compatible Deployments: Cohere Platform, Azure, AWS
                 Sagemaker/Bedrock, Private Deployments
-              type: optional<V2ChatRequestSafetyMode>
+              type: optional<ChatV2RequestSafetyMode>
             stop_sequences:
               docs: >
                 A list of up to 5 strings that the model will use to stop
@@ -2654,7 +2675,7 @@ service:
                 the \`p\` parameter.
               type: optional<float>
         content-type: application/json
-        name: V2ChatRequest
+        name: ChatV2Request
       response:
         docs: OK
         status-code: 200
@@ -2699,7 +2720,7 @@ exports[`validate namespaced API with multiple namespaces > namespaced-asyncapi 
       tag: optional<string>
     source:
       openapi: alpha_one.yml
-  Pets: list<Pet>
+  Pets: list<unknown>
 ",
         "name": "__package__.yml",
         "type": "file",
@@ -2722,9 +2743,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body: []
       method: GET
       path: /list-all
@@ -2754,10 +2773,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200

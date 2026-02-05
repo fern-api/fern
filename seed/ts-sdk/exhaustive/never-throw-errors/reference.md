@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> core.APIResponse&lt;string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -37,7 +37,7 @@ await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +90,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -102,7 +102,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> core.APIResponse&lt;string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -139,7 +139,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -151,7 +151,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -190,7 +190,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -202,7 +202,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, string&gt;, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -241,7 +241,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -253,7 +253,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> core.APIResponse<Record<string, SeedExhaustive.ObjectWithRequiredField>, SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, SeedExhaustive.ObjectWithRequiredField&gt;, SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -294,7 +294,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -306,7 +306,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithRequiredField | undefined, SeedExhaustive.endpoints.container.getAndReturnOptional.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithRequiredField | undefined, SeedExhaustive.endpoints.container.getAndReturnOptional.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -345,7 +345,7 @@ await client.endpoints.container.getAndReturnOptional({
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -358,7 +358,7 @@ await client.endpoints.container.getAndReturnOptional({
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error></code></summary>
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> core.APIResponse&lt;void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -411,7 +411,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
 <dl>
 <dd>
 
-**requestOptions:** `ContentType.RequestOptions` 
+**requestOptions:** `ContentTypeClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -423,7 +423,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error></code></summary>
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> core.APIResponse&lt;void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -476,7 +476,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
 <dl>
 <dd>
 
-**requestOptions:** `ContentType.RequestOptions` 
+**requestOptions:** `ContentTypeClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -489,7 +489,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.<a href="/src/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> core.APIResponse<SeedExhaustive.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error></code></summary>
+<details><summary><code>client.endpoints.enum.<a href="/src/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -526,7 +526,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 <dl>
 <dd>
 
-**requestOptions:** `Enum.RequestOptions` 
+**requestOptions:** `EnumClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -539,7 +539,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testGet</a>(id) -> core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error></code></summary>
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testGet</a>(id) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.httpMethods.testGet.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -576,7 +576,7 @@ await client.endpoints.httpMethods.testGet("id");
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -588,7 +588,7 @@ await client.endpoints.httpMethods.testGet("id");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPost</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPost.Error></code></summary>
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPost</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPost.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -627,7 +627,7 @@ await client.endpoints.httpMethods.testPost({
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -639,7 +639,7 @@ await client.endpoints.httpMethods.testPost({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPut</a>(id, { ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPut.Error></code></summary>
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPut</a>(id, { ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPut.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -686,7 +686,7 @@ await client.endpoints.httpMethods.testPut("id", {
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -698,7 +698,7 @@ await client.endpoints.httpMethods.testPut("id", {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPatch</a>(id, { ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPatch.Error></code></summary>
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPatch</a>(id, { ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPatch.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -759,7 +759,7 @@ await client.endpoints.httpMethods.testPatch("id", {
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -771,7 +771,7 @@ await client.endpoints.httpMethods.testPatch("id", {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testDelete</a>(id) -> core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error></code></summary>
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testDelete</a>(id) -> core.APIResponse&lt;boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -808,7 +808,7 @@ await client.endpoints.httpMethods.testDelete("id");
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -821,7 +821,7 @@ await client.endpoints.httpMethods.testDelete("id");
 </details>
 
 ## Endpoints Object
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.object.getAndReturnWithOptionalField.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.object.getAndReturnWithOptionalField.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -874,7 +874,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -886,7 +886,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnWithRequiredField.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnWithRequiredField.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -925,7 +925,7 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -937,7 +937,7 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithMapOfMap, SeedExhaustive.endpoints.object.getAndReturnWithMapOfMap.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithMapOfMap, SeedExhaustive.endpoints.object.getAndReturnWithMapOfMap.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -980,7 +980,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -992,7 +992,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> core.APIResponse<SeedExhaustive.NestedObjectWithOptionalField, SeedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.NestedObjectWithOptionalField, SeedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1048,7 +1048,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1060,7 +1060,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string_, { ...params }) -> core.APIResponse<SeedExhaustive.NestedObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> core.APIResponse&lt;SeedExhaustive.NestedObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1108,7 +1108,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**string_:** `string` 
+**string:** `string` 
     
 </dd>
 </dl>
@@ -1124,7 +1124,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1136,7 +1136,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> core.APIResponse<SeedExhaustive.NestedObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.NestedObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1211,7 +1211,75 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithDatetimeLikeString, SeedExhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.object.getAndReturnWithDatetimeLikeString({
+    datetimeLikeString: "2023-08-31T14:15:22Z",
+    actualDatetime: "2023-08-31T14:15:22Z"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1224,7 +1292,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>(param) -> core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPath.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>(param) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.params.getWithPath.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1275,7 +1343,7 @@ await client.endpoints.params.getWithPath("param");
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1287,7 +1355,7 @@ await client.endpoints.params.getWithPath("param");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.params.getWithInlinePath.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1340,7 +1408,7 @@ await client.endpoints.params.getWithInlinePath({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1352,7 +1420,7 @@ await client.endpoints.params.getWithInlinePath({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedExhaustive.endpoints.params.getWithQuery.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1406,7 +1474,7 @@ await client.endpoints.params.getWithQuery({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1418,7 +1486,7 @@ await client.endpoints.params.getWithQuery({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1472,7 +1540,7 @@ await client.endpoints.params.getWithAllowMultipleQuery({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1484,7 +1552,7 @@ await client.endpoints.params.getWithAllowMultipleQuery({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>(param, { ...params }) -> core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>(param, { ...params }) -> core.APIResponse&lt;void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1545,7 +1613,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1557,7 +1625,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1611,7 +1679,7 @@ await client.endpoints.params.getWithInlinePathAndQuery({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1623,7 +1691,7 @@ await client.endpoints.params.getWithInlinePathAndQuery({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>(param, { ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithPath.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>(param, { ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.params.modifyWithPath.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1682,7 +1750,7 @@ await client.endpoints.params.modifyWithPath("param", "string");
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1694,7 +1762,7 @@ await client.endpoints.params.modifyWithPath("param", "string");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1748,7 +1816,7 @@ await client.endpoints.params.modifyWithInlinePath({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1761,7 +1829,7 @@ await client.endpoints.params.modifyWithInlinePath({
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnString</a>({ ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnString</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1798,7 +1866,7 @@ await client.endpoints.primitive.getAndReturnString("string");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1810,7 +1878,7 @@ await client.endpoints.primitive.getAndReturnString("string");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnInt</a>({ ...params }) -> core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnInt</a>({ ...params }) -> core.APIResponse&lt;number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1847,7 +1915,7 @@ await client.endpoints.primitive.getAndReturnInt(1);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1859,7 +1927,7 @@ await client.endpoints.primitive.getAndReturnInt(1);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnLong</a>({ ...params }) -> core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnLong</a>({ ...params }) -> core.APIResponse&lt;number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1896,7 +1964,7 @@ await client.endpoints.primitive.getAndReturnLong(1000000);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1908,7 +1976,7 @@ await client.endpoints.primitive.getAndReturnLong(1000000);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDouble</a>({ ...params }) -> core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDouble</a>({ ...params }) -> core.APIResponse&lt;number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1945,7 +2013,7 @@ await client.endpoints.primitive.getAndReturnDouble(1.1);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1957,7 +2025,7 @@ await client.endpoints.primitive.getAndReturnDouble(1.1);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBool</a>({ ...params }) -> core.APIResponse<boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBool</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1994,7 +2062,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2006,7 +2074,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2043,7 +2111,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2055,7 +2123,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDate</a>({ ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDate</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2092,7 +2160,7 @@ await client.endpoints.primitive.getAndReturnDate("2023-01-15");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2104,7 +2172,7 @@ await client.endpoints.primitive.getAndReturnDate("2023-01-15");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnUuid</a>({ ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnUuid</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2141,7 +2209,7 @@ await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2153,7 +2221,7 @@ await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBase64</a>({ ...params }) -> core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBase64</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2190,7 +2258,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2203,7 +2271,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> core.APIResponse<SeedExhaustive.PutResponse, SeedExhaustive.endpoints.put.add.Error></code></summary>
+<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.PutResponse, SeedExhaustive.endpoints.put.add.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2242,7 +2310,7 @@ await client.endpoints.put.add({
 <dl>
 <dd>
 
-**requestOptions:** `Put.RequestOptions` 
+**requestOptions:** `PutClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2255,7 +2323,7 @@ await client.endpoints.put.add({
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.<a href="/src/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> core.APIResponse<SeedExhaustive.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error></code></summary>
+<details><summary><code>client.endpoints.union.<a href="/src/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2296,7 +2364,7 @@ await client.endpoints.union.getAndReturnUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2309,7 +2377,7 @@ await client.endpoints.union.getAndReturnUnion({
 </details>
 
 ## Endpoints Urls
-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withMixedCase</a>() -> core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error></code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withMixedCase</a>() -> core.APIResponse&lt;string, SeedExhaustive.endpoints.urls.withMixedCase.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2338,7 +2406,7 @@ await client.endpoints.urls.withMixedCase();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2350,7 +2418,7 @@ await client.endpoints.urls.withMixedCase();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">noEndingSlash</a>() -> core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error></code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">noEndingSlash</a>() -> core.APIResponse&lt;string, SeedExhaustive.endpoints.urls.noEndingSlash.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2379,7 +2447,7 @@ await client.endpoints.urls.noEndingSlash();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2391,7 +2459,7 @@ await client.endpoints.urls.noEndingSlash();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withEndingSlash</a>() -> core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error></code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withEndingSlash</a>() -> core.APIResponse&lt;string, SeedExhaustive.endpoints.urls.withEndingSlash.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2420,7 +2488,7 @@ await client.endpoints.urls.withEndingSlash();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2432,7 +2500,7 @@ await client.endpoints.urls.withEndingSlash();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withUnderscores</a>() -> core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error></code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withUnderscores</a>() -> core.APIResponse&lt;string, SeedExhaustive.endpoints.urls.withUnderscores.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2461,7 +2529,7 @@ await client.endpoints.urls.withUnderscores();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2474,7 +2542,7 @@ await client.endpoints.urls.withUnderscores();
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.inlinedRequests.<a href="/src/api/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> core.APIResponse<SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error></code></summary>
+<details><summary><code>client.inlinedRequests.<a href="/src/api/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2545,7 +2613,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 <dl>
 <dd>
 
-**requestOptions:** `InlinedRequests.RequestOptions` 
+**requestOptions:** `InlinedRequestsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2558,7 +2626,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 </details>
 
 ## NoAuth
-<details><summary><code>client.noAuth.<a href="/src/api/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> core.APIResponse<boolean, SeedExhaustive.noAuth.postWithNoAuth.Error></code></summary>
+<details><summary><code>client.noAuth.<a href="/src/api/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedExhaustive.noAuth.postWithNoAuth.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2611,7 +2679,7 @@ await client.noAuth.postWithNoAuth({
 <dl>
 <dd>
 
-**requestOptions:** `NoAuth.RequestOptions` 
+**requestOptions:** `NoAuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2624,7 +2692,7 @@ await client.noAuth.postWithNoAuth({
 </details>
 
 ## NoReqBody
-<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> core.APIResponse<SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.noReqBody.getWithNoRequestBody.Error></code></summary>
+<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> core.APIResponse&lt;SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.noReqBody.getWithNoRequestBody.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2653,7 +2721,7 @@ await client.noReqBody.getWithNoRequestBody();
 <dl>
 <dd>
 
-**requestOptions:** `NoReqBody.RequestOptions` 
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2665,7 +2733,7 @@ await client.noReqBody.getWithNoRequestBody();
 </dl>
 </details>
 
-<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> core.APIResponse<string, SeedExhaustive.noReqBody.postWithNoRequestBody.Error></code></summary>
+<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> core.APIResponse&lt;string, SeedExhaustive.noReqBody.postWithNoRequestBody.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2694,7 +2762,7 @@ await client.noReqBody.postWithNoRequestBody();
 <dl>
 <dd>
 
-**requestOptions:** `NoReqBody.RequestOptions` 
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2707,7 +2775,7 @@ await client.noReqBody.postWithNoRequestBody();
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.reqWithHeaders.<a href="/src/api/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> core.APIResponse<void, SeedExhaustive.reqWithHeaders.getWithCustomHeader.Error></code></summary>
+<details><summary><code>client.reqWithHeaders.<a href="/src/api/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> core.APIResponse&lt;void, SeedExhaustive.reqWithHeaders.getWithCustomHeader.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2748,7 +2816,7 @@ await client.reqWithHeaders.getWithCustomHeader({
 <dl>
 <dd>
 
-**requestOptions:** `ReqWithHeaders.RequestOptions` 
+**requestOptions:** `ReqWithHeadersClient.RequestOptions` 
     
 </dd>
 </dl>

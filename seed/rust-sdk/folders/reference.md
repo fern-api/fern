@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">foo</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -34,7 +34,7 @@ async fn main() {
 </details>
 
 ## A B
-<details><summary><code>client.a().b.<a href="/src/api/resources/a/b/client.rs">foo</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.a().b.<a href="/src/api/resources/a/b/client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -69,7 +69,7 @@ async fn main() {
 </details>
 
 ## A C
-<details><summary><code>client.a().c.<a href="/src/api/resources/a/c/client.rs">foo</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.a().c.<a href="/src/api/resources/a/c/client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -104,7 +104,7 @@ async fn main() {
 </details>
 
 ## Folder
-<details><summary><code>client.folder.<a href="/src/api/resources/folder/client.rs">foo</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.folder.<a href="/src/api/resources/folder/client.rs">foo</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -139,7 +139,7 @@ async fn main() {
 </details>
 
 ## Folder Service
-<details><summary><code>client.folder().service.<a href="/src/api/resources/folder/service/client.rs">endpoint</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.folder().service.<a href="/src/api/resources/folder/service/client.rs">endpoint</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -173,7 +173,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.folder().service.<a href="/src/api/resources/folder/service/client.rs">unknown_request</a>(request: serde_json::Value) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.folder().service.<a href="/src/api/resources/folder/service/client.rs">unknown_request</a>(request: serde_json::Value) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

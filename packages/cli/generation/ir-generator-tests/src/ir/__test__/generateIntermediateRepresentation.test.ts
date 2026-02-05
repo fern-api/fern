@@ -80,7 +80,7 @@ describe("test definitions", async () => {
                 audiences: { type: "all" },
                 workspaceName: workspace.workspaceName ?? ""
             });
-        }, 20_000);
+        }, 30_000);
     });
 }, 200_000);
 

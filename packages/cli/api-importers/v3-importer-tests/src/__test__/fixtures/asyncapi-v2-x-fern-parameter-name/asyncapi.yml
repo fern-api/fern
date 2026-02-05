@@ -1,0 +1,36 @@
+asyncapi: 2.6.0
+info:
+  title: Test x-fern-parameter-name extension for AsyncAPI v2
+  version: 1.0.0
+
+servers:
+  production:
+    url: wss://api.example.com
+    protocol: wss
+
+channels:
+  /users/{userId}/messages:
+    parameters:
+      userId:
+        description: The user ID
+        x-fern-parameter-name: id
+        schema:
+          type: string
+    publish:
+      operationId: sendMessage
+      message:
+        payload:
+          type: object
+          properties:
+            content:
+              type: string
+    subscribe:
+      operationId: receiveMessage
+      message:
+        payload:
+          type: object
+          properties:
+            content:
+              type: string
+            timestamp:
+              type: string

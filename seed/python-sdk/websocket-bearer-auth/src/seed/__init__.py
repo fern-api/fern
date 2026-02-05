@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import realtime
+    from . import realtime, realtime_no_auth
     from .client import AsyncSeedWebsocketBearerAuth, SeedWebsocketBearerAuth
     from .realtime import (
         ReceiveEvent,
@@ -17,9 +17,12 @@ if typing.TYPE_CHECKING:
         SendEvent2,
         SendSnakeCase,
     )
+    from .realtime_no_auth import NoAuthReceiveEvent, NoAuthSendEvent
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedWebsocketBearerAuth": ".client",
+    "NoAuthReceiveEvent": ".realtime_no_auth",
+    "NoAuthSendEvent": ".realtime_no_auth",
     "ReceiveEvent": ".realtime",
     "ReceiveEvent2": ".realtime",
     "ReceiveEvent3": ".realtime",
@@ -30,6 +33,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendSnakeCase": ".realtime",
     "__version__": ".version",
     "realtime": ".realtime",
+    "realtime_no_auth": ".realtime_no_auth",
 }
 
 
@@ -56,6 +60,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedWebsocketBearerAuth",
+    "NoAuthReceiveEvent",
+    "NoAuthSendEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
@@ -66,4 +72,5 @@ __all__ = [
     "SendSnakeCase",
     "__version__",
     "realtime",
+    "realtime_no_auth",
 ]

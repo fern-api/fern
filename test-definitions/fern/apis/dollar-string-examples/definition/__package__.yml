@@ -1,0 +1,27 @@
+types:
+  PaymentInfo:
+    properties:
+      amount: string
+      currency: string
+      description: optional<string>
+
+webhooks:
+  paymentProcessed:
+    display-name: Payment Processed
+    docs: |
+      Triggered when a payment is processed.
+      This webhook tests that dollar sign values like "$3.00" are treated as literal strings,
+      not as example references.
+    method: POST
+    payload: PaymentInfo
+    examples:
+      - name: PaymentProcessedExample
+        payload:
+          amount: "$3.00"
+          currency: "USD"
+          description: "Payment for order #12345"
+      - name: PaymentProcessedWithLargeAmount
+        payload:
+          amount: "$1,234.56"
+          currency: "USD"
+          description: null

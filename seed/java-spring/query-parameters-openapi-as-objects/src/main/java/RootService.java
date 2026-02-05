@@ -29,7 +29,7 @@ public interface RootService {
       @RequestParam("bytes") String bytes, @RequestParam("user") User user,
       @RequestParam("userList") Optional<User> userList,
       @RequestParam("optionalDeadline") Optional<OffsetDateTime> optionalDeadline,
-      @RequestParam("keyValue") Optional<Map<String, Optional<String>>> keyValue,
+      @RequestParam("keyValue") Optional<Map<String, String>> keyValue,
       @RequestParam("optionalString") Optional<String> optionalString,
       @RequestParam("nestedUser") Optional<NestedUser> nestedUser,
       @RequestParam("optionalUser") Optional<User> optionalUser,

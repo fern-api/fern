@@ -584,6 +584,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test inheritance from undiscrimnated union objects",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -622,22 +623,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test inheritance from undiscrimnated union objects",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testInheritanceFromUndiscrimnatedUnionObjects",
+      "safeName": "testInheritanceFromUndiscrimnatedUnionObjects"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_inheritance_from_undiscrimnated_union_objects",
+      "safeName": "test_inheritance_from_undiscrimnated_union_objects"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_INHERITANCE_FROM_UNDISCRIMNATED_UNION_OBJECTS",
+      "safeName": "TEST_INHERITANCE_FROM_UNDISCRIMNATED_UNION_OBJECTS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestInheritanceFromUndiscrimnatedUnionObjects",
+      "safeName": "TestInheritanceFromUndiscrimnatedUnionObjects"
     }
   },
   "constants": {

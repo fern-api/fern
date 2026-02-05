@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Parameter Serialization Edge Cases
+  version: 1.0.0
+
+paths:
+  /items:
+    get:
+      operationId: getItems
+      parameters:
+        - name: tags
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+      responses:
+        "200":
+          description: Success
+
+  /search:
+    get:
+      operationId: search
+      parameters:
+        - name: keywords
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: spaceDelimited
+          explode: false
+      responses:
+        "200":
+          description: Success
+
+  /filter:
+    get:
+      operationId: filter
+      parameters:
+        - name: categories
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: pipeDelimited
+          explode: false
+      responses:
+        "200":
+          description: Success
+
+  /items/{id}:
+    get:
+      operationId: getItemById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          style: matrix
+      responses:
+        "200":
+          description: Success
+
+  /data:
+    get:
+      operationId: getData
+      parameters:
+        - name: X-Custom-Headers
+          in: header
+          schema:
+            type: array
+            items:
+              type: string
+          style: simple
+          explode: false
+      responses:
+        "200":
+          description: Success
+
+  /complex:
+    get:
+      operationId: getComplex
+      parameters:
+        - name: filter
+          in: query
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              age:
+                type: integer
+              active:
+                type: boolean
+          style: deepObject
+          explode: true
+      responses:
+        "200":
+          description: Success
+
+  /files/{path}:
+    get:
+      operationId: getFile
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+          allowReserved: true
+      responses:
+        "200":
+          description: Success
+
+  /session:
+    get:
+      operationId: getSession
+      parameters:
+        - name: sessionId
+          in: cookie
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+
+  /users/{userId}/posts/{postId}:
+    get:
+      operationId: getUserPost
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success

@@ -4,7 +4,7 @@ This file provides guidance for Claude Code when working with the C# generator.
 
 ## C# and .NET-Specific Requirements
 
-- **Framework compatibility**: Ensure compatibility with target .NET versions (net462;net8.0;net7.0;net6.0;netstandard2.0)
+- **Framework compatibility**: Ensure compatibility with target .NET versions (net462;net8.0;netstandard2.0)
 - **IDE support**: Generated code should work well with Visual Studio, VS Code, JetBrains Rider, and the .NET CLI
 - **Dependencies**: Avoid unnecessary dependencies; prefer built-in .NET libraries when possible, then Microsoft provided packages, and finally third-party packages
 - **Naming conventions**: 
@@ -33,13 +33,13 @@ This file provides guidance for Claude Code when working with the C# generator.
 
 ```bash
 pnpm install
-pnpm --filter @fern-api/fern-csharp-sdk compile
-pnpm --filter @fern-api/fern-csharp-model compile
+pnpm turbo run compile --filter @fern-api/fern-csharp-sdk
+pnpm turbo run compile --filter @fern-api/fern-csharp-model
 ```
 
 ### Configuration Options
 
-You can find the configuration options for `generators.yml` in _generators/csharp/codegen/src/custom-config/BaseCsharpCustomConfigSchema.ts_:
+You can find the configuration options for `generators.yml` in _generators/csharp/codegen/src/custom-config/CsharpConfigSchema.ts_:
 
 ## Testing
 ```bash

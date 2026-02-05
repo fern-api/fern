@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.getUsers() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.nullable.getUsers() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -17,13 +17,13 @@ client.nullable().getUsers(
     GetUsersRequest
         .builder()
         .usernames(
-            Arrays.asList(Optional.of("usernames"))
+            Arrays.asList("usernames")
         )
         .activated(
-            Arrays.asList(Optional.of(true))
+            Arrays.asList(true)
         )
         .tags(
-            Arrays.asList("tags")
+            Arrays.asList(Optional.of("tags"))
         )
         .avatar("avatar")
         .extra(true)

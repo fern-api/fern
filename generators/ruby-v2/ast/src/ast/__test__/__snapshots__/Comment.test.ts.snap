@@ -2,6 +2,38 @@
 
 exports[`Comment > does not write a comment with no content 1`] = `""`;
 
+exports[`Comment > handles lines that are exactly at the limit 1`] = `
+"# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+"
+`;
+
+exports[`Comment > handles very long words like URLs without breaking them 1`] = `
+"# See the documentation at
+# https://example.com/very/long/path/to/documentation/that/exceeds/the/line/length/limit/significantly for more
+# information.
+"
+`;
+
+exports[`Comment > preserves existing line breaks while wrapping long lines 1`] = `
+"# First paragraph that is short.
+# Second paragraph that is very long and exceeds the RuboCop default line length limit of 120 characters and should be
+# wrapped to multiple lines automatically.
+"
+`;
+
+exports[`Comment > wraps long lines to fit within RuboCop line length limit 1`] = `
+"# This is a very long comment that exceeds the RuboCop default line length limit of 120 characters and should be wrapped
+# to multiple lines automatically.
+"
+`;
+
+exports[`Comment > wraps very long lines from OpenAPI descriptions 1`] = `
+"# The API endpoint allows you to retrieve detailed information about a specific resource including all of its
+# properties, relationships, and metadata. This endpoint supports pagination, filtering, and sorting options to help you
+# efficiently query large datasets.
+"
+`;
+
 exports[`Comment > writes multi-line comments 1`] = `
 "# Hello
 # there

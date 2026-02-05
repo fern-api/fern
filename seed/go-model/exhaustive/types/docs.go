@@ -11,6 +11,10 @@ import (
 type ObjectWithDocs struct {
 	// Characters that could lead to broken generated SDKs:
 	//
+	// Markdown Escapes:
+	// - \_: Escaped underscore (e.g., FOO\_BAR)
+	// - \*: Escaped asterisk
+	//
 	// JSDoc (JavaScript/TypeScript):
 	// - @: Used for JSDoc tags
 	// - {: }: Used for type definitions
@@ -27,6 +31,11 @@ type ObjectWithDocs struct {
 	// - ///: Comment marker
 	// - /**: Block comment start
 	// - ** /: Block comment end
+	//
+	// XMLDoc (C#) (Example of actual XML tags):
+	// See <a href="https://example.com/docs">the docs</a> for more info.
+	// Use <code>getValue()</code> to retrieve the value.
+	// Note: when count < 10 or count > 100, special handling applies.
 	//
 	// Javadoc (Java):
 	// - @: Used for Javadoc tags
@@ -64,17 +73,17 @@ type ObjectWithDocs struct {
 	// - ** /: PHPDoc comment end
 	// - *: Can interfere with comment blocks
 	// - &: HTML entities
-	String string `json:"string" url:"string"`
+	FieldString string `json:"string" url:"string"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectWithDocs) GetString() string {
+func (o *ObjectWithDocs) GetFieldString() string {
 	if o == nil {
 		return ""
 	}
-	return o.String
+	return o.FieldString
 }
 
 func (o *ObjectWithDocs) GetExtraProperties() map[string]any {

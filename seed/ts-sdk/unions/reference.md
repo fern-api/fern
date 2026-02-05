@@ -37,7 +37,7 @@ await client.bigunion.get("id");
 <dl>
 <dd>
 
-**requestOptions:** `Bigunion.RequestOptions` 
+**requestOptions:** `BigunionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -92,7 +92,7 @@ await client.bigunion.update({
 <dl>
 <dd>
 
-**requestOptions:** `Bigunion.RequestOptions` 
+**requestOptions:** `BigunionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -104,7 +104,7 @@ await client.bigunion.update({
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client/Client.ts">updateMany</a>({ ...params }) -> Record<string, boolean></code></summary>
+<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client/Client.ts">updateMany</a>({ ...params }) -> Record&lt;string, boolean&gt;</code></summary>
 <dl>
 <dd>
 
@@ -153,7 +153,7 @@ await client.bigunion.updateMany([{
 <dl>
 <dd>
 
-**requestOptions:** `Bigunion.RequestOptions` 
+**requestOptions:** `BigunionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -203,7 +203,7 @@ await client.union.get("id");
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -257,7 +257,7 @@ await client.union.update({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>

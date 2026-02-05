@@ -2,7 +2,7 @@ using SeedBytesUpload.Core;
 
 namespace SeedBytesUpload;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 
@@ -20,6 +20,12 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedBytesUpload.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new StreamRequest
@@ -28,6 +34,7 @@ public partial class ServiceClient
                     Method = HttpMethod.Post,
                     Path = "upload-content",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/octet-stream",
                     Options = options,
                 },

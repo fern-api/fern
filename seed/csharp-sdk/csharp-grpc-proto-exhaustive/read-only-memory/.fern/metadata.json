@@ -6,5 +6,6 @@
     "read-only-memory-types": [
       "float"
     ]
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

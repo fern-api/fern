@@ -19,6 +19,7 @@ types:
     enum:
       - ALL
       - ANY
+      - ENDPOINT_SECURITY
 
   AuthScheme:
     discriminant:
@@ -146,10 +147,16 @@ types:
       usernameEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the username.
+      usernameOmit:
+        type: optional<boolean>
+        docs: If true, the username will be omitted from the SDK.
       password: commons.Name
       passwordEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the password.
+      passwordOmit:
+        type: optional<boolean>
+        docs: If true, the password will be omitted from the SDK.
 
   HeaderAuthScheme:
     extends: BaseAuthScheme

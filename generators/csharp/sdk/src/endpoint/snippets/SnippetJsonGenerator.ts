@@ -10,14 +10,14 @@ export class SnippetJsonGenerator extends WithGeneration {
     private readonly context: SdkGeneratorContext;
     private readonly rootClientGenerator: RootClientGenerator;
     constructor({ context }: { context: SdkGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
         this.rootClientGenerator = new RootClientGenerator(context);
     }
 
     public async generate(): Promise<FernGeneratorExec.Snippets> {
         const rootClientSnippet = await this.rootClientGenerator
-            .generateExampleClientInstantiationSnippet({ asSnippet: true })
+            .generateExampleClientInstantiationSnippet({ asSnippet: true, includeEnvVarArguments: true })
             .toFormattedSnippetAsync({
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),

@@ -13,5 +13,6 @@
         "content": "Generator Invocation Custom Content for {{ gitUrl }}:{{ minVersion }}"
       }
     ]
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

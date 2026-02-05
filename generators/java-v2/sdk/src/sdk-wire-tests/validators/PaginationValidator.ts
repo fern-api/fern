@@ -20,6 +20,11 @@ export class PaginationValidator {
         writer.writeLine("");
         writer.writeLine("// Validate pagination structure");
 
+        if (endpoint.pagination?.type === "custom") {
+            writer.writeLine("// Custom pagination - structure validation skipped (user-defined)");
+            return;
+        }
+
         const paginationPath = this.getPaginationResultsPath(endpoint);
         if (paginationPath) {
             const pathParts = paginationPath.split(".");
@@ -62,6 +67,8 @@ export class PaginationValidator {
             return this.extractPath(endpoint.pagination.results);
         } else if (endpoint.pagination.type === "offset") {
             return this.extractPath(endpoint.pagination.results);
+        } else if (endpoint.pagination.type === "custom") {
+            return undefined;
         }
 
         return "data"; // Default fallback

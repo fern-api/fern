@@ -53,14 +53,14 @@ class BasicAuthClient:
         return _response.data
 
     def post_with_basic_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with basic auth scheme
 
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,14 +137,14 @@ class AsyncBasicAuthClient:
         return _response.data
 
     async def post_with_basic_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with basic auth scheme
 
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

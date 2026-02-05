@@ -1,4 +1,14 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Commons**
+//! - **File**
+//! - **Health**
+//! - **Service**
+//! - **Types**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod commons;
 pub mod file;
@@ -18,9 +28,10 @@ impl ExamplesClient {
             config: config.clone(),
             file: FileClient::new(config.clone())?,
             health: HealthClient::new(config.clone())?,
-            service: ServiceClient4::new(config.clone())?,
+            service: ServiceClient4::new(config.clone())?
         })
     }
+
 }
 
 pub use commons::CommonsClient;

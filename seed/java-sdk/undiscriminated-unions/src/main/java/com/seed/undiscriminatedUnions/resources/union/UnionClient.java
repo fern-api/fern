@@ -5,6 +5,7 @@ package com.seed.undiscriminatedUnions.resources.union;
 
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
+import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
@@ -58,6 +59,10 @@ public class UnionClient {
         return this.rawClient.call().body();
     }
 
+    public boolean call(RequestOptions requestOptions) {
+        return this.rawClient.call(requestOptions).body();
+    }
+
     public boolean call(Request request) {
         return this.rawClient.call(request).body();
     }
@@ -80,5 +85,13 @@ public class UnionClient {
 
     public String nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
         return this.rawClient.nestedUnions(request, requestOptions).body();
+    }
+
+    public String testCamelCaseProperties(PaymentRequest request) {
+        return this.rawClient.testCamelCaseProperties(request).body();
+    }
+
+    public String testCamelCaseProperties(PaymentRequest request, RequestOptions requestOptions) {
+        return this.rawClient.testCamelCaseProperties(request, requestOptions).body();
     }
 }

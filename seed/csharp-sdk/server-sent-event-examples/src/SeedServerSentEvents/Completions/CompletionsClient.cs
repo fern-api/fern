@@ -3,7 +3,7 @@ using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
-public partial class CompletionsClient
+public partial class CompletionsClient : ICompletionsClient
 {
     private RawClient _client;
 
@@ -21,6 +21,12 @@ public partial class CompletionsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedServerSentEvents.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -29,6 +35,7 @@ public partial class CompletionsClient
                     Method = HttpMethod.Post,
                     Path = "stream",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

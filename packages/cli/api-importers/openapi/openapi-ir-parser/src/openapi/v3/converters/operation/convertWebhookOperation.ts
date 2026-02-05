@@ -1,4 +1,11 @@
-import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+import {
+    MultipartFormDataWebhookPayloadWithExample,
+    NamedFullExample,
+    SchemaWithExample,
+    Source,
+    WebhookExampleCall,
+    WebhookWithExample
+} from "@fern-api/openapi-ir";
 import { createHash } from "crypto";
 
 import { getExtension } from "../../../../getExtension";
@@ -10,6 +17,7 @@ import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { convertParameters } from "../endpoint/convertParameters";
 import { convertRequest } from "../endpoint/convertRequest";
+import { convertResponse } from "../endpoint/convertResponse";
 
 export function convertWebhookOperation({
     context,
@@ -22,6 +30,7 @@ export function convertWebhookOperation({
 }): WebhookWithExample[] {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
+    const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
 
     const convertedParameters = convertParameters({
         parameters: [...operationContext.pathItemParameters, ...operationContext.operationParameters],
@@ -38,6 +47,18 @@ export function convertWebhookOperation({
     }
 
     const operationId = operation.operationId ?? generateWebhookOperationId({ path, method, sdkMethodName });
+
+    // Parse webhook responses similar to how endpoints do it
+    const convertedResponse = operation.responses
+        ? convertResponse({
+              operationContext,
+              streamFormat: undefined,
+              responses: operation.responses,
+              context,
+              responseBreadcrumbs,
+              source
+          })
+        : undefined;
 
     if (method !== "POST" && method !== "GET") {
         context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Not POST or GET`);
@@ -63,9 +84,38 @@ export function convertWebhookOperation({
         )
         .filter((request) => request != null)
         .map((request) => {
-            if (request == null || (request.type !== "json" && request.type !== "formUrlEncoded")) {
-                context.logger.error(`Skipping webhook ${path} because non-json and non-formUrlEncoded request body`);
+            if (
+                request == null ||
+                (request.type !== "json" && request.type !== "formUrlEncoded" && request.type !== "multipart")
+            ) {
+                context.logger.error(
+                    `Skipping webhook ${path} because non-json, non-formUrlEncoded, and non-multipart request body`
+                );
                 return undefined;
+            }
+
+            let multipartFormData: MultipartFormDataWebhookPayloadWithExample | undefined;
+            let payload: SchemaWithExample;
+
+            if (request.type === "multipart") {
+                multipartFormData = {
+                    name: request.name,
+                    properties: request.properties,
+                    description: request.description,
+                    source: request.source
+                };
+                payload = SchemaWithExample.unknown({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
+                    title: undefined,
+                    description: request.description,
+                    availability: undefined,
+                    namespace: context.namespace,
+                    groupName: undefined,
+                    example: undefined
+                });
+            } else {
+                payload = request.schema;
             }
 
             const webhook: WebhookWithExample = {
@@ -78,7 +128,9 @@ export function convertWebhookOperation({
                 tags: context.resolveTagsToTagIds(operation.tags),
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
-                payload: request.schema,
+                payload,
+                multipartFormData,
+                response: convertedResponse?.value,
                 description: operation.description,
                 examples: convertWebhookExamples(request.fullExamples),
                 source

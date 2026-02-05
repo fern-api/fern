@@ -8,7 +8,12 @@ import type * as SeedExhaustive from "../../../../../index";
 export class ObjectWithRequiredFieldError extends errors.SeedExhaustiveError {
     constructor(private readonly body: SeedExhaustive.types.ObjectWithRequiredField) {
         super("ObjectWithRequiredFieldError");
-        Object.setPrototypeOf(this, ObjectWithRequiredFieldError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

@@ -4,14 +4,11 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"],
+    "types": ["node", "vitest/globals"],
     "noImplicitOverride": true
   },
   "include": ["./src/**/*"],
   "references": [
-    {
-      "path": "../../base"
-    },
     {
       "path": "../../../packages/commons/core-utils"
     },

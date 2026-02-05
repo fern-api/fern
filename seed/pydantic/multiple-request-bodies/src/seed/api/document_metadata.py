@@ -9,7 +9,7 @@ from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class DocumentMetadata(UniversalBaseModel):
     author: typing.Optional[str] = None
     id: typing.Optional[int] = None
-    tags: typing.Optional[typing.List[typing.Optional[typing.Any]]] = None
+    tags: typing.Optional[typing.List[typing.Any]] = None
     title: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

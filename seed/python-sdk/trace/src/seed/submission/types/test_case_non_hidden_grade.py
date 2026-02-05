@@ -14,7 +14,7 @@ from .exception_v_2 import ExceptionV2
 class TestCaseNonHiddenGrade(UniversalBaseModel):
     passed: bool
     actual_result: typing_extensions.Annotated[
-        typing.Optional["VariableValue"], FieldMetadata(alias="actualResult")
+        typing.Optional["VariableValue"], FieldMetadata(alias="actualResult"), pydantic.Field(alias="actualResult")
     ] = None
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
@@ -29,6 +29,8 @@ class TestCaseNonHiddenGrade(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, I001
 from ...commons.types.variable_value import VariableValue  # noqa: E402, I001
 
-update_forward_refs(TestCaseNonHiddenGrade)
+update_forward_refs(TestCaseNonHiddenGrade, KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

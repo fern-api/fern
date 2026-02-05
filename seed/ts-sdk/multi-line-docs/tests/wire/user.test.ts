@@ -3,10 +3,10 @@
 import { SeedMultiLineDocsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("getUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMultiLineDocsClient({ environment: server.baseUrl });
+        const client = new SeedMultiLineDocsClient({ maxRetries: 0, environment: server.baseUrl });
 
         server.mockEndpoint().get("/users/userId").respondWith().statusCode(200).build();
 
@@ -16,7 +16,7 @@ describe("User", () => {
 
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMultiLineDocsClient({ environment: server.baseUrl });
+        const client = new SeedMultiLineDocsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { name: "name", age: 1 };
         const rawResponseBody = { id: "id", name: "name", age: 1 };
         server

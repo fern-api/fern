@@ -23,3 +23,11 @@ impl Environment {
         }
     }
 }
+impl Default for Environment {
+    fn default() -> Self {
+        Self::Production(ProductionUrls {
+            ec_2: "https://ec2.aws.com".to_string(),
+            s_3: "https://s3.aws.com".to_string(),
+        })
+    }
+}

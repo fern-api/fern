@@ -511,7 +511,7 @@
       "generatedRequestName": "UpdateAppRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateAppRequest",
+          "generatedName": "UpdateAppRequestBody",
           "schema": "AppConfig",
           "source": {
             "file": "../openapi.json",
@@ -2328,6 +2328,7 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "fullExamples": [],
         "type": "multipart"
       },
       "response": {
@@ -3085,7 +3086,7 @@
       "generatedRequestName": "CreateDeploymentRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateDeploymentRequest",
+          "generatedName": "CreateDeploymentRequestBody",
           "schema": "DeploymentConfig",
           "source": {
             "file": "../openapi.json",
@@ -3520,7 +3521,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -3541,7 +3542,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -3743,25 +3744,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "region",
-              "value": {
-                "value": "Seattle",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "local",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Authorization",
@@ -3831,7 +3814,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -3852,7 +3835,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -4054,25 +4037,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "region",
-              "value": {
-                "value": "Seattle",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "local",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Authorization",
@@ -4143,7 +4108,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -4163,7 +4128,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -4289,25 +4254,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "local",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "region",
-              "value": {
-                "value": "Seattle",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Authorization",
@@ -4465,7 +4412,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -4731,18 +4678,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "roomId",
-              "value": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Authorization",
@@ -4925,7 +4861,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -5191,18 +5127,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "roomId",
-              "value": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Authorization",
@@ -5385,7 +5310,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -5651,18 +5576,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "roomId",
-              "value": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Authorization",
@@ -5845,7 +5759,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -6142,18 +6056,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "roomId",
-              "value": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Authorization",
@@ -6340,7 +6243,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -6394,15 +6297,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "region",
-              "value": {
-                "value": "Seattle",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7102,7 +6997,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7122,7 +7017,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7142,7 +7037,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7260,7 +7155,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7280,7 +7175,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7398,7 +7293,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7418,7 +7313,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7541,7 +7436,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7561,7 +7456,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7581,7 +7476,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7602,7 +7497,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7720,38 +7615,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "end",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "step",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7904,7 +7768,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -7990,15 +7854,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "region",
-              "value": {
-                "value": "Seattle",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -8207,7 +8063,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -8293,15 +8149,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "region",
-              "value": {
-                "value": "Seattle",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -10398,6 +10246,7 @@
               },
               "generatedName": "DeploymentConfigEnv",
               "groupName": [],
+              "maxItems": 100,
               "type": "array"
             },
             "audiences": []
@@ -12038,6 +11887,7 @@
               "value": {
                 "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
                 "schema": "RoomAllocation",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -12150,6 +12000,7 @@
               "value": {
                 "generatedName": "RoomCurrentAllocation",
                 "schema": "RoomAllocation",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"

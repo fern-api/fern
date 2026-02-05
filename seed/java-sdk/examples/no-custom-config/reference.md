@@ -336,8 +336,9 @@ client.service().createMovie(
         .title("The Boy and the Heron")
         .from("Hayao Miyazaki")
         .rating(8.0)
-        .type("movie")
         .tag("tag-wf9as23d")
+        .revenue(1000000L)
+        .prequel("movie-cv9b914f")
         .metadata(
             new HashMap<String, Object>() {{
                 put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
@@ -348,8 +349,6 @@ client.service().createMovie(
                 }});
             }}
         )
-        .revenue(1000000L)
-        .prequel("movie-cv9b914f")
         .build()
 );
 ```
@@ -396,7 +395,7 @@ client.service().getMetadata(
         .builder()
         .xApiVersion("0.0.1")
         .tag(
-            Arrays.asList(Optional.of("development"))
+            Arrays.asList("development")
         )
         .shallow(false)
         .build()
@@ -471,15 +470,14 @@ client.service().createBigEntity(
         .extendedMovie(
             ExtendedMovie
                 .builder()
-                .cast(
-                    Arrays.asList("cast", "cast")
-                )
                 .id("id")
                 .title("title")
                 .from("from")
                 .rating(1.1)
-                .type("movie")
                 .tag("tag")
+                .revenue(1000000L)
+                .prequel("prequel")
+                .book("book")
                 .metadata(
                     new HashMap<String, Object>() {{
                         put("metadata", new 
@@ -487,9 +485,9 @@ client.service().createBigEntity(
                         }});
                     }}
                 )
-                .revenue(1000000L)
-                .prequel("prequel")
-                .book("book")
+                .cast(
+                    Arrays.asList("cast", "cast")
+                )
                 .build()
         )
         .entity(
@@ -502,7 +500,7 @@ client.service().createBigEntity(
                 .build()
         )
         .metadata(
-            Metadata.html()
+            Metadata.html("metadata")
         )
         .commonMetadata(
             Metadata
@@ -531,7 +529,7 @@ client.service().createBigEntity(
             )
         )
         .data(
-            Data.string()
+            Data.string("data")
         )
         .migration(
             Migration
@@ -551,7 +549,7 @@ client.service().createBigEntity(
             )
         )
         .test(
-            Test.and()
+            Test.and(true)
         )
         .node(
             Node

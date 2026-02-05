@@ -3,22 +3,27 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum FlexibleValue {
-        String {
+        #[serde(rename = "string")]
+        r#String {
             value: String,
         },
 
+        #[serde(rename = "integer")]
         Integer {
             value: i64,
         },
 
+        #[serde(rename = "double")]
         Double {
             value: f64,
         },
 
+        #[serde(rename = "boolean")]
         Boolean {
             value: bool,
         },
 
+        #[serde(rename = "stringList")]
         StringList {
             value: Vec<String>,
         },

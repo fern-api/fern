@@ -7,6 +7,22 @@
 
 The Seed PHP library provides convenient access to the Seed APIs from PHP.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Override Section](#override-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).

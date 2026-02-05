@@ -10,10 +10,12 @@ export function getMigrationsToRun({
     fromVersion: string;
     toVersion: string;
 }): VersionMigrations[] {
-    return ALL_MIGRATIONS.slice(
-        getIndexOfFirstMigrationGreaterThanOrEqualTo(fromVersion),
-        getIndexOfFirstMigrationGreaterThanOrEqualTo(toVersion)
-    );
+    const startIdx = getIndexOfFirstMigrationGreaterThanOrEqualTo(fromVersion);
+    const endIdx = getIndexOfFirstMigrationGreaterThanOrEqualTo(toVersion);
+
+    const adjustedEndIdx = ALL_MIGRATIONS[endIdx]?.version === toVersion ? endIdx + 1 : endIdx;
+
+    return ALL_MIGRATIONS.slice(startIdx, adjustedEndIdx);
 }
 
 /**

@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generateStream</a>({ ...params }) -> core.Stream<SeedStreaming.StreamResponse></code></summary>
+<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generateStream</a>({ ...params }) -> core.Stream&lt;SeedStreaming.StreamResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions` 
+**requestOptions:** `DummyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -93,7 +93,7 @@ await client.dummy.generate({
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions` 
+**requestOptions:** `DummyClient.RequestOptions` 
     
 </dd>
 </dl>

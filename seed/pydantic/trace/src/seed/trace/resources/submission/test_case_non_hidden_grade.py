@@ -5,13 +5,17 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 from .exception_v_2 import ExceptionV2
 
 
 class TestCaseNonHiddenGrade(UniversalBaseModel):
     passed: bool
-    actual_result: typing.Optional["VariableValue"] = pydantic.Field(alias="actualResult", default=None)
+    actual_result: typing_extensions.Annotated[
+        typing.Optional["VariableValue"], FieldMetadata(alias="actualResult"), pydantic.Field(alias="actualResult")
+    ] = None
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
@@ -23,6 +27,8 @@ class TestCaseNonHiddenGrade(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ..commons.key_value_pair import KeyValuePair  # noqa: E402, I001
+from ..commons.map_value import MapValue  # noqa: E402, I001
 from ..commons.variable_value import VariableValue  # noqa: E402, I001
 
-update_forward_refs(TestCaseNonHiddenGrade)
+update_forward_refs(TestCaseNonHiddenGrade, KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

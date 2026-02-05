@@ -3,8 +3,12 @@ namespace SeedErrorProperty;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedErrorPropertyApiException(string message, int statusCode, object body)
-    : SeedErrorPropertyException(message)
+public class SeedErrorPropertyApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedErrorPropertyException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

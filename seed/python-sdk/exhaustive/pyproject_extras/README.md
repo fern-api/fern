@@ -5,6 +5,20 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -87,6 +101,7 @@ response = client.endpoints.container.with_raw_response.get_and_return_list_of_p
     ...
 )
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

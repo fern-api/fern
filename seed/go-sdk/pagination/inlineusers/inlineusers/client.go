@@ -41,7 +41,7 @@ func (c *Client) ListWithCursorPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersCursorPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *inlineusers.User], error) {
+) (*core.Page[*string, *inlineusers.User, *inlineusers.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -76,14 +76,15 @@ func (c *Client) ListWithCursorPagination(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*string, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*string, *inlineusers.User, *inlineusers.ListUsersPaginationResponse] {
 		var zeroValue string
 		next := response.GetPage().GetNext().GetStartingAfter()
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*string, *inlineusers.User]{
-			Next:    &next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *inlineusers.User, *inlineusers.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -98,7 +99,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersMixedTypeCursorPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *inlineusers.User], error) {
+) (*core.Page[*string, *inlineusers.User, *inlineusers.ListUsersMixedTypePaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -133,14 +134,15 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersMixedTypePaginationResponse) *core.PageResponse[*string, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersMixedTypePaginationResponse) *core.PageResponse[*string, *inlineusers.User, *inlineusers.ListUsersMixedTypePaginationResponse] {
 		var zeroValue string
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*string, *inlineusers.User]{
-			Next:    &next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *inlineusers.User, *inlineusers.ListUsersMixedTypePaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -171,7 +173,7 @@ func (c *Client) ListWithOffsetPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *inlineusers.User], error) {
+) (*core.Page[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -214,12 +216,13 @@ func (c *Client) ListWithOffsetPagination(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*int, *inlineusers.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -234,7 +237,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersDoubleOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*float64, *inlineusers.User], error) {
+) (*core.Page[*float64, *inlineusers.User, *inlineusers.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -277,12 +280,13 @@ func (c *Client) ListWithDoubleOffsetPagination(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*float64, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*float64, *inlineusers.User, *inlineusers.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*float64, *inlineusers.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*float64, *inlineusers.User, *inlineusers.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -313,7 +317,7 @@ func (c *Client) ListWithOffsetStepPagination(
 	ctx context.Context,
 	request *inlineusers.ListUsersOffsetStepPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *inlineusers.User], error) {
+) (*core.Page[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -356,12 +360,13 @@ func (c *Client) ListWithOffsetStepPagination(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*int, *inlineusers.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -376,7 +381,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 	ctx context.Context,
 	request *inlineusers.ListWithOffsetPaginationHasNextPageRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *inlineusers.User], error) {
+) (*core.Page[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -419,12 +424,13 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersPaginationResponse) *core.PageResponse[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*int, *inlineusers.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *inlineusers.User, *inlineusers.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -439,7 +445,7 @@ func (c *Client) ListWithExtendedResults(
 	ctx context.Context,
 	request *inlineusers.ListUsersExtendedRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*uuid.UUID, *inlineusers.User], error) {
+) (*core.Page[*uuid.UUID, *inlineusers.User, *inlineusers.ListUsersExtendedResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -474,14 +480,15 @@ func (c *Client) ListWithExtendedResults(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersExtendedResponse) *core.PageResponse[*uuid.UUID, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersExtendedResponse) *core.PageResponse[*uuid.UUID, *inlineusers.User, *inlineusers.ListUsersExtendedResponse] {
 		var zeroValue *uuid.UUID
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*uuid.UUID, *inlineusers.User]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*uuid.UUID, *inlineusers.User, *inlineusers.ListUsersExtendedResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -496,7 +503,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 	ctx context.Context,
 	request *inlineusers.ListUsersExtendedRequestForOptionalData,
 	opts ...option.RequestOption,
-) (*core.Page[*uuid.UUID, *inlineusers.User], error) {
+) (*core.Page[*uuid.UUID, *inlineusers.User, *inlineusers.ListUsersExtendedOptionalListResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -531,14 +538,15 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *inlineusers.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *inlineusers.User] {
+	readPageResponse := func(response *inlineusers.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *inlineusers.User, *inlineusers.ListUsersExtendedOptionalListResponse] {
 		var zeroValue *uuid.UUID
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*uuid.UUID, *inlineusers.User]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*uuid.UUID, *inlineusers.User, *inlineusers.ListUsersExtendedOptionalListResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -553,7 +561,7 @@ func (c *Client) ListUsernames(
 	ctx context.Context,
 	request *inlineusers.ListUsernamesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, string], error) {
+) (*core.Page[*string, string, *fern.UsernameCursor], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -588,17 +596,18 @@ func (c *Client) ListUsernames(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string] {
+	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string, *fern.UsernameCursor] {
 		var zeroValue *string
 		var next *string
 		if response.Cursor != nil {
 			next = response.Cursor.After
 		}
 		results := response.GetCursor().GetData()
-		return &core.PageResponse[*string, string]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, string, *fern.UsernameCursor]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -613,7 +622,7 @@ func (c *Client) ListWithGlobalConfig(
 	ctx context.Context,
 	request *inlineusers.ListWithGlobalConfigRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, string], error) {
+) (*core.Page[*int, string, *inlineusers.UsernameContainer], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -656,12 +665,13 @@ func (c *Client) ListWithGlobalConfig(
 		}
 	}
 
-	readPageResponse := func(response *inlineusers.UsernameContainer) *core.PageResponse[*int, string] {
+	readPageResponse := func(response *inlineusers.UsernameContainer) *core.PageResponse[*int, string, *inlineusers.UsernameContainer] {
 		next += 1
 		results := response.GetResults()
-		return &core.PageResponse[*int, string]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, string, *inlineusers.UsernameContainer]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(

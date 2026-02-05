@@ -1,12 +1,12 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ast, BaseCsharpCustomConfigSchema } from "../..";
+import { ast, CsharpConfigSchema } from "../..";
 import { Generation } from "../../context/generation-info";
 
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
     "",
-    {} as BaseCsharpCustomConfigSchema,
+    {} as CsharpConfigSchema,
     {} as FernGeneratorExec.config.GeneratorConfig
 );
 
@@ -20,11 +20,11 @@ describe("class", () => {
                 parameters: [
                     generation.csharp.parameter({
                         name: "make",
-                        type: generation.csharp.Type.string
+                        type: generation.Primitive.string
                     }),
                     generation.csharp.parameter({
                         name: "model",
-                        type: generation.csharp.Type.string
+                        type: generation.Primitive.string
                     })
                 ],
                 superClassArguments: []

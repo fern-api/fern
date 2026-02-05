@@ -1,7 +1,7 @@
 from ..context import FastApiGeneratorContext
 from .service_initializer import ServiceInitializer
 from fern_python.codegen import AST, Filepath, Project
-from fern_python.external_dependencies import FastAPI, Starlette
+from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 import fern.ir.resources as ir_types
@@ -91,7 +91,7 @@ class RegisterFileGenerator:
         )
         self._write_exception_handler(
             writer=writer,
-            exception_type=Starlette.HTTPException,
+            exception_type=FastAPI.HTTPException,
             handler=self._context.core_utilities.exceptions.http_exception_handler(),
         )
         self._write_exception_handler(
@@ -110,7 +110,7 @@ class RegisterFileGenerator:
                 handler=handler,
             )
         )
-        # Starlette seems to have some oddities with it's Python version such that it doesn't recognize
+        # FastAPI seems to have some oddities with it's Python version such that it doesn't recognize
         # the base Exception we are using from a typing perspective.
         writer.write_line("  # type: ignore")
 

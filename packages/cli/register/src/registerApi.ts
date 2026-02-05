@@ -8,6 +8,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 
+import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer";
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 
@@ -18,7 +19,10 @@ export async function registerApi({
     token,
     audiences,
     snippetsConfig,
-    playgroundConfig
+    playgroundConfig,
+    graphqlOperations = {},
+    graphqlTypes = {},
+    aiEnhancerConfig
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -27,6 +31,9 @@ export async function registerApi({
     audiences: Audiences;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>;
+    graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
+    aiEnhancerConfig?: AIExampleEnhancerConfig;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -46,7 +53,31 @@ export async function registerApi({
         token: token.value
     });
 
-    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+    let apiDefinition = convertIrToFdrApi({
+        ir,
+        snippetsConfig,
+        playgroundConfig,
+        graphqlOperations,
+        graphqlTypes,
+        context
+    });
+
+    if (aiEnhancerConfig) {
+        const sources = workspace.getSources();
+        const openApiSource = sources.find((source) => source.type === "openapi");
+        const sourceFilePath = openApiSource?.absoluteFilePath;
+
+        apiDefinition = await enhanceExamplesWithAI(
+            apiDefinition,
+            aiEnhancerConfig,
+            context,
+            token,
+            organization,
+            sourceFilePath,
+            ir.apiName.originalName
+        );
+    }
+
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FdrCjsSdk.OrgId(organization),
         apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),

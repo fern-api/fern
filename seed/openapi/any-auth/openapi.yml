@@ -33,9 +33,6 @@ paths:
                 grant_type:
                   type: string
                   const: client_credentials
-                scope:
-                  type: string
-                  nullable: true
               required:
                 - client_id
                 - client_secret
@@ -60,6 +57,7 @@ paths:
         - BearerAuth: []
         - ApiKeyAuth: []
         - BearerAuth: []
+        - BasicAuth: []
   /admins:
     get:
       operationId: user_getAdmins
@@ -79,6 +77,7 @@ paths:
         - BearerAuth: []
         - ApiKeyAuth: []
         - BearerAuth: []
+        - BasicAuth: []
 components:
   schemas:
     TokenResponse:
@@ -115,3 +114,6 @@ components:
       type: apiKey
       in: header
       name: X-API-Key
+    BasicAuth:
+      type: http
+      scheme: basic

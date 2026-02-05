@@ -5,11 +5,15 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 
 
 class DebugMapValue(UniversalBaseModel):
-    key_value_pairs: typing.List["DebugKeyValuePairs"] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing_extensions.Annotated[
+        typing.List["DebugKeyValuePairs"], FieldMetadata(alias="keyValuePairs"), pydantic.Field(alias="keyValuePairs")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -20,5 +24,6 @@ class DebugMapValue(UniversalBaseModel):
 
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
+from .debug_variable_value import DebugVariableValue  # noqa: E402, I001
 
-update_forward_refs(DebugMapValue)
+update_forward_refs(DebugMapValue, DebugKeyValuePairs=DebugKeyValuePairs, DebugVariableValue=DebugVariableValue)

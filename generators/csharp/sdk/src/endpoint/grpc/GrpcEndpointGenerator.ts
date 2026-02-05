@@ -1,4 +1,5 @@
-import { ast, GrpcClientInfo } from "@fern-api/csharp-codegen";
+import { GrpcClientInfo } from "@fern-api/csharp-base";
+import { ast } from "@fern-api/csharp-codegen";
 import { ExampleEndpointCall, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
@@ -23,18 +24,21 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         cls: ast.Class,
         { serviceId, endpoint, rawGrpcClientReference, grpcClientInfo }: GrpcEndpointGenerator.Args
     ) {
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.types.GrpcRequestOptions)),
+                type: this.Types.GrpcRequestOptions.asOptional(),
                 name: this.names.parameters.requestOptions,
                 initializer: "null"
             })
         );
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.reference(this.extern.System.Threading.CancellationToken),
+                type: this.System.Threading.CancellationToken,
                 name: this.names.parameters.cancellationToken,
                 initializer: "default"
             })
@@ -56,7 +60,10 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             summary: endpoint.docs,
             return_: endpointSignatureInfo.returnType,
             body: this.settings.includeExceptionHandler
-                ? this.wrapWithExceptionHandler({ body, returnType: endpointSignatureInfo.returnType })
+                ? this.wrapWithExceptionHandler({
+                      body,
+                      returnType: endpointSignatureInfo.returnType
+                  })
                 : body,
             codeExample: snippet?.endpointCall
         });
@@ -118,7 +125,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.popScope();
 
             writer.write("catch (");
-            writer.writeNode(this.extern.Grpc.Core.RpcException);
+            writer.writeNode(this.Grpc.Core.RpcException);
             writer.writeLine(" rpc)");
             writer.pushScope();
             writer.writeNodeStatement(this.handleRpcException());
@@ -133,17 +140,50 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
 
     private createCallOptions({ rawGrpcClientReference }: { rawGrpcClientReference: string }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
+            const requestOptionsVar = this.names.parameters.requestOptions;
+
+            // Build gRPC metadata from headers
+            writer.writeLine("var metadata = new global::Grpc.Core.Metadata();");
+
+            // Add client-level headers (includes lazy auth headers)
+            writer.writeLine("foreach (var header in _client.Options.Headers)");
+            writer.pushScope();
+            writer.writeLine("var value = header.Value?.Match(str => str, func => func.Invoke());");
+            writer.writeLine("if (value != null) metadata.Add(header.Key, value);");
+            writer.popScope();
+
+            // Add client-level additional headers
+            writer.writeLine("if (_client.Options.AdditionalHeaders != null)");
+            writer.pushScope();
+            writer.writeLine("foreach (var header in _client.Options.AdditionalHeaders)");
+            writer.pushScope();
+            writer.writeLine("if (header.Value != null) metadata.Add(header.Key, header.Value);");
+            writer.popScope();
+            writer.popScope();
+
+            // Add request-level additional headers (highest priority)
+            writer.writeLine(`if (${requestOptionsVar}?.AdditionalHeaders != null)`);
+            writer.pushScope();
+            writer.writeLine(`foreach (var header in ${requestOptionsVar}.AdditionalHeaders)`);
+            writer.pushScope();
+            writer.writeLine("if (header.Value != null) metadata.Add(header.Key, header.Value);");
+            writer.popScope();
+            writer.popScope();
+            writer.writeLine();
+
+            // Create CallOptions with the built metadata
             writer.write("var callOptions = ");
             writer.writeNode(
                 this.csharp.invokeMethod({
                     on: this.csharp.codeblock(rawGrpcClientReference),
                     method: "CreateCallOptions",
                     arguments_: [
+                        this.csharp.codeblock("metadata"),
                         this.csharp.codeblock((writer) => {
-                            writer.write(`${this.names.parameters.requestOptions} ?? `);
+                            writer.write(`${requestOptionsVar} ?? `);
                             writer.writeNode(
                                 this.csharp.instantiateClass({
-                                    classReference: this.types.GrpcRequestOptions,
+                                    classReference: this.Types.GrpcRequestOptions,
                                     arguments_: []
                                 })
                             );
@@ -196,7 +236,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.write("throw ");
             writer.writeNode(
                 this.csharp.instantiateClass({
-                    classReference: this.types.BaseApiException,
+                    classReference: this.Types.BaseApiException,
                     arguments_: [
                         this.csharp.codeblock('$"Error with gRPC status code {statusCode}"'),
                         this.csharp.codeblock("statusCode"),
@@ -212,7 +252,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.write("throw ");
             writer.writeNode(
                 this.csharp.instantiateClass({
-                    classReference: this.types.BaseException,
+                    classReference: this.Types.BaseException,
                     arguments_: [this.csharp.codeblock('"Error"'), this.csharp.codeblock("e")]
                 })
             );

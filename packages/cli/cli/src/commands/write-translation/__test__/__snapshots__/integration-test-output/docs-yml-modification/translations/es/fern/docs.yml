@@ -1,0 +1,14 @@
+instances:
+  - url: https://test-es.docs.buildwithfern.com/es
+languages:
+  - en
+  - de
+  - es
+products:
+  - display-name: Home
+    path: ./nav.yml
+    slug: home
+title: Test Documentation
+settings:
+  language: es
+  search-text: Buscar

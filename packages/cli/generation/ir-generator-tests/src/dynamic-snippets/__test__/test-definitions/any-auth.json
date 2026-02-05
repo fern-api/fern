@@ -162,6 +162,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_user:User": {
@@ -292,6 +293,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },
@@ -581,39 +583,6 @@
                                 "value": {
                                     "type": "string",
                                     "value": "client_credentials"
-                                }
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "scope",
-                                    "camelCase": {
-                                        "unsafeName": "scope",
-                                        "safeName": "scope"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "scope",
-                                        "safeName": "scope"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SCOPE",
-                                        "safeName": "SCOPE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Scope",
-                                        "safeName": "Scope"
-                                    }
-                                },
-                                "wireValue": "scope"
-                            },
-                            "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,

@@ -6,37 +6,51 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .convert_token import ConvertToken
     from .key import Key
     from .key_type import KeyType
     from .metadata import Metadata
     from .metadata_union import MetadataUnion
     from .my_union import MyUnion
+    from .name import Name
     from .named_metadata import NamedMetadata
     from .nested_union_l_1 import NestedUnionL1
     from .nested_union_l_2 import NestedUnionL2
     from .nested_union_root import NestedUnionRoot
     from .optional_metadata import OptionalMetadata
+    from .payment_method_union import PaymentMethodUnion
     from .request import Request
+    from .tokenize_card import TokenizeCard
     from .type_with_optional_union import TypeWithOptionalUnion
     from .union_with_duplicate_types import UnionWithDuplicateTypes
     from .union_with_identical_primitives import UnionWithIdenticalPrimitives
     from .union_with_identical_strings import UnionWithIdenticalStrings
+    from .union_with_reserved_names import UnionWithReservedNames
+    from .union_with_type_aliases import UnionWithTypeAliases
+    from .user_id import UserId
 _dynamic_imports: typing.Dict[str, str] = {
+    "ConvertToken": ".convert_token",
     "Key": ".key",
     "KeyType": ".key_type",
     "Metadata": ".metadata",
     "MetadataUnion": ".metadata_union",
     "MyUnion": ".my_union",
+    "Name": ".name",
     "NamedMetadata": ".named_metadata",
     "NestedUnionL1": ".nested_union_l_1",
     "NestedUnionL2": ".nested_union_l_2",
     "NestedUnionRoot": ".nested_union_root",
     "OptionalMetadata": ".optional_metadata",
+    "PaymentMethodUnion": ".payment_method_union",
     "Request": ".request",
+    "TokenizeCard": ".tokenize_card",
     "TypeWithOptionalUnion": ".type_with_optional_union",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "UnionWithIdenticalPrimitives": ".union_with_identical_primitives",
     "UnionWithIdenticalStrings": ".union_with_identical_strings",
+    "UnionWithReservedNames": ".union_with_reserved_names",
+    "UnionWithTypeAliases": ".union_with_type_aliases",
+    "UserId": ".user_id",
 }
 
 
@@ -62,19 +76,26 @@ def __dir__():
 
 
 __all__ = [
+    "ConvertToken",
     "Key",
     "KeyType",
     "Metadata",
     "MetadataUnion",
     "MyUnion",
+    "Name",
     "NamedMetadata",
     "NestedUnionL1",
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "PaymentMethodUnion",
     "Request",
+    "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
+    "UnionWithTypeAliases",
+    "UserId",
 ]

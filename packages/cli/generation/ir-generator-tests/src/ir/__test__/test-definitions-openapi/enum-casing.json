@@ -575,7 +575,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": "Successful response"
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1504,6 +1506,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -1772,6 +1776,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:GrantTypeEnum": {
@@ -1902,6 +1907,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

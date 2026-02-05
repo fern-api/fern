@@ -42,7 +42,7 @@ await client.user.createUsername({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -98,7 +98,7 @@ await client.user.createUsernameWithReferencedType({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -147,7 +147,7 @@ await client.user.createUsernameOptional();
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -236,7 +236,7 @@ await client.user.getUsername({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>

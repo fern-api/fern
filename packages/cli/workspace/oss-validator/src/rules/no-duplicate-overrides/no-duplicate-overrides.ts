@@ -10,8 +10,7 @@ export const NoDuplicateOverridesRule: Rule = {
     name: "no-duplicate-overrides",
     run: async ({ workspace, specs, context }) => {
         const violations: ValidationViolation[] = [];
-        const seenMethodNames = new Set<string>();
-        const seenGroupNames = new Set<string>();
+        const seenMethodsByAudience = new Map<string, string[][]>();
 
         for (const spec of specs) {
             const contents = (await readFile(spec.absoluteFilepath)).toString();
@@ -20,7 +19,8 @@ export const NoDuplicateOverridesRule: Rule = {
                 const openAPI = await loadOpenAPI({
                     absolutePathToOpenAPI: spec.absoluteFilepath,
                     context,
-                    absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
+                    absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
+                    absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
                 });
 
                 const apiToValidate = isOpenAPIV2(openAPI) ? await convertOpenAPIV2ToV3(openAPI) : openAPI;
@@ -34,6 +34,7 @@ export const NoDuplicateOverridesRule: Rule = {
                         const operationObj = operation as {
                             "x-fern-sdk-group-name"?: string | string[];
                             "x-fern-sdk-method-name"?: string;
+                            "x-fern-audiences"?: string | string[];
                         };
                         const rawSdkGroupName = operationObj?.["x-fern-sdk-group-name"];
                         const sdkGroupName = Array.isArray(rawSdkGroupName)
@@ -42,16 +43,36 @@ export const NoDuplicateOverridesRule: Rule = {
                         const sdkMethodName = operationObj?.["x-fern-sdk-method-name"];
 
                         if (sdkGroupName && sdkMethodName) {
-                            const key = `${sdkGroupName}:${sdkMethodName}`;
-                            if (seenMethodNames.has(key)) {
-                                violations.push({
-                                    severity: "fatal",
-                                    relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
-                                    nodePath: ["paths", path, method],
-                                    message: `SDK method ${sdkGroupName}.${sdkMethodName} already exists (x-fern-sdk-group-name: ${sdkGroupName}, x-fern-sdk-method-name: ${sdkMethodName})`
-                                });
+                            const rawAudiences = operationObj?.["x-fern-audiences"];
+                            const audiences: string[] = rawAudiences
+                                ? Array.isArray(rawAudiences)
+                                    ? rawAudiences.map((a) => a.trim()).filter((a) => a.length > 0)
+                                    : [rawAudiences.trim()].filter((a) => a.length > 0)
+                                : [];
+
+                            // Include namespace in the key to allow same SDK method names across different namespaces.
+                            // This aligns with the generator behavior where namespace is prepended to the SDK group name.
+                            const namespacePrefix = spec.namespace ?? "";
+                            const key = `${namespacePrefix}:${sdkGroupName}:${sdkMethodName}`;
+                            const previousAudienceSets = seenMethodsByAudience.get(key) || [];
+
+                            for (const prevAudiences of previousAudienceSets) {
+                                if (audiencesIntersect(audiences, prevAudiences)) {
+                                    // Show the effective SDK path (with namespace) in the error message
+                                    const displayGroup =
+                                        spec.namespace != null ? `${spec.namespace}.${sdkGroupName}` : sdkGroupName;
+                                    violations.push({
+                                        severity: "fatal",
+                                        relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
+                                        nodePath: ["paths", path, method],
+                                        message: `SDK method ${displayGroup}.${sdkMethodName} already exists (x-fern-sdk-group-name: ${sdkGroupName}, x-fern-sdk-method-name: ${sdkMethodName})`
+                                    });
+                                    break; // Only report once per operation
+                                }
                             }
-                            seenMethodNames.add(key);
+
+                            previousAudienceSets.push(audiences);
+                            seenMethodsByAudience.set(key, previousAudienceSets);
                         }
                     }
                 }
@@ -60,3 +81,14 @@ export const NoDuplicateOverridesRule: Rule = {
         return violations;
     }
 };
+
+/**
+ * Check if two audience sets intersect.
+ * Empty arrays are treated as wildcards (match everything).
+ */
+function audiencesIntersect(a: string[], b: string[]): boolean {
+    if (a.length === 0 || b.length === 0) {
+        return true;
+    }
+    return a.some((aud) => b.includes(aud));
+}

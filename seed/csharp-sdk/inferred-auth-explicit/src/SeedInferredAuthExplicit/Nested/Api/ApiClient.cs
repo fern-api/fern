@@ -3,7 +3,7 @@ using SeedInferredAuthExplicit.Core;
 
 namespace SeedInferredAuthExplicit.Nested;
 
-public partial class ApiClient
+public partial class ApiClient : IApiClient
 {
     private RawClient _client;
 
@@ -20,6 +20,12 @@ public partial class ApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedInferredAuthExplicit.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -27,6 +33,7 @@ public partial class ApiClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/nested/get-something",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+# This channel demonstrates that even when the API has auth schemes defined,
+# a channel with auth: false should NOT generate auth code.
+channel:
+  path: /realtime-no-auth/{session_id}
+  auth: false
+  path-parameters:
+    session_id: string
+  query-parameters:
+    model: optional<string>
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: NoAuthSendEvent
+    receive:
+      display-name: Receive
+      origin: server
+      body: NoAuthReceiveEvent
+
+types:
+  NoAuthSendEvent:
+    properties:
+      text: string
+  NoAuthReceiveEvent:
+    properties:
+      response: string

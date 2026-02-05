@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -41,8 +40,13 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_simple(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.simple)
+        type_hints = typing.get_type_hints(cls.simple)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
@@ -61,14 +65,10 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.simple.__globals__)
-
         router.post(
             path="/snippet",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.simple.__doc__,
             **get_route_args(cls.simple, default_tag="service"),
         )(wrapper)
@@ -76,8 +76,13 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_download_file(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.download_file)
+        type_hints = typing.get_type_hints(cls.download_file)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
@@ -95,10 +100,6 @@ class AbstractServiceService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.download_file.__globals__)
 
         router.post(
             path="/",

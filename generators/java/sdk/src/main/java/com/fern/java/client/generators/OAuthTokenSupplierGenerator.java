@@ -8,11 +8,15 @@ import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpResponseBody;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.JsonResponseBody;
+import com.fern.ir.model.http.QueryParameter;
+import com.fern.ir.model.http.RequestProperty;
+import com.fern.ir.model.http.RequestPropertyValue;
 import com.fern.ir.model.http.ResponseProperty;
 import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
@@ -29,6 +33,10 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeSpec.Builder;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
@@ -47,6 +55,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String FETCH_TOKEN_METHOD_NAME = "fetchToken";
     private static final String GET_METHOD_NAME = "get";
     private static final String GET_EXPIRES_AT_METHOD_NAME = "getExpiresAt";
+    private static final long DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
 
     private final OAuthClientCredentials clientCredentials;
     private final ClientGeneratorContext clientGeneratorContext;
@@ -93,6 +102,30 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getName()
                 .getCamelCase()
                 .getUnsafeName();
+
+        List<Map.Entry<String, String>> customPropertiesWithNames = new ArrayList<>();
+        if (requestProperties.getCustomProperties().isPresent()) {
+            for (RequestProperty customProp :
+                    requestProperties.getCustomProperties().get()) {
+                // Skip literal properties - they are hardcoded in the request class
+                if (isLiteralProperty(customProp)) {
+                    continue;
+                }
+                String propName = customProp
+                        .getProperty()
+                        .visit(new RequestPropertyToNameVisitor())
+                        .getName()
+                        .getCamelCase()
+                        .getUnsafeName();
+                customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(propName, propName));
+            }
+        }
+
+        for (var header : httpEndpoint.getHeaders()) {
+            String headerName = header.getName().getName().getCamelCase().getUnsafeName();
+            customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(headerName, headerName));
+        }
+
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         // todo: handle other response types
         HttpResponseBody tokenHttpResponseBody =
@@ -139,18 +172,31 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "this.$L = authResponse.get$L()", ACCESS_TOKEN_FIELD_NAME, accessTokenResponsePropertyName);
         if (refreshRequired) {
-            String tokenPropertyName = expiryResponseProperty
-                    .get()
+            ResponseProperty expiresInProperty = expiryResponseProperty.get();
+            String tokenPropertyName = expiresInProperty
                     .getProperty()
                     .getName()
                     .getName()
                     .getPascalCase()
                     .getUnsafeName();
-            getMethodSpecBuilder.addStatement(
-                    "this.$L = $L(authResponse.get$L())",
-                    EXPIRES_AT_FIELD_NAME,
-                    GET_EXPIRES_AT_METHOD_NAME,
-                    tokenPropertyName);
+            TypeReference expiresInType = expiresInProperty.getProperty().getValueType();
+            boolean isOptional = isOptionalType(expiresInType);
+            if (isOptional) {
+                // Handle optional expires_in with default fallback
+                // In Java, optional fields return Optional<T>, so use .orElse()
+                getMethodSpecBuilder.addStatement(
+                        "this.$L = $L(authResponse.get$L().orElse($L))",
+                        EXPIRES_AT_FIELD_NAME,
+                        GET_EXPIRES_AT_METHOD_NAME,
+                        tokenPropertyName,
+                        DEFAULT_EXPIRES_IN_SECONDS);
+            } else {
+                getMethodSpecBuilder.addStatement(
+                        "this.$L = $L(authResponse.get$L())",
+                        EXPIRES_AT_FIELD_NAME,
+                        GET_EXPIRES_AT_METHOD_NAME,
+                        tokenPropertyName);
+            }
         }
         getMethodSpecBuilder
                 .endControlFlow()
@@ -161,11 +207,23 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, CLIENT_ID_FIELD_NAME)
-                .addParameter(String.class, CLIENT_SECRET_FIELD_NAME)
+                .addParameter(String.class, CLIENT_SECRET_FIELD_NAME);
+
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+            constructorBuilder.addParameter(String.class, customProp.getKey());
+        }
+
+        constructorBuilder
                 .addParameter(authClientClassName, AUTH_CLIENT_NAME)
                 .addStatement("this.$L = $L", CLIENT_ID_FIELD_NAME, CLIENT_ID_FIELD_NAME)
-                .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME)
-                .addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME);
+                .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME);
+
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+            constructorBuilder.addStatement("this.$L = $L", customProp.getKey(), customProp.getKey());
+        }
+
+        constructorBuilder.addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME);
+
         if (refreshRequired) {
             constructorBuilder.addStatement("this.$L = $T.now()", EXPIRES_AT_FIELD_NAME, Instant.class);
         }
@@ -175,30 +233,27 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(String.class, CLIENT_ID_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .build())
                 .addField(FieldSpec.builder(String.class, CLIENT_SECRET_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
-                        .build())
+                        .build());
+
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+            oauthTypeSpecBuilder.addField(
+                    FieldSpec.builder(String.class, customProp.getKey(), Modifier.PRIVATE, Modifier.FINAL)
+                            .build());
+        }
+
+        oauthTypeSpecBuilder
                 .addField(FieldSpec.builder(authClientClassName, AUTH_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
                         .build())
                 .addField(FieldSpec.builder(String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE)
                         .build())
                 .addMethod(constructorBuilder.build())
-                .addMethod(MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(fetchTokenReturnType)
-                        .addStatement(
-                                "$T $L = $T.builder().$L($L).$L($L).build()",
-                                fetchTokenRequestType,
-                                GET_TOKEN_REQUEST_NAME,
-                                fetchTokenRequestType,
-                                clientIdPropertyName,
-                                CLIENT_ID_FIELD_NAME,
-                                clientSecretPropertyName,
-                                CLIENT_SECRET_FIELD_NAME)
-                        .addStatement(
-                                "return $L.$L($L)",
-                                AUTH_CLIENT_NAME,
-                                httpEndpoint.getName().get().getCamelCase().getUnsafeName(),
-                                GET_TOKEN_REQUEST_NAME)
-                        .build())
+                .addMethod(buildFetchTokenMethod(
+                        fetchTokenReturnType,
+                        fetchTokenRequestType,
+                        clientIdPropertyName,
+                        clientSecretPropertyName,
+                        customPropertiesWithNames,
+                        httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
         if (refreshRequired) {
             oauthTypeSpecBuilder
@@ -240,6 +295,38 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 && !clientCredentials.getScopes().get().isEmpty()) throw new RuntimeException("Scopes not supported");
     }
 
+    private MethodSpec buildFetchTokenMethod(
+            TypeName fetchTokenReturnType,
+            TypeName fetchTokenRequestType,
+            String clientIdPropertyName,
+            String clientSecretPropertyName,
+            List<Map.Entry<String, String>> customPropertiesWithNames,
+            HttpEndpoint httpEndpoint) {
+        // Required properties (clientId/clientSecret) must come first for staged builders,
+        // followed by optional custom properties (like scope) which are in _FinalStage
+        CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
+                .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType)
+                .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
+                .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
+
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+            requestBuilderCode.add(".$L($L)", customProp.getValue(), customProp.getKey());
+        }
+
+        requestBuilderCode.add(".build()");
+
+        return MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(fetchTokenReturnType)
+                .addStatement(requestBuilderCode.build())
+                .addStatement(
+                        "return $L.$L($L)",
+                        AUTH_CLIENT_NAME,
+                        httpEndpoint.getName().get().getCamelCase().getUnsafeName(),
+                        GET_TOKEN_REQUEST_NAME)
+                .build();
+    }
+
     private TypeName getFetchTokenRequestType(HttpEndpoint httpEndpoint, HttpService httpService) {
         return httpEndpoint.getSdkRequest().get().getShape().visit(new Visitor<>() {
             @Override
@@ -261,5 +348,40 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 throw new RuntimeException("Unknown SdkRequestShape: " + unknownType);
             }
         });
+    }
+
+    private boolean isOptionalType(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            return typeReference.getContainer().get().isOptional();
+        }
+        return false;
+    }
+
+    private boolean isLiteralProperty(RequestProperty requestProperty) {
+        TypeReference valueType = requestProperty
+                .getProperty()
+                .visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                    @Override
+                    public TypeReference visitQuery(QueryParameter query) {
+                        return query.getValueType();
+                    }
+
+                    @Override
+                    public TypeReference visitBody(ObjectProperty body) {
+                        return body.getValueType();
+                    }
+
+                    @Override
+                    public TypeReference _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
+        if (valueType == null) {
+            return false;
+        }
+        if (valueType.isContainer()) {
+            return valueType.getContainer().get().isLiteral();
+        }
+        return false;
     }
 }

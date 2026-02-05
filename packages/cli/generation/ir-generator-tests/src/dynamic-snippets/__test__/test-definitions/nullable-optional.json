@@ -831,6 +831,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:Address": {
@@ -1123,6 +1124,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:CreateUserRequest": {
@@ -1325,6 +1327,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:UpdateUserRequest": {
@@ -1533,6 +1536,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:UserRole": {
@@ -2182,6 +2186,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:SmsNotification": {
@@ -2345,6 +2350,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:PushNotification": {
@@ -2538,6 +2544,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:SearchResult": {
@@ -2906,6 +2913,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:Document": {
@@ -3135,6 +3143,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:ComplexProfile": {
@@ -3876,6 +3885,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:DeserializationTestRequest": {
@@ -4352,6 +4362,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:DeserializationTestResponse": {
@@ -4542,6 +4553,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_nullable-optional:UserResponse": {
@@ -4834,6 +4846,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

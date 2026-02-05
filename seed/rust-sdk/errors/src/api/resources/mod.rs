@@ -1,4 +1,11 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Commons**
+//! - **Simple**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod commons;
 pub mod simple;
@@ -11,9 +18,10 @@ impl ErrorsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            simple: SimpleClient::new(config.clone())?,
+            simple: SimpleClient::new(config.clone())?
         })
     }
+
 }
 
 pub use commons::CommonsClient;

@@ -13,7 +13,9 @@ from .file_info_v_2 import FileInfoV2
 
 class DefaultProvidedFile(UniversalBaseModel):
     file: FileInfoV2
-    related_types: typing_extensions.Annotated[typing.List["VariableType"], FieldMetadata(alias="relatedTypes")]
+    related_types: typing_extensions.Annotated[
+        typing.List["VariableType"], FieldMetadata(alias="relatedTypes"), pydantic.Field(alias="relatedTypes")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -25,6 +27,8 @@ class DefaultProvidedFile(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .....commons.types.list_type import ListType  # noqa: E402, I001
+from .....commons.types.map_type import MapType  # noqa: E402, I001
 from .....commons.types.variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(DefaultProvidedFile)
+update_forward_refs(DefaultProvidedFile, ListType=ListType, MapType=MapType, VariableType=VariableType)

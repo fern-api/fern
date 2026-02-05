@@ -20,7 +20,12 @@ export class SeedInferredAuthImplicitNoExpiryError extends Error {
         rawResponse?: core.RawResponse;
     }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(this, SeedInferredAuthImplicitNoExpiryError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

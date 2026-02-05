@@ -1,6 +1,6 @@
 import Foundation
 
-public enum MultipleFilterSearchRequestValue: Codable, Hashable, Sendable {
+public indirect enum MultipleFilterSearchRequestValue: Codable, Hashable, Sendable {
     case multipleFilterSearchRequestArray([MultipleFilterSearchRequest])
     case singleFilterSearchRequestArray([SingleFilterSearchRequest])
 

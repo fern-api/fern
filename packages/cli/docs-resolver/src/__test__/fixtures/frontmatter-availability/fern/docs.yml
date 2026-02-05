@@ -1,0 +1,18 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+navigation:
+  - page: Page With Beta Availability
+    path: ./page-with-beta.mdx
+  - page: Page Without Availability
+    path: ./page-without-availability.mdx
+  - page: Page With Navigation Availability
+    path: ./page-with-nav-availability.mdx
+    availability: deprecated
+  - page: Page With Override
+    path: ./page-override-nav.mdx
+    availability: deprecated
+  - section: Section With Overview
+    path: ./section-overview.mdx
+    contents:
+      - page: Nested Page
+        path: ./nested-page.mdx

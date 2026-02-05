@@ -1,4 +1,11 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Ec2**
+//! - **S3**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod ec_2;
 pub mod s_3;
@@ -13,9 +20,10 @@ impl MultiUrlEnvironmentClient {
         Ok(Self {
             config: config.clone(),
             ec_2: Ec2Client::new(config.clone())?,
-            s_3: S3Client::new(config.clone())?,
+            s_3: S3Client::new(config.clone())?
         })
     }
+
 }
 
 pub use ec_2::Ec2Client;

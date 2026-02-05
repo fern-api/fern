@@ -27,10 +27,11 @@ export class SourceResolverImpl implements SourceResolver {
         const resolvedType = this.resolveSource({ source });
         if (resolvedType == null) {
             if (isRawProtobufSourceSchema(source)) {
-                throw new Error(`Cannot resolve source ${source.proto} from file ${relativeFilepath}`);
+                this.context.logger.warn(`Cannot resolve source ${source.proto} from file ${relativeFilepath}`);
             }
-            // Do not throw if OpenAPI since the source is not actually required.
-            this.context.logger.warn(`Cannot resolve source ${source.openapi} from file ${relativeFilepath}`);
+            // Do not warn if OpenAPI since the source is not actually required.
+            // This commonly happens with dependencies where the source file is in
+            // the dependency's directory, not the main workspace.
         }
         return resolvedType;
     }

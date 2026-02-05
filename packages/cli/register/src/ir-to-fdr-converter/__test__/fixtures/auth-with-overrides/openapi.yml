@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: Auth with Overrides Test API
+  version: 1.0.0
+  description: OpenAPI spec that will be modified by both auth overrides and openapi overrides
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /users:
+    get:
+      operationId: getUsers
+      summary: Get list of users
+      security:
+        - apiKey: []
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthorized
+
+  /users/{id}:
+    get:
+      operationId: getUser
+      summary: Get user by ID
+      security:
+        - apiKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string

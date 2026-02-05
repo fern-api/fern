@@ -6,6 +6,7 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.generator.exec.model.config.LicenseConfig;
 import com.fern.generator.exec.model.config.PublishingMetadata;
+import com.fern.java.ICustomConfig;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
@@ -51,6 +52,15 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     public abstract Optional<GradlePublishingConfig> gradlePublishingConfig();
 
+    /**
+     * When true, skip generating the repositories block in build.gradle. This is required when using central dependency
+     * management with RepositoriesMode.FAIL_ON_PROJECT_REPOS in settings.gradle.
+     */
+    @Value.Default
+    public Boolean skipRepositories() {
+        return false;
+    }
+
     @Override
     public final String filename() {
         return "build.gradle";
@@ -71,16 +81,18 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         }
         writer.addNewLine();
 
-        // add repositories
-        writer.beginControlFlow("repositories");
-        writer.addLine("mavenCentral()");
-        for (GradleRepository gradleRepository : customRepositories()) {
-            writer.beginControlFlow("maven");
-            writer.addLine("url '" + gradleRepository.url() + "'");
+        // add repositories (skip if central dependency management is enabled)
+        if (!skipRepositories()) {
+            writer.beginControlFlow("repositories");
+            writer.addLine("mavenCentral()");
+            for (GradleRepository gradleRepository : customRepositories()) {
+                writer.beginControlFlow("maven");
+                writer.addLine("url '" + gradleRepository.url() + "'");
+                writer.endControlFlow();
+            }
             writer.endControlFlow();
+            writer.addNewLine();
         }
-        writer.endControlFlow();
-        writer.addNewLine();
 
         // add dependencies
         writer.beginControlFlow("dependencies");
@@ -350,7 +362,12 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.endControlFlow();
     }
 
-    public final void writeToFile(Path directory, boolean _isLocal, Optional<String> _existingPrefix)
+    @Override
+    public final void writeToFile(
+            Path directory,
+            boolean _isLocal,
+            Optional<String> _existingPrefix,
+            ICustomConfig.OutputDirectory _outputDirectoryMode)
             throws IOException {
         Files.writeString(directory.resolve("build.gradle"), getContents());
     }

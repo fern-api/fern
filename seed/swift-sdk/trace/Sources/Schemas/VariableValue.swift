@@ -1,6 +1,6 @@
 import Foundation
 
-public enum VariableValue: Codable, Hashable, Sendable {
+public indirect enum VariableValue: Codable, Hashable, Sendable {
     case binaryTreeValue(BinaryTreeValue)
     case booleanValue(BooleanValue)
     case charValue(CharValue)

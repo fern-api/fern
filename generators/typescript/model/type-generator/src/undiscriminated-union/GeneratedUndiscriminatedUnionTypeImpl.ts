@@ -208,16 +208,13 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             return ts.factory.createTypeLiteralNode([
                 ts.factory.createIndexSignature(
                     undefined,
-                    undefined,
                     [
                         ts.factory.createParameterDeclaration(
                             undefined,
                             undefined,
-                            undefined,
                             "key",
                             undefined,
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                            undefined
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                         )
                     ],
                     ts.factory.createTypeReferenceNode(this.typeName)
@@ -239,16 +236,13 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
             return ts.factory.createTypeLiteralNode([
                 ts.factory.createIndexSignature(
                     undefined,
-                    undefined,
                     [
                         ts.factory.createParameterDeclaration(
                             undefined,
                             undefined,
-                            undefined,
                             "key",
                             undefined,
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                            undefined
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                         )
                     ],
                     ts.factory.createTypeReferenceNode(this.typeName)

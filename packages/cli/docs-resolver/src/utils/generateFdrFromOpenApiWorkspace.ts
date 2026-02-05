@@ -24,7 +24,11 @@ export async function generateFdrFromOpenApiWorkspace(
     const openApiLoader = new OpenAPILoader(workspace.absoluteFilePath);
     const openApiSpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
 
-    const openApiDocuments = await openApiLoader.loadDocuments({ context, specs: openApiSpecs });
+    const openApiDocuments = await openApiLoader.loadDocuments({
+        context,
+        specs: openApiSpecs,
+        loadAiExamples: true
+    });
 
     let fdrApiDefinition: FernRegistry.api.latest.ApiDefinition | undefined;
     for (const openApi of openApiDocuments) {

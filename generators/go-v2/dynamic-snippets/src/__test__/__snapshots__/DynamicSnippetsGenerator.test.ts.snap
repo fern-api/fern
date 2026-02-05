@@ -117,7 +117,7 @@ func do() {
 					"imdb":           7.6,
 				},
 			},
-			Revenue: 1000000,
+			Revenue: int64(1000000),
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -194,7 +194,7 @@ func do() {
 				"imdb":           7.6,
 			},
 		},
-		Revenue: 1000000,
+		Revenue: int64(1000000),
 	}
 	client.Service.CreateMovie(
 		context.TODO(),
@@ -223,14 +223,14 @@ func do() {
 		),
 	)
 	request := &types.ObjectWithOptionalField{
-		String: acme.String(
+		FieldString: acme.String(
 			"string",
 		),
 		Integer: acme.Int(
 			1,
 		),
 		Long: acme.Int64(
-			1000000,
+			int64(1000000),
 		),
 		Double: acme.Float64(
 			1.1,
@@ -244,7 +244,7 @@ func do() {
 			),
 		),
 		Date: acme.Time(
-			acme.MustParseDateTime(
+			acme.MustParseDate(
 				"2023-01-15",
 			),
 		),
@@ -253,7 +253,9 @@ func do() {
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
 		),
-		Base64: []byte("SGVsbG8gd29ybGQh"),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
 		List: []string{
 			"list",
 			"list",
@@ -323,13 +325,13 @@ func do() {
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
-			String: "one",
+			FieldString: "one",
 		},
 		&types.ObjectWithRequiredField{
-			String: "two",
+			FieldString: "two",
 		},
 		&types.ObjectWithRequiredField{
-			String: "three",
+			FieldString: "three",
 		},
 	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(
@@ -964,7 +966,7 @@ func do() {
 					"imdb":           7.6,
 				},
 			},
-			Revenue: 1000000,
+			Revenue: int64(1000000),
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -1041,7 +1043,7 @@ func do() {
 				"imdb":           7.6,
 			},
 		},
-		Revenue: 1000000,
+		Revenue: int64(1000000),
 	}
 	client.Service.CreateMovie(
 		context.TODO(),
@@ -1070,14 +1072,14 @@ func do() {
 		),
 	)
 	request := &types.ObjectWithOptionalField{
-		String: acme.String(
+		FieldString: acme.String(
 			"string",
 		),
 		Integer: acme.Int(
 			1,
 		),
 		Long: acme.Int64(
-			1000000,
+			int64(1000000),
 		),
 		Double: acme.Float64(
 			1.1,
@@ -1091,7 +1093,7 @@ func do() {
 			),
 		),
 		Date: acme.Time(
-			acme.MustParseDateTime(
+			acme.MustParseDate(
 				"2023-01-15",
 			),
 		),
@@ -1100,7 +1102,9 @@ func do() {
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
 		),
-		Base64: []byte("SGVsbG8gd29ybGQh"),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
 		List: []string{
 			"list",
 			"list",
@@ -1170,13 +1174,13 @@ func do() {
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
-			String: "one",
+			FieldString: "one",
 		},
 		&types.ObjectWithRequiredField{
-			String: "two",
+			FieldString: "two",
 		},
 		&types.ObjectWithRequiredField{
-			String: "three",
+			FieldString: "three",
 		},
 	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(
@@ -1811,7 +1815,7 @@ func do() {
 					"imdb":           7.6,
 				},
 			},
-			Revenue: 1000000,
+			Revenue: int64(1000000),
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -1888,7 +1892,7 @@ func do() {
 				"imdb":           7.6,
 			},
 		},
-		Revenue: 1000000,
+		Revenue: int64(1000000),
 	}
 	client.Service.CreateMovie(
 		context.TODO(),
@@ -1917,14 +1921,14 @@ func do() {
 		),
 	)
 	request := &types.ObjectWithOptionalField{
-		String: acme.String(
+		FieldString: acme.String(
 			"string",
 		),
 		Integer: acme.Int(
 			1,
 		),
 		Long: acme.Int64(
-			1000000,
+			int64(1000000),
 		),
 		Double: acme.Float64(
 			1.1,
@@ -1938,7 +1942,7 @@ func do() {
 			),
 		),
 		Date: acme.Time(
-			acme.MustParseDateTime(
+			acme.MustParseDate(
 				"2023-01-15",
 			),
 		),
@@ -1947,7 +1951,9 @@ func do() {
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
 		),
-		Base64: []byte("SGVsbG8gd29ybGQh"),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
 		List: []string{
 			"list",
 			"list",
@@ -2017,13 +2023,13 @@ func do() {
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
-			String: "one",
+			FieldString: "one",
 		},
 		&types.ObjectWithRequiredField{
-			String: "two",
+			FieldString: "two",
 		},
 		&types.ObjectWithRequiredField{
-			String: "three",
+			FieldString: "three",
 		},
 	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(

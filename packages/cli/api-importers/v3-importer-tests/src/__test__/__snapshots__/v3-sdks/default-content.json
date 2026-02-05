@@ -359,6 +359,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Default Content Type",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -496,22 +497,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Default Content Type",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "defaultContentType",
+      "safeName": "defaultContentType"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "default_content_type",
+      "safeName": "default_content_type"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "DEFAULT_CONTENT_TYPE",
+      "safeName": "DEFAULT_CONTENT_TYPE"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "DefaultContentType",
+      "safeName": "DefaultContentType"
     }
   },
   "constants": {

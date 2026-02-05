@@ -14,21 +14,10 @@ describe("no-undefined-example-reference", () => {
             )
         });
 
+        // Note: $malformed-example is now treated as a literal string (not an example reference)
+        // because it doesn't match the valid example reference format ($Type.Example or $import.Type.Example).
+        // This is intentional - strings like "$PATH", "$USD", "$3.00" should not require escaping.
         expect(violations).toEqual([
-            {
-                message:
-                    "Example $malformed-example is malformed. Examples should be formatted like $YourType.ExampleName",
-                nodePath: [
-                    "types",
-                    "MyType",
-                    {
-                        arrayIndex: 0,
-                        key: "examples"
-                    }
-                ],
-                relativeFilepath: RelativeFilePath.of("b.yml"),
-                severity: "fatal"
-            },
             {
                 message: "Example $a.MissingType.Example is not defined.",
                 nodePath: [

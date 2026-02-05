@@ -3,10 +3,15 @@
 import { SeedTraceClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Migration", () => {
+describe("MigrationClient", () => {
     test("getAttemptedMigrations", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = [
             { name: "name", status: "RUNNING" },

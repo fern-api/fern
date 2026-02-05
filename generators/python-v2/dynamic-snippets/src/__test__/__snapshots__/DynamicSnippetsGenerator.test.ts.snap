@@ -92,6 +92,13 @@ exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
+      "pathParameters"
+    ],
+    "message": "Expected string, got number"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
       "requestBody"
     ],
     "message": "Expected string, got number"
@@ -112,7 +119,6 @@ client.service.create_movie(
     title="The Boy and the Heron",
     from="Hayao Miyazaki",
     rating=8,
-    type="movie",
     tag="development",
     metadata={
         "actors": [
@@ -146,7 +152,7 @@ client.endpoints.object.get_and_return_with_optional_field(
     long=1000000,
     double=1.1,
     bool=True,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00Z"),
+    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=date.fromisoformat("2023-01-15"),
     uuid=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     base64="SGVsbG8gd29ybGQh",
@@ -154,9 +160,9 @@ client.endpoints.object.get_and_return_with_optional_field(
         "list",
         "list"
     ],
-    set={
+    set=[
         "set"
-    },
+    ],
     map={
         1: "map"
     },
@@ -167,6 +173,30 @@ client.endpoints.object.get_and_return_with_optional_field(
 
 exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "pathParameters[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "pathParameters[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "pathParameters[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -241,7 +271,9 @@ client = Acme()
 
 client.service.post(
     file="Hello, world!",
-    file_list=["First", "Second"]
+    file_list=["First", "Second"],
+    maybe_file="example_maybe_file",
+    maybe_file_list=["example_maybe_file_list"]
 )
 "
 `;
@@ -379,8 +411,8 @@ client.nullable.create_user(
         "admin"
     ],
     metadata={
-        "created_at": datetime.fromisoformat("1980-01-01T00:00:00Z"),
-        "updated_at": datetime.fromisoformat("1980-01-01T00:00:00Z"),
+        "created_at": datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
+        "updated_at": datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
         "avatar": None,
         "activated": None
     },

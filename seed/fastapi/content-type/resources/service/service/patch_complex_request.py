@@ -3,20 +3,24 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 
 
 class PatchComplexRequest(UniversalBaseModel):
     name: typing.Optional[str] = None
     age: typing.Optional[int] = None
     active: typing.Optional[bool] = None
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     tags: typing.Optional[typing.List[str]] = None
     email: typing.Optional[str] = None
     nickname: typing.Optional[str] = None
     bio: typing.Optional[str] = None
-    profile_image_url: typing.Optional[str] = pydantic.Field(alias="profileImageUrl", default=None)
-    settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    profile_image_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="profileImageUrl"), pydantic.Field(alias="profileImageUrl")
+    ] = None
+    settings: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

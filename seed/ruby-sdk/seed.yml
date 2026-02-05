@@ -13,15 +13,19 @@ buildScripts:
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/ruby-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
+    file: ./generators/ruby-v2/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk
+    context: .
+  podman:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     context: .
 test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
-    command: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-ruby-sdk
 language: ruby
 generatorType: SDK
 defaultOutputMode: github
@@ -52,12 +56,13 @@ fixtures:
       outputFolder: flattened-module-structure
 allowedFailures:
   - accept-header
+  - examples:wire-tests
   - alias
   - alias-extends
   - any-auth
   - api-wide-base-path
   - audiences
-  - auth-environment-variables
+  - header-auth-environment-variable
   - basic-auth
   - basic-auth-environment-variables
   - bearer-token-environment-variable
@@ -68,7 +73,8 @@ allowedFailures:
   - client-side-params
   - content-type
   - cross-package-type-names
-  - custom-auth
+  - dollar-string-examples
+  - header-auth
   - empty-clients
   - enum
   - error-property
@@ -89,6 +95,9 @@ allowedFailures:
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
+  - inferred-auth-implicit-api-key
+  - inferred-auth-implicit-reference
+  - inline-enum-request
   - license
   - literal
   - literals-unions
@@ -101,12 +110,16 @@ allowedFailures:
   - no-environment
   - no-retries
   - nullable
+  - nullable-allof-extends
   - nullable-optional
+  - nullable-request-body
   - oauth-client-credentials
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
+  - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - object
   - objects-with-imports
@@ -128,6 +141,7 @@ allowedFailures:
   - ruby-reserved-word-properties
   - server-sent-event-examples
   - server-sent-events
+  - server-url-templating
   - simple-api
   - simple-fhir
   - single-url-environment-default
@@ -138,12 +152,18 @@ allowedFailures:
   - undiscriminated-unions
   - undiscriminated-union-with-response-property
   - unions
+  - endpoint-security-auth
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   - unknown
+  # Java-specific fixture for staged builder ordering
+  - java-staged-builder-ordering
   - url-form-encoded
   - validation
   - variables
   - version
   - version-no-default
+  - webhook-audience
   - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
@@ -166,6 +186,10 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 scripts:
-  - docker: ruby:2.7
+  - image: ruby:3.3
     commands:
-      - bundle install && bundle exec rake test
+      build:
+        - bundle install
+        - bundle exec rubocop
+      test:
+        - bundle exec rake test

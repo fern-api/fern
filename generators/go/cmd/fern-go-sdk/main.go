@@ -45,6 +45,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.PackagePath,
 		config.ExportedClientName,
 		config.UnionVersion,
+		config.CustomPagerName,
 		config.Module,
 	)
 	if err != nil {

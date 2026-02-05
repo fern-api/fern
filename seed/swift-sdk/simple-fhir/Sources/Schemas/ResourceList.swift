@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ResourceList: Codable, Hashable, Sendable {
+public indirect enum ResourceList: Codable, Hashable, Sendable {
     case account(Account)
     case patient(Patient)
     case practitioner(Practitioner)

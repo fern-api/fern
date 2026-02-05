@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedAnyAuth/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedAnyAuth/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -20,7 +20,6 @@ await client.Auth.GetTokenAsync(
         ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = "scope",
     }
 );
 ```
@@ -50,7 +49,7 @@ await client.Auth.GetTokenAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -75,7 +74,7 @@ await client.User.GetAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAdminsAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAdminsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 

@@ -23,6 +23,7 @@ import com.seed.examples.resources.types.types.Tree;
 import com.seed.examples.types.BasicType;
 import com.seed.examples.types.Type;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -40,13 +41,14 @@ public class Example19 {
                         .castMember(CastMember.of(
                                 Actor.builder().name("name").id("id").build()))
                         .extendedMovie(ExtendedMovie.builder()
-                                .cast(Arrays.asList("cast", "cast"))
                                 .id("id")
                                 .title("title")
                                 .from("from")
                                 .rating(1.1)
-                                .type("movie")
                                 .tag("tag")
+                                .revenue(1000000L)
+                                .prequel("prequel")
+                                .book("book")
                                 .metadata(new HashMap<String, Object>() {
                                     {
                                         put("metadata", new HashMap<String, Object>() {
@@ -56,15 +58,13 @@ public class Example19 {
                                         });
                                     }
                                 })
-                                .revenue(1000000L)
-                                .prequel("prequel")
-                                .book("book")
+                                .cast(Arrays.asList("cast", "cast"))
                                 .build())
                         .entity(Entity.builder()
                                 .type(Type.of(BasicType.PRIMITIVE))
                                 .name("name")
                                 .build())
-                        .metadata(Metadata.html())
+                        .metadata(Metadata.html("metadata"))
                         .commonMetadata(Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
@@ -83,7 +83,7 @@ public class Example19 {
                                 })
                                 .jsonString("jsonString")
                                 .build()))
-                        .data(Data.string())
+                        .data(Data.string("data"))
                         .migration(Migration.builder()
                                 .name("name")
                                 .status(MigrationStatus.RUNNING)
@@ -93,7 +93,7 @@ public class Example19 {
                                 .exceptionMessage("exceptionMessage")
                                 .exceptionStacktrace("exceptionStacktrace")
                                 .build()))
-                        .test(Test.and())
+                        .test(Test.and(true))
                         .node(Node.builder()
                                 .name("name")
                                 .nodes(Optional.of(Arrays.asList(

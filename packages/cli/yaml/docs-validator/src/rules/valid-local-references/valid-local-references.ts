@@ -147,7 +147,7 @@ export const ValidLocalReferencesRule: Rule = {
                                     const errorMessage = createInformativeErrorMessage(invalidRefs);
 
                                     violations.push({
-                                        severity: "error",
+                                        severity: "warning",
                                         name: "Invalid OpenAPI References",
                                         message: errorMessage,
                                         relativeFilepath: relativePath

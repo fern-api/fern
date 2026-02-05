@@ -2,13 +2,21 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials;
 
-public partial class SimpleClient
+public partial class SimpleClient : ISimpleClient
 {
     private RawClient _client;
 
     internal SimpleClient(RawClient client)
     {
-        _client = client;
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
     /// <example><code>
@@ -22,6 +30,12 @@ public partial class SimpleClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -29,6 +43,7 @@ public partial class SimpleClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/get-something",
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

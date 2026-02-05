@@ -8,7 +8,7 @@ export const string: () => Schema<string, string> = createIdentitySchemaCreator<
         if (typeof value === "string") {
             return {
                 ok: true,
-                value
+                value,
             };
         } else {
             return {
@@ -16,10 +16,10 @@ export const string: () => Schema<string, string> = createIdentitySchemaCreator<
                 errors: [
                     {
                         path: breadcrumbsPrefix,
-                        message: getErrorMessageForIncorrectType(value, "string")
-                    }
-                ]
+                        message: getErrorMessageForIncorrectType(value, "string"),
+                    },
+                ],
             };
         }
-    }
+    },
 );

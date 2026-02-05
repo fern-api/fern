@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Plant Store API
+  version: 1.0.0
+  description: API for managing plants with custom basic auth field names
+
+servers:
+  - url: https://api.plantstore.example.com/v1
+
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      summary: List all plants
+      security:
+        - basicAuth: []
+      responses:
+        "200":
+          description: List of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /plants/{plantId}:
+    get:
+      operationId: getPlant
+      summary: Get a plant by ID
+      security:
+        - basicAuth: []
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Plant details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication with custom field names
+      x-fern-basic:
+        username:
+          name: project_id
+          env: PLANT_STORE_PROJECT_ID
+        password:
+          name: api_token
+          env: PLANT_STORE_API_TOKEN
+
+  schemas:
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Plant identifier
+          example: "plant-123"
+        name:
+          type: string
+          description: Plant name
+          example: "Monstera Deliciosa"
+        species:
+          type: string
+          description: Plant species
+          example: "Monstera"
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "UNAUTHORIZED"
+        message:
+          type: string
+          example: "Invalid credentials"

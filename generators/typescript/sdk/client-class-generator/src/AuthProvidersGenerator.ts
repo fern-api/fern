@@ -3,30 +3,85 @@ import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
 
-import { AuthProviderGenerator, InferredAuthProviderGenerator } from "./auth-provider";
+import {
+    AnyAuthProviderGenerator,
+    AuthProviderGenerator,
+    BasicAuthProviderGenerator,
+    BearerAuthProviderGenerator,
+    HeaderAuthProviderGenerator,
+    InferredAuthProviderGenerator,
+    OAuthAuthProviderGenerator,
+    RoutingAuthProviderGenerator
+} from "./auth-provider";
 
 export declare namespace AuthProvidersGenerator {
     export interface Init {
         ir: IntermediateRepresentation;
-        authScheme: AuthScheme;
+        authScheme: AuthScheme | { type: "any" } | { type: "routing" };
+        neverThrowErrors: boolean;
+        includeSerdeLayer: boolean;
+        shouldUseWrapper: boolean;
     }
 }
 
 export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
     private readonly authProviderGenerator: AuthProviderGenerator | undefined;
-    constructor({ ir, authScheme }: AuthProvidersGenerator.Init) {
+    constructor({
+        ir,
+        authScheme,
+        neverThrowErrors,
+        includeSerdeLayer,
+        shouldUseWrapper
+    }: AuthProvidersGenerator.Init) {
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
+                case "any":
+                    return new AnyAuthProviderGenerator({
+                        ir
+                    });
+                case "routing":
+                    return new RoutingAuthProviderGenerator({
+                        ir
+                    });
                 case "inferred":
                     return new InferredAuthProviderGenerator({
                         ir,
-                        authScheme
+                        authScheme,
+                        neverThrowErrors,
+                        shouldUseWrapper
                     });
                 case "basic":
+                    return new BasicAuthProviderGenerator({
+                        ir,
+                        authScheme,
+                        neverThrowErrors,
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        shouldUseWrapper
+                    });
                 case "bearer":
+                    return new BearerAuthProviderGenerator({
+                        ir,
+                        authScheme,
+                        neverThrowErrors,
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        shouldUseWrapper
+                    });
                 case "header":
+                    return new HeaderAuthProviderGenerator({
+                        ir,
+                        authScheme,
+                        neverThrowErrors,
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        shouldUseWrapper
+                    });
                 case "oauth":
-                    return undefined;
+                    return new OAuthAuthProviderGenerator({
+                        ir,
+                        authScheme,
+                        neverThrowErrors,
+                        includeSerdeLayer,
+                        shouldUseWrapper
+                    });
                 default:
                     assertNever(authScheme);
             }

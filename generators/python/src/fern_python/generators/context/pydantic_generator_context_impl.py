@@ -55,9 +55,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
             defaultdict(OrderedSet)
         )
-        self._types_with_union_self_referencing_members: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
-            defaultdict(OrderedSet)
-        )
 
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
@@ -68,14 +65,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     # This referenced type is self-referential
                     if referenced_id in referenced_type.referenced_types:
                         self._types_with_non_union_self_referencing_dependencies[id].add(referenced_id)
-                # TODO(tjb9dc): handle discriminated unions as well
-                elif referenced_type_shape.type == "undiscriminatedUnion":
-                    # For unions, apply the same logic but looking at the variants, and import more shallowly
-                    for member in referenced_type_shape.members:
-                        member_type_ids = self.get_type_names_in_type_reference(member.type)
-                        member_references = self.get_referenced_types_of_type_reference(member.type)
-                        if id in member_references:
-                            self._types_with_union_self_referencing_members[referenced_id].update(member_type_ids)
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -112,10 +101,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 default_value = maybe_v2_scheme.visit(
                     integer=lambda it: AST.Expression(f"{it.default}") if it.default is not None else None,
                     double=lambda dt: AST.Expression(f"{dt.default}") if dt.default is not None else None,
-                    string=lambda st: AST.Expression(f'"{st.default}"') if st.default is not None else None,
+                    string=lambda st: AST.Expression(repr(st.default)) if st.default is not None else None,
                     boolean=lambda bt: AST.Expression(f"{bt.default}") if bt.default is not None else None,
                     long_=lambda lt: AST.Expression(f"{lt.default}") if lt.default is not None else None,
-                    big_integer=lambda bit: AST.Expression(f'"{bit.default}"') if bit.default is not None else None,
+                    big_integer=lambda bit: AST.Expression(repr(bit.default)) if bit.default is not None else None,
                     uint=lambda _: None,
                     uint_64=lambda _: None,
                     date=lambda _: None,
@@ -175,13 +164,20 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
         return self._types_with_non_union_self_referencing_dependencies
 
-    def get_union_self_referencing_members_from_types(
-        self,
-    ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
-        return self._types_with_union_self_referencing_members
-
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(a, b) and self.does_type_reference_other_type(b, a)
+
+    def get_types_in_cycle_with(self, type_id: ir_types.TypeId) -> OrderedSet[ir_types.TypeId]:
+        """
+        Returns all types that are in a mutual reference cycle with the given type.
+        A type B is in a cycle with type A if A references B and B references A (directly or transitively).
+        """
+        cycle_types: OrderedSet[ir_types.TypeId] = OrderedSet()
+        referenced_types = self.get_referenced_types_ordered(type_id)
+        for dep in referenced_types:
+            if self.do_types_reference_each_other(type_id, dep):
+                cycle_types.add(dep)
+        return cycle_types
 
     def does_type_reference_other_type(self, type_id: ir_types.TypeId, other_type_id: ir_types.TypeId) -> bool:
         referenced_types = self.get_referenced_types(type_id)

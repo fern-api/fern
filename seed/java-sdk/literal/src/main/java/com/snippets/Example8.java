@@ -12,13 +12,11 @@ public class Example8 {
                 SeedLiteralClient.builder().url("https://api.fern.com").build();
 
         client.reference()
-                .send(SendRequest.builder().prompt("You are a helpful assistant").stream(false)
-                        .context("You're super wise")
+                .send(SendRequest.builder()
                         .query("What is the weather today")
+                        .context("You're super wise")
                         .containerObject(ContainerObject.builder()
                                 .nestedObjects(Arrays.asList(NestedObjectWithLiterals.builder()
-                                        .literal1("literal1")
-                                        .literal2("literal2")
                                         .strProp("strProp")
                                         .build()))
                                 .build())

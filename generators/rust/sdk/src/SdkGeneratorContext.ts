@@ -49,7 +49,12 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
-        return Object.values(AsIsFiles);
+        const files = Object.values(AsIsFiles);
+        // Only include sse_stream.rs when there are streaming endpoints
+        if (!this.hasStreamingEndpoints()) {
+            return files.filter((file) => file.filename !== "sse_stream.rs");
+        }
+        return files;
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
@@ -90,7 +95,8 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
                 extraDevDependencies: this.getExtraDevDependencies(),
                 generateBuilders: false,
                 deriveDebug: true,
-                deriveClone: true
+                deriveClone: true,
+                dateTimeType: this.customConfig.dateTimeType ?? "utc"
             }),
             this.generatorNotificationService
         );

@@ -1,15 +1,20 @@
 package com.fern.java.client;
 
+import static com.fern.java.GeneratorLogging.log;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
+import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.publish.DirectPublish;
 import com.fern.ir.model.publish.Filesystem;
 import com.fern.ir.model.publish.GithubPublish;
@@ -33,6 +38,7 @@ import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
 import com.fern.java.client.generators.HttpResponseGenerator;
+import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
@@ -45,6 +51,14 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.client.generators.auth.AuthProviderGenerator;
+import com.fern.java.client.generators.auth.BasicAuthProviderGenerator;
+import com.fern.java.client.generators.auth.BearerAuthProviderGenerator;
+import com.fern.java.client.generators.auth.EndpointMetadataGenerator;
+import com.fern.java.client.generators.auth.HeaderAuthProviderGenerator;
+import com.fern.java.client.generators.auth.InferredAuthProviderGenerator;
+import com.fern.java.client.generators.auth.OAuthAuthProviderGenerator;
+import com.fern.java.client.generators.auth.RoutingAuthProviderGenerator;
 import com.fern.java.client.generators.websocket.AsyncWebSocketChannelWriter;
 import com.fern.java.client.generators.websocket.SyncWebSocketChannelWriter;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
@@ -69,6 +83,7 @@ import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.palantir.common.streams.KeyedStream;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -150,6 +165,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .enableWireTests(customConfig.enableWireTests())
                 .useNullableAnnotation(customConfig.useNullableAnnotation())
                 .collapseOptionalNullable(customConfig.collapseOptionalNullable())
+                .gradleCentralDependencyManagement(customConfig.gradleCentralDependencyManagement())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -183,7 +199,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
-                customConfig.packageLayout());
+                customConfig.packageLayout(),
+                sdkCustomConfig.customPagerName());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
@@ -215,8 +232,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                packagePrefixTokens, customConfig.packageLayout(), customConfig.customPagerName());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
@@ -228,6 +245,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             ClientGeneratorContext context,
             IntermediateRepresentation ir,
             DefaultGeneratorExecClient generatorExecClient) {
+
+        log(generatorExecClient, "Generating core SDK files");
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
@@ -365,6 +384,64 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
 
+        if (context.isEndpointSecurity()) {
+            log(generatorExecClient, "Generating auth provider infrastructure for endpoint security");
+
+            AuthProviderGenerator authProviderGenerator = new AuthProviderGenerator(context);
+            this.addGeneratedFile(authProviderGenerator.generateFile());
+
+            EndpointMetadataGenerator endpointMetadataGenerator = new EndpointMetadataGenerator(context);
+            this.addGeneratedFile(endpointMetadataGenerator.generateFile());
+
+            RoutingAuthProviderGenerator routingAuthProviderGenerator = new RoutingAuthProviderGenerator(context);
+            this.addGeneratedFile(routingAuthProviderGenerator.generateFile());
+
+            for (AuthScheme authScheme : context.getResolvedAuthSchemes()) {
+                authScheme.getBearer().ifPresent(bearerScheme -> {
+                    BearerAuthProviderGenerator bearerGenerator =
+                            new BearerAuthProviderGenerator(context, bearerScheme);
+                    this.addGeneratedFile(bearerGenerator.generateFile());
+                });
+
+                authScheme.getBasic().ifPresent(basicScheme -> {
+                    BasicAuthProviderGenerator basicGenerator = new BasicAuthProviderGenerator(context, basicScheme);
+                    this.addGeneratedFile(basicGenerator.generateFile());
+                });
+
+                authScheme.getHeader().ifPresent(headerScheme -> {
+                    String schemeName =
+                            headerScheme.getName().getName().getPascalCase().getSafeName();
+                    HeaderAuthProviderGenerator headerGenerator =
+                            new HeaderAuthProviderGenerator(context, headerScheme, schemeName);
+                    this.addGeneratedFile(headerGenerator.generateFile());
+                });
+
+                authScheme.getOauth().ifPresent(oauthScheme -> {
+                    oauthScheme.getConfiguration().getClientCredentials().ifPresent(clientCredentials -> {
+                        EndpointReference tokenEndpointRef =
+                                clientCredentials.getTokenEndpoint().getEndpointReference();
+                        Subpackage authSubpackage = context.getIr()
+                                .getSubpackages()
+                                .get(tokenEndpointRef.getSubpackageId().get());
+                        ClassName authClientClassName =
+                                context.getPoetClassNameFactory().getClientClassName(authSubpackage);
+                        OAuthAuthProviderGenerator oauthGenerator =
+                                new OAuthAuthProviderGenerator(context, clientCredentials, authClientClassName);
+                        this.addGeneratedFile(oauthGenerator.generateFile());
+                    });
+                });
+
+                authScheme.getInferred().ifPresent(inferredScheme -> {
+                    String schemeName = inferredScheme.getKey().get();
+                    ClassName inferredAuthTokenSupplierClassName =
+                            context.getPoetClassNameFactory().getCoreClassName("InferredAuthTokenSupplier");
+                    InferredAuthProviderGenerator inferredGenerator =
+                            new InferredAuthProviderGenerator(context, schemeName, inferredAuthTokenSupplierClassName);
+                    this.addGeneratedFile(inferredGenerator.generateFile());
+                });
+            }
+        }
+
         HttpResponseGenerator httpResponseGenerator = new HttpResponseGenerator(context);
         this.addGeneratedFile(httpResponseGenerator.generateFile());
 
@@ -381,6 +458,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(generatedMediaTypesFile);
 
         // types
+        log(generatorExecClient, "Generating data types and models");
         TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
@@ -413,7 +491,18 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
+        // Generate InferredAuthTokenSupplier if inferred auth is present
+        Optional<InferredAuthScheme> maybeInferredAuthScheme = context.getResolvedAuthSchemes().stream()
+                .map(AuthScheme::getInferred)
+                .flatMap(Optional::stream)
+                .findFirst();
+        Optional<GeneratedJavaFile> generatedInferredAuthTokenSupplier =
+                maybeInferredAuthScheme.map(it -> new InferredAuthTokenSupplierGenerator(context, it).generateFile());
+
+        generatedInferredAuthTokenSupplier.ifPresent(this::addGeneratedFile);
+
         // subpackage clients and their WebSocket channels
+        log(generatorExecClient, "Generating API client classes");
         ir.getSubpackages().values().forEach(subpackage -> {
             // Generate subpackage clients if there are endpoints or WebSocket channels
             if (subpackage.getHasEndpointsInTree() || subpackage.getWebsocket().isPresent()) {
@@ -536,6 +625,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedRequestOptions,
                 generatedTypes.getInterfaces(),
                 generatedOAuthTokenSupplier,
+                generatedInferredAuthTokenSupplier,
                 generatedErrors);
         GeneratedRootClient generatedSyncRootClient = syncRootClientGenerator.generateFile();
         this.addGeneratedFile(generatedSyncRootClient);
@@ -553,6 +643,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedRequestOptions,
                 generatedTypes.getInterfaces(),
                 generatedOAuthTokenSupplier,
+                generatedInferredAuthTokenSupplier,
                 generatedErrors);
         GeneratedRootClient generatedAsyncRootClient = asyncRootClientGenerator.generateFile();
         this.addGeneratedFile(generatedAsyncRootClient);
@@ -608,8 +699,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                packagePrefixTokens, customConfig.packageLayout(), customConfig.customPagerName());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(

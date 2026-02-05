@@ -1,0 +1,10 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "enableForwardCompatibleEnums": true,
+        "noSerdeLayer": false
+    },
+    "sdkVersion": "0.0.1"
+}

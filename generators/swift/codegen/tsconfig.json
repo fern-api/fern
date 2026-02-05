@@ -4,15 +4,12 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": ["node", "vitest/globals"]
   },
   "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../base"
     },
     {
       "path": "../../browser-compatible-base"

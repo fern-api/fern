@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`tag-description-pages > defaults to false when not specified > tag-description-pages-disabled 1`] = `false`;
+
+exports[`tag-description-pages > parses tag-description-pages configuration correctly > tag-description-pages-enabled 1`] = `true`;

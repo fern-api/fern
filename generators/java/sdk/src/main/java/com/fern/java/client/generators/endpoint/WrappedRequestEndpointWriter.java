@@ -49,8 +49,6 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import okhttp3.*;
 
@@ -138,11 +136,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
-                // Build a properties map with only body parameters, preserving nullable semantics
-                initializeRequestBodyProperties(inlinedRequestBodyGetter, requestBodyCodeBlock);
                 initializeRequestBody(
                         generatedObjectMapper,
-                        variables.getRequestBodyPropertiesName(),
+                        requestParameterName,
                         requestBodyCodeBlock,
                         sendContentType,
                         contentType);
@@ -151,7 +147,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         generatedWrappedRequest.requestBodyGetter().get());
                 initializeMultipartBody(fileUploadRequestBodyGetter, requestBodyCodeBlock, generatedObjectMapper);
                 inlinedRequestBodyBuilder =
-                        Optional.of(CodeBlock.of("$L.build()", variables.getOkhttpRequestBodyName()));
+                        Optional.of(CodeBlock.of("$L.build()", variables.getMultipartBodyPropertiesName()));
             }
         } else {
             if (httpEndpoint.getMethod().equals(HttpMethod.POST)
@@ -161,6 +157,21 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));
             }
         }
+        if (clientGeneratorContext.isEndpointSecurity()) {
+            requestBodyCodeBlock.add(
+                    "$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                    java.util.Map.class,
+                    java.util.HashMap.class,
+                    clientOptionsMember.name,
+                    ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            requestBodyCodeBlock.add(
+                    "_headers.putAll($L.$L($L));\n",
+                    clientOptionsMember.name,
+                    ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
+                    getEndpointMetadataCodeBlock(httpEndpoint));
+        }
+
         requestBodyCodeBlock
                 .add(
                         "$T.Builder $L = new $T.Builder()\n",
@@ -181,12 +192,16 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     ".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
         }
         Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
-        requestBodyCodeBlock.add(
-                ".headers($T.of($L.$L($L)))",
-                Headers.class,
-                clientOptionsMember.name,
-                ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        if (clientGeneratorContext.isEndpointSecurity()) {
+            requestBodyCodeBlock.add(".headers($T.of(_headers))", Headers.class);
+        } else {
+            requestBodyCodeBlock.add(
+                    ".headers($T.of($L.$L($L)))",
+                    Headers.class,
+                    clientOptionsMember.name,
+                    ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        }
         if (sendContentType && !isFileUpload) {
             requestBodyCodeBlock.add("\n.addHeader($S, $S)", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
         }
@@ -195,13 +210,21 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.add(";\n");
         requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
+            String sdkName = header.camelCaseKey();
+            String headerName = generatedWrappedRequest.headerWireValues().get(sdkName);
+            if (headerName == null) {
+                String wireValue = header.objectProperty().getName().getWireValue();
+                headerName = (wireValue != null && !wireValue.isEmpty())
+                        ? wireValue
+                        : header.objectProperty().getName().getName().getOriginalName();
+            }
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
                         .addStatement(
                                 "$L.addHeader($S, $L)",
                                 AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                                header.wireKey().get(),
+                                headerName,
                                 PoetTypeNameStringifier.stringify(
                                         CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
                                                 .toString(),
@@ -211,7 +234,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 requestBodyCodeBlock.addStatement(
                         "$L.addHeader($S, $L)",
                         AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                        header.wireKey().get(),
+                        headerName,
                         PoetTypeNameStringifier.stringify(
                                 CodeBlock.of("$L.$N()", "request", header.getterProperty())
                                         .toString(),
@@ -221,22 +244,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.addStatement(
                 "$T $L = $L.build()", Request.class, variables.getOkhttpRequestName(), REQUEST_BUILDER_NAME);
         return requestBodyCodeBlock.build();
-    }
-
-    private void initializeRequestBodyProperties(
-            InlinedRequestBodyGetters inlinedRequestBody, CodeBlock.Builder requestBodyCodeBlock) {
-        requestBodyCodeBlock.addStatement(
-                "$T $L = new $T<>()",
-                ParameterizedTypeName.get(Map.class, String.class, Object.class),
-                variables.getRequestBodyPropertiesName(),
-                HashMap.class);
-        for (EnrichedObjectProperty bodyProperty : inlinedRequestBody.properties()) {
-            requestBodyCodeBlock.addStatement(
-                    "$L.put($S, $L)",
-                    variables.getRequestBodyPropertiesName(),
-                    bodyProperty.wireKey().get(),
-                    requestParameterName + "." + bodyProperty.getterProperty().name + "()");
-        }
     }
 
     private void initializeRequestBody(

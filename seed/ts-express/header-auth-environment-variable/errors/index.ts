@@ -1,0 +1,1 @@
+export { SeedHeaderTokenEnvironmentVariableError } from "./SeedHeaderTokenEnvironmentVariableError";

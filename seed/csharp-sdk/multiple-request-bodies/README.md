@@ -5,6 +5,19 @@
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Raw Response](#raw-response)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
@@ -82,6 +95,34 @@ var response = await client.UploadJsonDocumentAsync(
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
+```
+
+### Raw Response
+
+Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
+
+```csharp
+using SeedApi;
+
+// Access raw response data (status code, headers, etc.) alongside the parsed response
+var result = await client.UploadJsonDocumentAsync(...).WithRawResponse();
+
+// Access the parsed data
+var data = result.Data;
+
+// Access raw response metadata
+var statusCode = result.RawResponse.StatusCode;
+var headers = result.RawResponse.Headers;
+var url = result.RawResponse.Url;
+
+// Access specific headers (case-insensitive)
+if (headers.TryGetValue("X-Request-Id", out var requestId))
+{
+    System.Console.WriteLine($"Request ID: {requestId}");
+}
+
+// For the default behavior, simply await without .WithRawResponse()
+var data = await client.UploadJsonDocumentAsync(...);
 ```
 
 ## Contributing

@@ -3,58 +3,92 @@
 module Seed
   module Auth
     class Client
-      # @return [Seed::Auth::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Auth::Types::GetTokenRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :x_api_key
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
-        _body_prop_names = %i[client_id client_secret audience grant_type scope]
-        _body_bag = params.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request_data = Seed::Auth::Types::GetTokenRequest.new(params).to_h
+        non_body_param_names = ["X-Api-Key"]
+        body = request_data.except(*non_body_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        headers = {}
+        headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
+
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: Seed::Auth::Types::GetTokenRequest.new(_body_bag).to_h
+          headers: headers,
+          body: body,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Auth::Types::TokenResponse.load(_response.body)
+          Seed::Auth::Types::TokenResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Auth::Types::RefreshTokenRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :x_api_key
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
-        _body_prop_names = %i[client_id client_secret refresh_token audience grant_type scope]
-        _body_bag = params.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request_data = Seed::Auth::Types::RefreshTokenRequest.new(params).to_h
+        non_body_param_names = ["X-Api-Key"]
+        body = request_data.except(*non_body_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        headers = {}
+        headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
+
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token/refresh",
-          body: Seed::Auth::Types::RefreshTokenRequest.new(_body_bag).to_h
+          headers: headers,
+          body: body,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Auth::Types::TokenResponse.load(_response.body)
+          Seed::Auth::Types::TokenResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
     end

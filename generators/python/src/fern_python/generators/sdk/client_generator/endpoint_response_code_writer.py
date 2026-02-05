@@ -10,6 +10,9 @@ from fern_python.generators.sdk.client_generator.pagination.abstract_paginator i
 from fern_python.generators.sdk.client_generator.pagination.cursor import (
     CursorPagination,
 )
+from fern_python.generators.sdk.client_generator.pagination.custom import (
+    CustomPagination,
+)
 from fern_python.generators.sdk.client_generator.pagination.offset import (
     OffsetPagination,
 )
@@ -139,9 +142,9 @@ class EndpointResponseCodeWriter:
                             AST.TryStatement(
                                 body=[
                                     AST.YieldStatement(
-                                        self._context.core_utilities.get_construct(
+                                        self._context.core_utilities.get_construct_sse(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
                                         ),
                                     ),
                                 ],
@@ -384,6 +387,7 @@ class EndpointResponseCodeWriter:
             pydantic_parse_expression = property_access_expression
 
         if self._pagination is not None:
+            response_is_optional = self.is_json_response_optional(json_response)
             paginator = self._pagination.visit(
                 cursor=lambda cursor: CursorPagination(
                     context=self._context,
@@ -391,6 +395,7 @@ class EndpointResponseCodeWriter:
                     pydantic_parse_expression=pydantic_parse_expression,
                     config=self._pagination_snippet_config,
                     cursor=cursor,
+                    response_is_optional=response_is_optional,
                 ),
                 offset=lambda offset: OffsetPagination(
                     context=self._context,
@@ -398,8 +403,16 @@ class EndpointResponseCodeWriter:
                     pydantic_parse_expression=pydantic_parse_expression,
                     config=self._pagination_snippet_config,
                     offset=offset,
+                    response_is_optional=response_is_optional,
                 ),
-                custom=lambda _: raise_custom_pagination_error(),
+                custom=lambda custom: CustomPagination(
+                    context=self._context,
+                    is_async=self._is_async,
+                    pydantic_parse_expression=pydantic_parse_expression,
+                    config=self._pagination_snippet_config,
+                    custom=custom,
+                    response_is_optional=response_is_optional,
+                ),
             )
             if paginator is not None:
                 paginator.write(writer=writer)
@@ -524,9 +537,22 @@ class EndpointResponseCodeWriter:
                 if is_optional:
                     writer.write_line(f"if {RESPONSE_VARIABLE} is None or not {RESPONSE_VARIABLE}.text.strip():")
                     with writer.indent():
-                        writer.write("return ")
-                        writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
-                        writer.write_newline_if_last_line_not()
+                        if self._pagination is not None:
+                            # For pagination endpoints, return an empty pager instead of HttpResponse[None]
+                            empty_pager_expr = self._context.core_utilities.instantiate_paginator(
+                                is_async=self._is_async,
+                                has_next=AST.Expression("False"),
+                                items=AST.Expression("[]"),
+                                get_next=AST.Expression("None"),
+                                response=AST.Expression("None"),
+                            )
+                            writer.write("return ")
+                            writer.write_node(empty_pager_expr)
+                            writer.write_newline_if_last_line_not()
+                        else:
+                            writer.write("return ")
+                            writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
+                            writer.write_newline_if_last_line_not()
             writer.write_line(f"if 200 <= {RESPONSE_VARIABLE}.status_code < 300:")
             with writer.indent():
                 if self._response is None or self._response.body is None:
@@ -782,7 +808,3 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
-
-
-def raise_custom_pagination_error() -> None:
-    raise NotImplementedError("Custom pagination is not supported yet")

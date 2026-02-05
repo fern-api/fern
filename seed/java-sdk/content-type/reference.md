@@ -254,9 +254,9 @@ client.service().namedPatchWithMixed(
     "id",
     NamedMixedPatchRequest
         .builder()
-        .appId("appId")
         .instructions("instructions")
         .active(true)
+        .appId("appId")
         .build()
 );
 ```
@@ -343,10 +343,10 @@ client.service().optionalMergePatchTest(
     OptionalMergePatchRequest
         .builder()
         .requiredField("requiredField")
+        .nullableString("nullableString")
         .optionalString("optionalString")
         .optionalInteger(1)
         .optionalBoolean(true)
-        .nullableString("nullableString")
         .build()
 );
 ```

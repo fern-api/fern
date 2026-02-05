@@ -37,17 +37,25 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_usernames_custom(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_usernames_custom)
+        type_hints = typing.get_type_hints(cls.list_usernames_custom)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            resolved_annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -66,13 +74,9 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_usernames_custom.__globals__)
-
         router.get(
             path="/users",
-            response_model=UsernameCursor,
+            response_model=None,
             description=AbstractUsersService.list_usernames_custom.__doc__,
             **get_route_args(cls.list_usernames_custom, default_tag="users"),
         )(wrapper)

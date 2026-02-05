@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "generate-error-types": false
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

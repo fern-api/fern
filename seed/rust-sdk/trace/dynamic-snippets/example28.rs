@@ -10,6 +10,6 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .sysprop
-        .set_num_warm_instances(&Language::Java, &1, None)
+        .set_num_warm_instances(&Language::Java, 1, None)
         .await;
 }

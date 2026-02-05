@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentials/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentials/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentials/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentials/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 

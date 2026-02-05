@@ -36,3 +36,8 @@ impl Environment {
     }
 }
 }
+impl Default for Environment {
+    fn default() -> Self {
+    Self::Production(ProductionUrls { api: "https://api.example.com".to_string(), auth: "https://auth.example.com".to_string(), storage: "https://storage.example.com".to_string(), analytics: "https://analytics.example.com".to_string() })
+}
+}

@@ -1,12 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import {
-    DEFINITION_DIRECTORY,
-    FERN_DIRECTORY,
-    fernConfigJson,
-    generatorsYml,
-    PROJECT_CONFIG_FILENAME,
-    ROOT_API_FILENAME
-} from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin, getIrVersionForGenerator } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
@@ -22,9 +15,6 @@ import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { relative } from "path";
-import { create as createTar } from "tar";
-import tmp from "tmp-promise";
 import urlJoin from "url-join";
 
 export async function createAndStartJob({
@@ -39,7 +29,8 @@ export async function createAndStartJob({
     token,
     whitelabel,
     irVersionOverride,
-    absolutePathToPreview
+    absolutePathToPreview,
+    fernignorePath
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -53,7 +44,18 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    fernignorePath: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
+    // Read fernignore file contents if path is provided
+    let fernignoreContents: string | undefined;
+    if (fernignorePath != null) {
+        try {
+            fernignoreContents = await readFile(fernignorePath, "utf-8");
+        } catch (error) {
+            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`);
+        }
+    }
+
     const job = await createJob({
         projectConfig,
         workspace,
@@ -64,7 +66,8 @@ export async function createAndStartJob({
         shouldLogS3Url,
         token,
         whitelabel,
-        absolutePathToPreview
+        absolutePathToPreview,
+        fernignoreContents
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
@@ -80,7 +83,8 @@ async function createJob({
     shouldLogS3Url,
     token,
     whitelabel,
-    absolutePathToPreview
+    absolutePathToPreview,
+    fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -92,6 +96,7 @@ async function createJob({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    fernignoreContents: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -102,100 +107,6 @@ async function createJob({
         customConfig: generatorInvocation.config,
         publishMetadata: generatorInvocation.publishMetadata
     };
-
-    let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
-    // Only write definition if output mode is github
-    if (generatorInvocation.outputMode.type.startsWith("github")) {
-        try {
-            const tmpDir = await tmp.dir();
-
-            const absolutePathToTmpDir = AbsoluteFilePath.of(tmpDir.path);
-            context.logger.debug(`Writing mock fern definition to ${absolutePathToTmpDir}`);
-
-            const absolutePathToTmpFernDirectory = join(absolutePathToTmpDir, RelativeFilePath.of(FERN_DIRECTORY));
-            const absolutePathToTmpDefinitionDirectory = join(
-                absolutePathToTmpFernDirectory,
-                RelativeFilePath.of(DEFINITION_DIRECTORY)
-            );
-            await mkdir(absolutePathToTmpDefinitionDirectory, { recursive: true });
-
-            // write api.yml
-            const absolutePathToApiYml = join(
-                absolutePathToTmpDefinitionDirectory,
-                RelativeFilePath.of(ROOT_API_FILENAME)
-            );
-            await writeFile(absolutePathToApiYml, yaml.dump(workspace.definition.rootApiFile.contents));
-            // write definition
-            await writeFernDefinition({
-                absolutePathToDefinitionDirectory: absolutePathToTmpDefinitionDirectory,
-                definition: workspace.definition
-            });
-            // write fern.config.json
-            const absolutePathToFernConfigJson = join(
-                absolutePathToTmpFernDirectory,
-                RelativeFilePath.of(PROJECT_CONFIG_FILENAME)
-            );
-            await writeFile(absolutePathToFernConfigJson, JSON.stringify(projectConfig.rawConfig, undefined, 2));
-            // write sources
-            // TODO: We need handle what happens with source files outside of the fern directory
-            try {
-                const sources = workspace.getSources();
-                for (const source of sources) {
-                    const sourceContents = await readFile(source.absoluteFilePath);
-                    const relativeLocation = relative(workspace.absoluteFilePath, source.absoluteFilePath);
-                    const absolutePathToSourceFile = join(
-                        absolutePathToTmpFernDirectory,
-                        RelativeFilePath.of(relativeLocation)
-                    );
-                    // Make sure the directory exists
-                    await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
-
-                    await writeFile(absolutePathToSourceFile, new Uint8Array(sourceContents));
-                }
-            } catch (error) {
-                context.logger.debug(`Failed to write source files to disk, continuing: ${error}`);
-            }
-
-            const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
-            await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
-
-            // Upload definition to S3
-            context.logger.debug("Getting upload URL for Fern definition.");
-            const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
-                apiName: workspace.definition.rootApiFile.contents.name,
-                organizationName: organization,
-                version
-            });
-
-            if (!definitionUploadUrlRequest.ok) {
-                if (definitionUploadUrlRequest.error.content.reason === "status-code") {
-                    context.logger.debug(
-                        `Failed with status-code to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.body}`
-                    );
-                } else if (definitionUploadUrlRequest.error.content.reason === "non-json") {
-                    context.logger.debug(
-                        `Failed with non-json to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.rawBody}`
-                    );
-                } else if (definitionUploadUrlRequest.error.content.reason === "unknown") {
-                    context.logger.debug(
-                        `Failed to get upload URL as unknown error occurred continuing: ${definitionUploadUrlRequest.error.content.errorMessage}`
-                    );
-                }
-            } else {
-                context.logger.debug("Uploading definition...");
-                await axios.put(definitionUploadUrlRequest.body.s3Url, await readFile(tarPath));
-
-                // Create definition metadata
-                fernDefinitionMetadata = {
-                    definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
-                    outputPath: ".mock",
-                    cliVersion: projectConfig.version
-                };
-            }
-        } catch (error) {
-            context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
-        }
-    }
 
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.definition.rootApiFile.contents.name,
@@ -209,8 +120,8 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        fernDefinitionMetadata,
-        preview: absolutePathToPreview != null
+        preview: absolutePathToPreview != null,
+        fernignoreContents
     });
 
     if (!createResponse.ok) {
@@ -246,13 +157,18 @@ async function createJob({
             },
             insufficientPermissions: () => {
                 return context.failAndThrow(
-                    "You do not have permission to run this generator. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
-                        "If you believe this is an error, please contact support@buildwithfern.com"
+                    `You do not have permission to run this generator for organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
                 );
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
                     "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com."
+                );
+            },
+            branchDoesNotExist: (value) => {
+                return context.failAndThrow(
+                    `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`
                 );
             },
             _other: (content) => {
@@ -368,20 +284,28 @@ async function startJob({
 // java generator to support the new implementation, we manually migrate
 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
-    if (error?.reason === "status-code") {
+    if (error?.content?.reason === "status-code") {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-        const body = error.body as any;
+        const body = error.content.body as any;
         switch (body?._error) {
             case "IllegalApiNameError":
                 return FernFiddle.remoteGen.createJobV3.Error.illegalApiNameError();
+            case "IllegalApiVersionError":
+                return FernFiddle.remoteGen.createJobV3.Error.illegalApiVersionError(body.body);
             case "GeneratorsDoNotExistError":
                 return FernFiddle.remoteGen.createJobV3.Error.generatorsDoNotExistError(body.body);
             case "CannotPublishToNpmScope":
                 return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToNpmScope(body.body);
             case "CannotPublishToMavenScope":
                 return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToMavenGroup(body.body);
+            case "CannotPublishPypiPackage":
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishPypiPackage(body.body);
             case "InsufficientPermissions":
                 return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body);
+            case "OrgNotConfiguredForWhitelabel":
+                return FernFiddle.remoteGen.createJobV3.Error.orgNotConfiguredForWhitelabel(body.body);
+            case "BranchDoesNotExist":
+                return FernFiddle.remoteGen.createJobV3.Error.branchDoesNotExist(body.body);
         }
     }
     return error;

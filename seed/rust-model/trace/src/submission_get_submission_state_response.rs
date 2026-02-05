@@ -4,7 +4,9 @@ pub use crate::prelude::*;
 pub struct GetSubmissionStateResponse {
     #[serde(rename = "timeSubmitted")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub time_submitted: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub time_submitted: Option<DateTime<FixedOffset>>,
     pub submission: String,
     pub language: Language,
     #[serde(rename = "submissionTypeState")]

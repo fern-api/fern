@@ -1,6 +1,3 @@
-// Required for ES2017 compatibility.
-import "string.prototype.replaceall";
-
 export {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     DEFAULT_REQUEST_PARAMETER_NAME,

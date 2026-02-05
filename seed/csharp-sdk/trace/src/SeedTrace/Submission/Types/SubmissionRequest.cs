@@ -289,12 +289,12 @@ public record SubmissionRequest
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionRequest>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(SubmissionRequest).IsAssignableFrom(typeToConvert);
 
         public override SubmissionRequest Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

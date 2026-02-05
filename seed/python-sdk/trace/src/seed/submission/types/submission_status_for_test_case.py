@@ -44,7 +44,9 @@ class SubmissionStatusForTestCase_GradedV2(UniversalBaseModel):
 class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
     result: TestCaseResultWithStdout
-    trace_responses_size: typing_extensions.Annotated[int, FieldMetadata(alias="traceResponsesSize")]
+    trace_responses_size: typing_extensions.Annotated[
+        int, FieldMetadata(alias="traceResponsesSize"), pydantic.Field(alias="traceResponsesSize")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -56,8 +58,11 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionStatusForTestCase = typing.Union[
-    SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
+SubmissionStatusForTestCase = typing_extensions.Annotated[
+    typing.Union[
+        SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(SubmissionStatusForTestCase_Graded)
 update_forward_refs(SubmissionStatusForTestCase_Traced)

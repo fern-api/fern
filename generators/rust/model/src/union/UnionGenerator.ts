@@ -5,6 +5,7 @@ import { SingleUnionType, TypeDeclaration, TypeReference, UnionTypeDeclaration }
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
+    getInnerTypeFromOptional,
     isCollectionType,
     isDateTimeOnlyType,
     isDateTimeType,
@@ -17,6 +18,7 @@ import {
     typeSupportsHashAndEq,
     typeSupportsPartialEq
 } from "../utils/primitiveTypeUtils";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils";
 import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils";
 
 export class UnionGenerator {
@@ -66,17 +68,28 @@ export class UnionGenerator {
         // Add chrono imports based on specific types needed
         const hasDateOnly = this.hasDateFields();
         const hasDateTimeOnly = this.hasDateTimeOnlyFields();
+        const useUtc = this.context.getDateTimeType() === "utc";
 
         // TODO: @iamnamananand996 - use AST mechanism for all imports
         if (hasDateOnly && hasDateTimeOnly) {
             // Both date and datetime types present
-            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+            if (useUtc) {
+                writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+            } else {
+                // Default: DateTime<FixedOffset>
+                writer.writeLine("use chrono::{DateTime, FixedOffset, NaiveDate};");
+            }
         } else if (hasDateOnly) {
             // Only date type present, import NaiveDate only
             writer.writeLine("use chrono::NaiveDate;");
         } else if (hasDateTimeOnly) {
-            // Only datetime type present, import DateTime and Utc only
-            writer.writeLine("use chrono::{DateTime, Utc};");
+            // Only datetime type present
+            if (useUtc) {
+                writer.writeLine("use chrono::{DateTime, Utc};");
+            } else {
+                // Default: DateTime<FixedOffset>
+                writer.writeLine("use chrono::{DateTime, FixedOffset};");
+            }
         }
 
         // Add std::collections imports based on specific collection types used
@@ -215,11 +228,15 @@ export class UnionGenerator {
     }
 
     private generateUnionVariant(writer: rust.Writer, unionType: SingleUnionType): void {
-        const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName); // Escape reserved types with r#
         const discriminantValue = unionType.discriminantValue.wireValue;
 
+        // Find the typeId for this union to detect recursive fields
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
         // Generate variant attributes
-        const variantAttributes = this.generateVariantAttributes(unionType);
+        const variantAttributes = this.generateVariantAttributes(unionType, variantName);
         variantAttributes.forEach((attr) => {
             writer.write("    ");
             attr.write(writer);
@@ -232,10 +249,40 @@ export class UnionGenerator {
                 writer.writeLine(`    ${variantName},`);
             },
             singleProperty: (singleProperty) => {
-                const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context);
+                // Check if this field creates a recursive reference
+                const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
+
+                const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
                 const fieldName = singleProperty.name.name.snakeCase.unsafeName;
+                const wireValue = singleProperty.name.wireValue;
+                const isOptional = isOptionalType(singleProperty.type);
 
                 writer.writeLine(`    ${variantName} {`);
+
+                // Add serde rename if field name differs from wire value
+                if (fieldName !== wireValue) {
+                    writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
+                }
+
+                // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
+                // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
+                // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
+                const dateTimeType = this.context.getDateTimeType();
+                const typeRef = isOptional ? getInnerTypeFromOptional(singleProperty.type) : singleProperty.type;
+                if (isDateTimeOnlyType(typeRef)) {
+                    const modulePath = dateTimeType === "utc" 
+                        ? "crate::core::flexible_datetime::utc" 
+                        : "crate::core::flexible_datetime::offset";
+                    if (isOptional) {
+                        // For optional datetime fields with custom deserializer, we need serde(default)
+                        // to handle missing fields in JSON (otherwise serde expects the field to be present)
+                        writer.writeLine(`        #[serde(default)]`);
+                        writer.writeLine(`        #[serde(with = "${modulePath}::option")]`);
+                    } else {
+                        writer.writeLine(`        #[serde(with = "${modulePath}")]`);
+                    }
+                }
+
                 writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
 
                 // Add base properties if they exist
@@ -244,11 +291,29 @@ export class UnionGenerator {
                 writer.writeLine(`    },`);
             },
             samePropertiesAsObject: (declaredTypeName) => {
+                // Check if this referenced type creates a recursive reference
+                // For direct recursion, just check if the typeId matches
+                // For indirect recursion, we'd need to traverse the type graph
+                const isDirectRecursion = typeId && declaredTypeName.typeId === typeId;
+
+                // For indirect recursion, check if this type eventually references back to the union
+                let isRecursive = isDirectRecursion;
+                if (!isRecursive && typeId) {
+                    // Check if the referenced type contains a field that points back to this union
+                    const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                    if (referencedType?.shape.type === "object") {
+                        isRecursive = referencedType.shape.properties.some((prop) =>
+                            isFieldRecursive(typeId, prop.valueType, this.context.ir)
+                        );
+                    }
+                }
+
                 const objectTypeName = this.context.getUniqueTypeNameForReference(declaredTypeName);
+                const fieldTypeName = isRecursive ? `Box<${objectTypeName}>` : objectTypeName;
 
                 writer.writeLine(`    ${variantName} {`);
                 writer.writeLine(`        #[serde(flatten)]`);
-                writer.writeLine(`        data: ${objectTypeName},`);
+                writer.writeLine(`        data: ${fieldTypeName},`);
 
                 // Add base properties if they exist
                 this.generateBaseProperties(writer);
@@ -269,13 +334,18 @@ export class UnionGenerator {
         });
     }
 
-    private generateVariantAttributes(unionType: SingleUnionType): rust.Attribute[] {
+    private generateVariantAttributes(unionType: SingleUnionType, escapedVariantName: string): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
         const discriminantValue = unionType.discriminantValue.wireValue;
-        const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
 
-        // Add serde rename if the variant name differs from discriminant value
-        if (variantName.toLowerCase() !== discriminantValue.toLowerCase()) {
+        // Add serde rename if:
+        // 1. The variant name was escaped (e.g., String -> r#String), OR
+        // 2. The variant name differs from discriminant value (case-sensitive, since serde is case-sensitive)
+        const wasEscaped = escapedVariantName !== rawVariantName;
+        const namesDiffer = rawVariantName !== discriminantValue;
+
+        if (wasEscaped || namesDiffer) {
             attributes.push(Attribute.serde.rename(discriminantValue));
         }
 
@@ -283,18 +353,45 @@ export class UnionGenerator {
     }
 
     private generateBaseProperties(writer: rust.Writer): void {
+        // Find the typeId for this union to detect recursive fields
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
         // Generate base properties that are common to all variants
         this.unionTypeDeclaration.baseProperties.forEach((property) => {
             const fieldName = property.name.name.snakeCase.unsafeName;
-            const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
+
+            // Check if this field creates a recursive reference
+            const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
+
+            const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
             const wireValue = property.name.wireValue;
+            const isOptional = isOptionalType(property.valueType);
 
             if (fieldName !== wireValue) {
                 writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
             }
 
-            if (isOptionalType(property.valueType)) {
+            if (isOptional) {
                 writer.writeLine(`        #[serde(skip_serializing_if = "Option::is_none")]`);
+            }
+
+            // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
+            // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
+            // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
+            const dateTimeType = this.context.getDateTimeType();
+            const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
+            if (isDateTimeOnlyType(typeRef)) {
+                const modulePath = dateTimeType === "utc" 
+                    ? "crate::core::flexible_datetime::utc" 
+                    : "crate::core::flexible_datetime::offset";
+                if (isOptional) {
+                    // For optional datetime fields with custom deserializer, we need serde(default)
+                    // to handle missing fields in JSON (otherwise serde expects the field to be present)
+                    writer.writeLine(`        #[serde(default)]`);
+                    writer.writeLine(`        #[serde(with = "${modulePath}::option")]`);
+                } else {
+                    writer.writeLine(`        #[serde(with = "${modulePath}")]`);
+                }
             }
 
             writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);

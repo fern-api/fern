@@ -5,6 +5,20 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -60,6 +74,18 @@ match client.union_.get(None)?.await {
         println!("Other error: {:?}", e);
     }
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
+use seed_undiscriminated_unions::prelude::{*};
+
+let request = PaymentRequest {
+    ...
+};
 ```
 
 ## Advanced

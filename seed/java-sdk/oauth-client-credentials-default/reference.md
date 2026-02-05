@@ -18,7 +18,6 @@ client.auth().getToken(
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .grantType("client_credentials")
         .build()
 );
 ```

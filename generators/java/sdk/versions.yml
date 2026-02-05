@@ -1,3 +1,894 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 3.34.8
+  changelogEntry:
+    - summary: |
+        Switch base image from gradle:jdk11-jammy to gradle:jdk11-corretto to fix January 2026
+        Oracle CPU CVEs: CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933.
+        Amazon Corretto 11.0.30 includes the security patches while Eclipse Temurin 11.0.30
+        Docker images are not yet available.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.34.7
+  changelogEntry:
+    - summary: |
+        Add pre-flight check for git availability when using self-hosted GitHub mode. The CLI now
+        verifies git is installed before attempting to clone, providing a clear error message if
+        git is not found. Also adds improved error logging with diagnostics when git clone fails.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.34.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation importing types from the wrong package when multiple services have
+        endpoints with the same HTTP method and path. The generator now uses endpoint IDs to resolve
+        the correct endpoint instead of relying solely on method and path matching.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.34.5
+  changelogEntry:
+    - summary: |
+        Fix streaming endpoints incorrectly setting `Accept: application/json` header. Streaming
+        endpoints (SSE, NDJSON, etc.) now omit the Accept header entirely, allowing the server to
+        negotiate the appropriate streaming format.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.34.4
+  changelogEntry:
+    - summary: |
+        Fix Java SDK compilation error when a path parameter is named `key`. The lambda variable
+        in `requestOptions.getQueryParameters().forEach((key, value) -> {...})` was shadowing
+        the path parameter, causing a "variable key is already defined" compilation error.
+        Lambda variables are now prefixed with underscore to avoid conflicts.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.34.3
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation failure when an environment name is a Java reserved keyword
+        (e.g., "default") for multi-environment APIs.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.34.2
+  changelogEntry:
+    - summary: |
+        Change wire tests to use resource files for JSON strings above a certain length
+        to prevent undue stress to :spotlessJava and cut down on code duplication.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.34.1
+  changelogEntry:
+    - summary: |
+        Fix `output-directory` config option to also apply to test files. When using `source-root` mode,
+        test files are now written directly to the output path instead of always using `src/test/java/`.
+      type: fix
+  createdAt: "2026-01-22"
+  irVersion: 63
+
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Add `output-directory` config option to control where Java files are written during local generation.
+        - `project-root` (default): Files written to `<path>/src/main/java/` (current behavior)
+        - `source-root`: Files written directly to `<path>/` (pre-v3.8.2 behavior for embedding SDKs into existing projects)
+
+        This allows customers embedding SDKs into existing projects to avoid double `src/main/java` paths.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.33.2
+  changelogEntry:
+    - summary: |
+        Re-publish to verify Docker Hub and generator registry sync.
+      type: chore
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.33.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error in generated InputStream overloads for file upload endpoints. The
+        `requestOptions.getQueryParameters()` code block is now only emitted in methods that have
+        `RequestOptions` as a parameter.
+      type: fix
+  createdAt: "2026-01-21"
+  irVersion: 63
+
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Generate body-only method overloads for endpoints with required body and optional headers/query params.
+        This prevents breaking changes when optional headers or query params are added to existing endpoints.
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 63
+
+- version: 3.32.1
+  changelogEntry:
+    - summary: |
+        Update container to fix CVE-2026-23745 (node-tar path traversal via hardlinks/symlinks) and
+        CVE-2025-66293 (libpng out-of-bounds read). Patches npm's bundled tar to 7.5.3 and updates
+        libpng16-16 to the latest available version.
+      type: fix
+  createdAt: "2026-01-20"
+  irVersion: 63
+
+- version: 3.32.0
+  changelogEntry:
+    - summary: |
+        Add endpoint-level security support with routing auth providers. APIs can now define different
+        authentication requirements per endpoint using the ENDPOINT_SECURITY auth mode. The SDK generates
+        individual auth providers (Bearer, Basic, ApiKey, OAuth, InferredAuth) and a RoutingAuthProvider
+        that routes requests to the appropriate provider based on each endpoint's security requirements.
+        Supports OR (any of) and AND (all of) auth requirement combinations.
+
+        To enable, add `auth: endpoint-security: {}` to your api.yml and define per-endpoint auth in your
+        service definitions using the `auth` field on each endpoint.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add `additionalQueryParameters` support to `RequestOptions`, allowing users to add query parameters
+        to API requests at runtime. Query parameters added via RequestOptions override any request-defined
+        parameters with the same key. This mirrors the existing `addHeader` pattern.
+
+        Usage example:
+        ```java
+        client.endpoint(
+            Request.builder().build(),
+            RequestOptions.builder()
+                .addQueryParameter("key", "value")
+                .build()
+        );
+        ```
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.30.0
+  changelogEntry:
+    - summary: |
+        Add `enable-gradle-profiling` configuration option for profiling Gradle commands during generation.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.2
+  changelogEntry:
+    - summary: |
+        Add `notify`, `notifyAll`, and `wait` to reserved method names to prevent generated SDK
+        methods from conflicting with final methods in Java's Object class. This fixes compilation
+        errors when an API has a subpackage named "notify" (e.g., Twilio's Notify API).
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.1
+  changelogEntry:
+    - summary: |
+        Fix `_Builder` class to support all builder methods (url, timeout, environment, maxRetries,
+        httpClient, addHeader) so method chaining works in any order. This allows customers upgrading
+        from 3.18.x who wrote `builder().url().token()` to continue working without compile errors.
+        Configuration values set on `_Builder` are now properly passed through to `_TokenAuth` and
+        `_CredentialsAuth` when `token()` or `credentials()` is called.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.0
+  changelogEntry:
+    - summary: |
+        Add backward-compatible `builder()` method for OAuth client credentials authentication.
+        This restores support for the classic builder pattern `Client.builder().token("...")` and
+        `Client.builder().credentials("...", "...")` alongside the existing `withToken()` and
+        `withCredentials()` shortcuts. This prevents breaking changes for customers who upgraded.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.28.2
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.28.1
+  changelogEntry:
+    - summary: |
+        Update libtasn1-6 and gnupg packages in container to fix CVE-2021-46848, CVE-2025-13151, CVE-2025-68973.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.28.0
+  changelogEntry:
+    - summary: |
+        Upgrade IR version to 63.
+      type: chore
+  createdAt: "2026-01-12"
+  irVersion: 63
+
+- version: 3.27.6
+  changelogEntry:
+    - summary: |
+        Generate overloads without request wrapper when all query parameters are optional.
+        This prevents compile breaks when optional query parameters are added to endpoints.
+        For example, `getLatestInsurance(String userId)` and `getLatestInsurance(String userId, RequestOptions requestOptions)`
+        overloads are now generated in addition to the request wrapper variants.
+      type: feat
+  createdAt: "2026-01-06"
+  irVersion: 61
+
+- version: 3.27.5-rc4
+  changelogEntry:
+    - summary: |
+        Add fallback SDK name generation for X-Fern-SDK-Name header when no explicit maven config is provided.
+        This ensures local generation matches remote generation for GitHub output mode.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 61
+
+- version: 3.27.5-rc3
+  changelogEntry:
+    - summary: Retry Publishing of rc2
+      type: fix
+  createdAt: "2025-12-24"
+  irVersion: 61
+
+- version: 3.27.5-rc2
+  changelogEntry:
+    - summary: Install fast-content-type-parse dependency required by @octokit/request@10.0.7 CVE patch.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 61
+
+- version: 3.27.5-rc1
+  changelogEntry:
+    - summary: Add debug logging to generator agent methods to help diagnose issues with README and reference generation.
+      type: chore
+  createdAt: "2025-12-23"
+  irVersion: 61
+
+- version: 3.27.5-rc0
+  changelogEntry:
+    - summary: Skip installation of generator-cli in Java V2 generator as it is already installed in the base image.
+      type: chore
+  createdAt: "2025-12-23"
+  irVersion: 61
+
+- version: 3.27.4
+  changelogEntry:
+    - summary: |
+        Fix OAuth client credentials flow to include custom headers, timeouts, and retries in token requests by using ClientOptions.Builder.from() pattern.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.3
+  changelogEntry:
+    - summary: |
+        Fix streaming endpoint return types to use Iterable instead of Optional, fix missing ArrayList import for empty list literals, and fix OAuth wire tests to use withCredentials() pattern.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.2
+  changelogEntry:
+    - summary: |
+        Support configurable Node.js and Java V2 executable paths via NODE_PATH and JAVA_V2_PATH environment variables for local seed testing.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.1
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-central-dependency-management` configuration option (boolean, default false).
+        When enabled, this skips generating the `repositories` block in `build.gradle` files,
+        allowing `dependencyResolutionManagement` in `settings.gradle` with
+        `RepositoriesMode.FAIL_ON_PROJECT_REPOS` to work correctly.
+
+        This should be used in conjunction with `gradle-plugin-management` when configuring
+        central repository management on enterprise networks.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-central-dependency-management: true
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.26.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-plugin-management` configuration option to inject custom plugin management
+        and dependency resolution configuration into `settings.gradle`. This enables SDK generation
+        on enterprise networks that cannot access the Gradle Plugin Portal (`plugins.gradle.org`)
+        by configuring internal Artifactory/Nexus repositories for plugin resolution.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
+    - summary: |
+        Fix `gradle-distribution-url` override in Java V2 generator to properly create the
+        `gradle/wrapper` directory before writing `gradle-wrapper.properties`.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.25.1
+  changelogEntry:
+    - summary: |
+        Fix form-urlencoded request body handling to properly serialize request objects using
+        Jackson's convertValue, preserving wire names from @JsonProperty annotations.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.25.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-distribution-url` configuration option to allow overriding the Gradle wrapper
+        distribution URL. This enables SDK generation on enterprise networks that cannot access
+        `services.gradle.org` by pointing to an internal Gradle distribution mirror.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-distribution-url: https://internal-mirror.example.com/gradle/gradle-8.14.3-bin.zip
+        ```
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.5
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback, and skip
+        literal properties in OAuth request building.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.4
+  changelogEntry:
+    - summary: |
+        Mitigate OutOfMemoryError when generating SDKs for large specs. (Specifically, the IR preprocessing
+        preprocessing step now modifies the JSON tree in-place and avoids calling `.deepCopy()`.)
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.3
+  changelogEntry:
+    - summary: |
+        Update libpng16-16 in container to fix CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.2
+  changelogEntry:
+    - summary: |
+        Pass full `ClientOptions` instead of just `httpClient()` to custom pagination `create()` method.
+        This gives custom pager implementations access to all client configuration including base URL,
+        headers, and other options needed for making subsequent pagination requests.
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
+- version: 3.24.1
+  changelogEntry:
+    - summary: |
+        Fix Jackson deserialization conflict when a property starts with `with` (e.g., `withLabel`) and
+        another property matches the suffix (e.g., `label`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 3.24.0
+  changelogEntry:
+    - summary: |
+        Add support for configuring the default timeout via `default-timeout-in-seconds` in generators.yml.
+        Previously, the default timeout was hardcoded to 60 seconds. Now you can customize it:
+
+        Configuration example:
+        ```yaml
+        config:
+          default-timeout-in-seconds: 120
+        ```
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 3.23.4
+  changelogEntry:
+    - summary: |
+        OAuth token override is now always enabled for APIs with OAuth client credentials authentication.
+        The `oauth-token-override` config flag has been removed - SDK users can always choose between
+        providing a pre-generated bearer token directly or using the OAuth client credentials flow.
+
+        Generated usage:
+        ```java
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
+            .build();
+
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
+            .build();
+        ```
+      type: chore
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 3.23.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable query parameters to correctly apply .orElse(default) for parameters with
+        default values. Previously, only java.util.Optional was recognized for default value handling,
+        causing OptionalNullable parameters to be passed directly without unwrapping. Now both Optional
+        and OptionalNullable types are handled correctly: parameters with defaults use .orElse(default),
+        and parameters without defaults use appropriate presence checks (!isAbsent() for OptionalNullable,
+        isPresent() for Optional).
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 3.23.2
+  changelogEntry:
+    - summary: |
+        Revert OAuth staged builder compatibility changes.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 3.23.1
+  changelogEntry:
+    - summary: |
+        Fix duplicate case label compilation errors when multiple error types map to the same HTTP
+        status code. The generator now deduplicates errors by status code, keeping the first error
+        declaration for each code. This prevents Java compilation errors in generated switch statements.
+      type: fix
+  createdAt: "2025-12-06"
+  irVersion: 61
+
+- version: 3.23.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token override support with compile-time safe staged builder pattern. When
+        `oauth-token-override: true` is configured, SDK users can choose between the OAuth client
+        credentials flow or providing a pre-generated bearer token directly.
+
+        Configuration example:
+        ```yaml
+        config:
+          oauth-token-override: true
+        ```
+
+        Generated usage:
+        ```java
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
+            .build();
+
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
+            .build();
+        ```
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 3.22.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication schemes. Inferred auth allows SDKs to automatically
+        fetch tokens from custom (non-OAuth) token endpoints using `scheme: bearer` with `get-token`
+        configuration. The generated `InferredAuthTokenSupplier` class handles token caching and
+        automatic refresh with a 2-minute buffer before expiry.
+
+        Configuration example:
+        ```yaml
+        auth:
+          scheme: bearer
+          get-token:
+            endpoint: POST auth.retrieveToken
+        ```
+
+        Generated usage:
+        ```java
+        SeedApiClient client = SeedApiClient.builder()
+            .apiKey("your-api-key")
+            .build();
+        // Token is automatically fetched and refreshed as needed
+        ```
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 3.21.1
+  changelogEntry:
+    - summary: |
+        Fix header parameters with `x-fern-parameter-name` to use the correct HTTP header name (wire value) instead of the SDK parameter name.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 3.21.0
+  changelogEntry:
+    - summary: |
+        Remove unused kotlin-stdlib from Gradle base image to address CVE-2020-29582 in container.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 3.20.2
+  changelogEntry:
+    - summary: |
+        Improve generator logging by removing verbose "java v2 generator" status messages and adding per-file logging. Each generated file is now logged individually, matching the C# generator pattern.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 61
+
+- version: 3.20.1
+  changelogEntry:
+    - summary: |
+        Fix StreamTest generator to use Java 8 compatible constructs. Replaced List.of() and Map.of() (Java 9+) with Arrays.asList() and a createMap() helper method using HashMap.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 61
+
+- version: 3.20.0
+  changelogEntry:
+    - summary: |
+        Update vulnerable dependencies.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add wire test support for OAuth APIs and multi-URL environments. Wire tests now:
+        - Properly mock OAuth token endpoints with per-test token enqueuing
+        - Use `.clientId()/.clientSecret()` for OAuth-authenticated APIs
+        - Support custom OAuth headers (e.g., `apiKey`) required by token endpoints
+        - Configure `Environment.custom()` builder for multi-URL environment APIs
+        - Handle flexible JSON comparison allowing extra default fields in responses
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.13
+  changelogEntry:
+    - summary: |
+        Skip wire test generation for OAuth and multi-URL environment APIs temporarily.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.12
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets for query parameters with `allow-multiple: true` and optional types. Snippets now generate `List<T>` instead of `List<Optional<T>>`, which matches the SDK builder's convenience overload.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.11
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to preserve schema parameter order for staged builders.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.10
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets when use-local-date-for-dates is enabled. Snippets for date fields now generate LocalDate.parse(...) instead of string literals, matching SDKs configured to use LocalDate for dates. This fixes compilation errors in generated dynamic snippets for Java v2 when the use-local-date-for-dates flag is true.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use OptionalNullable when collapse-optional-nullable is enabled. Wire tests now correctly generate OptionalNullable.absent() and OptionalNullable.of() instead of Optional.empty() and Optional.of() for optional request bodies and method arguments when collapse-optional-nullable: true is configured. This includes support for nested optional/nullable types which collapse into a single `OptionalNullable<T>`.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.8
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with inline path parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when path parameters are inlined.
+      type: fix
+  createdAt: "2025-11-23"
+  irVersion: 61
+
+- version: 3.18.7
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with query parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when accessing query parameters.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.6
+  changelogEntry:
+    - summary: |
+        Fix compilation errors in raw clients when inlinePathParameters is enabled. Raw client methods now correctly use path parameters directly instead of attempting to access non-existent request objects.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.5
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 3.18.4
+  changelogEntry:
+    - summary: |
+        Fix missing @JsonInclude header on certain instances of `OptionalNullable<>`.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable compilation errors when collapse-optional-nullable is enabled. Corrected type witness syntax to generate `OptionalNullable.<Type>absent()` and prevented double-wrapping of OptionalNullable types.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.2
+  changelogEntry:
+    - summary: |
+        Fix bugs in 3.17.0's addition of InputStream-based method overloads.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.1
+  changelogEntry:
+    - summary: |
+        Fix bytes response support and snippet generation. Bytes responses now return `byte[]` instead of throwing exceptions. Empty bytes request bodies in snippets now generate valid default arguments.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.0
+  changelogEntry:
+    - summary: |
+        Add support for custom bidirectional pagination. APIs using custom pagination (e.g., HATEOAS links) can configure a custom pager name and receive skeleton classes with bidirectional navigation methods (`nextPage()`, `previousPage()`, `hasNext()`, `hasPrevious()`).
+
+        Configuration:
+        ```yaml
+        customConfig:
+          custom-pager-name: MyCustomPaginator
+        ```
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Add InputStream-based method overloads for file upload endpoints. For each single-file upload endpoint, the generator now creates 4 additional overloads that accept InputStream + filename instead of File objects:
+        - method(InputStream stream, String filename)
+        - method(InputStream stream, String filename, MediaType mediaType)
+        - method(InputStream stream, String filename, RequestOptions requestOptions)
+        - method(InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions)
+
+        This enables streaming file uploads without requiring files to be written to disk first. The implementation uses the existing FileStream wrapper class and InputStreamRequestBody for OkHttp integration. Note: Okio automatically closes the stream after upload, but users should still use try-with-resources for proper resource management.
+      type: feat
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 3.16.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth client credentials token supplier to support custom properties and headers. OAuth token endpoints can now include custom headers (e.g., x-api-key) and custom body properties (e.g., entity_id) in addition to standard OAuth fields (client_id, client_secret, scopes). This enables authentication with non-standard OAuth implementations that require additional parameters.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 3.16.0
+  changelogEntry:
+    - summary: |
+        Add opt-in use-local-date-for-dates config flag to generate java.time.LocalDate instead of String for Fern date types.
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.15.1
+  changelogEntry:
+    - summary: |
+        Fix SDK generation failures for endpoints with custom pagination. Endpoints using `x-fern-pagination: type: custom` now generate successfully, returning the raw response type without automatic pagination wrappers.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.15.0
+  changelogEntry:
+    - summary: |
+        Upgrade dependencies:
+        okhttp 4.12.0 -> 5.2.1,
+        jackson 2.17.2 -> 2.18.2,
+        [internal use only] mockito 3.11.2 -> 4.11.0.
+      type: feat
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.14
+  changelogEntry:
+    - summary: |
+        Fix streaming method names and request types in wire tests. Wire tests now correctly normalize streaming endpoints to use `.methodStream()` naming pattern and `MethodStreamRequest` types, while non-streaming endpoints use `.method()` and `MethodRequest`. This eliminates "incompatible types" compilation errors where streaming method calls were paired with non-streaming response types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.13
+  changelogEntry:
+    - summary: |
+        Revert unchecked operations warning fix in StreamTest generator due to type inference compilation errors. The previous fix (3.14.0) caused "incompatible types: inference variable T has incompatible equality constraints `Map<String,?>`,`Map`" errors when compiling generated StreamTest.java files. Restores the original implementation using raw types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.12
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets compilation errors for literal-typed parameters. Literal-typed parameters (e.g., prompt with literal string value, stream with literal false) are now correctly filtered from builder method calls in generated snippets, as these fields only have hardcoded getters without corresponding setters. This maintains parity with Java v1 behavior where literal fields are excluded from all class builders (both model and request classes).
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.11
+  changelogEntry:
+    - summary: |
+        Fix jsonEquals helper method not being generated in wire tests. The generator now correctly calls closeTestClass() to emit the jsonEquals helper method that enables numeric equivalence comparison in wire test assertions.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.10
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for numeric type mismatches and header serialization. Wire tests now use numeric equivalence comparison to handle integer vs double type differences from OpenAPI specs. Headers are no longer incorrectly serialized into JSON request bodies - they now use @JsonIgnore and are sent only as HTTP headers.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 3.14.9
+  changelogEntry:
+    - summary: Fix wire test compilation errors when using staged builders with collections. Builder method calls now correctly order required fields before collections like Lists, Sets, and Maps.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 3.14.8
+  changelogEntry:
+    - summary: |
+        Fix critical wire test generation failures causing build crashes. Implemented service name resolution to handle IR vs Dynamic IR mismatches and added graceful error handling instead of build failures.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 3.14.7
+  changelogEntry:
+    - summary: Fix inconsistent behavior between local and remote Java generation by ensuring license files are copied and platform headers are populated in all generation scenarios
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.6
+  changelogEntry:
+    - summary: |
+        Upgrade Gradle wrapper from 7.4.2 to 8.14.3. This update brings Java 24 support, GraalVM Native Image toolchain selection, enhanced test reporting, and build authoring improvements. The bundled Gradle wrapper files now use the latest stable Gradle 8.x release.
+      type: chore
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.5
+  changelogEntry:
+    - summary: |
+        Fix SDK generation failures for OpenAPI specs with nullable container types. The generator now properly handles nullable containers in response parsing and pagination, treating them distinctly from optional containers. Also adds support for literal container detection with improved error diagnostics.
+        This fixes "Unexpected container type" errors that occurred when processing APIs with nullable types or array examples in query parameters.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.4
+  changelogEntry:
+    - summary: |
+        Replace gradle wrapper command with resource copy to eliminate internet requests during SDK generation. Gradle wrapper files are now copied from bundled resources instead of being downloaded via `gradle wrapper` command. All `./gradlew` invocations during generation have been removed to avoid network calls and HTTP proxy issues.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.3
+  changelogEntry:
+    - summary: |
+        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip `{}` validation when Optional.empty() is passed, matching actual SDK behavior.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 3.14.2
   changelogEntry:
     - summary: |
@@ -79,7 +970,7 @@
 - version: 3.11.6
   changelogEntry:
     - summary: |
-        Fix path parameter prefixes (e.g., v{version}) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
+        Fix path parameter prefixes (e.g., `v{version}`) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
       type: fix
   createdAt: "2025-11-04"
   irVersion: 61

@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "package-id": "Seed.Client"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

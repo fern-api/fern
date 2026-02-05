@@ -10,9 +10,8 @@ import (
 )
 
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"-"`
-	ClientSecret string  `json:"client_secret" url:"-"`
-	Scope        *string `json:"scope,omitempty" url:"-"`
+	ClientId     string `json:"client_id" url:"-"`
+	ClientSecret string `json:"client_secret" url:"-"`
 	audience     string
 	grantType    string
 }

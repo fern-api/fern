@@ -12,6 +12,11 @@ export class InternalServerError extends errors.SeedErrorsError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, InternalServerError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

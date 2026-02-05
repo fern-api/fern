@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 from ..commons.language import Language
 from ..commons.problem_id import ProblemId
 from ..commons.test_case_with_expected_result import TestCaseWithExpectedResult
@@ -15,16 +17,30 @@ from .variable_type_and_name import VariableTypeAndName
 
 
 class ProblemInfo(UniversalBaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
-    problem_name: str = pydantic.Field(alias="problemName")
-    problem_version: int = pydantic.Field(alias="problemVersion")
+    problem_id: typing_extensions.Annotated[
+        ProblemId, FieldMetadata(alias="problemId"), pydantic.Field(alias="problemId")
+    ]
+    problem_description: typing_extensions.Annotated[
+        ProblemDescription, FieldMetadata(alias="problemDescription"), pydantic.Field(alias="problemDescription")
+    ]
+    problem_name: typing_extensions.Annotated[
+        str, FieldMetadata(alias="problemName"), pydantic.Field(alias="problemName")
+    ]
+    problem_version: typing_extensions.Annotated[
+        int, FieldMetadata(alias="problemVersion"), pydantic.Field(alias="problemVersion")
+    ]
     files: typing.Dict[Language, ProblemFiles]
-    input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
-    output_type: "VariableType" = pydantic.Field(alias="outputType")
+    input_params: typing_extensions.Annotated[
+        typing.List[VariableTypeAndName], FieldMetadata(alias="inputParams"), pydantic.Field(alias="inputParams")
+    ]
+    output_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="outputType"), pydantic.Field(alias="outputType")
+    ]
     testcases: typing.List[TestCaseWithExpectedResult]
-    method_name: str = pydantic.Field(alias="methodName")
-    supports_custom_test_cases: bool = pydantic.Field(alias="supportsCustomTestCases")
+    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName"), pydantic.Field(alias="methodName")]
+    supports_custom_test_cases: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="supportsCustomTestCases"), pydantic.Field(alias="supportsCustomTestCases")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -34,6 +50,8 @@ class ProblemInfo(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ..commons.list_type import ListType  # noqa: E402, I001
+from ..commons.map_type import MapType  # noqa: E402, I001
 from ..commons.variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(ProblemInfo)
+update_forward_refs(ProblemInfo, ListType=ListType, MapType=MapType, VariableType=VariableType)

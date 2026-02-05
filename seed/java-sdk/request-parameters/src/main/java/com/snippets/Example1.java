@@ -13,12 +13,12 @@ public class Example1 {
 
         client.user()
                 .createUsernameWithReferencedType(CreateUsernameReferencedRequest.builder()
-                        .tags(Arrays.asList("tags", "tags"))
                         .body(CreateUsernameBody.builder()
                                 .username("username")
                                 .password("password")
                                 .name("test")
                                 .build())
+                        .tags(Arrays.asList("tags", "tags"))
                         .build());
     }
 }

@@ -15,8 +15,12 @@ async fn main() {
                 problem_name: "problemName".to_string(),
                 problem_description: ProblemDescription {
                     boards: vec![
-                        ProblemDescriptionBoard::Html { value: None },
-                        ProblemDescriptionBoard::Html { value: None },
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
                     ],
                 },
                 files: HashMap::from([(
@@ -54,21 +58,21 @@ async fn main() {
                         test_case: TestCase {
                             id: "id".to_string(),
                             params: vec![
-                                VariableValue::IntegerValue { value: None },
-                                VariableValue::IntegerValue { value: None },
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
                             ],
                         },
-                        expected_result: VariableValue::IntegerValue { value: None },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
                     },
                     TestCaseWithExpectedResult {
                         test_case: TestCase {
                             id: "id".to_string(),
                             params: vec![
-                                VariableValue::IntegerValue { value: None },
-                                VariableValue::IntegerValue { value: None },
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
                             ],
                         },
-                        expected_result: VariableValue::IntegerValue { value: None },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
                     },
                 ],
                 method_name: "methodName".to_string(),

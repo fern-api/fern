@@ -1,4 +1,4 @@
-use crate::api::resources::ServiceClient;
+use crate::api::resources::PublicObjectClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -55,6 +55,29 @@ impl ApiClientBuilder {
         self
     }
 
+    /// Set the OAuth client ID for client credentials authentication
+    pub fn client_id(mut self, client_id: impl Into<String>) -> Self {
+        self.config.client_id = Some(client_id.into());
+        self
+    }
+
+    /// Set the OAuth client secret for client credentials authentication
+    pub fn client_secret(mut self, client_secret: impl Into<String>) -> Self {
+        self.config.client_secret = Some(client_secret.into());
+        self
+    }
+
+    /// Set OAuth credentials (client_id and client_secret) for client credentials authentication
+    pub fn oauth_credentials(
+        mut self,
+        client_id: impl Into<String>,
+        client_secret: impl Into<String>,
+    ) -> Self {
+        self.config.client_id = Some(client_id.into());
+        self.config.client_secret = Some(client_secret.into());
+        self
+    }
+
     /// Set the request timeout
     pub fn timeout(mut self, timeout: Duration) -> Self {
         self.config.timeout = timeout;
@@ -86,7 +109,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<ServiceClient, ApiError> {
-        ServiceClient::new(self.config)
+    pub fn build(self) -> Result<PublicObjectClient, ApiError> {
+        PublicObjectClient::new(self.config)
     }
 }

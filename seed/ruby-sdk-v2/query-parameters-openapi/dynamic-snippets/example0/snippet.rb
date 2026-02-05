@@ -5,35 +5,35 @@ client = Seed::Client.new(base_url: 'https://api.fern.com');
 client.search(
   limit: 1,
   id: 'id',
-  date: 'date',
+  date: '2023-01-15',
   deadline: '2024-01-15T09:30:00Z',
   bytes: 'bytes',
   user: {
     name: 'name',
     tags: ['tags', 'tags']
   },
-  userList: ,
-  optionalDeadline: '2024-01-15T09:30:00Z',
-  keyValue: {
+  optional_deadline: '2024-01-15T09:30:00Z',
+  key_value: {
     keyValue: 'keyValue'
   },
-  optionalString: 'optionalString',
-  nestedUser: {
+  optional_string: 'optionalString',
+  nested_user: {
     name: 'name',
     user: {
       name: 'name',
       tags: ['tags', 'tags']
     }
   },
-  optionalUser: {
+  optional_user: {
     name: 'name',
     tags: ['tags', 'tags']
   },
-  excludeUser: ,
-  filter: ,
   neighbor: {
     name: 'name',
     tags: ['tags', 'tags']
   },
-  neighborRequired: 
+  neighbor_required: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  }
 );

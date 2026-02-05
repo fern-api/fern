@@ -148,12 +148,12 @@ public record UnionWithPrimitive
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithPrimitive>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithPrimitive).IsAssignableFrom(typeToConvert);
 
         public override UnionWithPrimitive Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

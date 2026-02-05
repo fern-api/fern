@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -48,7 +63,7 @@ public class Example {
             .builder()
             .build();
 
-        client.service().upload();
+        client.service().upload("".getBytes());
     }
 }
 ```
@@ -127,7 +142,6 @@ SeedBytesUploadClient client = SeedBytesUploadClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.bytesUpload.SeedBytesUploadClient;
 import com.seed.bytesUpload.core.RequestOptions;
@@ -135,7 +149,7 @@ import com.seed.bytesUpload.core.RequestOptions;
 // Client level
 SeedBytesUploadClient client = SeedBytesUploadClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -143,7 +157,7 @@ client.service().upload(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

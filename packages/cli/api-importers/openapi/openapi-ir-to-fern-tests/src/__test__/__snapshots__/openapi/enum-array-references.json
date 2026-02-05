@@ -1,0 +1,321 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createProductWithEnumReferences": {
+              "auth": undefined,
+              "display-name": "Create product with enum references",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "allowedUnits": [
+                        "QUANTITY_UNIT_UNSPECIFIED",
+                      ],
+                      "category": "ELECTRONICS",
+                      "id": "id",
+                      "name": "name",
+                      "quantityUnit": "QUANTITY_UNIT_UNSPECIFIED",
+                      "status": "PENDING",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/products",
+              "request": {
+                "body": {
+                  "properties": {
+                    "allowedUnits": "optional<list<QuantityUnit>>",
+                    "category": "optional<ProductCategory>",
+                    "name": "optional<string>",
+                    "validStatuses": "optional<list<OrderStatus>>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostProductsRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Product created",
+                "status-code": 201,
+                "type": "Product",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getFiltersWithArrayOfEnumReferences": {
+              "auth": undefined,
+              "display-name": "Get filters with array of enum references",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "data": [
+                        {
+                          "allowedUnits": [
+                            "QUANTITY_UNIT_UNSPECIFIED",
+                          ],
+                          "category": "ELECTRONICS",
+                          "id": "id",
+                          "name": "name",
+                          "quantityUnit": "QUANTITY_UNIT_UNSPECIFIED",
+                          "status": "PENDING",
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/filters",
+              "request": {
+                "name": "GetFiltersRequest",
+                "query-parameters": {
+                  "quantityUnitFilter": {
+                    "allow-multiple": true,
+                    "docs": "Filter by quantity units",
+                    "type": "optional<QuantityUnit>",
+                  },
+                  "statusFilter": {
+                    "allow-multiple": true,
+                    "docs": "Filter by status",
+                    "type": "optional<OrderStatus>",
+                  },
+                },
+              },
+              "response": {
+                "docs": "Successful response",
+                "status-code": 200,
+                "type": "GetFiltersResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetFiltersResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "data": "optional<list<Product>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OrderStatus": {
+            "docs": "Status of an order",
+            "enum": [
+              "PENDING",
+              "PROCESSING",
+              "SHIPPED",
+              "DELIVERED",
+              "CANCELLED",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Product": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "allowedUnits": "optional<list<QuantityUnit>>",
+              "category": "optional<ProductCategory>",
+              "id": "optional<string>",
+              "name": "optional<string>",
+              "quantityUnit": "optional<QuantityUnit>",
+              "status": "optional<OrderStatus>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ProductCategory": {
+            "docs": "Category of a product",
+            "enum": [
+              "ELECTRONICS",
+              "CLOTHING",
+              "HOME_GARDEN",
+              "BOOKS",
+              "TOYS",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "QuantityUnit": {
+            "docs": "Units for measuring quantity",
+            "enum": [
+              "QUANTITY_UNIT_UNSPECIFIED",
+              "QUANTITY_UNIT_COUNT",
+              "QUANTITY_UNIT_GALLONS",
+              "QUANTITY_UNIT_POD",
+              "QUANTITY_UNIT_PALLET",
+              "QUANTITY_UNIT_SET",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  GetFiltersResponse:
+    properties:
+      data: optional<list<Product>>
+    source:
+      openapi: ../openapi.yml
+  QuantityUnit:
+    enum:
+      - QUANTITY_UNIT_UNSPECIFIED
+      - QUANTITY_UNIT_COUNT
+      - QUANTITY_UNIT_GALLONS
+      - QUANTITY_UNIT_POD
+      - QUANTITY_UNIT_PALLET
+      - QUANTITY_UNIT_SET
+    docs: Units for measuring quantity
+    source:
+      openapi: ../openapi.yml
+  OrderStatus:
+    enum:
+      - PENDING
+      - PROCESSING
+      - SHIPPED
+      - DELIVERED
+      - CANCELLED
+    docs: Status of an order
+    source:
+      openapi: ../openapi.yml
+  ProductCategory:
+    enum:
+      - ELECTRONICS
+      - CLOTHING
+      - HOME_GARDEN
+      - BOOKS
+      - TOYS
+    docs: Category of a product
+    source:
+      openapi: ../openapi.yml
+  Product:
+    properties:
+      id: optional<string>
+      name: optional<string>
+      category: optional<ProductCategory>
+      quantityUnit: optional<QuantityUnit>
+      status: optional<OrderStatus>
+      allowedUnits: optional<list<QuantityUnit>>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getFiltersWithArrayOfEnumReferences:
+      path: /filters
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: Get filters with array of enum references
+      request:
+        name: GetFiltersRequest
+        query-parameters:
+          quantityUnitFilter:
+            type: optional<QuantityUnit>
+            allow-multiple: true
+            docs: Filter by quantity units
+          statusFilter:
+            type: optional<OrderStatus>
+            allow-multiple: true
+            docs: Filter by status
+      response:
+        docs: Successful response
+        type: GetFiltersResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              data:
+                - id: id
+                  name: name
+                  category: ELECTRONICS
+                  quantityUnit: QUANTITY_UNIT_UNSPECIFIED
+                  status: PENDING
+                  allowedUnits:
+                    - QUANTITY_UNIT_UNSPECIFIED
+    createProductWithEnumReferences:
+      path: /products
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create product with enum references
+      request:
+        name: PostProductsRequest
+        body:
+          properties:
+            name: optional<string>
+            category: optional<ProductCategory>
+            allowedUnits: optional<list<QuantityUnit>>
+            validStatuses: optional<list<OrderStatus>>
+        content-type: application/json
+      response:
+        docs: Product created
+        type: Product
+        status-code: 201
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              name: name
+              category: ELECTRONICS
+              quantityUnit: QUANTITY_UNIT_UNSPECIFIED
+              status: PENDING
+              allowedUnits:
+                - QUANTITY_UNIT_UNSPECIFIED
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Enum Array Reference Test API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Enum Array Reference Test API
+",
+  },
+}

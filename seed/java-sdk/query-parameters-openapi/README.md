@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -43,6 +58,7 @@ package com.example.usage;
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.SearchRequest;
 import com.seed.api.types.NestedUser;
+import com.seed.api.types.SearchRequestNeighbor;
 import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
@@ -61,7 +77,7 @@ public class Example {
                 .builder()
                 .limit(1)
                 .id("id")
-                .date("date")
+                .date("2023-01-15")
                 .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .bytes("bytes")
                 .user(
@@ -74,39 +90,6 @@ public class Example {
                             )
                         )
                         .build()
-                )
-                .userList(
-                    Arrays.asList(
-                        Optional.of(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    Optional.of(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
-                    )
-                )
-                .excludeUser(
-                    Arrays.asList(
-                        Optional.of(
-                            User
-                                .builder()
-                                .name("name")
-                                .tags(
-                                    Optional.of(
-                                        Arrays.asList("tags", "tags")
-                                    )
-                                )
-                                .build()
-                        )
-                    )
-                )
-                .filter(
-                    Arrays.asList(Optional.of("filter"))
                 )
                 .neighborRequired(
                     SearchRequestNeighborRequired.of(
@@ -121,10 +104,39 @@ public class Example {
                             .build()
                     )
                 )
+                .userList(
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
+                            )
+                            .build()
+                    )
+                )
+                .excludeUser(
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
+                            )
+                            .build()
+                    )
+                )
+                .filter(
+                    Arrays.asList("filter")
+                )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .keyValue(
-                    new HashMap<String, Optional<String>>() {{
-                        put("keyValue", Optional.of("keyValue"));
+                    new HashMap<String, String>() {{
+                        put("keyValue", "keyValue");
                     }}
                 )
                 .optionalString("optionalString")
@@ -157,15 +169,17 @@ public class Example {
                         .build()
                 )
                 .neighbor(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            Optional.of(
-                                Arrays.asList("tags", "tags")
+                    SearchRequestNeighbor.of(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
                             )
-                        )
-                        .build()
+                            .build()
+                    )
                 )
                 .build()
         );
@@ -247,7 +261,6 @@ SeedApiClient client = SeedApiClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.api.SeedApiClient;
 import com.seed.api.core.RequestOptions;
@@ -255,7 +268,7 @@ import com.seed.api.core.RequestOptions;
 // Client level
 SeedApiClient client = SeedApiClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -263,7 +276,7 @@ client.search(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

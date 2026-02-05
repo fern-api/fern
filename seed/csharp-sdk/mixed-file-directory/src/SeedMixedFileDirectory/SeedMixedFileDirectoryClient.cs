@@ -2,13 +2,14 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory;
 
-public partial class SeedMixedFileDirectoryClient
+public partial class SeedMixedFileDirectoryClient : ISeedMixedFileDirectoryClient
 {
     private readonly RawClient _client;
 
     public SeedMixedFileDirectoryClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedMixedFileDirectoryClient
                 { "User-Agent", "Fernmixed-file-directory/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -30,7 +30,7 @@ public partial class SeedMixedFileDirectoryClient
         User = new UserClient(_client);
     }
 
-    public OrganizationClient Organization { get; }
+    public IOrganizationClient Organization { get; }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

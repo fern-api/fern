@@ -1,11 +1,10 @@
-import json
 import os
-import uuid
+import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
-from uuid import uuid4
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.inferred_auth_token_provider_generator import InferredAuthTokenProviderGenerator
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.raw_client_generator import RawClientGenerator
 from .client_generator.root_client_generator import RootClientGenerator
@@ -42,7 +41,6 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import build_snippet_writer
 
@@ -206,6 +204,29 @@ class SdkGenerator(AbstractGenerator):
                 oauth_scheme=oauth_scheme,
             )
 
+        maybe_inferred_auth_scheme = next(
+            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "inferred"), None
+        )
+        inferred_auth_scheme = (
+            maybe_inferred_auth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda _: None,
+                inferred=lambda inferred: inferred,
+            )
+            if maybe_inferred_auth_scheme is not None
+            else None
+        )
+        if inferred_auth_scheme is not None:
+            self._generate_inferred_auth_token_provider(
+                context=context,
+                ir=ir,
+                generator_exec_wrapper=generator_exec_wrapper,
+                project=project,
+                inferred_auth_scheme=inferred_auth_scheme,
+            )
+
         self._generate_client_wrapper(
             context=context,
             generated_environment=generated_environment,
@@ -296,6 +317,7 @@ class SdkGenerator(AbstractGenerator):
             generator_exec_wrapper=generator_exec_wrapper,
             context=context,
             endpoint_metadata=endpoint_metadata_collector,
+            skip_install=True,
         )
 
         snippets = snippet_registry.snippets()
@@ -363,6 +385,26 @@ class SdkGenerator(AbstractGenerator):
                 snippet_test_factory=test_fac,
                 snippet_writer=snippet_writer,
                 ir=ir,
+            )
+
+        if custom_config.pydantic_config.positional_single_property_constructors:
+            warning_message = (
+                "\x1b[31;1m"
+                "WARNING: positional_single_property_constructors is enabled. "
+                "This allows Wrapper('value') syntax for single-required-field models, but if the model "
+                "later adds another required field, the positional __init__ will no longer be generated, "
+                "causing runtime failures for existing code. Use keyword arguments (Wrapper(field='value')) "
+                "for long-term stability."
+                "\x1b[0m"
+            )
+            print(warning_message, file=sys.stderr)
+            generator_exec_wrapper.send_update(
+                GeneratorUpdate.factory.log(
+                    LogUpdate(
+                        level=LogLevel.WARN,
+                        message=warning_message,
+                    )
+                )
             )
 
     def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
@@ -439,6 +481,24 @@ class SdkGenerator(AbstractGenerator):
         OAuthTokenProviderGenerator(
             context=context,
             oauth_scheme=oauth_scheme,
+        ).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
+
+    def _generate_inferred_auth_token_provider(
+        self,
+        context: SdkGeneratorContext,
+        ir: ir_types.IntermediateRepresentation,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        project: Project,
+        inferred_auth_scheme: ir_types.InferredAuthScheme,
+    ) -> None:
+        filepath = context.get_filepath_for_generated_inferred_auth_token_provider()
+        source_file = context.source_file_factory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+        InferredAuthTokenProviderGenerator(
+            context=context,
+            inferred_auth_scheme=inferred_auth_scheme,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
 
@@ -546,25 +606,29 @@ class SdkGenerator(AbstractGenerator):
         ).generate(source_file=client_source_file)
         project.write_source_file(source_file=client_source_file, filepath=client_filepath)
 
-        raw_client_filepath = context.get_raw_client_filepath_for_subpackage_service(subpackage_id)
-        raw_client_source_file = context.source_file_factory.create(
-            project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
-        )
-        RawClientGenerator(
-            context=context,
-            package=subpackage,
-            subpackage_id=subpackage_id,
-            class_name=context.get_raw_client_class_name_for_subpackage_service(subpackage_id),
-            async_class_name=context.get_async_raw_client_class_name_for_subpackage_service(subpackage_id),
-            generated_root_client=generated_root_client,
-            snippet_registry=snippet_registry,
-            snippet_writer=snippet_writer,
-            endpoint_metadata_collector=endpoint_metadata_collector,
-            websocket=websocket,
-            imports_manager=raw_client_source_file.get_imports_manager(),
-            reference_resolver=raw_client_source_file.get_reference_resolver(),
-        ).generate(source_file=raw_client_source_file)
-        project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
+        # Only generate raw client if this subpackage has direct endpoints or websocket
+        has_direct_endpoints = subpackage.service is not None
+        has_websocket = websocket is not None and context.custom_config.should_generate_websocket_clients
+        if has_direct_endpoints or has_websocket:
+            raw_client_filepath = context.get_raw_client_filepath_for_subpackage_service(subpackage_id)
+            raw_client_source_file = context.source_file_factory.create(
+                project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+            RawClientGenerator(
+                context=context,
+                package=subpackage,
+                subpackage_id=subpackage_id,
+                class_name=context.get_raw_client_class_name_for_subpackage_service(subpackage_id),
+                async_class_name=context.get_async_raw_client_class_name_for_subpackage_service(subpackage_id),
+                generated_root_client=generated_root_client,
+                snippet_registry=snippet_registry,
+                snippet_writer=snippet_writer,
+                endpoint_metadata_collector=endpoint_metadata_collector,
+                websocket=websocket,
+                imports_manager=raw_client_source_file.get_imports_manager(),
+                reference_resolver=raw_client_source_file.get_reference_resolver(),
+            ).generate(source_file=raw_client_source_file)
+            project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
 
     def _generate_error(
         self,
@@ -600,83 +664,6 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 filepath_in_project=filepath,
                 exports={"__version__"},
             )
-
-    def _maybe_write_snippet_templates(
-        self,
-        context: SdkGeneratorContext,
-        snippet_template_factory: SnippetTemplateFactory,
-        project: Project,
-        generator_config: GeneratorConfig,
-        ir: ir_types.IntermediateRepresentation,
-        generator_exec_wrapper: GeneratorExecWrapper,
-    ) -> None:
-        if context.generator_config.output.snippet_template_filepath is not None:
-            org_id = generator_config.organization
-            api_name = ir.api_name.original_name
-            generator_exec_wrapper.send_update(
-                GeneratorUpdate.factory.log(
-                    LogUpdate(
-                        level=LogLevel.DEBUG,
-                        message=f"Generating snippet templates for Org: {org_id}, API: {api_name} for package {project._project_config.package_name if project._project_config is not None else 'package_unknown'} at version: {project._project_config.package_version if project._project_config is not None else '0.0.0'}.",
-                    )
-                )
-            )
-
-            snippets = snippet_template_factory.generate_templates()
-            if snippets is None:
-                return
-
-            # Send snippets to FDR
-            fdr_client = generator_exec_wrapper.fdr_client
-            if fdr_client is not None:
-                # API Definition ID doesn't matter right now
-                try:
-                    api_definition_id = uuid4()
-                    if ir.fdr_api_definition_id is not None:
-                        try:
-                            api_definition_id = uuid.UUID(ir.fdr_api_definition_id)
-                        except Exception as e:
-                            generator_exec_wrapper.send_update(
-                                GeneratorUpdate.factory.log(
-                                    LogUpdate(
-                                        level=LogLevel.DEBUG,
-                                        message=f"Failed to convert FDR API Definition ID to UUID: {str(e)}, generating a new one.",
-                                    )
-                                )
-                            )
-
-                    fdr_client.templates.register_batch(
-                        org_id=org_id,
-                        api_id=api_name,
-                        api_definition_id=api_definition_id,
-                        snippets=snippets,
-                    )
-                    generator_exec_wrapper.send_update(
-                        GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message="Uploaded snippet templates to FDR.")
-                        )
-                    )
-                except Exception as e:
-                    # Don't fail hard here, but issue a warning to the user.
-                    generator_exec_wrapper.send_update(
-                        GeneratorUpdate.factory.log(
-                            LogUpdate(
-                                level=LogLevel.WARN,
-                                message=f"Failed to upload snippet templates to FDR, this is ok: {str(e)}",
-                            )
-                        )
-                    )
-            else:
-                # Otherwise write them for local
-                project.add_file(
-                    context.generator_config.output.snippet_template_filepath,
-                    json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4),
-                )
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message="Wrote snippet templates to disk.")
-                    )
-                )
 
     def _maybe_write_snippets(
         self,

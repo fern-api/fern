@@ -29,7 +29,7 @@ await client.service.post();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -5,6 +5,7 @@ import { ApiDefinitionHolderLatest } from "../ApiDefinitionHolderLatest";
 it.skip("finds subpackage by exact match", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {
             [FdrAPI.api.v1.SubpackageId("test")]: {
                 id: FdrAPI.api.v1.SubpackageId("test"),
@@ -23,7 +24,8 @@ it.skip("finds subpackage by exact match", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getSubpackageByLocator("test")).toEqual({
         id: FdrAPI.api.v1.SubpackageId("test"),
@@ -35,6 +37,7 @@ it.skip("finds subpackage by exact match", () => {
 it.skip("finds subpackage from yaml/yml files", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {
             [FdrAPI.api.v1.SubpackageId("test")]: {
                 id: FdrAPI.api.v1.SubpackageId("test"),
@@ -48,7 +51,8 @@ it.skip("finds subpackage from yaml/yml files", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
 
     expect(apiDefinitionHolder.getSubpackageByLocator("test.yaml")).toEqual({
@@ -66,6 +70,7 @@ it.skip("finds subpackage from yaml/yml files", () => {
 it.skip("finds endpoint by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {},
         endpoints: {
             [FdrAPI.EndpointId("getUser")]: {
@@ -75,6 +80,7 @@ it.skip("finds endpoint by id and by path/method", () => {
                 displayName: "Get User",
                 operationId: "getUser",
                 auth: [],
+                multiAuth: undefined,
                 environments: [],
                 defaultEnvironment: FdrAPI.EnvironmentId("defaultEnvironment"),
                 description: "description",
@@ -98,7 +104,8 @@ it.skip("finds endpoint by id and by path/method", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getEndpointByLocator("getUser", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getEndpointByLocator("GET /users/:id", undefined)).toBeDefined();
@@ -108,6 +115,7 @@ it.skip("finds endpoint by id and by path/method", () => {
 it.skip("finds websocket by id and by path", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {},
         endpoints: {},
         websockets: {
@@ -133,7 +141,8 @@ it.skip("finds websocket by id and by path", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getWebSocketByLocator("userStream", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getWebSocketByLocator("STREAM /users/stream", undefined)).toBeDefined();
@@ -142,6 +151,7 @@ it.skip("finds websocket by id and by path", () => {
 it.skip("finds webhook by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {},
         endpoints: {},
         websockets: {},
@@ -154,6 +164,7 @@ it.skip("finds webhook by id and by path/method", () => {
                 headers: [],
                 payloads: [],
                 examples: [],
+                responses: [],
                 description: "description",
                 availability: undefined,
                 namespace: [],
@@ -163,7 +174,8 @@ it.skip("finds webhook by id and by path/method", () => {
         types: {},
         auths: {},
         globalHeaders: [],
-        snippetsConfiguration: undefined
+        snippetsConfiguration: undefined,
+        graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getWebhookByLocator("userCreated", undefined)).toBeDefined();
     expect(apiDefinitionHolder.getWebhookByLocator("POST /webhooks/user-created", undefined)).toBeDefined();

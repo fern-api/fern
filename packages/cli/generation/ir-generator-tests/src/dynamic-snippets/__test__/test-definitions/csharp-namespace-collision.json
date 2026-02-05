@@ -151,6 +151,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:Task": {
@@ -303,6 +304,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_System:Task": {
@@ -435,6 +437,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_System:User": {
@@ -693,6 +696,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

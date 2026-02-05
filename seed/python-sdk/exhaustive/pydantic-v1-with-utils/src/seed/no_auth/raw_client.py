@@ -20,14 +20,14 @@ class RawNoAuthClient:
         self._client_wrapper = client_wrapper
 
     def post_with_no_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[bool]:
         """
         POST request with no auth
 
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -75,14 +75,14 @@ class AsyncRawNoAuthClient:
         self._client_wrapper = client_wrapper
 
     async def post_with_no_auth(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[bool]:
         """
         POST request with no auth
 
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

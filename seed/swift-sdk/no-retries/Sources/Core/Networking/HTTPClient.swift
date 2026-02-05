@@ -77,7 +77,7 @@ final class HTTPClient: Swift.Sendable {
             if let data = data as? T {
                 return data
             } else {
-                throw ClientError.invalidResponse
+                throw NoRetriesError.invalidResponse
             }
         }
 
@@ -85,14 +85,14 @@ final class HTTPClient: Swift.Sendable {
             if let string = Swift.String(data: data, encoding: .utf8) as? T {
                 return string
             } else {
-                throw ClientError.invalidResponse
+                throw NoRetriesError.invalidResponse
             }
         }
 
         do {
             return try jsonDecoder.decode(responseType, from: data)
         } catch {
-            throw ClientError.decodingError(error)
+            throw NoRetriesError.decodingError(error)
         }
     }
 
@@ -275,7 +275,7 @@ final class HTTPClient: Swift.Sendable {
                 let (data, response) = try await clientConfig.urlSession.data(for: request)
 
                 guard let httpResponse = response as? Networking.HTTPURLResponse else {
-                    throw ClientError.invalidResponse
+                    throw NoRetriesError.invalidResponse
                 }
 
                 // Handle successful responses
@@ -298,11 +298,22 @@ final class HTTPClient: Swift.Sendable {
                     data: data
                 )
             } catch {
-                if attempt >= maxRetries || error is ClientError {
-                    if error is ClientError {
-                        throw error
+                let clientError: NoRetriesError?
+
+                // Treat timeouts as a first-class, non-retryable error
+                if let urlError = error as? Foundation.URLError, urlError.code == .timedOut {
+                    clientError = .timeout(error)
+                } else if let existingClientError = error as? NoRetriesError {
+                    clientError = existingClientError
+                } else {
+                    clientError = nil
+                }
+
+                if attempt >= maxRetries || clientError != nil {
+                    if let clientError {
+                        throw clientError
                     } else {
-                        throw ClientError.networkError(error)
+                        throw NoRetriesError.networkError(error)
                     }
                 }
                 let delay = Self.initialRetryDelay * pow(2.0, Swift.Double(attempt))
@@ -316,7 +327,7 @@ final class HTTPClient: Swift.Sendable {
         if let (data, httpResponse) = lastResponse {
             throw makeErrorFromResponse(statusCode: httpResponse.statusCode, data: data)
         }
-        throw ClientError.invalidResponse
+        throw NoRetriesError.invalidResponse
     }
 
     private func shouldRetry(statusCode: Swift.Int) -> Swift.Bool {
@@ -374,48 +385,13 @@ final class HTTPClient: Swift.Sendable {
         return delay * jitterMultiplier
     }
 
-    private func makeErrorFromResponse(statusCode: Swift.Int, data: Foundation.Data) -> ClientError
+    private func makeErrorFromResponse(statusCode: Swift.Int, data: Foundation.Data) -> NoRetriesError
     {
-        let errorResponse = parseErrorResponse(statusCode: statusCode, from: data)
-        switch statusCode {
-        case 400:
-            return ClientError.badRequest(errorResponse)
-        case 401:
-            return ClientError.unauthorized(errorResponse)
-        case 403:
-            return ClientError.forbidden(errorResponse)
-        case 404:
-            return ClientError.notFound(errorResponse)
-        case 422:
-            return ClientError.validationError(errorResponse)
-        case 500...599:
-            return ClientError.serverError(errorResponse)
-        default:
-            return ClientError.httpError(statusCode: statusCode, response: errorResponse)
-        }
-    }
-
-    private func parseErrorResponse(statusCode: Swift.Int, from data: Foundation.Data)
-        -> APIErrorResponse?
-    {
-        // Try to parse as JSON error response first
-        if let errorResponse = try? jsonDecoder.decode(APIErrorResponse.self, from: data) {
-            return errorResponse
-        }
-
-        // Try to parse as simple JSON with message field
-        if let json = try? Foundation.JSONSerialization.jsonObject(with: data)
-            as? [Swift.String: Any],
-            let message = json["message"] as? Swift.String
-        {
-            return APIErrorResponse(code: statusCode, message: message)
-        }
-
-        // Try to parse as plain text
-        if let errorMessage = Swift.String(data: data, encoding: .utf8), !errorMessage.isEmpty {
-            return APIErrorResponse(code: statusCode, message: errorMessage)
-        }
-
-        return nil
+        let httpError = HTTPError.from(
+            statusCode: statusCode,
+            data: data,
+            jsonDecoder: jsonDecoder
+        )
+        return NoRetriesError.httpError(httpError)
     }
 }

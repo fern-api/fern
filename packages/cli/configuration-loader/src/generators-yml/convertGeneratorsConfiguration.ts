@@ -1,6 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
@@ -8,6 +7,17 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
+
+import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName";
+
+/**
+ * Union type representing any spec-level settings schema.
+ * Used for parsing global api.settings which may contain settings from any spec type.
+ */
+type AnySpecSettingsSchema =
+    | generatorsYml.OpenApiSettingsSchema
+    | generatorsYml.AsyncApiSettingsSchema
+    | generatorsYml.BaseApiSettingsSchema;
 
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
@@ -34,7 +44,10 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
-    coerceOptionalSchemasToNullable: undefined
+    coerceOptionalSchemasToNullable: undefined,
+    removeDiscriminantsFromSchemas: undefined,
+    pathParameterOrder: undefined,
+    defaultIntegerFormat: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -49,12 +62,14 @@ export async function convertGeneratorsConfiguration({
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
     const readme = rawGeneratorsConfiguration.readme;
     warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration);
+
     const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
+        groupAliases: rawGeneratorsConfiguration.aliases ?? {},
         reviewers: rawGeneratorsConfiguration.reviewers,
         groups:
             rawGeneratorsConfiguration.groups != null
@@ -76,7 +91,8 @@ export async function convertGeneratorsConfiguration({
                 ? {
                       github: rawGeneratorsConfiguration.whitelabel.github
                   }
-                : undefined
+                : undefined,
+        ai: rawGeneratorsConfiguration.ai
     };
 }
 
@@ -93,7 +109,11 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        ),
+        pathParameterOrder: settings?.["path-parameter-order"]
     };
 }
 
@@ -118,7 +138,9 @@ function parseOpenApiDefinitionSettingsSchema(
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        defaultIntegerFormat: settings?.["default-integer-format"],
+        pathParameterOrder: settings?.["path-parameter-order"]
     };
 }
 
@@ -131,25 +153,64 @@ function parseAsyncApiDefinitionSettingsSchema(
     };
 }
 
-function parseBaseApiDefinitionSettingsSchema(
-    settings: generatorsYml.BaseApiSettingsSchema | undefined
+export function parseBaseApiDefinitionSettingsSchema(
+    settings: AnySpecSettingsSchema | undefined
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...UNDEFINED_API_DEFINITION_SETTINGS,
         shouldUseTitleAsName: settings?.["title-as-schema-name"],
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
-        shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
+        shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"],
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        groupMultiApiEnvironments:
+            settings != null && "group-multi-api-environments" in settings
+                ? settings["group-multi-api-environments"]
+                : undefined,
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        ),
+        pathParameterOrder: settings?.["path-parameter-order"]
     };
+}
+
+function parseRemoveDiscriminantsFromSchemas(
+    option: string | undefined
+): generatorsYml.RemoveDiscriminantsFromSchemas | undefined {
+    if (option == null || option === "always") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
+    } else if (option === "never") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+    }
+    throw new Error(`Unknown value for generators.yml API setting: remove-discriminants-from-schemas: ${option}`);
+}
+
+/**
+ * Merges settings with override precedence.
+ * Higher-level settings override lower-level settings when explicitly defined.
+ * Undefined values in higher-level settings don't override lower-level values.
+ *
+ * @param base - Base settings (lower priority)
+ * @param override - Override settings (higher priority)
+ * @returns Merged settings where override values take precedence over base values
+ */
+export function mergeSettings(
+    base: generatorsYml.APIDefinitionSettings,
+    override: generatorsYml.APIDefinitionSettings
+): generatorsYml.APIDefinitionSettings {
+    return {
+        ...base,
+        ...Object.fromEntries(Object.entries(override).filter(([_, value]) => value !== undefined))
+    } as generatorsYml.APIDefinitionSettings;
 }
 
 async function parseAPIConfigurationToApiLocations(
     apiConfiguration: generatorsYml.ApiConfigurationSchemaInternal | undefined,
-    rawConfiguration: generatorsYml.GeneratorsConfigurationSchema
+    rawConfiguration: generatorsYml.GeneratorsConfigurationSchema,
+    rootSettings: generatorsYml.APIDefinitionSettings
 ): Promise<generatorsYml.APIDefinitionLocation[]> {
     const apiDefinitions: generatorsYml.APIDefinitionLocation[] = [];
 
@@ -162,8 +223,9 @@ async function parseAPIConfigurationToApiLocations(
                 },
                 origin: undefined,
                 overrides: undefined,
+                overlays: undefined,
                 audiences: [],
-                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+                settings: rootSettings
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
             apiDefinitions.push({
@@ -177,8 +239,9 @@ async function parseAPIConfigurationToApiLocations(
                 },
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
+                overlays: undefined,
                 audiences: [],
-                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+                settings: rootSettings
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -190,8 +253,9 @@ async function parseAPIConfigurationToApiLocations(
                         },
                         origin: undefined,
                         overrides: undefined,
+                        overlays: undefined,
                         audiences: [],
-                        settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+                        settings: rootSettings
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
                     apiDefinitions.push({
@@ -205,8 +269,9 @@ async function parseAPIConfigurationToApiLocations(
                         },
                         origin: undefined,
                         overrides: definition.proto.overrides,
+                        overlays: undefined,
                         audiences: [],
-                        settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+                        settings: rootSettings
                     });
                 } else {
                     apiDefinitions.push({
@@ -216,8 +281,12 @@ async function parseAPIConfigurationToApiLocations(
                         },
                         origin: definition.origin,
                         overrides: definition.overrides,
+                        overlays: undefined,
                         audiences: definition.audiences,
-                        settings: parseDeprecatedApiDefinitionSettingsSchema(definition.settings)
+                        settings: mergeSettings(
+                            rootSettings,
+                            parseDeprecatedApiDefinitionSettingsSchema(definition.settings)
+                        )
                     });
                 }
             }
@@ -229,12 +298,16 @@ async function parseAPIConfigurationToApiLocations(
                 },
                 origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides,
+                overlays: undefined,
                 audiences: apiConfiguration.audiences,
-                settings: parseDeprecatedApiDefinitionSettingsSchema(apiConfiguration.settings)
+                settings: mergeSettings(
+                    rootSettings,
+                    parseDeprecatedApiDefinitionSettingsSchema(apiConfiguration.settings)
+                )
             });
         }
     } else {
-        const rootSettings = rawConfiguration[generatorsYml.API_SETTINGS_KEY];
+        const deprecatedApiSettings = rawConfiguration[generatorsYml.API_SETTINGS_KEY];
         const openapi = rawConfiguration[generatorsYml.OPENAPI_LOCATION_KEY];
         const apiOrigin = rawConfiguration[generatorsYml.API_ORIGIN_LOCATION_KEY];
         const openapiOverrides = rawConfiguration[generatorsYml.OPENAPI_OVERRIDES_LOCATION_KEY];
@@ -248,8 +321,12 @@ async function parseAPIConfigurationToApiLocations(
                     },
                     origin: apiOrigin,
                     overrides: openapiOverrides,
+                    overlays: undefined,
                     audiences: [],
-                    settings: parseDeprecatedApiDefinitionSettingsSchema(rootSettings)
+                    settings: mergeSettings(
+                        rootSettings,
+                        parseDeprecatedApiDefinitionSettingsSchema(deprecatedApiSettings)
+                    )
                 });
             } else if (typeof openapi === "object") {
                 apiDefinitions.push({
@@ -259,8 +336,9 @@ async function parseAPIConfigurationToApiLocations(
                     },
                     origin: openapi.origin,
                     overrides: openapi.overrides,
+                    overlays: undefined,
                     audiences: [],
-                    settings: parseOpenApiDefinitionSettingsSchema(openapi.settings)
+                    settings: mergeSettings(rootSettings, parseOpenApiDefinitionSettingsSchema(openapi.settings))
                 });
             }
         }
@@ -273,8 +351,9 @@ async function parseAPIConfigurationToApiLocations(
                 },
                 origin: apiOrigin,
                 overrides: undefined,
+                overlays: undefined,
                 audiences: [],
-                settings: parseDeprecatedApiDefinitionSettingsSchema(rootSettings)
+                settings: mergeSettings(rootSettings, parseDeprecatedApiDefinitionSettingsSchema(deprecatedApiSettings))
             });
         }
     }
@@ -284,30 +363,15 @@ async function parseAPIConfigurationToApiLocations(
 
 async function parseApiConfigurationV2Schema({
     apiConfiguration,
-    rawConfiguration
+    rawConfiguration,
+    apiSettings
 }: {
     apiConfiguration: generatorsYml.ApiConfigurationV2Schema;
     rawConfiguration: generatorsYml.GeneratorsConfigurationSchema;
+    apiSettings: generatorsYml.APIDefinitionSettings;
 }): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
-        "auth-schemes":
-            apiConfiguration.auth != null
-                ? Object.fromEntries(
-                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
-                          if (apiConfiguration.auth == null) {
-                              return false;
-                          }
-                          return visitRawApiAuth(apiConfiguration.auth, {
-                              any: (any) => {
-                                  return any.any.includes(name);
-                              },
-                              single: (single) => {
-                                  return single === name;
-                              }
-                          });
-                      })
-                  )
-                : undefined,
+        "auth-schemes": rawConfiguration["auth-schemes"],
         ...apiConfiguration
     };
 
@@ -315,7 +379,8 @@ async function parseApiConfigurationV2Schema({
         return {
             type: "conjure",
             pathToConjureDefinition: apiConfiguration.specs.conjure,
-            ...partialConfig
+            ...partialConfig,
+            settings: apiSettings
         };
     }
 
@@ -332,8 +397,9 @@ async function parseApiConfigurationV2Schema({
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
+                overlays: spec.overlays,
                 audiences: [],
-                settings: parseOpenApiDefinitionSettingsSchema(spec.settings)
+                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings))
             };
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {
             definitionLocation = {
@@ -343,8 +409,9 @@ async function parseApiConfigurationV2Schema({
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
+                overlays: undefined,
                 audiences: [],
-                settings: parseAsyncApiDefinitionSettingsSchema(spec.settings)
+                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings))
             };
         } else if (generatorsYml.isProtoSpecSchema(spec)) {
             definitionLocation = {
@@ -358,8 +425,9 @@ async function parseApiConfigurationV2Schema({
                 },
                 origin: undefined,
                 overrides: spec.proto.overrides,
+                overlays: undefined,
                 audiences: [],
-                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+                settings: apiSettings
             };
         } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
             definitionLocation = {
@@ -369,16 +437,36 @@ async function parseApiConfigurationV2Schema({
                 },
                 origin: undefined,
                 overrides: spec.overrides,
+                overlays: undefined,
                 audiences: [],
-                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+                settings: apiSettings
+            };
+        } else if (generatorsYml.isGraphQLSpecSchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "graphql",
+                    path: spec.graphql
+                },
+                origin: spec.origin,
+                overrides: spec.overrides,
+                overlays: undefined,
+                audiences: [],
+                settings: apiSettings
             };
         } else {
             continue;
         }
-        if ("namespace" in spec && spec.namespace != null) {
-            namespacedDefinitions[spec.namespace] ??= [];
+        // Handle namespace for most specs, but use "resource" for GraphQL specs
+        const namespaceValue =
+            generatorsYml.isGraphQLSpecSchema(spec) && "resource" in spec
+                ? spec.resource
+                : "namespace" in spec
+                  ? spec.namespace
+                  : undefined;
+        if (namespaceValue != null) {
+            namespacedDefinitions[namespaceValue] ??= [];
             // biome-ignore lint/style/noNonNullAssertion: allow
-            namespacedDefinitions[spec.namespace]!.push(definitionLocation);
+            namespacedDefinitions[namespaceValue]!.push(definitionLocation);
         } else {
             rootDefinitions.push(definitionLocation);
         }
@@ -389,7 +477,8 @@ async function parseApiConfigurationV2Schema({
         return {
             type: "singleNamespace",
             definitions: rootDefinitions,
-            ...partialConfig
+            ...partialConfig,
+            settings: apiSettings
         };
     }
     // Yes namespaces
@@ -397,7 +486,8 @@ async function parseApiConfigurationV2Schema({
         type: "multiNamespace",
         rootDefinitions,
         definitions: namespacedDefinitions,
-        ...partialConfig
+        ...partialConfig,
+        settings: apiSettings
     };
 }
 
@@ -408,15 +498,24 @@ async function parseAPIConfiguration(
 
     if (apiConfiguration != null) {
         if (generatorsYml.isApiConfigurationV2Schema(apiConfiguration)) {
-            return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
+            // Parse api-level settings (global defaults for this API)
+            const apiSettings = parseBaseApiDefinitionSettingsSchema(apiConfiguration.settings);
+            return parseApiConfigurationV2Schema({
+                apiConfiguration,
+                rawConfiguration: rawGeneratorsConfiguration,
+                apiSettings
+            });
         }
 
         if (generatorsYml.isNamespacedApiConfiguration(apiConfiguration)) {
             const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
+            // No api-level settings for namespaced config, pass empty settings
+            const emptySettings = {} as generatorsYml.APIDefinitionSettings;
             for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
                 namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
                     configuration,
-                    rawGeneratorsConfiguration
+                    rawGeneratorsConfiguration,
+                    emptySettings
                 );
             }
             return {
@@ -427,9 +526,15 @@ async function parseAPIConfiguration(
         }
     }
 
+    // Legacy configuration without api v2 schema - no api-level settings
+    const emptySettings = {} as generatorsYml.APIDefinitionSettings;
     return {
         type: "singleNamespace",
-        definitions: await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration)
+        definitions: await parseAPIConfigurationToApiLocations(
+            apiConfiguration,
+            rawGeneratorsConfiguration,
+            emptySettings
+        )
     };
 }
 
@@ -486,9 +591,11 @@ async function convertGenerator({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<generatorsYml.GeneratorInvocation> {
+    // Normalize the generator name by adding the default Docker org prefix if not present
+    const normalizedName = addDefaultDockerOrgIfNotPresent(generator.name);
     return {
         raw: generator,
-        name: generator.name,
+        name: normalizedName,
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({
@@ -500,7 +607,7 @@ async function convertGenerator({
             maybeTopLevelReviewers
         }),
         keywords: generator.keywords,
-        smartCasing: generator["smart-casing"] ?? false,
+        smartCasing: generator["smart-casing"] ?? true,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
@@ -510,11 +617,19 @@ async function convertGenerator({
             generator.snippets?.path != null
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
                 : undefined,
-        language: getLanguageFromGeneratorName(generator.name),
+        language: getLanguageFromGeneratorName(normalizedName),
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
-        settings: generator.api?.settings ?? undefined
+        settings: generator.api?.settings ?? undefined,
+        apiOverride:
+            generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
+                ? {
+                      specs: generator.api?.specs,
+                      auth: generator.api?.auth,
+                      "auth-schemes": generator.api?.["auth-schemes"]
+                  }
+                : undefined
     };
 }
 
@@ -646,10 +761,11 @@ async function convertOutputMode({
                     })
                 );
             case "pull-request": {
+                const pullRequestConfig = generator.github as generatorsYml.GithubPullRequestSchema;
                 const reviewers = _getReviewers({
                     topLevelReviewers: maybeTopLevelReviewers,
                     groupLevelReviewers: maybeGroupLevelReviewers,
-                    outputModeReviewers: (generator.github as generatorsYml.GithubPullRequestSchema).reviewers
+                    outputModeReviewers: pullRequestConfig.reviewers
                 });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
@@ -658,7 +774,8 @@ async function convertOutputMode({
                         license,
                         publishInfo,
                         downloadSnippets,
-                        reviewers
+                        reviewers,
+                        branch: pullRequestConfig.branch
                     })
                 );
             }
@@ -955,7 +1072,9 @@ function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | unde
 function warnForDeprecatedConfiguration(context: TaskContext, config: generatorsYml.GeneratorsConfigurationSchema) {
     const warnings = [];
     if (config["api-settings"] != null) {
-        warnings.push('"api-settings" is deprecated. Please use "api.specs[].settings" instead.');
+        warnings.push(
+            '"api-settings" is deprecated. Please use "api.settings" for global defaults or "api.specs[].settings" for spec-specific settings instead.'
+        );
     }
     if (config["async-api"] != null) {
         warnings.push('"async-api" is deprecated. Please use "api.specs[].asyncapi" instead.');

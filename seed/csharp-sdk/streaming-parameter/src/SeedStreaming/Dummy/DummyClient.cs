@@ -2,7 +2,7 @@ using SeedStreaming.Core;
 
 namespace SeedStreaming;
 
-public partial class DummyClient
+public partial class DummyClient : IDummyClient
 {
     private RawClient _client;
 
@@ -20,6 +20,12 @@ public partial class DummyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedStreaming.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +34,7 @@ public partial class DummyClient
                     Method = HttpMethod.Post,
                     Path = "generate",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

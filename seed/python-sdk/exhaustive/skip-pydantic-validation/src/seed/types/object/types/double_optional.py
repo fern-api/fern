@@ -12,7 +12,7 @@ from .optional_alias import OptionalAlias
 
 class DoubleOptional(UncheckedBaseModel):
     optional_alias: typing_extensions.Annotated[
-        typing.Optional[OptionalAlias], FieldMetadata(alias="optionalAlias")
+        typing.Optional[OptionalAlias], FieldMetadata(alias="optionalAlias"), pydantic.Field(alias="optionalAlias")
     ] = None
 
     if IS_PYDANTIC_V2:

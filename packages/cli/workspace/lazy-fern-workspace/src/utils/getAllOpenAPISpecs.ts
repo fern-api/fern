@@ -84,6 +84,7 @@ export async function convertProtobufToOpenAPI({
             type: "openapi",
             absoluteFilepath: openAPIAbsoluteFilePath.absoluteFilepath,
             absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
+            absoluteFilepathToOverlays: undefined,
             settings: protobufSpec.settings,
             source: {
                 type: "protobuf",

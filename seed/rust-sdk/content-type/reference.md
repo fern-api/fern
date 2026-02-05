@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch</a>(request: PatchProxyRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch</a>(request: PatchProxyRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch_complex</a>(id: String, request: PatchComplexRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch_complex</a>(id: String, request: PatchComplexRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -236,7 +236,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">named_patch_with_mixed</a>(id: String, request: NamedMixedPatchRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">named_patch_with_mixed</a>(id: String, request: NamedMixedPatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -335,7 +335,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">optional_merge_patch_test</a>(request: OptionalMergePatchRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">optional_merge_patch_test</a>(request: OptionalMergePatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -445,7 +445,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">regular_patch</a>(id: String, request: RegularPatchRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">regular_patch</a>(id: String, request: RegularPatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

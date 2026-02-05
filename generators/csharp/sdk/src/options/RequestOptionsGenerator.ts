@@ -2,11 +2,10 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class RequestOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
     constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
@@ -17,11 +16,11 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.RequestOptions,
+            reference: this.Types.RequestOptions,
             partial: true,
             access: ast.Access.Public,
-            interfaceReferences: [this.types.RequestOptionsInterface],
-            annotations: [this.extern.System.Serializable]
+            interfaceReferences: [this.Types.RequestOptionsInterface],
+            annotations: [this.System.Serializable]
         });
         this.baseOptionsGenerator.getRequestOptionFields(class_);
         return new CSharpFile({
@@ -37,7 +36,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
     protected getFilepath(): RelativeFilePath {
         return join(
             this.constants.folders.publicCoreFiles,
-            RelativeFilePath.of(`${this.types.RequestOptions.name}.cs`)
+            RelativeFilePath.of(`${this.Types.RequestOptions.name}.cs`)
         );
     }
 }

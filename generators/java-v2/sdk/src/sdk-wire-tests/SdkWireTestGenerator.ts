@@ -10,6 +10,7 @@ import { TestClassBuilder } from "./builders/TestClassBuilder";
 import { TestMethodBuilder } from "./builders/TestMethodBuilder";
 import { SnippetExtractor } from "./extractors/SnippetExtractor";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor";
+import { TestResourceWriter } from "./resources/TestResourceWriter";
 
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
@@ -18,11 +19,16 @@ export class SdkWireTestGenerator {
     private readonly testClassBuilder: TestClassBuilder;
     private readonly testMethodBuilder: TestMethodBuilder;
     private readonly snippetExtractor: SnippetExtractor;
+    private readonly resourceWriter: TestResourceWriter;
 
     constructor(private readonly context: SdkGeneratorContext) {
         this.testClassBuilder = new TestClassBuilder(context);
         this.testMethodBuilder = new TestMethodBuilder(context);
         this.snippetExtractor = new SnippetExtractor(context);
+        this.resourceWriter = new TestResourceWriter(context);
+
+        // Connect the resource writer to the test method builder
+        this.testMethodBuilder.setResourceWriter(this.resourceWriter);
     }
 
     /**
@@ -59,6 +65,9 @@ export class SdkWireTestGenerator {
         dynamicSnippetsGenerator: DynamicSnippetsGenerator
     ): Promise<void> {
         const endpointsByService = this.groupEndpointsByService();
+        let totalEndpointsProcessed = 0;
+        let totalEndpointsGenerated = 0;
+        let totalServiceFilesGenerated = 0;
 
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
@@ -79,18 +88,62 @@ export class SdkWireTestGenerator {
                 `Generating wire test for service: ${serviceName} with ${endpointsWithExamples.length} endpoints`
             );
 
-            const testClass = await this.generateTestClass(
+            const result = await this.generateTestClass(
                 serviceName,
                 endpointsWithExamples,
                 dynamicIr,
                 dynamicSnippetsGenerator
             );
-            const testFileName = `${this.toJavaClassName(serviceName)}WireTest.java`;
-            const testFilePath = this.getTestFilePath();
 
-            const file = new File(testFileName, RelativeFilePath.of(testFilePath), testClass);
+            totalEndpointsProcessed += endpointsWithExamples.length;
+            totalEndpointsGenerated += result.successCount;
 
-            this.context.project.addJavaFiles(file);
+            if (result.successCount > 0) {
+                const testFileName = `${this.toJavaClassName(serviceName)}WireTest.java`;
+                const testFilePath = this.getTestFilePath();
+
+                const file = new File(testFileName, RelativeFilePath.of(testFilePath), result.testClass);
+
+                this.context.project.addJavaFiles(file);
+                totalServiceFilesGenerated++;
+
+                this.context.logger.info(
+                    `Generated wire test for service ${serviceName}: ${result.successCount}/${endpointsWithExamples.length} endpoints successful`
+                );
+            } else {
+                this.context.logger.warn(
+                    `Skipping wire test file for service ${serviceName}: all ${endpointsWithExamples.length} endpoints failed to generate`
+                );
+            }
+        }
+
+        // Generate TestResources.java utility class and resource files if needed
+        if (this.resourceWriter.hasResources()) {
+            this.context.logger.info("Generating TestResources.java for large JSON payloads");
+
+            // Generate the TestResources.java utility class
+            const testResourcesFile = this.resourceWriter.generateTestResourcesClass();
+            this.context.project.addJavaFiles(testResourcesFile);
+
+            // Generate resource files
+            const resourceFiles = this.resourceWriter.getResourceFiles();
+            for (const resourceFile of resourceFiles) {
+                this.context.project.addRawFiles(resourceFile);
+            }
+
+            this.context.logger.info(`Generated ${resourceFiles.length} resource file(s) for large JSON payloads`);
+        }
+
+        this.context.logger.info(
+            `Wire test generation summary: ${totalEndpointsGenerated}/${totalEndpointsProcessed} endpoints successful across ${totalServiceFilesGenerated} test files`
+        );
+
+        if (totalEndpointsProcessed > 0 && totalEndpointsGenerated === 0) {
+            throw new Error(
+                `Wire test generation failed: 0/${totalEndpointsProcessed} endpoints succeeded. ` +
+                    `This indicates a systemic issue with snippet generation or service mapping. ` +
+                    `Check logs above for specific endpoint failures.`
+            );
         }
     }
 
@@ -99,7 +152,7 @@ export class SdkWireTestGenerator {
         endpoints: HttpEndpoint[],
         dynamicIr: dynamic.DynamicIntermediateRepresentation,
         dynamicSnippetsGenerator: DynamicSnippetsGenerator
-    ): Promise<string> {
+    ): Promise<{ testClass: string; successCount: number }> {
         const className = `${this.toJavaClassName(serviceName)}WireTest`;
         const clientClassName = this.context.getRootClientClassName();
 
@@ -108,6 +161,9 @@ export class SdkWireTestGenerator {
 
         const endpointTests = new Map<string, { snippet: string; testExample: WireTestExample }>();
         const allImports = new Set<string>();
+        const skippedEndpoints: Array<{ endpointId: string; endpointName: string; reason: string }> = [];
+
+        this.testMethodBuilder.setCurrentTestClassName(className);
 
         for (const endpoint of endpoints) {
             const testExamples = testDataExtractor.getTestExamples(endpoint);
@@ -115,20 +171,24 @@ export class SdkWireTestGenerator {
                 continue;
             }
 
-            this.context.logger.info(`Processing endpoint ${endpoint.id} with ${testExamples.length} test examples`);
+            this.context.logger.debug(`Processing endpoint ${endpoint.id} with ${testExamples.length} test examples`);
 
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
                 const firstDynamicExample = dynamicEndpoint.examples[0];
                 if (firstDynamicExample) {
                     try {
-                        this.context.logger.info(
+                        this.context.logger.debug(
                             `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
                         );
 
                         const expectedServiceName = serviceName.toLowerCase();
-                        const dynamicServiceName =
-                            dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName?.toLowerCase() || "";
+                        // Use the same fallback strategy as IR service resolution
+                        const dynamicServiceName = (
+                            dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName ||
+                            dynamicEndpoint.declaration.name.originalName ||
+                            "Service"
+                        ).toLowerCase();
 
                         const rawSnippet = await this.generateSnippetWithServiceCorrection(
                             endpoint,
@@ -148,6 +208,20 @@ export class SdkWireTestGenerator {
 
                         endpointImports.forEach((imp) => allImports.add(imp));
 
+                        // Check if method call extraction will fail and skip this endpoint
+                        const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
+                        if (testMethodCall === null) {
+                            this.context.logger.debug(
+                                `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Could not extract method call from snippet`
+                            );
+                            skippedEndpoints.push({
+                                endpointId: endpoint.id,
+                                endpointName: endpoint.name.originalName,
+                                reason: `Could not extract method call from snippet - likely service mismatch or invalid snippet format`
+                            });
+                            continue;
+                        }
+
                         const imports = snippetExtractor.extractImports(fullSnippet);
                         imports.forEach((imp) => allImports.add(imp));
 
@@ -162,12 +236,20 @@ export class SdkWireTestGenerator {
                         const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
                         returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
                     } catch (error) {
-                        this.context.logger.debug(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
+                        const errorMessage = error instanceof Error ? error.message : String(error);
+                        this.context.logger.debug(
+                            `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate snippet - ${errorMessage}`
+                        );
+                        skippedEndpoints.push({
+                            endpointId: endpoint.id,
+                            endpointName: endpoint.name.originalName,
+                            reason: `Snippet generation failed: ${errorMessage}`
+                        });
                     }
                 }
             } else {
                 // No dynamic examples, but we have test examples from static IR
-                this.context.logger.info(
+                this.context.logger.debug(
                     `No dynamic examples for endpoint ${endpoint.id}, creating default snippet for service ${serviceName}`
                 );
 
@@ -176,6 +258,20 @@ export class SdkWireTestGenerator {
                     try {
                         const rawSnippet = this.generateDefaultSnippet(endpoint, serviceName, firstTestExample);
                         const fullSnippet = this.applyServiceNameCorrections(rawSnippet, serviceName);
+
+                        // Check if method call extraction will fail and skip this endpoint
+                        const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
+                        if (testMethodCall === null) {
+                            this.context.logger.debug(
+                                `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Could not extract method call from default snippet`
+                            );
+                            skippedEndpoints.push({
+                                endpointId: endpoint.id,
+                                endpointName: endpoint.name.originalName,
+                                reason: `Could not extract method call from default snippet - likely service mismatch or invalid snippet format`
+                            });
+                            continue;
+                        }
 
                         const imports = snippetExtractor.extractImports(fullSnippet);
                         imports.forEach((imp) => allImports.add(imp));
@@ -188,14 +284,32 @@ export class SdkWireTestGenerator {
                         const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
                         returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
                     } catch (error) {
+                        const errorMessage = error instanceof Error ? error.message : String(error);
                         this.context.logger.debug(
-                            `Failed to generate default snippet for endpoint ${endpoint.id}: ${error}`
+                            `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate default snippet - ${errorMessage}`
                         );
+                        skippedEndpoints.push({
+                            endpointId: endpoint.id,
+                            endpointName: endpoint.name.originalName,
+                            reason: `Default snippet generation failed: ${errorMessage}`
+                        });
                     }
                 }
             }
         }
 
+        if (skippedEndpoints.length > 0) {
+            this.context.logger.warn(
+                `Skipped ${skippedEndpoints.length} endpoint(s) in service ${serviceName} due to generation failures`
+            );
+            // Individual endpoint details only in debug mode
+            this.context.logger.debug("Skipped endpoint details:");
+            skippedEndpoints.forEach(({ endpointName, reason }) => {
+                this.context.logger.debug(`  - ${endpointName}: ${reason}`);
+            });
+        }
+
+        const successCount = endpointTests.size;
         const hasAuth = this.context.ir.auth?.schemes && this.context.ir.auth.schemes.length > 0;
 
         const testClass = java.codeblock((writer) => {
@@ -208,22 +322,27 @@ export class SdkWireTestGenerator {
                 }
             }
 
-            writer.dedent();
-            writer.writeLine("}");
+            this.testClassBuilder.closeTestClass(writer);
         });
 
-        return testClass.toString({
-            packageName: this.context.getRootPackageName(),
-            customConfig: this.context.customConfig ?? {}
-        });
+        return {
+            testClass: testClass.toString({
+                packageName: this.context.getRootPackageName(),
+                customConfig: this.context.customConfig ?? {}
+            }),
+            successCount
+        };
     }
 
     private async generateSnippetForExample(
         example: dynamic.EndpointExample,
-        dynamicSnippetsGenerator: DynamicSnippetsGenerator
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator,
+        endpointId: string
     ): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-        const response = await dynamicSnippetsGenerator.generate(snippetRequest);
+        // Pass endpointId to avoid path collision issues when multiple namespaces
+        // have endpoints with the same HTTP method and path pattern
+        const response = await dynamicSnippetsGenerator.generate(snippetRequest, { endpointId });
         if (!response.snippet) {
             throw new Error("No snippet generated for example");
         }
@@ -278,14 +397,21 @@ export class SdkWireTestGenerator {
         serviceName: string
     ): Promise<string> {
         if (expectedServiceName !== dynamicServiceName) {
-            this.context.logger.warn(
-                `Service mismatch for endpoint ${endpoint.id}: expected service '${expectedServiceName}' but dynamic endpoint has service '${dynamicServiceName}'`
+            this.context.logger.debug(
+                `Service mismatch for endpoint ${endpoint.id}: expected service '${expectedServiceName}' but dynamic endpoint has service '${dynamicServiceName}'. ` +
+                    `Attempting service correction...`
             );
 
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (!dynamicEndpoint) {
-                throw new Error(`Dynamic endpoint not found for ${endpoint.id}`);
+                throw new Error(
+                    `Dynamic endpoint not found for ${endpoint.id}. This is likely due to a service mapping issue in the dynamic IR.`
+                );
             }
+
+            // Use consistent casing for service correction
+            const serviceNamePascal = serviceName;
+            const serviceNameLower = expectedServiceName;
 
             const correctedDynamicEndpoint = {
                 ...dynamicEndpoint,
@@ -294,26 +420,26 @@ export class SdkWireTestGenerator {
                     fernFilepath: {
                         allParts: [
                             {
-                                originalName: expectedServiceName,
-                                camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                                snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                                originalName: serviceNamePascal,
+                                camelCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
+                                snakeCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
                                 screamingSnakeCase: {
-                                    unsafeName: expectedServiceName.toUpperCase(),
-                                    safeName: expectedServiceName.toUpperCase()
+                                    unsafeName: serviceNamePascal.toUpperCase(),
+                                    safeName: serviceNamePascal.toUpperCase()
                                 },
-                                pascalCase: { unsafeName: serviceName, safeName: serviceName }
+                                pascalCase: { unsafeName: serviceNamePascal, safeName: serviceNamePascal }
                             }
                         ],
                         packagePath: [],
                         file: {
-                            originalName: expectedServiceName,
-                            camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                            snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                            originalName: serviceNamePascal,
+                            camelCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
+                            snakeCase: { unsafeName: serviceNameLower, safeName: serviceNameLower },
                             screamingSnakeCase: {
-                                unsafeName: expectedServiceName.toUpperCase(),
-                                safeName: expectedServiceName.toUpperCase()
+                                unsafeName: serviceNamePascal.toUpperCase(),
+                                safeName: serviceNamePascal.toUpperCase()
                             },
-                            pascalCase: { unsafeName: serviceName, safeName: serviceName }
+                            pascalCase: { unsafeName: serviceNamePascal, safeName: serviceNamePascal }
                         }
                     }
                 }
@@ -323,7 +449,20 @@ export class SdkWireTestGenerator {
 
             try {
                 dynamicIr.endpoints[endpoint.id] = correctedDynamicEndpoint;
-                return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
+                const snippet = await this.generateSnippetForExample(
+                    firstDynamicExample,
+                    dynamicSnippetsGenerator,
+                    endpoint.id
+                );
+                this.context.logger.debug(`Service correction succeeded for endpoint ${endpoint.id}`);
+                return snippet;
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : String(error);
+                throw new Error(
+                    `Service mismatch (expected: '${expectedServiceName}', got: '${dynamicServiceName}'). ` +
+                        `Correction attempt failed: ${errorMessage}. ` +
+                        `This typically occurs with V1 ungrouped endpoints or incorrect dynamic IR service mapping.`
+                );
             } finally {
                 if (originalDynamicEndpoint) {
                     dynamicIr.endpoints[endpoint.id] = originalDynamicEndpoint;
@@ -332,7 +471,7 @@ export class SdkWireTestGenerator {
                 }
             }
         } else {
-            return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
+            return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator, endpoint.id);
         }
     }
 
@@ -375,6 +514,14 @@ export class SdkWireTestGenerator {
         imports: string[]
     ): string {
         let transformedSnippet = snippet;
+
+        const isStreamingEndpoint = endpoint.response?.body?.type === "streaming";
+
+        if (isStreamingEndpoint) {
+            // For streaming endpoints, replace Optional<ResponseType> with Iterable<ResponseType>
+            // The Java SDK generator uses Iterable for streaming responses, not Optional
+            transformedSnippet = transformedSnippet.replace(/Optional</g, "Iterable<");
+        }
 
         if (endpoint.name.originalName === "listUsernames") {
             transformedSnippet = transformedSnippet.replace(/\.listWithCursorPagination\(/g, ".listUsernames(");
@@ -428,8 +575,16 @@ export class SdkWireTestGenerator {
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
-        if (this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth") && endpoint.auth) {
-            this.context.logger.debug(`Skipping OAuth endpoint: ${endpoint.id}`);
+        // Skip OAuth token endpoints in OAuth APIs - they conflict with the auto-token-fetch mechanism
+        // The OAuth client automatically fetches tokens using these same endpoints, causing mock response conflicts
+        if (this.isOAuthTokenEndpoint(endpoint.id)) {
+            this.context.logger.debug(`Skipping OAuth token endpoint: ${endpoint.id}`);
+            return false;
+        }
+
+        // Skip endpoints with custom pagination
+        if (endpoint.pagination?.type === "custom") {
+            this.context.logger.debug(`Skipping custom pagination endpoint: ${endpoint.id}`);
             return false;
         }
 
@@ -444,7 +599,6 @@ export class SdkWireTestGenerator {
             responseType === "fileDownload" ||
             responseType === "text" ||
             responseType === "bytes" ||
-            responseType === "streaming" ||
             responseType === "streamParameter"
         ) {
             this.context.logger.debug(
@@ -459,6 +613,45 @@ export class SdkWireTestGenerator {
         }
 
         return true;
+    }
+
+    /**
+     * Checks if the given endpoint is an OAuth token or refresh endpoint.
+     * These endpoints conflict with OAuth auto-fetch when tested directly.
+     */
+    private isOAuthTokenEndpoint(endpointId: string): boolean {
+        const auth = this.context.ir.auth;
+        if (!auth?.schemes) {
+            return false;
+        }
+
+        for (const scheme of auth.schemes) {
+            if (scheme.type === "oauth") {
+                const oauthConfig = scheme;
+                // Check if this endpoint is the token endpoint
+                if (oauthConfig.configuration?.tokenEndpoint?.endpointReference?.endpointId === endpointId) {
+                    return true;
+                }
+                // Check if this endpoint is the refresh endpoint
+                if (oauthConfig.configuration?.refreshEndpoint?.endpointReference?.endpointId === endpointId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determines if the API uses multiple base URLs (e.g., separate URLs for different services).
+     * Multi-URL environments don't support the .url() builder method.
+     */
+    private isMultiUrlEnvironment(): boolean {
+        const environments = this.context.ir.environments;
+        if (!environments?.environments) {
+            return false;
+        }
+
+        return environments.environments.type === "multipleBaseUrls";
     }
 
     /**

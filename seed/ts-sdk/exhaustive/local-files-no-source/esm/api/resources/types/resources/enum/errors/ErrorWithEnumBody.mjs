@@ -8,6 +8,10 @@ export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, ErrorWithEnumBody.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
     }
 }

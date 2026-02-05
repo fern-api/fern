@@ -1,1 +1,1 @@
-export { BaseCsharpGeneratorContext } from "./BaseCsharpGeneratorContext";
+export { GeneratorContext } from "./GeneratorContext";

@@ -7,8 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .bar import Bar
+    from .first_item_type import FirstItemType
     from .foo import Foo
     from .foo_extended import FooExtended
+    from .second_item_type import SecondItemType
     from .union import Union, Union_Bar, Union_Foo
     from .union_with_base_properties import (
         UnionWithBaseProperties,
@@ -29,6 +31,11 @@ if typing.TYPE_CHECKING:
         UnionWithDuplicateTypes_Foo1,
         UnionWithDuplicateTypes_Foo2,
     )
+    from .union_with_duplicative_discriminants import (
+        UnionWithDuplicativeDiscriminants,
+        UnionWithDuplicativeDiscriminants_FirstItemType,
+        UnionWithDuplicativeDiscriminants_SecondItemType,
+    )
     from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
     from .union_with_multiple_no_properties import (
         UnionWithMultipleNoProperties,
@@ -37,6 +44,16 @@ if typing.TYPE_CHECKING:
         UnionWithMultipleNoProperties_Foo,
     )
     from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
+    from .union_with_nullable_reference import (
+        UnionWithNullableReference,
+        UnionWithNullableReference_Bar,
+        UnionWithNullableReference_Foo,
+    )
+    from .union_with_optional_reference import (
+        UnionWithOptionalReference,
+        UnionWithOptionalReference_Bar,
+        UnionWithOptionalReference_Foo,
+    )
     from .union_with_optional_time import (
         UnionWithOptionalTime,
         UnionWithOptionalTime_Date,
@@ -61,8 +78,10 @@ if typing.TYPE_CHECKING:
     from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithoutKey_Foo
 _dynamic_imports: typing.Dict[str, str] = {
     "Bar": ".bar",
+    "FirstItemType": ".first_item_type",
     "Foo": ".foo",
     "FooExtended": ".foo_extended",
+    "SecondItemType": ".second_item_type",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithBaseProperties_Foo": ".union_with_base_properties",
@@ -79,6 +98,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "UnionWithDuplicateTypes_Foo1": ".union_with_duplicate_types",
     "UnionWithDuplicateTypes_Foo2": ".union_with_duplicate_types",
+    "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
+    "UnionWithDuplicativeDiscriminants_FirstItemType": ".union_with_duplicative_discriminants",
+    "UnionWithDuplicativeDiscriminants_SecondItemType": ".union_with_duplicative_discriminants",
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithLiteral_Fern": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
@@ -88,6 +110,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithNoProperties": ".union_with_no_properties",
     "UnionWithNoProperties_Empty": ".union_with_no_properties",
     "UnionWithNoProperties_Foo": ".union_with_no_properties",
+    "UnionWithNullableReference": ".union_with_nullable_reference",
+    "UnionWithNullableReference_Bar": ".union_with_nullable_reference",
+    "UnionWithNullableReference_Foo": ".union_with_nullable_reference",
+    "UnionWithOptionalReference": ".union_with_optional_reference",
+    "UnionWithOptionalReference_Bar": ".union_with_optional_reference",
+    "UnionWithOptionalReference_Foo": ".union_with_optional_reference",
     "UnionWithOptionalTime": ".union_with_optional_time",
     "UnionWithOptionalTime_Date": ".union_with_optional_time",
     "UnionWithOptionalTime_Datetime": ".union_with_optional_time",
@@ -142,8 +170,10 @@ def __dir__():
 
 __all__ = [
     "Bar",
+    "FirstItemType",
     "Foo",
     "FooExtended",
+    "SecondItemType",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
@@ -160,6 +190,9 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithDuplicateTypes_Foo1",
     "UnionWithDuplicateTypes_Foo2",
+    "UnionWithDuplicativeDiscriminants",
+    "UnionWithDuplicativeDiscriminants_FirstItemType",
+    "UnionWithDuplicativeDiscriminants_SecondItemType",
     "UnionWithLiteral",
     "UnionWithLiteral_Fern",
     "UnionWithMultipleNoProperties",
@@ -169,6 +202,12 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithNoProperties_Empty",
     "UnionWithNoProperties_Foo",
+    "UnionWithNullableReference",
+    "UnionWithNullableReference_Bar",
+    "UnionWithNullableReference_Foo",
+    "UnionWithOptionalReference",
+    "UnionWithOptionalReference_Bar",
+    "UnionWithOptionalReference_Foo",
     "UnionWithOptionalTime",
     "UnionWithOptionalTime_Date",
     "UnionWithOptionalTime_Datetime",

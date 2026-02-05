@@ -1,6 +1,6 @@
 import Foundation
 
-public enum TorU: Codable, Hashable, Sendable {
+public indirect enum TorU: Codable, Hashable, Sendable {
     case t(T)
     case u(U)
 

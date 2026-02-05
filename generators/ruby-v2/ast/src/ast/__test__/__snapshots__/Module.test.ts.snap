@@ -23,6 +23,8 @@ exports[`Module > writes empty module 1`] = `
 
 exports[`Module > writes module with a body 1`] = `
 "module Foobar
+  # @param name [String]
+  #
   # @return [instance]
   def build(name:); end
 end

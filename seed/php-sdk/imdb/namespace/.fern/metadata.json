@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "namespace": "Fern"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

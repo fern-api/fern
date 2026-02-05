@@ -23,7 +23,7 @@ export class EndpointSnippetsGenerator extends WithGeneration {
     private readonly snippetsCache: Map<string, EndpointSnippets> = new Map();
 
     constructor({ context }: { context: SdkGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
         this.grpcEndpointGenerator = new GrpcEndpointGenerator({ context });
         this.httpEndpointGenerator = new HttpEndpointGenerator({ context });
@@ -49,7 +49,11 @@ export class EndpointSnippetsGenerator extends WithGeneration {
                 if (endpoint.pagination || isStreaming) {
                     endpointIdsWithGenerator.push({ id: endpoint.id, isPager: true });
                 }
-                return endpointIdsWithGenerator.map(({ id }) => ({ id, endpoint, serviceId }));
+                return endpointIdsWithGenerator.map(({ id }) => ({
+                    id,
+                    endpoint,
+                    serviceId
+                }));
             })
         );
 

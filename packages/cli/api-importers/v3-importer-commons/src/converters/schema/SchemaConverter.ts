@@ -106,6 +106,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedMapSchema;
         }
 
+        const maybeConvertedDiscriminatorMappingSchema = this.tryConvertDiscriminatorMappingSchema();
+        if (maybeConvertedDiscriminatorMappingSchema != null) {
+            return maybeConvertedDiscriminatorMappingSchema;
+        }
+
         const maybeConvertedObjectAllOfSchema = this.tryConvertObjectAllOfSchema();
         if (maybeConvertedObjectAllOfSchema != null) {
             return maybeConvertedObjectAllOfSchema;
@@ -348,6 +353,44 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return undefined;
     }
 
+    private tryConvertDiscriminatorMappingSchema(): SchemaConverter.Output | undefined {
+        if (
+            this.schema.discriminator?.mapping != null &&
+            Object.keys(this.schema.discriminator.mapping).length > 0 &&
+            this.schema.oneOf == null &&
+            this.schema.anyOf == null
+        ) {
+            const schemaWithOneOf: OpenAPIV3_1.SchemaObject = {
+                ...this.schema,
+                oneOf: Object.values(this.schema.discriminator.mapping).map((ref) => ({
+                    $ref: ref
+                }))
+            };
+            const oneOfConverter = new OneOfSchemaConverter({
+                id: this.id,
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                schema: schemaWithOneOf,
+                inlinedTypes: {}
+            });
+            const oneOfType = oneOfConverter.convert();
+            if (oneOfType != null) {
+                return {
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: oneOfType.type,
+                            referencedTypes: oneOfType.referencedTypes
+                        }),
+                        audiences: this.audiences,
+                        propertiesByAudience: {}
+                    },
+                    inlinedTypes: oneOfType.inlinedTypes
+                };
+            }
+        }
+        return undefined;
+    }
+
     private tryConvertObjectAllOfSchema(): SchemaConverter.Output | undefined {
         if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
@@ -519,21 +562,23 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         for (const [index, example] of examples.entries()) {
             const resolvedExample = this.context.resolveExample(example);
+            const exampleName = `${this.id}_example_${index}`;
             const convertedExample = this.generateOrValidateExample({
-                example: resolvedExample
+                example: resolvedExample,
+                exampleName
             });
-            userSpecifiedExamples[`${this.id}_example_${index}`] = convertedExample;
+            userSpecifiedExamples[exampleName] = convertedExample;
         }
 
         return userSpecifiedExamples;
     }
 
     private generateOrValidateExample({
-        example,
-        ignoreErrors
+        example
     }: {
         example: unknown;
         ignoreErrors?: boolean;
+        exampleName?: string;
     }): unknown {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
@@ -541,15 +586,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             schema: this.schema,
             example
         });
-        const { validExample: convertedExample, errors } = exampleConverter.convert();
-        if (!ignoreErrors) {
-            errors.forEach((error) => {
-                this.context.errorCollector.collect({
-                    message: error.message,
-                    path: error.path
-                });
-            });
-        }
+        const { validExample: convertedExample } = exampleConverter.convert();
+        // Note: Example validation errors are intentionally not collected as warnings
+        // because they are too verbose and not actionable for users
         return convertedExample;
     }
 }

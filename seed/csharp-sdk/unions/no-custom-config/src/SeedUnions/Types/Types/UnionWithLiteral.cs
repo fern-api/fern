@@ -104,12 +104,12 @@ public record UnionWithLiteral
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithLiteral>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithLiteral).IsAssignableFrom(typeToConvert);
 
         public override UnionWithLiteral Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

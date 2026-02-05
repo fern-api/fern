@@ -12,37 +12,43 @@ from .raw_client import AsyncRawPathParamClient, RawPathParamClient
 class PathParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawPathParamClient(client_wrapper=client_wrapper)
-    
+
     @property
     def with_raw_response(self) -> RawPathParamClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
-        
+
         Returns
         -------
         RawPathParamClient
         """
         return self._raw_client
-    
-    def send(self, operand: Operand, operand_or_color: ColorOrOperand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    def send(
+        self,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         from seed import Color, Operand, SeedEnum
-        
+
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
@@ -53,54 +59,62 @@ class PathParamClient:
         """
         _response = self._raw_client.send(operand, operand_or_color, request_options=request_options)
         return _response.data
+
+
 class AsyncPathParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawPathParamClient(client_wrapper=client_wrapper)
-    
+
     @property
     def with_raw_response(self) -> AsyncRawPathParamClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
-        
+
         Returns
         -------
         AsyncRawPathParamClient
         """
         return self._raw_client
-    
-    async def send(self, operand: Operand, operand_or_color: ColorOrOperand, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+
+    async def send(
+        self,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         None
-        
+
         Examples
         --------
         import asyncio
-        
+
         from seed import AsyncSeedEnum, Color, Operand
-        
+
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
-        
-        
+
+
         async def main() -> None:
             await client.path_param.send(
                 operand=Operand.GREATER_THAN,
                 operand_or_color=Color.RED,
             )
-        
-        
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.send(operand, operand_or_color, request_options=request_options)

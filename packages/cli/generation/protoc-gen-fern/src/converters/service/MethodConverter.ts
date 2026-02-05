@@ -105,7 +105,9 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     methodType: this.getGrpcMethodType()
                 }),
                 audiences: [],
-                retries: undefined
+                retries: undefined,
+                apiPlayground: undefined,
+                responseHeaders: []
             }
         };
     }
@@ -161,7 +163,9 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                             v2Examples: undefined
                         })
                     ),
-                    statusCode: undefined
+                    statusCode: undefined,
+                    isWildcardStatusCode: undefined,
+                    docs: undefined
                 },
                 responseExample: undefined
             };

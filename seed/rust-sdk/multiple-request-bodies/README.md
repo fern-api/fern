@@ -5,6 +5,20 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -39,7 +53,14 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .upload_json_document(&UploadDocumentRequest {}, None)
+        .upload_json_document(
+            &UploadDocumentRequest {
+                author: None,
+                tags: None,
+                title: None,
+            },
+            None,
+        )
         .await;
 }
 ```

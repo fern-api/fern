@@ -8,9 +8,13 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import resources.optional.types.DeployParams;
+import resources.optional.types.DeployResponse;
+import resources.optional.types.SendOptionalBodyRequest;
 
 @RequestMapping(
     path = "/"
@@ -22,4 +26,20 @@ public interface OptionalService {
       consumes = "application/json"
   )
   String sendOptionalBody(@RequestBody Optional<Map<String, Object>> body);
+
+  @PostMapping(
+      value = "/send-optional-typed-body",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  String sendOptionalTypedBody(@RequestBody Optional<SendOptionalBodyRequest> body);
+
+  @PostMapping(
+      value = "/deploy/{actionId}/versions/{id}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  DeployResponse sendOptionalNullableWithAllOptionalProperties(
+      @PathVariable("actionId") String actionId, @PathVariable("id") String id,
+      @RequestBody Optional<DeployParams> body);
 }

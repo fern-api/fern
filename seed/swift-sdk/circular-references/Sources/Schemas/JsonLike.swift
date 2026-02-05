@@ -1,6 +1,6 @@
 import Foundation
 
-public enum JsonLike: Codable, Hashable, Sendable {
+public indirect enum JsonLike: Codable, Hashable, Sendable {
     case bool(Bool)
     case int(Int)
     case jsonLikeArray([JsonLike])

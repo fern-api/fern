@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username</a>(request: CreateUsernameRequest, tags: Option<Vec<String>>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username</a>(request: CreateUsernameRequest, tags: Option&lt;Vec&lt;String&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_with_referenced_type</a>(request: CreateUsernameBody, tags: Option<Vec<String>>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_with_referenced_type</a>(request: CreateUsernameBody, tags: Option&lt;Vec&lt;String&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -108,7 +108,7 @@ async fn main() {
     client
         .user
         .create_username_with_referenced_type(
-            &CreateUsernameReferencedRequest {
+            &CreateUsernameWithReferencedTypeRequest {
                 tags: vec!["tags".to_string(), "tags".to_string()],
                 body: CreateUsernameBody {
                     username: "username".to_string(),
@@ -146,7 +146,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_optional</a>(request: Option<Option<CreateUsernameBodyOptionalProperties>>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_optional</a>(request: Option&lt;Option&lt;CreateUsernameBodyOptionalProperties&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -169,7 +169,14 @@ async fn main() {
     let client = RequestParametersClient::new(config).expect("Failed to build client");
     client
         .user
-        .create_username_optional(&Some(Some(CreateUsernameBodyOptionalProperties {})), None)
+        .create_username_optional(
+            &Some(Some(CreateUsernameBodyOptionalProperties {
+                username: None,
+                password: None,
+                name: None,
+            })),
+            None,
+        )
         .await;
 }
 ```
@@ -183,7 +190,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_username</a>(limit: Option<i64>, id: Option<String>, date: Option<String>, deadline: Option<String>, bytes: Option<String>, user: Option<User>, user_list: Option<Vec<User>>, optional_deadline: Option<Option<String>>, key_value: Option<std::collections::HashMap<String, String>>, optional_string: Option<Option<String>>, nested_user: Option<NestedUser>, optional_user: Option<Option<User>>, long_param: Option<String>, big_int_param: Option<String>) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_username</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, user_list: Option&lt;Vec&lt;User&gt;&gt;, optional_deadline: Option&lt;Option&lt;String&gt;&gt;, key_value: Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;, optional_string: Option&lt;Option&lt;String&gt;&gt;, nested_user: Option&lt;NestedUser&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;, long_param: Option&lt;String&gt;, big_int_param: Option&lt;String&gt;) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -211,10 +218,10 @@ async fn main() {
                 limit: 1,
                 id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
-                bytes: "SGVsbG8gd29ybGQh".to_string(),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                bytes: base64::engine::general_purpose::STANDARD
+                    .decode("SGVsbG8gd29ybGQh")
+                    .unwrap(),
                 user: User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
@@ -230,9 +237,7 @@ async fn main() {
                     },
                 ],
                 optional_deadline: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
                 key_value: HashMap::from([("keyValue".to_string(), "keyValue".to_string())]),
                 optional_string: Some("optionalString".to_string()),
@@ -253,7 +258,7 @@ async fn main() {
                 }],
                 filter: vec!["filter".to_string()],
                 long_param: 1000000,
-                big_int_param: "1000000".to_string(),
+                big_int_param: BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap(),
             },
             None,
         )

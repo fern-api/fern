@@ -107,7 +107,7 @@ export class RealtimeSocket {
         this.socket.send(JSON.stringify(jsonPayload));
     }
 
-    public sendSend2(message: SeedWebsocket.SendEvent2): void {
+    public customSend(message: SeedWebsocket.SendEvent2): void {
         this.assertSocketIsOpen();
         const jsonPayload = SendEvent2.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",

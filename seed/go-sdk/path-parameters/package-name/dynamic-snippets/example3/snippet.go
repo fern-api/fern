@@ -3,6 +3,7 @@ package example
 import (
     client "github.com/fern-api/path-parameters-go/client"
     option "github.com/fern-api/path-parameters-go/option"
+    path "github.com/fern-api/path-parameters-go"
     context "context"
 )
 
@@ -12,9 +13,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &path.GetUsersRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
+    }
     client.User.GetUser(
         context.TODO(),
-        "tenant_id",
-        "user_id",
+        request,
     )
 }

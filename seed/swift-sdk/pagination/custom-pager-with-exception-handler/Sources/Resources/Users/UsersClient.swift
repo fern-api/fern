@@ -44,6 +44,21 @@ public final class UsersClient: Sendable {
         )
     }
 
+    /// Pagination endpoint with a top-level cursor field in the request body.
+    /// This tests that the mock server correctly ignores cursor mismatches
+    /// when getNextPage() is called with a different cursor value.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func listWithTopLevelBodyCursorPagination(request: Requests.ListUsersTopLevelBodyCursorPaginationRequest, requestOptions: RequestOptions? = nil) async throws -> ListUsersTopLevelCursorPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/users/top-level-cursor",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ListUsersTopLevelCursorPaginationResponse.self
+        )
+    }
+
     public func listWithOffsetPagination(page: Int? = nil, perPage: Int? = nil, order: OrderType? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponseType {
         return try await httpClient.performRequest(
             method: .get,
@@ -148,6 +163,18 @@ public final class UsersClient: Sendable {
         )
     }
 
+    public func listUsernamesWithOptionalResponse(startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameCursor? {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: UsernameCursor?.self
+        )
+    }
+
     public func listWithGlobalConfig(offset: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameContainerType {
         return try await httpClient.performRequest(
             method: .get,
@@ -157,6 +184,18 @@ public final class UsersClient: Sendable {
             ],
             requestOptions: requestOptions,
             responseType: UsernameContainerType.self
+        )
+    }
+
+    public func listWithOptionalData(page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersOptionalDataPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users/optional-data",
+            queryParams: [
+                "page": page.map { .int($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersOptionalDataPaginationResponse.self
         )
     }
 }

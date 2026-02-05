@@ -103,7 +103,6 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
             ts.factory.createParameterDeclaration(
                 undefined,
                 undefined,
-                undefined,
                 SamePropertiesAsObjectSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
                 context.type.getReferenceToNamedType(this.extended).getTypeNode()

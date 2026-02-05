@@ -101,13 +101,34 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("use-local-date-for-dates")
+    default Boolean useLocalDateForDates() {
+        return false;
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
+
+    @JsonProperty("custom-pager-name")
+    Optional<String> customPagerName();
 
     @Value.Default
     @JsonProperty("package-layout")
     default PackageLayout packageLayout() {
         return PackageLayout.NESTED;
+    }
+
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
+
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
+    @Value.Default
+    @JsonProperty("gradle-central-dependency-management")
+    default Boolean gradleCentralDependencyManagement() {
+        return false;
     }
 
     enum PackageLayout {
@@ -140,5 +161,37 @@ public interface ICustomConfig {
         public String getValue() {
             return value;
         }
+    }
+
+    /**
+     * Controls how the output directory is interpreted during local generation.
+     *
+     * <ul>
+     *   <li>{@code SOURCE_ROOT} - Output path points directly to where .java files should go. Files are written without
+     *       adding src/main/java prefix.
+     *   <li>{@code PROJECT_ROOT} - Output path points to project root. Generator adds src/main/java prefix for
+     *       production files and src/test/java for test files.
+     * </ul>
+     */
+    enum OutputDirectory {
+        SOURCE_ROOT("source-root"),
+        PROJECT_ROOT("project-root");
+
+        private final String value;
+
+        OutputDirectory(String value) {
+            this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
+        }
+    }
+
+    @Value.Default
+    @JsonProperty("output-directory")
+    default OutputDirectory outputDirectory() {
+        return OutputDirectory.PROJECT_ROOT;
     }
 }

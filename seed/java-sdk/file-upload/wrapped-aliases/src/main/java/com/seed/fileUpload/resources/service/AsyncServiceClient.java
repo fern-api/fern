@@ -7,15 +7,19 @@ import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
+import com.seed.fileUpload.resources.service.requests.JustFileWithOptionalQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
+import com.seed.fileUpload.resources.service.requests.LiteralEnumRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import okhttp3.MediaType;
 
 public class AsyncServiceClient {
     protected final ClientOptions clientOptions;
@@ -61,6 +65,25 @@ public class AsyncServiceClient {
         return this.rawClient.justFile(file, request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> justFile(InputStream stream, String filename) {
+        return this.rawClient.justFile(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFile(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.justFile(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFile(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.justFile(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFile(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .justFile(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
         return this.rawClient.justFileWithQueryParams(file, request).thenApply(response -> response.body());
     }
@@ -69,6 +92,18 @@ public class AsyncServiceClient {
             File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .justFileWithQueryParams(file, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithOptionalQueryParams(
+            File file, JustFileWithOptionalQueryParamsRequest request) {
+        return this.rawClient.justFileWithOptionalQueryParams(file, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithOptionalQueryParams(
+            File file, JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .justFileWithOptionalQueryParams(file, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
@@ -81,6 +116,25 @@ public class AsyncServiceClient {
         return this.rawClient.withContentType(file, request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> withContentType(InputStream stream, String filename) {
+        return this.rawClient.withContentType(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withContentType(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withContentType(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withContentType(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withContentType(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withContentType(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withContentType(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> withFormEncoding(File file, WithFormEncodingRequest request) {
         return this.rawClient.withFormEncoding(file, request).thenApply(response -> response.body());
     }
@@ -88,6 +142,26 @@ public class AsyncServiceClient {
     public CompletableFuture<Void> withFormEncoding(
             File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
         return this.rawClient.withFormEncoding(file, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(InputStream stream, String filename) {
+        return this.rawClient.withFormEncoding(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withFormEncoding(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withFormEncoding(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withFormEncoding(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> withFormEncodedContainers(
@@ -113,6 +187,10 @@ public class AsyncServiceClient {
         return this.rawClient.optionalArgs(imageFile).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, RequestOptions requestOptions) {
+        return this.rawClient.optionalArgs(imageFile, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<String> optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
         return this.rawClient.optionalArgs(imageFile, request).thenApply(response -> response.body());
     }
@@ -120,6 +198,35 @@ public class AsyncServiceClient {
     public CompletableFuture<String> optionalArgs(
             Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
         return this.rawClient.optionalArgs(imageFile, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, InputStream stream, String filename) {
+        return this.rawClient.optionalArgs(imageFile, stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(
+            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient
+                .optionalArgs(imageFile, stream, filename, mediaType)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(
+            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .optionalArgs(imageFile, stream, filename, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(
+            Optional<File> imageFile,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .optionalArgs(imageFile, stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> withInlineType(File file, InlineTypeRequest request) {
@@ -131,11 +238,66 @@ public class AsyncServiceClient {
         return this.rawClient.withInlineType(file, request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<String> withInlineType(InputStream stream, String filename) {
+        return this.rawClient.withInlineType(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withInlineType(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withInlineType(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withInlineType(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> simple() {
         return this.rawClient.simple().thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> simple(RequestOptions requestOptions) {
         return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(File file, LiteralEnumRequest request) {
+        return this.rawClient.withLiteralAndEnumTypes(file, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            File file, LiteralEnumRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(file, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(InputStream stream, String filename) {
+        return this.rawClient.withLiteralAndEnumTypes(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, mediaType)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

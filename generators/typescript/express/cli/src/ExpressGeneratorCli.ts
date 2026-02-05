@@ -25,6 +25,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             requestValidationStatusCode: parsed?.requestValidationStatusCode ?? 422,
             outputEsm: parsed?.outputEsm ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,
+            outputSrcOnly: parsed?.outputSrcOnly ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
             skipRequestValidation: parsed?.skipRequestValidation ?? false,
@@ -110,7 +111,15 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         return customConfig.outputSourceFiles;
     }
 
+    protected outputSrcOnly(customConfig: ExpressCustomConfig): boolean {
+        return customConfig.outputSrcOnly ?? false;
+    }
+
     protected shouldTolerateRepublish(_customConfig: ExpressCustomConfig): boolean {
+        return false;
+    }
+
+    protected shouldSkipNpmPkgFix(_customConfig: ExpressCustomConfig): boolean {
         return false;
     }
 

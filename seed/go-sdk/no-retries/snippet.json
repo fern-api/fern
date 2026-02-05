@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_retries.getUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/no-retries/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Retries.GetUsers(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

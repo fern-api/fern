@@ -1,4 +1,694 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.3
+  changelogEntry:
+    - summary: |
+        Fix `useDefaultRequestParameterValues` to only apply defaults to query parameters and headers, not to inlined request body properties.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 62
+
+- version: 2.20.2
+  changelogEntry:
+    - summary: |
+        Wire test assertions now use JSON element comparison instead of object equality, resolving false failures when comparing collections inside undiscriminated union types.
+      type: fix
+    - summary: |
+        Fix mock response data generation to omit null values for optional-but-not-nullable properties, matching SDK serialization behavior.
+      type: fix
+    - summary: |
+        Fix nullability warning (CS8764) in undiscriminated union JsonConverter by using non-optional return type for ReadAsPropertyName method.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.20.1
+  changelogEntry:
+    - summary: |
+        Fix ambiguous type references (CS0104) for sub-client interfaces when multiple sub-clients share the same name in different namespaces.
+      type: fix
+    - summary: |
+        Fix duplicate implicit conversion operators (CS0557) for undiscriminated unions with multiple variants that resolve to the same type.
+      type: fix
+    - summary: |
+        Add transitive implicit conversion operators for nested undiscriminated unions.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.20.0
+  changelogEntry:
+    - summary: |
+        Remove .NET 6 (EOL 2024/10/12) and 7 (EOL 2024/05/14) target frameworks from generated SDKs as they are no longer supported by Microsoft.
+        The generated SDKs now only target .NET Framework 4.6.2, .NET Standard 2.0, and .NET 8.
+      type: chore
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.7
+  changelogEntry:
+    - summary: |
+        Top-level clients now use interface types for sub-clients instead of concrete types.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to preserve string field values that contain datetime-like strings.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 62
+
+- version: 2.19.5
+  changelogEntry:
+    - summary: |
+        Fix missing client-level headers for endpoints without endpoint-specific headers.
+
+        Previously, endpoints that didn't have endpoint-specific headers (like custom request headers)
+        would not include client-level headers (API key, SDK version, additional headers) in their
+        HTTP requests. This caused authentication failures for APIs that rely on headers set at the
+        client level.
+
+        The fix ensures that all endpoints now properly merge headers from:
+        * Client options headers (API key, SDK version, etc.)
+        * Client additional headers (user-provided at client construction)
+        * Request options additional headers (user-provided per-request)
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.4
+  changelogEntry:
+    - summary: |
+        Fix missing `[Optional]` and/or `Nullable` attributes on generated properties with defaults.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.3
+  changelogEntry:
+    - summary: |
+        Fully unwrap optional-nullable wrappers when generating undiscriminated unions.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.2
+  changelogEntry:
+    - summary: |
+        Fixes missing references to Core utilities in interface files for the Optional wrapper.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.1
+  changelogEntry:
+    - summary: |
+        Fix nullable element types in collections to correctly preserve nullable markers.
+
+        Previously, nullable types nested inside collections would incorrectly strip the inner nullable marker:
+        - `nullable<list<nullable<string>>>` incorrectly generated `IEnumerable<string>?`
+        - `nullable<map<string, nullable<Address>>>` incorrectly generated `Dictionary<string, Address>?`
+
+        Now generates correctly:
+        - `nullable<list<nullable<string>>>` generates `IEnumerable<string?>?`
+        - `nullable<map<string, nullable<Address>>>` generates `Dictionary<string, Address?>?`
+        - `optional<map<string, nullable<string>>>` generates `Dictionary<string, string?>?`
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 62
+
+- version: 2.19.0
+  changelogEntry:
+    - summary: |
+        Add support for type-safe undiscriminated unions with the new `use-undiscriminated-unions` configuration option.
+
+        Undiscriminated unions provide a clean, type-safe way to work with values that can be one of several types:
+
+        ```csharp
+        // Creating union values
+        var response = MyUnion.FromString("hello");
+        var response = MyUnion.FromInt(42);
+        var response = MyUnion.FromCustomObject(new CustomObject { ... });
+
+        // Type-safe value access with Is* properties and As* methods
+        if (response.IsString)
+        {
+            string value = response.AsString();
+            Console.WriteLine($"Got string: {value}");
+        }
+        else if (response.IsInt)
+        {
+            int value = response.AsInt();
+            Console.WriteLine($"Got integer: {value}");
+        }
+
+        // Safe extraction with TryAs* pattern (no exceptions)
+        if (response.TryAsCustomObject(out var obj))
+        {
+            Console.WriteLine($"Got object: {obj.Name}");
+        }
+        ```
+
+        This provides better IntelliSense support and compile-time safety compared to working with generic `object` types.
+      type: feat
+    - summary: |
+        Reduce NuGet package dependencies. The OneOf library is no longer required when undiscriminated unions are not used,
+        resulting in smaller package sizes and fewer transitive dependencies.
+      type: chore
+  createdAt: "2026-01-27"
+  irVersion: 62
+
+- version: 2.18.1
+  changelogEntry:
+    - summary: |
+        While most `<`s and `>`s should be escaped to `&lt;` and `&gt;` to avoid mangling the output,
+        genuine XML/HTML tags should be kept as-is; this commit scans for potential valid tags and
+        prevents their being escaped. (Ambiguous cases are escaped.)
+
+        Before:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See &lt;a href="https://example.com/docs"&gt;the docs&lt;/a&gt; for more info.
+        /// Use &lt;code&gt;getValue()&lt;/code&gt; to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+
+        After:
+        ```
+        /// XMLDoc (C#) (Example of actual XML tags):
+        /// See <a href="https://example.com/docs">the docs</a> for more info.
+        /// Use <code>getValue()</code> to retrieve the value.
+        /// Note: when count &lt; 10 or count &gt; 100, special handling applies.
+        ```
+      type: fix
+  createdAt: "2026-01-27"
+  irVersion: 62
+
+- version: 2.18.0
+  changelogEntry:
+    - summary: |
+        Add `QueryStringBuilder` class for building query strings with proper URL encoding.
+
+        Example usage:
+        ```csharp
+        var queryString = new QueryStringBuilder.Builder()
+            .Add("access_token", "abc123")
+            .Add("config_id", "cfg-456")
+            .AddDeepObject("session_settings", new { SystemPrompt = "Hello" })
+            .Build();
+        // Result: ?access_token=abc123&config_id=cfg-456&session_settings%5BSystemPrompt%5D=Hello
+        ```
+      type: feat
+    - summary: Improve header merging logic for better reliability and maintainability.
+      type: chore
+    - summary: |
+        Remove `additional-properties` and `experimental-additional-properties` configuration options.
+        AdditionalProperties support is now always enabled for all generated SDKs, simplifying the generator
+        and ensuring consistent behavior across all generated code. This feature allows handling of extra/unknown
+        properties in JSON responses.
+      type: chore
+  createdAt: "2026-01-22"
+  irVersion: 62
+
+- version: 2.17.5
+  changelogEntry:
+    - summary: |
+        Fix test equality comparison for nested OneOf values in collections.
+
+        Previously, when comparing objects containing `List<OneOf<...>>` properties (such as
+        `RelatedResources` in FHIR-style models), the test framework would incorrectly report
+        differences even when the values were identical. This was because the nested OneOf
+        comparer didn't recursively handle OneOf values within collections.
+
+        The fix adds a custom `EqualityAdapter` that registers itself with the inner
+        `NUnitEqualityComparer`, enabling proper recursive comparison of nested OneOf values.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.4
+  changelogEntry:
+    - summary: |
+        Fix extra properties support for inlined request bodies and improve test equality comparisons.
+
+        This fix addresses three issues with the `extra-properties: true` feature:
+        * Inlined request bodies now properly support `AdditionalProperties` for serialization/deserialization
+        * Test snippets now include extra properties from examples for both object types and wrapped requests
+        * Added `AdditionalPropertiesComparer` to handle type mismatches between JsonElement and native C# types in test assertions
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.3
+  changelogEntry:
+    - summary: |
+        Fix mock server tests to use FormUrlEncodedMatcher for form-urlencoded requests.
+
+        Previously, mock server tests used `WithBodyAsJson` for form-urlencoded requests, which
+        caused test failures because the SDK sends the request body as `key=value&key2=value2`
+        format, not JSON. This fix uses WireMock's `FormUrlEncodedMatcher` to properly match
+        form-urlencoded request bodies.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 2.17.2
+  changelogEntry:
+    - summary: |
+        Fix mock server tests to exclude read-only properties from expected request JSON.
+
+        Previously, mock server tests included read-only properties (marked with `access: read-only`)
+        in the expected request JSON, causing test failures because the SDK correctly excludes these
+        properties during serialization. This fix filters out read-only properties at all nesting
+        levels, including within dictionaries, lists, and nested objects.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 62
+
+- version: 2.17.1
+  changelogEntry:
+    - summary: |
+        Add global::System to Attribute in OptionalAttribute and NullableAttribute.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 62
+
+- version: 2.17.0
+  changelogEntry:
+    - summary: |
+        Respect defaults set for request parameter values.
+
+        When `use-default-request-parameter-values: true` is configured in generators.yml, the SDK will
+        generate initializers of the form `= default` for those properties of a record that have defaults.
+        Any property with a default will also have the 'required' keyword stripped if it's there, since
+        users should be allowed to omit it during initialization and rely on the default.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
+- version: 2.16.0
+  changelogEntry:
+    - summary: |
+        Add support for accessing raw HTTP response data alongside typed response objects using `.WithRawResponse()`.
+
+        HTTP endpoint methods now return `WithRawResponseTask<T>`, which provides two usage patterns:
+        * **Default behavior**: Direct `await` returns just the typed data (zero-allocation fast path)
+        * **Raw response access**: Await with `.WithRawResponse()` returns both data and HTTP metadata
+
+        Example usage:
+        ```csharp
+        // Default behavior - returns just the data
+        var userData = await client.Users.GetAsync("user-123");
+
+        // Access raw response metadata
+        var result = await client.Users.GetAsync("user-123").WithRawResponse();
+        var data = result.Data;
+        var statusCode = result.RawResponse.StatusCode;  // HttpStatusCode
+        var headers = result.RawResponse.Headers;        // ResponseHeaders
+        var url = result.RawResponse.Url;                // Uri
+
+        // Access specific headers (case-insensitive)
+        if (headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            Console.WriteLine($"Request ID: {requestId}");
+        }
+
+        // Check content type and length
+        var contentType = headers.ContentType;
+        var contentLength = headers.ContentLength;
+        ```
+
+        New types:
+        * `WithRawResponseTask<T>` - Awaitable task wrapper supporting both usage patterns
+        * `WithRawResponse<T>` - Container for data + raw response metadata
+        * `RawResponse` - HTTP response metadata (status code, headers, URL)
+        * `ResponseHeaders` - Case-insensitive header collection with enumeration support
+
+        Benefits:
+        * Zero overhead when raw response access isn't needed
+        * Backward compatible - implicit conversion to `Task<T>` supported
+        * Type-safe access to HTTP metadata when debugging or logging
+        * Case-insensitive header lookups following HTTP standards
+      type: feat
+  createdAt: "2026-01-20"
+  irVersion: 62
+
+- version: 2.15.0
+  changelogEntry:
+    - summary: |
+        Add support for explicit nullable/optional type handling with the new `Optional<T>` type.
+
+        When `experimental-explicit-nullable-optional: true` is configured in generators.yml, the SDK will use `Optional<T?>` for nullable optional fields, enabling three-state semantics for PATCH requests:
+        * **Undefined**: Field not set - won't be included in the request (leave unchanged on server)
+        * **Defined with null**: Field explicitly set to null - will send `null` (clear the field on server)
+        * **Defined with value**: Field set to a value - will send the value (update the field on server)
+
+        Example usage:
+        ```csharp
+        public class UpdateUserRequest
+        {
+            public Optional<string?> Name { get; set; } = Optional<string?>.Undefined;
+            public Optional<string?> Email { get; set; } = Optional<string?>.Undefined;
+        }
+
+        // Don't send name field (leave unchanged)
+        var request1 = new UpdateUserRequest();
+
+        // Set name to a value
+        var request2 = new UpdateUserRequest { Name = "John" };
+
+        // Clear name (send null)
+        var request3 = new UpdateUserRequest { Name = null };
+        ```
+
+        The `Optional<T>` type includes:
+        * `IsDefined` property to check if a value is set
+        * `Value` property to access the value (throws if undefined)
+        * `TryGetValue` method for safe value access
+        * Implicit conversion operators for ergonomic usage
+        * Full JSON serialization support
+        * `IEquatable<Optional<T>>` implementation for proper equality checks
+      type: feat
+    - summary: |
+        Fix query parameter serialization to properly handle nullable struct types (DateTime?, DateOnly?, etc.) by adding `.Value` accessor when needed.
+      type: fix
+    - summary: |
+        Improve nullable and optional type handling throughout the generator, including collection value types and type mapping.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 62
+
+- version: 2.14.1
+  changelogEntry:
+    - summary: |
+        When `include-exception-handler: true` is configured, the generated exception interceptor class
+        now accepts `ClientOptions` in its constructor. This allows the interceptor to access client
+        configuration when capturing exceptions.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 62
+
+- version: 2.14.0
+  changelogEntry:
+    - summary: |
+        Refactor WebSocket API code generation to use composition over inheritance.
+
+        Key changes:
+        * Replace `AsyncApi<T>` base class with `WebSocketClient` internal class using composition
+        * Flatten namespace from `{root}.Core.Async.*` to `{root}.Core.WebSockets`
+        * Generated WebSocket clients now implement `IAsyncDisposable`, `IDisposable`, and `INotifyPropertyChanged` directly
+        * Store `Options` and `WebSocketClient` as private fields instead of using inheritance
+        * Forward `Status`, `Connected`, `Closed`, and `ExceptionOccurred` events from internal client
+        * Simplify `INotifyPropertyChanged` to only notify for `Status` property changes
+
+        This refactoring improves code clarity and reduces complexity.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 62
+
+- version: 2.13.1
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 62
+
+- version: 2.13.0
+  changelogEntry:
+    - summary: |
+        Generate interfaces for all SDK clients to enable dependency injection and mocking for unit testing.
+
+        Each client class now implements a corresponding interface:
+        * Root client implements `I{ClientName}` (e.g., `IAcmeClient`)
+        * Sub-package clients implement `I{SubpackageName}Client` (e.g., `IUsersClient`)
+
+        This allows consumers to:
+        * Use dependency injection frameworks to inject client interfaces
+        * Mock client interfaces in unit tests using libraries like Moq or NSubstitute
+        * Follow SOLID principles with interface-based programming
+      type: feat
+  createdAt: "2026-01-06"
+  irVersion: 62
+
+- version: 2.12.2
+  changelogEntry:
+    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+      type: chore
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 2.12.1
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 2.12.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication scheme. This allows the SDK to automatically
+        obtain authentication tokens from a specified token endpoint and cache them for subsequent
+        requests.
+
+        When an API uses inferred auth, the SDK will:
+        * Call the token endpoint to obtain authentication headers
+        * Cache the headers and refresh them when expired (with a 2-minute buffer)
+        * Automatically set the authenticated request headers on all API calls
+      type: feat
+  createdAt: "2025-12-11"
+  irVersion: 62
+
+- version: 2.11.4
+  changelogEntry:
+    - summary: |
+        Don't use `required` keyword on properties that are read-only, since they're not supposed to be set by users.
+      type: fix
+  createdAt: "2025-12-13"
+  irVersion: 61
+
+- version: 2.11.3
+  changelogEntry:
+    - summary: |
+        Remove blocking `.Result` calls on async tasks in generated code. Header values now support
+        async resolution via `Func<ValueTask<string>>` and `Func<Task<string>>`, and the `RawClient`
+        uses async methods (`CreateHttpRequestAsync`, `MergeHeadersAsync`) to resolve headers without
+        blocking. This improves performance and prevents potential deadlocks in async contexts.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 2.11.2
+  changelogEntry:
+    - summary: |
+        Change core files to fully qualify references to `Attribute` and related types in case of name collision.
+      type: fix
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 2.11.1
+  changelogEntry:
+    - summary: |
+        When `include-exception-handler: true` is configured:
+        * Remove unneeded `CaptureException` method from `Interceptor` class, since there's already an `Intercept` method.
+      type: fix
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 2.11.0
+  changelogEntry:
+    - summary: |
+        Add constructor exception handling infrastructure for SDK authors to capture initialization errors.
+
+        When `include-exception-handler: true` is configured:
+        * Adds `CaptureException` method to `ExceptionHandler` class for capturing exceptions without re-throwing
+        * Wraps all client constructors (root and sub-clients) with try-catch blocks
+        * Initializes `clientOptions.ExceptionHandler` with a custom interceptor in the root client constructor
+        * Generates a `{PackageName}ExceptionInterceptor` stub class that SDK authors can customize
+
+        New configuration option:
+        * `exception-interceptor-class-name`: Custom name for the exception interceptor class (optional)
+
+        Example generators.yml configuration:
+        ```yml
+        groups:
+          dotnet-sdk:
+            generators:
+              - name: fernapi/fern-csharp-sdk
+                version: 2.11.0
+                config:
+                  include-exception-handler: true
+                  exception-interceptor-class-name: MyCustomExceptionInterceptor
+        ```
+
+        SDK authors can implement their exception capturing logic (e.g., application monitoring platform, logging) in the generated interceptor class.
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 2.10.0
+  changelogEntry:
+    - summary: |
+        Add support for flexible `output-path` configuration that allows specifying different paths
+        for the library project, test project, solution file, and other files (README.md, reference.md).
+
+        Configuration options:
+        * Simple string: `output-path: src` - all projects go to that path
+        * Object with specific paths:
+          - `library`: path for the library project (default: "src")
+          - `test`: path for the test project (default: "src")
+          - `solution`: path for the solution file (default: ".")
+          - `other`: path for README.md, reference.md, and other files (default: ".")
+
+        Example generators.yml configuration:
+        ```yml
+        groups:
+          dotnet-sdk:
+            generators:
+              - name: fernapi/fern-csharp-sdk
+                version: 2.10.0
+                config:
+                  output-path:
+                    library: src/MyApi
+                    test: test/MyApi.Test
+                    solution: .
+                    other: src/MyApi
+        ```
+
+        The generated CI workflow and project references are automatically updated to use the configured paths.
+        Note: `.github`, `.fern`, `.editorconfig`, `.gitignore`, and `.fernignore` are always generated in the root output folder.
+      type: feat
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 2.9.9
+  changelogEntry:
+    - summary: |
+        Retries now check `Retry-After` and `X-RateLimit-Reset` headers before defaulting to
+        exponential backoff with jitter.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 2.9.8
+  changelogEntry:
+    - summary: |
+        Restore default behavior for wire tests: tests are now generated by default and controlled
+        via the existing `generate-mock-server-tests` config option (defaults to true). The
+        `enable-wire-tests` option is now treated as an alias for backward compatibility.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 2.9.7
+  changelogEntry:
+    - summary: |
+        Wire tests are now controlled entirely by the `enable-wire-tests` custom config option,
+        no longer using the CLI's `writeUnitTests` flag.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 61
+
+- version: 2.9.6
+  changelogEntry:
+    - summary: |
+        Fix getGitHubConfig to return RawGithubConfig with undefined values instead of throwing errors when publishing config is missing, aligning with TypeScript/Python generator behavior.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 61
+
+- version: 2.9.5
+  changelogEntry:
+    - summary: |
+        Fix readonly constant assertion message showing '[object Object]' instead of property name.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 61
+
+- version: 2.9.4
+  changelogEntry:
+    - summary: |
+        Remove error on null config in README generation.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 2.9.3
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 2.9.2
+  changelogEntry:
+    - type: chore
+      summary: |
+        Bump generator CLI version to publish new Docker image.
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 2.9.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add check in test script to verify that .NET 10 is installed.
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 2.9.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Upgrade C# SDK generator Docker images to use .NET 10 SDK base image.
+        * Improves package restoration and build performance
+        * .NET 10 uses .slnx solution files instead of .sln files, which are more readable and generate deterministically
+        * This change does not affect the target framework of generated SDKs
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 2.8.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        .github/workflows/ci.yml file changes:
+        * Update actions/checkout to v5
+        * Update actions/setup-dotnet to v5
+        * Use .NET 10 SDK
+        * Split up restore and build steps
+        * Don't build the test project unless running tests
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 2.7.5
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support enums in multipart-forms.
+        Corrected date-normalization code in tests generation.
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 2.7.4
+  changelogEntry:
+    - type: chore
+      summary: |
+        Upgrade C# formatter csharpier to 1.2.1.
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 2.7.3
+  changelogEntry:
+    - type: fix
+      summary: |
+        Refactor package dependencies in C# generation so Dynamic Snippets in the browser can work.
+  createdAt: "2025-11-10"
+  irVersion: 61
+
 - version: 2.7.2
   changelogEntry:
     - type: fix
@@ -133,7 +823,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Ensure `experimental-fully-qualified-namespaces` to have 
+        Ensure `experimental-fully-qualified-namespaces` to have
         'global::' prefix.
   createdAt: "2025-08-19"
   irVersion: 58
@@ -141,8 +831,8 @@
   changelogEntry:
     - type: fix
       summary: |
-        Add support for configuration 'experimental-fully-qualified-namespaces' to 
-        generate fully qualified typenames and namespaces. 
+        Add support for configuration 'experimental-fully-qualified-namespaces' to
+        generate fully qualified typenames and namespaces.
         Add support for `experimental-dotnet-format` to have `dotnet format` reduce
         namespaces and namespace prefixes. (this can take a large amount of memory)
         This creates code that is much cleaner, and can easily support
@@ -180,7 +870,7 @@
 
     - type: fix
       summary: |
-        Set csharpier version to `1.1.*` to avoid inadvertently picking up 
+        Set csharpier version to `1.1.*` to avoid inadvertently picking up
         `1.0.3` which has an inconsistency in formatting.
 
   createdAt: "2025-08-04"
@@ -1455,8 +2145,8 @@
     - type: break
       summary: >-
         The C# SDK is now on major version 1.0.0. To preserve compatibility with
-        pre-1.0.0, set all of \{root-namespace-for-core-classes,
-        pascal-case-environments, simplify-object-dictionaries\} to `false`.
+        pre-1.0.0, set all of `{root-namespace-for-core-classes,
+        pascal-case-environments, simplify-object-dictionaries}` to `false`.
     - type: internal
       summary: Core classes that are exposed publicly are now in the root namespace.
     - type: internal

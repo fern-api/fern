@@ -32,9 +32,12 @@ export function convertHttpResponse({
         file,
         typeResolver
     });
+    const docs = typeof endpoint.response !== "string" ? endpoint.response?.docs : undefined;
     return {
         body: responseBody,
-        statusCode: typeof endpoint.response !== "string" ? endpoint.response?.["status-code"] : undefined
+        statusCode: typeof endpoint.response !== "string" ? endpoint.response?.["status-code"] : undefined,
+        isWildcardStatusCode: undefined,
+        docs
     };
 }
 

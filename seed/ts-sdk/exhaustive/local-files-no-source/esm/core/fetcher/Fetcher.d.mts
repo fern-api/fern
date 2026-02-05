@@ -1,14 +1,13 @@
 import { type LogConfig, type Logger } from "../logging/logger.mjs";
 import type { APIResponse } from "./APIResponse.mjs";
 import type { EndpointMetadata } from "./EndpointMetadata.mjs";
-import { EndpointSupplier } from "./EndpointSupplier.mjs";
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 export declare namespace Fetcher {
     interface Args {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
+        headers?: Record<string, unknown>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;
@@ -22,7 +21,7 @@ export declare namespace Fetcher {
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
     }
-    type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
+    type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {
         reason: "status-code";
         statusCode: number;
@@ -32,6 +31,10 @@ export declare namespace Fetcher {
         reason: "non-json";
         statusCode: number;
         rawBody: string;
+    }
+    interface BodyIsNullError {
+        reason: "body-is-null";
+        statusCode: number;
     }
     interface TimeoutError {
         reason: "timeout";

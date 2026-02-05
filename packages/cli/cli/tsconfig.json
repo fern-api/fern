@@ -3,7 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "moduleResolution": "bundler"
   },
   "include": ["./src/**/*"],
   "references": [
@@ -54,6 +55,9 @@
     },
     {
       "path": "../logger"
+    },
+    {
+      "path": "../../migrations-base"
     },
     {
       "path": "../generation/local-generation/local-workspace-runner"
@@ -116,6 +120,9 @@
       "path": "../configuration"
     },
     {
+      "path": "../ai"
+    },
+    {
       "path": "../cli-source-resolver"
     },
     {
@@ -123,6 +130,9 @@
     },
     {
       "path": "../cli-logger"
+    },
+    {
+      "path": "../cli-v2"
     },
     {
       "path": "../../commons/casings-generator"

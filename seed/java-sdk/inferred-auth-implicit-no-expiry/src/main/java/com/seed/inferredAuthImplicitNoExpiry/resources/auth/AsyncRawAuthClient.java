@@ -14,8 +14,6 @@ import com.seed.inferredAuthImplicitNoExpiry.resources.auth.requests.GetTokenReq
 import com.seed.inferredAuthImplicitNoExpiry.resources.auth.requests.RefreshTokenRequest;
 import com.seed.inferredAuthImplicitNoExpiry.resources.auth.types.TokenResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,27 +40,23 @@ public class AsyncRawAuthClient {
 
     public CompletableFuture<SeedInferredAuthImplicitNoExpiryHttpResponse<TokenResponse>> getTokenWithClientCredentials(
             GetTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("token")
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("client_id", request.getClientId());
-        properties.put("client_secret", request.getClientSecret());
-        properties.put("audience", request.getAudience());
-        properties.put("grant_type", request.getGrantType());
-        if (request.getScope().isPresent()) {
-            properties.put("scope", request.getScope());
+                .addPathSegments("token");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -79,18 +73,16 @@ public class AsyncRawAuthClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedInferredAuthImplicitNoExpiryHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedInferredAuthImplicitNoExpiryApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -114,28 +106,23 @@ public class AsyncRawAuthClient {
 
     public CompletableFuture<SeedInferredAuthImplicitNoExpiryHttpResponse<TokenResponse>> refreshToken(
             RefreshTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("token/refresh")
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("client_id", request.getClientId());
-        properties.put("client_secret", request.getClientSecret());
-        properties.put("refresh_token", request.getRefreshToken());
-        properties.put("audience", request.getAudience());
-        properties.put("grant_type", request.getGrantType());
-        if (request.getScope().isPresent()) {
-            properties.put("scope", request.getScope());
+                .addPathSegments("token/refresh");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -152,18 +139,16 @@ public class AsyncRawAuthClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedInferredAuthImplicitNoExpiryHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedInferredAuthImplicitNoExpiryApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

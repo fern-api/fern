@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -45,22 +60,44 @@ import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRe
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .build();
+        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.auth().getToken(
             GetTokenRequest
                 .builder()
                 .clientId("client_id")
                 .clientSecret("client_secret")
-                .grantType("client_credentials")
                 .build()
         );
     }
 }
+```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.builder()
+    .token("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.builder()
+    .credentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Base Url
@@ -137,7 +174,6 @@ SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefau
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
@@ -145,7 +181,7 @@ import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
 // Client level
 SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -153,7 +189,7 @@ client.auth().getToken(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

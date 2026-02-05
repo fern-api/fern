@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": false
-  }
+  },
+  "sdkVersion": "v0.0.1"
 }

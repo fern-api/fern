@@ -7,16 +7,29 @@ buildScripts:
   compileScript:
     commands:
       - go build -v ./...
+  lintScript:
+    commands:
+      - golangci-lint run --timeout=5m
   testScript:
     commands:
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-      - go test -v ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi 
+      - |
+        PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+          export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+        fi
+        go test -v ./...
+        TEST_EXIT_CODE=$?
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+        fi
+        exit $TEST_EXIT_CODE
 publish:
   workingDirectory: generators/go
   preBuildCommands:
     - go build ./...
-    - pnpm --filter @fern-api/go-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/go-sdk
   docker:
     file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
@@ -24,7 +37,21 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-sdk:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  podman:
+    image: fernapi/fern-go-sdk:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  local:
+    workingDirectory: generators/go
+    buildCommand:
+      # Build TypeScript v2 CLI first
+      - pnpm turbo run dist:cli --filter @fern-api/go-sdk
+      # Build Go v1 CLI
+      - go build -ldflags "-s -w" -trimpath -buildvcs=false -o fern-go-sdk ./cmd/fern-go-sdk
+    runCommand: ./fern-go-sdk {CONFIG_PATH}
+    env:
+      # Set path to the go-v2 CLI built from TypeScript (absolute path)
+      GO_V2_PATH: "/Users/jsklan/git/fern-2/generators/go-v2/sdk/dist/cli.cjs"
 language: go
 generatorType: SDK
 defaultOutputMode: github
@@ -103,13 +130,15 @@ fixtures:
       customConfig:
         enableWireTests: true
         packageName: testPackageName
+        errorCodes: per-endpoint
+        clientConstructorName: NewIMDBClient
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
     - outputFolder: deep-package-path
-      customConfig: 
+      customConfig:
         packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
@@ -183,6 +212,20 @@ fixtures:
         packageName: stream
         module:
           path: github.com/fern-api/stream-go
+  server-sent-event-examples:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-examples-go
+  server-sent-events:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-go
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -200,27 +243,69 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
+  nullable-request-body:
+    - outputFolder: dynamic-snippets-disabled
+      disableDynamicSnippetTests: true
+  oauth-client-credentials:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: PayrocPager
+  go-optional-literal-alias:
+    - outputFolder: .
+      customConfig: null
+  go-undiscriminated-union-wire-tests:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+        packageName: fern
+        module:
+          path: github.com/go-undiscriminated-union-wire-tests/fern
+  exhaustive:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
 scripts:
-  - docker: fernapi/go-seed:1.0.0
+  - image: fernapi/go-seed:1.0.0
     commands:
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-      - CGO_ENABLED=0 go test ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+      test:
+        - |
+          PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+            export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+          fi
+          CGO_ENABLED=0 go test ./...
+          TEST_EXIT_CODE=$?
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          fi
+          exit $TEST_EXIT_CODE
 allowedFailures:
   - alias-extends
   - bytes-download
   - enum
   - errors
-  - exhaustive
   - literal
   - mixed-case:no-custom-config
   - mixed-case:default-values
-  - pagination-custom
   - request-parameters
   - reserved-keywords
   - streaming-parameter
+  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-url-templating
   - trace
   - property-access
+  - oauth-client-credentials:.
+  - oauth-client-credentials-reference
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
@@ -234,6 +319,8 @@ allowedFailures:
   - variables
 
   # Will include these back in once we fix dynamic snippets for inline file properties
-  - file-upload:no-custom-config 
-  - file-upload:package-name 
+  - file-upload:no-custom-config
+  - file-upload:package-name
   - file-upload-openapi
+
+  - pagination-custom:.

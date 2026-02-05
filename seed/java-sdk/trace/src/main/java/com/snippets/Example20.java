@@ -26,8 +26,11 @@ public class Example20 {
                 .createProblem(CreateProblemRequest.builder()
                         .problemName("problemName")
                         .problemDescription(ProblemDescription.builder()
-                                .boards(Arrays.asList(ProblemDescriptionBoard.html(), ProblemDescriptionBoard.html()))
+                                .boards(Arrays.asList(
+                                        ProblemDescriptionBoard.html("boards"), ProblemDescriptionBoard.html("boards")))
                                 .build())
+                        .outputType(VariableType.integerType())
+                        .methodName("methodName")
                         .files(new HashMap<Language, ProblemFiles>() {
                             {
                                 put(
@@ -58,25 +61,23 @@ public class Example20 {
                                         .variableType(VariableType.integerType())
                                         .name("name")
                                         .build()))
-                        .outputType(VariableType.integerType())
                         .testcases(Arrays.asList(
                                 TestCaseWithExpectedResult.builder()
                                         .testCase(TestCase.builder()
                                                 .id("id")
                                                 .params(Arrays.asList(
-                                                        VariableValue.integerValue(), VariableValue.integerValue()))
+                                                        VariableValue.integerValue(1), VariableValue.integerValue(1)))
                                                 .build())
-                                        .expectedResult(VariableValue.integerValue())
+                                        .expectedResult(VariableValue.integerValue(1))
                                         .build(),
                                 TestCaseWithExpectedResult.builder()
                                         .testCase(TestCase.builder()
                                                 .id("id")
                                                 .params(Arrays.asList(
-                                                        VariableValue.integerValue(), VariableValue.integerValue()))
+                                                        VariableValue.integerValue(1), VariableValue.integerValue(1)))
                                                 .build())
-                                        .expectedResult(VariableValue.integerValue())
+                                        .expectedResult(VariableValue.integerValue(1))
                                         .build()))
-                        .methodName("methodName")
                         .build());
     }
 }

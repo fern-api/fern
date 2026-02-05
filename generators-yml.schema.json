@@ -64,6 +64,22 @@
         }
       ]
     },
+    "aliases": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "groups": {
       "oneOf": [
         {
@@ -81,6 +97,26 @@
       "oneOf": [
         {
           "$ref": "#/definitions/reviewers.ReviewersSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ai": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ai.AIServicesSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "autorelease": {
+      "oneOf": [
+        {
+          "type": "boolean"
         },
         {
           "type": "null"
@@ -504,6 +540,16 @@
               "type": "null"
             }
           ]
+        },
+        "omit": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -721,6 +767,20 @@
         "v2"
       ]
     },
+    "generators.RemoveDiscriminantsFromSchemas": {
+      "type": "string",
+      "enum": [
+        "always",
+        "never"
+      ]
+    },
+    "generators.PathParameterOrder": {
+      "type": "string",
+      "enum": [
+        "url-order",
+        "spec-order"
+      ]
+    },
     "generators.APIDefinitionSettingsSchema": {
       "type": "object",
       "properties": {
@@ -818,6 +878,26 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -1139,6 +1219,58 @@
       },
       "additionalProperties": false
     },
+    "fernDefinition.validation.ListValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "fernDefinition.validation.MapValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "fernDefinition.validation.ValidationSchema": {
       "anyOf": [
         {
@@ -1146,6 +1278,12 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.validation.NumberValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.validation.ListValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.validation.MapValidationSchema"
         }
       ]
     },
@@ -1305,6 +1443,41 @@
     "fernDefinition.service.HttpHeaderSchema": {
       "$ref": "#/definitions/fernDefinition.service.TypeReferenceDeclarationWithEnvOverride"
     },
+    "fernDefinition.environments.ServerVariableSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.environments.SingleBaseUrlEnvironmentSchema": {
       "type": "object",
       "properties": {
@@ -1333,6 +1506,39 @@
         },
         "url": {
           "type": "string"
+        },
+        "default-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url-template": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fernDefinition.environments.ServerVariableSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1448,6 +1654,32 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.EndpointSecuritySchemaDetails": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.EndpointSecuritySchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "endpoint-security": {
+          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchemaDetails"
+        }
+      },
+      "required": [
+        "endpoint-security"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.auth.ApiAuthSchema": {
       "anyOf": [
         {
@@ -1458,6 +1690,9 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.auth.AnyAuthSchemesSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchema"
         }
       ]
     },
@@ -1558,6 +1793,15 @@
         }
       ]
     },
+    "generators.DefaultIntegerFormat": {
+      "type": "string",
+      "enum": [
+        "int32",
+        "int64",
+        "uint32",
+        "uint64"
+      ]
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1635,6 +1879,26 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -1800,6 +2064,16 @@
               "type": "null"
             }
           ]
+        },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1821,6 +2095,16 @@
           ]
         },
         "overrides": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "overlays": {
           "oneOf": [
             {
               "type": "string"
@@ -1939,6 +2223,26 @@
             }
           ]
         },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "message-naming": {
           "oneOf": [
             {
@@ -2048,6 +2352,48 @@
       ],
       "additionalProperties": false
     },
+    "generators.GraphQLSpecSchema": {
+      "type": "object",
+      "properties": {
+        "graphql": {
+          "type": "string"
+        },
+        "origin": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resource": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "graphql"
+      ],
+      "additionalProperties": false
+    },
     "generators.SpecSchema": {
       "anyOf": [
         {
@@ -2061,6 +2407,9 @@
         },
         {
           "$ref": "#/definitions/generators.OpenRPCSpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.GraphQLSpecSchema"
         }
       ]
     },
@@ -2088,6 +2437,292 @@
           "$ref": "#/definitions/generators.ConjureSchema"
         }
       ]
+    },
+    "generators.APIConfigurationV2SettingsSchema": {
+      "type": "object",
+      "properties": {
+        "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prefer-undiscriminated-unions-with-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "object-query-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-forward-compatible-enums": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-bytes-for-binary-response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-form-parameter-encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.FormParameterEncoding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIFilterSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "example-generation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additional-properties-defaults-to": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-single-schema-oneof": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-all-of-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-aliases": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.ResolveAliases"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group-multi-api-environments": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title-as-schema-name": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optional-additional-properties": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-enums-to-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group-environments-by-host": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message-naming": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MessageNamingSettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "generators.APIConfigurationV2Schema": {
       "type": "object",
@@ -2148,8 +2783,31 @@
             }
           ]
         },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "specs": {
           "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
+        },
+        "settings": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.APIConfigurationV2SettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -2835,6 +3493,13 @@
         }
       ]
     },
+    "group.GithubSelfhostedMode": {
+      "type": "string",
+      "enum": [
+        "pull-request",
+        "push"
+      ]
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -2876,7 +3541,17 @@
         "mode": {
           "oneOf": [
             {
-              "const": "pull-request"
+              "$ref": "#/definitions/group.GithubSelfhostedMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -3162,10 +3837,33 @@
             }
           ]
         },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+              "$ref": "#/definitions/generators.APIConfigurationV2SettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "specs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
             },
             {
               "type": "null"
@@ -3303,6 +4001,16 @@
               "type": "null"
             }
           ]
+        },
+        "autorelease": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -3356,6 +4064,33 @@
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "ai.ModelProvider": {
+      "type": "string",
+      "enum": [
+        "openai",
+        "anthropic",
+        "bedrock"
+      ]
+    },
+    "ai.ModelName": {
+      "type": "string"
+    },
+    "ai.AIServicesSchema": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/ai.ModelProvider"
+        },
+        "model": {
+          "$ref": "#/definitions/ai.ModelName"
+        }
+      },
+      "required": [
+        "provider",
+        "model"
       ],
       "additionalProperties": false
     },

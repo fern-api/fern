@@ -124,8 +124,12 @@ ${this.buffer}`;
 
     private stringifyImports(): string {
         let result = Object.entries(this.references)
-            .filter(([ns]) => !this.isCurrentNamespace(ns)) // Filter out the current namespace.
-            .filter(([ns]) => !this.generation.registry.isNamespaceImplicit(ns)) // System is implicitly imported
+            .filter(
+                ([ns]) =>
+                    ns && // filter out blank or unspecified namespaces
+                    !this.isCurrentNamespace(ns) && // filter out the current namespace.
+                    !this.generation.registry.isNamespaceImplicit(ns) // filter out implicitly imported namespaces.
+            )
             .map(
                 ([, refs]) =>
                     `using ${refs.some((ref) => ref?.global) ? "global::" : ""}${(refs[0] as ClassReference).resolveNamespace()};`

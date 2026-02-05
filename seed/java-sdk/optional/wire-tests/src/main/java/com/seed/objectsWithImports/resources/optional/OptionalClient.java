@@ -5,6 +5,8 @@ package com.seed.objectsWithImports.resources.optional;
 
 import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.RequestOptions;
+import com.seed.objectsWithImports.resources.optional.types.DeployParams;
+import com.seed.objectsWithImports.resources.optional.types.DeployResponse;
 import com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;
 import java.util.Map;
 import java.util.Optional;
@@ -30,6 +32,10 @@ public class OptionalClient {
         return this.rawClient.sendOptionalBody().body();
     }
 
+    public String sendOptionalBody(RequestOptions requestOptions) {
+        return this.rawClient.sendOptionalBody(requestOptions).body();
+    }
+
     public String sendOptionalBody(Optional<Map<String, Object>> request) {
         return this.rawClient.sendOptionalBody(request).body();
     }
@@ -42,11 +48,58 @@ public class OptionalClient {
         return this.rawClient.sendOptionalTypedBody().body();
     }
 
+    public String sendOptionalTypedBody(RequestOptions requestOptions) {
+        return this.rawClient.sendOptionalTypedBody(requestOptions).body();
+    }
+
     public String sendOptionalTypedBody(Optional<SendOptionalBodyRequest> request) {
         return this.rawClient.sendOptionalTypedBody(request).body();
     }
 
     public String sendOptionalTypedBody(Optional<SendOptionalBodyRequest> request, RequestOptions requestOptions) {
         return this.rawClient.sendOptionalTypedBody(request, requestOptions).body();
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public DeployResponse sendOptionalNullableWithAllOptionalProperties(String actionId, String id) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id)
+                .body();
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public DeployResponse sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, RequestOptions requestOptions) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id, requestOptions)
+                .body();
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public DeployResponse sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, Optional<DeployParams> request) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id, request)
+                .body();
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public DeployResponse sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, Optional<DeployParams> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id, request, requestOptions)
+                .body();
     }
 }

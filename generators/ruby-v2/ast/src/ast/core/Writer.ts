@@ -23,6 +23,9 @@ export class Writer extends AbstractWriter {
     /* Require statements */
     protected requires: Set<RequirePath> = new Set();
 
+    /* Track indentation level for line wrapping calculations */
+    private _indentLevel = 0;
+
     constructor({ customConfig, formatter }: Writer.Args) {
         super();
         this.customConfig = customConfig;
@@ -34,6 +37,23 @@ export class Writer extends AbstractWriter {
      */
     public addRequire(requirePath: RequirePath): void {
         this.requires.add(requirePath);
+    }
+
+    /**
+     * Gets the current indentation level.
+     */
+    public get currentIndentLevel(): number {
+        return this._indentLevel;
+    }
+
+    public override indent(): void {
+        this._indentLevel++;
+        super.indent();
+    }
+
+    public override dedent(): void {
+        this._indentLevel--;
+        super.dedent();
     }
 
     // override abstract method

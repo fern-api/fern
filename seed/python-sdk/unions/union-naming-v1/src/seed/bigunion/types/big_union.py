@@ -23,8 +23,12 @@ class Base(UniversalBaseModel):
     """
 
     id: str
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="created-at")]
-    archived_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="archived-at")] = None
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="created-at"), pydantic.Field(alias="created-at")
+    ]
+    archived_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="archived-at"), pydantic.Field(alias="archived-at")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -739,34 +743,37 @@ NormalSweetBigUnion(
     value="example1",
 )
 """
-BigUnion = typing.Union[
-    NormalSweetBigUnion,
-    ThankfulFactorBigUnion,
-    JumboEndBigUnion,
-    HastyPainBigUnion,
-    MistySnowBigUnion,
-    DistinctFailureBigUnion,
-    PracticalPrincipleBigUnion,
-    LimpingStepBigUnion,
-    VibrantExcitementBigUnion,
-    ActiveDiamondBigUnion,
-    PopularLimitBigUnion,
-    FalseMirrorBigUnion,
-    PrimaryBlockBigUnion,
-    RotatingRatioBigUnion,
-    ColorfulCoverBigUnion,
-    DisloyalValueBigUnion,
-    GruesomeCoachBigUnion,
-    TotalWorkBigUnion,
-    HarmoniousPlayBigUnion,
-    UniqueStressBigUnion,
-    UnwillingSmokeBigUnion,
-    FrozenSleepBigUnion,
-    DiligentDealBigUnion,
-    AttractiveScriptBigUnion,
-    HoarseMouseBigUnion,
-    CircularCardBigUnion,
-    PotableBadBigUnion,
-    TriangularRepairBigUnion,
-    GaseousRoadBigUnion,
+BigUnion = typing_extensions.Annotated[
+    typing.Union[
+        NormalSweetBigUnion,
+        ThankfulFactorBigUnion,
+        JumboEndBigUnion,
+        HastyPainBigUnion,
+        MistySnowBigUnion,
+        DistinctFailureBigUnion,
+        PracticalPrincipleBigUnion,
+        LimpingStepBigUnion,
+        VibrantExcitementBigUnion,
+        ActiveDiamondBigUnion,
+        PopularLimitBigUnion,
+        FalseMirrorBigUnion,
+        PrimaryBlockBigUnion,
+        RotatingRatioBigUnion,
+        ColorfulCoverBigUnion,
+        DisloyalValueBigUnion,
+        GruesomeCoachBigUnion,
+        TotalWorkBigUnion,
+        HarmoniousPlayBigUnion,
+        UniqueStressBigUnion,
+        UnwillingSmokeBigUnion,
+        FrozenSleepBigUnion,
+        DiligentDealBigUnion,
+        AttractiveScriptBigUnion,
+        HoarseMouseBigUnion,
+        CircularCardBigUnion,
+        PotableBadBigUnion,
+        TriangularRepairBigUnion,
+        GaseousRoadBigUnion,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

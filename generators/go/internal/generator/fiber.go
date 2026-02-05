@@ -90,15 +90,15 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *common.FernFilepath, en
 	}
 
 	var (
-		referenceType      string
-		referenceIsPointer bool
-		referenceLiteral   string
+		referenceType            string
+		referenceIsPointer       bool
+		referenceFieldIsPointer  bool
+		referenceLiteral         string
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
-		referenceType = strings.TrimPrefix(
-			typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false),
-			"*",
-		)
+		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false)
+		referenceFieldIsPointer = strings.HasPrefix(fullType, "*")
+		referenceType = strings.TrimPrefix(fullType, "*")
 		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])
 		if reference.RequestBodyType.Container != nil && reference.RequestBodyType.Container.Literal != nil {
 			referenceLiteral = literalToValue(reference.RequestBodyType.Container.Literal)
@@ -132,7 +132,11 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *common.FernFilepath, en
 			f.P(`return fmt.Errorf("expected literal %q, but found %q", `, referenceLiteral, ", body)")
 			f.P("}")
 		}
-		f.P(receiver, ".", bodyField, " = body")
+		bodyValue := "body"
+		if referenceFieldIsPointer && !referenceIsPointer {
+			bodyValue = "&body"
+		}
+		f.P(receiver, ".", bodyField, " = ", bodyValue)
 	} else {
 		f.P("*", receiver, " = ", typeName, "(body)")
 	}

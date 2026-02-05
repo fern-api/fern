@@ -21,9 +21,10 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const BODY_BAG_NAME = "_body";
-const QUERY_PARAM_NAMES_VN = "_query_param_names";
-const PATH_PARAM_NAMES_VN = "_path_param_names";
+const BODY_BAG_NAME = "body_params";
+const QUERY_PARAM_NAMES_VN = "query_param_names";
+const PATH_PARAM_NAMES_VN = "path_param_names";
+const HEADER_BAG_NAME = "headers";
 
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId;
@@ -36,7 +37,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ruby.Type {
-        return ruby.Type.void();
+        if (this.endpoint.requestBody?.type === "inlinedRequestBody") {
+            const wrapperRef = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+            return ruby.Type.class_({ name: wrapperRef.name, modules: wrapperRef.modules });
+        }
+        if (
+            this.endpoint.requestBody?.type === "reference" &&
+            this.endpoint.requestBody.requestBodyType.type === "named"
+        ) {
+            const bodyTypeRef = this.context.getReferenceToTypeId(this.endpoint.requestBody.requestBodyType.typeId);
+            return ruby.Type.class_({ name: bodyTypeRef.name, modules: bodyTypeRef.modules });
+        }
+        return ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped());
     }
 
     public getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined {
@@ -46,16 +58,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         return {
             code: ruby.codeblock((writer) => {
-                writer.write(`params = `);
-                ruby.invokeMethod({
-                    on: ruby.classReference({
-                        name: "Utils",
-                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
-                    }),
-                    method: "symbolize_keys",
-                    arguments_: [ruby.codeblock("params")]
-                }).write(writer);
-                writer.newLine();
                 writer.write(`${QUERY_PARAM_NAMES_VN} = `);
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 writer.writeLine(`${queryParameterBagName} = {}`);
@@ -73,7 +75,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        return undefined;
+        if (this.endpoint.headers.length === 0) {
+            return undefined;
+        }
+
+        return {
+            code: ruby.codeblock((writer) => {
+                writer.writeLine(`${HEADER_BAG_NAME} = {}`);
+                for (const header of this.endpoint.headers) {
+                    const snakeCaseName = header.name.name.snakeCase.safeName;
+                    const wireValue = header.name.wireValue;
+                    writer.writeLine(
+                        `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] if params[:${snakeCaseName}]`
+                    );
+                }
+            }),
+            headerParameterBagReference: HEADER_BAG_NAME
+        };
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
@@ -90,6 +108,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             const bodyTypeReference = this.context.getReferenceToTypeId(
                 this.endpoint.requestBody.requestBodyType.typeId
             );
+            const typeDeclaration = this.context.getTypeDeclarationOrThrow(
+                this.endpoint.requestBody.requestBodyType.typeId
+            );
+            // Enums and aliases are modules, not classes, so they don't have a .new() method
+            const isModule = typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias";
 
             if (this.hasPathParameters()) {
                 return {
@@ -98,50 +121,67 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
                     }),
                     requestBodyReference: ruby.codeblock((writer) => {
-                        writer.writeNode(bodyTypeReference);
-                        writer.write(`.new(${bodyParamsVar}).to_h`);
+                        if (isModule) {
+                            writer.write(bodyParamsVar);
+                        } else {
+                            writer.writeNode(bodyTypeReference);
+                            writer.write(`.new(${bodyParamsVar}).to_h`);
+                        }
                     })
                 };
             }
             return {
                 requestBodyReference: ruby.codeblock((writer) => {
-                    writer.writeNode(bodyTypeReference);
-                    writer.write(`.new(${bodyParamsVar}).to_h`);
+                    if (isModule) {
+                        writer.write(bodyParamsVar);
+                    } else {
+                        writer.writeNode(bodyTypeReference);
+                        writer.write(`.new(${bodyParamsVar}).to_h`);
+                    }
                 })
             };
         }
 
         if (this.endpoint.requestBody.type === "inlinedRequestBody") {
             const wrapperReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
-            const bodyPropertyNames = [
-                ...this.endpoint.requestBody.properties,
-                ...(this.endpoint.requestBody.extendedProperties ?? [])
-            ].map((prop) => prop.name.name.snakeCase.safeName);
 
-            const BODY_PROP_NAMES_VN = "_body_prop_names";
+            // Get all non-body parameter names (path, query, headers) that need to be excluded from the body
+            const nonBodyParamNames = this.getNonBodyParameterWireNames();
 
-            if (this.hasPathParameters()) {
+            if (nonBodyParamNames.length > 0) {
+                // Fix for request body serialization bug:
+                // Instead of removing path/query params before serialization (which causes nil values
+                // to be serialized for required fields), we serialize ALL params through the wrapper
+                // type first, then remove the non-body params from the serialized result.
+                const NON_BODY_PARAM_NAMES_VN = "non_body_param_names";
                 return {
                     code: ruby.codeblock((writer) => {
-                        writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
-                        writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
-                        writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
-                        writer.writeLine(`_body_bag = ${BODY_BAG_NAME}.slice(*${BODY_PROP_NAMES_VN})`);
-                    }),
-                    requestBodyReference: ruby.codeblock((writer) => {
+                        writer.write(`request_data = `);
                         writer.writeNode(wrapperReference);
-                        writer.write(`.new(_body_bag).to_h`);
-                    })
+                        writer.writeLine(`.new(params).to_h`);
+                        writer.writeLine(`${NON_BODY_PARAM_NAMES_VN} = ${toExplicitArray(nonBodyParamNames)}`);
+                        writer.writeLine(`body = request_data.except(*${NON_BODY_PARAM_NAMES_VN})`);
+                    }),
+                    requestBodyReference: ruby.codeblock("body")
                 };
             }
             return {
-                code: ruby.codeblock((writer) => {
-                    writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
-                    writer.writeLine(`_body_bag = params.slice(*${BODY_PROP_NAMES_VN})`);
-                }),
                 requestBodyReference: ruby.codeblock((writer) => {
                     writer.writeNode(wrapperReference);
-                    writer.write(`.new(_body_bag).to_h`);
+                    writer.write(`.new(params).to_h`);
+                })
+            };
+        }
+
+        // Fallback case: if there are path parameters, we need to define _body
+        if (this.hasPathParameters()) {
+            return {
+                code: ruby.codeblock((writer) => {
+                    writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
+                    writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+                }),
+                requestBodyReference: ruby.codeblock((writer) => {
+                    writer.write(BODY_BAG_NAME);
                 })
             };
         }
@@ -171,6 +211,32 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private hasQueryParameters(): boolean {
         return this.endpoint.queryParameters.length > 0;
+    }
+
+    /**
+     * Returns the wire names of all non-body parameters (path, query, headers).
+     * These are the keys that will appear in the serialized hash and need to be
+     * excluded from the request body.
+     */
+    private getNonBodyParameterWireNames(): string[] {
+        const wireNames: string[] = [];
+
+        // Path parameters use originalName as wireValue
+        for (const pathParam of this.endpoint.allPathParameters) {
+            wireNames.push(pathParam.name.originalName);
+        }
+
+        // Query parameters have explicit wireValue
+        for (const queryParam of this.endpoint.queryParameters) {
+            wireNames.push(queryParam.name.wireValue);
+        }
+
+        // Headers have explicit wireValue
+        for (const header of this.endpoint.headers) {
+            wireNames.push(header.name.wireValue);
+        }
+
+        return wireNames;
     }
 }
 

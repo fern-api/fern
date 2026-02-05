@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedCsharpNamespaceCollision.Core;
+using SeedCsharpNamespaceCollision.Test.Utils;
 
 namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.System;
 
@@ -57,12 +57,6 @@ public class CreateUserTest : BaseMockServerTest
                 Country = "USA",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedCsharpNamespaceCollision.System.User>(mockResponse)
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

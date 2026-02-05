@@ -160,6 +160,25 @@ jobs:
             echo "Set changes according to output of get-generator-changes step"
           fi
 
+  check-orphaned-seed-folders:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [changes]
+    if: ${{ needs.changes.outputs.seed == 'true' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Check for orphaned seed folders
+        shell: bash
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          pnpm seed:local clean --dry-run
+
   get-all-test-matrices:
     runs-on: ubuntu-latest
     timeout-minutes: 10

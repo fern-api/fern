@@ -87,7 +87,12 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
     }: {
         localReferenceToUnionValue: ts.Expression;
     }): ts.Expression[] {
-        return [localReferenceToUnionValue];
+        return [
+            ts.factory.createPropertyAccessExpression(
+                localReferenceToUnionValue,
+                UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME
+            )
+        ];
     }
 
     public getVisitMethodParameterType(context: SdkContext): ts.TypeNode | undefined {
@@ -97,7 +102,6 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
     public getParametersForBuilder(context: SdkContext): ts.ParameterDeclaration[] {
         return [
             ts.factory.createParameterDeclaration(
-                undefined,
                 undefined,
                 undefined,
                 UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,

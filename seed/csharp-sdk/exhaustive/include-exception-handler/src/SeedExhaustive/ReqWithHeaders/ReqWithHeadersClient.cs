@@ -2,13 +2,21 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
 
-public partial class ReqWithHeadersClient
+public partial class ReqWithHeadersClient : IReqWithHeadersClient
 {
     private RawClient _client;
 
     internal ReqWithHeadersClient(RawClient client)
     {
-        _client = client;
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
     /// <example><code>
@@ -30,13 +38,14 @@ public partial class ReqWithHeadersClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
-                        { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
-                    }
-                );
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add("X-TEST-SERVICE-HEADER", request.XTestServiceHeader)
+                    .Add("X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest

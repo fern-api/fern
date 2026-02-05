@@ -3,10 +3,14 @@
 import { SeedVariablesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("post", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedVariablesClient({ rootVariable: "endpointParam", environment: server.baseUrl });
+        const client = new SeedVariablesClient({
+            maxRetries: 0,
+            rootVariable: "endpointParam",
+            environment: server.baseUrl,
+        });
 
         server.mockEndpoint().post("/endpointParam").respondWith().statusCode(200).build();
 

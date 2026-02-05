@@ -5,6 +5,7 @@ package com.seed.undiscriminatedUnions.resources.union;
 
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
+import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
@@ -59,6 +60,10 @@ public class AsyncUnionClient {
         return this.rawClient.call().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Boolean> call(RequestOptions requestOptions) {
+        return this.rawClient.call(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Boolean> call(Request request) {
         return this.rawClient.call(request).thenApply(response -> response.body());
     }
@@ -82,5 +87,13 @@ public class AsyncUnionClient {
 
     public CompletableFuture<String> nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
         return this.rawClient.nestedUnions(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> testCamelCaseProperties(PaymentRequest request) {
+        return this.rawClient.testCamelCaseProperties(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> testCamelCaseProperties(PaymentRequest request, RequestOptions requestOptions) {
+        return this.rawClient.testCamelCaseProperties(request, requestOptions).thenApply(response -> response.body());
     }
 }

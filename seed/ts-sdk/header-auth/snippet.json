@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/apiKey",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithBearerToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedHeaderTokenClient } from \"@fern/header-auth\";\n\nconst client = new SeedHeaderTokenClient({ environment: \"YOUR_BASE_URL\", headerTokenAuth: \"YOUR_HEADER_TOKEN_AUTH\" });\nawait client.service.getWithBearerToken();\n"
+            }
+        }
+    ],
+    "types": {}
+}

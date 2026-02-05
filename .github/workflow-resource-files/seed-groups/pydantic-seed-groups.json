@@ -33,7 +33,7 @@
     },
     {
       "fixtures": [
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "circular-references:no-custom-config",
         "oauth-client-credentials-custom",
         "server-sent-event-examples",
@@ -140,7 +140,7 @@
       "fixtures": [
         "api-wide-base-path",
         "oauth-client-credentials",
-        "custom-auth",
+        "header-auth",
         "optional",
         "undiscriminated-union-with-response-property",
         "request-parameters",

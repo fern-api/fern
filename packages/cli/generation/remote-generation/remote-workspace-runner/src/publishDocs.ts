@@ -1,8 +1,8 @@
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { MediaType } from "@fern-api/core-utils";
+import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
@@ -13,24 +13,25 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { convertIrToFdrApi } from "@fern-api/register";
+import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
+import { detectAirGappedMode, OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { getFaiClient } from "./getFaiClient";
 import { measureImageSizes } from "./measureImageSizes";
+import { asyncPool } from "./utils/asyncPool";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
-const HASH_BATCH_SIZE = 10;
+const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
 interface FileWithMimeType {
     mediaType: string;
@@ -57,7 +58,10 @@ export async function publishDocs({
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
-    targetAudiences
+    withAiExamples = true,
+    excludeApis = false,
+    targetAudiences,
+    docsUrl
 }: {
     token: FernToken;
     organization: string;
@@ -72,16 +76,31 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    withAiExamples?: boolean;
+    excludeApis?: boolean;
     targetAudiences?: string[];
+    docsUrl?: string;
 }): Promise<void> {
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
+    if (isAirGapped) {
+        context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
+    }
+
     const fdr = createFdrService({ token: token.value });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
+
+    if (excludeApis) {
+        context.logger.debug(
+            "Experimental flag 'exclude-apis' is enabled - API references will be excluded from S3 upload"
+        );
+    }
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
-    const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
-    const disableSnippetGen = preview || useDynamicSnippets;
+    const disableDynamicSnippets =
+        docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -105,35 +124,55 @@ export async function publishDocs({
 
             const measuredImages = await measureImageSizes(imagesToMeasure, MEASURE_IMAGE_BATCH_SIZE, context);
 
-            const images: DocsV2Write.ImageFilePath[] = [];
+            context.logger.debug(`Hashing ${measuredImages.size} image files with concurrency ${HASH_CONCURRENCY}...`);
+            const hashImageStart = performance.now();
 
-            for (const image of measuredImages.values()) {
-                const filePath = filesMap.get(image.filePath);
-                if (filePath == null) {
-                    continue;
+            const imageArray = Array.from(measuredImages.values());
+            const hashedImages: Array<DocsV2Write.ImageFilePath | null> = await asyncPool(
+                HASH_CONCURRENCY,
+                imageArray,
+                async (image) => {
+                    const filePath = filesMap.get(image.filePath);
+                    if (filePath == null) {
+                        return null;
+                    }
+
+                    const obj = {
+                        filePath: CjsFdrSdk.docs.v1.write.FilePath(
+                            convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                        ),
+                        width: image.width,
+                        height: image.height,
+                        blurDataUrl: image.blurDataUrl,
+                        alt: undefined,
+                        fileHash: await calculateFileHash(filePath.absoluteFilePath)
+                    } as DocsV2Write.ImageFilePath;
+                    return obj;
                 }
+            );
 
-                images.push({
-                    filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                        convertToFernHostRelativeFilePath(filePath.relativeFilePath)
-                    ),
-                    width: image.width,
-                    height: image.height,
-                    blurDataUrl: image.blurDataUrl,
-                    alt: undefined,
-                    fileHash: await calculateFileHash(filePath.absoluteFilePath)
-                });
-            }
+            const images: DocsV2Write.ImageFilePath[] = hashedImages.filter(
+                (img): img is DocsV2Write.ImageFilePath => img != null
+            );
+            const hashImageTime = performance.now() - hashImageStart;
+            context.logger.debug(`Hashed ${images.length} images in ${hashImageTime.toFixed(0)}ms`);
 
             const nonImageFiles = files.filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath));
-            const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = [];
 
-            for (const file of nonImageFiles) {
-                filepaths.push({
+            context.logger.debug(
+                `Hashing ${nonImageFiles.length} non-image files with concurrency ${HASH_CONCURRENCY}...`
+            );
+            const hashNonImageStart = performance.now();
+            const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = await asyncPool(
+                HASH_CONCURRENCY,
+                nonImageFiles,
+                async (file) => ({
                     path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
                     fileHash: await calculateFileHash(file.absoluteFilePath)
-                });
-            }
+                })
+            );
+            const hashNonImageTime = performance.now() - hashNonImageStart;
+            context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
@@ -146,6 +185,8 @@ export async function publishDocs({
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
+                    context.logger.debug(`Received preview registration ID: ${docsRegistrationId}`);
+
                     if (skipUpload) {
                         context.logger.debug("Skip-upload mode: skipping file uploads for docs preview");
                     } else {
@@ -157,9 +198,10 @@ export async function publishDocs({
                         );
 
                         const uploadCount = Object.keys(urlsToUpload).length;
+                        const skippedCount = skippedSet.size;
 
                         if (uploadCount > 0) {
-                            // context.logger.info(`↑ Uploading ${uploadCount} files...`); // uncomment when FDR is updated to persist hashes over multiple previews
+                            context.logger.debug(`Uploading ${uploadCount} files (${skippedCount} skipped)...`);
                             await uploadFiles(
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
@@ -167,7 +209,7 @@ export async function publishDocs({
                                 UPLOAD_FILE_BATCH_SIZE
                             );
                         } else {
-                            // context.logger.info("✓ No files to upload (all up to date)"); //ibid.
+                            context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
                         }
                     }
                     return convertToFilePathPairs(
@@ -175,7 +217,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             } else {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
@@ -189,11 +231,12 @@ export async function publishDocs({
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
+                    context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
 
                     const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
                     if (skippedCount > 0) {
                         context.logger.info(
-                            `✓ Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
+                            `Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
                         );
                     }
 
@@ -218,7 +261,7 @@ export async function publishDocs({
                                 UPLOAD_FILE_BATCH_SIZE
                             );
                         } else {
-                            context.logger.info("✓ No files to upload (all up to date)");
+                            context.logger.info("No files to upload (all up to date)");
                         }
                     }
                     return convertToFilePathPairs(
@@ -226,30 +269,97 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             }
         },
-        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+        registerApi: async ({
+            ir,
+            snippetsConfig,
+            playgroundConfig,
+            apiName,
+            workspace,
+            graphqlOperations,
+            graphqlTypes
+        }) => {
+            // Use apiName from docs.yml (folder name) as the API identifier for FDR
+            // This ensures users can reference APIs by their folder name in docs components
+            let apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context,
+                apiNameOverride: apiName
+            });
+
+            const aiEnhancerConfig = getAIEnhancerConfig(
+                withAiExamples,
+                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
+            );
+            if (aiEnhancerConfig && workspace) {
+                const sources = workspace.getSources();
+                const openApiSource = sources.find((source) => source.type === "openapi");
+                const sourceFilePath = openApiSource?.absoluteFilePath;
+
+                apiDefinition = await enhanceExamplesWithAI(
+                    apiDefinition,
+                    aiEnhancerConfig,
+                    context,
+                    token,
+                    organization,
+                    sourceFilePath
+                );
+            }
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-            if (useDynamicSnippets) {
-                dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
+            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
+            if (Object.keys(snippetsConfig).length === 0) {
+                context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
+            } else if (!disableDynamicSnippets) {
+                // Check for existing SDK dynamic IRs before generating
+                const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
+                    fdr,
                     workspace,
                     organization,
                     context,
                     snippetsConfig
                 });
+
+                if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
+                    dynamicIRsByLanguage = existingSdkDynamicIrs;
+                    languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
+                    context.logger.debug(
+                        `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
+                    );
+                }
+
+                // Generate dynamic IRs for languages that don't have existing SDK dynamic IRs
+                const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig,
+                    skipLanguages: languagesWithExistingSdkDynamicIr
+                });
+
+                if (generatedDynamicIRs) {
+                    dynamicIRsByLanguage = {
+                        ...dynamicIRsByLanguage,
+                        ...generatedDynamicIRs
+                    };
+                }
             }
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
+                apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName.originalName),
                 definition: apiDefinition,
                 definitionV2: undefined,
-                dynamicIRs: dynamicIRsByLanguage
+                dynamicIRs: dynamicIRsByLanguage,
+                docsUrl
             });
 
             if (response.ok) {
@@ -277,49 +387,150 @@ export async function publishDocs({
                             "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
                         );
                     }
-                    default:
+                    default: {
+                        const errorDetails = extractErrorDetails(response.error);
+                        context.logger.error(
+                            `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                        );
                         if (apiName != null) {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
+                                errorDetails
                             );
                         } else {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
+                                errorDetails
                             );
                         }
+                    }
                 }
             }
         },
         targetAudiences
     });
 
-    const docsDefinition = await resolver.resolve();
+    context.logger.info("Resolving docs definition...");
+    const resolveStart = performance.now();
+    let docsDefinition = await resolver.resolve();
+    const resolveTime = performance.now() - resolveStart;
+
+    if (docsWorkspace.config.settings?.substituteEnvVars) {
+        context.logger.debug("Applying environment variable substitution to docs definition...");
+        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const substitutedDocs = replaceEnvVariables(
+            docsWithoutJsFiles,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: false }
+        );
+        docsDefinition = { ...substitutedDocs, jsFiles };
+    }
+
+    const pageCount = Object.keys(docsDefinition.pages).length;
+    const apiWorkspaceCount = apiWorkspaces.length;
+    const resolveMemory = process.memoryUsage();
+    context.logger.info(
+        `Resolved docs definition in ${resolveTime.toFixed(0)}ms: ${pageCount} pages${apiWorkspaceCount ? `, ${apiWorkspaceCount} API workspaces` : ""}`
+    );
+    context.logger.debug(
+        `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
+    );
 
     if (docsRegistrationId == null) {
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    context.logger.debug("Publishing docs...");
+    // Handle Python docs generation if configured
+    let libraryDocsConfig: DocsV2Write.LibraryDocsRegistrationConfig | undefined;
+    const pythonDocsSection = await extractPythonDocsSectionFromConfig(
+        docsWorkspace.config,
+        docsWorkspace.absoluteFilePath
+    );
+    if (pythonDocsSection != null && !isAirGapped) {
+        // Config is already deserialized with camelCase properties
+        const githubUrl = pythonDocsSection.pythonDocs;
+
+        context.logger.info(`Generating Python documentation from ${githubUrl}...`);
+
+        // Start Python docs generation
+        const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
+            orgId: CjsFdrSdk.OrgId(organization),
+            githubUrl: CjsFdrSdk.Url(githubUrl),
+            language: "PYTHON",
+            config: {
+                branch: undefined,
+                packagePath: undefined,
+                title: pythonDocsSection.title,
+                slug: pythonDocsSection.slug
+            }
+        });
+
+        if (!startResponse.ok) {
+            return context.failAndThrow(`Failed to start Python docs generation for ${githubUrl}`, startResponse.error);
+        }
+
+        const jobId = startResponse.body.jobId;
+        context.logger.debug(`Python docs generation started with jobId: ${jobId}`);
+
+        // Poll for completion
+        const POLL_INTERVAL_MS = 3000;
+        const MAX_POLL_ATTEMPTS = 100; // ~5 minutes
+        let pollAttempts = 0;
+
+        while (pollAttempts < MAX_POLL_ATTEMPTS) {
+            const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
+
+            if (!statusResponse.ok) {
+                return context.failAndThrow(`Failed to check Python docs generation status`, statusResponse.error);
+            }
+
+            const status = statusResponse.body.status;
+            context.logger.debug(`Python docs generation status: ${status}`);
+
+            if (status === "COMPLETED") {
+                context.logger.info("Python documentation generation completed.");
+                libraryDocsConfig = {
+                    jobId,
+                    slug: pythonDocsSection.slug,
+                    title: pythonDocsSection.title
+                };
+                break;
+            } else if (status === "FAILED") {
+                const errorMsg = statusResponse.body.error?.message ?? "Unknown error";
+                return context.failAndThrow(`Python docs generation failed: ${errorMsg}`);
+            }
+
+            // Wait before next poll
+            await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+            pollAttempts++;
+        }
+
+        if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+            return context.failAndThrow("Python docs generation timed out");
+        }
+    }
+
+    context.logger.info("Publishing docs to FDR...");
+    const publishStart = performance.now();
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
-            excludeApis: false
+            excludeApis,
+            libraryDocs: libraryDocsConfig
         }
     );
 
     if (registerDocsResponse.ok) {
+        const publishTime = performance.now() - publishStart;
+        context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({
             docsDefinition,
-            organization,
-            token,
-            url: url.replace("https://", ""),
-            context,
-            fdr,
             isPreview: preview,
-            domain,
-            customDomains
+            context
         });
 
         const link = terminalLink(url, url);
@@ -333,6 +544,11 @@ export async function publishDocs({
                 return context.failAndThrow(
                     "Failed to publish docs to " + domain,
                     `Docs registration ID ${docsRegistrationId} does not exist.`
+                );
+            case "LibraryDocsJobInvalidForRegistrationError":
+                return context.failAndThrow(
+                    "Failed to publish docs to " + domain,
+                    "Library docs job is invalid for registration. The job may not exist, may not be completed, or may belong to a different organization."
                 );
             default:
                 return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error);
@@ -398,7 +614,8 @@ function convertToFilePathPairs(
 
 async function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
-    context: TaskContext
+    context: TaskContext,
+    organization: string
 ): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -406,6 +623,12 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization);
+    if (authErrorMessage != null) {
+        return context.failAndThrow(authErrorMessage);
+    }
+
     switch (error.error) {
         case "InvalidCustomDomainError":
             return context.failAndThrow(
@@ -416,10 +639,14 @@ async function startDocsRegisterFailed(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
         case "UnauthorizedError":
-            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.");
+            return context.failAndThrow(
+                `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
+                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
             );
         case "UnavailableError":
             return context.failAndThrow(
@@ -430,6 +657,25 @@ async function startDocsRegisterFailed(
     }
 }
 
+function getAuthenticationErrorMessage(error: unknown, organization: string): string | undefined {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+
+    if (content?.reason === "status-code") {
+        const statusCode = content.statusCode as number | undefined;
+
+        if (statusCode === 401 || statusCode === 403) {
+            const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
+            const contactMessage =
+                "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
+
+            return `${baseMessage}\n\n${contactMessage}`;
+        }
+    }
+
+    return undefined;
+}
+
 function parseBasePath(domain: string): string | undefined {
     try {
         return new URL(wrapWithHttps(domain)).pathname;
@@ -438,16 +684,284 @@ function parseBasePath(domain: string): string | undefined {
     }
 }
 
-async function generateLanguageSpecificDynamicIRs({
+async function checkAndDownloadExistingSdkDynamicIRs({
+    fdr,
     workspace,
     organization,
     context,
     snippetsConfig
 }: {
+    fdr: FdrClient;
     workspace: FernWorkspace | undefined;
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
+}): Promise<Record<string, DynamicIr> | undefined> {
+    if (!workspace) {
+        return undefined;
+    }
+
+    const snippetConfigWithVersions = await buildSnippetConfigurationWithVersions({
+        fdr,
+        workspace,
+        snippetsConfig,
+        context
+    });
+
+    if (Object.keys(snippetConfigWithVersions).length === 0) {
+        context.logger.debug(`[SDK Dynamic IR] No snippet configs found, skipping S3 check`);
+        return undefined;
+    }
+
+    try {
+        const response = await fdr.api.v1.register.checkSdkDynamicIrExists({
+            orgId: CjsFdrSdk.OrgId(organization),
+            snippetConfiguration: snippetConfigWithVersions
+        });
+
+        if (!response.ok || !response.body) {
+            context.logger.debug(`[SDK Dynamic IR] API call failed or returned empty body`);
+            return undefined;
+        }
+
+        const existingDynamicIrs = response.body.existingDynamicIrs;
+
+        if (Object.keys(existingDynamicIrs).length === 0) {
+            context.logger.debug("[SDK Dynamic IR] No existing SDK dynamic IRs found in S3");
+            return undefined;
+        }
+
+        const result: Record<string, DynamicIr> = {};
+        for (const [language, sdkDynamicIrDownload] of Object.entries(existingDynamicIrs)) {
+            try {
+                context.logger.debug(`Downloading existing SDK dynamic IR for ${language}...`);
+                const downloadResponse = await fetch(sdkDynamicIrDownload.downloadUrl);
+                if (downloadResponse.ok) {
+                    const dynamicIR = (await downloadResponse.json()) as unknown;
+                    result[language] = { dynamicIR };
+                    context.logger.debug(`Successfully downloaded SDK dynamic IR for ${language}`);
+                } else {
+                    context.logger.warn(
+                        `Failed to download SDK dynamic IR for ${language}: ${downloadResponse.status}`
+                    );
+                }
+            } catch (error) {
+                context.logger.warn(`Error downloading SDK dynamic IR for ${language}: ${error}`);
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
+    } catch (error) {
+        context.logger.debug(`Error checking for existing SDK dynamic IRs: ${error}`);
+        return undefined;
+    }
+}
+// normalize Go package names by stripping https:// prefix to match how upload keys are generated.
+function normalizeGoPackageForLookup(repository: string): string {
+    return repository.replace(/^https:\/\//, "");
+}
+async function buildSnippetConfigurationWithVersions({
+    fdr,
+    workspace,
+    snippetsConfig,
+    context
+}: {
+    fdr: FdrClient;
+    workspace: FernWorkspace;
+    snippetsConfig: SnippetsConfig;
+    context: TaskContext;
+}): Promise<Record<string, { packageName: string; version: string | undefined }>> {
+    const result: Record<string, { packageName: string; version: string | undefined }> = {};
+
+    const snippetConfigs: Array<{
+        language: string;
+        snippetName: string | undefined;
+        explicitVersion: string | undefined;
+    }> = [
+        {
+            language: "typescript",
+            snippetName: snippetsConfig.typescriptSdk?.package,
+            explicitVersion: snippetsConfig.typescriptSdk?.version
+        },
+        {
+            language: "python",
+            snippetName: snippetsConfig.pythonSdk?.package,
+            explicitVersion: snippetsConfig.pythonSdk?.version
+        },
+        {
+            language: "java",
+            snippetName: snippetsConfig.javaSdk?.coordinate,
+            explicitVersion: snippetsConfig.javaSdk?.version
+        },
+        {
+            language: "go",
+            // Normalize to match S3 upload key format (github.com/owner/repo vs https://github.com/owner/repo)
+            snippetName:
+                snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
+            explicitVersion: snippetsConfig.goSdk?.version
+        },
+        {
+            language: "csharp",
+            snippetName: snippetsConfig.csharpSdk?.package,
+            explicitVersion: snippetsConfig.csharpSdk?.version
+        },
+        {
+            language: "ruby",
+            snippetName: snippetsConfig.rubySdk?.gem,
+            explicitVersion: snippetsConfig.rubySdk?.version
+        },
+        {
+            language: "php",
+            snippetName: snippetsConfig.phpSdk?.package,
+            explicitVersion: snippetsConfig.phpSdk?.version
+        },
+        {
+            language: "swift",
+            snippetName: snippetsConfig.swiftSdk?.package,
+            explicitVersion: snippetsConfig.swiftSdk?.version
+        },
+        {
+            language: "rust",
+            snippetName: snippetsConfig.rustSdk?.package,
+            explicitVersion: snippetsConfig.rustSdk?.version
+        }
+    ];
+
+    for (const config of snippetConfigs) {
+        if (!config.snippetName) {
+            continue;
+        }
+
+        let version: string | undefined = config.explicitVersion;
+        if (!version) {
+            const versionResult = await computeSemanticVersionForLanguage({
+                fdr,
+                workspace,
+                language: config.language,
+                snippetName: config.snippetName,
+                context
+            });
+            version = versionResult?.version;
+        }
+
+        // Include the entry even if no version is available - the API will use the latest version
+        result[config.language] = { packageName: config.snippetName, version };
+        if (!version) {
+            context.logger.debug(`[SDK Dynamic IR] ${config.language}: no version specified, will use latest`);
+        }
+    }
+
+    return result;
+}
+
+async function computeSemanticVersionForLanguage({
+    fdr,
+    workspace,
+    language,
+    snippetName,
+    context
+}: {
+    fdr: FdrClient;
+    workspace: FernWorkspace;
+    language: string;
+    snippetName: string;
+    context: TaskContext;
+}): Promise<{ version: string; generatorPackage: string } | undefined> {
+    let fdrLanguage: CjsFdrSdk.sdks.Language;
+    switch (language) {
+        case "csharp":
+            fdrLanguage = "Csharp";
+            break;
+        case "go":
+            fdrLanguage = "Go";
+            break;
+        case "java":
+            fdrLanguage = "Java";
+            break;
+        case "python":
+            fdrLanguage = "Python";
+            break;
+        case "ruby":
+            fdrLanguage = "Ruby";
+            break;
+        case "typescript":
+            fdrLanguage = "TypeScript";
+            break;
+        case "php":
+            fdrLanguage = "Php";
+            break;
+        case "swift":
+            fdrLanguage = "Swift";
+            break;
+        default:
+            return undefined;
+    }
+
+    let githubRepository: string | undefined;
+    let generatorPackage: string | undefined;
+    let matchedGeneratorName: string | undefined;
+
+    if (workspace.generatorsConfiguration?.groups) {
+        const candidatePackages: string[] = [];
+        for (const group of workspace.generatorsConfiguration.groups) {
+            for (const generatorInvocation of group.generators) {
+                if (generatorInvocation.language === language) {
+                    const pkgName = generatorsYml.getPackageName({ generatorInvocation });
+                    if (pkgName) {
+                        candidatePackages.push(pkgName);
+                    }
+                    if (!generatorPackage && pkgName) {
+                        generatorPackage = pkgName;
+                        matchedGeneratorName = generatorInvocation.name;
+                        if (generatorInvocation.outputMode.type === "githubV2") {
+                            githubRepository = `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (!generatorPackage) {
+        context.logger.debug(`[SDK Dynamic IR] ${language}: no generator found with a package name`);
+        return undefined;
+    }
+
+    try {
+        const response = await fdr.sdks.versions.computeSemanticVersion({
+            githubRepository,
+            language: fdrLanguage,
+            package: generatorPackage
+        });
+
+        if (!response.ok) {
+            context.logger.debug(
+                `[SDK Dynamic IR] ${language}: version computation failed for package "${generatorPackage}"`
+            );
+            return undefined;
+        }
+        context.logger.debug(
+            `[SDK Dynamic IR] ${language}: computed version ${response.body.version} for package "${generatorPackage}"`
+        );
+        return { version: response.body.version, generatorPackage };
+    } catch (error) {
+        context.logger.debug(`[SDK Dynamic IR] ${language}: error computing version: ${error}`);
+        return undefined;
+    }
+}
+
+async function generateLanguageSpecificDynamicIRs({
+    workspace,
+    organization,
+    context,
+    snippetsConfig,
+    skipLanguages = new Set()
+}: {
+    workspace: FernWorkspace | undefined;
+    organization: string;
+    context: TaskContext;
+    snippetsConfig: SnippetsConfig;
+    skipLanguages?: Set<string>;
 }): Promise<Record<string, DynamicIr> | undefined> {
     let languageSpecificIRs: Record<string, DynamicIr> = {};
 
@@ -455,17 +969,12 @@ async function generateLanguageSpecificDynamicIRs({
         return undefined;
     }
 
-    if (Object.keys(snippetsConfig).length === 0) {
-        context.logger.warn(`WARNING: No snippets defined for ${workspace.workspaceName}.`);
-        context.logger.warn("Did you add snippets to your docs configuration?");
-        context.logger.warn("For more info: https://buildwithfern.com/learn/docs/api-references/sdk-snippets");
-    }
-
     let snippetConfiguration = {
         typescript: snippetsConfig.typescriptSdk?.package,
         python: snippetsConfig.pythonSdk?.package,
         java: snippetsConfig.javaSdk?.coordinate,
-        go: snippetsConfig.goSdk?.githubRepo,
+        // normalize Go package name to match generator package format for comparison logic
+        go: snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
         csharp: snippetsConfig.csharpSdk?.package,
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
@@ -520,6 +1029,14 @@ async function generateLanguageSpecificDynamicIRs({
                     continue;
                 }
 
+                // Skip languages that already have SDK dynamic IRs
+                if (skipLanguages.has(generatorInvocation.language)) {
+                    context.logger.debug(
+                        `Skipping dynamic IR generation for ${generatorInvocation.language} (using existing SDK dynamic IR)`
+                    );
+                    continue;
+                }
+
                 // generate a dynamic IR for configuration that matches the requested api snippet
                 if (
                     generatorInvocation.language &&
@@ -568,7 +1085,12 @@ async function generateLanguageSpecificDynamicIRs({
     }
 
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
-        if (language && packageName && !Object.keys(languageSpecificIRs).includes(language)) {
+        if (
+            language &&
+            packageName &&
+            !Object.keys(languageSpecificIRs).includes(language) &&
+            !skipLanguages.has(language)
+        ) {
             context.logger.warn();
             context.logger.warn(
                 `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
@@ -603,12 +1125,13 @@ async function uploadDynamicIRs({
             const dynamicIR = dynamicIRs[language]?.dynamicIR;
 
             if (dynamicIR) {
+                const jsonBody = JSON.stringify(dynamicIR);
                 const response = await fetch(source.uploadUrl, {
                     method: "PUT",
-                    body: JSON.stringify(dynamicIR),
+                    body: jsonBody,
                     headers: {
                         "Content-Type": "application/octet-stream",
-                        "Content-Length": JSON.stringify(dynamicIR).length.toString()
+                        "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
                     }
                 });
 
@@ -626,72 +1149,249 @@ async function uploadDynamicIRs({
 
 async function updateAiChatFromDocsDefinition({
     docsDefinition,
-    organization,
-    token,
-    url,
-    context,
-    fdr,
     isPreview,
-    domain,
-    customDomains
+    context
 }: {
     docsDefinition: DocsDefinition;
-    organization: string;
-    token: FernToken;
-    url: string;
-    context: TaskContext;
-    fdr: FdrClient;
     isPreview: boolean;
-    domain: string;
-    customDomains: string[];
+    context: TaskContext;
 }): Promise<void> {
-    if (docsDefinition.config.aiChatConfig == null) {
+    if (docsDefinition.config.aiChatConfig == null || isPreview) {
         return;
     }
-    context.logger.debug("Processing AI Chat configuration from docs.yml");
+    context.logger.warn(
+        chalk.yellow("Enabling Ask Fern from docs.yml is deprecated. Please enable it from the Fern dashboard instead.")
+    );
+}
 
-    if (docsDefinition.config.aiChatConfig.location != null) {
-        const faiClient = getFaiClient({ token: token.value });
+function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {
+    if (!withAiExamples) {
+        return undefined;
+    }
 
-        const domainsToEnable = isPreview
-            ? [wrapWithHttps(url).replace("https://", "")]
-            : [
-                  wrapWithHttps(domain).replace("https://", ""),
-                  ...customDomains.map((cd) => wrapWithHttps(cd).replace("https://", ""))
-              ];
+    return {
+        enabled: true,
+        model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
+        maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
+        styleInstructions
+    };
+}
 
-        context.logger.debug(
-            `Enabling Ask AI for domain${domainsToEnable.length > 1 ? "s" : ""}: ${domainsToEnable.join(", ")}`
-        );
+/**
+ * Extracts detailed error information from an FDR SDK error response.
+ * This helps debug network/fetch failures by providing structured error details
+ * including status codes, error messages, and any underlying cause information.
+ */
+function extractErrorDetails(error: unknown): Record<string, unknown> {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
 
-        if (docsDefinition.config.aiChatConfig.location.includes("docs")) {
-            for (const domainToEnable of domainsToEnable) {
-                const domainHostname = new URL(wrapWithHttps(domainToEnable)).hostname;
-                context.logger.debug(`Adding domain ${domainHostname} to Algolia whitelist`);
-                const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
-                    domain: domainHostname
-                });
-                if (!addResult.ok) {
-                    context.logger.warn(
-                        `Failed to add domain ${domainHostname} to Algolia whitelist${isPreview ? ". Please try regenerating to test AI chat in preview." : "."}`
-                    );
+    return {
+        errorType: errorObj?.error,
+        statusCode: errorObj?.statusCode ?? content?.statusCode,
+        reason: content?.reason,
+        errorMessage: content?.errorMessage ?? content?.message,
+        body: content?.body,
+        // Include any underlying error/cause information
+        cause: content?.cause,
+        // Include the raw error for complete debugging if needed
+        rawError: error
+    };
+}
+
+/**
+ * Extracts the first library section configuration from the docs config navigation.
+ * Only supports Python libraries for now.
+ * Searches through top-level navigation, tabbed navigation, versioned navigation,
+ * and product-based navigation (including product files and version files).
+ */
+async function extractPythonDocsSectionFromConfig(
+    config: docsYml.RawSchemas.DocsConfiguration,
+    absolutePathToFernFolder: AbsoluteFilePath
+): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> {
+    // Helper to check if an item is a Python docs config
+    // The config may have "pythonDocs" (camelCase, deserialized) or "python-docs" (kebab-case, raw YAML)
+    const isPythonDocsConfig = (item: unknown): boolean => {
+        if (item == null || typeof item !== "object") {
+            return false;
+        }
+        const obj = item as Record<string, unknown>;
+        // Check for deserialized format (pythonDocs) or raw YAML format (python-docs)
+        return typeof obj.pythonDocs === "string" || typeof obj["python-docs"] === "string";
+    };
+
+    // Helper to normalize python-docs config to the expected format
+    const normalizePythonDocsConfig = (item: unknown): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (item == null || typeof item !== "object") {
+            return undefined;
+        }
+        const obj = item as Record<string, unknown>;
+        // If it has pythonDocs (deserialized format), return as-is
+        if (typeof obj.pythonDocs === "string") {
+            return item as docsYml.RawSchemas.PythonDocsConfiguration;
+        }
+        // If it has python-docs (raw YAML format), convert to deserialized format
+        if (typeof obj["python-docs"] === "string") {
+            return {
+                pythonDocs: obj["python-docs"],
+                title: typeof obj.title === "string" ? obj.title : undefined,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined
+            } as docsYml.RawSchemas.PythonDocsConfiguration;
+        }
+        return undefined;
+    };
+
+    // Helper to recursively search navigation items
+    const findPythonDocsSectionInItems = (
+        items: unknown[] | undefined
+    ): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (items == null) {
+            return undefined;
+        }
+        for (const item of items) {
+            if (isPythonDocsConfig(item)) {
+                return normalizePythonDocsConfig(item);
+            }
+            // Check in section contents
+            if (item != null && typeof item === "object" && "section" in item) {
+                const sectionItem = item as { contents?: unknown[] };
+                if (sectionItem.contents) {
+                    const found = findPythonDocsSectionInItems(sectionItem.contents);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+            // Check in tabbed navigation items (items with tab and layout properties)
+            if (item != null && typeof item === "object" && "tab" in item && "layout" in item) {
+                const tabbedItem = item as { layout?: unknown[] };
+                if (tabbedItem.layout) {
+                    const found = findPythonDocsSectionInItems(tabbedItem.layout);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+        }
+        return undefined;
+    };
+
+    // Helper to search in a navigation config (handles arrays, tabbed, and versioned)
+    const findInNavigationConfig = (navigation: unknown): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (navigation == null) {
+            return undefined;
+        }
+
+        // Check if it's an array (simple navigation)
+        if (Array.isArray(navigation)) {
+            return findPythonDocsSectionInItems(navigation);
+        }
+
+        // Check if it's an object with tabs
+        if (navigation != null && typeof navigation === "object") {
+            const navObj = navigation as Record<string, unknown>;
+
+            // Tabbed navigation - check each tab's layout
+            if (Array.isArray(navObj.tabs)) {
+                for (const tab of navObj.tabs) {
+                    if (tab != null && typeof tab === "object") {
+                        const tabObj = tab as Record<string, unknown>;
+                        if (Array.isArray(tabObj.layout)) {
+                            const found = findPythonDocsSectionInItems(tabObj.layout);
+                            if (found) {
+                                return found;
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        const indexingResult = await faiClient.settings.enableAskAi({
-            domains: domainsToEnable,
-            org_name: organization,
-            locations: docsDefinition.config.aiChatConfig.location,
-            preview: isPreview
-        });
+        return undefined;
+    };
 
-        if (indexingResult.success) {
-            context.logger.info(
-                chalk.green(
-                    `${isPreview ? "" : `Ask Fern enabled for ${domainsToEnable.join(", ")}. `}\nNote: it may take a few minutes after publishing for Ask Fern settings to reflect expected state.`
-                )
-            );
+    // Helper to load and search a version file
+    const searchVersionFile = async (
+        versionPath: string
+    ): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> => {
+        try {
+            const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(versionPath));
+            const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+            if (content != null && typeof content === "object") {
+                const versionContent = content as Record<string, unknown>;
+                return findInNavigationConfig(versionContent.navigation);
+            }
+        } catch {
+            // If we can't read the file, skip it
+        }
+        return undefined;
+    };
+
+    // Helper to load and search a product file
+    const searchProductFile = async (
+        productPath: string,
+        productVersions?: docsYml.RawSchemas.VersionConfig[]
+    ): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> => {
+        try {
+            const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(productPath));
+            const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+
+            if (content != null && typeof content === "object") {
+                const productContent = content as Record<string, unknown>;
+
+                // First check the product file's own navigation
+                const found = findInNavigationConfig(productContent.navigation);
+                if (found) {
+                    return found;
+                }
+            }
+
+            // If the product has versions, search each version file
+            if (productVersions != null && productVersions.length > 0) {
+                for (const version of productVersions) {
+                    const found = await searchVersionFile(version.path);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+        } catch {
+            // If we can't read the file, skip it
+        }
+        return undefined;
+    };
+
+    // First, check top-level navigation
+    if (config.navigation != null) {
+        const found = findInNavigationConfig(config.navigation);
+        if (found) {
+            return found;
         }
     }
+
+    // Check top-level versions (versioned navigation at root level)
+    if (config.versions != null && config.versions.length > 0) {
+        for (const version of config.versions) {
+            const found = await searchVersionFile(version.path);
+            if (found) {
+                return found;
+            }
+        }
+    }
+
+    // Check products (product-based navigation)
+    if (config.products != null && config.products.length > 0) {
+        for (const product of config.products) {
+            // Only internal products have a path to a product file
+            if ("path" in product && product.path != null) {
+                const found = await searchProductFile(product.path, product.versions);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+    }
+
+    return undefined;
 }

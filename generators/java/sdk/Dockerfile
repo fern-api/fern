@@ -1,24 +1,71 @@
 # Stage 1: Java V2
 # Updated: WebSocket feature support added
-FROM node:23.10-bookworm AS node
+# Updated Node.js to 24.13.0 to fix CVE-2025-59465, CVE-2025-55131, CVE-2025-55130, CVE-2026-21637, CVE-2025-59466, CVE-2025-55132
+FROM node:24.13.0-bookworm AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
 # Stage 2: Java V1
 # Apple Silicon: FROM bitnami/gradle:latest
-FROM gradle:jdk11-jammy
+# Use Corretto to fix January 2026 Oracle CPU CVEs:
+# - CVE-2026-21945, CVE-2026-21932, CVE-2026-21925, CVE-2026-21933
+FROM gradle:jdk11-corretto
+
+# Remove vulnerable jars from Gradle base image - not used by this generator
+# CVE-2025-4949: jgit 5.13.3
+# CVE-2022-4065: testng 6.3.1
+# CVE-2025-48924: commons-lang 2.6, commons-lang3 3.14.0
+# CVE-2020-36843: eddsa 0.3.0
+# CVE-2020-29582: kotlin-stdlib (insecure temp file/folder creation in versions < 1.4.21)
+RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
+       /opt/gradle/lib/plugins/org.eclipse.jgit.ssh.apache-*.jar \
+       /opt/gradle/lib/plugins/testng-*.jar \
+       /opt/gradle/lib/commons-lang-*.jar \
+       /opt/gradle/lib/commons-lang3-*.jar \
+       /opt/gradle/lib/plugins/eddsa-*.jar \
+       /opt/gradle/lib/kotlin-stdlib-*.jar
+
+# Update packages to get latest security fixes and remove unnecessary packages
+# Amazon Linux 2023 uses dnf instead of apt-get
+# Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
+# need to update what's present and remove what we don't need
+RUN dnf update -y && \
+    dnf remove -y git-lfs wget || true && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf
+
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
     && tar -xvf sdk.tar \
     && rm -rf sdk.tar
 
-ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF8"
+ENV JAVA_TOOL_OPTIONS="-Xmx4g -Dfile.encoding=UTF8"
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
+# Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
+RUN npm install -g npm@latest && npm install -g glob@11.1.0
+
+# Patch npm's bundled glob to 11.1.0 (npm bundles its own copy at node_modules/npm/node_modules/glob)
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    rm -rf glob && \
+    npm pack glob@11.1.0 && \
+    tar -xzf glob-11.1.0.tgz && \
+    mv package glob && \
+    rm glob-11.1.0.tgz
+
+# Patch npm's bundled tar to 7.5.7 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w (path traversal via hardlinks/symlinks)
+# Note: We use curl instead of npm pack because npm pack depends on tar itself
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    rm -rf tar && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.7.tgz -o tar-7.5.7.tgz && \
+    tar -xzf tar-7.5.7.tgz && \
+    mv package tar && \
+    rm tar-7.5.7.tgz
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
@@ -30,6 +77,29 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
 
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
+RUN npm install -f -g @fern-api/generator-cli@0.5.3
+
+# Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
+# Use npm pack + tar to replace the package without running npm install (which fails due to workspace: protocol)
+# Also install fast-content-type-parse which is a new dependency in @octokit/request@10.0.7
+# Note: Skip patching if @octokit directory doesn't exist (may be different in newer versions)
+RUN OCTOKIT_DIR="/usr/local/lib/node_modules/@fern-api/generator-cli/node_modules/@octokit" && \
+    if [ -d "$OCTOKIT_DIR" ]; then \
+        cd "$OCTOKIT_DIR" && \
+        rm -rf request && \
+        npm pack @octokit/request@10.0.7 && \
+        tar -xzf octokit-request-10.0.7.tgz && \
+        mv package request && \
+        rm octokit-request-10.0.7.tgz && \
+        cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules && \
+        if [ ! -d "fast-content-type-parse" ]; then \
+            npm pack fast-content-type-parse@2.0.1 && \
+            tar -xzf fast-content-type-parse-2.0.1.tgz && \
+            mv package fast-content-type-parse && \
+            rm fast-content-type-parse-2.0.1.tgz; \
+        fi; \
+    else \
+        echo "Skipping @octokit/request patch - directory does not exist (may be patched in newer version)"; \
+    fi
 
 ENTRYPOINT ["sh", "/init.sh"]

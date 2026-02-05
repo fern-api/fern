@@ -146,12 +146,12 @@ public record Animal
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Animal>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(Animal).IsAssignableFrom(typeToConvert);
 
         public override Animal Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

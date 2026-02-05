@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tssego \"github.com/fern-api/sse-go\"\n\tssegoclient \"github.com/fern-api/sse-go/client\"\n)\n\nclient := ssegoclient.NewClient()\nresponse, err := client.Completions.Stream(\n\tcontext.TODO(),\n\t\u0026ssego.StreamCompletionRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

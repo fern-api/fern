@@ -24,9 +24,23 @@ public abstract class AbstractDelegatingHttpEndpointMethodSpecs implements HttpE
 
     public abstract Optional<MethodSpec> getNoRequestBodyMethodSpec();
 
+    public abstract Optional<MethodSpec> getNoRequestBodyWithRequestOptionsMethodSpec();
+
+    public abstract Optional<MethodSpec> getBodyOnlyMethodSpec();
+
+    public abstract Optional<MethodSpec> getBodyOnlyWithRequestOptionsMethodSpec();
+
     public abstract Optional<MethodSpec> getByteArrayMethodSpec();
 
     public abstract Optional<MethodSpec> getNonRequestOptionsByteArrayMethodSpec();
+
+    public abstract Optional<MethodSpec> getInputStreamMethodSpec();
+
+    public abstract Optional<MethodSpec> getInputStreamWithMediaTypeMethodSpec();
+
+    public abstract Optional<MethodSpec> getInputStreamWithRequestOptionsMethodSpec();
+
+    public abstract Optional<MethodSpec> getInputStreamWithMediaTypeAndRequestOptionsMethodSpec();
 
     protected static String paramString(MethodSpec spec) {
         StringBuilder argString = new StringBuilder("(");

@@ -19,55 +19,83 @@ class ComplexProfile(UniversalBaseModel):
     """
 
     id: str
-    nullable_role: typing_extensions.Annotated[typing.Optional[UserRole], FieldMetadata(alias="nullableRole")] = None
-    optional_role: typing_extensions.Annotated[typing.Optional[UserRole], FieldMetadata(alias="optionalRole")] = None
-    optional_nullable_role: typing_extensions.Annotated[
-        typing.Optional[UserRole], FieldMetadata(alias="optionalNullableRole")
+    nullable_role: typing_extensions.Annotated[
+        typing.Optional[UserRole], FieldMetadata(alias="nullableRole"), pydantic.Field(alias="nullableRole")
     ] = None
-    nullable_status: typing_extensions.Annotated[typing.Optional[UserStatus], FieldMetadata(alias="nullableStatus")] = (
-        None
-    )
-    optional_status: typing_extensions.Annotated[typing.Optional[UserStatus], FieldMetadata(alias="optionalStatus")] = (
-        None
-    )
+    optional_role: typing_extensions.Annotated[
+        typing.Optional[UserRole], FieldMetadata(alias="optionalRole"), pydantic.Field(alias="optionalRole")
+    ] = None
+    optional_nullable_role: typing_extensions.Annotated[
+        typing.Optional[UserRole],
+        FieldMetadata(alias="optionalNullableRole"),
+        pydantic.Field(alias="optionalNullableRole"),
+    ] = None
+    nullable_status: typing_extensions.Annotated[
+        typing.Optional[UserStatus], FieldMetadata(alias="nullableStatus"), pydantic.Field(alias="nullableStatus")
+    ] = None
+    optional_status: typing_extensions.Annotated[
+        typing.Optional[UserStatus], FieldMetadata(alias="optionalStatus"), pydantic.Field(alias="optionalStatus")
+    ] = None
     optional_nullable_status: typing_extensions.Annotated[
-        typing.Optional[UserStatus], FieldMetadata(alias="optionalNullableStatus")
+        typing.Optional[UserStatus],
+        FieldMetadata(alias="optionalNullableStatus"),
+        pydantic.Field(alias="optionalNullableStatus"),
     ] = None
     nullable_notification: typing_extensions.Annotated[
-        typing.Optional[NotificationMethod], FieldMetadata(alias="nullableNotification")
+        typing.Optional[NotificationMethod],
+        FieldMetadata(alias="nullableNotification"),
+        pydantic.Field(alias="nullableNotification"),
     ] = None
     optional_notification: typing_extensions.Annotated[
-        typing.Optional[NotificationMethod], FieldMetadata(alias="optionalNotification")
+        typing.Optional[NotificationMethod],
+        FieldMetadata(alias="optionalNotification"),
+        pydantic.Field(alias="optionalNotification"),
     ] = None
     optional_nullable_notification: typing_extensions.Annotated[
-        typing.Optional[NotificationMethod], FieldMetadata(alias="optionalNullableNotification")
+        typing.Optional[NotificationMethod],
+        FieldMetadata(alias="optionalNullableNotification"),
+        pydantic.Field(alias="optionalNullableNotification"),
     ] = None
     nullable_search_result: typing_extensions.Annotated[
-        typing.Optional[SearchResult], FieldMetadata(alias="nullableSearchResult")
+        typing.Optional[SearchResult],
+        FieldMetadata(alias="nullableSearchResult"),
+        pydantic.Field(alias="nullableSearchResult"),
     ] = None
     optional_search_result: typing_extensions.Annotated[
-        typing.Optional[SearchResult], FieldMetadata(alias="optionalSearchResult")
+        typing.Optional[SearchResult],
+        FieldMetadata(alias="optionalSearchResult"),
+        pydantic.Field(alias="optionalSearchResult"),
     ] = None
     nullable_array: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="nullableArray")
+        typing.Optional[typing.List[str]], FieldMetadata(alias="nullableArray"), pydantic.Field(alias="nullableArray")
     ] = None
     optional_array: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="optionalArray")
+        typing.Optional[typing.List[str]], FieldMetadata(alias="optionalArray"), pydantic.Field(alias="optionalArray")
     ] = None
     optional_nullable_array: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="optionalNullableArray")
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="optionalNullableArray"),
+        pydantic.Field(alias="optionalNullableArray"),
     ] = None
     nullable_list_of_nullables: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.Optional[str]]], FieldMetadata(alias="nullableListOfNullables")
+        typing.Optional[typing.List[typing.Optional[str]]],
+        FieldMetadata(alias="nullableListOfNullables"),
+        pydantic.Field(alias="nullableListOfNullables"),
     ] = None
     nullable_map_of_nullables: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[Address]]], FieldMetadata(alias="nullableMapOfNullables")
+        typing.Optional[typing.Dict[str, typing.Optional[Address]]],
+        FieldMetadata(alias="nullableMapOfNullables"),
+        pydantic.Field(alias="nullableMapOfNullables"),
     ] = None
     nullable_list_of_unions: typing_extensions.Annotated[
-        typing.Optional[typing.List[NotificationMethod]], FieldMetadata(alias="nullableListOfUnions")
+        typing.Optional[typing.List[NotificationMethod]],
+        FieldMetadata(alias="nullableListOfUnions"),
+        pydantic.Field(alias="nullableListOfUnions"),
     ] = None
     optional_map_of_enums: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, UserRole]], FieldMetadata(alias="optionalMapOfEnums")
+        typing.Optional[typing.Dict[str, UserRole]],
+        FieldMetadata(alias="optionalMapOfEnums"),
+        pydantic.Field(alias="optionalMapOfEnums"),
     ] = None
 
     if IS_PYDANTIC_V2:

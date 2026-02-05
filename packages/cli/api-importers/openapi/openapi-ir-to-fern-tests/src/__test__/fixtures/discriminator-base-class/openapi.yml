@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: Discriminator Base Class Test
+  version: 1.0.0
+
+paths:
+  /form:
+    post:
+      operationId: createForm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                form_fields:
+                  description: Array of form fields with different types
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/FormFieldBase"
+      responses:
+        "200":
+          description: Success
+
+components:
+  schemas:
+    FormFieldBase:
+      description: Base form field with discriminator
+      required:
+        - type
+        - name
+        - x
+        - y
+      properties:
+        type:
+          type: string
+        name:
+          description: Display name for the field
+          type: string
+        x:
+          description: X coordinate
+          type: integer
+        y:
+          description: Y coordinate
+          type: integer
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          text: "#/components/schemas/FormFieldText"
+          checkbox: "#/components/schemas/FormFieldCheckbox"
+          signature: "#/components/schemas/FormFieldSignature"
+
+    FormFieldText:
+      description: Text input field
+      allOf:
+        - $ref: "#/components/schemas/FormFieldBase"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              description: A text input field
+              type: string
+              default: text
+            placeholder:
+              description: Placeholder text
+              type: string
+            maxLength:
+              description: Maximum length
+              type: integer
+
+    FormFieldCheckbox:
+      description: Checkbox field
+      allOf:
+        - $ref: "#/components/schemas/FormFieldBase"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              description: A checkbox field
+              type: string
+              default: checkbox
+            checked:
+              description: Default checked state
+              type: boolean
+
+    FormFieldSignature:
+      description: Signature field
+      allOf:
+        - $ref: "#/components/schemas/FormFieldBase"
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              description: A signature field
+              type: string
+              default: signature
+            required:
+              description: Whether signature is required
+              type: boolean

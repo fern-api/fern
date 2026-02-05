@@ -105,6 +105,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-property-name`",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -139,22 +140,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-property-name`",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernPropertyName",
+      "safeName": "testExtensionXFernPropertyName"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_property_name",
+      "safeName": "test_extension_x_fern_property_name"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_PROPERTY_NAME",
+      "safeName": "TEST_EXTENSION_X_FERN_PROPERTY_NAME"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernPropertyName",
+      "safeName": "TestExtensionXFernPropertyName"
     }
   },
   "constants": {

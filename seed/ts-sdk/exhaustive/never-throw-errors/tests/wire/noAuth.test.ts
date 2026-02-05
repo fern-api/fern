@@ -3,10 +3,10 @@
 import { SeedExhaustiveClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("NoAuth", () => {
+describe("NoAuthClient", () => {
     test("postWithNoAuth", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server

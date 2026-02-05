@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -41,6 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.nullableOptional.core.OptionalNullable;
 import com.seed.nullableOptional.resources.nullableoptional.types.Address;
 import com.seed.nullableOptional.resources.nullableoptional.types.CreateUserRequest;
 
@@ -54,19 +70,35 @@ public class Example {
             CreateUserRequest
                 .builder()
                 .username("username")
-                .email("email")
-                .phone("phone")
+                .email(
+                    OptionalNullable.of("email")
+                )
+                .phone(
+                    OptionalNullable.of("phone")
+                )
                 .address(
-                    Address
-                        .builder()
-                        .street("street")
-                        .zipCode("zipCode")
-                        .city("city")
-                        .state("state")
-                        .country("country")
-                        .buildingId("buildingId")
-                        .tenantId("tenantId")
-                        .build()
+                    OptionalNullable.of(
+                        Address
+                            .builder()
+                            .street("street")
+                            .city(
+                                OptionalNullable.of("city")
+                            )
+                            .state(
+                                OptionalNullable.of("state")
+                            )
+                            .zipCode("zipCode")
+                            .country(
+                                OptionalNullable.of("country")
+                            )
+                            .buildingId(
+                                OptionalNullable.of("buildingId")
+                            )
+                            .tenantId(
+                                OptionalNullable.of("tenantId")
+                            )
+                            .build()
+                    )
                 )
                 .build()
         );
@@ -170,7 +202,6 @@ SeedNullableOptionalClient client = SeedNullableOptionalClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.nullableOptional.SeedNullableOptionalClient;
 import com.seed.nullableOptional.core.RequestOptions;
@@ -178,7 +209,7 @@ import com.seed.nullableOptional.core.RequestOptions;
 // Client level
 SeedNullableOptionalClient client = SeedNullableOptionalClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -186,7 +217,7 @@ client.nullableOptional().createUser(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

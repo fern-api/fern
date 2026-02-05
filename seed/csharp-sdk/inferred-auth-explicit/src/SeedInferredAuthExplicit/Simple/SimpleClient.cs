@@ -2,7 +2,7 @@ using SeedInferredAuthExplicit.Core;
 
 namespace SeedInferredAuthExplicit;
 
-public partial class SimpleClient
+public partial class SimpleClient : ISimpleClient
 {
     private RawClient _client;
 
@@ -19,6 +19,12 @@ public partial class SimpleClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedInferredAuthExplicit.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -26,6 +32,7 @@ public partial class SimpleClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/get-something",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

@@ -26,10 +26,6 @@ public class SeedApiClient {
         return this.rawClient;
     }
 
-    public ResponseBody postWithNullableNamedRequestBodyType(String id) {
-        return this.rawClient.postWithNullableNamedRequestBodyType(id).body();
-    }
-
     public ResponseBody postWithNullableNamedRequestBodyType(
             String id, PostWithNullableNamedRequestBodyTypeRequest request) {
         return this.rawClient.postWithNullableNamedRequestBodyType(id, request).body();
@@ -44,6 +40,12 @@ public class SeedApiClient {
 
     public ResponseBody postWithNonNullableNamedRequestBodyType(String id) {
         return this.rawClient.postWithNonNullableNamedRequestBodyType(id).body();
+    }
+
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String id, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithNonNullableNamedRequestBodyType(id, requestOptions)
+                .body();
     }
 
     public ResponseBody postWithNonNullableNamedRequestBodyType(String id, NonNullableObject request) {

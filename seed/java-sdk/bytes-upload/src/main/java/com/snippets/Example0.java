@@ -7,6 +7,6 @@ public class Example0 {
         SeedBytesUploadClient client =
                 SeedBytesUploadClient.builder().url("https://api.fern.com").build();
 
-        client.service().upload();
+        client.service().upload("".getBytes());
     }
 }

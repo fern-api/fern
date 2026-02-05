@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(request: MyUnion) -> Result<MyUnion, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(request: MyUnion) -> Result&lt;MyUnion, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -37,7 +37,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result<Metadata, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -71,7 +71,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -114,7 +114,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">call</a>(request: Request) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">call</a>(request: Request) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -158,7 +158,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result<UnionWithDuplicateTypes, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result&lt;UnionWithDuplicateTypes, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -195,7 +195,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -222,6 +222,66 @@ async fn main() {
         .await;
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .test_camel_case_properties(
+            &PaymentRequest {
+                payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
+                    method: "card".to_string(),
+                    card_number: "1234567890123456".to_string(),
+                }),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**payment_method:** `PaymentMethodUnion` 
+    
 </dd>
 </dl>
 </dd>

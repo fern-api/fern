@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -53,9 +68,9 @@ public class Example {
             GetFooRequest
                 .builder()
                 .requiredBaz("required_baz")
+                .requiredNullableBaz("required_nullable_baz")
                 .optionalBaz("optional_baz")
                 .optionalNullableBaz("optional_nullable_baz")
-                .requiredNullableBaz("required_nullable_baz")
                 .build()
         );
     }
@@ -136,7 +151,6 @@ SeedApiClient client = SeedApiClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.api.SeedApiClient;
 import com.seed.api.core.RequestOptions;
@@ -144,7 +158,7 @@ import com.seed.api.core.RequestOptions;
 // Client level
 SeedApiClient client = SeedApiClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -152,7 +166,7 @@ client.getFoo(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

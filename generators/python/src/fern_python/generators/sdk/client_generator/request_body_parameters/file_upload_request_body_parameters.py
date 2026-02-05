@@ -2,6 +2,7 @@ from typing import Dict, List, Optional
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
+from ..type_utilities import is_type_primitive_for_multipart
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
@@ -124,12 +125,37 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                     if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
                         continue
                     elif property_as_union.type == "bodyProperty":
-                        writer.write_line(
-                            f'"{property_as_union.name.wire_value}": {self._get_body_property_name(property_as_union)},'
-                        )
+                        prop_name = self._get_body_property_name(property_as_union)
+                        # For multipart form data, httpx expects primitive types (str, int, etc.)
+                        # Object types need to be JSON serialized as strings
+                        if self._is_primitive_type(property_as_union.value_type):
+                            writer.write_line(f'"{property_as_union.name.wire_value}": {prop_name},')
+                        else:
+                            # JSON serialize complex types for multipart form compatibility
+                            writer.write(f'"{property_as_union.name.wire_value}": ')
+                            writer.write_node(
+                                AST.Expression(
+                                    Json.dumps(
+                                        AST.Expression(
+                                            self._context.core_utilities.jsonable_encoder(AST.Expression(prop_name))
+                                        )
+                                    )
+                                )
+                            )
+                            writer.write_line(",")
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
+
+    def _is_primitive_type(self, type_reference: ir_types.TypeReference) -> bool:
+        """Check if a type can be passed directly in multipart form data without JSON serialization.
+
+        See `type_utilities.is_type_primitive_for_multipart` for full documentation.
+        """
+        return is_type_primitive_for_multipart(
+            type_reference,
+            get_type_declaration=self._context.pydantic_generator_context.get_declaration_for_type_id,
+        )
 
     def get_files(self) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:
@@ -195,7 +221,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                 write_file_property(writer, property_as_union.value)
                                 writer.write("} ")
                                 writer.write_line(
-                                    f"if {property_as_union.value.get_as_union().key.wire_value} is not None "
+                                    f"if {self._get_file_property_name(property_as_union.value)} is not None "
                                 )
                                 writer.write_line("else {}")
                             writer.write_line("),")

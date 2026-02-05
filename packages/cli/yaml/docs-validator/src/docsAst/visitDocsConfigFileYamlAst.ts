@@ -43,6 +43,16 @@ export async function visitDocsConfigFileYamlAst({
         analytics: noop,
         aiChat: noop,
         aiSearch: noop,
+        aiExamples: async (aiExamples) => {
+            // Handle nested structure (new format)
+            if (aiExamples != null && typeof aiExamples === "object") {
+                await visitObjectAsync(aiExamples, {
+                    enabled: noop,
+                    style: noop
+                });
+            }
+            // If it's a boolean, it's the old format which is handled by noop
+        },
         pageActions: noop,
         announcement: noop,
         backgroundImage: async (background) => {
@@ -115,7 +125,31 @@ export async function visitDocsConfigFileYamlAst({
                 nodePath: ["favicon"]
             });
         },
+        footer: async (footer) => {
+            if (footer == null) {
+                return;
+            }
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: footer,
+                visitor,
+                nodePath: ["footer"],
+                willBeUploaded: false
+            });
+        },
         footerLinks: noop,
+        header: async (header) => {
+            if (header == null) {
+                return;
+            }
+            await visitFilepath({
+                absoluteFilepathToConfiguration,
+                rawUnresolvedFilepath: header,
+                visitor,
+                nodePath: ["header"],
+                willBeUploaded: false
+            });
+        },
         integrations: noop,
         js: async (js) => {
             if (js == null) {

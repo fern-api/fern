@@ -23,7 +23,11 @@ export function getTextEventStreamObject(
             if (mediaObject == null) {
                 continue;
             }
-            const schema = mediaObject.schema;
+            // Check for itemSchema (OAS 3.2 standard for SSE) if schema is not present
+            const mediaObjectWithItemSchema = mediaObject as OpenAPIV3.MediaTypeObject & {
+                itemSchema?: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+            };
+            const schema = mediaObject.schema ?? mediaObjectWithItemSchema.itemSchema;
 
             return {
                 contentType,
@@ -34,6 +38,28 @@ export function getTextEventStreamObject(
     }
 
     return undefined;
+}
+
+/**
+ * Checks if the response content has text/event-stream with itemSchema.
+ * This is the OAS 3.2 standard for SSE endpoints.
+ */
+export function hasTextEventStreamWithItemSchema(media: Record<string, OpenAPIV3.MediaTypeObject>): boolean {
+    for (const contentType of Object.keys(media)) {
+        if (contentType.includes("text/event-stream")) {
+            const mediaObject = media[contentType];
+            if (mediaObject == null) {
+                continue;
+            }
+            const mediaObjectWithItemSchema = mediaObject as OpenAPIV3.MediaTypeObject & {
+                itemSchema?: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+            };
+            if (mediaObjectWithItemSchema.itemSchema != null) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 export interface ApplicationJsonMediaObject {

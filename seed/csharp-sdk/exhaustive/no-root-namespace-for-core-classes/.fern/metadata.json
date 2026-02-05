@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "root-namespace-for-core-classes": false
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

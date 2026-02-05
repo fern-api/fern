@@ -1,13 +1,27 @@
-import { HttpResponseResolver, passthrough } from "msw";
+import { type HttpResponseResolver, passthrough } from "msw";
 
 import { fromJson, toJson } from "../../src/core/json";
+
+export interface WithJsonOptions {
+    /**
+     * List of field names to ignore when comparing request bodies.
+     * This is useful for pagination cursor fields that change between requests.
+     */
+    ignoredFields?: string[];
+}
 
 /**
  * Creates a request matcher that validates if the request JSON body exactly matches the expected object
  * @param expectedBody - The exact body object to match against
  * @param resolver - Response resolver to execute if body matches
+ * @param options - Optional configuration including fields to ignore
  */
-export function withJson(expectedBody: unknown, resolver: HttpResponseResolver): HttpResponseResolver {
+export function withJson(
+    expectedBody: unknown,
+    resolver: HttpResponseResolver,
+    options?: WithJsonOptions,
+): HttpResponseResolver {
+    const ignoredFields = options?.ignoredFields ?? [];
     return async (args) => {
         const { request } = args;
 
@@ -28,7 +42,8 @@ export function withJson(expectedBody: unknown, resolver: HttpResponseResolver):
         }
 
         const mismatches = findMismatches(actualBody, expectedBody);
-        if (Object.keys(mismatches).filter((key) => !key.startsWith("pagination.")).length > 0) {
+        const filteredMismatches = Object.keys(mismatches).filter((key) => !ignoredFields.includes(key));
+        if (filteredMismatches.length > 0) {
             console.error("JSON body mismatch:", toJson(mismatches, undefined, 2));
             return passthrough();
         }
@@ -67,7 +82,7 @@ function findMismatches(actual: any, expected: any): Record<string, { actual: an
             const itemMismatches = findMismatches(actual[i], expected[i]);
             if (Object.keys(itemMismatches).length > 0) {
                 for (const [mismatchKey, mismatchValue] of Object.entries(itemMismatches)) {
-                    arrayMismatches[`[${i}]${mismatchKey === "value" ? "" : "." + mismatchKey}`] = mismatchValue;
+                    arrayMismatches[`[${i}]${mismatchKey === "value" ? "" : `.${mismatchKey}`}`] = mismatchValue;
                 }
             }
         }
@@ -99,7 +114,7 @@ function findMismatches(actual: any, expected: any): Record<string, { actual: an
             const nestedMismatches = findMismatches(actual[key], expected[key]);
             if (Object.keys(nestedMismatches).length > 0) {
                 for (const [nestedKey, nestedValue] of Object.entries(nestedMismatches)) {
-                    mismatches[`${key}${nestedKey === "value" ? "" : "." + nestedKey}`] = nestedValue;
+                    mismatches[`${key}${nestedKey === "value" ? "" : `.${nestedKey}`}`] = nestedValue;
                 }
             }
         } else if (actual[key] !== expected[key]) {

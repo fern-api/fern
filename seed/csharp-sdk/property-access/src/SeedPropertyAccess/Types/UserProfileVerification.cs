@@ -19,7 +19,7 @@ public record UserProfileVerification : IJsonOnDeserialized
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("verified")]
-    public required string Verified { get; set; }
+    public string Verified { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

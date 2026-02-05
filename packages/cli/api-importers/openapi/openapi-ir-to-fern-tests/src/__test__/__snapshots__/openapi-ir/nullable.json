@@ -56,7 +56,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/users",
       "examples": [
@@ -211,7 +210,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "PUT",
       "path": "/users",
       "examples": [
@@ -367,7 +365,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -399,7 +397,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/users/{userId}",
       "examples": [
@@ -422,16 +419,6 @@
               "value": {
                 "value": {
                   "value": "activated",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "email",
-              "value": {
-                "value": {
-                  "value": "email",
                   "type": "string"
                 },
                 "type": "primitive"

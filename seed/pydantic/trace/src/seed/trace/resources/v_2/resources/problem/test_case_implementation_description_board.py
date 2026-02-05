@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import UniversalBaseModel
 from .parameter_id import ParameterId
 
@@ -18,6 +20,7 @@ class TestCaseImplementationDescriptionBoard_ParamId(UniversalBaseModel):
     type: typing.Literal["paramId"] = "paramId"
 
 
-TestCaseImplementationDescriptionBoard = typing.Union[
-    TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId
+TestCaseImplementationDescriptionBoard = typing_extensions.Annotated[
+    typing.Union[TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId],
+    pydantic.Field(discriminator="type"),
 ]

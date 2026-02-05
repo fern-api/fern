@@ -4,16 +4,37 @@ using SeedPagination.Core;
 
 namespace SeedPagination.InlineUsers;
 
-public partial class InlineUsersClient_
+public partial class InlineUsersClient_ : IInlineUsersClient_
 {
     private RawClient _client;
 
     internal InlineUsersClient_(RawClient client)
     {
-        _client = client;
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithCursorPaginationInternalAsync(
+    private WithRawResponseTask<ListUsersPaginationResponse> ListWithCursorPaginationInternalAsync(
+        ListUsersCursorPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersPaginationResponse>(
+            ListWithCursorPaginationInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersPaginationResponse>
+    > ListWithCursorPaginationInternalAsyncCore(
         ListUsersCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -22,23 +43,19 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Page != null)
-                {
-                    _query["page"] = request.Page.Value.ToString();
-                }
-                if (request.PerPage != null)
-                {
-                    _query["per_page"] = request.PerPage.Value.ToString();
-                }
-                if (request.Order != null)
-                {
-                    _query["order"] = request.Order.Value.Stringify();
-                }
-                if (request.StartingAfter != null)
-                {
-                    _query["starting_after"] = request.StartingAfter;
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4)
+                    .Add("page", request.Page)
+                    .Add("per_page", request.PerPage)
+                    .Add("order", request.Order)
+                    .Add("starting_after", request.StartingAfter)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -46,7 +63,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -57,14 +75,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersPaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -77,7 +113,20 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationInternalAsync(
+    private WithRawResponseTask<ListUsersMixedTypePaginationResponse> ListWithMixedTypeCursorPaginationInternalAsync(
+        ListUsersMixedTypeCursorPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersMixedTypePaginationResponse>(
+            ListWithMixedTypeCursorPaginationInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersMixedTypePaginationResponse>
+    > ListWithMixedTypeCursorPaginationInternalAsyncCore(
         ListUsersMixedTypeCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -86,11 +135,16 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Cursor != null)
-                {
-                    _query["cursor"] = request.Cursor;
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("cursor", request.Cursor)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -98,7 +152,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -109,16 +164,33 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersMixedTypePaginationResponse>(
-                            responseBody
-                        )!;
+                        var responseData =
+                            JsonUtils.Deserialize<ListUsersMixedTypePaginationResponse>(
+                                responseBody
+                            )!;
+                        return new WithRawResponse<ListUsersMixedTypePaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -131,7 +203,20 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationInternalAsync(
+    private WithRawResponseTask<ListUsersPaginationResponse> ListWithBodyCursorPaginationInternalAsync(
+        ListUsersBodyCursorPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersPaginationResponse>(
+            ListWithBodyCursorPaginationInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersPaginationResponse>
+    > ListWithBodyCursorPaginationInternalAsyncCore(
         ListUsersBodyCursorPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -140,6 +225,12 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -148,6 +239,7 @@ public partial class InlineUsersClient_
                             Method = HttpMethod.Post,
                             Path = "/inline-users",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -158,14 +250,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersPaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -178,7 +288,20 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationInternalAsync(
+    private WithRawResponseTask<ListUsersPaginationResponse> ListWithOffsetPaginationInternalAsync(
+        ListUsersOffsetPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersPaginationResponse>(
+            ListWithOffsetPaginationInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersPaginationResponse>
+    > ListWithOffsetPaginationInternalAsyncCore(
         ListUsersOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -187,23 +310,19 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Page != null)
-                {
-                    _query["page"] = request.Page.Value.ToString();
-                }
-                if (request.PerPage != null)
-                {
-                    _query["per_page"] = request.PerPage.Value.ToString();
-                }
-                if (request.Order != null)
-                {
-                    _query["order"] = request.Order.Value.Stringify();
-                }
-                if (request.StartingAfter != null)
-                {
-                    _query["starting_after"] = request.StartingAfter;
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4)
+                    .Add("page", request.Page)
+                    .Add("per_page", request.PerPage)
+                    .Add("order", request.Order)
+                    .Add("starting_after", request.StartingAfter)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -211,7 +330,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -222,14 +342,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersPaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -242,7 +380,20 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationInternalAsync(
+    private WithRawResponseTask<ListUsersPaginationResponse> ListWithDoubleOffsetPaginationInternalAsync(
+        ListUsersDoubleOffsetPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersPaginationResponse>(
+            ListWithDoubleOffsetPaginationInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersPaginationResponse>
+    > ListWithDoubleOffsetPaginationInternalAsyncCore(
         ListUsersDoubleOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -251,23 +402,19 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Page != null)
-                {
-                    _query["page"] = request.Page.Value.ToString();
-                }
-                if (request.PerPage != null)
-                {
-                    _query["per_page"] = request.PerPage.Value.ToString();
-                }
-                if (request.Order != null)
-                {
-                    _query["order"] = request.Order.Value.Stringify();
-                }
-                if (request.StartingAfter != null)
-                {
-                    _query["starting_after"] = request.StartingAfter;
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 4)
+                    .Add("page", request.Page)
+                    .Add("per_page", request.PerPage)
+                    .Add("order", request.Order)
+                    .Add("starting_after", request.StartingAfter)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -275,7 +422,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -286,14 +434,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersPaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -306,7 +472,20 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationInternalAsync(
+    private WithRawResponseTask<ListUsersPaginationResponse> ListWithBodyOffsetPaginationInternalAsync(
+        ListUsersBodyOffsetPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersPaginationResponse>(
+            ListWithBodyOffsetPaginationInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersPaginationResponse>
+    > ListWithBodyOffsetPaginationInternalAsyncCore(
         ListUsersBodyOffsetPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -315,6 +494,12 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -323,6 +508,7 @@ public partial class InlineUsersClient_
                             Method = HttpMethod.Post,
                             Path = "/inline-users",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -333,14 +519,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersPaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -353,7 +557,20 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationInternalAsync(
+    private WithRawResponseTask<ListUsersPaginationResponse> ListWithOffsetStepPaginationInternalAsync(
+        ListUsersOffsetStepPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersPaginationResponse>(
+            ListWithOffsetStepPaginationInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersPaginationResponse>
+    > ListWithOffsetStepPaginationInternalAsyncCore(
         ListUsersOffsetStepPaginationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -362,19 +579,18 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Page != null)
-                {
-                    _query["page"] = request.Page.Value.ToString();
-                }
-                if (request.Limit != null)
-                {
-                    _query["limit"] = request.Limit.Value.ToString();
-                }
-                if (request.Order != null)
-                {
-                    _query["order"] = request.Order.Value.Stringify();
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3)
+                    .Add("page", request.Page)
+                    .Add("limit", request.Limit)
+                    .Add("order", request.Order)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -382,7 +598,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -393,14 +610,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersPaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -413,7 +648,24 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageInternalAsync(
+    private WithRawResponseTask<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageInternalAsync(
+        ListWithOffsetPaginationHasNextPageRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersPaginationResponse>(
+            ListWithOffsetPaginationHasNextPageInternalAsyncCore(
+                request,
+                options,
+                cancellationToken
+            )
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersPaginationResponse>
+    > ListWithOffsetPaginationHasNextPageInternalAsyncCore(
         ListWithOffsetPaginationHasNextPageRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -422,19 +674,18 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Page != null)
-                {
-                    _query["page"] = request.Page.Value.ToString();
-                }
-                if (request.Limit != null)
-                {
-                    _query["limit"] = request.Limit.Value.ToString();
-                }
-                if (request.Order != null)
-                {
-                    _query["order"] = request.Order.Value.Stringify();
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 3)
+                    .Add("page", request.Page)
+                    .Add("limit", request.Limit)
+                    .Add("order", request.Order)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -442,7 +693,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -453,14 +705,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersPaginationResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -473,7 +743,20 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersExtendedResponse> ListWithExtendedResultsInternalAsync(
+    private WithRawResponseTask<ListUsersExtendedResponse> ListWithExtendedResultsInternalAsync(
+        ListUsersExtendedRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersExtendedResponse>(
+            ListWithExtendedResultsInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersExtendedResponse>
+    > ListWithExtendedResultsInternalAsyncCore(
         ListUsersExtendedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -482,11 +765,16 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Cursor != null)
-                {
-                    _query["cursor"] = request.Cursor;
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("cursor", request.Cursor)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -494,7 +782,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -505,14 +794,32 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersExtendedResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ListUsersExtendedResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ListUsersExtendedResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -525,7 +832,24 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataInternalAsync(
+    private WithRawResponseTask<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataInternalAsync(
+        ListUsersExtendedRequestForOptionalData request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ListUsersExtendedOptionalListResponse>(
+            ListWithExtendedResultsAndOptionalDataInternalAsyncCore(
+                request,
+                options,
+                cancellationToken
+            )
+        );
+    }
+
+    private async Task<
+        WithRawResponse<ListUsersExtendedOptionalListResponse>
+    > ListWithExtendedResultsAndOptionalDataInternalAsyncCore(
         ListUsersExtendedRequestForOptionalData request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -534,11 +858,16 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Cursor != null)
-                {
-                    _query["cursor"] = request.Cursor;
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("cursor", request.Cursor)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -546,7 +875,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -557,16 +887,33 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(
-                            responseBody
-                        )!;
+                        var responseData =
+                            JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(
+                                responseBody
+                            )!;
+                        return new WithRawResponse<ListUsersExtendedOptionalListResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -579,7 +926,18 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<UsernameCursor> ListUsernamesInternalAsync(
+    private WithRawResponseTask<UsernameCursor> ListUsernamesInternalAsync(
+        ListUsernamesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<UsernameCursor>(
+            ListUsernamesInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<WithRawResponse<UsernameCursor>> ListUsernamesInternalAsyncCore(
         ListUsernamesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -588,11 +946,16 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.StartingAfter != null)
-                {
-                    _query["starting_after"] = request.StartingAfter;
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("starting_after", request.StartingAfter)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -600,7 +963,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -611,14 +975,30 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
+                        return new WithRawResponse<UsernameCursor>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -631,7 +1011,18 @@ public partial class InlineUsersClient_
             .ConfigureAwait(false);
     }
 
-    private async Task<UsernameContainer> ListWithGlobalConfigInternalAsync(
+    private WithRawResponseTask<UsernameContainer> ListWithGlobalConfigInternalAsync(
+        ListWithGlobalConfigRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<UsernameContainer>(
+            ListWithGlobalConfigInternalAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    private async Task<WithRawResponse<UsernameContainer>> ListWithGlobalConfigInternalAsyncCore(
         ListWithGlobalConfigRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -640,11 +1031,16 @@ public partial class InlineUsersClient_
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Offset != null)
-                {
-                    _query["offset"] = request.Offset.Value.ToString();
-                }
+                var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("offset", request.Offset)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -652,7 +1048,8 @@ public partial class InlineUsersClient_
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/inline-users",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -663,14 +1060,30 @@ public partial class InlineUsersClient_
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
+                        return new WithRawResponse<UsernameContainer>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedPaginationException("Failed to deserialize response", e);
+                        throw new SeedPaginationApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedPaginationApiException(
@@ -717,7 +1130,12 @@ public partial class InlineUsersClient_
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithCursorPaginationInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithCursorPaginationInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         (request, cursor) =>
                         {
                             request.StartingAfter = cursor;
@@ -760,7 +1178,12 @@ public partial class InlineUsersClient_
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithMixedTypeCursorPaginationInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithMixedTypeCursorPaginationInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;
@@ -806,7 +1229,12 @@ public partial class InlineUsersClient_
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithBodyCursorPaginationInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithBodyCursorPaginationInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         (request, cursor) =>
                         {
                             request.Pagination ??= new WithCursor();
@@ -847,14 +1275,19 @@ public partial class InlineUsersClient_
                     ListUsersOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithOffsetPaginationInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithOffsetPaginationInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -896,14 +1329,19 @@ public partial class InlineUsersClient_
                     ListUsersDoubleOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    double?,
+                    double,
                     object,
                     User
                 >
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithDoubleOffsetPaginationInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithDoubleOffsetPaginationInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -942,14 +1380,19 @@ public partial class InlineUsersClient_
                     ListUsersBodyOffsetPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
+                    int,
                     object,
                     User
                 >
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithBodyOffsetPaginationInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithBodyOffsetPaginationInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         request => request.Pagination?.Page ?? 0,
                         (request, offset) =>
                         {
@@ -991,14 +1434,19 @@ public partial class InlineUsersClient_
                     ListUsersOffsetStepPaginationRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithOffsetStepPaginationInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithOffsetStepPaginationInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -1039,14 +1487,19 @@ public partial class InlineUsersClient_
                     ListWithOffsetPaginationHasNextPageRequest,
                     RequestOptions?,
                     ListUsersPaginationResponse,
-                    int?,
-                    int?,
+                    int,
+                    int,
                     User
                 >
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithOffsetPaginationHasNextPageInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithOffsetPaginationHasNextPageInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         request => request.Page ?? 0,
                         (request, offset) =>
                         {
@@ -1094,7 +1547,12 @@ public partial class InlineUsersClient_
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithExtendedResultsInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithExtendedResultsInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;
@@ -1140,7 +1598,12 @@ public partial class InlineUsersClient_
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithExtendedResultsAndOptionalDataInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithExtendedResultsAndOptionalDataInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;
@@ -1183,7 +1646,8 @@ public partial class InlineUsersClient_
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListUsernamesInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListUsernamesInternalAsync(request, options, cancellationToken),
                         (request, cursor) =>
                         {
                             request.StartingAfter = cursor;
@@ -1217,14 +1681,19 @@ public partial class InlineUsersClient_
                     ListWithGlobalConfigRequest,
                     RequestOptions?,
                     UsernameContainer,
-                    int?,
+                    int,
                     object,
                     string
                 >
                     .CreateInstanceAsync(
                         request,
                         options,
-                        ListWithGlobalConfigInternalAsync,
+                        async (request, options, cancellationToken) =>
+                            await ListWithGlobalConfigInternalAsync(
+                                request,
+                                options,
+                                cancellationToken
+                            ),
                         request => request.Offset ?? 0,
                         (request, offset) =>
                         {

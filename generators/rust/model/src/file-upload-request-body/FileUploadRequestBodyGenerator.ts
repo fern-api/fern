@@ -189,13 +189,21 @@ export class FileUploadRequestBodyGenerator {
 
     // Helper method to convert query parameters to object properties
     private convertQueryParametersToProperties(queryParams: QueryParameter[]): InlinedRequestBodyProperty[] {
-        return queryParams.map((queryParam) => ({
-            name: queryParam.name,
-            valueType: queryParam.valueType,
-            docs: queryParam.docs,
-            availability: queryParam.availability,
-            propertyAccess: undefined,
-            v2Examples: undefined
-        }));
+        return queryParams.map((queryParam) => {
+            // For allow-multiple query params, wrap the type in a list using proper IR constructors
+            let valueType = queryParam.valueType;
+            if (queryParam.allowMultiple) {
+                valueType = TypeReference.container(ContainerType.list(queryParam.valueType));
+            }
+
+            return {
+                name: queryParam.name,
+                valueType,
+                docs: queryParam.docs,
+                availability: queryParam.availability,
+                propertyAccess: undefined,
+                v2Examples: undefined
+            };
+        });
     }
 }

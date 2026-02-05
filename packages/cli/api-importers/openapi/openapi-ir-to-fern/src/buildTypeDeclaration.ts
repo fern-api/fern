@@ -33,7 +33,7 @@ import { State } from "./State";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -146,7 +146,7 @@ export function buildObjectTypeDeclaration({
 }): ConvertedTypeDeclaration {
     const shouldSkipReadonly =
         context.isInState(State.Request) &&
-        context.respectReadonlySchemas &&
+        context.options.respectReadonlySchemas &&
         (context.getEndpointMethod() === "POST" ||
             context.getEndpointMethod() === "PUT" ||
             context.getEndpointMethod() === "PATCH");
@@ -228,7 +228,7 @@ export function buildObjectTypeDeclaration({
             namespace,
             declarationDepth: declarationDepth + 1
         });
-        extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference));
+        extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference)));
     }
 
     for (const inlineSchemaId of schemasToInline) {
@@ -258,7 +258,7 @@ export function buildObjectTypeDeclaration({
                 namespace,
                 declarationDepth: declarationDepth + 1
             });
-            extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference));
+            extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(extendedSchemaTypeReference)));
         }
     }
 
@@ -301,7 +301,10 @@ export function buildObjectTypeDeclaration({
 
     const name = schema.nameOverride ?? schema.generatedName;
     return {
-        name: readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
+        name:
+            readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly
+                ? `${name}Read`
+                : name,
         schema: objectTypeDeclaration
     };
 }
@@ -342,7 +345,7 @@ function getAllParentSchemasToInline({
 }
 
 // Helper function to extract properties directly from a Schema object
-function getPropertiesFromSchema(
+export function getPropertiesFromSchema(
     context: OpenApiIrConverterContext,
     schema: Schema,
     namespace: string | undefined
@@ -361,7 +364,7 @@ function getPropertiesFromSchema(
     return { properties: [], allOf: [] };
 }
 
-function getProperties(
+export function getProperties(
     context: OpenApiIrConverterContext,
     schemaId: SchemaId,
     namespace: string | undefined
@@ -561,7 +564,7 @@ export function buildNullableTypeDeclaration({
     namespace: string | undefined;
     declarationDepth: number;
 }): ConvertedTypeDeclaration {
-    if (!context.respectNullableSchemas) {
+    if (!context.options.respectNullableSchemas) {
         return buildOptionalTypeDeclaration({
             schema,
             context,
@@ -669,7 +672,10 @@ export function buildOneOfTypeDeclaration({
         return {
             name: schema.nameOverride ?? schema.generatedName,
             schema: {
-                discriminant: schema.discriminantProperty,
+                discriminant:
+                    schema.discriminantPropertyNameOverride != null
+                        ? { name: schema.discriminantPropertyNameOverride, value: schema.discriminantProperty }
+                        : schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
@@ -710,7 +716,7 @@ function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
 }
 
-function getSchemaIdOfResolvedType({
+export function getSchemaIdOfResolvedType({
     schema,
     context,
     namespace

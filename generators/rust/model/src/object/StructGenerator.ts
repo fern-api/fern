@@ -112,7 +112,7 @@ export class StructGenerator {
 
         // Generate the field type, wrapping in Box<T> if recursive
         const fieldType = generateFieldType(property, this.context, isRecursive);
-        const fieldAttributes = generateFieldAttributes(property);
+        const fieldAttributes = generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         return rust.field({

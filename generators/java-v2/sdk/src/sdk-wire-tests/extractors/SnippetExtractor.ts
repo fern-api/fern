@@ -9,8 +9,16 @@ export class SnippetExtractor {
     /**
      * Extracts just the client method call from a full Java snippet.
      * Removes client instantiation and imports, returning only the actual method invocation.
+     * Returns null if the method call cannot be extracted.
      */
-    public extractMethodCall(fullSnippet: string): string {
+    public extractMethodCall(fullSnippet: string): string | null {
+        // First check if the snippet contains placeholder comments
+        // TODO: @tanmay - remove this once we have a way to generate valid client method calls
+        if (fullSnippet.includes("// TODO: Add client call")) {
+            this.context.logger.debug("Snippet contains placeholder comment, cannot extract method call");
+            return null;
+        }
+
         const lines = fullSnippet.split("\n");
 
         let clientInstantiationIndex = -1;
@@ -34,7 +42,7 @@ export class SnippetExtractor {
 
         if (clientCallStartIndex === -1) {
             this.context.logger.debug("Could not find client method call in snippet");
-            return "// TODO: Add client call";
+            return null;
         }
 
         const methodCallLines: string[] = [];
@@ -72,12 +80,12 @@ export class SnippetExtractor {
 
         if (!foundSemicolon || methodCallLines.length === 0) {
             this.context.logger.debug("Could not extract complete method call");
-            return "// TODO: Add client call";
+            return null;
         }
 
         const nonEmptyLines = methodCallLines.filter((line) => line && line.trim().length > 0);
         if (nonEmptyLines.length === 0) {
-            return "// TODO: Add client call";
+            return null;
         }
 
         const minIndent = Math.min(

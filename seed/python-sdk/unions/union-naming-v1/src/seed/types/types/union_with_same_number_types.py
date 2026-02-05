@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -52,6 +53,9 @@ from seed.types import PositiveIntUnionWithSameNumberTypes
 
 PositiveIntUnionWithSameNumberTypes(value=100)
 """
-UnionWithSameNumberTypes = typing.Union[
-    PositiveIntUnionWithSameNumberTypes, NegativeIntUnionWithSameNumberTypes, AnyNumberUnionWithSameNumberTypes
+UnionWithSameNumberTypes = typing_extensions.Annotated[
+    typing.Union[
+        PositiveIntUnionWithSameNumberTypes, NegativeIntUnionWithSameNumberTypes, AnyNumberUnionWithSameNumberTypes
+    ],
+    pydantic.Field(discriminator="type"),
 ]

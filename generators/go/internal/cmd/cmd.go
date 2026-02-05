@@ -77,6 +77,7 @@ type Config struct {
 	PackageName                  string
 	PackagePath                  string
 	UnionVersion                 string
+	CustomPagerName              string
 	Module                       *generator.ModuleConfig
 	Writer                       *writer.Config
 }
@@ -109,6 +110,12 @@ func run(fn GeneratorFunc) (retErr error) {
 	if err != nil {
 		return err
 	}
+
+	// Normalize the version by adding 'v' prefix if missing (Go convention)
+	if config.Version != "" && !strings.HasPrefix(config.Version, "v") {
+		config.Version = "v" + config.Version
+	}
+
 	coordinator := coordinator.NewClient(config.CoordinatorURL, config.CoordinatorTaskID)
 	if err := coordinator.Init(); err != nil {
 		return err
@@ -243,6 +250,7 @@ func newConfig(configFilename string) (*Config, error) {
 		PackagePath:                  customConfig.PackagePath,
 		ExportedClientName:           customConfig.ExportedClientName,
 		UnionVersion:                 customConfig.UnionVersion,
+		CustomPagerName:              customConfig.CustomPagerName,
 		Module:                       moduleConfig,
 		Writer:                       writerConfig,
 	}, nil
@@ -299,6 +307,7 @@ type customConfig struct {
 	ExportedClientName           string        `json:"exportedClientName,omitempty"`
 	UnionVersion                 string        `json:"union,omitempty"`
 	Module                       *moduleConfig `json:"module,omitempty"`
+	CustomPagerName              string        `json:"customPagerName,omitempty"`
 }
 
 type moduleConfig struct {

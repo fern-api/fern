@@ -1,8 +1,18 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Auth**
+//! - **NestedNoAuth**
+//! - **Nested**
+//! - **Service**
+//! - **Simple**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod auth;
-pub mod nested;
 pub mod nested_no_auth;
+pub mod nested;
 pub mod service;
 pub mod simple;
 pub struct OauthClientCredentialsWithVariablesClient {
@@ -22,13 +32,14 @@ impl OauthClientCredentialsWithVariablesClient {
             nested_no_auth: NestedNoAuthClient::new(config.clone())?,
             nested: NestedClient::new(config.clone())?,
             service: ServiceClient::new(config.clone())?,
-            simple: SimpleClient::new(config.clone())?,
+            simple: SimpleClient::new(config.clone())?
         })
     }
+
 }
 
 pub use auth::AuthClient;
-pub use nested::NestedClient;
 pub use nested_no_auth::NestedNoAuthClient;
+pub use nested::NestedClient;
 pub use service::ServiceClient;
 pub use simple::SimpleClient;

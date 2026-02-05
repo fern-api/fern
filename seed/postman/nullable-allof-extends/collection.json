@@ -1,0 +1,229 @@
+{
+  "info": {
+    "name": "Nullable AllOf Extends Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.example.com",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Get Test",
+      "request": {
+        "description": "Returns a RootObject which inherits from a nullable schema.",
+        "url": {
+          "raw": "{{baseUrl}}/test",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "test"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Returns a RootObject which inherits from a nullable schema.",
+            "url": {
+              "raw": "{{baseUrl}}/test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "test"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": "OK",
+          "body": "{\n    \"normalField\": \"normalField\"\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Returns a RootObject which inherits from a nullable schema.",
+            "url": {
+              "raw": "{{baseUrl}}/test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "test"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": "OK",
+          "body": "{\n    \"normalField\": \"normalField\",\n    \"nullableField\": \"nullableField\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "Create Test",
+      "request": {
+        "description": "Creates a test object with nullable allOf in request body.",
+        "url": {
+          "raw": "{{baseUrl}}/test",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "test"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Creates a test object with nullable allOf in request body.",
+            "url": {
+              "raw": "{{baseUrl}}/test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "test"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "OK",
+          "body": "{\n    \"normalField\": \"normalField\"\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Creates a test object with nullable allOf in request body.",
+            "url": {
+              "raw": "{{baseUrl}}/test",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "test"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"normalField\": \"normalField\",\n    \"nullableField\": \"nullableField\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "OK",
+          "body": "{\n    \"normalField\": \"normalField\",\n    \"nullableField\": \"nullableField\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}

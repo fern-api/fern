@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +83,7 @@ client.headers.send(
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.inlined_request.<a href="src/seed/inlined_request/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.inlined_request.<a href="src/seed/inlined_request/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -164,8 +164,9 @@ client.inlined_request.send(
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
-<details><summary><code>client.path_param.<a href="src/seed/path_param/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.path_param.<a href="src/seed/path_param/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -231,7 +232,7 @@ client.path_param.send(
 </details>
 
 ## QueryParam
-<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -312,7 +313,7 @@ client.query_param.send(
 </dl>
 </details>
 
-<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send_list</a>(...)</code></summary>
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send_list</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

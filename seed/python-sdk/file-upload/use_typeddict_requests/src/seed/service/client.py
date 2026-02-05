@@ -12,7 +12,9 @@ from .requests.my_inline_type import MyInlineTypeParams
 from .requests.my_object import MyObjectParams
 from .requests.my_object_with_optional import MyObjectWithOptionalParams
 from .types.id import Id
+from .types.model_type import ModelType
 from .types.object_type import ObjectType
+from .types.open_enum_type import OpenEnumType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -48,7 +50,7 @@ class ServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -84,7 +86,7 @@ class ServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -188,6 +190,36 @@ class ServiceClient:
         )
         return _response.data
 
+    def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = self._raw_client.just_file_with_optional_query_params(
+            file=file, maybe_string=maybe_string, maybe_integer=maybe_integer, request_options=request_options
+        )
+        return _response.data
+
     def with_content_type(
         self,
         *,
@@ -260,7 +292,7 @@ class ServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -298,7 +330,7 @@ class ServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -336,7 +368,7 @@ class ServiceClient:
         self,
         *,
         image_file: typing.Optional[core.File] = OMIT,
-        request: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
@@ -345,7 +377,7 @@ class ServiceClient:
         image_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        request : typing.Optional[typing.Optional[typing.Any]]
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -412,6 +444,43 @@ class ServiceClient:
         _response = self._raw_client.simple(request_options=request_options)
         return _response.data
 
+    def with_literal_and_enum_types(
+        self,
+        *,
+        file: core.File,
+        model_type: typing.Optional[ModelType] = OMIT,
+        open_enum: typing.Optional[OpenEnumType] = OMIT,
+        maybe_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        model_type : typing.Optional[ModelType]
+
+        open_enum : typing.Optional[OpenEnumType]
+
+        maybe_name : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = self._raw_client.with_literal_and_enum_types(
+            file=file,
+            model_type=model_type,
+            open_enum=open_enum,
+            maybe_name=maybe_name,
+            request_options=request_options,
+        )
+        return _response.data
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -443,7 +512,7 @@ class AsyncServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -479,7 +548,7 @@ class AsyncServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -591,6 +660,36 @@ class AsyncServiceClient:
         )
         return _response.data
 
+    async def just_file_with_optional_query_params(
+        self,
+        *,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = await self._raw_client.just_file_with_optional_query_params(
+            file=file, maybe_string=maybe_string, maybe_integer=maybe_integer, request_options=request_options
+        )
+        return _response.data
+
     async def with_content_type(
         self,
         *,
@@ -665,7 +764,7 @@ class AsyncServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -703,7 +802,7 @@ class AsyncServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -741,7 +840,7 @@ class AsyncServiceClient:
         self,
         *,
         image_file: typing.Optional[core.File] = OMIT,
-        request: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
@@ -750,7 +849,7 @@ class AsyncServiceClient:
         image_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        request : typing.Optional[typing.Optional[typing.Any]]
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -831,4 +930,41 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.simple(request_options=request_options)
+        return _response.data
+
+    async def with_literal_and_enum_types(
+        self,
+        *,
+        file: core.File,
+        model_type: typing.Optional[ModelType] = OMIT,
+        open_enum: typing.Optional[OpenEnumType] = OMIT,
+        maybe_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        model_type : typing.Optional[ModelType]
+
+        open_enum : typing.Optional[OpenEnumType]
+
+        maybe_name : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = await self._raw_client.with_literal_and_enum_types(
+            file=file,
+            model_type=model_type,
+            open_enum=open_enum,
+            maybe_name=maybe_name,
+            request_options=request_options,
+        )
         return _response.data

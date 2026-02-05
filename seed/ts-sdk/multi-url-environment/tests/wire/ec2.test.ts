@@ -3,10 +3,11 @@
 import { SeedMultiUrlEnvironmentClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Ec2", () => {
+describe("Ec2Client", () => {
     test("bootInstance", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMultiUrlEnvironmentClient({
+            maxRetries: 0,
             token: "test",
             environment: { ec2: server.baseUrl, s3: server.baseUrl },
         });

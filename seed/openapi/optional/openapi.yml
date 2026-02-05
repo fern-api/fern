@@ -24,6 +24,84 @@ paths:
               type: object
               additionalProperties: true
               nullable: true
+  /send-optional-typed-body:
+    post:
+      operationId: optional_sendOptionalTypedBody
+      tags:
+        - Optional
+      parameters: []
+      responses:
+        '200':
+          description: Id of the created resource
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendOptionalBodyRequest'
+              nullable: true
+  /deploy/{actionId}/versions/{id}:
+    post:
+      description: >-
+        Tests optional(nullable(T)) where T has only optional properties.
+
+        This should not generate wire tests expecting {} when Optional.empty()
+        is passed.
+      operationId: optional_sendOptionalNullableWithAllOptionalProperties
+      tags:
+        - Optional
+      parameters:
+        - name: actionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeployResponse'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployParams'
+              nullable: true
 components:
-  schemas: {}
+  schemas:
+    SendOptionalBodyRequest:
+      title: SendOptionalBodyRequest
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    DeployParams:
+      title: DeployParams
+      type: object
+      properties:
+        updateDraft:
+          type: boolean
+          nullable: true
+    DeployResponse:
+      title: DeployResponse
+      type: object
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
   securitySchemes: {}

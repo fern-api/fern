@@ -12,10 +12,10 @@ public class Example0 {
 
         client.user()
                 .createUsername(CreateUsernameRequest.builder()
-                        .tags(Arrays.asList("tags", "tags"))
                         .username("username")
                         .password("password")
                         .name("test")
+                        .tags(Arrays.asList("tags", "tags"))
                         .build());
     }
 }

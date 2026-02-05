@@ -1,0 +1,5 @@
+api:
+  specs:
+    - openapi: ../openapi.json
+      settings:
+        coerce-enums-to-literals: false

@@ -798,7 +798,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1206,6 +1208,8 @@
                         "external"
                     ],
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Add a movie to the database"
                 }
@@ -1264,6 +1268,9 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -1288,6 +1295,9 @@
                         }
                     },
                     "url": "https://www.staging.yoursite.com",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]
@@ -1409,6 +1419,8 @@
                     },
                     "docs": null
                 },
+                "fileUploadPayload": null,
+                "responses": null,
                 "examples": null,
                 "v2Examples": null,
                 "availability": null,
@@ -1622,6 +1634,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_webhooks:User": {
@@ -1722,6 +1735,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -1880,6 +1894,7 @@
         "development"
     ],
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_imdb": {
             "name": {

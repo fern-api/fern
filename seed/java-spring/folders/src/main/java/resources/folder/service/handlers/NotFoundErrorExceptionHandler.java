@@ -14,6 +14,6 @@ import resources.folder.service.exceptions.NotFoundError;
 public final class NotFoundErrorExceptionHandler {
   @ExceptionHandler(NotFoundError.class)
   ResponseEntity<Object> handle(NotFoundError notFoundError) {
-    return new ResponseEntity<>(notFoundError.getBody(), null, NotFoundError.STATUS_CODE);
+    return ResponseEntity.status(NotFoundError.STATUS_CODE).body(notFoundError.getBody());
   }
 }

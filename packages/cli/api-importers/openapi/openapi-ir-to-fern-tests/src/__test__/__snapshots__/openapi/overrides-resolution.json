@@ -95,7 +95,7 @@
               "request": {
                 "body": {
                   "properties": {
-                    "email": "optional<string>",
+                    "email": "optional<nullable<string>>",
                     "lastName": "optional<string>",
                     "name": "optional<string>",
                     "settings": "optional<UserSettings>",
@@ -126,7 +126,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "createdAt": "optional<datetime>",
+              "createdAt": "optional<nullable<datetime>>",
               "email": "optional<string>",
               "id": "optional<string>",
               "name": "optional<string>",
@@ -141,7 +141,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "lastModified": "optional<datetime>",
+              "lastModified": "optional<nullable<datetime>>",
               "notifications": "optional<boolean>",
               "theme": "optional<string>",
             },
@@ -153,9 +153,9 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "accountStatus": "optional<UserStatsAccountStatus>",
-              "lastLoginTime": "optional<datetime>",
-              "totalLogins": "optional<integer>",
+              "accountStatus": "optional<nullable<UserStatsAccountStatus>>",
+              "lastLoginTime": "optional<nullable<datetime>>",
+              "totalLogins": "optional<nullable<integer>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -224,7 +224,7 @@
         body:
           properties:
             name: optional<string>
-            email: optional<string>
+            email: optional<nullable<string>>
             settings: optional<UserSettings>
             lastName: optional<string>
         content-type: application/json
@@ -255,7 +255,7 @@ types:
     properties:
       theme: optional<string>
       notifications: optional<boolean>
-      lastModified: optional<datetime>
+      lastModified: optional<nullable<datetime>>
     source:
       openapi: ../openapi.yml
   UserStatsAccountStatus:
@@ -269,9 +269,9 @@ types:
       openapi: ../openapi.yml
   UserStats:
     properties:
-      totalLogins: optional<integer>
-      lastLoginTime: optional<datetime>
-      accountStatus: optional<UserStatsAccountStatus>
+      totalLogins: optional<nullable<integer>>
+      lastLoginTime: optional<nullable<datetime>>
+      accountStatus: optional<nullable<UserStatsAccountStatus>>
     source:
       openapi: ../openapi.yml
   User:
@@ -279,7 +279,7 @@ types:
       id: optional<string>
       name: optional<string>
       email: optional<string>
-      createdAt: optional<datetime>
+      createdAt: optional<nullable<datetime>>
       settings: optional<UserSettings>
       stats: optional<UserStats>
     source:

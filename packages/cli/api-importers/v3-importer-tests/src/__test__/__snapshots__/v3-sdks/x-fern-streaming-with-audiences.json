@@ -389,6 +389,7 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -1007,6 +1008,7 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -1657,6 +1659,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1764,22 +1767,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernAudiencesAlongsideXFernStreaming",
+      "safeName": "testExtensionXFernAudiencesAlongsideXFernStreaming"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_audiences_alongside_x_fern_streaming",
+      "safeName": "test_extension_x_fern_audiences_alongside_x_fern_streaming"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_AUDIENCES_ALONGSIDE_X_FERN_STREAMING",
+      "safeName": "TEST_EXTENSION_X_FERN_AUDIENCES_ALONGSIDE_X_FERN_STREAMING"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernAudiencesAlongsideXFernStreaming",
+      "safeName": "TestExtensionXFernAudiencesAlongsideXFernStreaming"
     }
   },
   "constants": {

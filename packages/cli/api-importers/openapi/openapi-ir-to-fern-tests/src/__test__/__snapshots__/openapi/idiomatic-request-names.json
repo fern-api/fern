@@ -41,8 +41,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/users/{userId}",
-              "path-parameters": {
-                "userId": "string",
+              "request": {
+                "name": "GetUsersUserIdRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
               },
               "response": {
                 "docs": "User retrieved successfully",
@@ -157,9 +160,11 @@
       method: GET
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId: string
       display-name: Get a user
+      request:
+        name: GetUsersUserIdRequest
+        path-parameters:
+          userId: string
       response:
         docs: User retrieved successfully
         type: User
@@ -259,10 +264,6 @@ types:
                   "path-parameters": {
                     "organizationId": "organizationId",
                   },
-                  "query-parameters": {
-                    "page": 1,
-                    "pageSize": 1,
-                  },
                   "response": {
                     "body": {
                       "users": [
@@ -280,11 +281,11 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/organizations/{organizationId}/users",
-              "path-parameters": {
-                "organizationId": "string",
-              },
               "request": {
                 "name": "GetOrganizationsOrganizationIdUsersRequest",
+                "path-parameters": {
+                  "organizationId": "string",
+                },
                 "query-parameters": {
                   "page": "optional<integer>",
                   "pageSize": "optional<integer>",
@@ -316,11 +317,11 @@ service:
       method: GET
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        organizationId: string
       display-name: List organization users
       request:
         name: GetOrganizationsOrganizationIdUsersRequest
+        path-parameters:
+          organizationId: string
         query-parameters:
           page: optional<integer>
           pageSize: optional<integer>
@@ -331,9 +332,6 @@ service:
       examples:
         - path-parameters:
             organizationId: organizationId
-          query-parameters:
-            page: 1
-            pageSize: 1
           response:
             body:
               users:
@@ -361,10 +359,6 @@ service:
               "docs": undefined,
               "examples": [
                 {
-                  "query-parameters": {
-                    "page": 1,
-                    "pageSize": 1,
-                  },
                   "response": {
                     "body": {
                       "users": [
@@ -426,10 +420,7 @@ service:
         type: root.UserList
         status-code: 200
       examples:
-        - query-parameters:
-            page: 1
-            pageSize: 1
-          response:
+        - response:
             body:
               users:
                 - id: id

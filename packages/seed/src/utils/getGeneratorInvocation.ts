@@ -20,7 +20,8 @@ export async function getGeneratorInvocation({
     irVersion,
     publishMetadata,
     readme,
-    license
+    license,
+    smartCasing
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -33,6 +34,7 @@ export async function getGeneratorInvocation({
     publishMetadata: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     license?: unknown;
+    smartCasing?: boolean;
 }): Promise<generatorsYml.GeneratorInvocation> {
     const raw =
         license != null
@@ -55,7 +57,7 @@ export async function getGeneratorInvocation({
         absolutePathToLocalSnippets: undefined,
         language,
         keywords: undefined,
-        smartCasing: false,
+        smartCasing: smartCasing ?? false,
         disableExamples: false,
         irVersionOverride: irVersion,
         publishMetadata:

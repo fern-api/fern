@@ -1,4 +1,10 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Level1**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod level_1;
 pub struct EmptyClientsClient {
@@ -9,8 +15,10 @@ impl EmptyClientsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            
         })
     }
+
 }
 
 pub use level_1::Level1Client;

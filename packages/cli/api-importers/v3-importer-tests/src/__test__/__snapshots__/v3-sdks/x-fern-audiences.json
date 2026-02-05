@@ -553,6 +553,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-audiences`",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -642,22 +643,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-audiences`",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernAudiences",
+      "safeName": "testExtensionXFernAudiences"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_audiences",
+      "safeName": "test_extension_x_fern_audiences"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_AUDIENCES",
+      "safeName": "TEST_EXTENSION_X_FERN_AUDIENCES"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernAudiences",
+      "safeName": "TestExtensionXFernAudiences"
     }
   },
   "constants": {

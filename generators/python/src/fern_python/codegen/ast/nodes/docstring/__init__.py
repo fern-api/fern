@@ -1,3 +1,3 @@
-from .docstring import Docstring
+from .docstring import Docstring, escape_docstring
 
-__all__ = ["Docstring"]
+__all__ = ["Docstring", "escape_docstring"]

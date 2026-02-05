@@ -148,10 +148,10 @@ describe("isValidSemVerChange", () => {
             expect(isValidSemVerChange(current, previous)).toBe(true);
         });
 
-        it("should reject minor version increment with non-zero patch", () => {
+        it("should allow minor version increment with non-zero patch", () => {
             const current = new SemVer(1, 6, 1);
             const previous = new SemVer(1, 5, 10);
-            expect(isValidSemVerChange(current, previous)).toBe(false);
+            expect(isValidSemVerChange(current, previous)).toBe(true);
         });
 
         it("should reject minor version increment with prerelease", () => {

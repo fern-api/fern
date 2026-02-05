@@ -33,6 +33,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         footerLinks: undefined,
         logoHeight: undefined,
         logoHref: undefined,
+        logoRightText: undefined,
         favicon: undefined,
         metadata: undefined,
         redirects: undefined,
@@ -45,10 +46,14 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         css: undefined,
         js: undefined,
         pageActions: undefined,
-        theme: undefined
+        theme: undefined,
+        header: undefined,
+        footer: undefined,
+        editThisPageLaunch: undefined
     },
     jsFiles: undefined,
-    id: undefined
+    id: undefined,
+    apiNameToId: {}
 };
 
 export async function runPreviewServer({

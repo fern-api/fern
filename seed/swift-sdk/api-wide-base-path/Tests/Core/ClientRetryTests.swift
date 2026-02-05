@@ -23,8 +23,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -53,8 +53,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -83,8 +83,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -112,8 +112,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -140,8 +140,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -169,8 +169,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -198,8 +198,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -232,8 +232,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -276,8 +276,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -316,8 +316,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -367,8 +367,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -392,8 +392,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -421,8 +421,8 @@ import Testing
             _ = try await client.service.post(
                 pathParam: "pathParam",
                 serviceParam: "serviceParam",
-                resourceParam: "resourceParam",
                 endpointParam: 1,
+                resourceParam: "resourceParam",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

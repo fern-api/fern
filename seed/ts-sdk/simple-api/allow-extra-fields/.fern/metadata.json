@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "allowExtraFields": true
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

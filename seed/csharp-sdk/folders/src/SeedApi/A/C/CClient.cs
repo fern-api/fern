@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi.A.C;
 
-public partial class CClient
+public partial class CClient : ICClient
 {
     private RawClient _client;
 
@@ -20,6 +20,12 @@ public partial class CClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -27,6 +33,7 @@ public partial class CClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

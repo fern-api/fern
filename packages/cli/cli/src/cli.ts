@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { runCliV2 } from "@fern-api/cli-v2";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
@@ -28,6 +29,10 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { docsDiff } from "./commands/docs-diff/docsDiff";
+import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
+import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
+import { downgrade } from "./commands/downgrade/downgrade";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
@@ -37,11 +42,14 @@ import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/g
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
+import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
+import { selfUpdate } from "./commands/self-update/selfUpdate";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
@@ -125,9 +133,20 @@ async function runCli() {
 }
 
 async function tryRunCli(cliContext: CliContext) {
-    const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
+    const args = hideBin(process.argv);
+
+    if (args[0] === "completion") {
+        yargs(args)
+            .scriptName(cliContext.environment.cliName)
+            .completion("completion", "Generate shell completion script")
+            .parse();
+        return;
+    }
+
+    const cli: Argv<GlobalCliOptions> = yargs(args)
         .scriptName(cliContext.environment.cliName)
         .version(false)
+        .completion("completion", "Generate shell completion script")
         .fail((message, error: unknown, argv) => {
             // if error is null, it's a yargs validation error
             if (error == null) {
@@ -164,6 +183,7 @@ async function tryRunCli(cliContext: CliContext) {
         .recommendCommands();
 
     addDiffCommand(cli, cliContext);
+    addSdkDiffCommand(cli, cliContext);
     addInitCommand(cli, cliContext);
     addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
@@ -181,9 +201,11 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
-    addWriteOverridesCommand(cli, cliContext);
+    addOverridesCommand(cli, cliContext);
+    addWriteOverridesCommand(cli, cliContext); // Deprecated: use `fern overrides write` instead
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
+    addSelfUpdateCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -191,10 +213,12 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+    addDowngradeCommand(cli, cliContext);
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addBetaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -413,6 +437,56 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
+function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "sdk-diff <from-dir> <to-dir>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("from-dir", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to the directory containing the previous version of the SDK"
+                })
+                .positional("to-dir", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to the directory containing the next version of the SDK"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output result as JSON"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern sdk-diff"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const result = await sdkDiffCommand({
+                context: cliContext,
+                project,
+                fromDir: argv.fromDir,
+                toDir: argv.toDir
+            });
+
+            if (argv.json) {
+                // Output as JSON
+                cliContext.logger.info(JSON.stringify(result, null, 2));
+            } else {
+                // Output as formatted text
+                cliContext.logger.info("\n" + result.message);
+                cliContext.logger.info(`\nVersion Bump: ${result.version_bump}`);
+            }
+        }
+    );
+}
+
 function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "token",
@@ -568,19 +642,57 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Skip asset upload step and generate fake links for preview",
                     default: false
+                })
+                .option("fernignore", {
+                    type: "string",
+                    description:
+                        "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)"
+                })
+                .option("dynamic-ir-only", {
+                    boolean: true,
+                    description:
+                        "Only upload dynamic IR for specified version, skip SDK generation (remote generation only)",
+                    default: false
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Custom output directory (currently only supported with --preview for SDK generation)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
-            }
-            if (argv.local && argv.preview) {
-                return cliContext.failWithoutThrowing("The --local flag is incompatible with --preview.");
             }
             if (argv.skipUpload && !argv.preview) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
             }
             if (argv.skipUpload && argv.docs == null) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --docs.");
+            }
+            if (argv.fernignore != null && (argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --dynamic-ir-only flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["dynamic-ir-only"] && argv.version == null) {
+                return cliContext.failWithoutThrowing(
+                    "The --dynamic-ir-only flag requires a version to be specified with --version."
+                );
+            }
+            if (argv["dynamic-ir-only"] && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --dynamic-ir-only flag can only be used for API generation, not docs generation."
+                );
+            }
+            if (argv.output != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --output flag currently only works with --preview.");
+            }
+            if (argv.output != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
@@ -599,7 +711,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     force: argv.force,
                     runner: argv.runner as ContainerRunner,
                     inspect: false,
-                    lfsOverride: argv.lfsOverride
+                    lfsOverride: argv.lfsOverride,
+                    fernignorePath: argv.fernignore,
+                    dynamicIrOnly: argv["dynamic-ir-only"],
+                    outputDir: argv.output
                 });
             }
             if (argv.docs != null) {
@@ -645,7 +760,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 force: argv.force,
                 runner: argv.runner as ContainerRunner,
                 inspect: false,
-                lfsOverride: argv.lfsOverride
+                lfsOverride: argv.lfsOverride,
+                fernignorePath: argv.fernignore,
+                dynamicIrOnly: argv["dynamic-ir-only"],
+                outputDir: argv.output
             });
         }
     );
@@ -1009,14 +1127,55 @@ function addUpgradeCommand({
                 .option("version", {
                     string: true,
                     description: "The version to upgrade to. Defaults to the latest release."
+                })
+                .option("to", {
+                    string: true,
+                    hidden: true
+                })
+                .option("from", {
+                    string: true,
+                    description:
+                        "The version to migrate from. Use this to manually run migrations when upgrading from an older CLI version."
+                })
+                .option("from-git", {
+                    boolean: true,
+                    hidden: true
+                })
+                .option("yes", {
+                    alias: "y",
+                    boolean: true,
+                    default: false,
+                    description: "Automatically answer yes to migration prompts."
                 }),
         async (argv) => {
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
-                targetVersion: argv.version
+                targetVersion: argv.to ?? argv.version,
+                fromVersion: argv.from,
+                fromGit: argv["from-git"],
+                yes: argv.yes
             });
             onRun();
+        }
+    );
+}
+
+function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "downgrade <version>",
+        `Downgrades Fern CLI version in ${PROJECT_CONFIG_FILENAME}`,
+        (yargs) =>
+            yargs.positional("version", {
+                type: "string",
+                description: "The version to downgrade to",
+                demandOption: true
+            }),
+        async (argv) => {
+            await downgrade({
+                cliContext,
+                targetVersion: argv.version
+            });
         }
     );
 }
@@ -1026,11 +1185,17 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         "api update",
         `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description:
-                    "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description:
+                        "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
+                }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
                 command: "fern api update"
@@ -1040,7 +1205,36 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
+                }),
+                indent: argv.indent
+            });
+        }
+    );
+}
+
+function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "self-update [version]",
+        "Updates the globally installed Fern CLI to the latest version or the specified version",
+        (yargs) =>
+            yargs
+                .positional("version", {
+                    type: "string",
+                    description: "The version to update to (e.g., 0.85.0, 10). Defaults to latest."
                 })
+                .option("dry-run", {
+                    type: "boolean",
+                    description: "Show what would be executed without actually running the update",
+                    default: false
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern self-update"
+            });
+            await selfUpdate({
+                cliContext,
+                version: argv.version,
+                dryRun: argv.dryRun
             });
         }
     );
@@ -1117,7 +1311,7 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "test",
-        "Runs tests specified in --command, this spins up a mock server in the background that is terminated upon completion of the tests.",
+        false,
         (yargs) =>
             yargs
                 .option("api", {
@@ -1154,7 +1348,7 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "mock",
-        "Starts a mock server for an API.",
+        false,
         (yargs) =>
             yargs
                 .option("port", {
@@ -1181,9 +1375,55 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("overrides", "Commands for managing OpenAPI overrides", (yargs) => {
+        addOverridesCompareCommand(yargs, cliContext);
+        addOverridesWriteCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addOverridesCompareCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "write-overrides",
+        "compare <original> <modified>",
+        "Compare two OpenAPI specs and generate an overrides file from the differences.",
+        (yargs) =>
+            yargs
+                .positional("original", {
+                    type: "string",
+                    description: "Path to the original OpenAPI spec",
+                    demandOption: true
+                })
+                .positional("modified", {
+                    type: "string",
+                    description: "Path to the modified OpenAPI spec",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    alias: "o",
+                    description: "Path to write the overrides file (defaults to <original>-overrides.yml)"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern overrides compare"
+            });
+            const originalPath = resolve(cwd(), argv.original as string);
+            const modifiedPath = resolve(cwd(), argv.modified as string);
+            const outputPath = argv.output != null ? resolve(cwd(), argv.output) : undefined;
+            await compareOpenAPISpecs({
+                originalPath: AbsoluteFilePath.of(originalPath),
+                modifiedPath: AbsoluteFilePath.of(modifiedPath),
+                outputPath: outputPath != null ? AbsoluteFilePath.of(outputPath) : undefined,
+                cliContext
+            });
+        }
+    );
+}
+
+function addOverridesWriteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write",
         "Generate a basic openapi overrides file.",
         (yargs) => [
             yargs.option("api", {
@@ -1199,7 +1439,43 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
         ],
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern generate-overrides"
+                command: "fern overrides write"
+            });
+            await writeOverridesForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api as string,
+                    defaultToAllApiWorkspaces: true
+                }),
+                includeModels: !(argv.excludeModels as boolean),
+                cliContext
+            });
+        }
+    );
+}
+
+/**
+ * @deprecated Use `fern overrides write` instead
+ */
+function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-overrides",
+        false, // Hidden from help - deprecated in favor of `fern overrides write`
+        (yargs) => [
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API"
+            }),
+            yargs.option("exclude-models", {
+                boolean: true,
+                description:
+                    "When generating the initial overrides, also stub the models (in addition to the endpoints)",
+                default: false
+            })
+        ],
+        async (argv) => {
+            cliContext.logger.warn("The 'write-overrides' command is deprecated. Use 'fern overrides write' instead.");
+            await cliContext.instrumentPostHogEvent({
+                command: "fern write-overrides"
             });
             await writeOverridesForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -1253,14 +1529,118 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("docs", "Commands for managing your docs", (yargs) => {
-        // Add subcommands directly
-        addDocsPreviewCommand(yargs, cliContext);
+        addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
+        addDocsPreviewCommand(yargs, cliContext);
+        addDocsDiffCommand(yargs, cliContext);
         return yargs;
     });
 }
 
+function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "diff <preview-url> <files..>",
+        "Generate visual diffs between preview and production docs pages",
+        (yargs) =>
+            yargs
+                .positional("preview-url", {
+                    type: "string",
+                    description: "The preview deployment URL (e.g. acme-preview-abc123.docs.buildwithfern.com)",
+                    demandOption: true
+                })
+                .positional("files", {
+                    type: "string",
+                    array: true,
+                    description: "File paths to generate diffs for (e.g. fern/pages/intro.mdx)",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    default: ".fern/diff",
+                    description: "Output directory for diff images"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs diff"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const result = await docsDiff({
+                cliContext,
+                project,
+                previewUrl: argv.previewUrl,
+                files: argv.files ?? [],
+                outputDir: argv.output
+            });
+
+            cliContext.logger.info(JSON.stringify(result, null, 2));
+        }
+    );
+}
+
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("preview", "Commands for managing preview deployments", (yargs) => {
+        addDocsPreviewListCommand(yargs, cliContext);
+        addDocsPreviewDeleteCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsPreviewListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list",
+        "List all preview deployments",
+        (yargs) =>
+            yargs
+                .option("limit", {
+                    type: "number",
+                    description: "Maximum number of preview deployments to display"
+                })
+                .option("page", {
+                    type: "number",
+                    description: "Page number for pagination (starts at 1)"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs preview list"
+            });
+            await listDocsPreview({
+                cliContext,
+                limit: argv.limit,
+                page: argv.page
+            });
+        }
+    );
+}
+
+function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "delete <url>",
+        "Delete a preview deployment",
+        (yargs) =>
+            yargs.positional("url", {
+                type: "string",
+                description:
+                    "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs preview delete"
+            });
+            await deleteDocsPreview({
+                cliContext,
+                previewUrl: argv.url
+            });
+        }
+    );
+}
+
+function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "dev",
         "Run a local development server to preview your docs",
@@ -1293,6 +1673,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
+                })
+                .option("force-download", {
+                    boolean: true,
+                    default: false,
+                    description: "Force re-download of the docs preview bundle by deleting the cached bundle"
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -1328,7 +1713,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
-                backendPort
+                backendPort,
+                forceDownload: argv.forceDownload
             });
         }
     );
@@ -1428,7 +1814,13 @@ function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
     cli.command(
         "write-translation",
         "Generate translation directories for each language defined in docs.yml",
-        (yargs) => yargs,
+        (yargs) =>
+            yargs.option("stub", {
+                alias: "s",
+                type: "boolean",
+                default: false,
+                description: "Return content as-is without calling the translation service"
+            }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
                 command: "fern write-translation"
@@ -1439,7 +1831,8 @@ function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     defaultToAllApiWorkspaces: true,
                     commandLineApiWorkspace: undefined
                 }),
-                cliContext
+                cliContext,
+                stub: argv.stub
             });
         }
     );
@@ -1459,6 +1852,11 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API"
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -1474,8 +1872,30 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     defaultToAllApiWorkspaces: false
                 }),
                 cliContext,
-                outputPath: resolve(cwd(), argv.outputPath)
+                outputPath: resolve(cwd(), argv.outputPath),
+                indent: argv.indent
             });
+        }
+    );
+}
+
+function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "beta",
+        false, // Hidden from --help while in-development.
+        (yargs) =>
+            yargs.help(false).version(false).strict(false).parserConfiguration({
+                "unknown-options-as-args": true
+            }),
+        async (argv) => {
+            try {
+                // Pass through all arguments after "v2" to the v2 CLI
+                const v2Args = argv._.slice(1).map(String);
+                await runCliV2(v2Args);
+            } catch (error) {
+                cliContext.logger.error("CLI v2 failed:", String(error));
+                cliContext.failWithoutThrowing();
+            }
         }
     );
 }

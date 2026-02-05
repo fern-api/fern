@@ -1,4 +1,4 @@
-import { AbstractGeneratorAgent } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -21,7 +21,7 @@ export class RubyGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         readmeConfigBuilder: ReadmeConfigBuilder;
         ir: IntermediateRepresentation;
     }) {
-        super({ logger, config, selfHosted: false }); // TODO: upgrade IR and add self hosted
+        super({ logger, config, selfHosted: ir.selfHosted });
         this.readmeConfigBuilder = readmeConfigBuilder;
     }
 
@@ -40,15 +40,14 @@ export class RubyGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         return FernGeneratorCli.Language.Ruby;
     }
 
-    public getGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): FernGeneratorCli.GitHubConfig {
-        // TODO: get from env
+    public getGitHubConfig(_args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
+        // Return undefined values for uri and token to indicate no GitHub config is available.
+        // The base class getRemote() will only create a Remote when uri and token are non-null.
         return {
-            sourceDirectory: "NONE",
-            uri: "NONE",
-            token: "token",
-            branch: "NONE"
+            sourceDirectory: "lib",
+            uri: undefined,
+            token: undefined,
+            branch: undefined
         };
     }
 }

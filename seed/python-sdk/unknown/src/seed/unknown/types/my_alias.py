@@ -2,4 +2,4 @@
 
 import typing
 
-MyAlias = typing.Optional[typing.Any]
+MyAlias = typing.Any

@@ -5,7 +5,16 @@ export { AbstractSpecConverter } from "./AbstractSpecConverter";
 export * from "./converters";
 export * as Converters from "./converters";
 export { SchemaOrReferenceConverter } from "./converters/schema";
-export { type APIError, ErrorCollector } from "./ErrorCollector";
+export { type APIError, APIErrorLevel, ErrorCollector } from "./ErrorCollector";
+export {
+    type AiExampleOverride,
+    type EndpointExampleValidationResult,
+    type ExampleSource,
+    type ExampleToValidate,
+    type ExampleValidationResult,
+    ExampleValidator,
+    type SpecExampleValidationResult
+} from "./ExampleValidator";
 export * as Extensions from "./extensions";
 export type { FernEnumConfig } from "./types/FernEnumConfig";
 export { convertNumberToSnakeCase } from "./utils/ConvertNumberToSnakeCase";

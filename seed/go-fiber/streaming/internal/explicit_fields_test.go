@@ -15,6 +15,7 @@ type testExplicitFieldsStruct struct {
 	Count          *int     `json:"count,omitempty"`
 	Enabled        *bool    `json:"enabled,omitempty"`
 	Tags           []string `json:"tags,omitempty"`
+	//lint:ignore unused this field is intentionally unused for testing
 	unexported     string   `json:"-"`
 	explicitFields *big.Int `json:"-"`
 }

@@ -8,6 +8,13 @@ import (
 	internal "github.com/query-parameters-openapi/fern/internal"
 )
 
+type SearchRequestNeighbor struct {
+	User       *User
+	NestedUser *NestedUser
+	String     string
+	Integer    int
+}
+
 type SearchRequestNeighborRequired struct {
 	User       *User
 	NestedUser *NestedUser

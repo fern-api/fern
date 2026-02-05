@@ -2,35 +2,23 @@
 
 import type * as SeedApi from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedApiClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedApiClient {
-    protected readonly _options: SeedApiClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
 
-    constructor(_options: SeedApiClient.Options) {
-        this._options = {
-            ..._options,
-            logging: core.logging.createLogger(_options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/required-nullable",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/required-nullable/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedApiClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
@@ -60,20 +48,12 @@ export class SeedApiClient {
             required_baz: requiredBaz,
             required_nullable_baz: requiredNullableBaz,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (optionalBaz != null) {
-            _queryParams.optional_baz = optionalBaz;
-        }
-
-        if (optionalNullableBaz !== undefined) {
-            _queryParams.optional_nullable_baz = optionalNullableBaz;
-        }
-
-        _queryParams.required_baz = requiredBaz;
-        if (requiredNullableBaz !== undefined) {
-            _queryParams.required_nullable_baz = requiredNullableBaz;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            optional_baz: optionalBaz,
+            optional_nullable_baz: optionalNullableBaz,
+            required_baz: requiredBaz,
+            required_nullable_baz: requiredNullableBaz,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -102,21 +82,7 @@ export class SeedApiClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /foo.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/foo");
     }
 
     /**
@@ -181,20 +147,6 @@ export class SeedApiClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling PATCH /foo/{id}.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/foo/{id}");
     }
 }

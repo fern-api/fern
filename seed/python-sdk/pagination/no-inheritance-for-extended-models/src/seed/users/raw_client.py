@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -14,7 +14,9 @@ from ..types.username_cursor import UsernameCursor
 from .types.list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from .types.list_users_extended_response import ListUsersExtendedResponse
 from .types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
+from .types.list_users_optional_data_pagination_response import ListUsersOptionalDataPaginationResponse
 from .types.list_users_pagination_response import ListUsersPaginationResponse
+from .types.list_users_top_level_cursor_pagination_response import ListUsersTopLevelCursorPaginationResponse
 from .types.order import Order
 from .types.user import User
 from .types.username_container import UsernameContainer
@@ -37,7 +39,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -58,7 +60,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -93,9 +95,7 @@ class RawUsersClient:
                         starting_after=_parsed_next,
                         request_options=request_options,
                     )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -103,7 +103,7 @@ class RawUsersClient:
 
     def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersMixedTypePaginationResponse]:
         """
         Parameters
         ----------
@@ -114,7 +114,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -140,9 +140,7 @@ class RawUsersClient:
                     cursor=_parsed_next,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -150,7 +148,7 @@ class RawUsersClient:
 
     def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -163,7 +161,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -195,9 +193,68 @@ class RawUsersClient:
                         pagination=pagination,
                         request_options=request_options,
                     )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_with_top_level_body_cursor_pagination(
+        self,
+        *,
+        cursor: typing.Optional[str] = OMIT,
+        filter: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[User, ListUsersTopLevelCursorPaginationResponse]:
+        """
+        Pagination endpoint with a top-level cursor field in the request body.
+        This tests that the mock server correctly ignores cursor mismatches
+        when getNextPage() is called with a different cursor value.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        filter : typing.Optional[str]
+            An optional filter to apply to the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User, ListUsersTopLevelCursorPaginationResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users/top-level-cursor",
+            method="POST",
+            json={
+                "cursor": cursor,
+                "filter": filter,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersTopLevelCursorPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersTopLevelCursorPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
                 )
+                _items = _parsed_response.data
+                _parsed_next = _parsed_response.next_cursor
+                _has_next = _parsed_next is not None and _parsed_next != ""
+                _get_next = lambda: self.list_with_top_level_body_cursor_pagination(
+                    cursor=_parsed_next,
+                    filter=filter,
+                    request_options=request_options,
+                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -211,7 +268,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -232,7 +289,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 0
 
@@ -265,9 +322,7 @@ class RawUsersClient:
                     starting_after=starting_after,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -281,7 +336,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -302,7 +357,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -335,9 +390,7 @@ class RawUsersClient:
                     starting_after=starting_after,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -345,7 +398,7 @@ class RawUsersClient:
 
     def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -358,7 +411,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -386,9 +439,7 @@ class RawUsersClient:
                     pagination=pagination,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -401,7 +452,7 @@ class RawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -420,7 +471,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -446,14 +497,12 @@ class RawUsersClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_step_pagination(
-                    page=page + len(_items),
+                    page=page + len(_items or []),
                     limit=limit,
                     order=order,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -466,7 +515,7 @@ class RawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -485,7 +534,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -511,14 +560,12 @@ class RawUsersClient:
                 _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
-                    page=page + len(_items),
+                    page=page + len(_items or []),
                     limit=limit,
                     order=order,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -526,7 +573,7 @@ class RawUsersClient:
 
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersExtendedResponse]:
         """
         Parameters
         ----------
@@ -537,7 +584,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersExtendedResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -564,9 +611,7 @@ class RawUsersClient:
                     cursor=_parsed_next,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -574,7 +619,7 @@ class RawUsersClient:
 
     def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersExtendedOptionalListResponse]:
         """
         Parameters
         ----------
@@ -585,7 +630,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -612,9 +657,7 @@ class RawUsersClient:
                     cursor=_parsed_next,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -622,7 +665,7 @@ class RawUsersClient:
 
     def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[str]:
+    ) -> SyncPager[str, UsernameCursor]:
         """
         Parameters
         ----------
@@ -635,7 +678,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[str]
+        SyncPager[str, UsernameCursor]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -665,9 +708,64 @@ class RawUsersClient:
                         starting_after=_parsed_next,
                         request_options=request_options,
                     )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_usernames_with_optional_response(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[str, typing.Optional[UsernameCursor]]:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[str, typing.Optional[UsernameCursor]]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return SyncPager(has_next=False, items=[], get_next=None, response=None)
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    typing.Optional[UsernameCursor],
+                    parse_obj_as(
+                        type_=typing.Optional[UsernameCursor],  # type: ignore
+                        object_=_response.json(),
+                    ),
                 )
+                _items = (
+                    _parsed_response.cursor.data
+                    if _parsed_response is not None and _parsed_response.cursor is not None
+                    else []
+                )
+
+                _has_next = False
+                _get_next = None
+                if _parsed_response is not None and _parsed_response.cursor is not None:
+                    _parsed_next = _parsed_response.cursor.after
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+                    _get_next = lambda: self.list_usernames_with_optional_response(
+                        starting_after=_parsed_next,
+                        request_options=request_options,
+                    )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -675,7 +773,7 @@ class RawUsersClient:
 
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[str]:
+    ) -> SyncPager[str, UsernameContainer]:
         """
         Parameters
         ----------
@@ -686,7 +784,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[str]
+        SyncPager[str, UsernameContainer]
         """
         offset = offset if offset is not None else 1
 
@@ -713,9 +811,54 @@ class RawUsersClient:
                     offset=offset + 1,
                     request_options=request_options,
                 )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_with_optional_data(
+        self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[User, ListUsersOptionalDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User, ListUsersOptionalDataPaginationResponse]
+        """
+        page = page if page is not None else 0
+
+        _response = self._client_wrapper.httpx_client.request(
+            "users/optional-data",
+            method="GET",
+            params={
+                "page": page,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersOptionalDataPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersOptionalDataPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
                 )
+                _items = _parsed_response.data
+                _has_next = True
+                _get_next = lambda: self.list_with_optional_data(
+                    page=page + 1,
+                    request_options=request_options,
+                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -734,7 +877,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -755,7 +898,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -793,9 +936,7 @@ class AsyncRawUsersClient:
                             request_options=request_options,
                         )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -803,7 +944,7 @@ class AsyncRawUsersClient:
 
     async def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersMixedTypePaginationResponse]:
         """
         Parameters
         ----------
@@ -814,7 +955,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -843,9 +984,7 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -853,7 +992,7 @@ class AsyncRawUsersClient:
 
     async def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -866,7 +1005,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -901,9 +1040,71 @@ class AsyncRawUsersClient:
                             request_options=request_options,
                         )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_with_top_level_body_cursor_pagination(
+        self,
+        *,
+        cursor: typing.Optional[str] = OMIT,
+        filter: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[User, ListUsersTopLevelCursorPaginationResponse]:
+        """
+        Pagination endpoint with a top-level cursor field in the request body.
+        This tests that the mock server correctly ignores cursor mismatches
+        when getNextPage() is called with a different cursor value.
+
+        Parameters
+        ----------
+        cursor : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        filter : typing.Optional[str]
+            An optional filter to apply to the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User, ListUsersTopLevelCursorPaginationResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users/top-level-cursor",
+            method="POST",
+            json={
+                "cursor": cursor,
+                "filter": filter,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersTopLevelCursorPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersTopLevelCursorPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
                 )
+                _items = _parsed_response.data
+                _parsed_next = _parsed_response.next_cursor
+                _has_next = _parsed_next is not None and _parsed_next != ""
+
+                async def _get_next():
+                    return await self.list_with_top_level_body_cursor_pagination(
+                        cursor=_parsed_next,
+                        filter=filter,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -917,7 +1118,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -938,7 +1139,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 0
 
@@ -974,9 +1175,7 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -990,7 +1189,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1011,7 +1210,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -1047,9 +1246,7 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1057,7 +1254,7 @@ class AsyncRawUsersClient:
 
     async def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1070,7 +1267,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1101,9 +1298,7 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1116,7 +1311,7 @@ class AsyncRawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1135,7 +1330,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -1163,15 +1358,13 @@ class AsyncRawUsersClient:
 
                 async def _get_next():
                     return await self.list_with_offset_step_pagination(
-                        page=page + len(_items),
+                        page=page + len(_items or []),
                         limit=limit,
                         order=order,
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1184,7 +1377,7 @@ class AsyncRawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1203,7 +1396,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -1231,15 +1424,13 @@ class AsyncRawUsersClient:
 
                 async def _get_next():
                     return await self.list_with_offset_pagination_has_next_page(
-                        page=page + len(_items),
+                        page=page + len(_items or []),
                         limit=limit,
                         order=order,
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1247,7 +1438,7 @@ class AsyncRawUsersClient:
 
     async def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersExtendedResponse]:
         """
         Parameters
         ----------
@@ -1258,7 +1449,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersExtendedResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1288,9 +1479,7 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1298,7 +1487,7 @@ class AsyncRawUsersClient:
 
     async def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersExtendedOptionalListResponse]:
         """
         Parameters
         ----------
@@ -1309,7 +1498,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1339,9 +1528,7 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1349,7 +1536,7 @@ class AsyncRawUsersClient:
 
     async def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[str]:
+    ) -> AsyncPager[str, UsernameCursor]:
         """
         Parameters
         ----------
@@ -1362,7 +1549,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[str]
+        AsyncPager[str, UsernameCursor]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1395,9 +1582,67 @@ class AsyncRawUsersClient:
                             request_options=request_options,
                         )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_usernames_with_optional_response(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[str, typing.Optional[UsernameCursor]]:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[str, typing.Optional[UsernameCursor]]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncPager(has_next=False, items=[], get_next=None, response=None)
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    typing.Optional[UsernameCursor],
+                    parse_obj_as(
+                        type_=typing.Optional[UsernameCursor],  # type: ignore
+                        object_=_response.json(),
+                    ),
                 )
+                _items = (
+                    _parsed_response.cursor.data
+                    if _parsed_response is not None and _parsed_response.cursor is not None
+                    else []
+                )
+
+                _has_next = False
+                _get_next = None
+                if _parsed_response is not None and _parsed_response.cursor is not None:
+                    _parsed_next = _parsed_response.cursor.after
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+
+                    async def _get_next():
+                        return await self.list_usernames_with_optional_response(
+                            starting_after=_parsed_next,
+                            request_options=request_options,
+                        )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1405,7 +1650,7 @@ class AsyncRawUsersClient:
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[str]:
+    ) -> AsyncPager[str, UsernameContainer]:
         """
         Parameters
         ----------
@@ -1416,7 +1661,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[str]
+        AsyncPager[str, UsernameContainer]
         """
         offset = offset if offset is not None else 1
 
@@ -1446,9 +1691,57 @@ class AsyncRawUsersClient:
                         request_options=request_options,
                     )
 
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_with_optional_data(
+        self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[User, ListUsersOptionalDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User, ListUsersOptionalDataPaginationResponse]
+        """
+        page = page if page is not None else 0
+
+        _response = await self._client_wrapper.httpx_client.request(
+            "users/optional-data",
+            method="GET",
+            params={
+                "page": page,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersOptionalDataPaginationResponse,
+                    parse_obj_as(
+                        type_=ListUsersOptionalDataPaginationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
                 )
+                _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    return await self.list_with_optional_data(
+                        page=page + 1,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

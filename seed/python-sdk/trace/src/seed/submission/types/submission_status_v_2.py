@@ -17,9 +17,15 @@ from .workspace_submission_update import WorkspaceSubmissionUpdate
 class SubmissionStatusV2_Test(UniversalBaseModel):
     type: typing.Literal["test"] = "test"
     updates: typing.List[TestSubmissionUpdate]
-    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")]
-    problem_version: typing_extensions.Annotated[int, FieldMetadata(alias="problemVersion")]
-    problem_info: typing_extensions.Annotated[ProblemInfoV2, FieldMetadata(alias="problemInfo")]
+    problem_id: typing_extensions.Annotated[
+        ProblemId, FieldMetadata(alias="problemId"), pydantic.Field(alias="problemId")
+    ]
+    problem_version: typing_extensions.Annotated[
+        int, FieldMetadata(alias="problemVersion"), pydantic.Field(alias="problemVersion")
+    ]
+    problem_info: typing_extensions.Annotated[
+        ProblemInfoV2, FieldMetadata(alias="problemInfo"), pydantic.Field(alias="problemInfo")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -45,5 +51,7 @@ class SubmissionStatusV2_Workspace(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
+SubmissionStatusV2 = typing_extensions.Annotated[
+    typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace], pydantic.Field(discriminator="type")
+]
 update_forward_refs(SubmissionStatusV2_Test)

@@ -45,12 +45,19 @@ class AbstractBigunionService(AbstractFernService):
     @classmethod
     def __init_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get)
+        type_hints = typing.get_type_hints(cls.get)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -67,13 +74,9 @@ class AbstractBigunionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get.__globals__)
-
         router.get(
             path="/{id}",
-            response_model=BigUnion,
+            response_model=None,
             description=AbstractBigunionService.get.__doc__,
             **get_route_args(cls.get, default_tag="bigunion"),
         )(wrapper)
@@ -81,12 +84,19 @@ class AbstractBigunionService(AbstractFernService):
     @classmethod
     def __init_update(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update)
+        type_hints = typing.get_type_hints(cls.update)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -103,13 +113,9 @@ class AbstractBigunionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update.__globals__)
-
         router.patch(
             path="/",
-            response_model=bool,
+            response_model=None,
             description=AbstractBigunionService.update.__doc__,
             **get_route_args(cls.update, default_tag="bigunion"),
         )(wrapper)
@@ -117,12 +123,19 @@ class AbstractBigunionService(AbstractFernService):
     @classmethod
     def __init_update_many(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_many)
+        type_hints = typing.get_type_hints(cls.update_many)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_many, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -139,13 +152,9 @@ class AbstractBigunionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_many.__globals__)
-
         router.patch(
             path="/many",
-            response_model=typing.Dict[str, bool],
+            response_model=None,
             description=AbstractBigunionService.update_many.__doc__,
             **get_route_args(cls.update_many, default_tag="bigunion"),
         )(wrapper)

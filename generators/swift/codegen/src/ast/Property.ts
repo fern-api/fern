@@ -13,6 +13,7 @@ export declare namespace Property {
         static_?: boolean;
         declarationType: DeclarationType;
         type: TypeReference;
+        indirect?: boolean;
         defaultValue?: Expression;
         docs?: DocComment;
     }
@@ -24,16 +25,27 @@ export class Property extends AstNode {
     public readonly static_?: boolean;
     public readonly declarationType: DeclarationType;
     public readonly type: TypeReference;
+    public readonly indirect?: boolean;
     public readonly defaultValue?: Expression;
     public readonly docs?: DocComment;
 
-    constructor({ unsafeName, accessLevel, static_, declarationType, type, defaultValue, docs }: Property.Args) {
+    constructor({
+        unsafeName,
+        accessLevel,
+        static_,
+        declarationType,
+        type,
+        indirect,
+        defaultValue,
+        docs
+    }: Property.Args) {
         super();
         this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.static_ = static_;
         this.declarationType = declarationType;
         this.type = type;
+        this.indirect = indirect;
         this.defaultValue = defaultValue;
         this.docs = docs;
     }

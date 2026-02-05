@@ -5,8 +5,6 @@ types:
       nullable_bar: optional<nullable<string>>
       nullable_required_bar: nullable<string>
       required_bar: string
-    source:
-      openapi: openapi.json
 service:
   auth: false
   base-path: ""
@@ -44,8 +42,6 @@ service:
         docs: successful operation
         status-code: 200
         type: Foo
-      source:
-        openapi: openapi.json
     updateFoo:
       display-name: Update foo
       method: PATCH
@@ -71,5 +67,3 @@ service:
         docs: successful operation
         status-code: 200
         type: Foo
-  source:
-    openapi: openapi.json

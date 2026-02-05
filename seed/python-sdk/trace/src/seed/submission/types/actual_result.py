@@ -27,9 +27,15 @@ class ActualResult_Value(UniversalBaseModel):
 
 class ActualResult_Exception(UniversalBaseModel):
     type: typing.Literal["exception"] = "exception"
-    exception_type: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionType")]
-    exception_message: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionMessage")]
-    exception_stacktrace: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionStacktrace")]
+    exception_type: typing_extensions.Annotated[
+        str, FieldMetadata(alias="exceptionType"), pydantic.Field(alias="exceptionType")
+    ]
+    exception_message: typing_extensions.Annotated[
+        str, FieldMetadata(alias="exceptionMessage"), pydantic.Field(alias="exceptionMessage")
+    ]
+    exception_stacktrace: typing_extensions.Annotated[
+        str, FieldMetadata(alias="exceptionStacktrace"), pydantic.Field(alias="exceptionStacktrace")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -54,4 +60,7 @@ class ActualResult_ExceptionV2(UniversalBaseModel):
             smart_union = True
 
 
-ActualResult = typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2]
+ActualResult = typing_extensions.Annotated[
+    typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2],
+    pydantic.Field(discriminator="type"),
+]

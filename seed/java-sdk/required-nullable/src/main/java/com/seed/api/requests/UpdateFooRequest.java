@@ -47,7 +47,7 @@ public final class UpdateFooRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("X-Idempotency-Key")
+    @JsonIgnore
     public String getXIdempotencyKey() {
         return xIdempotencyKey;
     }
@@ -186,7 +186,6 @@ public final class UpdateFooRequest {
         }
 
         @java.lang.Override
-        @JsonSetter("X-Idempotency-Key")
         public _FinalStage xIdempotencyKey(@NotNull String xIdempotencyKey) {
             this.xIdempotencyKey = Objects.requireNonNull(xIdempotencyKey, "xIdempotencyKey must not be null");
             return this;

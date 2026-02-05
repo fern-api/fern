@@ -8,7 +8,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -112,22 +111,47 @@ class AbstractPlaylistService(AbstractFernService):
     @classmethod
     def __init_create_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_playlist)
+        type_hints = typing.get_type_hints(cls.create_playlist)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "service_param":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="serviceParam")]
+                    )
+                )
             elif parameter_name == "datetime":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
+                )
             elif parameter_name == "optional_datetime":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="optionalDatetime")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="optionalDatetime")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -144,13 +168,9 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_playlist.__globals__)
-
         router.post(
             path="/v2/playlist/{service_param}/create",
-            response_model=Playlist,
+            response_model=None,
             description=AbstractPlaylistService.create_playlist.__doc__,
             **get_route_args(cls.create_playlist, default_tag="playlist"),
         )(wrapper)
@@ -158,38 +178,67 @@ class AbstractPlaylistService(AbstractFernService):
     @classmethod
     def __init_get_playlists(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_playlists)
+        type_hints = typing.get_type_hints(cls.get_playlists)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "service_param":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="serviceParam")]
+                    )
+                )
             elif parameter_name == "limit":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "other_field":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(default=..., alias="otherField", description="i'm another field")
+                        annotation=typing.Annotated[
+                            resolved_annotation, fastapi.Query(alias="otherField", description="i'm another field")
+                        ]
                     )
                 )
             elif parameter_name == "multi_line_docs":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=..., alias="multiLineDocs", description="I'm a multiline\ndescription"
-                        )
+                        annotation=typing.Annotated[
+                            resolved_annotation,
+                            fastapi.Query(alias="multiLineDocs", description="I'm a multiline\ndescription"),
+                        ]
                     )
                 )
             elif parameter_name == "optional_multiple_field":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, alias="optionalMultipleField"))
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="optionalMultipleField")],
+                        default=None,
+                    )
                 )
             elif parameter_name == "multiple_field":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=[], alias="multipleField")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="multipleField")],
+                        default=[],
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_playlists, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -206,13 +255,9 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_playlists.__globals__)
-
         router.get(
             path="/v2/playlist/{service_param}/all",
-            response_model=typing.Sequence[Playlist],
+            response_model=None,
             description=AbstractPlaylistService.get_playlists.__doc__,
             **get_route_args(cls.get_playlists, default_tag="playlist"),
         )(wrapper)
@@ -220,16 +265,34 @@ class AbstractPlaylistService(AbstractFernService):
     @classmethod
     def __init_get_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_playlist)
+        type_hints = typing.get_type_hints(cls.get_playlist)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "service_param":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="serviceParam")]
+                    )
+                )
             elif parameter_name == "playlist_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="playlistId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -248,13 +311,9 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_playlist.__globals__)
-
         router.get(
             path="/v2/playlist/{service_param}/{playlist_id}",
-            response_model=Playlist,
+            response_model=None,
             description=AbstractPlaylistService.get_playlist.__doc__,
             **get_route_args(cls.get_playlist, default_tag="playlist"),
         )(wrapper)
@@ -262,20 +321,42 @@ class AbstractPlaylistService(AbstractFernService):
     @classmethod
     def __init_update_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_playlist)
+        type_hints = typing.get_type_hints(cls.update_playlist)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "service_param":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="serviceParam")]
+                    )
+                )
             elif parameter_name == "playlist_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="playlistId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -294,13 +375,9 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_playlist.__globals__)
-
         router.put(
             path="/v2/playlist/{service_param}/{playlist_id}",
-            response_model=typing.Optional[Playlist],
+            response_model=None,
             description=AbstractPlaylistService.update_playlist.__doc__,
             **get_route_args(cls.update_playlist, default_tag="playlist"),
         )(wrapper)
@@ -308,18 +385,36 @@ class AbstractPlaylistService(AbstractFernService):
     @classmethod
     def __init_delete_playlist(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.delete_playlist)
+        type_hints = typing.get_type_hints(cls.delete_playlist)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "service_param":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="serviceParam")]
+                    )
+                )
             elif parameter_name == "playlist_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.delete_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -336,14 +431,10 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.delete_playlist.__globals__)
-
         router.delete(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractPlaylistService.delete_playlist.__doc__,
             **get_route_args(cls.delete_playlist, default_tag="playlist"),
         )(wrapper)

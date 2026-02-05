@@ -134,6 +134,17 @@ types:
   #   properties:
   #     app-id: string
 
+  AiExamplesConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      style:
+        type: optional<string>
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -179,6 +190,12 @@ types:
 
       "ai-search": optional<AIChatConfig>
 
+      # ai examples
+      "ai-examples":
+        type: optional<AiExamplesConfig>
+        docs: |
+          Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
@@ -203,6 +220,18 @@ types:
       # scripts
       css: optional<CssConfig>
       js: optional<JsConfig>
+
+      # custom components
+      header:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom React component (TSX/JSX) that replaces the default header.
+          The component must have a default export.
+      footer:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom React component (TSX/JSX) that replaces the default footer.
+          The component must have a default export.
 
   TabId: string
 
@@ -271,6 +300,31 @@ types:
           When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
 
           @default: false
+      custom:
+        type: optional<list<CustomPageAction>>
+        docs: |
+          When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.
+          The value of this property should be the name of the custom IDE.
+          Example: `cursor`
+
+  CustomPageAction:
+    docs: A custom page action that can be configured by the user.
+    properties:
+      title:
+        type: string
+        docs: The title of the custom action.
+      subtitle:
+        type: optional<string>
+        docs: The subtitle/helper text of the custom action.
+      url:
+        type: string
+        docs: The URL to navigate to. Use {slug} as a placeholder for the current page slug, {domain} as a placeholder for the current domain, and {url} as a placeholder for the current full URL.
+      icon:
+        type: optional<string>
+        docs: Icon to display for the custom action. Can be a relative filepath, an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fa-solid fa-star" or "star").
+      default:
+        type: optional<boolean>
+        docs: Whether this custom action should be the default action.
 
   AIChatConfig:
     properties:
@@ -336,6 +390,7 @@ types:
           If `href` is set, clicking on the tab will redirect to the given URL.
 
           Tabs with `href` must not have children in the navigation config.
+      target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
 
   ChangelogFolderRelativePath:
@@ -385,6 +440,14 @@ types:
   EditThisPageConfig:
     properties:
       github: optional<GithubEditThisPageConfig>
+      launch:
+        type: optional<EditThisPageLaunch>
+        docs: The launch method for "Edit this page" button. Defaults to github.
+
+  EditThisPageLaunch:
+    enum:
+      - github
+      - dashboard
 
   GithubEditThisPageConfig:
     properties:
@@ -418,6 +481,11 @@ types:
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
       audiences: optional<Audience>
+      hidden:
+        type: optional<boolean>
+        docs: |
+          If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
+      announcement: optional<AnnouncementConfig>
 
   Availability:
     enum:
@@ -494,6 +562,7 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
+      - PythonDocsConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
       - FolderConfiguration
@@ -514,6 +583,11 @@ types:
       href:
         type: optional<string>
         docs: The URL that users will be directed to when clicking the logo. Typically your company's homepage or app.
+      right-text:
+        type: optional<string>
+        docs: |
+          Text to display to the right of the logo image. This is useful for adding a tagline or product name next to your logo.
+          Example: `Docs`
 
   BackgroundImageConfiguration:
     docs: This background image is used to customize the appearance of your docs site.
@@ -615,6 +689,15 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      switcher-placement:
+        type: optional<SwitcherPlacement>
+        docs: |
+          Set the placement of the version and language switcher
+
+          @default: `header`
+
+          Note: this setting is ignored when `disable-header` is set to true.
+
       content-alignment:
         type: optional<ContentAlignment>
         docs: |
@@ -712,12 +795,39 @@ types:
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
+      substitute-env-vars:
+        type: optional<boolean>
+        docs: |
+          When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
+          including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+          Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+
+          @default: false
 
   ThemeConfig:
     properties:
-      sidebar: SidebarThemeConfig
-      body: BodyThemeConfig
-      tabs: TabsThemeConfig
+      sidebar: optional<SidebarThemeConfig>
+      body: optional<BodyThemeConfig>
+      tabs: optional<TabsThemeConfig>
+      page-actions: optional<PageActionsThemeConfig>
+      footer-nav: optional<FooterNavThemeConfig>
+      language-switcher: optional<LanguageSwitcherThemeConfig>
+      product-switcher: optional<ProductSwitcherThemeConfig>
+
+  ProductSwitcherThemeConfig:
+    enum:
+      - default
+      - toggle
+
+  LanguageSwitcherThemeConfig:
+    enum:
+      - default
+      - minimal
+
+  FooterNavThemeConfig:
+    enum:
+      - default
+      - minimal
 
   TabsThemeConfig:
     enum:
@@ -733,6 +843,11 @@ types:
     enum:
       - default
       - minimal
+
+  PageActionsThemeConfig:
+    enum:
+      - default
+      - toolbar
 
   HttpSnippetsConfig:
     discriminated: false
@@ -764,6 +879,11 @@ types:
       - sidebar
 
   TabsPlacement:
+    enum:
+      - header
+      - sidebar
+
+  SwitcherPlacement:
     enum:
       - header
       - sidebar
@@ -967,12 +1087,21 @@ types:
         type: optional<string>
         docs: |
           The title to display for this folder section. If not provided, the folder name will be used.
+      title-source:
+        type: optional<TitleSource>
+        docs: |
+          Determines how page titles are derived for files in this folder. Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename` (derive title from the file name). Defaults to `filename`.
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed: optional<boolean>
       availability: optional<Availability>
+
+  TitleSource:
+    enum:
+      - frontmatter
+      - filename
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -989,6 +1118,9 @@ types:
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
+      tag-description-pages:
+        type: optional<boolean>
+        docs: If true, a page will be created for each tag in the OpenAPI spec that contains a description.
       snippets: optional<SnippetsConfiguration>
       postman:
         type: optional<string>
@@ -1023,6 +1155,27 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
+
+  PythonDocsConfiguration:
+    docs: |
+      Configuration for generating Python library documentation from source code.
+      The docs are generated from a GitHub repository and merged into the navigation.
+    properties:
+      python-docs:
+        type: string
+        docs: |
+          GitHub URL to the repository containing the Python library source code.
+          Example: https://github.com/NVIDIA/NeMo-RL
+      title:
+        type: optional<string>
+        docs: |
+          Navigation title for the Python docs section.
+          @default: "Python Reference"
+      slug:
+        type: optional<string>
+        docs: |
+          URL slug for the Python docs pages.
+          @default: "python-docs"
 
   ApiReferenceLayoutItem:
     docs: |
@@ -1104,6 +1257,7 @@ types:
       link: string
       href: string
       icon: optional<string>
+      target: optional<Target>
 
   VersionedSnippetLanguageConfiguration:
     properties:
@@ -1243,6 +1397,7 @@ types:
         docs: |
           The URL once you click on the button.
           Example: https://buildwithfern.com/contact
+      target: optional<Target>
       url:
         type: optional<string>
         availability: deprecated
@@ -1282,6 +1437,7 @@ types:
     extends: [WithViewers]
     properties:
       url: string
+      target: optional<Target>
 
   FooterLinksConfig:
     properties:
@@ -1535,9 +1691,29 @@ types:
           By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.
 
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
+      ai-examples:
+        type: optional<boolean>
+        availability: deprecated
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+          DEPRECATED: Use the top-level `ai-examples` property instead.
+      ai-example-style-instructions:
+        type: optional<string>
+        availability: deprecated
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+
+          DEPRECATED: Use the top-level `ai-example-style-instructions` property instead.
+      exclude-apis:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation.
 
   PlaygroundSettings:
     properties:
+      hidden: optional<boolean>
       environments:
         type: optional<list<string>>
         docs: A list of environment IDs that are allowed to be used in the playground.
@@ -1609,6 +1785,7 @@ types:
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+      announcement: optional<AnnouncementConfig>
 
   ExternalProduct:
     extends: [ProductConfigBase]
@@ -1616,6 +1793,20 @@ types:
       href:
         type: string
         docs: The absolute URL to the product.
+      target:
+        type: optional<Target>
+        docs: The target of the URL
+
+  Target:
+    enum:
+      - name: blank
+        value: _blank
+      - name: self
+        value: _self
+      - name: parent
+        value: _parent
+      - name: top
+        value: _top
 
   ProductFileConfig:
     properties:

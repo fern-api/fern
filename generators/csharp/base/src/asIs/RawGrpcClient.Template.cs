@@ -21,25 +21,21 @@ internal class RawGrpcClient
 
         var grpcOptions = PrepareGrpcChannelOptions();
         Channel =
-            grpcOptions != null
+            grpcOptions is not null
                 ? GrpcChannel.ForAddress(_clientOptions.BaseUrl, grpcOptions)
                 : GrpcChannel.ForAddress(_clientOptions.BaseUrl);
     }
 
     /// <summary>
-    /// Prepares the gRPC metadata associated with the given request.
-    /// The provided request headers take precedence over the headers
-    /// associated with this client (which are sent on _every_ request).
+    /// Creates CallOptions for a gRPC request with the provided metadata, timeout, and credentials.
+    /// Metadata (headers) should be built at the endpoint level before calling this method.
     /// </summary>
     public CallOptions CreateCallOptions(
+        global::Grpc.Core.Metadata metadata,
         GrpcRequestOptions options,
         CancellationToken cancellationToken = default
     )
     {
-        var metadata = new global::Grpc.Core.Metadata();
-        SetHeaders(metadata, _clientOptions.Headers);
-        SetHeaders(metadata, options.Headers);
-
         var timeout = options.Timeout ?? _clientOptions.Timeout;
         var deadline = DateTime.UtcNow.Add(timeout);
         return new CallOptions(
@@ -52,22 +48,10 @@ internal class RawGrpcClient
         );
     }
 
-    private static void SetHeaders(global::Grpc.Core.Metadata metadata, Headers headers)
-    {
-        foreach (var header in headers)
-        {
-            var value = header.Value?.Match(str => str, func => func.Invoke());
-            if (value != null)
-            {
-                metadata.Add(header.Key, value);
-            }
-        }
-    }
-
     private GrpcChannelOptions? PrepareGrpcChannelOptions()
     {
         var grpcChannelOptions = _clientOptions.GrpcOptions;
-        if (grpcChannelOptions == null)
+        if (grpcChannelOptions is null)
         {
             return null;
         }

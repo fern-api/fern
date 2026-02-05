@@ -8,7 +8,6 @@ import typing
 import uuid
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -107,16 +106,32 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_update_test_submission_status(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_test_submission_status)
+        type_hints = typing.get_type_hints(cls.update_test_submission_status)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -135,14 +150,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_test_submission_status.__globals__)
-
         router.post(
             path="/admin/store-test-submission-status/{submission_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.update_test_submission_status.__doc__,
             **get_route_args(cls.update_test_submission_status, default_tag="admin"),
         )(wrapper)
@@ -150,16 +161,32 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_send_test_submission_update(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_test_submission_update)
+        type_hints = typing.get_type_hints(cls.send_test_submission_update)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.send_test_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -176,14 +203,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.send_test_submission_update.__globals__)
-
         router.post(
             path="/admin/store-test-submission-status-v2/{submission_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.send_test_submission_update.__doc__,
             **get_route_args(cls.send_test_submission_update, default_tag="admin"),
         )(wrapper)
@@ -191,16 +214,32 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_update_workspace_submission_status(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_workspace_submission_status)
+        type_hints = typing.get_type_hints(cls.update_workspace_submission_status)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -221,14 +260,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_workspace_submission_status.__globals__)
-
         router.post(
             path="/admin/store-workspace-submission-status/{submission_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.update_workspace_submission_status.__doc__,
             **get_route_args(cls.update_workspace_submission_status, default_tag="admin"),
         )(wrapper)
@@ -236,16 +271,32 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_send_workspace_submission_update(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_workspace_submission_update)
+        type_hints = typing.get_type_hints(cls.send_workspace_submission_update)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -264,14 +315,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.send_workspace_submission_update.__globals__)
-
         router.post(
             path="/admin/store-workspace-submission-status-v2/{submission_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.send_workspace_submission_update.__doc__,
             **get_route_args(cls.send_workspace_submission_update, default_tag="admin"),
         )(wrapper)
@@ -279,18 +326,38 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_test_case(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_test_case)
+        type_hints = typing.get_type_hints(cls.store_traced_test_case)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "test_case_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="testCaseId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_test_case, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -307,14 +374,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.store_traced_test_case.__globals__)
-
         router.post(
             path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_test_case.__doc__,
             **get_route_args(cls.store_traced_test_case, default_tag="admin"),
         )(wrapper)
@@ -322,18 +385,38 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_test_case_v_2(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_test_case_v_2)
+        type_hints = typing.get_type_hints(cls.store_traced_test_case_v_2)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "test_case_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="testCaseId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_test_case_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -350,14 +433,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.store_traced_test_case_v_2.__globals__)
-
         router.post(
             path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_test_case_v_2.__doc__,
             **get_route_args(cls.store_traced_test_case_v_2, default_tag="admin"),
         )(wrapper)
@@ -365,16 +444,32 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_workspace(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_workspace)
+        type_hints = typing.get_type_hints(cls.store_traced_workspace)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_workspace, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -391,14 +486,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.store_traced_workspace.__globals__)
-
         router.post(
             path="/admin/store-workspace-trace/submission/{submission_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_workspace.__doc__,
             **get_route_args(cls.store_traced_workspace, default_tag="admin"),
         )(wrapper)
@@ -406,16 +497,32 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_workspace_v_2(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_workspace_v_2)
+        type_hints = typing.get_type_hints(cls.store_traced_workspace_v_2)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "submission_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_workspace_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -432,14 +539,10 @@ class AbstractAdminService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.store_traced_workspace_v_2.__globals__)
-
         router.post(
             path="/admin/store-workspace-trace-v2/submission/{submission_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_workspace_v_2.__doc__,
             **get_route_args(cls.store_traced_workspace_v_2, default_tag="admin"),
         )(wrapper)

@@ -12,9 +12,13 @@ from .parameter_id import ParameterId
 
 
 class Parameter(UniversalBaseModel):
-    parameter_id: typing_extensions.Annotated[ParameterId, FieldMetadata(alias="parameterId")]
+    parameter_id: typing_extensions.Annotated[
+        ParameterId, FieldMetadata(alias="parameterId"), pydantic.Field(alias="parameterId")
+    ]
     name: str
-    variable_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="variableType")]
+    variable_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="variableType"), pydantic.Field(alias="variableType")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -26,6 +30,8 @@ class Parameter(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .....commons.types.list_type import ListType  # noqa: E402, I001
+from .....commons.types.map_type import MapType  # noqa: E402, I001
 from .....commons.types.variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(Parameter)
+update_forward_refs(Parameter, ListType=ListType, MapType=MapType, VariableType=VariableType)

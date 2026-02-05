@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.types.NestedUser;
+import com.seed.api.types.SearchRequestNeighbor;
 import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
@@ -47,7 +48,7 @@ public final class SearchRequest {
 
     private final Optional<OffsetDateTime> optionalDeadline;
 
-    private final Optional<Map<String, Optional<String>>> keyValue;
+    private final Optional<Map<String, String>> keyValue;
 
     private final Optional<String> optionalString;
 
@@ -55,7 +56,7 @@ public final class SearchRequest {
 
     private final Optional<User> optionalUser;
 
-    private final Optional<User> neighbor;
+    private final Optional<SearchRequestNeighbor> neighbor;
 
     private final SearchRequestNeighborRequired neighborRequired;
 
@@ -72,11 +73,11 @@ public final class SearchRequest {
             String bytes,
             User user,
             Optional<OffsetDateTime> optionalDeadline,
-            Optional<Map<String, Optional<String>>> keyValue,
+            Optional<Map<String, String>> keyValue,
             Optional<String> optionalString,
             Optional<NestedUser> nestedUser,
             Optional<User> optionalUser,
-            Optional<User> neighbor,
+            Optional<SearchRequestNeighbor> neighbor,
             SearchRequestNeighborRequired neighborRequired,
             Map<String, Object> additionalProperties) {
         this.userList = userList;
@@ -149,7 +150,7 @@ public final class SearchRequest {
     }
 
     @JsonProperty("keyValue")
-    public Optional<Map<String, Optional<String>>> getKeyValue() {
+    public Optional<Map<String, String>> getKeyValue() {
         return keyValue;
     }
 
@@ -169,7 +170,7 @@ public final class SearchRequest {
     }
 
     @JsonProperty("neighbor")
-    public Optional<User> getNeighbor() {
+    public Optional<SearchRequestNeighbor> getNeighbor() {
         return neighbor;
     }
 
@@ -293,9 +294,9 @@ public final class SearchRequest {
 
         _FinalStage optionalDeadline(OffsetDateTime optionalDeadline);
 
-        _FinalStage keyValue(Optional<Map<String, Optional<String>>> keyValue);
+        _FinalStage keyValue(Optional<Map<String, String>> keyValue);
 
-        _FinalStage keyValue(Map<String, Optional<String>> keyValue);
+        _FinalStage keyValue(Map<String, String> keyValue);
 
         _FinalStage optionalString(Optional<String> optionalString);
 
@@ -309,9 +310,9 @@ public final class SearchRequest {
 
         _FinalStage optionalUser(User optionalUser);
 
-        _FinalStage neighbor(Optional<User> neighbor);
+        _FinalStage neighbor(Optional<SearchRequestNeighbor> neighbor);
 
-        _FinalStage neighbor(User neighbor);
+        _FinalStage neighbor(SearchRequestNeighbor neighbor);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -338,7 +339,7 @@ public final class SearchRequest {
 
         private SearchRequestNeighborRequired neighborRequired;
 
-        private Optional<User> neighbor = Optional.empty();
+        private Optional<SearchRequestNeighbor> neighbor = Optional.empty();
 
         private Optional<User> optionalUser = Optional.empty();
 
@@ -346,7 +347,7 @@ public final class SearchRequest {
 
         private Optional<String> optionalString = Optional.empty();
 
-        private Optional<Map<String, Optional<String>>> keyValue = Optional.empty();
+        private Optional<Map<String, String>> keyValue = Optional.empty();
 
         private Optional<OffsetDateTime> optionalDeadline = Optional.empty();
 
@@ -432,14 +433,14 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
-        public _FinalStage neighbor(User neighbor) {
+        public _FinalStage neighbor(SearchRequestNeighbor neighbor) {
             this.neighbor = Optional.ofNullable(neighbor);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "neighbor", nulls = Nulls.SKIP)
-        public _FinalStage neighbor(Optional<User> neighbor) {
+        public _FinalStage neighbor(Optional<SearchRequestNeighbor> neighbor) {
             this.neighbor = neighbor;
             return this;
         }
@@ -484,14 +485,14 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
-        public _FinalStage keyValue(Map<String, Optional<String>> keyValue) {
+        public _FinalStage keyValue(Map<String, String> keyValue) {
             this.keyValue = Optional.ofNullable(keyValue);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
-        public _FinalStage keyValue(Optional<Map<String, Optional<String>>> keyValue) {
+        public _FinalStage keyValue(Optional<Map<String, String>> keyValue) {
             this.keyValue = keyValue;
             return this;
         }

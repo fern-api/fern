@@ -1,6 +1,7 @@
 import {
     ContainerType,
     CursorPagination,
+    CustomPagination,
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
@@ -52,6 +53,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
         clientClass: GeneratedSdkClientClassImpl;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        offsetSemantics: "item-index" | "page-index";
     }
 }
 
@@ -73,6 +75,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private clientClass: GeneratedSdkClientClassImpl;
     private streamType: "wrapper" | "web";
     private readonly fileResponseType: "stream" | "binary-response";
+    private readonly offsetSemantics: "item-index" | "page-index";
 
     constructor({
         packageId,
@@ -83,7 +86,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         includeContentHeadersOnResponse,
         clientClass,
         streamType,
-        fileResponseType
+        fileResponseType,
+        offsetSemantics
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -94,6 +98,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.clientClass = clientClass;
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
+        this.offsetSemantics = offsetSemantics;
     }
 
     private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
@@ -128,6 +133,12 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     return this.getOffsetPaginationInfo({
                         context,
                         offset: this.endpoint.pagination,
+                        successReturnType
+                    });
+                case "custom":
+                    return this.getCustomPaginationInfo({
+                        context,
+                        custom: this.endpoint.pagination,
                         successReturnType
                     });
             }
@@ -334,12 +345,26 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                               ts.factory.createIdentifier("length")
                           ),
                           ts.factory.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-                          ts.factory.createParenthesizedExpression(
-                              ts.factory.createBinaryExpression(
-                                  stepPropertyAccess,
-                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                  ts.factory.createNumericLiteral("1")
-                              )
+                          // access to stepPropertyAccess should be an integer so that it compares correctly to items.length
+                          ts.factory.createCallExpression(
+                              ts.factory.createPropertyAccessExpression(
+                                  ts.factory.createIdentifier("Math"),
+                                  ts.factory.createIdentifier("floor")
+                              ),
+                              undefined,
+                              [
+                                  ts.factory.createParenthesizedExpression(
+                                      ts.factory.createBinaryExpression(
+                                          stepPropertyAccess,
+                                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                          ts.factory.createNumericLiteral(
+                                              this.getDefaultPaginationValue({
+                                                  type: offset.step.property.valueType
+                                              })
+                                          )
+                                      )
+                                  )
+                              ]
                           )
                       );
                   })()
@@ -385,7 +410,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // loadPage
         const incrementOffset =
-            offset.step != null
+            offset.step != null && this.offsetSemantics === "item-index"
                 ? ts.factory.createExpressionStatement(
                       ts.factory.createBinaryExpression(
                           ts.factory.createIdentifier("_offset"),
@@ -425,8 +450,70 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const loadPage = [incrementOffset, callEndpoint];
 
         return {
-            type: offset.step != null ? "offset-step" : "offset",
+            type: offset.step != null && this.offsetSemantics === "item-index" ? "offset-step" : "offset",
             initializeOffset,
+            itemType: itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
+    }
+
+    private getCustomPaginationInfo({
+        context,
+        custom,
+        successReturnType
+    }: {
+        context: SdkContext;
+        custom: CustomPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = custom.results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = getElementTypeFromArrayType(
+            removeUndefinedAndNullFromTypeNode(
+                context.type.getReferenceToResponsePropertyType({
+                    responseType: successReturnType,
+                    property: custom.results
+                })
+            )
+        );
+
+        // For custom pagination, hasNextPage always returns false
+        // The SDK author is responsible for implementing the pagination logic
+        const hasNextPage = ts.factory.createFalse();
+
+        // getItems gets the items from the results property
+        const getItems = ts.factory.createBinaryExpression(
+            context.type.generateGetterForResponseProperty({
+                property: custom.results,
+                variable: "response",
+                isVariableOptional: true
+            }),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
+
+        // For custom pagination, loadPage throws an error
+        // The SDK author is responsible for implementing the pagination logic
+        const loadPage = [
+            ts.factory.createThrowStatement(
+                ts.factory.createNewExpression(ts.factory.createIdentifier("Error"), undefined, [
+                    ts.factory.createStringLiteral(
+                        "Custom pagination requires manual implementation. Override the loadPage method to implement pagination."
+                    )
+                ])
+            )
+        ];
+
+        return {
+            type: "custom",
             itemType: itemType,
             responseType: successReturnType,
             hasNextPage,
@@ -639,7 +726,6 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                                   ts.factory.createParameterDeclaration(
                                                       undefined,
                                                       undefined,
-                                                      undefined,
                                                       GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
                                                   )
                                               ],
@@ -669,7 +755,6 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                               undefined,
                                               [
                                                   ts.factory.createParameterDeclaration(
-                                                      undefined,
                                                       undefined,
                                                       undefined,
                                                       GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
@@ -911,69 +996,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
+
+        const handleNonStatusCodeErrorReference =
+            context.nonStatusCodeErrorHandler.getReferenceToHandleNonStatusCodeError({
+                importsManager: context.importsManager,
+                exportsManager: context.exportsManager,
+                sourceFile: context.sourceFile
+            });
+
         return [
-            ts.factory.createSwitchStatement(
-                ts.factory.createPropertyAccessExpression(
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(handleNonStatusCodeErrorReference.getExpression(), undefined, [
                     referenceToError,
-                    context.coreUtilities.fetcher.Fetcher.Error.reason
-                ),
-                ts.factory.createCaseBlock([
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.NonJsonError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: undefined,
-                                    statusCode: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.statusCode
-                                    ),
-                                    responseBody: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
-                                    ),
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.timeoutSdkError
-                                    .getGeneratedTimeoutSdkError()
-                                    .build(
-                                        context,
-                                        `Timeout exceeded when calling ${this.endpoint.method} ${getFullPathForEndpoint(
-                                            this.endpoint
-                                        )}.`
-                                    )
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.UnknownError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.UnknownError.message
-                                    ),
-                                    statusCode: undefined,
-                                    responseBody: undefined,
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    )
+                    referenceToRawResponse,
+                    ts.factory.createStringLiteral(this.endpoint.method),
+                    ts.factory.createStringLiteral(getFullPathForEndpoint(this.endpoint))
                 ])
             )
         ];

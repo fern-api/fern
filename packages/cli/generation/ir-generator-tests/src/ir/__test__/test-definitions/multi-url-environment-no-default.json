@@ -306,7 +306,9 @@
                     },
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -386,6 +388,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -657,7 +661,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -748,6 +754,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -855,6 +863,9 @@
                         "ec2": "https://ec2.aws.com",
                         "s3": "https://s3.aws.com"
                     },
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -882,6 +893,9 @@
                         "ec2": "https://staging.ec2.aws.com",
                         "s3": "https://staging.s3.aws.com"
                     },
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]
@@ -1432,6 +1446,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_ec2": {
             "name": {

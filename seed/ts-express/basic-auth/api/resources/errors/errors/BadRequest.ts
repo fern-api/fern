@@ -6,7 +6,12 @@ import * as errors from "../../../../errors/index";
 export class BadRequest extends errors.SeedBasicAuthError {
     constructor() {
         super("BadRequest");
-        Object.setPrototypeOf(this, BadRequest.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

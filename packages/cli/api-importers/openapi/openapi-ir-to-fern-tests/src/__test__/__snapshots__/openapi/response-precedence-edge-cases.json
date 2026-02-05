@@ -1,0 +1,356 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "NotFoundError": {
+            "docs": "Not found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 404,
+            "type": "unknown",
+          },
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "deleteItem": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "NotFoundError",
+              ],
+              "examples": [
+                {},
+              ],
+              "method": "DELETE",
+              "pagination": undefined,
+              "path": "/delete",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "exportData": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "data": [
+                        {
+                          "key": "value",
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/export",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ExportDataResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getData": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "NotFoundError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "data": "data",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/data",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "GetDataResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getItems": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/items",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getRateLimited": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "data": "data",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/rate-limited",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "GetRateLimitedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getUsers": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "NotFoundError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      {
+                        "id": "id",
+                        "name": "name",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/users",
+              "response": {
+                "docs": "List of users",
+                "status-code": 200,
+                "type": "list<GetUsersResponseItem>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ExportDataResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "data": "optional<list<map<string, unknown>>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "GetDataResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "data": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "GetRateLimitedResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "data": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "GetUsersResponseItem": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NotFoundErrorBody": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "error": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  GetDataResponse:
+    properties:
+      data: optional<string>
+    source:
+      openapi: ../openapi.yml
+  NotFoundErrorBody:
+    properties:
+      error: optional<string>
+    source:
+      openapi: ../openapi.yml
+  ExportDataResponse:
+    properties:
+      data: optional<list<map<string, unknown>>>
+    source:
+      openapi: ../openapi.yml
+  GetUsersResponseItem:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  GetRateLimitedResponse:
+    properties:
+      data: optional<string>
+    source:
+      openapi: ../openapi.yml
+errors:
+  NotFoundError:
+    status-code: 404
+    type: unknown
+    docs: Not found
+    examples:
+      - value: {}
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getData:
+      path: /data
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: GetDataResponse
+        status-code: 200
+      errors:
+        - NotFoundError
+      examples:
+        - response:
+            body:
+              data: data
+    exportData:
+      path: /export
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: ExportDataResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              data:
+                - key: value
+    getItems:
+      path: /items
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - {}
+    getUsers:
+      path: /users
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: List of users
+        type: list<GetUsersResponseItem>
+        status-code: 200
+      errors:
+        - NotFoundError
+      examples:
+        - response:
+            body:
+              - id: id
+                name: name
+    deleteItem:
+      path: /delete
+      method: DELETE
+      source:
+        openapi: ../openapi.yml
+      errors:
+        - NotFoundError
+      examples:
+        - {}
+    getRateLimited:
+      path: /rate-limited
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: GetRateLimitedResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              data: data
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Response Precedence Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Response Precedence Edge Cases
+",
+  },
+}

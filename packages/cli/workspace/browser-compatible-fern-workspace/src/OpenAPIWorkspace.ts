@@ -1,7 +1,8 @@
 import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
+import { type Overlay } from "@fern-api/core-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { parse } from "@fern-api/openapi-ir-parser";
+import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
@@ -25,6 +26,7 @@ export declare namespace OpenAPIWorkspace {
     export interface Spec {
         parsed: OpenAPI.Document;
         overrides?: Partial<OpenAPI.Document>;
+        overlays?: Overlay;
         settings?: Settings;
     }
 
@@ -34,6 +36,7 @@ export declare namespace OpenAPIWorkspace {
 export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
     private spec: OpenAPIWorkspace.Spec;
     private loader: InMemoryOpenAPILoader;
+    private readonly parseOptions: Partial<ParseOpenAPIOptions>;
 
     public type = "openapi";
 
@@ -45,6 +48,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             respectNullableSchemas: spec.settings?.respectNullableSchemas,
             wrapReferencesToNullableInOptional: spec.settings?.wrapReferencesToNullableInOptional,
             coerceOptionalSchemasToNullable: spec.settings?.coerceOptionalSchemasToNullable,
+            coerceEnumsToLiterals: spec.settings?.coerceEnumsToLiterals,
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
             objectQueryParameters: spec.settings?.objectQueryParameters,
@@ -53,10 +57,25 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums,
             inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
             resolveAliases: spec.settings?.resolveAliases,
-            groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost
+            groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost,
+            removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
+            defaultIntegerFormat: spec.settings?.defaultIntegerFormat,
+            pathParameterOrder: spec.settings?.pathParameterOrder
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();
+        this.parseOptions = {
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+            respectReadonlySchemas: this.respectReadonlySchemas,
+            inlinePathParameters: this.inlinePathParameters,
+            objectQueryParameters: this.objectQueryParameters,
+            useBytesForBinaryResponse: this.useBytesForBinaryResponse,
+            respectForwardCompatibleEnums: this.respectForwardCompatibleEnums,
+            resolveAliases: this.resolveAliases,
+            groupEnvironmentsByHost: this.groupEnvironmentsByHost,
+            defaultIntegerFormat: this.defaultIntegerFormat,
+            pathParameterOrder: this.pathParameterOrder
+        };
     }
 
     public getOpenAPIIr(
@@ -73,12 +92,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             documents: [document],
             options: {
                 ...options,
-                onlyIncludeReferencedSchemas:
-                    options?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
-                respectReadonlySchemas: options?.respectReadonlySchemas ?? this.respectReadonlySchemas,
-                inlinePathParameters: options?.inlinePathParameters ?? this.inlinePathParameters,
-                objectQueryParameters: options?.objectQueryParameters ?? this.objectQueryParameters,
-                groupEnvironmentsByHost: options?.groupEnvironmentsByHost ?? this.groupEnvironmentsByHost
+                ...this.parseOptions
             }
         });
     }

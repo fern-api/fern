@@ -1,0 +1,5 @@
+# frozen_string_literal: true
+
+require_relative "seed_inferred_auth_implicit_client/auth/types/get_token_request"
+require_relative "seed_inferred_auth_implicit_client/auth/types/refresh_token_request"
+require_relative "seed_inferred_auth_implicit_client/auth/types/token_response"

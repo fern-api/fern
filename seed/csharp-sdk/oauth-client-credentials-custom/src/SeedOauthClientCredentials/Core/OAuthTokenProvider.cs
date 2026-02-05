@@ -16,10 +16,22 @@ public partial class OAuthTokenProvider
 
     private string _clientSecret;
 
-    public OAuthTokenProvider(string clientId, string clientSecret, AuthClient client)
+    private string _entityId;
+
+    private string _scp;
+
+    public OAuthTokenProvider(
+        string clientId,
+        string clientSecret,
+        string EntityId,
+        string Scp,
+        AuthClient client
+    )
     {
         _clientId = clientId;
         _clientSecret = clientSecret;
+        _entityId = EntityId;
+        _scp = Scp;
         _client = client;
     }
 
@@ -29,7 +41,13 @@ public partial class OAuthTokenProvider
         {
             var tokenResponse = await _client
                 .GetTokenWithClientCredentialsAsync(
-                    new GetTokenRequest { Cid = _clientId, Csr = _clientSecret }
+                    new GetTokenRequest
+                    {
+                        Cid = _clientId,
+                        Csr = _clientSecret,
+                        EntityId = _entityId,
+                        Scp = _scp,
+                    }
                 )
                 .ConfigureAwait(false);
             _accessToken = tokenResponse.AccessToken;

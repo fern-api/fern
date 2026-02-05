@@ -1,7 +1,10 @@
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
-import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import {
+    AbstractAPIWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
 import { FixtureConfigurations } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -9,7 +12,7 @@ import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
 import { LocalScriptRunner, ScriptRunner } from "../test";
 import { TaskContextFactory } from "../test/TaskContextFactory";
-import { DockerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
+import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
 
 export async function runWithCustomFixture({
     pathToFixture,
@@ -19,7 +22,7 @@ export async function runWithCustomFixture({
     outputPath,
     inspect,
     local,
-    keepDocker
+    keepContainer
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
@@ -28,7 +31,7 @@ export async function runWithCustomFixture({
     outputPath?: AbsoluteFilePath;
     inspect: boolean;
     local: boolean;
-    keepDocker: boolean;
+    keepContainer: boolean;
 }): Promise<void> {
     const lock = new Semaphore(1);
     const absolutePathToOutput = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
@@ -44,7 +47,7 @@ export async function runWithCustomFixture({
     let scriptRunner: ScriptRunner | undefined = undefined;
 
     if (!skipScripts) {
-        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext);
+        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel);
     }
 
     if (local) {
@@ -64,16 +67,16 @@ export async function runWithCustomFixture({
             taskContextFactory,
             skipScripts,
             scriptRunner,
-            keepDocker,
+            keepContainer,
             inspect
         });
     } else {
-        testRunner = new DockerTestRunner({
+        testRunner = new ContainerTestRunner({
             generator: workspace,
             lock,
             taskContextFactory,
             skipScripts,
-            keepDocker,
+            keepContainer,
             scriptRunner,
             inspect
         });
@@ -122,7 +125,8 @@ export async function runWithCustomFixture({
             configuration: runFixtureConfig,
             inspect,
             absolutePathToApiDefinition: pathToFixture,
-            outputDir: absolutePathToOutput
+            outputDir: absolutePathToOutput,
+            generatorInvocation: generatorGroup.invocation
         });
 
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);

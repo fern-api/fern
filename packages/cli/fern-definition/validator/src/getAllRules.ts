@@ -15,7 +15,6 @@ import { NoDuplicateFieldNamesRule } from "./rules/no-duplicate-field-names";
 import { NoErrorStatusCodeConflictRule } from "./rules/no-error-status-code-conflict";
 import { NoExtensionsWithFileUploadRule } from "./rules/no-extensions-with-file-upload";
 import { NoGetRequestBodyRule } from "./rules/no-get-request-body";
-import { NoHeadResponseBodyRule } from "./rules/no-head-response-body";
 import { NoMissingAuthRule } from "./rules/no-missing-auth";
 import { NoMissingErrorDiscriminantRule } from "./rules/no-missing-error-discriminant";
 import { NoMissingRequestNameRule } from "./rules/no-missing-request-name";
@@ -59,7 +58,6 @@ export function getAllRules(): Rule[] {
         NoDuplicateFieldNamesRule,
         NoObjectSinglePropertyKeyRule,
         NoGetRequestBodyRule,
-        NoHeadResponseBodyRule,
         NoComplexQueryParamsRule,
         ValidDefaultEnvironmentRule,
         NoMissingErrorDiscriminantRule,

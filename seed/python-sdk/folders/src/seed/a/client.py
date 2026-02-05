@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawAClient, RawAClient
 
 if typing.TYPE_CHECKING:
     from .b.client import AsyncBClient, BClient
@@ -14,21 +13,9 @@ if typing.TYPE_CHECKING:
 
 class AClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawAClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._b: typing.Optional[BClient] = None
         self._c: typing.Optional[CClient] = None
-
-    @property
-    def with_raw_response(self) -> RawAClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawAClient
-        """
-        return self._raw_client
 
     @property
     def b(self):
@@ -49,21 +36,9 @@ class AClient:
 
 class AsyncAClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawAClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._b: typing.Optional[AsyncBClient] = None
         self._c: typing.Optional[AsyncCClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawAClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawAClient
-        """
-        return self._raw_client
 
     @property
     def b(self):

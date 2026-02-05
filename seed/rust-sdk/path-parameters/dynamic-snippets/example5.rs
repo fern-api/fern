@@ -12,11 +12,9 @@ async fn main() {
         .update_user(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
-            &UpdateUserRequest {
-                body: User {
-                    name: "name".to_string(),
-                    tags: vec!["tags".to_string(), "tags".to_string()],
-                },
+            &User {
+                name: "name".to_string(),
+                tags: vec!["tags".to_string(), "tags".to_string()],
             },
             None,
         )

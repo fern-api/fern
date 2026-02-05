@@ -1,4 +1,5 @@
 import {
+    AbstractAstNode,
     AbstractDynamicSnippetsGenerator,
     FernGeneratorExec,
     Options
@@ -35,6 +36,10 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         options: Options = {}
     ): FernIr.dynamic.EndpointSnippetResponse {
         return super.generateSync(request, options);
+    }
+
+    public async generateSnippetAst(request: FernIr.dynamic.EndpointSnippetRequest): Promise<AbstractAstNode> {
+        return super.generateSnippetAst(request);
     }
 
     protected createSnippetGenerator(context: DynamicSnippetsGeneratorContext): EndpointSnippetGenerator {

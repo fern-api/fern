@@ -15,6 +15,7 @@ export enum AsIsFiles {
     Page = "core/page.go_",
     Pager = "internal/pager.go_",
     PagerTest = "internal/pager_test.go_",
+    CustomPagination = "core/custom_pagination.go_",
     Stream = "core/stream.go_",
     Streamer = "internal/streamer.go_"
 }

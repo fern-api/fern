@@ -22,6 +22,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static FORWARD_COMPATIBLE_ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "FORWARD_COMPATIBLE_ENUMS";
+    private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -46,7 +47,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.requestOptionsName = this.types.RequestOptions.name;
+        this.requestOptionsName = this.Types.RequestOptions.name;
     }
     protected get generation() {
         return this.context.generation;
@@ -57,9 +58,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     protected get registry() {
         return this.generation.registry;
     }
-    protected get extern() {
-        return this.generation.extern;
-    }
     protected get settings() {
         return this.generation.settings;
     }
@@ -69,26 +67,42 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     protected get names() {
         return this.generation.names;
     }
-    protected get types() {
-        return this.generation.types;
-    }
     protected get model() {
         return this.generation.model;
+    }
+    protected get format() {
+        return this.generation.format;
     }
     protected get csharp() {
         return this.generation.csharp;
     }
+    protected get Types() {
+        return this.generation.Types;
+    }
+
     protected get System() {
-        return this.extern.System;
+        return this.generation.extern.System;
     }
     protected get NUnit() {
-        return this.extern.NUnit;
+        return this.generation.extern.NUnit;
     }
     protected get OneOf() {
-        return this.extern.OneOf;
+        return this.generation.extern.OneOf;
     }
     protected get Google() {
-        return this.extern.Google;
+        return this.generation.extern.Google;
+    }
+    protected get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    protected get Primitive() {
+        return this.generation.Primitive;
+    }
+    protected get Value() {
+        return this.generation.Value;
+    }
+    protected get Collection() {
+        return this.generation.Collection;
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -97,6 +111,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
@@ -153,10 +168,39 @@ using ${this.namespaces.root};
 
 try {
     var response = await ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
-} catch (${this.types.BaseApiException.name} e) {
+} catch (${this.Types.BaseApiException.name} e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
+`)
+        );
+    }
+
+    private buildRawResponseSnippets(): string[] {
+        const rawResponseEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID);
+        return rawResponseEndpoints.map((rawResponseEndpoint) =>
+            this.writeCode(`
+using ${this.namespaces.root};
+
+// Access raw response data (status code, headers, etc.) alongside the parsed response
+var result = await ${this.getMethodCall(rawResponseEndpoint)}(...).WithRawResponse();
+
+// Access the parsed data
+var data = result.Data;
+
+// Access raw response metadata
+var statusCode = result.RawResponse.StatusCode;
+var headers = result.RawResponse.Headers;
+var url = result.RawResponse.Url;
+
+// Access specific headers (case-insensitive)
+if (headers.TryGetValue("X-Request-Id", out var requestId))
+{
+    System.Console.WriteLine($"Request ID: {requestId}");
+}
+
+// For the default behavior, simply await without .WithRawResponse()
+var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
 `)
         );
     }

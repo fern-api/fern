@@ -15,8 +15,28 @@ import java.util.Optional;
 
 public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
+    private final Optional<String> customPagerName;
+
     public ClientPoetClassNameFactory(List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        this(packagePrefixTokens, packageLayout, Optional.empty());
+    }
+
+    public ClientPoetClassNameFactory(
+            List<String> packagePrefixTokens,
+            ICustomConfig.PackageLayout packageLayout,
+            Optional<String> customPagerName) {
         super(packagePrefixTokens, packageLayout);
+        this.customPagerName = customPagerName;
+    }
+
+    public ClassName getCustomPaginationClassName() {
+        String className = customPagerName.orElse("CustomPager");
+        return getPaginationClassName(className);
+    }
+
+    public ClassName getAsyncCustomPaginationClassName() {
+        String className = "Async" + customPagerName.orElse("CustomPager");
+        return getPaginationClassName(className);
     }
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
@@ -60,6 +80,18 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
 
     public ClassName getMediaTypesClassName() {
         return ClassName.get(getCorePackage(), "MediaTypes");
+    }
+
+    public ClassName getOkhttp3MediaTypeClassName() {
+        return ClassName.get("okhttp3", "MediaType");
+    }
+
+    public ClassName getOkhttp3MultipartBodyClassName() {
+        return ClassName.get("okhttp3", "MultipartBody");
+    }
+
+    public ClassName getOkhttp3RequestBodyClassName() {
+        return ClassName.get("okhttp3", "RequestBody");
     }
 
     public ClassName getClientClassName(Subpackage subpackage) {

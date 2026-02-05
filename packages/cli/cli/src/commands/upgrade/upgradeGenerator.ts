@@ -1,4 +1,5 @@
 import {
+    addDefaultDockerOrgIfNotPresent,
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
@@ -15,11 +16,27 @@ import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
+import { loadAndRunMigrations } from "./migrations";
 
 interface SkippedMajorUpgrade {
     generatorName: string;
     currentVersion: string;
     latestMajorVersion: string;
+}
+
+interface AppliedUpgrade {
+    generatorName: string;
+    groupName: string;
+    previousVersion: string;
+    newVersion: string;
+    migrationsApplied?: number;
+    migrationVersions?: string[];
+}
+
+interface AlreadyUpToDate {
+    generatorName: string;
+    groupName: string;
+    version: string;
 }
 
 function getChangelogUrl(generatorName: string): string | undefined {
@@ -54,11 +71,17 @@ export async function loadAndUpdateGenerators({
     includeMajor: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
-}): Promise<{ updatedConfiguration: string | undefined; skippedMajorUpgrades: SkippedMajorUpgrade[] }> {
+}): Promise<{
+    updatedConfiguration: string | undefined;
+    skippedMajorUpgrades: SkippedMajorUpgrade[];
+    appliedUpgrades: AppliedUpgrade[];
+    alreadyUpToDate: AlreadyUpToDate[];
+}> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+
     if (filepath == null || !(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
     }
     const contents = await readFile(filepath);
     context.logger.debug(`Found generators: ${contents.toString()}`);
@@ -69,15 +92,17 @@ export async function loadAndUpdateGenerators({
     const generatorGroups = parsedDocument.get("groups");
     if (generatorGroups == null) {
         context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
     }
     if (!YAML.isMap(generatorGroups)) {
         context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
     }
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
 
     const skippedMajorUpgrades: SkippedMajorUpgrade[] = [];
+    const appliedUpgrades: AppliedUpgrade[] = [];
+    const alreadyUpToDate: AlreadyUpToDate[] = [];
 
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
@@ -114,15 +139,20 @@ export async function loadAndUpdateGenerators({
                 );
             }
             const generatorName = generator.get("name") as string;
+            // Normalize the generator name to add default Docker org prefix if not present
+            // This is needed because the YAML may contain shorthand names like "fern-csharp-sdk"
+            const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
-            if (generatorFilter != null && generatorName !== generatorFilter) {
+            // Normalize the generator filter to add default Docker org prefix if not present
+            const normalizedGeneratorFilter =
+                generatorFilter != null ? addDefaultDockerOrgIfNotPresent(generatorFilter) : undefined;
+            // Compare normalized names so both shorthand and full names work
+            if (normalizedGeneratorFilter != null && normalizedGeneratorName !== normalizedGeneratorFilter) {
                 context.logger.debug(
                     `Skipping generator ${generatorName} as it does not match the filter: ${generatorFilter}`
                 );
                 continue;
             }
-
-            const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
             const currentGeneratorVersion = generator.get("version") as string;
 
@@ -139,10 +169,75 @@ export async function loadAndUpdateGenerators({
             const versionToUse = latestVersion ?? currentGeneratorVersion;
 
             if (latestVersion != null) {
-                context.logger.debug(
-                    chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
-                );
-                generator.set("version", latestVersion);
+                if (latestVersion !== currentGeneratorVersion) {
+                    context.logger.debug(
+                        chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
+                    );
+
+                    // Update the version in YAML
+                    generator.set("version", latestVersion);
+
+                    // Run migrations if available
+                    let migrationsApplied = 0;
+                    let migrationVersions: string[] = [];
+
+                    // Convert YAML map to plain object for migration
+                    // toJSON() returns a plain object with all the YAML properties
+                    const currentConfig = generator.toJSON();
+
+                    const migrationResult = await loadAndRunMigrations({
+                        generatorName: normalizedGeneratorName,
+                        from: currentGeneratorVersion,
+                        to: latestVersion,
+                        config: currentConfig,
+                        logger: context.logger
+                    });
+
+                    if (migrationResult != null) {
+                        migrationsApplied = migrationResult.migrationsApplied;
+                        migrationVersions = migrationResult.appliedVersions;
+
+                        // Apply migrated config back to YAML, preserving formatting and comments
+                        // Get the original and migrated keys to detect what changed
+                        const originalKeys = new Set(Object.keys(currentConfig));
+                        const migratedKeys = new Set(Object.keys(migrationResult.config));
+
+                        // Remove keys that are in original but not in migration result
+                        for (const key of originalKeys) {
+                            if (!migratedKeys.has(key)) {
+                                generator.delete(key);
+                            }
+                        }
+
+                        // Add or update keys from migration result
+                        for (const [key, value] of Object.entries(migrationResult.config)) {
+                            generator.set(key, value);
+                        }
+
+                        context.logger.debug(
+                            chalk.dim(`Applied ${migrationsApplied} migration(s): ${migrationVersions.join(", ")}`)
+                        );
+                    }
+
+                    appliedUpgrades.push({
+                        generatorName,
+                        groupName,
+                        previousVersion: currentGeneratorVersion,
+                        newVersion: latestVersion,
+                        migrationsApplied: migrationsApplied > 0 ? migrationsApplied : undefined,
+                        migrationVersions: migrationVersions.length > 0 ? migrationVersions : undefined
+                    });
+                } else {
+                    // Generator is already on the latest version
+                    context.logger.debug(
+                        chalk.gray(`${generatorName} is already on the latest version: ${currentGeneratorVersion}`)
+                    );
+                    alreadyUpToDate.push({
+                        generatorName,
+                        groupName,
+                        version: currentGeneratorVersion
+                    });
+                }
             }
 
             if (!includeMajor) {
@@ -171,7 +266,7 @@ export async function loadAndUpdateGenerators({
         }
     }
 
-    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades };
+    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades, appliedUpgrades, alreadyUpToDate };
 }
 
 export async function upgradeGenerator({
@@ -190,6 +285,8 @@ export async function upgradeGenerator({
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
+    const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
+    const allAlreadyUpToDate: Array<{ workspace: string | undefined; upToDate: AlreadyUpToDate[] }> = [];
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -231,9 +328,91 @@ export async function upgradeGenerator({
                 }
 
                 allSkippedMajorUpgrades.push(...result.skippedMajorUpgrades);
+                if (result.appliedUpgrades.length > 0) {
+                    allAppliedUpgrades.push({
+                        workspace: workspace.workspaceName,
+                        upgrades: result.appliedUpgrades
+                    });
+                }
+                if (result.alreadyUpToDate.length > 0) {
+                    allAlreadyUpToDate.push({
+                        workspace: workspace.workspaceName,
+                        upToDate: result.alreadyUpToDate
+                    });
+                }
             });
         })
     );
+
+    if (allAppliedUpgrades.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.green("Successfully upgraded generators:"));
+
+        for (const { workspace, upgrades } of allAppliedUpgrades) {
+            const upgradesByGroup = new Map<string, AppliedUpgrade[]>();
+            for (const upgrade of upgrades) {
+                const existing = upgradesByGroup.get(upgrade.groupName) ?? [];
+                existing.push(upgrade);
+                upgradesByGroup.set(upgrade.groupName, existing);
+            }
+
+            for (const [groupName, groupUpgrades] of upgradesByGroup) {
+                const workspacePrefix = workspace != null ? `[${workspace}] ` : "";
+                cliContext.logger.info(chalk.green(`${workspacePrefix}Group ${groupName}:`));
+
+                for (const upgrade of groupUpgrades) {
+                    cliContext.logger.info(
+                        chalk.green(
+                            `  - ${upgrade.generatorName}: ${chalk.dim(upgrade.previousVersion)} → ${upgrade.newVersion}`
+                        )
+                    );
+                    // Show migration info if migrations were applied
+                    if (upgrade.migrationsApplied != null && upgrade.migrationsApplied > 0) {
+                        cliContext.logger.info(
+                            chalk.dim(
+                                `    Applied ${upgrade.migrationsApplied} migration(s): ${upgrade.migrationVersions?.join(", ") ?? ""}`
+                            )
+                        );
+                    }
+                    // Use normalized name for changelog lookup since the map uses fernapi/... keys
+                    const changelogUrl = getChangelogUrl(addDefaultDockerOrgIfNotPresent(upgrade.generatorName));
+                    if (changelogUrl != null) {
+                        cliContext.logger.info(chalk.dim(`    Changelog: ${changelogUrl}`));
+                    }
+                }
+            }
+        }
+    }
+
+    if (allAlreadyUpToDate.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.dim("Generators already on latest version:"));
+
+        for (const { workspace, upToDate } of allAlreadyUpToDate) {
+            const upToDateByGroup = new Map<string, AlreadyUpToDate[]>();
+            for (const item of upToDate) {
+                const existing = upToDateByGroup.get(item.groupName) ?? [];
+                existing.push(item);
+                upToDateByGroup.set(item.groupName, existing);
+            }
+
+            for (const [groupName, groupItems] of upToDateByGroup) {
+                const workspacePrefix = workspace != null ? `[${workspace}] ` : "";
+                cliContext.logger.info(chalk.dim(`${workspacePrefix}Group ${groupName}:`));
+
+                for (const item of groupItems) {
+                    cliContext.logger.info(chalk.dim(`  - ${item.generatorName}: ${item.version} (latest)`));
+                }
+            }
+        }
+    }
+
+    if (allAppliedUpgrades.length === 0 && allAlreadyUpToDate.length === 0) {
+        const filterMessage =
+            group != null ? ` for group ${group}` : generator != null ? ` for generator ${generator}` : "";
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.gray(`No generators found${filterMessage}.`));
+    }
 
     if (allSkippedMajorUpgrades.length > 0) {
         cliContext.logger.info("");
@@ -247,7 +426,8 @@ export async function upgradeGenerator({
                     ? `fern generator upgrade --generator ${upgrade.generatorName} --include-major`
                     : `fern generator upgrade --include-major`;
             cliContext.logger.info(chalk.yellow(`    Run: ${upgradeCommand}`));
-            const changelogUrl = getChangelogUrl(upgrade.generatorName);
+            // Use normalized name for changelog lookup since the map uses fernapi/... keys
+            const changelogUrl = getChangelogUrl(addDefaultDockerOrgIfNotPresent(upgrade.generatorName));
             if (changelogUrl != null) {
                 cliContext.logger.info(chalk.yellow(`    Changelog: ${changelogUrl}`));
             }

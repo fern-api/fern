@@ -2,36 +2,24 @@
 
 import type * as SeedApi from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import { toJson } from "./core/json.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedApiClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedApiClient {
-    protected readonly _options: SeedApiClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
 
-    constructor(_options: SeedApiClient.Options) {
-        this._options = {
-            ..._options,
-            logging: core.logging.createLogger(_options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/query-parameters-openapi",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/query-parameters-openapi/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedApiClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
@@ -42,7 +30,7 @@ export class SeedApiClient {
      *     await client.search({
      *         limit: 1,
      *         id: "id",
-     *         date: "date",
+     *         date: "2023-01-15",
      *         deadline: "2024-01-15T09:30:00Z",
      *         bytes: "bytes",
      *         user: {
@@ -113,63 +101,24 @@ export class SeedApiClient {
             neighbor,
             neighborRequired,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.limit = limit.toString();
-        _queryParams.id = id;
-        _queryParams.date = date;
-        _queryParams.deadline = deadline;
-        _queryParams.bytes = bytes;
-        _queryParams.user = user;
-        if (userList != null) {
-            if (Array.isArray(userList)) {
-                _queryParams.userList = userList.map((item) => item);
-            } else {
-                _queryParams.userList = userList;
-            }
-        }
-
-        if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline;
-        }
-
-        if (keyValue != null) {
-            _queryParams.keyValue = toJson(keyValue);
-        }
-
-        if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
-        }
-
-        if (nestedUser != null) {
-            _queryParams.nestedUser = nestedUser;
-        }
-
-        if (optionalUser != null) {
-            _queryParams.optionalUser = optionalUser;
-        }
-
-        if (excludeUser != null) {
-            if (Array.isArray(excludeUser)) {
-                _queryParams.excludeUser = excludeUser.map((item) => item);
-            } else {
-                _queryParams.excludeUser = excludeUser;
-            }
-        }
-
-        if (filter != null) {
-            if (Array.isArray(filter)) {
-                _queryParams.filter = filter.map((item) => item);
-            } else {
-                _queryParams.filter = filter;
-            }
-        }
-
-        if (neighbor != null) {
-            _queryParams.neighbor = neighbor;
-        }
-
-        _queryParams.neighborRequired =
-            typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired);
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            id,
+            date,
+            deadline,
+            bytes,
+            user,
+            userList,
+            optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
+            keyValue: keyValue != null ? toJson(keyValue) : undefined,
+            optionalString,
+            nestedUser,
+            optionalUser,
+            excludeUser,
+            filter,
+            neighbor: neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined,
+            neighborRequired: typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired),
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -198,20 +147,6 @@ export class SeedApiClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /user/getUsername.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/user/getUsername");
     }
 }

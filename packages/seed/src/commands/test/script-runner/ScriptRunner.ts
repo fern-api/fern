@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { DockerScriptConfig } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../../Semaphore";
 
@@ -9,18 +9,23 @@ export declare namespace ScriptRunner {
         taskContext: TaskContext;
         outputDir: AbsoluteFilePath;
         id: string;
-        skipScripts?: string[];
+        skipScripts?: boolean | string[];
     }
 
     type RunResponse = ScriptSuccessResponse | ScriptFailureResponse;
 
     interface ScriptSuccessResponse {
         type: "success";
+        buildTimeMs?: number;
+        testTimeMs?: number;
     }
 
     interface ScriptFailureResponse {
         type: "failure";
+        phase: "build" | "test";
         message: string;
+        buildTimeMs?: number;
+        testTimeMs?: number;
     }
 }
 
@@ -33,11 +38,16 @@ export abstract class ScriptRunner {
     constructor(
         protected readonly workspace: GeneratorWorkspace,
         protected readonly skipScripts: boolean,
-        protected readonly context: TaskContext
+        protected readonly context: TaskContext,
+        protected readonly logLevel: LogLevel
     ) {}
 
     public abstract run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse>;
     public abstract stop(): Promise<void>;
 
     protected abstract initialize(): Promise<void>;
+
+    protected shouldStreamOutput(): boolean {
+        return this.logLevel === "debug" || this.logLevel === "trace";
+    }
 }

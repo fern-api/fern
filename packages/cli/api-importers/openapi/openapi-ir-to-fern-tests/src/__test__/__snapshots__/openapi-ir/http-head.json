@@ -26,7 +26,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -88,24 +88,12 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/users",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -159,7 +147,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "HEAD",
       "path": "/users",
       "examples": [

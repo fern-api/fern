@@ -8,15 +8,19 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment";
 export class NativeExecutionEnvironment implements ExecutionEnvironment {
     private readonly commands: string[];
     private readonly workingDirectory?: string;
+    private readonly env?: Record<string, string>;
     constructor({
         commands,
-        workingDirectory
+        workingDirectory,
+        env
     }: {
         commands: string[];
         workingDirectory?: string;
+        env?: Record<string, string>;
     }) {
         this.commands = commands;
         this.workingDirectory = workingDirectory;
+        this.env = env;
     }
 
     public async execute({
@@ -44,20 +48,17 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
 
             context.logger.debug(`Executing command: ${processedCommand}`);
 
-            const parts = processedCommand.split(" ");
-            const program = parts[0];
-            const args = parts.slice(1);
+            // Check if command contains shell operators that require shell mode
+            const shellOperators = ["&&", "||", "|", ";", ">", "<", ">>", "<<"];
+            const needsShell = shellOperators.some((op) => processedCommand.includes(op));
 
-            if (!program) {
-                throw new Error(`Invalid command: ${processedCommand}`);
-            }
-
-            const result = await loggingExeca(context.logger, program, args, {
+            const execOptions = {
                 doNotPipeOutput: false,
                 reject: false,
                 cwd: this.workingDirectory,
                 env: {
                     ...process.env,
+                    ...this.env,
                     IR_PATH: irPath,
                     CONFIG_PATH: configPath,
                     OUTPUT_PATH: outputPath,
@@ -65,8 +66,26 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                     SNIPPET_TEMPLATE_PATH: snippetTemplatePath || "",
                     GENERATOR_NAME: generatorName,
                     ...(inspect ? { NODE_OPTIONS: "--inspect-brk=0.0.0.0:9229" } : {})
+                },
+                shell: needsShell
+            };
+
+            let result;
+            if (needsShell) {
+                // For shell commands, pass the entire command as a single string
+                result = await loggingExeca(context.logger, processedCommand, [], execOptions);
+            } else {
+                // For simple commands, split by space
+                const parts = processedCommand.split(" ");
+                const program = parts[0];
+                const args = parts.slice(1);
+
+                if (!program) {
+                    throw new Error(`Invalid command: ${processedCommand}`);
                 }
-            });
+
+                result = await loggingExeca(context.logger, program, args, execOptions);
+            }
 
             if (result.failed) {
                 throw new Error(`Command failed: ${processedCommand}\n${result.stderr || result.stdout}`);

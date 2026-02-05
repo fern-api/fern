@@ -4,7 +4,12 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { typeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
+import {
+    getInnerTypeFromOptional,
+    isDateTimeOnlyType,
+    isOptionalType,
+    typeSupportsHashAndEq
+} from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -58,7 +63,8 @@ export class AliasGenerator {
             innerType: generateRustTypeForTypeReference(this.aliasTypeDeclaration.aliasOf, this.context),
             visibility: PUBLIC,
             innerVisibility: PUBLIC,
-            attributes: this.generateNewtypeAttributes()
+            attributes: this.generateNewtypeAttributes(),
+            innerAttributes: this.generateInnerAttributes()
         });
     }
 
@@ -75,8 +81,36 @@ export class AliasGenerator {
 
         attributes.push(Attribute.derive(derives));
 
-        // DateTime aliases will use default RFC 3339 string serialization
-        // No special serde handling needed for datetime aliases
+        return attributes;
+    }
+
+    private generateInnerAttributes(): rust.Attribute[] {
+        const attributes: rust.Attribute[] = [];
+
+        // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
+        // Use deserialize_with instead of with to allow Serialize derive to work correctly
+        // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
+        // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
+        const dateTimeType = this.context.getDateTimeType();
+        const aliasType = this.aliasTypeDeclaration.aliasOf;
+        const modulePath = dateTimeType === "utc" 
+            ? "crate::core::flexible_datetime::utc" 
+            : "crate::core::flexible_datetime::offset";
+
+        if (isDateTimeOnlyType(aliasType)) {
+            // Direct datetime type
+            attributes.push(Attribute.serde.deserializeWith(`${modulePath}::deserialize`));
+        } else if (isOptionalType(aliasType)) {
+            // Optional type - check if inner type is datetime
+            const innerType = getInnerTypeFromOptional(aliasType);
+            if (isDateTimeOnlyType(innerType)) {
+                // Optional datetime type
+                attributes.push(Attribute.serde.default());
+                attributes.push(
+                    Attribute.serde.deserializeWith(`${modulePath}::option::deserialize`)
+                );
+            }
+        }
 
         return attributes;
     }

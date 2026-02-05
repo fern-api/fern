@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -79,6 +80,9 @@ UnionWithMultipleNoProperties_Foo(
     name="example",
 )
 """
-UnionWithMultipleNoProperties = typing.Union[
-    UnionWithMultipleNoProperties_Foo, UnionWithMultipleNoProperties_Empty1, UnionWithMultipleNoProperties_Empty2
+UnionWithMultipleNoProperties = typing_extensions.Annotated[
+    typing.Union[
+        UnionWithMultipleNoProperties_Foo, UnionWithMultipleNoProperties_Empty1, UnionWithMultipleNoProperties_Empty2
+    ],
+    pydantic.Field(discriminator="type"),
 ]

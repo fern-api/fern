@@ -1,4 +1,15 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Commons**
+//! - **FolderA**
+//! - **FolderB**
+//! - **FolderC**
+//! - **FolderD**
+//! - **Foo**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod commons;
 pub mod folder_a;
@@ -19,9 +30,10 @@ impl CrossPackageTypeNamesClient {
             config: config.clone(),
             folder_a: FolderAClient::new(config.clone())?,
             folder_d: FolderDClient::new(config.clone())?,
-            foo: FooClient::new(config.clone())?,
+            foo: FooClient::new(config.clone())?
         })
     }
+
 }
 
 pub use commons::CommonsClient;

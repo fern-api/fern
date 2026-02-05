@@ -5,6 +5,18 @@
 
 The Seed PHP library provides convenient access to the Seed APIs from PHP.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires PHP ^8.1.
@@ -26,10 +38,12 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\FileUploadExample\Requests\UploadFileRequest;
+use Seed\Utils\File;
 
 $client = new SeedClient();
 $client->fileUploadExample->uploadFile(
     new UploadFileRequest([
+        'file' => File::createFromString("example_file", "example_file"),
         'name' => 'name',
     ]),
 );

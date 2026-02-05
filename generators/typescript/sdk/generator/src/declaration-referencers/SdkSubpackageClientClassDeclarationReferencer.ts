@@ -20,11 +20,7 @@ export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkCl
 
     public getExportedName(subpackageId: SubpackageId): string {
         const subpackage = this.packageResolver.resolveSubpackage(subpackageId);
-        if (subpackage.name.pascalCase.safeName !== this.namespaceExport) {
-            return subpackage.name.pascalCase.safeName;
-        } else {
-            return `${subpackage.name.pascalCase.unsafeName}Service`;
-        }
+        return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<SubpackageId>): Reference {

@@ -98,6 +98,13 @@ public class AsyncServiceClient {
     /**
      * List or search for users
      */
+    public CompletableFuture<PaginatedUserResponse> listUsers(RequestOptions requestOptions) {
+        return this.rawClient.listUsers(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * List or search for users
+     */
     public CompletableFuture<PaginatedUserResponse> listUsers(ListUsersRequest request) {
         return this.rawClient.listUsers(request).thenApply(response -> response.body());
     }
@@ -114,6 +121,13 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<User> getUserById(String userId) {
         return this.rawClient.getUserById(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<User> getUserById(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getUserById(userId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -154,6 +168,13 @@ public class AsyncServiceClient {
     /**
      * Update a user
      */
+    public CompletableFuture<User> updateUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.updateUser(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update a user
+     */
     public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request) {
         return this.rawClient.updateUser(userId, request).thenApply(response -> response.body());
     }
@@ -189,6 +210,13 @@ public class AsyncServiceClient {
     /**
      * List all connections
      */
+    public CompletableFuture<List<Connection>> listConnections(RequestOptions requestOptions) {
+        return this.rawClient.listConnections(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * List all connections
+     */
     public CompletableFuture<List<Connection>> listConnections(ListConnectionsRequest request) {
         return this.rawClient.listConnections(request).thenApply(response -> response.body());
     }
@@ -206,6 +234,13 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<Connection> getConnection(String connectionId) {
         return this.rawClient.getConnection(connectionId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public CompletableFuture<Connection> getConnection(String connectionId, RequestOptions requestOptions) {
+        return this.rawClient.getConnection(connectionId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -235,6 +270,13 @@ public class AsyncServiceClient {
     /**
      * List all clients/applications
      */
+    public CompletableFuture<PaginatedClientResponse> listClients(RequestOptions requestOptions) {
+        return this.rawClient.listClients(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * List all clients/applications
+     */
     public CompletableFuture<PaginatedClientResponse> listClients(ListClientsRequest request) {
         return this.rawClient.listClients(request).thenApply(response -> response.body());
     }
@@ -252,6 +294,13 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<Client> getClient(String clientId) {
         return this.rawClient.getClient(clientId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public CompletableFuture<Client> getClient(String clientId, RequestOptions requestOptions) {
+        return this.rawClient.getClient(clientId, requestOptions).thenApply(response -> response.body());
     }
 
     /**

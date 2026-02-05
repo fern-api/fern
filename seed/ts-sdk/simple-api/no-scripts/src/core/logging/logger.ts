@@ -2,14 +2,14 @@ export const LogLevel = {
     Debug: "debug",
     Info: "info",
     Warn: "warn",
-    Error: "error"
+    Error: "error",
 } as const;
 export type LogLevel = (typeof LogLevel)[keyof typeof LogLevel];
 const logLevelMap: Record<LogLevel, number> = {
     [LogLevel.Debug]: 1,
     [LogLevel.Info]: 2,
     [LogLevel.Warn]: 3,
-    [LogLevel.Error]: 4
+    [LogLevel.Error]: 4,
 };
 
 export interface ILogger {
@@ -199,5 +199,5 @@ export function createLogger(config?: LogConfig | Logger): Logger {
 const defaultLogger: Logger = new Logger({
     level: LogLevel.Info,
     logger: new ConsoleLogger(),
-    silent: true
+    silent: true,
 });

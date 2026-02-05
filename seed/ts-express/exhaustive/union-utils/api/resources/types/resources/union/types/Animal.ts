@@ -80,7 +80,7 @@ export const Animal = {
             case "cat":
                 return visitor.cat(value);
             default:
-                return visitor._other(value as any);
+                return visitor._other(value);
         }
     },
 } as const;

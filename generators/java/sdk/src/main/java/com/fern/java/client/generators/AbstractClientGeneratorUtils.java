@@ -35,6 +35,7 @@ import com.fern.java.client.generators.endpoint.RawHttpEndpointMethodSpecs;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -172,6 +173,36 @@ public abstract class AbstractClientGeneratorUtils {
                             .get());
                 }
 
+                if (httpEndpointMethodSpecs
+                        .getNoRequestBodyWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getNoRequestBodyWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getNoRequestBodyWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs.getBodyOnlyMethodSpec().isPresent()) {
+                    rawClientImplBuilder.addMethod(
+                            rawHttpEndpointMethodSpecs.getBodyOnlyMethodSpec().get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getBodyOnlyWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getBodyOnlyWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
                 rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
                 implBuilder.addMethod(delegatingHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
 
@@ -194,6 +225,48 @@ public abstract class AbstractClientGeneratorUtils {
                             rawHttpEndpointMethodSpecs.getByteArrayMethodSpec().get());
                     implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
                             .getByteArrayMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs.getInputStreamMethodSpec().isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getInputStreamWithMediaTypeMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getInputStreamWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
                             .get());
                 }
 
@@ -320,7 +393,8 @@ public abstract class AbstractClientGeneratorUtils {
     }
 
     private MethodSpec.Builder getBaseSubpackageMethod(Subpackage subpackage, ClassName subpackageClientInterface) {
-        return MethodSpec.methodBuilder(subpackage.getName().getCamelCase().getSafeName())
+        return MethodSpec.methodBuilder(KeyWordUtils.getKeyWordCompatibleMethodName(
+                        subpackage.getName().getCamelCase().getSafeName()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(subpackageClientInterface);
     }

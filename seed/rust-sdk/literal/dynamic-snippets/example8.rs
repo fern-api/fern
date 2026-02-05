@@ -12,9 +12,11 @@ async fn main() {
         .send(
             &SendRequest {
                 prompt: "You are a helpful assistant".to_string(),
-                stream: false,
-                context: SomeLiteral("You're super wise".to_string()),
                 query: "What is the weather today".to_string(),
+                stream: false,
+                ending: Default::default(),
+                context: SomeLiteral("You're super wise".to_string()),
+                maybe_context: None,
                 container_object: ContainerObject {
                     nested_objects: vec![NestedObjectWithLiterals {
                         literal_1: "literal1".to_string(),

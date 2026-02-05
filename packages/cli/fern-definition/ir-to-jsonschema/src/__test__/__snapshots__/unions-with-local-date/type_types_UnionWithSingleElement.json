@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "foo"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "foo"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ]
+    }
+  ],
+  "definitions": {}
+}

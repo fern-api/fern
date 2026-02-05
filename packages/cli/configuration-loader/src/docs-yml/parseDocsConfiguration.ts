@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -213,7 +213,11 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        pageActions: convertPageActions(pageActions),
+        pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
+
+        /* custom components */
+        header: resolveFilepath(rawDocsConfiguration.header, absoluteFilepathToDocsConfig),
+        footer: resolveFilepath(rawDocsConfiguration.footer, absoluteFilepathToDocsConfig),
 
         experimental
     };
@@ -228,7 +232,8 @@ function convertLogoReference(
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
               light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
-              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined
+              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined,
+              rightText: rawLogo.rightText
           }
         : undefined;
 }
@@ -315,7 +320,8 @@ async function convertJsConfig(
 }
 
 function convertPageActions(
-    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined
+    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): docsYml.ParsedDocsConfiguration["pageActions"] {
     if (pageActions == null) {
         return undefined;
@@ -329,10 +335,13 @@ function convertPageActions(
             askAi: pageActions.options?.askAi ?? true,
             copyPage: pageActions.options?.copyPage ?? true,
             viewAsMarkdown: pageActions.options?.viewAsMarkdown ?? true,
-            openAi: pageActions.options?.chatgpt ?? false,
-            claude: pageActions.options?.claude ?? false,
-            cursor: pageActions.options?.cursor ?? false,
-            vscode: pageActions.options?.vscode ?? false
+            openAi: pageActions.options?.chatgpt ?? true,
+            claude: pageActions.options?.claude ?? true,
+            cursor: pageActions.options?.cursor ?? true,
+            vscode: pageActions.options?.vscode ?? false,
+            custom: (pageActions.options?.custom ?? []).map((action) =>
+                convertCustomPageAction(action, absoluteFilepathToDocsConfig)
+            )
         }
     };
 }
@@ -360,6 +369,19 @@ function convertPageActionOption(
     }
 }
 
+function convertCustomPageAction(
+    customAction: docsYml.RawSchemas.CustomPageAction,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): docsYml.ParsedCustomPageAction {
+    return {
+        title: customAction.title,
+        subtitle: customAction.subtitle,
+        url: customAction.url,
+        icon: resolveIconPath(customAction.icon, absoluteFilepathToDocsConfig),
+        default: customAction.default
+    };
+}
+
 function convertThemeConfig(
     theme: docsYml.RawSchemas.ThemeConfig | undefined
 ): docsYml.ParsedDocsConfiguration["theme"] {
@@ -370,7 +392,11 @@ function convertThemeConfig(
     return {
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
-        body: theme.body ?? "default"
+        body: theme.body ?? "default",
+        pageActions: theme.pageActions ?? "default",
+        footerNav: theme.footerNav ?? "default",
+        languageSwitcher: theme.languageSwitcher ?? "default",
+        productSwitcher: theme.productSwitcher ?? "default"
     };
 }
 
@@ -388,7 +414,7 @@ function convertSettingsConfig(
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
         httpSnippets: settings.httpSnippets ?? true,
-        searchText: settings.searchText ?? "Search",
+        searchText: settings.searchText ?? undefined,
         useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableAnalytics: settings.disableAnalytics ?? false
@@ -415,6 +441,10 @@ function convertLayoutConfig(
                 : layout.searchbarPlacement === "header-tabs"
                   ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
                   : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
+        switcherPlacement:
+            !layout.switcherPlacement || layout.switcherPlacement === "header"
+                ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
+                : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
         tabsPlacement:
             layout.tabsPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
@@ -473,7 +503,17 @@ async function getVersionedNavigationConfiguration({
     for (const version of versions) {
         const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
         const versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(versionContent);
+
+        // Sanitize null/undefined values before parsing
+        const removedPaths: string[][] = [];
+        const sanitizedVersionContent = sanitizeNullValues(versionContent, [], removedPaths);
+        if (removedPaths.length > 0) {
+            context.logger.warn(
+                `Version file ${version.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+            );
+        }
+
+        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
         const versionNavigation = await convertNavigationConfiguration({
             tabs: versionResult.tabs,
             rawNavigationConfig: versionResult.navigation,
@@ -487,9 +527,11 @@ async function getVersionedNavigationConfiguration({
             navigation: versionNavigation,
             availability: version.availability,
             slug: version.slug,
+            hidden: version.hidden,
             viewers: parseRoles(version.viewers),
             orphaned: version.orphaned,
-            featureFlags: convertFeatureFlag(version.featureFlag)
+            featureFlags: convertFeatureFlag(version.featureFlag),
+            announcement: version.announcement
         });
     }
     return {
@@ -534,7 +576,17 @@ async function getNavigationConfiguration({
                 const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
 
                 const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
-                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
+
+                // Sanitize null/undefined values before parsing
+                const removedPaths: string[][] = [];
+                const sanitizedContent = sanitizeNullValues(content, [], removedPaths);
+                if (removedPaths.length > 0) {
+                    context.logger.warn(
+                        `Product file ${product.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+                    );
+                }
+
+                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(sanitizedContent);
 
                 // If the product has versions defined, process them
                 if (product.versions != null && product.versions.length > 0) {
@@ -565,13 +617,15 @@ async function getNavigationConfiguration({
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
-                    featureFlags: convertFeatureFlag(product.featureFlag)
+                    featureFlags: convertFeatureFlag(product.featureFlag),
+                    announcement: product.announcement
                 });
             } else if ("href" in product && product.href != null) {
                 productNavbars.push({
                     type: "external",
                     product: product.displayName,
                     href: product.href,
+                    target: product.target,
                     subtitle: product.subtitle,
                     icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
                     image: productImageFile,
@@ -825,7 +879,8 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "link",
-                href: tab.href
+                href: tab.href,
+                target: tab.target
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -915,6 +970,16 @@ async function expandFolderConfiguration({
 
     const contents = await buildNavigationForDirectory({ directoryPath: folderPath });
 
+    const indexPage = contents.find(
+        (item) =>
+            item.type === "page" &&
+            (item.slug === "index" ||
+                item.absolutePath.toLowerCase().endsWith("/index.mdx") ||
+                item.absolutePath.toLowerCase().endsWith("/index.md"))
+    );
+
+    const filteredContents = indexPage ? contents.filter((item) => item !== indexPage) : contents;
+
     const folderName = path.basename(folderPath);
     const title = rawConfig.title ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
@@ -923,12 +988,12 @@ async function expandFolderConfiguration({
         type: "section",
         title,
         icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-        contents,
+        contents: filteredContents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
-        overviewAbsolutePath: undefined,
+        overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
         viewers: parseRoles(rawConfig.viewers),
         orphaned: rawConfig.orphaned,
         featureFlags: convertFeatureFlag(rawConfig.featureFlag),
@@ -984,6 +1049,7 @@ async function convertNavigationItem({
                     : { type: "all" },
             availability: rawConfig.availability,
             showErrors: rawConfig.displayErrors ?? true,
+            tagDescriptionPages: rawConfig.tagDescriptionPages ?? false,
             snippetsConfiguration:
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
@@ -1010,7 +1076,8 @@ async function convertNavigationItem({
             type: "link",
             text: rawConfig.link,
             url: rawConfig.href,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig)
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            target: rawConfig.target
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
@@ -1033,6 +1100,14 @@ async function convertNavigationItem({
             absolutePathToConfig,
             context
         });
+    }
+    if (isRawPythonDocsSectionConfig(rawConfig)) {
+        return {
+            type: "pythonDocsSection",
+            githubUrl: rawConfig.pythonDocs,
+            title: rawConfig.title ?? undefined,
+            slug: rawConfig.slug ?? undefined
+        };
     }
     assertNever(rawConfig);
 }
@@ -1083,7 +1158,8 @@ function parseApiReferenceLayoutItem(
                 type: "link",
                 text: item.link,
                 url: item.href,
-                icon: resolveIconPath(item.icon, absolutePathToConfig)
+                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                target: item.target
             }
         ];
     } else if (isRawApiRefSectionConfiguration(item)) {
@@ -1209,6 +1285,10 @@ function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConf
     return isPlainObject(item) && typeof item.folder === "string";
 }
 
+function isRawPythonDocsSectionConfig(item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration {
+    return isPlainObject(item) && typeof item.pythonDocs === "string";
+}
+
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {
     return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents);
 }
@@ -1277,13 +1357,15 @@ function convertNavbarLinks(
                 return {
                     type: "github",
                     url: CjsFdrSdk.Url(githubValue),
-                    viewers: undefined
+                    viewers: undefined,
+                    target: undefined
                 };
             } else {
                 return {
                     type: "github",
                     url: CjsFdrSdk.Url(githubValue.url),
-                    viewers: convertRoleToRoleIds(githubValue.viewers)
+                    viewers: convertRoleToRoleIds(githubValue.viewers),
+                    target: githubValue.target
                 };
             }
         }
@@ -1301,6 +1383,7 @@ function convertNavbarLinks(
                 links:
                     navbarLink.links?.map((link) => ({
                         href: link.href,
+                        target: link.target,
                         url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
                         text: link.text,
                         icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig),
@@ -1315,6 +1398,7 @@ function convertNavbarLinks(
             type: navbarLink.type,
             text: navbarLink.text,
             url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
+            target: navbarLink.target,
             icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
             rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
             rounded: navbarLink.rounded,

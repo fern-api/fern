@@ -748,7 +748,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Success"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1020,7 +1021,8 @@
               }
             },
             "type": "offset"
-          }
+          },
+          "responseHeaders": []
         }
       ]
     }
@@ -1521,6 +1523,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

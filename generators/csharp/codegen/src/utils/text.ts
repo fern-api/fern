@@ -1,3 +1,5 @@
+import { is } from "./type-guards";
+
 /**
  * Capitalizes the first character of a string.
  *
@@ -116,4 +118,21 @@ export function uniqueId(input: string): string {
         const v = c === "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
     });
+}
+/**
+ * This normalized date strings to ISO 8601 format so that they can be matched in wire tests.
+ *
+ * This can be used as a replacer function for JSON.stringify.
+ *
+ * @example
+ * ```ts
+ * JSON.stringify({ a: "2025-01-01T00:00:00.000" }, normalizeDates, 2);
+ * ```
+ */
+export function normalizeDates(key: string, value: unknown): unknown {
+    return is.isIsoDateTimeString(value) // reformat date time to ISO 8601 format
+        ? new Date(value).toISOString()
+        : is.isIsoDateString(value) // reformat date to ISO 8601 format
+          ? new Date(value).toISOString().slice(0, 10)
+          : value; // return value as is
 }

@@ -409,7 +409,7 @@ await client.Admin.StoreTracedTestCaseAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable&lt;TraceResponseV2&gt; { ... })</code></summary>
 <dl>
 <dd>
 
@@ -717,7 +717,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable&lt;TraceResponseV2&gt; { ... })</code></summary>
 <dl>
 <dd>
 
@@ -853,7 +853,7 @@ await client.Admin.StoreTracedWorkspaceV2Async(
 </details>
 
 ## Homepage
-<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">GetHomepageProblemsAsync</a>() -> IEnumerable<string></code></summary>
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">GetHomepageProblemsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;string&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -878,7 +878,7 @@ await client.Homepage.GetHomepageProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable<string> { ... })</code></summary>
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable&lt;string&gt; { ... })</code></summary>
 <dl>
 <dd>
 
@@ -919,7 +919,7 @@ await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string", "s
 </details>
 
 ## Migration
-<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> IEnumerable<Migration></code></summary>
+<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Migration&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -962,7 +962,7 @@ await client.Migration.GetAttemptedMigrationsAsync(
 </details>
 
 ## Playlist
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">CreatePlaylistAsync</a>(serviceParam, CreatePlaylistRequest { ... }) -> Playlist</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">CreatePlaylistAsync</a>(serviceParam, CreatePlaylistRequest { ... }) -> WithRawResponseTask&lt;Playlist&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1036,7 +1036,7 @@ await client.Playlist.CreatePlaylistAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> IEnumerable<Playlist></code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Playlist&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1108,7 +1108,7 @@ await client.Playlist.GetPlaylistsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistAsync</a>(serviceParam, playlistId) -> Playlist</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistAsync</a>(serviceParam, playlistId) -> WithRawResponseTask&lt;Playlist&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1170,7 +1170,7 @@ await client.Playlist.GetPlaylistAsync(1, "playlistId");
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">UpdatePlaylistAsync</a>(serviceParam, playlistId, UpdatePlaylistRequest? { ... }) -> Playlist?</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">UpdatePlaylistAsync</a>(serviceParam, playlistId, UpdatePlaylistRequest? { ... }) -> WithRawResponseTask&lt;Playlist?&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1311,7 +1311,7 @@ await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
 </details>
 
 ## Problem
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> CreateProblemResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> WithRawResponseTask&lt;CreateProblemResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1441,7 +1441,7 @@ await client.Problem.CreateProblemAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">UpdateProblemAsync</a>(problemId, CreateProblemRequest { ... }) -> UpdateProblemResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">UpdateProblemAsync</a>(problemId, CreateProblemRequest { ... }) -> WithRawResponseTask&lt;UpdateProblemResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1634,7 +1634,7 @@ await client.Problem.DeleteProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">GetDefaultStarterFilesAsync</a>(GetDefaultStarterFilesRequest { ... }) -> GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">GetDefaultStarterFilesAsync</a>(GetDefaultStarterFilesRequest { ... }) -> WithRawResponseTask&lt;GetDefaultStarterFilesResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1708,7 +1708,7 @@ await client.Problem.GetDefaultStarterFilesAsync(
 </details>
 
 ## Submission
-<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">CreateExecutionSessionAsync</a>(language) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">CreateExecutionSessionAsync</a>(language) -> WithRawResponseTask&lt;ExecutionSessionResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1762,7 +1762,7 @@ await client.Submission.CreateExecutionSessionAsync(Language.Java);
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionAsync</a>(sessionId) -> ExecutionSessionResponse?</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionAsync</a>(sessionId) -> WithRawResponseTask&lt;ExecutionSessionResponse?&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1870,7 +1870,7 @@ await client.Submission.StopExecutionSessionAsync("sessionId");
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionsStateAsync</a>() -> GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionsStateAsync</a>() -> WithRawResponseTask&lt;GetExecutionSessionStateResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1944,7 +1944,7 @@ await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
 </dl>
 </details>
 
-<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> Dictionary<Language, int></code></summary>
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;Language, int&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1970,7 +1970,7 @@ await client.Sysprop.GetNumWarmInstancesAsync();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;LightweightProblemInfoV2&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2009,7 +2009,7 @@ await client.V2.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;ProblemInfoV2&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2048,7 +2048,7 @@ await client.V2.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> WithRawResponseTask&lt;ProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2102,7 +2102,7 @@ await client.V2.Problem.GetLatestProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> WithRawResponseTask&lt;ProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2165,7 +2165,7 @@ await client.V2.Problem.GetProblemVersionAsync("problemId", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;LightweightProblemInfoV2&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2204,7 +2204,7 @@ await client.V2.V3.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;ProblemInfoV2&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2243,7 +2243,7 @@ await client.V2.V3.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> WithRawResponseTask&lt;ProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2297,7 +2297,7 @@ await client.V2.V3.Problem.GetLatestProblemAsync("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> WithRawResponseTask&lt;ProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 

@@ -15,7 +15,9 @@
 request := &fern.SearchRequest{
         Limit: 1,
         Id: "id",
-        Date: "date",
+        Date: fern.MustParseDate(
+            "2023-01-15",
+        ),
         Deadline: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
@@ -45,10 +47,8 @@ request := &fern.SearchRequest{
                 "2024-01-15T09:30:00Z",
             ),
         ),
-        KeyValue: map[string]*string{
-            "keyValue": fern.String(
-                "keyValue",
-            ),
+        KeyValue: map[string]string{
+            "keyValue": "keyValue",
         },
         OptionalString: fern.String(
             "optionalString",
@@ -92,13 +92,15 @@ request := &fern.SearchRequest{
                 "filter",
             ),
         },
-        Neighbor: &fern.User{
-            Name: fern.String(
-                "name",
-            ),
-            Tags: []string{
-                "tags",
-                "tags",
+        Neighbor: &fern.SearchRequestNeighbor{
+            User: &fern.User{
+                Name: fern.String(
+                    "name",
+                ),
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
             },
         },
         NeighborRequired: &fern.SearchRequestNeighborRequired{
@@ -148,7 +150,7 @@ client.Search(
 <dl>
 <dd>
 
-**date:** `string` 
+**date:** `time.Time` 
     
 </dd>
 </dl>
@@ -196,7 +198,7 @@ client.Search(
 <dl>
 <dd>
 
-**keyValue:** `map[string]*string` 
+**keyValue:** `map[string]string` 
     
 </dd>
 </dl>
@@ -244,7 +246,7 @@ client.Search(
 <dl>
 <dd>
 
-**neighbor:** `*fern.User` 
+**neighbor:** `*fern.SearchRequestNeighbor` 
     
 </dd>
 </dl>

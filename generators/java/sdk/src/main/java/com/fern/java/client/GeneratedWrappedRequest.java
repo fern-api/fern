@@ -7,6 +7,7 @@ import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.squareup.javapoet.MethodSpec;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -15,6 +16,8 @@ import org.immutables.value.Value;
 public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile {
 
     public abstract List<EnrichedObjectProperty> headerParams();
+
+    public abstract Map<String, String> headerWireValues();
 
     public abstract List<EnrichedObjectProperty> queryParams();
 

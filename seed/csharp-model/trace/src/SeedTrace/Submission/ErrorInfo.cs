@@ -191,12 +191,12 @@ public record ErrorInfo
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ErrorInfo>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(ErrorInfo).IsAssignableFrom(typeToConvert);
 
         public override ErrorInfo Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

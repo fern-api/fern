@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedVersion/User/UserClient.cs">GetUserAsync</a>(userId) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedVersion/User/UserClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

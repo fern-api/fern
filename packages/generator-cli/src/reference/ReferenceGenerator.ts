@@ -99,7 +99,10 @@ export class ReferenceGenerator {
     private generateParameter(parameter: ParameterReference): string {
         const desc = parameter.description?.match(/[^\r\n]+/g)?.length;
         const containsLineBreak = desc != null && desc > 1;
-        return `**${parameter.name}:** \`${this.wrapInLink(parameter.type, parameter.location)}\` ${
+        // Use markdown link syntax for linked types, code for non-linked types
+        const typeText =
+            parameter.location != null ? `[${parameter.type}](${parameter.location.path})` : `\`${parameter.type}\``;
+        return `**${parameter.name}:** ${typeText} ${
             parameter.description != null ? (containsLineBreak ? "\n\n" : "— ") + parameter.description : ""
         }
     `;
@@ -114,6 +117,12 @@ export class ReferenceGenerator {
     }
 
     private wrapInLink(content: string, link?: RelativeLocation) {
-        return link != null ? `<a href="${link.path}">${content}</a>` : content;
+        // Always HTML encode when used in snippet context (inside <code> tags)
+        const encodedContent = this.htmlEncode(content);
+        return link != null ? `<a href="${link.path}">${encodedContent}</a>` : encodedContent;
+    }
+
+    private htmlEncode(content: string): string {
+        return content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 }

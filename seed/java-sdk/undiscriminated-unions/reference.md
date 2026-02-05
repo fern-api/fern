@@ -42,7 +42,7 @@ client.union().get(
 </dl>
 </details>
 
-<details><summary><code>client.union.getMetadata() -> Map&lt;Key, String&gt;</code></summary>
+<details><summary><code>client.union.getMetadata() -> Map&amp;lt;Key, String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -245,6 +245,59 @@ client.union().nestedUnions(
 <dd>
 
 **request:** `NestedUnionRoot` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.testCamelCaseProperties(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.union().testCamelCaseProperties(
+    PaymentRequest
+        .builder()
+        .paymentMethod(
+            PaymentMethodUnion.of(
+                TokenizeCard
+                    .builder()
+                    .method("card")
+                    .cardNumber("1234567890123456")
+                    .build()
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**paymentMethod:** `PaymentMethodUnion` 
     
 </dd>
 </dl>

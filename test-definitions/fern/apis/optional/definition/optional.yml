@@ -3,6 +3,14 @@ types:
     properties:
       message: string
 
+  DeployParams:
+    properties:
+      updateDraft: optional<boolean>
+
+  DeployResponse:
+    properties:
+      success: boolean
+
 service:
   auth: false
   base-path: ""
@@ -22,3 +30,15 @@ service:
       response:
         type: string
         docs: Id of the created resource
+
+    sendOptionalNullableWithAllOptionalProperties:
+      docs: |
+        Tests optional(nullable(T)) where T has only optional properties.
+        This should not generate wire tests expecting {} when Optional.empty() is passed.
+      method: POST
+      path: /deploy/{actionId}/versions/{id}
+      path-parameters:
+        actionId: string
+        id: string
+      request: optional<nullable<DeployParams>>
+      response: DeployResponse

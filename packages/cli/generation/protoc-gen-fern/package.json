@@ -24,13 +24,12 @@
   "bin": {
     "protoc-gen-fern": "bin/protoc-gen-fern"
   },
-  "files": ["lib"],
+  "files": ["bin", "lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist": "tsc --project build.tsconfig.json --outDir ./dist/cjs",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -52,6 +51,6 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

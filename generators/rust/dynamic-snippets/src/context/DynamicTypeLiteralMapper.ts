@@ -22,12 +22,18 @@ export class DynamicTypeLiteralMapper {
     }
 
     public convert(args: DynamicTypeLiteralMapper.Args): rust.Expression {
-        // Validate null values
-        if (args.value == null && !this.context.isNullable(args.typeReference)) {
-            this.context.addScopedError("Expected non-null value, but got null", Severity.Critical);
-        }
+        // Handle null values
         if (args.value == null) {
-            return rust.Expression.none();
+            if (this.context.isNullable(args.typeReference)) {
+                return rust.Expression.none();
+            } else {
+                // For required fields, generate a placeholder value instead of None
+                this.context.addScopedError(
+                    "Expected non-null value, but got null. Using placeholder.",
+                    Severity.Critical
+                );
+                return this.generatePlaceholderValue(args.typeReference);
+            }
         }
 
         // Perform type validation before conversion
@@ -62,6 +68,73 @@ export class DynamicTypeLiteralMapper {
                 });
             default:
                 this.context.addScopedError("Unhandled type reference", Severity.Critical);
+                return rust.Expression.raw("Default::default()");
+        }
+    }
+
+    /**
+     * Generate a placeholder value for required fields that have null/undefined data.
+     * This ensures generated code compiles even with incomplete test data.
+     */
+    private generatePlaceholderValue(typeReference: FernIr.dynamic.TypeReference): rust.Expression {
+        switch (typeReference.type) {
+            case "primitive":
+                return this.generatePrimitivePlaceholder(typeReference.value);
+            case "named":
+                return rust.Expression.raw("Default::default()");
+            case "list":
+                return rust.Expression.vec([]);
+            case "set":
+                return rust.Expression.raw("HashSet::new()");
+            case "map":
+                return rust.Expression.raw("HashMap::new()");
+            case "literal":
+                return this.convertLiteral({ literal: typeReference.value, value: typeReference.value.value });
+            case "unknown":
+                return rust.Expression.raw("serde_json::json!(null)");
+            default:
+                return rust.Expression.raw("Default::default()");
+        }
+    }
+
+    private generatePrimitivePlaceholder(primitive: FernIr.PrimitiveTypeV1): rust.Expression {
+        switch (primitive) {
+            case "STRING":
+            case "UUID":
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral("value"),
+                    method: "to_string",
+                    args: []
+                });
+            case "BIG_INTEGER":
+                // BigInt is num_bigint::BigInt in Rust - generate zero for placeholder
+                return rust.Expression.raw('BigInt::parse_bytes("0".as_bytes(), 10).unwrap()');
+            case "BASE_64":
+                // Base64 is Vec<u8> in Rust - generate empty vec for placeholder
+                return rust.Expression.raw("vec![]");
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+                return rust.Expression.numberLiteral(0);
+            case "FLOAT":
+            case "DOUBLE":
+                return rust.Expression.floatLiteral(0.0);
+            case "BOOLEAN":
+                return rust.Expression.booleanLiteral(false);
+            case "DATE":
+                return rust.Expression.raw('NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap()');
+            case "DATE_TIME":
+                if (this.context.getDateTimeType() === "utc") {
+                    return rust.Expression.raw(
+                        'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
+                    );
+                }
+                // Default: DateTime<FixedOffset> - preserves original timezone
+                return rust.Expression.raw(
+                    'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap()'
+                );
+            default:
                 return rust.Expression.raw("Default::default()");
         }
     }
@@ -101,7 +174,7 @@ export class DynamicTypeLiteralMapper {
                 if (num == null) {
                     return rust.Expression.raw("Default::default()");
                 }
-                return rust.Expression.numberLiteral(num);
+                return rust.Expression.floatLiteral(num);
             }
             case "BOOLEAN": {
                 const bool = this.getValueAsBoolean({ value, as });
@@ -142,27 +215,42 @@ export class DynamicTypeLiteralMapper {
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");
                 }
-                // Parse DateTime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap().with_timezone(&Utc)
+                // For "utc" config, convert to UTC: DateTime::parse_from_rfc3339("...").unwrap().with_timezone(&Utc)
+                if (this.context.getDateTimeType() === "utc") {
+                    return rust.Expression.methodCall({
+                        target: rust.Expression.methodCall({
+                            target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
+                                rust.Expression.stringLiteral(str)
+                            ]),
+                            method: "unwrap",
+                            args: []
+                        }),
+                        method: "with_timezone",
+                        args: [rust.Expression.raw("&Utc")]
+                    });
+                }
+                // Default: DateTime<FixedOffset> - preserves original timezone
                 return rust.Expression.methodCall({
-                    target: rust.Expression.methodCall({
-                        target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
-                            rust.Expression.stringLiteral(str)
-                        ]),
-                        method: "unwrap",
-                        args: []
-                    }),
-                    method: "with_timezone",
-                    args: [rust.Expression.raw("&Utc")]
+                    target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
+                        rust.Expression.stringLiteral(str)
+                    ]),
+                    method: "unwrap",
+                    args: []
                 });
             }
             case "BASE_64": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
-                    return rust.Expression.raw("Default::default()");
+                    return rust.Expression.raw("vec![]");
                 }
+                // Base64 is Vec<u8> in Rust - decode the base64 string to bytes
                 return rust.Expression.methodCall({
-                    target: rust.Expression.stringLiteral(str),
-                    method: "to_string",
+                    target: rust.Expression.methodCall({
+                        target: rust.Expression.raw("base64::engine::general_purpose::STANDARD"),
+                        method: "decode",
+                        args: [rust.Expression.stringLiteral(str)]
+                    }),
+                    method: "unwrap",
                     args: []
                 });
             }
@@ -171,9 +259,13 @@ export class DynamicTypeLiteralMapper {
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");
                 }
+                // BigInt is num_bigint::BigInt in Rust - parse from string
                 return rust.Expression.methodCall({
-                    target: rust.Expression.stringLiteral(str),
-                    method: "to_string",
+                    target: rust.Expression.functionCall("BigInt::parse_bytes", [
+                        rust.Expression.raw(`${JSON.stringify(str)}.as_bytes()`),
+                        rust.Expression.numberLiteral(10)
+                    ]),
+                    method: "unwrap",
                     args: []
                 });
             }
@@ -216,33 +308,9 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.reference("None");
         }
 
-        if (typeof value === "string") {
-            return rust.Expression.methodCall({
-                target: rust.Expression.stringLiteral(value),
-                method: "to_string",
-                args: []
-            });
-        }
-
-        if (typeof value === "number") {
-            return rust.Expression.numberLiteral(value);
-        }
-
-        if (typeof value === "boolean") {
-            return rust.Expression.booleanLiteral(value);
-        }
-
-        if (Array.isArray(value)) {
-            const elements = value.map((v) => this.convertUnknown({ value: v }));
-            return rust.Expression.vec(elements);
-        }
-
-        if (typeof value === "object") {
-            // Use serde_json for complex objects
-            return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
-        }
-
-        return rust.Expression.stringLiteral("");
+        // For unknown types, always use serde_json::json! to ensure proper type compatibility
+        // This is especially important for map<string, unknown> which expects serde_json::Value
+        return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
     }
 
     private convertNamed({
@@ -357,21 +425,21 @@ export class DynamicTypeLiteralMapper {
             });
         }
 
-        // Regular object handling
-        const properties = this.context.associateByWireValue({
-            parameters: objectType.properties,
-            values: valueRecord
-        });
+        // Regular object handling - include ALL properties, setting missing optional ones to None
+        const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        const structFields = properties.map((property) => {
+        for (const property of objectType.properties) {
             this.context.scopeError(property.name.wireValue);
             try {
-                // Special handling for _fields properties that should contain base object data
                 const propertyName = this.context.getPropertyName(property.name.name);
+                const wireValue = property.name.wireValue;
+
                 let propertyValue: rust.Expression;
 
+                // Check for _fields properties first (for #[serde(flatten)] support)
+                // These properties don't exist in the JSON but need to be populated from parent data
                 if (propertyName.endsWith("_fields") && property.typeReference.type === "named") {
-                    // This is likely a flattened base object - create it from the parent's data
+                    // Special handling for _fields properties that should contain base object data
                     const baseTypeId = property.typeReference.value;
                     const baseType = this.context.ir.types[baseTypeId];
 
@@ -383,24 +451,38 @@ export class DynamicTypeLiteralMapper {
                     } else {
                         propertyValue = this.convert({
                             typeReference: property.typeReference,
-                            value: property.value
+                            value: valueRecord[wireValue]
                         });
                     }
                 } else {
-                    propertyValue = this.convert({
-                        typeReference: property.typeReference,
-                        value: property.value
-                    });
+                    const hasValue = wireValue in valueRecord;
+
+                    if (!hasValue) {
+                        // Property not in value - check if it's optional
+                        const isOptional = this.context.isNullable(property.typeReference);
+                        if (isOptional) {
+                            propertyValue = rust.Expression.none();
+                        } else {
+                            // Required field missing - add error and use default
+                            this.context.addScopedError(`Required field '${wireValue}' is missing`, Severity.Critical);
+                            propertyValue = rust.Expression.raw("Default::default()");
+                        }
+                    } else {
+                        propertyValue = this.convert({
+                            typeReference: property.typeReference,
+                            value: valueRecord[wireValue]
+                        });
+                    }
                 }
 
-                return {
+                structFields.push({
                     name: propertyName,
                     value: propertyValue
-                };
+                });
             } finally {
                 this.context.unscopeError();
             }
-        });
+        }
 
         return rust.Expression.structConstruction(structName, structFields);
     }
@@ -411,14 +493,17 @@ export class DynamicTypeLiteralMapper {
         baseObjectType: FernIr.dynamic.ObjectType;
         baseFieldName: string;
     } | null {
-        // Check if extends information is available in the object
+        // Check if extends information is available in the object (from dynamic IR)
+        // Note: We use a type assertion here because the extends field may not be
+        // in the published @fern-api/dynamic-ir-sdk yet, but will be populated at runtime
+        // by the updated IR generator.
         const extendsProperty = (objectType as { extends?: string[] }).extends;
-        if (extendsProperty && Array.isArray(extendsProperty) && extendsProperty.length > 0) {
+        if (extendsProperty != null && extendsProperty.length > 0) {
             const baseTypeId = extendsProperty[0];
-            if (baseTypeId) {
+            if (baseTypeId != null) {
                 const baseType = this.context.ir.types[baseTypeId];
 
-                if (baseType && baseType.type === "object") {
+                if (baseType != null && baseType.type === "object") {
                     // For Rust, the flattened field is typically named after the base type
                     const baseFieldName = this.getBaseFieldName(baseType.declaration.name);
 
@@ -431,18 +516,18 @@ export class DynamicTypeLiteralMapper {
             }
         }
 
-        // General case: Check if this object has properties that suggest it extends another object
+        // Fallback: Check if this object has properties that suggest it extends another object
         // Look for properties that might be flattened base objects
         const potentialBaseFieldProperty = objectType.properties.find((prop) => {
             const propertyName = prop.name.name.snakeCase.safeName;
             return propertyName.endsWith("_fields") && prop.typeReference.type === "named";
         });
 
-        if (potentialBaseFieldProperty && potentialBaseFieldProperty.typeReference.type === "named") {
+        if (potentialBaseFieldProperty != null && potentialBaseFieldProperty.typeReference.type === "named") {
             const baseTypeId = potentialBaseFieldProperty.typeReference.value;
             const baseType = this.context.ir.types[baseTypeId];
 
-            if (baseType && baseType.type === "object") {
+            if (baseType != null && baseType.type === "object") {
                 return {
                     baseObjectTypeId: baseTypeId,
                     baseObjectType: baseType,
@@ -472,21 +557,34 @@ export class DynamicTypeLiteralMapper {
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        // Create the base object with all base properties
-        const baseProperties = this.context.associateByWireValue({
-            parameters: extendsInfo.baseObjectType.properties,
-            values: value
-        });
-
-        const baseStructFields = baseProperties.map((property) => {
+        // Create the base object with ALL base properties (not just those with values)
+        // For missing required fields, use Default::default()
+        const baseStructFields = extendsInfo.baseObjectType.properties.map((property) => {
             this.context.scopeError(property.name.wireValue);
             try {
+                const propertyValue = value[property.name.wireValue];
+                let fieldValue: rust.Expression;
+
+                if (propertyValue !== undefined) {
+                    // Value is provided in the example
+                    fieldValue = this.convert({
+                        typeReference: property.typeReference,
+                        value: propertyValue
+                    });
+                } else if (
+                    property.typeReference.type === "optional" ||
+                    property.typeReference.type === "nullable"
+                ) {
+                    // Optional field without value -> None
+                    fieldValue = rust.Expression.raw("None");
+                } else {
+                    // Required field without value -> Default::default()
+                    fieldValue = rust.Expression.raw("Default::default()");
+                }
+
                 return {
                     name: this.context.getPropertyName(property.name.name),
-                    value: this.convert({
-                        typeReference: property.typeReference,
-                        value: property.value
-                    })
+                    value: fieldValue
                 };
             } finally {
                 this.context.unscopeError();
@@ -558,7 +656,8 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.raw(`todo!("Unknown enum variant: ${value}")`);
         }
 
-        const variantName = enumVariant.name.pascalCase.safeName;
+        const rawVariantName = enumVariant.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName);
         return rust.Expression.reference(`${enumName}::${variantName}`);
     }
 
@@ -580,13 +679,14 @@ export class DynamicTypeLiteralMapper {
         }
 
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
-        const unionName = this.context.getStructName(unionType.declaration.name);
-        const variantName = unionVariant.discriminantValue.name.pascalCase.safeName;
+        const unionName = this.context.getStructNameByDeclaration(unionType.declaration);
+        const rawVariantName = unionVariant.discriminantValue.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName);
 
         // Handle different union variant types with correct Rust syntax
         switch (unionVariant.type) {
             case "singleProperty": {
-                // For single property variants: UnionName::Variant { field_name: value }
+                // For single property variants: UnionName::Variant { field_name: value, ...base_properties }
                 const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
                 if (record == null) {
                     return rust.Expression.reference(`${unionName}::${variantName}`);
@@ -594,18 +694,45 @@ export class DynamicTypeLiteralMapper {
 
                 this.context.scopeError(unionVariant.discriminantValue.wireValue);
                 try {
+                    // Get the variant's main property value
                     const propertyValue = this.convert({
                         typeReference: unionVariant.typeReference,
                         value: record[unionVariant.discriminantValue.wireValue]
                     });
 
-                    // Use struct syntax for single property variants
-                    return rust.Expression.structConstruction(`${unionName}::${variantName}`, [
+                    // Build all struct fields: variant value + base properties
+                    const structFields: Array<{ name: string; value: rust.Expression }> = [
                         {
                             name: this.getUnionFieldName(unionVariant),
                             value: propertyValue
                         }
-                    ]);
+                    ];
+
+                    // Add base/extended properties from the union
+                    if (unionVariant.properties && unionVariant.properties.length > 0) {
+                        for (const property of unionVariant.properties) {
+                            const wireValue = property.name.wireValue;
+                            const fieldName = property.name.name.snakeCase.safeName;
+                            const fieldValue = record[wireValue];
+
+                            this.context.scopeError(wireValue);
+                            try {
+                                const convertedValue = this.convert({
+                                    typeReference: property.typeReference,
+                                    value: fieldValue
+                                });
+                                structFields.push({
+                                    name: fieldName,
+                                    value: convertedValue
+                                });
+                            } finally {
+                                this.context.unscopeError();
+                            }
+                        }
+                    }
+
+                    // Use struct syntax with all fields
+                    return rust.Expression.structConstruction(`${unionName}::${variantName}`, structFields);
                 } finally {
                     this.context.unscopeError();
                 }
@@ -655,7 +782,7 @@ export class DynamicTypeLiteralMapper {
         unionType: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): rust.Expression {
-        const unionName = this.context.getStructName(unionType.declaration.name);
+        const unionName = this.context.getStructNameByDeclaration(unionType.declaration);
 
         // Try each type in the union until one works
         for (let i = 0; i < unionType.types.length; i++) {

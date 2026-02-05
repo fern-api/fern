@@ -288,7 +288,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -334,6 +335,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 },
@@ -508,7 +510,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -591,6 +594,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }
@@ -1040,6 +1044,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_service": {
             "name": {

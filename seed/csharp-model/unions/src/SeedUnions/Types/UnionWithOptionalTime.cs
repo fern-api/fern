@@ -148,12 +148,12 @@ public record UnionWithOptionalTime
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithOptionalTime>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithOptionalTime).IsAssignableFrom(typeToConvert);
 
         public override UnionWithOptionalTime Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

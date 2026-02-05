@@ -9,6 +9,7 @@ module <%= gem_namespace %>
       # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
       # @return [<%= gem_namespace %>::Internal::CursorItemIterator]
       def initialize(initial_cursor:, cursor_field:, item_field:, &block)
+        super()
         @item_field = item_field
         @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &block)
         @page = nil

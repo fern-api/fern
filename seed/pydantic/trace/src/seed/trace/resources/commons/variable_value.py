@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
 from .node_id import NodeId
@@ -39,7 +41,9 @@ class VariableValue_CharValue(UniversalBaseModel):
 
 class VariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
-    key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing_extensions.Annotated[
+        typing.List["KeyValuePair"], FieldMetadata(alias="keyValuePairs"), pydantic.Field(alias="keyValuePairs")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -104,20 +108,24 @@ class VariableValue_NullValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-VariableValue = typing.Union[
-    VariableValue_IntegerValue,
-    VariableValue_BooleanValue,
-    VariableValue_DoubleValue,
-    VariableValue_StringValue,
-    VariableValue_CharValue,
-    VariableValue_MapValue,
-    VariableValue_ListValue,
-    VariableValue_BinaryTreeValue,
-    VariableValue_SinglyLinkedListValue,
-    VariableValue_DoublyLinkedListValue,
-    VariableValue_NullValue,
+VariableValue = typing_extensions.Annotated[
+    typing.Union[
+        VariableValue_IntegerValue,
+        VariableValue_BooleanValue,
+        VariableValue_DoubleValue,
+        VariableValue_StringValue,
+        VariableValue_CharValue,
+        VariableValue_MapValue,
+        VariableValue_ListValue,
+        VariableValue_BinaryTreeValue,
+        VariableValue_SinglyLinkedListValue,
+        VariableValue_DoublyLinkedListValue,
+        VariableValue_NullValue,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402, I001
+from .map_value import MapValue  # noqa: E402, I001
 
-update_forward_refs(VariableValue_MapValue)
-update_forward_refs(VariableValue_ListValue)
+update_forward_refs(VariableValue_MapValue, KeyValuePair=KeyValuePair, VariableValue=VariableValue)
+update_forward_refs(VariableValue_ListValue, KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

@@ -2,3 +2,4 @@
 !generators/rust/sdk/dist/cli.cjs
 !generators/rust/sdk/dist/asIs/
 !generators/rust/sdk/features.yml
+**/.DS_Store

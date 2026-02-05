@@ -15,6 +15,7 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     orm_mode: bool = False
     smart_union: bool = False
     require_optional_fields: bool = False
+    coerce_numbers_to_str: bool = False
     use_str_enums: bool = True
     """
     use_str_enums is deprecated, prefer `enum_type` instead (default: 'literals', which is the equivalent of `use_str_enums=True`)
@@ -29,6 +30,13 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     """
 
     wrapped_aliases: bool = False
+
+    positional_single_property_constructors: bool = False
+    """
+    When enabled, generates a custom __init__ method for models with a single required field
+    (ignoring discriminator/literal type fields with defaults). This allows positional argument
+    construction like `Isin("US0378331005")` instead of `Isin(isin="US0378331005")`.
+    """
 
     union_naming: UnionNamingVersions = "v0"
     """

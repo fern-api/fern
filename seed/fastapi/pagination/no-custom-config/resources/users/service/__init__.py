@@ -4,6 +4,12 @@
 
 from .list_users_body_cursor_pagination_request import ListUsersBodyCursorPaginationRequest
 from .list_users_body_offset_pagination_request import ListUsersBodyOffsetPaginationRequest
+from .list_users_top_level_body_cursor_pagination_request import ListUsersTopLevelBodyCursorPaginationRequest
 from .service import AbstractUsersService
 
-__all__ = ["AbstractUsersService", "ListUsersBodyCursorPaginationRequest", "ListUsersBodyOffsetPaginationRequest"]
+__all__ = [
+    "AbstractUsersService",
+    "ListUsersBodyCursorPaginationRequest",
+    "ListUsersBodyOffsetPaginationRequest",
+    "ListUsersTopLevelBodyCursorPaginationRequest",
+]

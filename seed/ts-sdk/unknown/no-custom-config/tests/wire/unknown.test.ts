@@ -3,10 +3,10 @@
 import { SeedUnknownAsAnyClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Unknown", () => {
+describe("UnknownClient", () => {
     test("post", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnknownAsAnyClient({ environment: server.baseUrl });
+        const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
         server
@@ -33,7 +33,7 @@ describe("Unknown", () => {
 
     test("postObject", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnknownAsAnyClient({ environment: server.baseUrl });
+        const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { unknown: { key: "value" } };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
         server

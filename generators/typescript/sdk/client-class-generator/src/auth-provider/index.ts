@@ -1,4 +1,16 @@
+export { AnyAuthProviderGenerator } from "./AnyAuthProviderGenerator";
+export { AnyAuthProviderInstance } from "./AnyAuthProviderInstance";
 export type { AuthProviderGenerator } from "./AuthProviderGenerator";
 export { AuthProviderInstance } from "./AuthProviderInstance";
+export { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
+export { BasicAuthProviderInstance } from "./BasicAuthProviderInstance";
+export { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator";
+export { BearerAuthProviderInstance } from "./BearerAuthProviderInstance";
+export { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator";
+export { HeaderAuthProviderInstance } from "./HeaderAuthProviderInstance";
 export { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator";
 export { InferredAuthProviderInstance } from "./InferredAuthProviderInstance";
+export { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator";
+export { OAuthAuthProviderInstance } from "./OAuthAuthProviderInstance";
+export { RoutingAuthProviderGenerator } from "./RoutingAuthProviderGenerator";
+export { RoutingAuthProviderInstance } from "./RoutingAuthProviderInstance";

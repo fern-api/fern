@@ -23,8 +23,7 @@ private func main() async throws {
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
-        grantType: .clientCredentials,
-        scope: "scope"
+        grantType: .clientCredentials
     ))
 }
 

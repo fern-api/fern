@@ -12,11 +12,15 @@ export abstract class FileGenerator<
     constructor(protected readonly context: Context) {}
 
     public generate(): GeneratedFile {
-        this.context.logger.debug(`Generating ${this.getFilepath()}`);
+        this.context.logger.debug(`Generating ${this.getLogLabel()}`);
         return this.doGenerate();
     }
 
     protected abstract doGenerate(): GeneratedFile;
 
     protected abstract getFilepath(): RelativeFilePath;
+
+    protected getLogLabel(): string {
+        return `${this.getFilepath()}`;
+    }
 }

@@ -2,13 +2,14 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
 
-public partial class SeedCsharpNamespaceConflictClient
+public partial class SeedCsharpNamespaceConflictClient : ISeedCsharpNamespaceConflictClient
 {
     private readonly RawClient _client;
 
     public SeedCsharpNamespaceConflictClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedCsharpNamespaceConflictClient
                 { "User-Agent", "Ferncsharp-namespace-conflict/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedCsharpNamespaceConflictClient
         Tasktest = new TasktestClient(_client);
     }
 
-    public TasktestClient Tasktest { get; }
+    public ITasktestClient Tasktest { get; }
 }

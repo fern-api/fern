@@ -8,9 +8,27 @@ features:
       You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
       URL, which is particularly useful in test environments.
 
+  - id: OAUTH
+    description: |
+      This SDK supports OAuth 2.0 authentication. You have two options for providing credentials:
+
+      **Option 1: Client Credentials** - Provide your client ID and secret, and the SDK will automatically handle
+      token fetching and refresh:
+
+      **Option 2: Direct Token** - If you already have an access token (e.g., obtained through your own OAuth flow),
+      you can provide it directly:
+
   - id: PAGINATION
     description: |
-      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page using the `GetNextPage` helper method. If need be you can access the raw response using the `RawResponse` field on the page.
+      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items.
+      You can also iterate page-by-page using the `GetNextPage` helper method.
+
+      The `Page.Results` attribute, which contains the relevant list of items returned by the call to the server,
+      is the only attribute you will need for most use cases. But if need be, several other attributes are available:
+
+      - `Page.Response` contains the full spec-defined response as returned by the server.
+      - `Page.StatusCode` and `Page.Header` returns HTTP metadata associated with the call to the server.
+      - `Page.RawResponse` returns the pagination object if you need to access its fields (like `Next`).
 
   - id: ERRORS
     description: |
@@ -33,7 +51,8 @@ features:
     advanced: true
     description: |
       You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
-      when you need to examine the response headers received from the API call.
+      when you need to examine the response headers received from the API call. (When the endpoint is paginated,
+      the raw HTTP response data will be included automatically in the Page response object.)
 
   - id: RETRIES
     advanced: true

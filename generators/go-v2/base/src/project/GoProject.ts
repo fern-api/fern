@@ -4,7 +4,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath, resolveRootModulePath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
-import { mkdir, readFile } from "fs/promises";
+import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
 import { ModuleConfig } from "../module/ModuleConfig";
@@ -46,6 +46,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             files: Object.values(this.goFiles).flat()
         });
         await this.writeRawFiles();
+        await this.writeLicenseFile();
         const isModule = this.getModuleConfig({ config: this.context.config }) != null;
         if (tidy && isModule) {
             await this.runGoModTidy();
@@ -83,10 +84,17 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
         const isModule = this.getModuleConfig({ config: this.context.config }) != null;
         if (files.length > 0 && isModule) {
-            await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
-                doNotPipeOutput: true,
-                cwd: this.absolutePathToOutputDirectory
-            });
+            try {
+                await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
+                    doNotPipeOutput: true,
+                    cwd: this.absolutePathToOutputDirectory
+                });
+            } catch (error) {
+                this.context.logger.warn(
+                    `Failed to format Go files with 'go fmt': ${error instanceof Error ? error.message : String(error)}. ` +
+                        "The generated files have been written but may not be properly formatted."
+                );
+            }
         }
         return this.absolutePathToOutputDirectory;
     }
@@ -94,11 +102,13 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
     private async writeAsIsFiles({
         filenames,
         getPackageName,
-        getImportPath
+        getImportPath,
+        templateVariables
     }: {
         filenames: string[];
         getPackageName: (dirname: string) => string;
         getImportPath: (dirname: string) => string;
+        templateVariables?: Record<string, string>;
     }): Promise<void> {
         for (const filename of filenames) {
             // Parse the directory path and filename from the full path
@@ -110,7 +120,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
                 filename,
                 templateVariables: {
                     PackageName: packageName,
-                    RootImportPath: this.getRootImportPath()
+                    RootImportPath: this.getRootImportPath(),
+                    ...templateVariables
                 }
             });
             const goFilename = basename.replace(".go_", ".go");
@@ -149,7 +160,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.writeAsIsFiles({
             filenames: this.context.getCoreAsIsFiles(),
             getPackageName: () => "core",
-            getImportPath: (dirname) => this.getImportPath(dirname)
+            getImportPath: (dirname) => this.getImportPath(dirname),
+            templateVariables: {
+                CustomPagerName: this.context.customConfig.customPagerName ?? "CustomPager"
+            }
         });
     }
 
@@ -209,6 +223,36 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             doNotPipeOutput: true,
             cwd: this.absolutePathToOutputDirectory
         });
+    }
+
+    private async writeLicenseFile(): Promise<void> {
+        const licenseConfig = this.context.config.license;
+        if (licenseConfig?.type !== "custom") {
+            return;
+        }
+
+        // In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
+        // For remote generation, Fiddle handles writing the LICENSE file after generation
+        const dockerLicensePath = "/tmp/LICENSE";
+        const licenseFileName = licenseConfig.filename ?? "LICENSE";
+        const destinationPath = path.join(this.absolutePathToOutputDirectory, licenseFileName);
+
+        try {
+            await copyFile(dockerLicensePath, destinationPath);
+            this.context.logger.debug(`Successfully copied LICENSE file to ${destinationPath}`);
+        } catch (error) {
+            // File not found is expected for remote generation where Fiddle handles it
+            if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+                this.context.logger.debug(
+                    `Custom license file not found at ${dockerLicensePath}. This is expected for remote generation.`
+                );
+            } else {
+                // Log other errors for debugging while maintaining backwards compatibility
+                this.context.logger.warn(
+                    `Failed to copy custom license file from ${dockerLicensePath} to ${destinationPath}: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        }
     }
 
     private getModuleConfig({

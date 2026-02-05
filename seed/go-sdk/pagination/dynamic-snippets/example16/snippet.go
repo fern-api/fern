@@ -16,19 +16,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersCursorPaginationRequest{
-        Page: fern.Int(
-            1,
+    request := &fern.ListUsersTopLevelBodyCursorPaginationRequest{
+        Cursor: fern.String(
+            "initial_cursor",
         ),
-        PerPage: fern.Int(
-            1,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-        StartingAfter: fern.String(
-            "starting_after",
+        Filter: fern.String(
+            "active",
         ),
     }
-    client.Users.ListWithCursorPagination(
+    client.Users.ListWithTopLevelBodyCursorPagination(
         context.TODO(),
         request,
     )

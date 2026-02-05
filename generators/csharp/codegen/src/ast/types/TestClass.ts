@@ -58,7 +58,7 @@ export class TestClass extends Node {
                 access: Access.Public,
                 name: this.name,
                 namespace: this.namespace,
-                annotations: [this.extern.NUnit.Framework.TestFixture],
+                annotations: [this.NUnit.Framework.TestFixture],
                 parentClassReference: this.parentClassReference,
                 origin: this.origin
             },
@@ -71,7 +71,7 @@ export class TestClass extends Node {
                 name: testMethod.name,
                 parameters: [],
                 body: testMethod.body,
-                annotations: [this.extern.NUnit.Framework.Test]
+                annotations: [this.NUnit.Framework.Test]
             });
         }
         return _class;

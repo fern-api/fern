@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "type": "string"
+    },
+    "token_type": {
+      "type": "string"
+    },
+    "expires_in": {
+      "type": "integer"
+    },
+    "scope": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "access_token",
+    "token_type",
+    "expires_in"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

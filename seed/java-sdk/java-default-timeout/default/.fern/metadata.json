@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "default-timeout-in-seconds": 120
+  },
+  "sdkVersion": "0.0.1"
+}

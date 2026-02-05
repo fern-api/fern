@@ -49,7 +49,7 @@ export const Error = {
             case 400:
                 return visitor.badRequestBody(value.content);
             default:
-                return visitor._other(value as any);
+                return visitor._other(value.content);
         }
     },
 } as const;

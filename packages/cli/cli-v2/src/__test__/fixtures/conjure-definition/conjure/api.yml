@@ -1,0 +1,17 @@
+types:
+  definitions:
+    default-package: com.test.api
+
+services:
+  UserService:
+    package: com.test.api
+    base-path: /users
+    endpoints:
+      getUser:
+        docs: Get a user by ID.
+        http: GET /{userId}
+        args:
+          userId:
+            type: string
+            param-type: path
+        returns: string

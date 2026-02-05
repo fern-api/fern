@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "2a5575e5",
+            "id": {
+                "method": "POST",
+                "path": "/optional-request-body/{path_param}",
+                "identifier_override": "endpoint_testGroup.test_method_name"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.testGroup().testMethodName(\n            \"path_param\",\n            TestMethodNameTestGroupRequest\n                .builder()\n                .body(\n                    Optional.empty()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.testGroup().testMethodName(\n            \"path_param\",\n            TestMethodNameTestGroupRequest\n                .builder()\n                .body(\n                    Optional.empty()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "cf1d99e9",
+            "id": {
+                "method": "POST",
+                "path": "/optional-request-body/{path_param}",
+                "identifier_override": "endpoint_testGroup.test_method_name"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;\nimport com.seed.api.types.PlainObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.testGroup().testMethodName(\n            \"path_param\",\n            TestMethodNameTestGroupRequest\n                .builder()\n                .queryParamObject(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .queryParamInteger(1)\n                .body(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;\nimport com.seed.api.types.PlainObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.testGroup().testMethodName(\n            \"path_param\",\n            TestMethodNameTestGroupRequest\n                .builder()\n                .queryParamObject(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .queryParamInteger(1)\n                .body(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2fd53ee8",
+            "id": {
+                "method": "POST",
+                "path": "/optional-request-body/{path_param}",
+                "identifier_override": "endpoint_testGroup.test_method_name"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;\nimport com.seed.api.types.PlainObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.testGroup().testMethodName(\n            \"path_param\",\n            TestMethodNameTestGroupRequest\n                .builder()\n                .queryParamObject(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .queryParamInteger(1)\n                .body(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;\nimport com.seed.api.types.PlainObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.testGroup().testMethodName(\n            \"path_param\",\n            TestMethodNameTestGroupRequest\n                .builder()\n                .queryParamObject(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .queryParamInteger(1)\n                .body(\n                    PlainObject\n                        .builder()\n                        .id(\"id\")\n                        .name(\"name\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

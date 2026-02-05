@@ -1,6 +1,208 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_realtime-no-auth:NoAuthSendEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "NoAuthSendEvent",
+                    "camelCase": {
+                        "unsafeName": "noAuthSendEvent",
+                        "safeName": "noAuthSendEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "no_auth_send_event",
+                        "safeName": "no_auth_send_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NO_AUTH_SEND_EVENT",
+                        "safeName": "NO_AUTH_SEND_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NoAuthSendEvent",
+                        "safeName": "NoAuthSendEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime-no-auth",
+                            "camelCase": {
+                                "unsafeName": "realtimeNoAuth",
+                                "safeName": "realtimeNoAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime_no_auth",
+                                "safeName": "realtime_no_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME_NO_AUTH",
+                                "safeName": "REALTIME_NO_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RealtimeNoAuth",
+                                "safeName": "RealtimeNoAuth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime-no-auth",
+                        "camelCase": {
+                            "unsafeName": "realtimeNoAuth",
+                            "safeName": "realtimeNoAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime_no_auth",
+                            "safeName": "realtime_no_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME_NO_AUTH",
+                            "safeName": "REALTIME_NO_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RealtimeNoAuth",
+                            "safeName": "RealtimeNoAuth"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "text",
+                            "camelCase": {
+                                "unsafeName": "text",
+                                "safeName": "text"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "text",
+                                "safeName": "text"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEXT",
+                                "safeName": "TEXT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Text",
+                                "safeName": "Text"
+                            }
+                        },
+                        "wireValue": "text"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_realtime-no-auth:NoAuthReceiveEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "NoAuthReceiveEvent",
+                    "camelCase": {
+                        "unsafeName": "noAuthReceiveEvent",
+                        "safeName": "noAuthReceiveEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "no_auth_receive_event",
+                        "safeName": "no_auth_receive_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NO_AUTH_RECEIVE_EVENT",
+                        "safeName": "NO_AUTH_RECEIVE_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NoAuthReceiveEvent",
+                        "safeName": "NoAuthReceiveEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "realtime-no-auth",
+                            "camelCase": {
+                                "unsafeName": "realtimeNoAuth",
+                                "safeName": "realtimeNoAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "realtime_no_auth",
+                                "safeName": "realtime_no_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REALTIME_NO_AUTH",
+                                "safeName": "REALTIME_NO_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RealtimeNoAuth",
+                                "safeName": "RealtimeNoAuth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "realtime-no-auth",
+                        "camelCase": {
+                            "unsafeName": "realtimeNoAuth",
+                            "safeName": "realtimeNoAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime_no_auth",
+                            "safeName": "realtime_no_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME_NO_AUTH",
+                            "safeName": "REALTIME_NO_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RealtimeNoAuth",
+                            "safeName": "RealtimeNoAuth"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "response",
+                            "camelCase": {
+                                "unsafeName": "response",
+                                "safeName": "response"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "response",
+                                "safeName": "response"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RESPONSE",
+                                "safeName": "RESPONSE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Response",
+                                "safeName": "Response"
+                            }
+                        },
+                        "wireValue": "response"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_realtime:SendEvent": {
             "type": "object",
             "declaration": {
@@ -129,6 +331,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_realtime:send_snake_case": {
@@ -259,6 +462,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_realtime:ReceiveEvent": {
@@ -389,6 +593,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_realtime:receive_snake_case": {
@@ -519,6 +724,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_realtime:SendEvent2": {
@@ -649,6 +855,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_realtime:ReceiveEvent2": {
@@ -809,6 +1016,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_realtime:ReceiveEvent3": {
@@ -909,6 +1117,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

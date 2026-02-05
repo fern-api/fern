@@ -5,7 +5,7 @@ describe("undiscriminatedUnion", () => {
     itSchemaIdentity(undiscriminatedUnion([string(), number()]), "hello world");
 
     itSchemaIdentity(undiscriminatedUnion([object({ hello: string() }), object({ goodbye: string() })]), {
-        goodbye: "foo"
+        goodbye: "foo",
     });
 
     itSchema(
@@ -13,8 +13,8 @@ describe("undiscriminatedUnion", () => {
         undiscriminatedUnion([object({ hello: string() }), object({ helloWorld: property("hello_world", string()) })]),
         {
             raw: { hello_world: "foo " },
-            parsed: { helloWorld: "foo " }
-        }
+            parsed: { helloWorld: "foo " },
+        },
     );
 
     it("Returns errors for all variants", async () => {
@@ -25,12 +25,12 @@ describe("undiscriminatedUnion", () => {
         expect(result.errors).toEqual([
             {
                 message: "[Variant 0] Expected string. Received true.",
-                path: []
+                path: [],
             },
             {
                 message: "[Variant 1] Expected number. Received true.",
-                path: []
-            }
+                path: [],
+            },
         ]);
     });
 

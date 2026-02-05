@@ -6,5 +6,6 @@
     "enableWireTests": false,
     "clientName": "Acme",
     "clientConstructorName": "New"
-  }
+  },
+  "sdkVersion": "v0.0.1"
 }

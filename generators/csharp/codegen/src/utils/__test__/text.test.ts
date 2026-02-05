@@ -1,4 +1,4 @@
-import { camelCase, hash, uniqueId, upperFirst } from "../text";
+import { camelCase, hash, normalizeDates, uniqueId, upperFirst } from "../text";
 
 describe("text utilities", () => {
     describe("upperFirst", () => {
@@ -621,6 +621,485 @@ describe("text utilities", () => {
 
                 // All IDs should be unique
                 expect(new Set(ids).size).toBe(26);
+            });
+        });
+    });
+
+    describe("normalizeDates", () => {
+        describe("basic functionality", () => {
+            it("should normalize date-time strings to full ISO format with timezone", () => {
+                const result = normalizeDates("date", "2025-01-01T00:00:00.000Z");
+                expect(result).toBe("2025-01-01T00:00:00.000Z");
+            });
+
+            it("should normalize ISO date-time strings without timezone to UTC", () => {
+                // Without timezone, parsed as local time then converted to UTC
+                const result = normalizeDates("date", "2025-01-01T00:00:00.000");
+                expect(typeof result).toBe("string");
+                expect(result).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+            });
+
+            it("should normalize ISO date-time strings without milliseconds", () => {
+                const result = normalizeDates("date", "2025-01-01T00:00:00Z");
+                expect(result).toBe("2025-01-01T00:00:00.000Z");
+            });
+
+            it("should normalize ISO date-time strings with positive timezone offset", () => {
+                const result = normalizeDates("date", "2025-01-01T00:00:00.000+05:00");
+                // Should convert to UTC
+                expect(result).toBe("2024-12-31T19:00:00.000Z");
+            });
+
+            it("should normalize ISO date-time strings with negative timezone offset", () => {
+                const result = normalizeDates("date", "2025-01-01T00:00:00.000-05:00");
+                // Should convert to UTC
+                expect(result).toBe("2025-01-01T05:00:00.000Z");
+            });
+
+            it("should normalize date-only strings to YYYY-MM-DD format", () => {
+                // Date-only strings now correctly match the date-only regex
+                const result = normalizeDates("date", "2025-01-01");
+                expect(result).toBe("2025-01-01");
+            });
+
+            it("should handle date strings with single-digit month and day", () => {
+                const result = normalizeDates("date", "2025-1-5");
+                expect(result).toBe("2025-01-05");
+            });
+
+            it("should not match year-only strings", () => {
+                // Year-only strings no longer match the date regex
+                const result = normalizeDates("date", "2025");
+                expect(result).toBe("2025");
+            });
+
+            it("should return non-date values unchanged", () => {
+                expect(normalizeDates("key", "not a date")).toBe("not a date");
+                expect(normalizeDates("key", 123)).toBe(123);
+                expect(normalizeDates("key", true)).toBe(true);
+                expect(normalizeDates("key", false)).toBe(false);
+                expect(normalizeDates("key", null)).toBe(null);
+                expect(normalizeDates("key", undefined)).toBe(undefined);
+            });
+        });
+
+        describe("with JSON.stringify", () => {
+            it("should work as a replacer function for JSON.stringify with UTC times", () => {
+                const obj = {
+                    date: "2025-01-01T00:00:00.000Z",
+                    name: "test"
+                };
+
+                const result = JSON.stringify(obj, normalizeDates);
+                const parsed = JSON.parse(result);
+
+                expect(parsed.date).toBe("2025-01-01T00:00:00.000Z");
+                expect(parsed.name).toBe("test");
+            });
+
+            it("should normalize multiple date strings in an object", () => {
+                const obj = {
+                    createdAt: "2025-01-01T00:00:00.000Z",
+                    updatedAt: "2025-01-02T12:30:00.000Z",
+                    name: "test"
+                };
+
+                const result = JSON.stringify(obj, normalizeDates);
+                const parsed = JSON.parse(result);
+
+                expect(parsed.createdAt).toBe("2025-01-01T00:00:00.000Z");
+                expect(parsed.updatedAt).toBe("2025-01-02T12:30:00.000Z");
+                expect(parsed.name).toBe("test");
+            });
+
+            it("should normalize dates in nested objects", () => {
+                const obj = {
+                    user: {
+                        createdAt: "2025-01-01T00:00:00.000Z",
+                        profile: {
+                            updatedAt: "2025-01-02T12:30:00.000Z"
+                        }
+                    }
+                };
+
+                const result = JSON.stringify(obj, normalizeDates);
+                const parsed = JSON.parse(result);
+
+                expect(parsed.user.createdAt).toBe("2025-01-01T00:00:00.000Z");
+                expect(parsed.user.profile.updatedAt).toBe("2025-01-02T12:30:00.000Z");
+            });
+
+            it("should normalize dates in arrays", () => {
+                const obj = {
+                    dates: ["2025-01-01T00:00:00.000Z", "2025-01-02T00:00:00.000Z", "2025-01-03T00:00:00.000Z"]
+                };
+
+                const result = JSON.stringify(obj, normalizeDates);
+                const parsed = JSON.parse(result);
+
+                expect(parsed.dates[0]).toBe("2025-01-01T00:00:00.000Z");
+                expect(parsed.dates[1]).toBe("2025-01-02T00:00:00.000Z");
+                expect(parsed.dates[2]).toBe("2025-01-03T00:00:00.000Z");
+            });
+
+            it("should handle mixed types in arrays", () => {
+                const obj = {
+                    values: ["2025-01-01T00:00:00.000Z", "not a date", 123, true, null]
+                };
+
+                const result = JSON.stringify(obj, normalizeDates);
+                const parsed = JSON.parse(result);
+
+                expect(parsed.values[0]).toBe("2025-01-01T00:00:00.000Z");
+                expect(parsed.values[1]).toBe("not a date");
+                expect(parsed.values[2]).toBe(123);
+                expect(parsed.values[3]).toBe(true);
+                expect(parsed.values[4]).toBe(null);
+            });
+        });
+
+        describe("date format variations", () => {
+            it("should normalize date-only ISO strings to YYYY-MM-DD", () => {
+                const result = normalizeDates("date", "2025-01-01");
+                expect(result).toBe("2025-01-01");
+            });
+
+            it("should normalize dates with space instead of T separator", () => {
+                // Space separator is treated as local time
+                const result = normalizeDates("date", "2025-01-01 00:00:00Z");
+                expect(result).toBe("2025-01-01T00:00:00.000Z");
+            });
+
+            it("should normalize dates with lowercase z timezone", () => {
+                const result = normalizeDates("date", "2025-01-01T00:00:00.000z");
+                expect(result).toBe("2025-01-01T00:00:00.000Z");
+            });
+
+            it("should handle dates with high precision milliseconds", () => {
+                const result = normalizeDates("date", "2025-01-01T00:00:00.123456Z");
+                // JavaScript Date will truncate to milliseconds
+                expect(result).toBe("2025-01-01T00:00:00.123Z");
+            });
+
+            it("should handle week date format", () => {
+                // ISO week date format: YYYY-Www-D
+                // JavaScript's Date constructor may not support this, so expect a non-datetime string
+                const result = normalizeDates("date", "2025-W01-1");
+                expect(result).toBe("2025-W01-1");
+            });
+
+            it("should handle ordinal date format", () => {
+                // ISO ordinal date format: YYYY-DDD
+                // No longer matches the date-only regex, so returned unchanged
+                const result = normalizeDates("date", "2025-001");
+                expect(result).toBe("2025-001");
+            });
+        });
+
+        describe("edge cases", () => {
+            it("should handle date-times at boundaries", () => {
+                // Start of epoch
+                const epoch = normalizeDates("date", "1970-01-01T00:00:00.000Z");
+                expect(epoch).toBe("1970-01-01T00:00:00.000Z");
+
+                // End of year
+                const endOfYear = normalizeDates("date", "2025-12-31T23:59:59.999Z");
+                expect(endOfYear).toBe("2025-12-31T23:59:59.999Z");
+
+                // Leap year date
+                const leapDay = normalizeDates("date", "2024-02-29T00:00:00.000Z");
+                expect(leapDay).toBe("2024-02-29T00:00:00.000Z");
+            });
+
+            it("should handle date-only at boundaries", () => {
+                // Start of epoch date
+                const epoch = normalizeDates("date", "1970-01-01");
+                expect(epoch).toBe("1970-01-01");
+
+                // End of year
+                const endOfYear = normalizeDates("date", "2025-12-31");
+                expect(endOfYear).toBe("2025-12-31");
+
+                // Leap year date
+                const leapDay = normalizeDates("date", "2024-02-29");
+                expect(leapDay).toBe("2024-02-29");
+            });
+
+            it("should handle dates with year < 1000", () => {
+                const result = normalizeDates("date", "0999-01-01T00:00:00.000Z");
+                expect(result).toBe("0999-01-01T00:00:00.000Z");
+
+                const dateOnly = normalizeDates("date", "0999-01-01");
+                expect(dateOnly).toBe("0999-01-01");
+            });
+
+            it("should handle dates with negative years (BC)", () => {
+                const result = normalizeDates("date", "-000001-01-01T00:00:00.000Z");
+                expect(typeof result).toBe("string");
+                // JavaScript Date handles negative years
+                expect(result).toContain("01-01T00:00:00");
+            });
+
+            it("should handle dates with year > 9999", () => {
+                const result = normalizeDates("date", "+010000-01-01T00:00:00.000Z");
+                expect(typeof result).toBe("string");
+                // JavaScript Date can handle extended year format
+                expect(result).toContain("01-01T00:00:00");
+            });
+
+            it("should not modify strings that look like dates but aren't ISO format", () => {
+                expect(normalizeDates("date", "01/01/2025")).toBe("01/01/2025");
+                expect(normalizeDates("date", "January 1, 2025")).toBe("January 1, 2025");
+                expect(normalizeDates("date", "12:00:00")).toBe("12:00:00");
+            });
+
+            it("should handle empty strings", () => {
+                const result = normalizeDates("date", "");
+                expect(result).toBe("");
+            });
+
+            it("should handle objects", () => {
+                const obj = { date: "2025-01-01" };
+                const result = normalizeDates("date", obj);
+                expect(result).toBe(obj);
+            });
+
+            it("should handle arrays", () => {
+                const arr = ["2025-01-01"];
+                const result = normalizeDates("date", arr);
+                expect(result).toBe(arr);
+            });
+        });
+
+        describe("wire test use case", () => {
+            it("should enable consistent date-time matching in wire tests", () => {
+                // Simulating comparing two API responses with date-time
+                const response1 = {
+                    id: "123",
+                    createdAt: "2025-01-01T00:00:00.000Z",
+                    data: "test"
+                };
+
+                const response2 = {
+                    id: "123",
+                    createdAt: "2025-01-01T00:00:00.000Z", // Already in ISO format
+                    data: "test"
+                };
+
+                // Normalize both
+                const normalized1 = JSON.parse(JSON.stringify(response1, normalizeDates));
+                const normalized2 = JSON.parse(JSON.stringify(response2, normalizeDates));
+
+                // Should be equal after normalization
+                expect(normalized1.createdAt).toBe(normalized2.createdAt);
+                expect(JSON.stringify(normalized1)).toBe(JSON.stringify(normalized2));
+            });
+
+            it("should enable consistent date-only matching in wire tests", () => {
+                // Simulating comparing two API responses with date-only
+                const response1 = {
+                    id: "123",
+                    birthDate: "2025-01-01",
+                    data: "test"
+                };
+
+                const response2 = {
+                    id: "123",
+                    birthDate: "2025-01-01", // Same format
+                    data: "test"
+                };
+
+                // Normalize both
+                const normalized1 = JSON.parse(JSON.stringify(response1, normalizeDates));
+                const normalized2 = JSON.parse(JSON.stringify(response2, normalizeDates));
+
+                // Should be equal after normalization
+                expect(normalized1.birthDate).toBe(normalized2.birthDate);
+                expect(JSON.stringify(normalized1)).toBe(JSON.stringify(normalized2));
+            });
+
+            it("should handle timezone differences in wire tests", () => {
+                // Same moment in time, different representations
+                const response1 = {
+                    timestamp: "2025-01-01T00:00:00.000Z"
+                };
+
+                const response2 = {
+                    timestamp: "2025-01-01T05:00:00.000+05:00"
+                };
+
+                // Normalize both
+                const normalized1 = JSON.parse(JSON.stringify(response1, normalizeDates));
+                const normalized2 = JSON.parse(JSON.stringify(response2, normalizeDates));
+
+                // Should be equal after normalization (same UTC time)
+                expect(normalized1.timestamp).toBe(normalized2.timestamp);
+            });
+
+            it("should preserve non-date fields in wire test comparisons", () => {
+                const response = {
+                    id: "abc-123",
+                    name: "Test User",
+                    email: "test@example.com",
+                    age: 30,
+                    active: true,
+                    metadata: null,
+                    createdAt: "2025-01-01T00:00:00.000Z",
+                    birthDate: "1995-05-15"
+                };
+
+                const normalized = JSON.parse(JSON.stringify(response, normalizeDates));
+
+                expect(normalized.id).toBe("abc-123");
+                expect(normalized.name).toBe("Test User");
+                expect(normalized.email).toBe("test@example.com");
+                expect(normalized.age).toBe(30);
+                expect(normalized.active).toBe(true);
+                expect(normalized.metadata).toBe(null);
+                expect(normalized.createdAt).toBe("2025-01-01T00:00:00.000Z");
+                expect(normalized.birthDate).toBe("1995-05-15");
+            });
+
+            it("should work with deeply nested wire test data", () => {
+                const response = {
+                    user: {
+                        id: "123",
+                        profile: {
+                            createdAt: "2025-01-01T00:00:00.000Z",
+                            birthDate: "1990-01-01",
+                            settings: {
+                                lastLogin: "2025-01-15T12:30:00.000Z"
+                            }
+                        },
+                        posts: [
+                            {
+                                id: "post1",
+                                publishedAt: "2025-01-10T00:00:00.000Z",
+                                scheduledDate: "2025-01-20"
+                            },
+                            {
+                                id: "post2",
+                                publishedAt: "2025-01-11T00:00:00.000Z",
+                                scheduledDate: "2025-01-21"
+                            }
+                        ]
+                    }
+                };
+
+                const normalized = JSON.parse(JSON.stringify(response, normalizeDates));
+
+                expect(normalized.user.profile.createdAt).toBe("2025-01-01T00:00:00.000Z");
+                expect(normalized.user.profile.birthDate).toBe("1990-01-01");
+                expect(normalized.user.profile.settings.lastLogin).toBe("2025-01-15T12:30:00.000Z");
+                expect(normalized.user.posts[0].publishedAt).toBe("2025-01-10T00:00:00.000Z");
+                expect(normalized.user.posts[0].scheduledDate).toBe("2025-01-20");
+                expect(normalized.user.posts[1].publishedAt).toBe("2025-01-11T00:00:00.000Z");
+                expect(normalized.user.posts[1].scheduledDate).toBe("2025-01-21");
+            });
+        });
+
+        describe("key parameter", () => {
+            it("should receive the key when used as a replacer", () => {
+                const keys: string[] = [];
+                const customReplacer = (key: string, value: unknown) => {
+                    keys.push(key);
+                    return normalizeDates(key, value);
+                };
+
+                const obj = {
+                    date: "2025-01-01T00:00:00.000Z",
+                    name: "test"
+                };
+
+                JSON.stringify(obj, customReplacer);
+
+                // First call has empty string key for root
+                expect(keys).toContain("");
+                expect(keys).toContain("date");
+                expect(keys).toContain("name");
+            });
+
+            it("should work regardless of key name", () => {
+                const obj = {
+                    createdAt: "2025-01-01T00:00:00.000Z",
+                    timestamp: "2025-01-02T00:00:00.000Z",
+                    date: "2025-01-03"
+                };
+
+                const normalized = JSON.parse(JSON.stringify(obj, normalizeDates));
+
+                // Function should normalize based on value, not key
+                expect(normalized.createdAt).toBe("2025-01-01T00:00:00.000Z");
+                expect(normalized.timestamp).toBe("2025-01-02T00:00:00.000Z");
+                expect(normalized.date).toBe("2025-01-03");
+            });
+        });
+
+        describe("real-world date scenarios", () => {
+            it("should normalize various real-world date-time formats with UTC", () => {
+                // Common ISO 8601 variants used in APIs with UTC timezone
+                const dates = [
+                    { input: "2025-11-07T12:34:56.789Z", expected: "2025-11-07T12:34:56.789Z" },
+                    { input: "2025-11-07T12:34:56Z", expected: "2025-11-07T12:34:56.000Z" }
+                ];
+
+                dates.forEach(({ input, expected }) => {
+                    const result = normalizeDates("date", input);
+                    expect(result).toBe(expected);
+                });
+            });
+
+            it("should normalize date-time formats without timezone (local time)", () => {
+                // Without timezone, these are parsed as local time
+                const result1 = normalizeDates("date", "2025-11-07T12:34:56");
+                expect(typeof result1).toBe("string");
+                expect(result1).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+            });
+
+            it("should normalize various real-world date-only formats", () => {
+                // Common date-only formats
+                const result1 = normalizeDates("date", "2025-11-07");
+                expect(typeof result1).toBe("string");
+                expect(result1).toBe("2025-11-07");
+
+                // Single-digit month and day
+                const result2 = normalizeDates("date", "2025-1-7");
+                expect(typeof result2).toBe("string");
+                expect(result2).toBe("2025-01-07");
+            });
+
+            it("should handle database timestamp formats", () => {
+                // Common database timestamp formats with UTC
+                const result1 = normalizeDates("created_at", "2025-11-07T12:34:56.789Z");
+                expect(result1).toBe("2025-11-07T12:34:56.789Z");
+
+                const result2 = normalizeDates("updated_at", "2025-11-07T12:34:56.789000Z");
+                // JavaScript truncates extra precision
+                expect(result2).toBe("2025-11-07T12:34:56.789Z");
+            });
+
+            it("should handle API response with mixed date formats", () => {
+                const apiResponse = {
+                    id: "user-123",
+                    email: "user@example.com",
+                    createdAt: "2025-01-01T00:00:00.000Z",
+                    updatedAt: "2025-01-15T10:30:00.000Z",
+                    lastLogin: "2025-11-07T12:34:56+00:00",
+                    birthDate: "1990-01-01",
+                    metadata: {
+                        registrationDate: "2025-01-01",
+                        verifiedAt: "2025-01-02T08:00:00.000Z"
+                    }
+                };
+
+                const normalized = JSON.parse(JSON.stringify(apiResponse, normalizeDates));
+
+                expect(normalized.createdAt).toBe("2025-01-01T00:00:00.000Z");
+                expect(normalized.updatedAt).toBe("2025-01-15T10:30:00.000Z");
+                expect(normalized.lastLogin).toBe("2025-11-07T12:34:56.000Z");
+                expect(normalized.birthDate).toBe("1990-01-01");
+                expect(normalized.metadata.registrationDate).toBe("2025-01-01");
+                expect(normalized.metadata.verifiedAt).toBe("2025-01-02T08:00:00.000Z");
             });
         });
     });

@@ -43,26 +43,39 @@ export abstract class AstNode extends AbstractAstNode {
     protected get names() {
         return this.generation.names;
     }
-    protected get types() {
-        return this.generation.types;
-    }
-    protected get extern() {
-        return this.generation.extern;
-    }
     protected get model() {
         return this.generation.model;
     }
-    public get System() {
-        return this.extern.System;
+    protected get format() {
+        return this.generation.format;
     }
-    public get NUnit() {
-        return this.extern.NUnit;
+    protected get Types() {
+        return this.generation.Types;
     }
-    public get OneOf() {
-        return this.extern.OneOf;
+
+    protected get System() {
+        return this.generation.extern.System;
     }
-    public get Google() {
-        return this.extern.Google;
+    protected get NUnit() {
+        return this.generation.extern.NUnit;
+    }
+    protected get OneOf() {
+        return this.generation.extern.OneOf;
+    }
+    protected get Google() {
+        return this.generation.extern.Google;
+    }
+    protected get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    protected get Primitive() {
+        return this.generation.Primitive;
+    }
+    protected get Value() {
+        return this.generation.Value;
+    }
+    protected get Collection() {
+        return this.generation.Collection;
     }
 
     /**

@@ -15,7 +15,7 @@ func do() {
     )
     request := &fern.ListResourcesRequest{
         PageLimit: 10,
-        BeforeDate: fern.MustParseDateTime(
+        BeforeDate: fern.MustParseDate(
             "2023-01-01",
         ),
     }

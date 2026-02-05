@@ -12,6 +12,10 @@ class ObjectWithDocs(UncheckedBaseModel):
     """
     Characters that could lead to broken generated SDKs:
     
+    Markdown Escapes:
+    - \\_: Escaped underscore (e.g., FOO\\_BAR)
+    - \\*: Escaped asterisk
+    
     JSDoc (JavaScript/TypeScript):
     - @: Used for JSDoc tags
     - {: }: Used for type definitions
@@ -28,6 +32,11 @@ class ObjectWithDocs(UncheckedBaseModel):
     - ///: Comment marker
     - /**: Block comment start
     - ** /: Block comment end
+    
+    XMLDoc (C#) (Example of actual XML tags):
+    See <a href="https://example.com/docs">the docs</a> for more info.
+    Use <code>getValue()</code> to retrieve the value.
+    Note: when count < 10 or count > 100, special handling applies.
     
     Javadoc (Java):
     - @: Used for Javadoc tags

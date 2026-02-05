@@ -4,22 +4,24 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class ParamsClient
+public partial class ParamsClient : IParamsClient
 {
     private RawClient _client;
 
     internal ParamsClient(RawClient client)
     {
-        _client = client;
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
-    /// <summary>
-    /// GET with path param
-    /// </summary>
-    /// <example><code>
-    /// await client.Endpoints.Params.GetWithPathAsync("param");
-    /// </code></example>
-    public async Task<string> GetWithPathAsync(
+    private async Task<WithRawResponse<string>> GetWithPathAsyncCore(
         string param,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -28,6 +30,12 @@ public partial class ParamsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -38,6 +46,7 @@ public partial class ParamsClient
                                 "/params/path/{0}",
                                 ValueConvert.ToPathParameterString(param)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -48,14 +57,249 @@ public partial class ParamsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
 
+    private async Task<WithRawResponse<string>> GetWithInlinePathAsyncCore(
+        GetWithInlinePath request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(request.Param)
+                            ),
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<string>> ModifyWithPathAsyncCore(
+        string param,
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Put,
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
+                            Body = request,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<string>> ModifyWithInlinePathAsyncCore(
+        ModifyResourceAtInlinedPath request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Put,
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(request.Param)
+                            ),
+                            Body = request.Body,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedExhaustiveApiException(
@@ -72,55 +316,34 @@ public partial class ParamsClient
     /// GET with path param
     /// </summary>
     /// <example><code>
+    /// await client.Endpoints.Params.GetWithPathAsync("param");
+    /// </code></example>
+    public WithRawResponseTask<string> GetWithPathAsync(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            GetWithPathAsyncCore(param, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// GET with path param
+    /// </summary>
+    /// <example><code>
     /// await client.Endpoints.Params.GetWithInlinePathAsync(new GetWithInlinePath { Param = "param" });
     /// </code></example>
-    public async Task<string> GetWithInlinePathAsync(
+    public WithRawResponseTask<string> GetWithInlinePathAsync(
         GetWithInlinePath request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Get,
-                            Path = string.Format(
-                                "/params/path/{0}",
-                                ValueConvert.ToPathParameterString(request.Param)
-                            ),
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<string>(
+            GetWithInlinePathAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -138,9 +361,17 @@ public partial class ParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
-                _query["number"] = request.Number.ToString();
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
+                    .Add("query", request.Query)
+                    .Add("number", request.Number)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -148,7 +379,8 @@ public partial class ParamsClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/params",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -187,9 +419,17 @@ public partial class ParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
-                _query["number"] = request.Number.Select(_value => _value.ToString()).ToList();
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 2)
+                    .Add("query", request.Query)
+                    .Add("number", request.Number)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -197,7 +437,8 @@ public partial class ParamsClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/params",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -238,8 +479,16 @@ public partial class ParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("query", request.Query)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -250,7 +499,8 @@ public partial class ParamsClient
                                 "/params/path-query/{0}",
                                 ValueConvert.ToPathParameterString(param)
                             ),
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -289,8 +539,16 @@ public partial class ParamsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["query"] = request.Query;
+                var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1)
+                    .Add("query", request.Query)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -301,7 +559,8 @@ public partial class ParamsClient
                                 "/params/path-query/{0}",
                                 ValueConvert.ToPathParameterString(request.Param)
                             ),
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -329,55 +588,16 @@ public partial class ParamsClient
     /// <example><code>
     /// await client.Endpoints.Params.ModifyWithPathAsync("param", "string");
     /// </code></example>
-    public async Task<string> ModifyWithPathAsync(
+    public WithRawResponseTask<string> ModifyWithPathAsync(
         string param,
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Put,
-                            Path = string.Format(
-                                "/params/path/{0}",
-                                ValueConvert.ToPathParameterString(param)
-                            ),
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<string>(
+            ModifyWithPathAsyncCore(param, request, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -388,53 +608,14 @@ public partial class ParamsClient
     ///     new ModifyResourceAtInlinedPath { Param = "param", Body = "string" }
     /// );
     /// </code></example>
-    public async Task<string> ModifyWithInlinePathAsync(
+    public WithRawResponseTask<string> ModifyWithInlinePathAsync(
         ModifyResourceAtInlinedPath request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Put,
-                            Path = string.Format(
-                                "/params/path/{0}",
-                                ValueConvert.ToPathParameterString(request.Param)
-                            ),
-                            Body = request.Body,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<string>(
+            ModifyWithInlinePathAsyncCore(request, options, cancellationToken)
+        );
     }
 }

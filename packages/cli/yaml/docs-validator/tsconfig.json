@@ -4,7 +4,7 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"],
+    "types": ["node", "vitest/globals"],
     "moduleResolution": "bundler"
   },
   "include": ["./src/**/*", "./src/**/*.json"],
@@ -16,10 +16,16 @@
       "path": "../../workspace/loader"
     },
     {
+      "path": "../../api-importers/v3-importer-commons"
+    },
+    {
       "path": "../../task-context"
     },
     {
       "path": "../../project-loader"
+    },
+    {
+      "path": "../../api-importers/openapi-to-ir"
     },
     {
       "path": "../../logger"
@@ -47,6 +53,9 @@
     },
     {
       "path": "../../configuration-loader"
+    },
+    {
+      "path": "../../workspace/commons"
     }
   ]
 }

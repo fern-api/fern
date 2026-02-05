@@ -195,6 +195,16 @@
         }
       ]
     },
+    "ai-examples": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AiExamplesConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -327,6 +337,26 @@
           "type": "null"
         }
       ]
+    },
+    "header": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "footer": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -383,6 +413,13 @@
       ],
       "additionalProperties": false
     },
+    "docs.EditThisPageLaunch": {
+      "type": "string",
+      "enum": [
+        "github",
+        "dashboard"
+      ]
+    },
     "docs.EditThisPageConfig": {
       "type": "object",
       "properties": {
@@ -390,6 +427,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.GithubEditThisPageConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "launch": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.EditThisPageLaunch"
             },
             {
               "type": "null"
@@ -718,6 +765,15 @@
         }
       ]
     },
+    "docs.Target": {
+      "type": "string",
+      "enum": [
+        "_blank",
+        "_self",
+        "_parent",
+        "_top"
+      ]
+    },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
     },
@@ -801,6 +857,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
             },
             {
               "type": "null"
@@ -895,6 +961,26 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.Audience"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "announcement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AnnouncementConfig"
             },
             {
               "type": "null"
@@ -1009,6 +1095,16 @@
               "type": "null"
             }
           ]
+        },
+        "announcement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AnnouncementConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1108,6 +1204,16 @@
         },
         "href": {
           "type": "string"
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1493,6 +1599,16 @@
     "docs.PlaygroundSettings": {
       "type": "object",
       "properties": {
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "environments": {
           "oneOf": [
             {
@@ -1939,6 +2055,16 @@
               "type": "null"
             }
           ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -2041,6 +2167,16 @@
           ]
         },
         "display-errors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tag-description-pages": {
           "oneOf": [
             {
               "type": "boolean"
@@ -2199,6 +2335,38 @@
       ],
       "additionalProperties": false
     },
+    "docs.PythonDocsConfiguration": {
+      "type": "object",
+      "properties": {
+        "python-docs": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "python-docs"
+      ],
+      "additionalProperties": false
+    },
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
@@ -2281,6 +2449,13 @@
       ],
       "additionalProperties": false
     },
+    "docs.TitleSource": {
+      "type": "string",
+      "enum": [
+        "frontmatter",
+        "filename"
+      ]
+    },
     "docs.FolderConfiguration": {
       "type": "object",
       "properties": {
@@ -2321,6 +2496,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TitleSource"
             },
             {
               "type": "null"
@@ -2403,6 +2588,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.PythonDocsConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"
@@ -2618,6 +2806,16 @@
         },
         "url": {
           "type": "string"
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -2652,6 +2850,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
             },
             {
               "type": "null"
@@ -2753,6 +2961,16 @@
                 }
               ]
             },
+            "target": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Target"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "url": {
               "oneOf": [
                 {
@@ -2833,6 +3051,16 @@
                 }
               ]
             },
+            "target": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Target"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "url": {
               "oneOf": [
                 {
@@ -2907,6 +3135,16 @@
               "oneOf": [
                 {
                   "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "target": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Target"
                 },
                 {
                   "type": "null"
@@ -3073,6 +3311,16 @@
                 }
               ]
             },
+            "target": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Target"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "url": {
               "oneOf": [
                 {
@@ -3147,6 +3395,16 @@
               "oneOf": [
                 {
                   "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "target": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/docs.Target"
                 },
                 {
                   "type": "null"
@@ -3348,6 +3606,52 @@
         "vscode"
       ]
     },
+    "docs.CustomPageAction": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "title",
+        "url"
+      ],
+      "additionalProperties": false
+    },
     "docs.PageActionOptions": {
       "type": "object",
       "properties": {
@@ -3415,6 +3719,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "custom": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.CustomPageAction"
+              }
             },
             {
               "type": "null"
@@ -3497,6 +3814,36 @@
           ]
         },
         "dynamic-snippets": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ai-examples": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ai-example-style-instructions": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exclude-apis": {
           "oneOf": [
             {
               "type": "boolean"
@@ -3639,6 +3986,32 @@
               "items": {
                 "$ref": "#/definitions/docs.AIChatDatasource"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.AiExamplesConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "style": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -3893,6 +4266,16 @@
           ]
         },
         "href": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "right-text": {
           "oneOf": [
             {
               "type": "string"
@@ -4265,6 +4648,13 @@
         "sidebar"
       ]
     },
+    "docs.SwitcherPlacement": {
+      "type": "string",
+      "enum": [
+        "header",
+        "sidebar"
+      ]
+    },
     "docs.ContentAlignment": {
       "type": "string",
       "enum": [
@@ -4336,6 +4726,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "switcher-placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SwitcherPlacement"
             },
             {
               "type": "null"
@@ -4525,6 +4925,16 @@
               "type": "null"
             }
           ]
+        },
+        "substitute-env-vars": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4550,24 +4960,108 @@
         "bubble"
       ]
     },
+    "docs.PageActionsThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "toolbar"
+      ]
+    },
+    "docs.FooterNavThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "minimal"
+      ]
+    },
+    "docs.LanguageSwitcherThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "minimal"
+      ]
+    },
+    "docs.ProductSwitcherThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "toggle"
+      ]
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
         "sidebar": {
-          "$ref": "#/definitions/docs.SidebarThemeConfig"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SidebarThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "body": {
-          "$ref": "#/definitions/docs.BodyThemeConfig"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.BodyThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "tabs": {
-          "$ref": "#/definitions/docs.TabsThemeConfig"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-actions": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageActionsThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "footer-nav": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FooterNavThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LanguageSwitcherThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "product-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ProductSwitcherThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
-      "required": [
-        "sidebar",
-        "body",
-        "tabs"
-      ],
       "additionalProperties": false
     },
     "docs.IntegrationsConfig": {

@@ -170,7 +170,10 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
 
         for subpackage_id in self._package.subpackages:
             subpackage = self._context.ir.subpackages[subpackage_id]
-            if subpackage.has_endpoints_in_tree:
+            has_websocket = (
+                subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
+            )
+            if subpackage.has_endpoints_in_tree or has_websocket:
                 if should_declare_client_wrapper:
                     writer.write_line("self._client_wrapper = client_wrapper")
                     should_declare_client_wrapper = False
@@ -272,7 +275,10 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         if self._context.custom_config.lazy_imports:
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree:
+                has_websocket = (
+                    subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
+                )
+                if subpackage.has_endpoints_in_tree or has_websocket:
                     class_declaration.add_method(
                         declaration=AST.FunctionDeclaration(
                             name=subpackage.name.snake_case.safe_name,

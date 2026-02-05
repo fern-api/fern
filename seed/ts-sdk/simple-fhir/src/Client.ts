@@ -2,53 +2,41 @@
 
 import type * as SeedApi from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedApiClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedApiClient {
-    protected readonly _options: SeedApiClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
 
-    constructor(_options: SeedApiClient.Options) {
-        this._options = {
-            ..._options,
-            logging: core.logging.createLogger(_options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/simple-fhir",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/simple-fhir/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedApiClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {string} accountId
+     * @param {string} account_id
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.getAccount("account_id")
      */
     public getAccount(
-        accountId: string,
+        account_id: string,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Account> {
-        return core.HttpResponsePromise.fromPromise(this.__getAccount(accountId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getAccount(account_id, requestOptions));
     }
 
     private async __getAccount(
-        accountId: string,
+        account_id: string,
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Account>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -56,7 +44,7 @@ export class SeedApiClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `account/${core.url.encodePathParam(accountId)}`,
+                `account/${core.url.encodePathParam(account_id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -79,20 +67,6 @@ export class SeedApiClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /account/{account_id}.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/account/{account_id}");
     }
 }

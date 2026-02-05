@@ -1,0 +1,3 @@
+rootProject.name = 'nullable-allof-extends'
+
+include 'sample-app'

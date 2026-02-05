@@ -201,4 +201,39 @@ import PathParameters
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func getUserSpecifics1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PathParametersClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        )
+        let response = try await client.user.getUserSpecifics(
+            userId: "user_id",
+            version: 1,
+            thought: "thought",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

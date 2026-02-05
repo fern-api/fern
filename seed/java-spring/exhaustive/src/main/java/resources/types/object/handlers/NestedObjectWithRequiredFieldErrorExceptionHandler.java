@@ -15,6 +15,6 @@ public final class NestedObjectWithRequiredFieldErrorExceptionHandler {
   @ExceptionHandler(NestedObjectWithRequiredFieldError.class)
   ResponseEntity<Object> handle(
       NestedObjectWithRequiredFieldError nestedObjectWithRequiredFieldError) {
-    return new ResponseEntity<>(nestedObjectWithRequiredFieldError.getBody(), null, NestedObjectWithRequiredFieldError.STATUS_CODE);
+    return ResponseEntity.status(NestedObjectWithRequiredFieldError.STATUS_CODE).body(nestedObjectWithRequiredFieldError.getBody());
   }
 }

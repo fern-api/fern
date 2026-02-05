@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "packageName": "fern-api/imdb-php"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

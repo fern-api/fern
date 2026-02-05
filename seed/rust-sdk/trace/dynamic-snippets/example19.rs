@@ -10,6 +10,6 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .delete_playlist(&1, &PlaylistId("playlist_id".to_string()), None)
+        .delete_playlist(1, &PlaylistId("playlist_id".to_string()), None)
         .await;
 }

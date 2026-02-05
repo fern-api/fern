@@ -13,7 +13,10 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithClientCredentials(
+            "<clientId>",
+            "<clientSecret>",
+        ),
     )
     request := &auth.GetTokenRequest{
         ClientId: "client_id",

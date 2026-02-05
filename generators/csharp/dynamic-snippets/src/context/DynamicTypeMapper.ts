@@ -15,18 +15,18 @@ export class DynamicTypeMapper extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
     }
 
     public convert(args: DynamicTypeMapper.Args): ast.Type {
         switch (args.typeReference.type) {
             case "list":
-                return this.csharp.Type.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.Collection.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
             case "map": {
-                return this.csharp.Type.map(
+                return this.Collection.map(
                     this.convert({ typeReference: args.typeReference.key }),
                     this.convert({ typeReference: args.typeReference.value })
                 );
@@ -41,12 +41,12 @@ export class DynamicTypeMapper extends WithGeneration {
             case "optional":
             case "nullable": {
                 const value = this.convert({ typeReference: args.typeReference.value });
-                return args.unboxOptionals ? value.unwrapIfOptional() : this.csharp.Type.optional(value);
+                return args.unboxOptionals ? value.asNonOptional() : value.asOptional();
             }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
-                return this.csharp.Type.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.Collection.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
             case "unknown":
                 return this.convertUnknown();
             default:
@@ -67,24 +67,22 @@ export class DynamicTypeMapper extends WithGeneration {
                 return this.convert({ typeReference: named.typeReference });
             case "enum":
             case "object":
-                return this.csharp.Type.reference(
-                    this.csharp.classReference({
-                        origin: named.declaration,
-                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                    })
-                );
+                return this.csharp.classReference({
+                    origin: named.declaration,
+                    namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                });
+
             case "discriminatedUnion":
                 if (!this.settings.shouldGeneratedDiscriminatedUnions) {
-                    return this.csharp.Type.object;
+                    return this.Primitive.object;
                 }
-                return this.csharp.Type.reference(
-                    this.csharp.classReference({
-                        origin: named.declaration,
-                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                    })
-                );
+                return this.csharp.classReference({
+                    origin: named.declaration,
+                    namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                });
+
             case "undiscriminatedUnion":
-                return this.csharp.Type.oneOf(
+                return this.OneOf.OneOf(
                     named.types.map((typeReference) => {
                         return this.convert({ typeReference });
                     })
@@ -97,44 +95,44 @@ export class DynamicTypeMapper extends WithGeneration {
     private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): ast.Type {
         switch (literal.type) {
             case "boolean":
-                return this.csharp.Type.boolean;
+                return this.Primitive.boolean;
             case "string":
-                return this.csharp.Type.string;
+                return this.Primitive.string;
         }
     }
 
     private convertUnknown(): ast.Type {
-        return this.csharp.Type.object;
+        return this.Primitive.object;
     }
 
     private convertPrimitive({ primitive }: { primitive: FernIr.dynamic.PrimitiveTypeV1 }): ast.Type {
         switch (primitive) {
             case "INTEGER":
-                return this.csharp.Type.integer;
+                return this.Primitive.integer;
             case "UINT":
-                return this.csharp.Type.uint;
+                return this.Primitive.uint;
             case "LONG":
-                return this.csharp.Type.long;
+                return this.Primitive.long;
             case "UINT_64":
-                return this.csharp.Type.ulong;
+                return this.Primitive.ulong;
             case "FLOAT":
-                return this.csharp.Type.float;
+                return this.Primitive.float;
             case "DOUBLE":
-                return this.csharp.Type.double;
+                return this.Primitive.double;
             case "BOOLEAN":
-                return this.csharp.Type.boolean;
+                return this.Primitive.boolean;
             case "STRING":
-                return this.csharp.Type.string;
+                return this.Primitive.string;
             case "DATE":
-                return this.csharp.Type.dateOnly;
+                return this.Value.dateOnly;
             case "DATE_TIME":
-                return this.csharp.Type.dateTime;
+                return this.Value.dateTime;
             case "UUID":
-                return this.csharp.Type.string;
+                return this.Primitive.string;
             case "BASE_64":
-                return this.csharp.Type.string;
+                return this.Primitive.string;
             case "BIG_INTEGER":
-                return this.csharp.Type.string;
+                return this.Primitive.string;
             default:
                 assertNever(primitive);
         }

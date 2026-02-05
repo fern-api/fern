@@ -1,8 +1,8 @@
-import { Logger } from "@fern-api/logger";
-import { SchemaId, SdkGroupName } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+import type { Logger } from "@fern-api/logger";
+import type { SchemaId, SdkGroupName } from "@fern-api/openapi-ir";
+import type { OpenAPIV3 } from "openapi-types";
 
-import { ParseOpenAPIOptions } from "../options";
+import type { ParseOpenAPIOptions } from "../options";
 
 export interface SchemaParserContext {
     logger: Logger;
@@ -23,4 +23,11 @@ export interface SchemaParserContext {
         discriminant: string,
         discriminantValue: string
     ): void;
+
+    /**
+     * Looks up which namespace (if any) contains the given schema ID.
+     * Returns undefined if schema is in rootSchemas or doesn't exist.
+     * This is useful when a schema is assigned (usually via overrides) a different namespace than its context.
+     */
+    getNamespace(schemaId: SchemaId): string | undefined;
 }

@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi.Folder;
 
-public partial class FolderClient
+public partial class FolderClient : IFolderClient
 {
     private RawClient _client;
 
@@ -13,7 +13,7 @@ public partial class FolderClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 
     /// <example><code>
     /// await client.Folder.FooAsync();
@@ -23,6 +23,12 @@ public partial class FolderClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +36,7 @@ public partial class FolderClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

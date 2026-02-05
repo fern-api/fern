@@ -19,6 +19,12 @@ export function assertNonNull<T>(val: T, message?: string): asserts val is Exclu
     }
 }
 
+export function assertString(val: unknown, message?: string): asserts val is string {
+    if (typeof val !== "string") {
+        throw new Error(message ?? `Expected value to be a string but got ${typeof val}.`);
+    }
+}
+
 export function assertNever(x: never): never {
     throw new Error("Unexpected value: " + JSON.stringify(x));
 }

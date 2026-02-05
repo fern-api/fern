@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -70,14 +69,26 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_create_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_execution_session)
+        type_hints = typing.get_type_hints(cls.create_execution_session)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "language":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -94,13 +105,9 @@ class AbstractSubmissionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_execution_session.__globals__)
-
         router.post(
             path="/sessions/create-session/{language}",
-            response_model=ExecutionSessionResponse,
+            response_model=None,
             description=AbstractSubmissionService.create_execution_session.__doc__,
             **get_route_args(cls.create_execution_session, default_tag="submission"),
         )(wrapper)
@@ -108,14 +115,26 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_get_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_execution_session)
+        type_hints = typing.get_type_hints(cls.get_execution_session)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="sessionId")])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -132,13 +151,9 @@ class AbstractSubmissionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_execution_session.__globals__)
-
         router.get(
             path="/sessions/{session_id}",
-            response_model=typing.Optional[ExecutionSessionResponse],
+            response_model=None,
             description=AbstractSubmissionService.get_execution_session.__doc__,
             **get_route_args(cls.get_execution_session, default_tag="submission"),
         )(wrapper)
@@ -146,14 +161,26 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_stop_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.stop_execution_session)
+        type_hints = typing.get_type_hints(cls.stop_execution_session)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="sessionId")])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.stop_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -170,14 +197,10 @@ class AbstractSubmissionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.stop_execution_session.__globals__)
-
         router.delete(
             path="/sessions/stop/{session_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractSubmissionService.stop_execution_session.__doc__,
             **get_route_args(cls.stop_execution_session, default_tag="submission"),
         )(wrapper)
@@ -185,12 +208,22 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_get_execution_sessions_state(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_execution_sessions_state)
+        type_hints = typing.get_type_hints(cls.get_execution_sessions_state)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_execution_sessions_state, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -207,13 +240,9 @@ class AbstractSubmissionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_execution_sessions_state.__globals__)
-
         router.get(
             path="/sessions/execution-sessions-state",
-            response_model=GetExecutionSessionStateResponse,
+            response_model=None,
             description=AbstractSubmissionService.get_execution_sessions_state.__doc__,
             **get_route_args(cls.get_execution_sessions_state, default_tag="submission"),
         )(wrapper)

@@ -6,5 +6,5 @@ from ....core.exceptions.fern_http_exception import FernHTTPException
 
 
 class NotFoundError(FernHTTPException):
-    def __init__(self, error: typing.Optional[typing.Any]):
+    def __init__(self, error: typing.Any):
         super().__init__(status_code=404, name="NotFoundError", content=error)

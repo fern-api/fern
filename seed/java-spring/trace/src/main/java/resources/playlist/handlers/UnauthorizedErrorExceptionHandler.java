@@ -16,6 +16,6 @@ public final class UnauthorizedErrorExceptionHandler {
   @ExceptionHandler(UnauthorizedError.class)
   ResponseEntity<Object> handle(UnauthorizedError unauthorizedError) {
     ErrorBody body = new ErrorBody<>(UnauthorizedError.ERROR_NAME);
-    return new ResponseEntity<>(body, null, UnauthorizedError.STATUS_CODE);
+    return ResponseEntity.status(UnauthorizedError.STATUS_CODE).body(body);
   }
 }

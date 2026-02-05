@@ -1,14 +1,13 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-base";
-import { Generation } from "@fern-api/csharp-codegen";
+import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels";
 import { generateVersion } from "./generateVersion";
 import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
-export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
+export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli {
     protected constructContext({
         ir,
         customConfig,
@@ -16,22 +15,22 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
         generatorNotificationService
     }: {
         ir: IntermediateRepresentation;
-        customConfig: ModelCustomConfigSchema;
+        customConfig: CsharpConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
     }): ModelGeneratorContext {
         return new ModelGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
-    protected parseCustomConfigOrThrow(customConfig: unknown): ModelCustomConfigSchema {
-        const parsed = customConfig != null ? ModelCustomConfigSchema.parse(customConfig) : undefined;
+    protected parseCustomConfigOrThrow(customConfig: unknown): CsharpConfigSchema {
+        const parsed = customConfig != null ? CsharpConfigSchema.parse(customConfig) : undefined;
         if (parsed != null) {
             return this.validateCustomConfig(parsed);
         }
         return {};
     }
 
-    private validateCustomConfig(customConfig: ModelCustomConfigSchema): ModelCustomConfigSchema {
+    private validateCustomConfig(customConfig: CsharpConfigSchema): CsharpConfigSchema {
         new Generation(
             {} as unknown as IntermediateRepresentation,
             "",

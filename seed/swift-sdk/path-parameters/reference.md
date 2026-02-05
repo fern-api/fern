@@ -608,3 +608,102 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUserSpecifics</a>(tenantId: String, userId: String, version: String, thought: String, requestOptions: RequestOptions?) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import PathParameters
+
+private func main() async throws {
+    let client = PathParametersClient()
+
+    _ = try await client.user.getUserSpecifics(
+        userId: "user_id",
+        version: 1,
+        thought: "thought"
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thought:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

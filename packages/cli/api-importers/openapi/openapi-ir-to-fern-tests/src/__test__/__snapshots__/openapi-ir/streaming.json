@@ -97,7 +97,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v1/users",
       "examples": [
@@ -234,7 +233,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v1/users",
       "examples": [
@@ -368,7 +366,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v2/users",
       "examples": [
@@ -519,7 +516,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v2/users",
       "examples": [
@@ -731,7 +727,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v3/users",
       "examples": [
@@ -926,7 +921,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v3/users",
       "examples": [

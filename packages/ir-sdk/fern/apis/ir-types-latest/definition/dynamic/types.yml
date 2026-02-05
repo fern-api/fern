@@ -52,6 +52,11 @@ types:
     properties:
       declaration: declaration.Declaration
       properties: list<NamedParameter>
+      extends:
+        docs: |
+          List of type IDs that this object extends. Used by generators that need to
+          handle inheritance patterns differently (e.g., Rust uses flattened wrapper fields).
+        type: optional<list<commons.TypeId>>
       additionalProperties:
         docs: Whether the type allows additional properties.
         type: optional<boolean>

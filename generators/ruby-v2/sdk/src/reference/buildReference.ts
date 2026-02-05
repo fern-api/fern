@@ -1,4 +1,5 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -71,6 +72,7 @@ function getEndpointReference({
     singleEndpointSnippet: SingleEndpointSnippet;
 }): FernGeneratorCli.EndpointReference {
     const returnValue = getReturnValue({ context, endpoint });
+    const serviceFilepath = getServiceFilepath({ context, serviceId, service });
     return {
         title: {
             snippetParts: [
@@ -78,7 +80,8 @@ function getEndpointReference({
                     text: getAccessFromRootClient({ context, service }) + "."
                 },
                 {
-                    text: getEndpointMethodName({ endpoint })
+                    text: getEndpointMethodName({ endpoint }),
+                    location: serviceFilepath != null ? { path: serviceFilepath } : undefined
                 },
                 {
                     text: getReferenceEndpointInvocationParameters({ context, endpoint })
@@ -88,8 +91,38 @@ function getEndpointReference({
         },
         description: endpoint.docs,
         snippet: singleEndpointSnippet.endpointCall.trim(),
-        parameters: getEndpointParameters({ context, endpoint })
+        parameters: getEndpointParameters({ context, serviceId, endpoint })
     };
+}
+
+function getServiceFilepath({
+    context,
+    serviceId,
+    service
+}: {
+    context: SdkGeneratorContext;
+    serviceId: ServiceId;
+    service: HttpService;
+}): string | undefined {
+    // For root service, the client file is at lib/<gem_name>/client.rb
+    if (isRootServiceId({ context, serviceId })) {
+        return "/" + join(context.getRootFolderPath(), RelativeFilePath.of("client.rb"));
+    }
+
+    // For subpackage services, the client file is at lib/<gem_name>/<subpackage_path>/client.rb
+    const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+    if (servicePath.length > 0) {
+        return (
+            "/" +
+            join(
+                context.getRootFolderPath(),
+                ...servicePath.map((p) => RelativeFilePath.of(p)),
+                RelativeFilePath.of("client.rb")
+            )
+        );
+    }
+
+    return undefined;
 }
 
 function getAccessFromRootClient({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
@@ -174,9 +207,11 @@ function getSimpleTypeName(rubyType: ruby.Type, context: SdkGeneratorContext): s
 
 function getEndpointParameters({
     context,
+    serviceId,
     endpoint
 }: {
     context: SdkGeneratorContext;
+    serviceId: ServiceId;
     endpoint: HttpEndpoint;
 }): FernGeneratorCli.ParameterReference[] {
     const parameters: FernGeneratorCli.ParameterReference[] = [];
@@ -226,7 +261,36 @@ function getEndpointParameters({
         });
     }
 
+    // Add request_options parameter for all endpoints (parity with TypeScript)
+    const requestOptionsType = getRequestOptionsType({ context, serviceId });
+    parameters.push({
+        name: "request_options",
+        type: requestOptionsType,
+        description: undefined,
+        required: false
+    });
+
     return parameters;
+}
+
+function getRequestOptionsType({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): string {
+    // For root service, use the root module's RequestOptions
+    if (isRootServiceId({ context, serviceId })) {
+        return `${context.getRootModuleName()}::RequestOptions`;
+    }
+
+    // For subpackage services, use the subpackage's RequestOptions
+    try {
+        const subpackage = context.getSubpackageForServiceId(serviceId);
+        const modulePath = [
+            context.getRootModuleName(),
+            ...subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName)
+        ].join("::");
+        return `${modulePath}::RequestOptions`;
+    } catch {
+        // Fallback to root module's RequestOptions if subpackage not found
+        return `${context.getRootModuleName()}::RequestOptions`;
+    }
 }
 
 function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {

@@ -1,4 +1,10 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Payment**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod payment;
 pub struct IdempotencyHeadersClient {
@@ -10,9 +16,10 @@ impl IdempotencyHeadersClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            payment: PaymentClient::new(config.clone())?,
+            payment: PaymentClient::new(config.clone())?
         })
     }
+
 }
 
 pub use payment::PaymentClient;

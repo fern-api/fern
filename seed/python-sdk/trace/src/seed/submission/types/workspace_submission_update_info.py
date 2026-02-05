@@ -29,7 +29,9 @@ class WorkspaceSubmissionUpdateInfo_Running(UniversalBaseModel):
 
 class WorkspaceSubmissionUpdateInfo_Ran(UniversalBaseModel):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = None
+    exception_v_2: typing_extensions.Annotated[
+        typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2"), pydantic.Field(alias="exceptionV2")
+    ] = None
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
@@ -71,7 +73,9 @@ class WorkspaceSubmissionUpdateInfo_Traced(UniversalBaseModel):
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(UniversalBaseModel):
     type: typing.Literal["tracedV2"] = "tracedV2"
-    trace_responses_size: typing_extensions.Annotated[int, FieldMetadata(alias="traceResponsesSize")]
+    trace_responses_size: typing_extensions.Annotated[
+        int, FieldMetadata(alias="traceResponsesSize"), pydantic.Field(alias="traceResponsesSize")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -109,12 +113,15 @@ class WorkspaceSubmissionUpdateInfo_Finished(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-WorkspaceSubmissionUpdateInfo = typing.Union[
-    WorkspaceSubmissionUpdateInfo_Running,
-    WorkspaceSubmissionUpdateInfo_Ran,
-    WorkspaceSubmissionUpdateInfo_Stopped,
-    WorkspaceSubmissionUpdateInfo_Traced,
-    WorkspaceSubmissionUpdateInfo_TracedV2,
-    WorkspaceSubmissionUpdateInfo_Errored,
-    WorkspaceSubmissionUpdateInfo_Finished,
+WorkspaceSubmissionUpdateInfo = typing_extensions.Annotated[
+    typing.Union[
+        WorkspaceSubmissionUpdateInfo_Running,
+        WorkspaceSubmissionUpdateInfo_Ran,
+        WorkspaceSubmissionUpdateInfo_Stopped,
+        WorkspaceSubmissionUpdateInfo_Traced,
+        WorkspaceSubmissionUpdateInfo_TracedV2,
+        WorkspaceSubmissionUpdateInfo_Errored,
+        WorkspaceSubmissionUpdateInfo_Finished,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

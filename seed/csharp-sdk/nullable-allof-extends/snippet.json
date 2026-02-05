@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/test",
+                "method": "GET",
+                "identifier_override": "endpoint_.getTest"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetTestAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/test",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTest"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateTestAsync(new RootObject());\n"
+            }
+        }
+    ]
+}

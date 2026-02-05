@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: String, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Date?, keyValue: [String: String?]?, optionalString: String?, nestedUser: NestedUser?, optionalUser: User?, excludeUser: User?, filter: String?, neighbor: SearchRequestNeighbor?, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Date?, keyValue: [String: String]?, optionalString: String?, nestedUser: NestedUser?, optionalUser: User?, excludeUser: User?, filter: String?, neighbor: SearchRequestNeighbor?, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,7 @@ private func main() async throws {
     _ = try await client.search(
         limit: 1,
         id: "id",
-        date: "date",
+        date: CalendarDate("2023-01-15")!,
         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         bytes: "bytes",
         user: User(
@@ -105,7 +105,7 @@ try await main()
 <dl>
 <dd>
 
-**date:** `String` 
+**date:** `CalendarDate` 
     
 </dd>
 </dl>
@@ -153,7 +153,7 @@ try await main()
 <dl>
 <dd>
 
-**keyValue:** `[String: String?]?` 
+**keyValue:** `[String: String]?` 
     
 </dd>
 </dl>

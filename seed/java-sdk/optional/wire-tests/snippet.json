@@ -25,6 +25,19 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalTypedBody(\n            Optional.of(\n                SendOptionalBodyRequest\n                    .builder()\n                    .message(\"message\")\n                    .build()\n            )\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalTypedBody(\n            Optional.of(\n                SendOptionalBodyRequest\n                    .builder()\n                    .message(\"message\")\n                    .build()\n            )\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "8fd759b9",
+            "id": {
+                "method": "POST",
+                "path": "/deploy/{actionId}/versions/{id}",
+                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n"
+            }
         }
     ],
     "types": {}

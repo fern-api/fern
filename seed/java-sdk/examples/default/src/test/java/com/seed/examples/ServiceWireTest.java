@@ -101,8 +101,9 @@ public class ServiceWireTest {
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -138,8 +139,9 @@ public class ServiceWireTest {
                         .title("The Boy and the Heron")
                         .from("Hayao Miyazaki")
                         .rating(8.0)
-                        .type("movie")
                         .tag("tag-wf9as23d")
+                        .revenue(1000000L)
+                        .prequel("movie-cv9b914f")
                         .metadata(new HashMap<String, Object>() {
                             {
                                 put(
@@ -155,8 +157,6 @@ public class ServiceWireTest {
                                 });
                             }
                         })
-                        .revenue(1000000L)
-                        .prequel("movie-cv9b914f")
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -188,7 +188,7 @@ public class ServiceWireTest {
                 + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -219,8 +219,9 @@ public class ServiceWireTest {
         String expectedResponseBody = "" + "\"movie-c06a4ad7\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -257,7 +258,7 @@ public class ServiceWireTest {
         Metadata response = client.service()
                 .getMetadata(GetMetadataRequest.builder()
                         .xApiVersion("0.0.1")
-                        .tag(Arrays.asList(Optional.of("development")))
+                        .tag(Arrays.asList("development"))
                         .shallow(false)
                         .build());
         RecordedRequest request = server.takeRequest();
@@ -286,8 +287,9 @@ public class ServiceWireTest {
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -326,13 +328,14 @@ public class ServiceWireTest {
                         .castMember(CastMember.of(
                                 Actor.builder().name("name").id("id").build()))
                         .extendedMovie(ExtendedMovie.builder()
-                                .cast(Arrays.asList("cast", "cast"))
                                 .id("id")
                                 .title("title")
                                 .from("from")
                                 .rating(1.1)
-                                .type("movie")
                                 .tag("tag")
+                                .revenue(1000000L)
+                                .prequel("prequel")
+                                .book("book")
                                 .metadata(new HashMap<String, Object>() {
                                     {
                                         put("metadata", new HashMap<String, Object>() {
@@ -342,15 +345,13 @@ public class ServiceWireTest {
                                         });
                                     }
                                 })
-                                .revenue(1000000L)
-                                .prequel("prequel")
-                                .book("book")
+                                .cast(Arrays.asList("cast", "cast"))
                                 .build())
                         .entity(Entity.builder()
                                 .type(Type.of(BasicType.PRIMITIVE))
                                 .name("name")
                                 .build())
-                        .metadata(Metadata.html())
+                        .metadata(Metadata.html("metadata"))
                         .commonMetadata(Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
@@ -369,7 +370,7 @@ public class ServiceWireTest {
                                 })
                                 .jsonString("jsonString")
                                 .build()))
-                        .data(Data.string())
+                        .data(Data.string("data"))
                         .migration(Migration.builder()
                                 .name("name")
                                 .status(MigrationStatus.RUNNING)
@@ -379,7 +380,7 @@ public class ServiceWireTest {
                                 .exceptionMessage("exceptionMessage")
                                 .exceptionStacktrace("exceptionStacktrace")
                                 .build()))
-                        .test(Test.and())
+                        .test(Test.and(true))
                         .node(Node.builder()
                                 .name("name")
                                 .nodes(Optional.of(Arrays.asList(
@@ -523,234 +524,11 @@ public class ServiceWireTest {
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = ""
-                + "{\n"
-                + "  \"castMember\": {\n"
-                + "    \"name\": \"name\",\n"
-                + "    \"id\": \"id\"\n"
-                + "  },\n"
-                + "  \"extendedMovie\": {\n"
-                + "    \"cast\": [\n"
-                + "      \"cast\",\n"
-                + "      \"cast\"\n"
-                + "    ],\n"
-                + "    \"id\": \"id\",\n"
-                + "    \"prequel\": \"prequel\",\n"
-                + "    \"title\": \"title\",\n"
-                + "    \"from\": \"from\",\n"
-                + "    \"rating\": 1.1,\n"
-                + "    \"type\": \"movie\",\n"
-                + "    \"tag\": \"tag\",\n"
-                + "    \"book\": \"book\",\n"
-                + "    \"metadata\": {\n"
-                + "      \"metadata\": {\n"
-                + "        \"key\": \"value\"\n"
-                + "      }\n"
-                + "    },\n"
-                + "    \"revenue\": 1000000\n"
-                + "  },\n"
-                + "  \"entity\": {\n"
-                + "    \"type\": \"primitive\",\n"
-                + "    \"name\": \"name\"\n"
-                + "  },\n"
-                + "  \"metadata\": {\n"
-                + "    \"type\": \"html\",\n"
-                + "    \"value\": \"metadata\",\n"
-                + "    \"extra\": {\n"
-                + "      \"extra\": \"extra\"\n"
-                + "    },\n"
-                + "    \"tags\": [\n"
-                + "      \"tags\"\n"
-                + "    ]\n"
-                + "  },\n"
-                + "  \"commonMetadata\": {\n"
-                + "    \"id\": \"id\",\n"
-                + "    \"data\": {\n"
-                + "      \"data\": \"data\"\n"
-                + "    },\n"
-                + "    \"jsonString\": \"jsonString\"\n"
-                + "  },\n"
-                + "  \"eventInfo\": {\n"
-                + "    \"type\": \"metadata\",\n"
-                + "    \"id\": \"id\",\n"
-                + "    \"data\": {\n"
-                + "      \"data\": \"data\"\n"
-                + "    },\n"
-                + "    \"jsonString\": \"jsonString\"\n"
-                + "  },\n"
-                + "  \"data\": {\n"
-                + "    \"type\": \"string\",\n"
-                + "    \"value\": \"data\"\n"
-                + "  },\n"
-                + "  \"migration\": {\n"
-                + "    \"name\": \"name\",\n"
-                + "    \"status\": \"RUNNING\"\n"
-                + "  },\n"
-                + "  \"exception\": {\n"
-                + "    \"type\": \"generic\",\n"
-                + "    \"exceptionType\": \"exceptionType\",\n"
-                + "    \"exceptionMessage\": \"exceptionMessage\",\n"
-                + "    \"exceptionStacktrace\": \"exceptionStacktrace\"\n"
-                + "  },\n"
-                + "  \"test\": {\n"
-                + "    \"type\": \"and\",\n"
-                + "    \"value\": true\n"
-                + "  },\n"
-                + "  \"node\": {\n"
-                + "    \"name\": \"name\",\n"
-                + "    \"nodes\": [\n"
-                + "      {\n"
-                + "        \"name\": \"name\",\n"
-                + "        \"nodes\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          }\n"
-                + "        ],\n"
-                + "        \"trees\": [\n"
-                + "          {\n"
-                + "            \"nodes\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"nodes\": []\n"
-                + "          }\n"
-                + "        ]\n"
-                + "      },\n"
-                + "      {\n"
-                + "        \"name\": \"name\",\n"
-                + "        \"nodes\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          }\n"
-                + "        ],\n"
-                + "        \"trees\": [\n"
-                + "          {\n"
-                + "            \"nodes\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"nodes\": []\n"
-                + "          }\n"
-                + "        ]\n"
-                + "      }\n"
-                + "    ],\n"
-                + "    \"trees\": [\n"
-                + "      {\n"
-                + "        \"nodes\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          }\n"
-                + "        ]\n"
-                + "      },\n"
-                + "      {\n"
-                + "        \"nodes\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"nodes\": [],\n"
-                + "            \"trees\": []\n"
-                + "          }\n"
-                + "        ]\n"
-                + "      }\n"
-                + "    ]\n"
-                + "  },\n"
-                + "  \"directory\": {\n"
-                + "    \"name\": \"name\",\n"
-                + "    \"files\": [\n"
-                + "      {\n"
-                + "        \"name\": \"name\",\n"
-                + "        \"contents\": \"contents\"\n"
-                + "      },\n"
-                + "      {\n"
-                + "        \"name\": \"name\",\n"
-                + "        \"contents\": \"contents\"\n"
-                + "      }\n"
-                + "    ],\n"
-                + "    \"directories\": [\n"
-                + "      {\n"
-                + "        \"name\": \"name\",\n"
-                + "        \"files\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"contents\": \"contents\"\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"contents\": \"contents\"\n"
-                + "          }\n"
-                + "        ],\n"
-                + "        \"directories\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"files\": [],\n"
-                + "            \"directories\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"files\": [],\n"
-                + "            \"directories\": []\n"
-                + "          }\n"
-                + "        ]\n"
-                + "      },\n"
-                + "      {\n"
-                + "        \"name\": \"name\",\n"
-                + "        \"files\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"contents\": \"contents\"\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"contents\": \"contents\"\n"
-                + "          }\n"
-                + "        ],\n"
-                + "        \"directories\": [\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"files\": [],\n"
-                + "            \"directories\": []\n"
-                + "          },\n"
-                + "          {\n"
-                + "            \"name\": \"name\",\n"
-                + "            \"files\": [],\n"
-                + "            \"directories\": []\n"
-                + "          }\n"
-                + "        ]\n"
-                + "      }\n"
-                + "    ]\n"
-                + "  },\n"
-                + "  \"moment\": {\n"
-                + "    \"id\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n"
-                + "    \"date\": \"2023-01-15\",\n"
-                + "    \"datetime\": \"2024-01-15T09:30:00Z\"\n"
-                + "  }\n"
-                + "}";
+        String expectedRequestBody =
+                TestResources.loadResource("/wire-tests/ServiceWireTest_testCreateBigEntity_request.json");
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -798,8 +576,9 @@ public class ServiceWireTest {
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -833,5 +612,35 @@ public class ServiceWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence and null safety.
+     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
+     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
+     */
+    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
+        if (expected == null && actual == null) return true;
+        if (expected == null || actual == null) return false;
+        if (expected.equals(actual)) return true;
+        if (expected.isNumber() && actual.isNumber())
+            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
+        if (expected.isObject() && actual.isObject()) {
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                JsonNode actualValue = actual.get(entry.getKey());
+                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+            }
+            return true;
+        }
+        if (expected.isArray() && actual.isArray()) {
+            if (expected.size() != actual.size()) return false;
+            for (int i = 0; i < expected.size(); i++) {
+                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

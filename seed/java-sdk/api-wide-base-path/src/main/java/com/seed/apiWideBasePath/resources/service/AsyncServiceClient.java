@@ -24,14 +24,14 @@ public class AsyncServiceClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<Void> post(String serviceParam, String resourceParam, int endpointParam) {
-        return this.rawClient.post(serviceParam, resourceParam, endpointParam).thenApply(response -> response.body());
+    public CompletableFuture<Void> post(String serviceParam, int endpointParam, String resourceParam) {
+        return this.rawClient.post(serviceParam, endpointParam, resourceParam).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> post(
-            String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
+            String serviceParam, int endpointParam, String resourceParam, RequestOptions requestOptions) {
         return this.rawClient
-                .post(serviceParam, resourceParam, endpointParam, requestOptions)
+                .post(serviceParam, endpointParam, resourceParam, requestOptions)
                 .thenApply(response -> response.body());
     }
 }

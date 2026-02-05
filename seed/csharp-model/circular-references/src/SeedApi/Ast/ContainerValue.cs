@@ -146,12 +146,12 @@ public record ContainerValue
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ContainerValue>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(ContainerValue).IsAssignableFrom(typeToConvert);
 
         public override ContainerValue Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

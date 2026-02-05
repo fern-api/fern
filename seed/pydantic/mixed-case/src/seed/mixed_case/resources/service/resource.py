@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .resource_status import ResourceStatus
 
 
@@ -46,9 +48,11 @@ class Resource_User(Base):
     """
 
     resource_type: typing.Literal["user"] = "user"
-    user_name: str = pydantic.Field(alias="userName")
+    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName"), pydantic.Field(alias="userName")]
     metadata_tags: typing.List[str]
-    extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
+    extra_properties: typing_extensions.Annotated[
+        typing.Dict[str, str], FieldMetadata(alias="EXTRA_PROPERTIES"), pydantic.Field(alias="EXTRA_PROPERTIES")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -91,4 +95,6 @@ Resource_User(
     extra_properties={"foo": "bar", "baz": "qux"},
 )
 """
-Resource = typing.Union[Resource_User, Resource_Organization]
+Resource = typing_extensions.Annotated[
+    typing.Union[Resource_User, Resource_Organization], pydantic.Field(discriminator="resource_type")
+]

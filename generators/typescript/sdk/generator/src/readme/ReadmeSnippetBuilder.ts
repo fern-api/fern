@@ -22,9 +22,11 @@ interface EndpointWithRequest {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly ABORTING_REQUESTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ABORTING_REQUESTS";
+    private static readonly AUTHENTICATION_FEATURE_ID: FernGeneratorCli.FeatureId = "AUTHENTICATION";
     private static readonly EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static readonly REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId =
         "REQUEST_AND_RESPONSE_TYPES";
+    private static readonly SUBPACKAGE_EXPORTS_FEATURE_ID: FernGeneratorCli.FeatureId = "SUBPACKAGE_EXPORTS";
     private static readonly RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
     private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
@@ -38,6 +40,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
+    private readonly generateSubpackageExports: boolean;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
@@ -50,16 +53,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     constructor({
         context,
         endpointSnippets,
-        fileResponseType
+        fileResponseType,
+        generateSubpackageExports
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
+        generateSubpackageExports: boolean;
     }) {
         super({ endpointSnippets });
         this.context = context;
         this.fileResponseType = fileResponseType;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.generateSubpackageExports = generateSubpackageExports;
 
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -73,13 +79,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.genericAPISdkErrorName = this.getGenericApiSdkErrorName();
     }
 
-    public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
-        const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
+    public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[] | false> {
+        const snippets: Record<FernGeneratorCli.FeatureId, string[] | false> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
 
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
+        snippets[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] = this.buildAuthenticationSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
         snippets[ReadmeSnippetBuilder.STREAMING_RESPONSE_FEATURE_ID] = this.buildStreamingSnippets();
@@ -92,12 +99,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
 
         if (this.isPaginationEnabled) {
-            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+            const paginationSnippets = this.buildPaginationSnippets();
+            if (paginationSnippets.length > 0) {
+                snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = paginationSnippets;
+            }
         }
 
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();
         if (requestAndResponseTypesSnippets != null) {
             snippets[ReadmeSnippetBuilder.REQUEST_AND_RESPONSE_TYPES_FEATURE_ID] = requestAndResponseTypesSnippets;
+        }
+
+        const subpackageExportsSnippets = this.buildSubpackageExportsSnippets();
+        if (subpackageExportsSnippets != null) {
+            snippets[ReadmeSnippetBuilder.SUBPACKAGE_EXPORTS_FEATURE_ID] = subpackageExportsSnippets;
         }
 
         return snippets;
@@ -203,6 +218,38 @@ const request: ${requestTypeName} = {
         ];
     }
 
+    private buildSubpackageExportsSnippets(): string[] | undefined {
+        if (!this.generateSubpackageExports) {
+            return undefined;
+        }
+
+        const firstSubpackageWithClient = Object.values(this.context.ir.subpackages).find(
+            (subpackage) => subpackage.hasEndpointsInTree
+        );
+
+        if (firstSubpackageWithClient == null) {
+            return undefined;
+        }
+
+        const pathSegments = firstSubpackageWithClient.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
+        const subpackageName = firstSubpackageWithClient.name.camelCase.safeName;
+        if (pathSegments.length === 0 || pathSegments[pathSegments.length - 1] !== subpackageName) {
+            pathSegments.push(subpackageName);
+        }
+        const importPath = pathSegments.join("/");
+        const clientName = `${firstSubpackageWithClient.name.pascalCase.unsafeName}Client`;
+
+        return [
+            this.writeCode(
+                code`
+import { ${clientName} } from '${this.rootPackageName}/${importPath}';
+
+const client = new ${clientName}({...});
+`
+            )
+        ];
+    }
+
     private buildRawResponseSnippets(): string[] {
         const rawResponseEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID);
         return rawResponseEndpoints.map((rawResponseEndpoint) =>
@@ -219,17 +266,30 @@ console.log(rawResponse.headers['X-My-Header']);
 
     private buildAdditionalHeadersSnippets(): string[] {
         const headerEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID);
-        return headerEndpoints.map((headerEndpoint) =>
+        const firstEndpoint = headerEndpoints[0];
+        if (firstEndpoint == null) {
+            return [];
+        }
+        return [
             this.writeCode(
                 code`
-const response = await ${this.getMethodCall(headerEndpoint)}(..., {
+import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";
+
+const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
+const response = await ${this.getMethodCall(firstEndpoint)}(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 `
             )
-        );
+        ];
     }
 
     private buildAdditionalQueryStringParametersSnippets(): string[] {
@@ -421,6 +481,41 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
 `
             )
         ];
+    }
+
+    private buildAuthenticationSnippets(): string[] | false {
+        // Return false to explicitly skip snippets - the full description is built in buildAuthenticationDescription()
+        return false;
+    }
+
+    public buildAuthenticationDescription(): string | undefined {
+        const oauthScheme = this.context.ir.auth.schemes.find((scheme) => scheme.type === "oauth");
+        if (oauthScheme == null) {
+            return undefined;
+        }
+
+        return (
+            "The SDK supports OAuth authentication with two options:\n\n" +
+            "**Option 1: OAuth Client Credentials Flow**\n\n" +
+            "Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:\n\n" +
+            "```typescript\n" +
+            `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
+            `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
+            `    clientId: "YOUR_CLIENT_ID",\n` +
+            `    clientSecret: "YOUR_CLIENT_SECRET",\n` +
+            `    ...\n` +
+            `});\n` +
+            "```\n\n" +
+            "**Option 2: Token Override**\n\n" +
+            "Use this when you already have a valid bearer token and want to skip the OAuth flow:\n\n" +
+            "```typescript\n" +
+            `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
+            `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
+            `    token: "my-pre-generated-bearer-token",\n` +
+            `    ...\n` +
+            `});\n` +
+            "```"
+        );
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {

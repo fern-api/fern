@@ -1,0 +1,8 @@
+instances:
+  - url: https://test.docs.buildwithfern.com
+
+products:
+  - display-name: Home
+    path: ./nav.yml
+
+title: No Languages Project

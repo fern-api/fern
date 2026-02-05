@@ -29,7 +29,7 @@ await client.folderA.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -71,7 +71,7 @@ await client.folderD.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -125,7 +125,7 @@ await client.foo.find({
 <dl>
 <dd>
 
-**requestOptions:** `Foo.RequestOptions` 
+**requestOptions:** `FooClient.RequestOptions` 
     
 </dd>
 </dl>

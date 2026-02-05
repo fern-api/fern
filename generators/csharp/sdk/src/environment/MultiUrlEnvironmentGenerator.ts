@@ -4,7 +4,6 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace SingleUrlEnvironmentGenerator {
@@ -14,11 +13,7 @@ export declare namespace SingleUrlEnvironmentGenerator {
     }
 }
 
-export class MultiUrlEnvironmentGenerator extends FileGenerator<
-    CSharpFile,
-    SdkCustomConfigSchema,
-    SdkGeneratorContext
-> {
+export class MultiUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
     private multiUrlEnvironments: MultipleBaseUrlsEnvironments;
 
     constructor({ context, multiUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
@@ -28,10 +23,10 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.Environments,
+            reference: this.Types.Environments,
             partial: false,
             access: ast.Access.Public,
-            annotations: [this.extern.System.Serializable]
+            annotations: [this.System.Serializable]
         });
 
         for (const environment of this.multiUrlEnvironments.environments) {
@@ -46,7 +41,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                 static_: true,
                 readonly: true,
 
-                type: this.csharp.Type.reference(this.types.Environments),
+                type: this.Types.Environments,
                 initializer: this.csharp.codeblock((writer) => {
                     writer.writeNode(
                         this.csharp.instantiateClass({
@@ -71,7 +66,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
             class_.addField({
                 origin: baseUrl,
                 access: ast.Access.Public,
-                type: this.csharp.Type.string,
+                type: this.Primitive.string,
                 get: true,
                 init: true,
                 summary: `URL for the ${baseUrl.id} service`
@@ -96,12 +91,12 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         });
 
         return this.csharp.instantiateClass({
-            classReference: this.types.Environments,
+            classReference: this.Types.Environments,
             arguments_
         });
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.types.Environments.name}.cs`));
+        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.Types.Environments.name}.cs`));
     }
 }

@@ -503,7 +503,9 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -538,6 +540,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -939,6 +943,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -1246,4 +1251,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `4853086`;
+exports[`dependencies > file dependencies 1`] = `5761137`;

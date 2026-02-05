@@ -53,9 +53,15 @@ class SubmissionResponse_WorkspaceInitialized(UniversalBaseModel):
 
 class SubmissionResponse_ServerErrored(UniversalBaseModel):
     type: typing.Literal["serverErrored"] = "serverErrored"
-    exception_type: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionType")]
-    exception_message: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionMessage")]
-    exception_stacktrace: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionStacktrace")]
+    exception_type: typing_extensions.Annotated[
+        str, FieldMetadata(alias="exceptionType"), pydantic.Field(alias="exceptionType")
+    ]
+    exception_message: typing_extensions.Annotated[
+        str, FieldMetadata(alias="exceptionMessage"), pydantic.Field(alias="exceptionMessage")
+    ]
+    exception_stacktrace: typing_extensions.Annotated[
+        str, FieldMetadata(alias="exceptionStacktrace"), pydantic.Field(alias="exceptionStacktrace")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -93,11 +99,14 @@ class SubmissionResponse_Terminated(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionResponse = typing.Union[
-    SubmissionResponse_ServerInitialized,
-    SubmissionResponse_ProblemInitialized,
-    SubmissionResponse_WorkspaceInitialized,
-    SubmissionResponse_ServerErrored,
-    SubmissionResponse_CodeExecutionUpdate,
-    SubmissionResponse_Terminated,
+SubmissionResponse = typing_extensions.Annotated[
+    typing.Union[
+        SubmissionResponse_ServerInitialized,
+        SubmissionResponse_ProblemInitialized,
+        SubmissionResponse_WorkspaceInitialized,
+        SubmissionResponse_ServerErrored,
+        SubmissionResponse_CodeExecutionUpdate,
+        SubmissionResponse_Terminated,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

@@ -20,9 +20,9 @@ class SearchRequest extends JsonSerializableType
     public string $id;
 
     /**
-     * @var string $date
+     * @var DateTime $date
      */
-    public string $date;
+    public DateTime $date;
 
     /**
      * @var DateTime $deadline
@@ -50,7 +50,7 @@ class SearchRequest extends JsonSerializableType
     public ?DateTime $optionalDeadline;
 
     /**
-     * @var ?array<string, ?string> $keyValue
+     * @var ?array<string, string> $keyValue
      */
     public ?array $keyValue;
 
@@ -80,9 +80,14 @@ class SearchRequest extends JsonSerializableType
     public ?array $filter;
 
     /**
-     * @var ?User $neighbor
+     * @var (
+     *    User
+     *   |NestedUser
+     *   |string
+     *   |int
+     * )|null $neighbor
      */
-    public ?User $neighbor;
+    public User|NestedUser|string|int|null $neighbor;
 
     /**
      * @var (
@@ -98,7 +103,7 @@ class SearchRequest extends JsonSerializableType
      * @param array{
      *   limit: int,
      *   id: string,
-     *   date: string,
+     *   date: DateTime,
      *   deadline: DateTime,
      *   bytes: string,
      *   user: User,
@@ -110,13 +115,18 @@ class SearchRequest extends JsonSerializableType
      * ),
      *   userList?: ?array<User>,
      *   optionalDeadline?: ?DateTime,
-     *   keyValue?: ?array<string, ?string>,
+     *   keyValue?: ?array<string, string>,
      *   optionalString?: ?string,
      *   nestedUser?: ?NestedUser,
      *   optionalUser?: ?User,
      *   excludeUser?: ?array<User>,
      *   filter?: ?array<string>,
-     *   neighbor?: ?User,
+     *   neighbor?: (
+     *    User
+     *   |NestedUser
+     *   |string
+     *   |int
+     * )|null,
      * } $values
      */
     public function __construct(

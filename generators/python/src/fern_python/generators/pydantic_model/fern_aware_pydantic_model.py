@@ -99,10 +99,13 @@ class FernAwarePydanticModel:
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
+            coerce_numbers_to_str=custom_config.coerce_numbers_to_str,
+            positional_single_property_constructors=custom_config.positional_single_property_constructors,
         )
 
         self._force_update_forward_refs = force_update_forward_refs
         self._forward_referenced_models: set[ir_types.TypeId] = set()
+        self._self_referential_union_member_dependencies: set[ir_types.TypeId] = set()
 
     def to_reference(self) -> LocalClassReference:
         return self._pydantic_model.to_reference()
@@ -146,8 +149,32 @@ class FernAwarePydanticModel:
             # that we must call update_forward_refs on the union utils class itself, but we'll cross that bridge when we get there
             return
 
-        # Get self-referencing dependencies of the type you are trying to add
-        # And add them as ghost references at the bottom of the file
+        # Get the type id we're checking cycles against (either this model's type or the original type for union members)
+        type_id_to_reference = self._type_id_for_forward_ref()
+
+        # Get all types that are in a mutual reference cycle with the field's type
+        # This handles complex cycles like A -> Union1 -> Union2 -> B -> A
+        types_in_cycle = self._context.get_types_in_cycle_with(type_id)
+        for dependency in types_in_cycle:
+            # Skip if this is the current model's own type
+            if type_id_to_reference is not None and dependency == type_id_to_reference:
+                continue
+            # Skip if we've already added this as a forward reference
+            if dependency in self._forward_referenced_models:
+                continue
+
+            import dataclasses
+
+            # Force must_import_after_current_declaration=True so imports appear at bottom
+            # before update_forward_refs call
+            ghost_ref = dataclasses.replace(
+                self.get_class_reference_for_type_id(dependency), must_import_after_current_declaration=True
+            )
+            self._pydantic_model.add_ghost_reference(ghost_ref)
+            self._self_referential_union_member_dependencies.add(dependency)
+
+        # Also keep the existing logic for non-union self-referencing dependencies
+        # (types that directly reference themselves)
         self_referencing_dependencies_from_non_union_types = (
             self._context.get_non_union_self_referencing_dependencies_from_types()[type_id]
         )
@@ -155,13 +182,6 @@ class FernAwarePydanticModel:
             if (
                 not self._type_name or self._type_name.type_id != dependency
             ) and dependency not in self._forward_referenced_models:
-                self.add_ghost_reference(dependency)
-
-        self_referencing_dependencies_from_union_types = (
-            self._context.get_union_self_referencing_members_from_types()
-        )[type_id]
-        for dependency in self_referencing_dependencies_from_union_types:
-            if dependency not in self._forward_referenced_models:
                 self.add_ghost_reference(dependency)
 
     def add_private_instance_field_unsafe(
@@ -292,7 +312,20 @@ class FernAwarePydanticModel:
             ):
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        if self._model_contains_forward_refs or self._force_update_forward_refs:
+        # Handle self-referential union member dependencies specially
+        if self._self_referential_union_member_dependencies:
+            import dataclasses
+
+            # Force must_import_after_current_declaration=True to ensure these imports
+            # go into _import_to_statements_that_must_precede_it and appear at bottom
+            ghost_references = [
+                dataclasses.replace(
+                    self.get_class_reference_for_type_id(dependency_type_id), must_import_after_current_declaration=True
+                )
+                for dependency_type_id in self._self_referential_union_member_dependencies
+            ]
+            self._pydantic_model.update_forward_refs_with_ghost_references(ghost_references)
+        elif self._model_contains_forward_refs or self._force_update_forward_refs:
             self._pydantic_model.update_forward_refs()
 
         # Acknowledge forward refs for extended models as well

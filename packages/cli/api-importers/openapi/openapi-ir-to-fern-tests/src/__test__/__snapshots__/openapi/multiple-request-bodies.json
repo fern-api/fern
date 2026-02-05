@@ -6,11 +6,10 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "service": {
-          "auth": false,
+          "auth": true,
           "base-path": "",
           "endpoints": {
             "uploadJsonDocument": {
-              "auth": undefined,
               "display-name": "Upload document metadata (JSON) or document file",
               "docs": undefined,
               "examples": [
@@ -57,7 +56,6 @@
               },
             },
             "uploadPdfDocument": {
-              "auth": undefined,
               "display-name": "Upload document metadata (JSON) or document file",
               "docs": undefined,
               "method": "POST",
@@ -145,7 +143,7 @@
     source:
       openapi: ../openapi.yml
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     uploadJsonDocument:

@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "formDataSupport": "Node16"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

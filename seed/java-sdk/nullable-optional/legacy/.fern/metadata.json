@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "use-nullable-annotation": false
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

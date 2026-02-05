@@ -94,6 +94,7 @@ async function visitNavigationItem({
         apiName: noop,
         audiences: noop,
         displayErrors: noop,
+        tagDescriptionPages: noop,
         snippets: noop,
         summary: noop,
         title: noop,

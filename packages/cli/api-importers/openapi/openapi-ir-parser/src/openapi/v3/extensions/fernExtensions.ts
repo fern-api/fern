@@ -490,7 +490,17 @@ export const FernOpenAPIExtension = {
      *    - $ref: components/schemas/Triangle
      *    - $ref: components/schemas/Square
      */
-    IS_DISCRIMINATED: "x-fern-discriminated"
+    IS_DISCRIMINATED: "x-fern-discriminated",
+
+    /**
+     * Used to control whether an endpoint is shown in the API explorer.
+     *
+     * paths:
+     *  /path/to/my/endpoint:
+     *    get:
+     *      x-fern-explorer-enabled: true  # or false
+     */
+    EXPLORER_ENABLED: "x-fern-explorer-enabled"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

@@ -160,7 +160,7 @@ class ServiceClient:
         limit: int,
         offset: int,
         query: typing.Optional[str] = OMIT,
-        filters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        filters: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
         """
@@ -177,7 +177,7 @@ class ServiceClient:
         query : typing.Optional[str]
             Search query text
 
-        filters : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        filters : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -345,8 +345,8 @@ class ServiceClient:
         password: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         phone_verified: typing.Optional[bool] = OMIT,
-        user_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        app_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        user_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        app_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -368,9 +368,9 @@ class ServiceClient:
 
         phone_verified : typing.Optional[bool]
 
-        user_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        user_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
-        app_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        app_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -422,8 +422,8 @@ class ServiceClient:
         username: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         phone_verified: typing.Optional[bool] = OMIT,
-        user_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        app_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        user_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        app_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         password: typing.Optional[str] = OMIT,
         blocked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -445,9 +445,9 @@ class ServiceClient:
 
         phone_verified : typing.Optional[bool]
 
-        user_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        user_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
-        app_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        app_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         password : typing.Optional[str]
 
@@ -902,7 +902,7 @@ class AsyncServiceClient:
         limit: int,
         offset: int,
         query: typing.Optional[str] = OMIT,
-        filters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        filters: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
         """
@@ -919,7 +919,7 @@ class AsyncServiceClient:
         query : typing.Optional[str]
             Search query text
 
-        filters : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        filters : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1111,8 +1111,8 @@ class AsyncServiceClient:
         password: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         phone_verified: typing.Optional[bool] = OMIT,
-        user_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        app_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        user_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        app_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -1134,9 +1134,9 @@ class AsyncServiceClient:
 
         phone_verified : typing.Optional[bool]
 
-        user_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        user_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
-        app_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        app_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1196,8 +1196,8 @@ class AsyncServiceClient:
         username: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         phone_verified: typing.Optional[bool] = OMIT,
-        user_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        app_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        user_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        app_metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         password: typing.Optional[str] = OMIT,
         blocked: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1219,9 +1219,9 @@ class AsyncServiceClient:
 
         phone_verified : typing.Optional[bool]
 
-        user_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        user_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
-        app_metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        app_metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         password : typing.Optional[str]
 

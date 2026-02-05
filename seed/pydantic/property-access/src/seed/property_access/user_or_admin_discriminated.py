@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .admin import Admin
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .foo import Foo
@@ -62,6 +63,7 @@ class UserOrAdminDiscriminated_Empty(Base):
             extra = pydantic.Extra.allow
 
 
-UserOrAdminDiscriminated = typing.Union[
-    UserOrAdminDiscriminated_User, UserOrAdminDiscriminated_Admin, UserOrAdminDiscriminated_Empty
+UserOrAdminDiscriminated = typing_extensions.Annotated[
+    typing.Union[UserOrAdminDiscriminated_User, UserOrAdminDiscriminated_Admin, UserOrAdminDiscriminated_Empty],
+    pydantic.Field(discriminator="type"),
 ]

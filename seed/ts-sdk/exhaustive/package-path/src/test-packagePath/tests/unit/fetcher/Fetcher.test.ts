@@ -34,7 +34,7 @@ describe("Test fetcherImpl", () => {
             "https://httpbin.org/post",
             expect.objectContaining({
                 method: "POST",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
                 body: JSON.stringify({ data: "test" }),
             }),
         );
@@ -66,7 +66,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "POST",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
                 body: expect.any(fs.ReadStream),
             }),
         );
@@ -102,7 +102,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -113,11 +113,12 @@ describe("Test fetcherImpl", () => {
             expect(typeof body.stream).toBe("function");
             const stream = body.stream();
             expect(stream).toBeInstanceOf(ReadableStream);
-            const reader = stream.getReader();
+            const readableStream = stream as ReadableStream;
+            const reader = readableStream.getReader();
             const { value } = await reader.read();
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(value);
-            expect(streamContent).toBe("This is a test file!\n");
+            expect(streamContent.trim()).toBe("This is a test file!");
             expect(body.bodyUsed).toBe(true);
         }
     });
@@ -148,7 +149,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -163,7 +164,7 @@ describe("Test fetcherImpl", () => {
             const { value } = await reader.read();
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(value);
-            expect(streamContent).toBe("This is a test file!\n");
+            expect(streamContent.trim()).toBe("This is a test file!");
             expect(body.bodyUsed).toBe(true);
         }
     });
@@ -194,7 +195,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -207,7 +208,7 @@ describe("Test fetcherImpl", () => {
             expect(arrayBuffer).toBeInstanceOf(ArrayBuffer);
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(new Uint8Array(arrayBuffer));
-            expect(streamContent).toBe("This is a test file!\n");
+            expect(streamContent.trim()).toBe("This is a test file!");
             expect(body.bodyUsed).toBe(true);
         }
     });
@@ -238,7 +239,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -254,7 +255,7 @@ describe("Test fetcherImpl", () => {
             expect(bytes).toBeInstanceOf(Uint8Array);
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(bytes);
-            expect(streamContent).toBe("This is a test file!\n");
+            expect(streamContent.trim()).toBe("This is a test file!");
             expect(body.bodyUsed).toBe(true);
         }
     });

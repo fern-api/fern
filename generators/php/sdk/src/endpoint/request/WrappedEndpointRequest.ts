@@ -278,16 +278,26 @@ export class WrappedEndpointRequest extends EndpointRequest {
         });
         if (this.context.isDateTime(reference)) {
             return php.codeblock((writer) => {
-                writer.write(`${parameter}->format(`);
-                writer.writeNode(this.context.getDateTimeFormat());
-                writer.write(")");
+                writer.writeNode(
+                    php.invokeMethod({
+                        on: this.context.getJsonSerializerClassReference(),
+                        method: "serializeDateTime",
+                        arguments_: [php.codeblock(parameter)],
+                        static_: true
+                    })
+                );
             });
         }
         if (this.context.isDate(reference)) {
             return php.codeblock((writer) => {
-                writer.write(`${parameter}->format(`);
-                writer.writeNode(this.context.getDateFormat());
-                writer.write(")");
+                writer.writeNode(
+                    php.invokeMethod({
+                        on: this.context.getJsonSerializerClassReference(),
+                        method: "serializeDate",
+                        arguments_: [php.codeblock(parameter)],
+                        static_: true
+                    })
+                );
             });
         }
         const maybeLiteral = this.context.maybeLiteral(reference);

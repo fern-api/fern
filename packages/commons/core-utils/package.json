@@ -34,6 +34,7 @@
     "@types/semver": "^7.5.8",
     "ajv": "^8.17.1",
     "json-schema": "^0.4.0",
+    "jsonpath-plus": "10.3.0",
     "lodash-es": "^4.17.21",
     "semver": "^7.5.8",
     "strip-ansi": "^7.1.0",
@@ -53,6 +54,6 @@
     "@types/whatwg-mimetype": "^3.0.2",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

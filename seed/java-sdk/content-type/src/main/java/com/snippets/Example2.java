@@ -12,9 +12,9 @@ public class Example2 {
                 .namedPatchWithMixed(
                         "id",
                         NamedMixedPatchRequest.builder()
-                                .appId("appId")
                                 .instructions("instructions")
                                 .active(true)
+                                .appId("appId")
                                 .build());
     }
 }

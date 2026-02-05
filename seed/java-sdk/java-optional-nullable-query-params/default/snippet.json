@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "69998269",
+            "id": {
+                "method": "GET",
+                "path": "/api/search",
+                "identifier_override": "endpoint_.search"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;\nimport com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;\nimport com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;\nimport com.seed.javaOptionalNullableQueryParams.types.SortOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient\n            .builder()\n            .build();\n\n        client.search(\n            SearchRequest\n                .builder()\n                .query(\n                    OptionalNullable.of(\"\")\n                )\n                .limit(\n                    OptionalNullable.of(1)\n                )\n                .includeArchived(\n                    OptionalNullable.of(true)\n                )\n                .sortOrder(\n                    OptionalNullable.of(SortOrder.ASC)\n                )\n                .optionalWithoutDefault(\n                    OptionalNullable.of(\"optionalWithoutDefault\")\n                )\n                .regularOptional(\n                    OptionalNullable.of(\"default-value\")\n                )\n                .regularOptionalNoDefault(\n                    OptionalNullable.of(\"regularOptionalNoDefault\")\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;\nimport com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;\nimport com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;\nimport com.seed.javaOptionalNullableQueryParams.types.SortOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient\n            .builder()\n            .build();\n\n        client.search(\n            SearchRequest\n                .builder()\n                .query(\n                    OptionalNullable.of(\"\")\n                )\n                .limit(\n                    OptionalNullable.of(1)\n                )\n                .includeArchived(\n                    OptionalNullable.of(true)\n                )\n                .sortOrder(\n                    OptionalNullable.of(SortOrder.ASC)\n                )\n                .optionalWithoutDefault(\n                    OptionalNullable.of(\"optionalWithoutDefault\")\n                )\n                .regularOptional(\n                    OptionalNullable.of(\"default-value\")\n                )\n                .regularOptionalNoDefault(\n                    OptionalNullable.of(\"regularOptionalNoDefault\")\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

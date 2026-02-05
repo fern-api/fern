@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">GetAsync</a>(id) -> object</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;object&gt;</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Bigunion.GetAsync("id");
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateAsync</a>(object { ... }) -> bool</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateAsync</a>(object { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable<object> { ... }) -> Dictionary<string, bool></code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable&lt;object&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, bool&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ await client.Bigunion.UpdateManyAsync(
 </details>
 
 ## Union
-<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> object</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;object&gt;</code></summary>
 <dl>
 <dd>
 
@@ -167,7 +167,7 @@ await client.Union.GetAsync("id");
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">UpdateAsync</a>(object { ... }) -> bool</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">UpdateAsync</a>(object { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 

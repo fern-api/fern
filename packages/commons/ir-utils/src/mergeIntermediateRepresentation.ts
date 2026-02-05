@@ -78,7 +78,8 @@ export function mergeIntermediateRepresentation(
         dynamic: ir1.dynamic ?? ir2.dynamic,
         sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig,
         audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])],
-        generationMetadata: ir1.generationMetadata ?? ir2.generationMetadata
+        generationMetadata: ir1.generationMetadata ?? ir2.generationMetadata,
+        apiPlayground: ir1.apiPlayground ?? ir2.apiPlayground
     };
 }
 
@@ -226,7 +227,10 @@ function mergeEnvironments(
                                 deconflictedEnvironments2.environments.map((env) => [env.id, env.url])
                             )
                         },
-                        docs: undefined
+                        docs: undefined,
+                        defaultUrls: undefined,
+                        urlTemplates: undefined,
+                        urlVariables: undefined
                     }))
                 })
             },

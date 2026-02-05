@@ -1055,9 +1055,9 @@ public class MultipartFormTests
                 .Value?.Trim('"') ?? throw new global::System.Exception("Boundary not found");
     }
 
-    private static MultipartFormRequest CreateMultipartFormRequest()
+    private static SeedResponseProperty.Core.MultipartFormRequest CreateMultipartFormRequest()
     {
-        return new MultipartFormRequest
+        return new SeedResponseProperty.Core.MultipartFormRequest
         {
             BaseUrl = "https://localhost",
             Method = HttpMethod.Post,

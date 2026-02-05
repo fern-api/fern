@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -81,12 +80,19 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_patch(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.patch)
+        type_hints = typing.get_type_hints(cls.patch)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.patch, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -103,14 +109,10 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.patch.__globals__)
-
         router.patch(
             path="/",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.patch.__doc__,
             **get_route_args(cls.patch, default_tag="service"),
         )(wrapper)
@@ -118,14 +120,23 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_patch_complex(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.patch_complex)
+        type_hints = typing.get_type_hints(cls.patch_complex)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.patch_complex, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -142,14 +153,10 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.patch_complex.__globals__)
-
         router.patch(
             path="/complex/{id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.patch_complex.__doc__,
             **get_route_args(cls.patch_complex, default_tag="service"),
         )(wrapper)
@@ -157,14 +164,23 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_named_patch_with_mixed(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.named_patch_with_mixed)
+        type_hints = typing.get_type_hints(cls.named_patch_with_mixed)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.named_patch_with_mixed, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -181,14 +197,10 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.named_patch_with_mixed.__globals__)
-
         router.patch(
             path="/named-mixed/{id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.named_patch_with_mixed.__doc__,
             **get_route_args(cls.named_patch_with_mixed, default_tag="service"),
         )(wrapper)
@@ -196,12 +208,19 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_optional_merge_patch_test(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.optional_merge_patch_test)
+        type_hints = typing.get_type_hints(cls.optional_merge_patch_test)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.optional_merge_patch_test, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -218,14 +237,10 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.optional_merge_patch_test.__globals__)
-
         router.patch(
             path="/optional-merge-patch-test",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.optional_merge_patch_test.__doc__,
             **get_route_args(cls.optional_merge_patch_test, default_tag="service"),
         )(wrapper)
@@ -233,14 +248,23 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_regular_patch(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.regular_patch)
+        type_hints = typing.get_type_hints(cls.regular_patch)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.regular_patch, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -257,14 +281,10 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.regular_patch.__globals__)
-
         router.patch(
             path="/regular/{id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.regular_patch.__doc__,
             **get_route_args(cls.regular_patch, default_tag="service"),
         )(wrapper)

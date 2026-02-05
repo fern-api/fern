@@ -40,7 +40,7 @@ export const Error = {
     ): _Result => {
         switch (value.errorName) {
             default:
-                return visitor._other(value as any);
+                return visitor._other(value.content);
         }
     },
 } as const;

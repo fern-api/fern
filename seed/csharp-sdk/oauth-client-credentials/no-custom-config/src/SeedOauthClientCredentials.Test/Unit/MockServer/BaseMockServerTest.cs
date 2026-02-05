@@ -17,16 +17,6 @@ public class BaseMockServerTest
 
     private void MockOAuthEndpoint()
     {
-        const string requestJson_0 = """
-            {
-              "client_id": "CLIENT_ID",
-              "client_secret": "CLIENT_SECRET",
-              "audience": "https://api.example.com",
-              "grant_type": "client_credentials",
-              "scope": "scope"
-            }
-            """;
-
         const string mockResponse_0 = """
             {
               "access_token": "access_token",
@@ -40,8 +30,8 @@ public class BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson_0)
             )
             .RespondWith(
                 WireMock
@@ -49,15 +39,6 @@ public class BaseMockServerTest
                     .WithStatusCode(200)
                     .WithBody(mockResponse_0)
             );
-        const string requestJson_1 = """
-            {
-              "client_id": "CLIENT_ID",
-              "client_secret": "CLIENT_SECRET",
-              "audience": "https://api.example.com",
-              "grant_type": "client_credentials",
-              "scope": "read:users"
-            }
-            """;
 
         const string mockResponse_1 = """
             {
@@ -72,8 +53,8 @@ public class BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson_1)
             )
             .RespondWith(
                 WireMock
@@ -93,8 +74,8 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedOauthClientCredentialsClient(
-            "CLIENT_ID",
-            "CLIENT_SECRET",
+            "client_id",
+            "client_secret",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
         MockOAuthEndpoint();

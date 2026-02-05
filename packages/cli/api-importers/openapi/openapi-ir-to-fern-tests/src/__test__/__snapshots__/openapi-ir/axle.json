@@ -293,7 +293,6 @@
       "servers": [],
       "description": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/ignition",
       "examples": [
@@ -580,7 +579,6 @@
       "servers": [],
       "description": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.\n\nAuth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/token/exchange",
       "examples": [
@@ -727,7 +725,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -840,7 +838,6 @@
       "servers": [],
       "description": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/accounts/{id}",
       "examples": [
@@ -857,18 +854,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "x-client-id",
@@ -1035,7 +1021,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1148,7 +1134,6 @@
       "servers": [],
       "description": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/policies/{id}",
       "examples": [
@@ -1165,18 +1150,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "x-client-id",
@@ -1358,11 +1332,8 @@
                               "type": "primitive"
                             },
                             "type": {
-                              "value": {
-                                "value": "vehicle",
-                                "type": "string"
-                              },
-                              "type": "literal"
+                              "value": "vehicle",
+                              "type": "enum"
                             },
                             "data": {
                               "properties": {
@@ -1692,7 +1663,6 @@
       "servers": [],
       "description": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/carriers/{id}",
       "examples": [
@@ -1968,7 +1938,6 @@
       "servers": [],
       "description": "The Get Carriers method returns an array of Carrier objects.",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/carriers",
       "examples": [
@@ -2244,7 +2213,6 @@
         "allOfPropertyConflicts": [],
         "description": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
         "generatedName": "Account",
-        "nameOverride": "Account",
         "title": "Account",
         "groupName": [
           "Accounts"
@@ -2531,7 +2499,6 @@
         "allOfPropertyConflicts": [],
         "description": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
         "generatedName": "Policy",
-        "nameOverride": "Policy",
         "title": "Policy",
         "groupName": [
           "Accounts"
@@ -2663,7 +2630,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Address",
-        "nameOverride": "Address",
         "title": "Address",
         "groupName": [],
         "additionalProperties": false,
@@ -2785,7 +2751,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Carrier",
-        "nameOverride": "Carrier",
         "title": "Carrier",
         "groupName": [],
         "additionalProperties": false,
@@ -2948,7 +2913,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Coverage",
-        "nameOverride": "Coverage",
         "title": "Coverage",
         "groupName": [],
         "additionalProperties": false,
@@ -2980,13 +2944,20 @@
             "generatedName": "propertyType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "vehicle",
-                "type": "string"
-              },
               "generatedName": "PropertyType",
+              "values": [
+                {
+                  "generatedName": "vehicle",
+                  "value": "vehicle",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -3010,7 +2981,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Property",
-        "nameOverride": "Property",
         "title": "Property",
         "groupName": [],
         "additionalProperties": false,
@@ -3101,7 +3071,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Vehicle",
-        "nameOverride": "Vehicle",
         "title": "Vehicle",
         "groupName": [],
         "additionalProperties": false,
@@ -3278,7 +3247,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Insured",
-        "nameOverride": "Insured",
         "title": "Insured",
         "groupName": [],
         "additionalProperties": false,
@@ -3500,7 +3468,6 @@
         "allOfPropertyConflicts": [],
         "description": "User to attach to Ignition session. If user is set, unique `id` must be provided.",
         "generatedName": "User",
-        "nameOverride": "User",
         "title": "User",
         "groupName": [],
         "additionalProperties": false,
@@ -3516,7 +3483,6 @@
           "type": "boolean"
         },
         "generatedName": "Success",
-        "nameOverride": "Success",
         "title": "Success",
         "groupName": [],
         "type": "primitive"
@@ -3569,7 +3535,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Error",
-        "nameOverride": "Error",
         "title": "Error",
         "groupName": [],
         "additionalProperties": false,

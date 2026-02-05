@@ -13,7 +13,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\ListResourcesRequest;
-use Seed\Core\Types\Constant;
+use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Json\JsonDecoder;
 
 class ServiceClient
@@ -25,7 +25,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -124,7 +124,7 @@ class ServiceClient
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['page_limit'] = $request->pageLimit;
-        $query['beforeDate'] = $request->beforeDate->format(Constant::DateFormat);
+        $query['beforeDate'] = JsonSerializer::serializeDate($request->beforeDate);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

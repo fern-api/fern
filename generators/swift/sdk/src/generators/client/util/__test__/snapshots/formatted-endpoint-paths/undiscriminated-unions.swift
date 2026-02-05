@@ -5,3 +5,4 @@
 "/call"
 "/duplicate"
 "/nested"
+"/camel-case"

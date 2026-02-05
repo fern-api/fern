@@ -27,7 +27,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -60,24 +60,12 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/list",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "pageNumber",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -171,7 +159,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -191,7 +179,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -224,34 +212,12 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/list-with-step",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "pageNumber",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {

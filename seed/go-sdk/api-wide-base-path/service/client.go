@@ -35,16 +35,16 @@ func (c *Client) Post(
 	ctx context.Context,
 	pathParam string,
 	serviceParam string,
-	resourceParam string,
 	endpointParam int,
+	resourceParam string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Post(
 		ctx,
 		pathParam,
 		serviceParam,
-		resourceParam,
 		endpointParam,
+		resourceParam,
 		opts...,
 	)
 	if err != nil {

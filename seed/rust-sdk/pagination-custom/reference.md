@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames_custom</a>(starting_after: Option<Option<String>>) -> Result<UsernameCursor, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames_custom</a>(starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

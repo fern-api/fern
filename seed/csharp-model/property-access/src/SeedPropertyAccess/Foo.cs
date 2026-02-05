@@ -16,7 +16,7 @@ public record Foo : IJsonOnDeserialized
 
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("read")]
-    public required string Read { get; set; }
+    public string Read { get; set; }
 
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("write")]

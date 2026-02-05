@@ -54,7 +54,8 @@ export class LocalTestRunner extends TestRunner {
             readme,
             shouldGenerateDynamicSnippetTests,
             inspect = false,
-            license
+            license,
+            smartCasing
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -74,7 +75,8 @@ export class LocalTestRunner extends TestRunner {
                     irVersion,
                     publishMetadata,
                     readme,
-                    license
+                    license,
+                    smartCasing
                 })
             ]
         };
@@ -90,10 +92,12 @@ export class LocalTestRunner extends TestRunner {
                 outputVersionOverride: outputVersion,
                 shouldGenerateDynamicSnippetTests,
                 skipUnstableDynamicSnippetTests: true,
-                inspect
+                inspect,
+                ai: undefined
             },
             commands,
-            this.generator.workspaceConfig.test.local?.workingDirectory
+            this.generator.workspaceConfig.test.local?.workingDirectory,
+            this.generator.workspaceConfig.test.local?.env
         );
     }
 

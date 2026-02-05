@@ -1,5 +1,6 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { readFile } from "fs/promises";
 import path from "path";
 
@@ -44,9 +45,25 @@ export class PythonProject extends AbstractProject<AbstractPythonGeneratorContex
         );
 
         await this.createRawFiles();
-        // await loggingExeca(undefined, "ruff", ["format", ".", "--no-cache"], {
-        //     cwd: this.absolutePathToOutputDirectory
-        // });
+        await this.runRuffLinting();
+    }
+
+    private async runRuffLinting(): Promise<void> {
+        if (this.sourceFiles.length === 0) {
+            return;
+        }
+
+        this.context.logger.debug("Running ruff check --fix on generated files...");
+        await loggingExeca(this.context.logger, "ruff", ["check", "--fix", "--no-cache", "--ignore", "E741"], {
+            doNotPipeOutput: true,
+            cwd: this.absolutePathToOutputDirectory
+        });
+
+        this.context.logger.debug("Running ruff format on generated files...");
+        await loggingExeca(this.context.logger, "ruff", ["format", "--no-cache"], {
+            doNotPipeOutput: true,
+            cwd: this.absolutePathToOutputDirectory
+        });
     }
 }
 

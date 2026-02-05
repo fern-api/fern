@@ -2,13 +2,14 @@ using SeedPlainText.Core;
 
 namespace SeedPlainText;
 
-public partial class SeedPlainTextClient
+public partial class SeedPlainTextClient : ISeedPlainTextClient
 {
     private readonly RawClient _client;
 
     public SeedPlainTextClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedPlainTextClient
                 { "User-Agent", "Fernplain-text/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedPlainTextClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

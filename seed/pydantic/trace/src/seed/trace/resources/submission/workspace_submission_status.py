@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .error_info import ErrorInfo
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
@@ -35,7 +37,9 @@ class WorkspaceSubmissionStatus_Running(UniversalBaseModel):
 
 class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+    exception_v_2: typing_extensions.Annotated[
+        typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2"), pydantic.Field(alias="exceptionV2")
+    ] = None
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
@@ -49,7 +53,9 @@ class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
 
 class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+    exception_v_2: typing_extensions.Annotated[
+        typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2"), pydantic.Field(alias="exceptionV2")
+    ] = None
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
@@ -61,10 +67,13 @@ class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-WorkspaceSubmissionStatus = typing.Union[
-    WorkspaceSubmissionStatus_Stopped,
-    WorkspaceSubmissionStatus_Errored,
-    WorkspaceSubmissionStatus_Running,
-    WorkspaceSubmissionStatus_Ran,
-    WorkspaceSubmissionStatus_Traced,
+WorkspaceSubmissionStatus = typing_extensions.Annotated[
+    typing.Union[
+        WorkspaceSubmissionStatus_Stopped,
+        WorkspaceSubmissionStatus_Errored,
+        WorkspaceSubmissionStatus_Running,
+        WorkspaceSubmissionStatus_Ran,
+        WorkspaceSubmissionStatus_Traced,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

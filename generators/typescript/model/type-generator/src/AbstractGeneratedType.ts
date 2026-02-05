@@ -73,7 +73,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
 
     protected getDocs({ context, opts }: AbstractGeneratedType.getDocs.Args<Context>): string | undefined {
         const groups: string[] = [];
-        if (this.docs != null) {
+        if (this.docs) {
             groups.push(this.docs);
         }
         for (const example of this.examples) {

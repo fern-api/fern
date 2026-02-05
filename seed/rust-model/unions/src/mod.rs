@@ -1,3 +1,13 @@
+//! Request and response types for the Unions
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 1 types for API operations
+//! - **Model Types**: 58 types for data representation
+
 pub mod bigunion_big_union;
 pub mod bigunion_normal_sweet;
 pub mod bigunion_thankful_factor;
@@ -29,6 +39,8 @@ pub mod bigunion_potable_bad;
 pub mod bigunion_triangular_repair;
 pub mod bigunion_gaseous_road;
 pub mod types_union;
+pub mod types_union_with_optional_reference;
+pub mod types_union_with_nullable_reference;
 pub mod types_union_with_discriminant;
 pub mod types_union_with_primitive;
 pub mod types_union_with_duplicate_primitive;
@@ -42,6 +54,9 @@ pub mod types_union_with_optional_time;
 pub mod types_union_with_single_element;
 pub mod types_union_with_duplicate_types;
 pub mod types_union_with_sub_types;
+pub mod types_union_with_duplicative_discriminants;
+pub mod types_first_item_type;
+pub mod types_second_item_type;
 pub mod types_foo;
 pub mod types_foo_extended;
 pub mod types_bar;
@@ -84,6 +99,8 @@ pub use bigunion_potable_bad::PotableBad;
 pub use bigunion_triangular_repair::TriangularRepair;
 pub use bigunion_gaseous_road::GaseousRoad;
 pub use types_union::Union;
+pub use types_union_with_optional_reference::UnionWithOptionalReference;
+pub use types_union_with_nullable_reference::UnionWithNullableReference;
 pub use types_union_with_discriminant::UnionWithDiscriminant;
 pub use types_union_with_primitive::UnionWithPrimitive;
 pub use types_union_with_duplicate_primitive::UnionWithDuplicatePrimitive;
@@ -97,6 +114,9 @@ pub use types_union_with_optional_time::UnionWithOptionalTime;
 pub use types_union_with_single_element::UnionWithSingleElement;
 pub use types_union_with_duplicate_types::UnionWithDuplicateTypes;
 pub use types_union_with_sub_types::UnionWithSubTypes;
+pub use types_union_with_duplicative_discriminants::UnionWithDuplicativeDiscriminants;
+pub use types_first_item_type::FirstItemType;
+pub use types_second_item_type::SecondItemType;
 pub use types_foo::Foo;
 pub use types_foo_extended::FooExtended;
 pub use types_bar::Bar;

@@ -155,12 +155,12 @@ public record Shape
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Shape>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(Shape).IsAssignableFrom(typeToConvert);
 
         public override Shape Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

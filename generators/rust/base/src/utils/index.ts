@@ -1,6 +1,8 @@
 import { camelCase, snakeCase } from "lodash-es";
 import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
 
+export { RustCycleDetector } from "./cycleDetector";
+
 export function convertToSnakeCase(str: string): string {
     return snakeCase(str);
 }
@@ -21,6 +23,10 @@ export function convertPascalToSnakeCase(pascalCase: string): string {
 }
 
 export function escapeRustKeyword(name: string): string {
+    // Handle identifiers starting with numbers by prefixing with underscore
+    if (/^[0-9]/.test(name)) {
+        return `_${name}`;
+    }
     return RUST_KEYWORDS.has(name) ? `r#${name}` : name;
 }
 

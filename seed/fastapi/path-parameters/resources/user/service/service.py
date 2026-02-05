@@ -41,6 +41,13 @@ class AbstractUserService(AbstractFernService):
         """
         ...
 
+    @abc.abstractmethod
+    def get_user_specifics(self, *, user_id: str, version: int, thought: str) -> User:
+        """
+        Test endpoint with path parameters listed in different order than found in path
+        """
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -53,16 +60,24 @@ class AbstractUserService(AbstractFernService):
         cls.__init_update_user(router=router)
         cls.__init_search_users(router=router)
         cls.__init_get_user_metadata(router=router)
+        cls.__init_get_user_specifics(router=router)
 
     @classmethod
     def __init_get_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_user)
+        type_hints = typing.get_type_hints(cls.get_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -79,13 +94,9 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_user.__globals__)
-
         router.get(
             path="/{tenant_id}/user/{user_id}",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.get_user.__doc__,
             **get_route_args(cls.get_user, default_tag="user"),
         )(wrapper)
@@ -93,12 +104,19 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_create_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_user)
+        type_hints = typing.get_type_hints(cls.create_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -115,13 +133,9 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_user.__globals__)
-
         router.post(
             path="/{tenant_id}/user/",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.create_user.__doc__,
             **get_route_args(cls.create_user, default_tag="user"),
         )(wrapper)
@@ -129,14 +143,23 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_update_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_user)
+        type_hints = typing.get_type_hints(cls.update_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -153,13 +176,9 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_user.__globals__)
-
         router.patch(
             path="/{tenant_id}/user/{user_id}",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.update_user.__doc__,
             **get_route_args(cls.update_user, default_tag="user"),
         )(wrapper)
@@ -167,14 +186,23 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_search_users(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.search_users)
+        type_hints = typing.get_type_hints(cls.search_users)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             elif parameter_name == "limit":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.search_users, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -191,13 +219,9 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.search_users.__globals__)
-
         router.get(
             path="/{tenant_id}/user/{user_id}/search",
-            response_model=typing.Sequence[User],
+            response_model=None,
             description=AbstractUserService.search_users.__doc__,
             **get_route_args(cls.search_users, default_tag="user"),
         )(wrapper)
@@ -205,14 +229,23 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_get_user_metadata(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_user_metadata)
+        type_hints = typing.get_type_hints(cls.get_user_metadata)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             elif parameter_name == "version":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_user_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -229,13 +262,56 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_user_metadata.__globals__)
-
         router.get(
             path="/{tenant_id}/user/{user_id}/metadata/v{version}",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.get_user_metadata.__doc__,
             **get_route_args(cls.get_user_metadata, default_tag="user"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_user_specifics(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_user_specifics)
+        type_hints = typing.get_type_hints(cls.get_user_specifics)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "user_id":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
+            elif parameter_name == "version":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
+            elif parameter_name == "thought":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_user_specifics, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_user_specifics)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> User:
+            try:
+                return cls.get_user_specifics(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_user_specifics' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.get(
+            path="/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
+            response_model=None,
+            description=AbstractUserService.get_user_specifics.__doc__,
+            **get_route_args(cls.get_user_specifics, default_tag="user"),
         )(wrapper)

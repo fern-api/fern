@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "timeout_in_seconds": "infinity"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

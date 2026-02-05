@@ -1,4 +1,4 @@
-import { V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { FileUploadRequest, HttpResponse, V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
 
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -60,6 +60,7 @@ export class WebhookConverter extends AbstractOperationConverter {
         }
 
         let payload: WebhookPayload;
+        let fileUploadPayload: FileUploadRequest | undefined;
         if (requestBody.type === "inlinedRequestBody") {
             payload = WebhookPayload.inlinedPayload({
                 name: requestBody.name,
@@ -71,9 +72,26 @@ export class WebhookConverter extends AbstractOperationConverter {
                 payloadType: requestBody.requestBodyType,
                 docs: requestBody.docs
             });
+        } else if (requestBody.type === "fileUpload") {
+            // For multipart form data webhooks, we populate the fileUploadPayload field
+            // and create a placeholder inlined payload
+            fileUploadPayload = {
+                name: requestBody.name,
+                properties: requestBody.properties,
+                docs: requestBody.docs,
+                v2Examples: requestBody.v2Examples,
+                contentType: requestBody.contentType
+            };
+            payload = WebhookPayload.inlinedPayload({
+                name: requestBody.name,
+                extends: [],
+                properties: []
+            });
         } else {
             return undefined;
         }
+
+        const responses = this.convertWebhookResponses();
 
         return {
             audiences:
@@ -89,6 +107,8 @@ export class WebhookConverter extends AbstractOperationConverter {
                 method: httpMethod,
                 headers,
                 payload,
+                fileUploadPayload,
+                responses: responses.length > 0 ? responses : undefined,
                 examples: [],
                 availability: this.context.getAvailability({
                     node: this.operation,
@@ -106,6 +126,46 @@ export class WebhookConverter extends AbstractOperationConverter {
             },
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private convertWebhookResponses(): HttpResponse[] {
+        const responses: HttpResponse[] = [];
+
+        if (this.operation.responses == null) {
+            return responses;
+        }
+
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            // Check for wildcard status codes like 4XX or 5XX
+            const isWildcard = /^\d[Xx]{2}$/.test(statusCode);
+            let statusCodeNum: number;
+
+            if (isWildcard) {
+                // Convert wildcard to base value (e.g., "4XX" -> 400, "5XX" -> 500)
+                // We know statusCode[0] exists because the regex matched
+                statusCodeNum = parseInt(statusCode.charAt(0)) * 100;
+            } else {
+                statusCodeNum = parseInt(statusCode);
+                if (isNaN(statusCodeNum)) {
+                    continue;
+                }
+            }
+
+            const resolvedResponse = this.context.resolveMaybeReference({
+                schemaOrReference: response,
+                breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
+            });
+            const docs = resolvedResponse?.description;
+
+            responses.push({
+                statusCode: statusCodeNum,
+                isWildcardStatusCode: isWildcard ? true : undefined,
+                body: undefined,
+                docs
+            });
+        }
+
+        return responses;
     }
 
     private getWebhookV2ExamplesFromRequestBodyV2Examples(

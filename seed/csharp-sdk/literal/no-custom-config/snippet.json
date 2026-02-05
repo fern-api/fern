@@ -1,0 +1,65 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Headers.SendAsync(\n    new SendLiteralsInHeadersRequest\n    {\n        EndpointVersion = \"02-12-2024\",\n        Async = true,\n        Query = \"What is the weather today\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/inlined",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined.send"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Inlined.SendAsync(\n    new SendLiteralsInlinedRequest\n    {\n        Temperature = 10.1,\n        Prompt = \"You are a helpful assistant\",\n        Context = \"You're super wise\",\n        AliasedContext = \"You're super wise\",\n        MaybeContext = \"You're super wise\",\n        ObjectWithLiteral = new ATopLevelLiteral\n        {\n            NestedLiteral = new ANestedLiteral { MyLiteral = \"How super cool\" },\n        },\n        Stream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/path/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_path.send"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Path.SendAsync(\"123\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/query",
+                "method": "POST",
+                "identifier_override": "endpoint_query.send"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Query.SendAsync(\n    new SendLiteralsInQueryRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        OptionalPrompt = \"You are a helpful assistant\",\n        AliasPrompt = \"You are a helpful assistant\",\n        AliasOptionalPrompt = \"You are a helpful assistant\",\n        Stream = false,\n        OptionalStream = false,\n        AliasStream = false,\n        AliasOptionalStream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/reference",
+                "method": "POST",
+                "identifier_override": "endpoint_reference.send"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Reference.SendAsync(\n    new SendRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        Stream = false,\n        Context = \"You're super wise\",\n        Query = \"What is the weather today\",\n        ContainerObject = new ContainerObject\n        {\n            NestedObjects = new List<NestedObjectWithLiterals>()\n            {\n                new NestedObjectWithLiterals\n                {\n                    Literal1 = \"literal1\",\n                    Literal2 = \"literal2\",\n                    StrProp = \"strProp\",\n                },\n            },\n        },\n    }\n);\n"
+            }
+        }
+    ]
+}

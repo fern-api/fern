@@ -1,0 +1,103 @@
+openapi: 3.1.0
+info:
+  title: Human Examples Preserved Test
+  description: Test that human-generated examples are not overwritten when ai-examples is enabled
+  version: 1.0.0
+paths:
+  /products:
+    post:
+      tags:
+        - products
+      summary: Create a product
+      description: Create a new product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+            example:
+              title: "supersonic flux capacitor Headphones"
+              price: 79.99
+              id: a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d
+              inStock: false
+      responses:
+        "201":
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              example:
+                id: a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d
+                title: "supersonic flux capacitor Headphones"
+                price: 79.99
+                inStock: false
+                createdAt: "2024-01-15T10:30:00Z"
+  /products/{productId}:
+    get:
+      tags:
+        - products
+      summary: Get a product
+      description: Retrieve a product by ID
+      operationId: getProduct
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Product retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+components:
+  schemas:
+    CreateProductRequest:
+      type: object
+      required:
+        - title
+        - price
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Optional client-provided ID
+        title:
+          type: string
+          description: Product title
+        price:
+          type: number
+          format: float
+          description: Product price
+        inStock:
+          type: boolean
+          description: Whether the product is in stock
+    Product:
+      type: object
+      required:
+        - id
+        - title
+        - price
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        price:
+          type: number
+          format: float
+        inStock:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true

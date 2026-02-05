@@ -168,7 +168,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -327,6 +329,8 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -385,6 +389,9 @@
                         }
                     },
                     "url": "https://localhost",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]
@@ -529,6 +536,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_dataservice": {
             "name": {

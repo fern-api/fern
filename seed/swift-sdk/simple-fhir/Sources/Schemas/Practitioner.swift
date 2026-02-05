@@ -3,7 +3,7 @@ import Foundation
 public struct Practitioner: Codable, Hashable, Sendable {
     public let id: String
     public let relatedResources: [ResourceList]
-    public let memo: Memo
+    public let memo: Indirect<Memo>
     public let resourceType: Practitioner
     public let name: String
     /// Additional properties that are not explicitly defined in the schema
@@ -19,7 +19,7 @@ public struct Practitioner: Codable, Hashable, Sendable {
     ) {
         self.id = id
         self.relatedResources = relatedResources
-        self.memo = memo
+        self.memo = Indirect(memo)
         self.resourceType = resourceType
         self.name = name
         self.additionalProperties = additionalProperties
@@ -29,7 +29,7 @@ public struct Practitioner: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.relatedResources = try container.decode([ResourceList].self, forKey: .relatedResources)
-        self.memo = try container.decode(Memo.self, forKey: .memo)
+        self.memo = try container.decode(Indirect<Memo>.self, forKey: .memo)
         self.resourceType = try container.decode(Practitioner.self, forKey: .resourceType)
         self.name = try container.decode(String.self, forKey: .name)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)

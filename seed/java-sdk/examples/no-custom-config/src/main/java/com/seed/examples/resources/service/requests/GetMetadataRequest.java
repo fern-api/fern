@@ -5,6 +5,7 @@ package com.seed.examples.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,7 +48,7 @@ public final class GetMetadataRequest {
         return tag;
     }
 
-    @JsonProperty("X-API-Version")
+    @JsonIgnore
     public String getXApiVersion() {
         return xApiVersion;
     }
@@ -128,7 +129,6 @@ public final class GetMetadataRequest {
         }
 
         @java.lang.Override
-        @JsonSetter("X-API-Version")
         public _FinalStage xApiVersion(@NotNull String xApiVersion) {
             this.xApiVersion = Objects.requireNonNull(xApiVersion, "xApiVersion must not be null");
             return this;

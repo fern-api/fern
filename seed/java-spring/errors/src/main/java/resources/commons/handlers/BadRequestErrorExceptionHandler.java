@@ -14,6 +14,6 @@ import resources.commons.exceptions.BadRequestError;
 public final class BadRequestErrorExceptionHandler {
   @ExceptionHandler(BadRequestError.class)
   ResponseEntity<Object> handle(BadRequestError badRequestError) {
-    return new ResponseEntity<>(badRequestError.getBody(), null, BadRequestError.STATUS_CODE);
+    return ResponseEntity.status(BadRequestError.STATUS_CODE).body(badRequestError.getBody());
   }
 }

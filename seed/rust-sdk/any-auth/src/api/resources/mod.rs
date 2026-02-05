@@ -1,4 +1,11 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Auth**
+//! - **User**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod auth;
 pub mod user;
@@ -13,9 +20,10 @@ impl AnyAuthClient {
         Ok(Self {
             config: config.clone(),
             auth: AuthClient::new(config.clone())?,
-            user: UserClient::new(config.clone())?,
+            user: UserClient::new(config.clone())?
         })
     }
+
 }
 
 pub use auth::AuthClient;

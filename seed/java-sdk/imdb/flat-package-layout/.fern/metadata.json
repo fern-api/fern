@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "package-layout": "flat"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

@@ -1,18 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
-import { CSharpFile, convertExampleTypeReferenceToTypeReference, FileGenerator } from "@fern-api/csharp-base";
-import { ast, is } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ExampleEndpointCall,
-    ExampleResponse,
-    ExampleTypeReference,
-    HttpEndpoint,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
-import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
@@ -23,7 +15,7 @@ export declare namespace TestClass {
     }
 }
 
-export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly classReference: ast.ClassReference;
     private readonly endpointGenerator: HttpEndpointGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
@@ -70,7 +62,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             name: this.classReference.name,
             namespace: this.getTestNamespace(),
             origin: this.classReference.origin,
-            parentClassReference: this.types.BaseMockServerTest
+            parentClassReference: this.Types.BaseMockServerTest
         });
         this.exampleEndpointCalls.forEach((example, index) => {
             let jsonExampleResponse: unknown | undefined = undefined;
@@ -97,7 +89,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             if (isSupportedResponse) {
                 isAsyncTest = true;
             }
-            const methodBody = this.csharp.codeblock((writer) => {
+            const methodBody = this.csharp.codeblock((writer: Writer) => {
                 writer.writeNode(this.mockEndpointGenerator.generateForExample(this.endpoint, example));
 
                 writer.newLine();
@@ -132,7 +124,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     writer.writeNodeStatement(endpointSnippet);
                     writer.writeTextStatement("Assert.That(headers, Is.Not.Null)");
                     writer.write("Assert.That(headers, Is.InstanceOf<");
-                    writer.writeNode(this.extern.System.Net.Http.HttpResponseHeaders);
+                    writer.writeNode(this.System.Net.Http.HttpResponseHeaders);
                     writer.writeTextStatement(">())");
                 } else {
                     if (isSupportedResponse) {
@@ -140,41 +132,16 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         writer.write("var response = ");
                         writer.writeNodeStatement(endpointSnippet);
                         if (responseBodyType === "json") {
-                            const responseType = this.getCsharpTypeFromResponse(example.response);
-                            const deserializeResponseNode = this.csharp.invokeMethod({
-                                on: this.types.JsonUtils,
-                                method: "Deserialize",
-                                generics: [responseType],
-                                arguments_: [this.csharp.codeblock("mockResponse")]
-                            });
-                            const innerType = responseType.unwrapIfOptional();
-                            if (is.Type.oneOf(innerType) || is.Type.oneOfBase(innerType)) {
-                                writer.writeLine(`Assert.That(
-                                response.Value,
-                                Is.EqualTo(`);
-                                writer.writeNode(deserializeResponseNode);
-                                writer.writeLine(".Value).UsingDefaults()");
-                            } else {
-                                if (
-                                    innerType.isCollection ||
-                                    is.Type.object(innerType) ||
-                                    is.Type.reference(innerType) ||
-                                    is.Type.coreReference(innerType)
-                                ) {
-                                    writer.writeLine(`Assert.That(
-                                        response,
-                                        Is.EqualTo(`);
-                                    writer.writeNode(deserializeResponseNode);
-                                    writer.writeLine(").UsingDefaults()");
-                                } else {
-                                    writer.writeLine(`Assert.That(
-                                  response,
-                                  Is.EqualTo(`);
-                                    writer.writeNode(deserializeResponseNode);
-                                    writer.writeLine(")");
-                                }
-                            }
-                            writer.writeTextStatement(")");
+                            writer.writeNodeStatement(
+                                this.csharp.invokeMethod({
+                                    on: this.Types.JsonAssert,
+                                    method: "AreEqual",
+                                    arguments_: [
+                                        this.csharp.codeblock("response"),
+                                        this.csharp.codeblock("mockResponse")
+                                    ]
+                                })
+                            );
                         } else if (responseBodyType === "text") {
                             writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
                         }
@@ -274,59 +241,6 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     : undefined;
             case "unknown":
                 return undefined;
-        }
-    }
-
-    normalizeDatetimes(obj: unknown): unknown {
-        function isValidDateString(datetimeString: string): boolean {
-            const date = new Date(datetimeString);
-            return !isNaN(date.getTime()) && datetimeString.includes("T");
-        }
-
-        if (typeof obj === "string" && isValidDateString(obj)) {
-            return new Date(obj).toISOString();
-        } else if (Array.isArray(obj)) {
-            return obj.map((item) => this.normalizeDatetimes(item));
-        } else if (obj != null && typeof obj === "object") {
-            const result: Record<string, unknown> = {};
-            for (const [key, value] of Object.entries(obj)) {
-                result[key] = this.normalizeDatetimes(value);
-            }
-            return result;
-        }
-
-        return obj;
-    }
-
-    isValidDateString(dateString: string): boolean {
-        const date = new Date(dateString);
-        return !isNaN(date.getTime());
-    }
-
-    getCsharpTypeFromResponse(exampleResponse: ExampleResponse): ast.Type {
-        switch (exampleResponse.type) {
-            case "ok":
-                if (exampleResponse.value.type === "body") {
-                    if (exampleResponse.value.value) {
-                        const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.value.value);
-                        const type = this.context.csharpTypeMapper.convert({
-                            reference: typeReference
-                        });
-                        return type;
-                    }
-                }
-                throw new Error("Internal error; could not convert example response to C# type");
-            case "error":
-                if (exampleResponse.body) {
-                    const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.body);
-                    const type = this.context.csharpTypeMapper.convert({
-                        reference: typeReference
-                    });
-                    return type;
-                }
-                throw new Error("Internal error; could not convert example response to C# type");
-            default:
-                assertNever(exampleResponse);
         }
     }
 }

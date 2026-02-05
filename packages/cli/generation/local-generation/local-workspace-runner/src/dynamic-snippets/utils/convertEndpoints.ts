@@ -16,13 +16,19 @@ export type EndpointLocation = Omit<dynamic.EndpointLocation, "method"> & {
     method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 };
 
-export type Auth = dynamic.Auth.Basic | dynamic.Auth.Bearer | dynamic.Auth.Header | dynamic.Auth.Oauth;
+export type Auth =
+    | dynamic.Auth.Basic
+    | dynamic.Auth.Bearer
+    | dynamic.Auth.Header
+    | dynamic.Auth.Oauth
+    | dynamic.Auth.Inferred;
 
 export type AuthValues =
     | dynamic.AuthValues.Basic
     | dynamic.AuthValues.Bearer
     | dynamic.AuthValues.Header
-    | dynamic.AuthValues.Oauth;
+    | dynamic.AuthValues.Oauth
+    | dynamic.AuthValues.Inferred;
 
 export function convertEndpoints(endpoints: Record<string, dynamic.Endpoint>): Record<string, Endpoint> {
     return Object.fromEntries(
@@ -74,10 +80,7 @@ function convertExampleAuth(auth: dynamic.AuthValues | undefined): AuthValues | 
     if (auth == null) {
         return undefined;
     }
-    if (auth.type === "inferred") {
-        return undefined;
-    }
-
+    // Keep inferred auth - don't strip it out
     return auth as AuthValues;
 }
 
@@ -85,9 +88,6 @@ function convertEndpointAuth(auth: dynamic.Auth | undefined): Auth | undefined {
     if (auth == null) {
         return undefined;
     }
-    if (auth.type === "inferred") {
-        return undefined;
-    }
-
+    // Keep inferred auth - don't strip it out
     return auth as Auth;
 }

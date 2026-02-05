@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-api:
-  specs:
-    - namespace: petsV1
-      openapi: ../openapi.json
-    - namespace: petsV2
-      openapi: ../openapi.json
-    - namespace: petsV2
-      openapi: ../openapi2.json

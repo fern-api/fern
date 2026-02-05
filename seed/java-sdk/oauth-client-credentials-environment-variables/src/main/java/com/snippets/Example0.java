@@ -6,9 +6,7 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.reques
 public class Example0 {
     public static void main(String[] args) {
         SeedOauthClientCredentialsEnvironmentVariablesClient client =
-                SeedOauthClientCredentialsEnvironmentVariablesClient.builder()
-                        .clientId("<clientId>")
-                        .clientSecret("<clientSecret>")
+                SeedOauthClientCredentialsEnvironmentVariablesClient.withCredentials("<clientId>", "<clientSecret>")
                         .url("https://api.fern.com")
                         .build();
 
@@ -16,8 +14,6 @@ public class Example0 {
                 .getTokenWithClientCredentials(GetTokenRequest.builder()
                         .clientId("client_id")
                         .clientSecret("client_secret")
-                        .audience("https://api.example.com")
-                        .grantType("client_credentials")
                         .scope("scope")
                         .build());
     }

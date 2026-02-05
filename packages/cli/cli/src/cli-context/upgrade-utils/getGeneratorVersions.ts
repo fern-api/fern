@@ -1,4 +1,5 @@
 import {
+    addDefaultDockerOrgIfNotPresent,
     generatorsYml,
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
@@ -163,13 +164,17 @@ async function processGeneratorsYml({
                     return;
                 }
 
+                // Normalize the generator filter to add default Docker org prefix if not present
+                const normalizedGeneratorFilter =
+                    generatorFilter != null ? addDefaultDockerOrgIfNotPresent(generatorFilter) : undefined;
+
                 for (const group of generatorsConfiguration.groups) {
                     if (groupFilter != null && group.groupName !== groupFilter) {
                         continue;
                     }
                     // Log version of generator to stdout
                     for (const generator of group.generators) {
-                        if (generatorFilter != null && generator.name !== generatorFilter) {
+                        if (normalizedGeneratorFilter != null && generator.name !== normalizedGeneratorFilter) {
                             continue;
                         }
                         await perGeneratorAction(workspace.workspaceName, group.groupName, generator, context);

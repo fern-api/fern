@@ -187,7 +187,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "date":
-                writer.write(`"${this.internalType.value}"`);
+                this.writeDate({ writer, date: this.internalType });
                 break;
             case "dateTime":
                 this.writeDateTime({ writer, dateTime: this.internalType });
@@ -526,15 +526,46 @@ export class TypeLiteral extends AstNode {
     }
 
     public orderBuilderParameters(parameters: java.BuilderParameter[]): java.BuilderParameter[] {
+        const hasRequiredFields = parameters.some((p) => !p.value.isOptional() && !this.isCollection(p.value));
+
+        if (!hasRequiredFields) {
+            return parameters.sort((a, b) => {
+                const aIsOptional = a.value.isOptional();
+                const bIsOptional = b.value.isOptional();
+
+                if (aIsOptional && !bIsOptional) {
+                    return 1;
+                }
+                if (!aIsOptional && bIsOptional) {
+                    return -1;
+                }
+
+                return 0;
+            });
+        }
+
         return parameters.sort((a, b) => {
-            if (a.value.isOptional() && !b.value.isOptional()) {
+            const aIsNonRequired = this.isNonRequired(a.value);
+            const bIsNonRequired = this.isNonRequired(b.value);
+
+            if (aIsNonRequired && !bIsNonRequired) {
                 return 1;
             }
-            if (!a.value.isOptional() && b.value.isOptional()) {
+            if (!aIsNonRequired && bIsNonRequired) {
                 return -1;
             }
+
             return 0;
         });
+    }
+
+    private isCollection(value: TypeLiteral): boolean {
+        const internalType = value.internalType.type;
+        return internalType === "list" || internalType === "set" || internalType === "map";
+    }
+
+    private isNonRequired(value: TypeLiteral): boolean {
+        return value.isOptional() || this.isCollection(value);
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
@@ -543,6 +574,16 @@ export class TypeLiteral extends AstNode {
             java.instantiateClass({
                 classReference: class_.reference,
                 arguments_: parameters.map((parameter) => parameter.value)
+            })
+        );
+    }
+
+    private writeDate({ writer, date }: { writer: Writer; date: Date }): void {
+        writer.writeNode(
+            java.invokeMethod({
+                on: LocalDateClassReference,
+                method: "parse",
+                arguments_: [TypeLiteral.string(date.value)]
             })
         );
     }
@@ -632,7 +673,9 @@ export class TypeLiteral extends AstNode {
         }
 
         if (values.length === 0) {
-            writer.write(`new ${classReference.name}<`);
+            writer.write("new ");
+            writer.writeNode(classReference);
+            writer.write("<");
             writer.writeNode(iterable.valueType);
             writer.write(">()");
             return;
@@ -778,6 +821,11 @@ export const HashSetClassReference = new ClassReference({
 export const ListClassReference = new ClassReference({
     name: "List",
     packageName: "java.util"
+});
+
+export const LocalDateClassReference = new ClassReference({
+    name: "LocalDate",
+    packageName: "java.time"
 });
 
 export const MapClassReference = new ClassReference({

@@ -104,12 +104,16 @@ public final class GetExecutionSessionStateResponse {
     )
     public Builder states(Map<String, ExecutionSessionState> states) {
       this.states.clear();
-      this.states.putAll(states);
+      if (states != null) {
+        this.states.putAll(states);
+      }
       return this;
     }
 
     public Builder putAllStates(Map<String, ExecutionSessionState> states) {
-      this.states.putAll(states);
+      if (states != null) {
+        this.states.putAll(states);
+      }
       return this;
     }
 
@@ -138,7 +142,9 @@ public final class GetExecutionSessionStateResponse {
     )
     public Builder warmingSessionIds(List<String> warmingSessionIds) {
       this.warmingSessionIds.clear();
-      this.warmingSessionIds.addAll(warmingSessionIds);
+      if (warmingSessionIds != null) {
+        this.warmingSessionIds.addAll(warmingSessionIds);
+      }
       return this;
     }
 
@@ -148,7 +154,9 @@ public final class GetExecutionSessionStateResponse {
     }
 
     public Builder addAllWarmingSessionIds(List<String> warmingSessionIds) {
-      this.warmingSessionIds.addAll(warmingSessionIds);
+      if (warmingSessionIds != null) {
+        this.warmingSessionIds.addAll(warmingSessionIds);
+      }
       return this;
     }
 

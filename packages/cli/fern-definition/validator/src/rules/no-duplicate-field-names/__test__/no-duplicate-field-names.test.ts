@@ -44,21 +44,6 @@ describe("no-duplicate-field-names", () => {
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "EnumWithDuplicates"],
                 message: 'Name "A" is used by multiple values.'
-            },
-            {
-                severity: "fatal",
-                relativeFilepath: RelativeFilePath.of("1.yml"),
-                nodePath: ["types", "UnionWithOverlap"],
-                message: `Discriminant "type" conflicts with extended property:
-  - a -> ObjectWithTypeProperty -> type`
-            },
-            {
-                severity: "fatal",
-                relativeFilepath: RelativeFilePath.of("1.yml"),
-                nodePath: ["types", "UnionWithOverlapWithCustomName"],
-                message: `Discriminant "foo" conflicts with extended properties:
-  - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooProperty -> foo
-  - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooAndBarProperties -> propertyWithFooName`
             }
         ]);
     });

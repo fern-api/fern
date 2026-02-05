@@ -26,19 +26,19 @@ class UnknownClient:
         return self._raw_client
 
     def post(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[typing.Optional[typing.Any]]:
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Any]:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[typing.Optional[typing.Any]]
+        typing.List[typing.Any]
 
         Examples
         --------
@@ -55,19 +55,19 @@ class UnknownClient:
         return _response.data
 
     def post_object(
-        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[typing.Optional[typing.Any]]:
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Any]:
         """
         Parameters
         ----------
-        unknown : typing.Optional[typing.Any]
+        unknown : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[typing.Optional[typing.Any]]
+        typing.List[typing.Any]
 
         Examples
         --------
@@ -100,19 +100,19 @@ class AsyncUnknownClient:
         return self._raw_client
 
     async def post(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[typing.Optional[typing.Any]]:
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Any]:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[typing.Optional[typing.Any]]
+        typing.List[typing.Any]
 
         Examples
         --------
@@ -137,19 +137,19 @@ class AsyncUnknownClient:
         return _response.data
 
     async def post_object(
-        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[typing.Optional[typing.Any]]:
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[typing.Any]:
         """
         Parameters
         ----------
-        unknown : typing.Optional[typing.Any]
+        unknown : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[typing.Optional[typing.Any]]
+        typing.List[typing.Any]
 
         Examples
         --------

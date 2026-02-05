@@ -3,8 +3,9 @@ package example
 import (
     client "github.com/file-upload/fern/client"
     option "github.com/file-upload/fern/option"
-    context "context"
+    fern "github.com/file-upload/fern"
     strings "strings"
+    context "context"
 )
 
 func do() {
@@ -13,10 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Service.JustFile(
-        context.TODO(),
-        strings.NewReader(
+    request := &fern.JustFileRequest{
+        File: strings.NewReader(
             "",
         ),
+    }
+    client.Service.JustFile(
+        context.TODO(),
+        request,
     )
 }

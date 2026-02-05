@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel
 
 
@@ -29,4 +31,6 @@ UnionWithOptionalTime_Date(
     )
 )
 """
-UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime]
+UnionWithOptionalTime = typing_extensions.Annotated[
+    typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime], pydantic.Field(discriminator="type")
+]

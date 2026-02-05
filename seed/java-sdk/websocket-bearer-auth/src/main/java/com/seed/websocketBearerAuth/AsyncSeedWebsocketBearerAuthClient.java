@@ -6,16 +6,24 @@ package com.seed.websocketBearerAuth;
 import com.seed.websocketBearerAuth.core.ClientOptions;
 import com.seed.websocketBearerAuth.core.Suppliers;
 import com.seed.websocketBearerAuth.resources.realtime.AsyncRealtimeClient;
+import com.seed.websocketBearerAuth.resources.realtimenoauth.AsyncRealtimeNoAuthClient;
 import java.util.function.Supplier;
 
 public class AsyncSeedWebsocketBearerAuthClient {
     protected final ClientOptions clientOptions;
 
+    protected final Supplier<AsyncRealtimeNoAuthClient> realtimeNoAuthClient;
+
     protected final Supplier<AsyncRealtimeClient> realtimeClient;
 
     public AsyncSeedWebsocketBearerAuthClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.realtimeNoAuthClient = Suppliers.memoize(() -> new AsyncRealtimeNoAuthClient(clientOptions));
         this.realtimeClient = Suppliers.memoize(() -> new AsyncRealtimeClient(clientOptions));
+    }
+
+    public AsyncRealtimeNoAuthClient realtimeNoAuth() {
+        return this.realtimeNoAuthClient.get();
     }
 
     public AsyncRealtimeClient realtime() {

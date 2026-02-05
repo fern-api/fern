@@ -37,6 +37,6 @@
     "@wasm-fmt/ruff_fmt": "^0.6.1",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

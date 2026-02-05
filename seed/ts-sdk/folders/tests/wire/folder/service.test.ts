@@ -4,10 +4,10 @@ import * as SeedApi from "../../../src/api/index";
 import { SeedApiClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("endpoint", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ environment: server.baseUrl });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
         server.mockEndpoint().get("/service").respondWith().statusCode(200).build();
 
@@ -17,7 +17,7 @@ describe("Service", () => {
 
     test("unknownRequest (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ environment: server.baseUrl });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
 
         server.mockEndpoint().post("/service").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
@@ -30,7 +30,7 @@ describe("Service", () => {
 
     test("unknownRequest (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ environment: server.baseUrl });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = "string";
         server

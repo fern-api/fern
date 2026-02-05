@@ -39,7 +39,7 @@ await client.simple.fooWithoutEndpointError({
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions` 
+**requestOptions:** `SimpleClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -90,7 +90,7 @@ await client.simple.foo({
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions` 
+**requestOptions:** `SimpleClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -141,7 +141,7 @@ await client.simple.fooWithExamples({
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions` 
+**requestOptions:** `SimpleClient.RequestOptions` 
     
 </dd>
 </dl>

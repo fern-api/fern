@@ -287,12 +287,12 @@ public record WorkspaceSubmissionStatus
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<WorkspaceSubmissionStatus>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(WorkspaceSubmissionStatus).IsAssignableFrom(typeToConvert);
 
         public override WorkspaceSubmissionStatus Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

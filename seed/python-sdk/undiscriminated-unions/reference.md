@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -&gt; AsyncHttpResponse[MyUnion]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>()</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>() -&gt; AsyncHttpResponse[Metadata]</code></summary>
 <dl>
 <dd>
 
@@ -102,7 +102,7 @@ client.union.get_metadata()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...)</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -158,7 +158,7 @@ client.union.update_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">call</a>(...)</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">call</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -214,7 +214,7 @@ client.union.call(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...)</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...) -&gt; AsyncHttpResponse[UnionWithDuplicateTypes]</code></summary>
 <dl>
 <dd>
 
@@ -270,7 +270,7 @@ client.union.duplicate_types_union(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...)</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -307,6 +307,66 @@ client.union.nested_unions(
 <dd>
 
 **request:** `NestedUnionRoot` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedUndiscriminatedUnions
+from seed.union import TokenizeCard
+
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.union.test_camel_case_properties(
+    payment_method=TokenizeCard(
+        method="card",
+        card_number="1234567890123456",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**payment_method:** `PaymentMethodUnion` 
     
 </dd>
 </dl>

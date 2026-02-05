@@ -2,7 +2,7 @@ using SeedInferredAuthImplicitNoExpiry.Core;
 
 namespace SeedInferredAuthImplicitNoExpiry.Nested;
 
-public partial class NestedClient
+public partial class NestedClient : INestedClient
 {
     private RawClient _client;
 
@@ -12,5 +12,5 @@ public partial class NestedClient
         Api = new ApiClient(_client);
     }
 
-    public ApiClient Api { get; }
+    public IApiClient Api { get; }
 }

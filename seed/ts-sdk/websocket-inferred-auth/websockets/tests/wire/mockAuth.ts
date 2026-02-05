@@ -2,7 +2,7 @@
 
 import type { MockServer } from "../mock-server/MockServer";
 
-export function mockAuth(server: MockServer) {
+export function mockInferredAuthScheme(server: MockServer): void {
     const rawRequestBody = {
         client_id: "client_id",
         client_secret: "client_secret",

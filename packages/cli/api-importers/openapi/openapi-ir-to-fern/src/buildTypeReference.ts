@@ -25,8 +25,8 @@ import {
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
-import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
+import { getDeclarationFileFromGroupName } from "./utils/getDeclarationFileForSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import {
     getDefaultFromTypeReference,
@@ -446,15 +446,16 @@ function makeUndefinedIfOutsideRange(num: number | undefined, type: "integer" | 
 export function buildReferenceTypeReference({
     schema,
     fileContainingReference,
-    context,
-    namespace
+    context
 }: {
     schema: ReferencedSchema;
     fileContainingReference: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
-    const resolvedSchema = context.getSchema(schema.schema, namespace);
+    // Use schema.namespace (the reference's target namespace) to look up the schema,
+    // not the current context's namespace
+    const resolvedSchema = context.getSchema(schema.schema, schema.namespace);
     if (resolvedSchema == null) {
         return "unknown";
     }
@@ -462,16 +463,21 @@ export function buildReferenceTypeReference({
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const displayName = getDisplayName(resolvedSchema);
+    // Use the reference's namespace (schema.namespace) to determine the declaration file,
+    // as this is the authoritative source for where the schema lives
     const typeWithPrefix = getPrefixedType({
         context,
         fileContainingReference,
-        declarationFile: convertSdkGroupNameToFile(groupName),
+        declarationFile: getDeclarationFileFromGroupName({
+            namespace: schema.namespace,
+            groupName
+        }),
         type: schemaName
     });
 
     let type = typeWithPrefix;
     if (resolvedSchema.type === "nullable") {
-        type = context.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
+        type = context.options.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
     }
     if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
         type = `optional<${type}>`;
@@ -580,7 +586,7 @@ export function buildNullableTypeReference({
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    if (!context.respectNullableSchemas) {
+    if (!context.options.respectNullableSchemas) {
         return buildOptionalTypeReference({
             schema,
             fileContainingReference,
@@ -604,7 +610,7 @@ export function buildNullableTypeReference({
     const itemDefault = getDefaultFromTypeReference(itemTypeReference);
     const itemValidation = getValidationFromTypeReference(itemTypeReference);
     let type = wrapTypeReferenceAsNullable(itemType);
-    if (context.wrapReferencesToNullableInOptional) {
+    if (context.options.wrapReferencesToNullableInOptional) {
         type = wrapTypeReferenceAsOptional(type);
     }
     if (

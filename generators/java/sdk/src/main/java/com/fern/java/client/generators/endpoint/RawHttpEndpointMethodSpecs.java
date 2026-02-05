@@ -43,6 +43,31 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
     }
 
     @Override
+    public Optional<MethodSpec> getNoRequestBodyWithRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getNoRequestBodyWithRequestOptionsMethodSpec()
+                .map(methodSpec -> methodSpec.toBuilder()
+                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                        .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getBodyOnlyMethodSpec() {
+        return httpEndpointMethodSpecs.getBodyOnlyMethodSpec().map(methodSpec -> methodSpec.toBuilder()
+                .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getBodyOnlyWithRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getBodyOnlyWithRequestOptionsMethodSpec()
+                .map(methodSpec -> methodSpec.toBuilder()
+                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                        .build());
+    }
+
+    @Override
     public Optional<MethodSpec> getByteArrayMethodSpec() {
         return httpEndpointMethodSpecs.getByteArrayMethodSpec().map(methodSpec -> methodSpec.toBuilder()
                 .returns(wrapInRawHttpResponse(methodSpec.returnType))
@@ -53,6 +78,38 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
     public Optional<MethodSpec> getNonRequestOptionsByteArrayMethodSpec() {
         return httpEndpointMethodSpecs
                 .getNonRequestOptionsByteArrayMethodSpec()
+                .map(methodSpec -> methodSpec.toBuilder()
+                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                        .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamMethodSpec() {
+        return httpEndpointMethodSpecs.getInputStreamMethodSpec().map(methodSpec -> methodSpec.toBuilder()
+                .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeMethodSpec() {
+        return httpEndpointMethodSpecs.getInputStreamWithMediaTypeMethodSpec().map(methodSpec -> methodSpec.toBuilder()
+                .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getInputStreamWithRequestOptionsMethodSpec()
+                .map(methodSpec -> methodSpec.toBuilder()
+                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                        .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeAndRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
                 .map(methodSpec -> methodSpec.toBuilder()
                         .returns(wrapInRawHttpResponse(methodSpec.returnType))
                         .build());

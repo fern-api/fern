@@ -60,7 +60,7 @@ client.organization().create(
 </details>
 
 ## User
-<details><summary><code>client.user.list() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.list() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -120,7 +120,7 @@ client.user().list(
 </details>
 
 ## User Events
-<details><summary><code>client.user.events.listEvents() -> List&lt;Event&gt;</code></summary>
+<details><summary><code>client.user.events.listEvents() -> List&amp;lt;Event&amp;gt;</code></summary>
 <dl>
 <dd>
 

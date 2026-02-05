@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi.temp_pydantic_v1_params
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -55,14 +56,25 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     @classmethod
     def __init_test_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_get)
+        type_hints = typing.get_type_hints(cls.test_get)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Path()]
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_get, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -79,13 +91,9 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_get.__globals__)
-
         router.get(
             path="/http-methods/{id}",
-            response_model=str,
+            response_model=None,
             description=AbstractEndpointsHttpMethodsService.test_get.__doc__,
             **get_route_args(cls.test_get, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -93,14 +101,25 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     @classmethod
     def __init_test_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_post)
+        type_hints = typing.get_type_hints(cls.test_post)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_post, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -117,13 +136,9 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_post.__globals__)
-
         router.post(
             path="/http-methods",
-            response_model=ObjectWithOptionalField,
+            response_model=None,
             description=AbstractEndpointsHttpMethodsService.test_post.__doc__,
             **get_route_args(cls.test_post, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -131,16 +146,31 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     @classmethod
     def __init_test_put(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_put)
+        type_hints = typing.get_type_hints(cls.test_put)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Path()]
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_put, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -157,13 +187,9 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_put.__globals__)
-
         router.put(
             path="/http-methods/{id}",
-            response_model=ObjectWithOptionalField,
+            response_model=None,
             description=AbstractEndpointsHttpMethodsService.test_put.__doc__,
             **get_route_args(cls.test_put, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -171,16 +197,31 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     @classmethod
     def __init_test_patch(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_patch)
+        type_hints = typing.get_type_hints(cls.test_patch)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Path()]
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_patch, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -197,13 +238,9 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_patch.__globals__)
-
         router.patch(
             path="/http-methods/{id}",
-            response_model=ObjectWithOptionalField,
+            response_model=None,
             description=AbstractEndpointsHttpMethodsService.test_patch.__doc__,
             **get_route_args(cls.test_patch, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -211,14 +248,25 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
     @classmethod
     def __init_test_delete(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test_delete)
+        type_hints = typing.get_type_hints(cls.test_delete)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Path()]
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_delete, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -235,13 +283,9 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_delete.__globals__)
-
         router.delete(
             path="/http-methods/{id}",
-            response_model=bool,
+            response_model=None,
             description=AbstractEndpointsHttpMethodsService.test_delete.__doc__,
             **get_route_args(cls.test_delete, default_tag="endpoints.http_methods"),
         )(wrapper)

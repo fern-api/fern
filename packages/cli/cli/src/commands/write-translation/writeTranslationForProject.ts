@@ -1,198 +1,37 @@
 import { docsYml } from "@fern-api/configuration";
-
-type DocsConfiguration = docsYml.RawSchemas.DocsConfiguration;
-type DocsInstance = docsYml.RawSchemas.DocsInstance;
-
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
-import { existsSync, statSync } from "fs";
-import { mkdir, readdir, readFile, writeFile } from "fs/promises";
-import yaml from "js-yaml";
+import cliProgress from "cli-progress";
+import { existsSync } from "fs";
+import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
+import IS_CI from "is-ci";
 import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext";
-import { transformContentForLanguage } from "./content-transformer";
+import { isAssetFile, shouldProcessFile, transformContentForLanguage } from "./content-transformer";
+import { createLanguageSpecificDocsConfig } from "./docs-config-utils";
+import { collectFiles } from "./file-collection-utils";
 import {
     cleanupHashMappings,
     hasFileChanged,
     loadHashMappings,
     saveHashMappings,
-    updateHashForFile
+    updateAndSaveHashForFile
 } from "./hash-utils";
 import { ContentTransformation, ProcessingStats } from "./types";
 
-/**
- * Adds a language prefix to a URL using subdomain format.
- * @param url - The original URL
- * @param language - The language to add as a subdomain prefix
- * @returns The URL with the language prefix in the subdomain
- * @example
- * - "https://org.docs.buildwithfern.com" -> "https://org-de.docs.buildwithfern.com"
- * - "https://docs.custom.com" -> "https://de.docs.custom.com"
- * - "https://docs.custom.com/path" -> "https://de.docs.custom.com/path"
- */
-export function addLanguageSuffixToUrl(url: string, language: string): string {
-    try {
-        const urlObj = new URL(url);
-        const hostname = urlObj.hostname;
-        const originalHasTrailingSlash = url.endsWith("/");
-
-        if (hostname.endsWith(".docs.buildwithfern.com")) {
-            const org = hostname.replace(".docs.buildwithfern.com", "");
-            urlObj.hostname = `${org}-${language}.docs.buildwithfern.com`;
-        } else {
-            urlObj.hostname = `${language}.${hostname}`;
-        }
-
-        let result = urlObj.toString();
-
-        if (!originalHasTrailingSlash && result.endsWith("/") && urlObj.pathname === "/") {
-            result = result.slice(0, -1);
-        } else if (originalHasTrailingSlash && !result.endsWith("/") && urlObj.pathname === "/") {
-            result += "/";
-        }
-
-        return result;
-    } catch {
-        // fallback parsing for invalid URLs
-        const originalHasTrailingSlash = url.endsWith("/");
-        if (url.includes("://")) {
-            const [protocol, rest] = url.split("://");
-            const [hostAndPath, ...fragments] = rest?.split("#") ?? [];
-            const [hostAndQuery, ...hashParts] = hostAndPath?.split("?") ?? [];
-            const [hostname, ...pathParts] = hostAndQuery?.split("/") ?? [];
-
-            if (!hostname) {
-                return url;
-            }
-
-            let newHostname: string;
-            if (hostname.endsWith(".docs.buildwithfern.com")) {
-                const orgPart = hostname.replace(".docs.buildwithfern.com", "");
-                newHostname = `${orgPart}-${language}.docs.buildwithfern.com`;
-            } else {
-                newHostname = `${language}.${hostname}`;
-            }
-
-            let result = `${protocol}://${newHostname}`;
-            if (pathParts.length > 0) {
-                result += "/" + pathParts.join("/");
-            } else if (originalHasTrailingSlash) {
-                result += "/";
-            }
-            if (hashParts.length > 0) {
-                result += "?" + hashParts.join("?");
-            }
-            if (fragments.length > 0) {
-                result += "#" + fragments.join("#");
-            }
-
-            return result;
-        } else {
-            if (url.includes("/")) {
-                const parts = url.split("/");
-                const hostname = parts[0];
-                const pathParts = parts.slice(1);
-
-                let newHostname: string;
-                if (hostname?.endsWith(".docs.buildwithfern.com")) {
-                    const orgPart = hostname.replace(".docs.buildwithfern.com", "");
-                    newHostname = `${orgPart}-${language}.docs.buildwithfern.com`;
-                } else {
-                    newHostname = `${language}.${hostname}`;
-                }
-
-                if (pathParts.length > 0 || pathParts.some((p) => p !== "")) {
-                    return `${newHostname}/${pathParts.join("/")}`;
-                } else if (originalHasTrailingSlash) {
-                    return `${newHostname}/`;
-                } else {
-                    return newHostname;
-                }
-            } else {
-                if (url.endsWith(".docs.buildwithfern.com")) {
-                    const orgPart = url.replace(".docs.buildwithfern.com", "");
-                    return `${orgPart}-${language}.docs.buildwithfern.com`;
-                } else {
-                    return `${language}.${url}`;
-                }
-            }
-        }
-    }
-}
-
-/**
- * Modifies instance URLs in docs configuration to add language suffixes.
- * @param docsConfig - The original docs configuration
- * @param language - The target language
- * @returns Modified docs configuration with language-suffixed URLs
- */
-function modifyInstanceUrlsForLanguage(docsConfig: DocsConfiguration, language: string): DocsConfiguration {
-    const modifiedConfig = structuredClone(docsConfig);
-
-    if (modifiedConfig.instances && Array.isArray(modifiedConfig.instances)) {
-        modifiedConfig.instances = modifiedConfig.instances.map((instance: DocsInstance) => {
-            const modifiedInstance = { ...instance };
-
-            if (modifiedInstance.url) {
-                modifiedInstance.url = addLanguageSuffixToUrl(modifiedInstance.url, language);
-            }
-
-            if (modifiedInstance.customDomain) {
-                const customDomain = modifiedInstance.customDomain;
-                if (typeof customDomain === "string") {
-                    modifiedInstance.customDomain = addLanguageSuffixToUrl(customDomain, language);
-                } else if (Array.isArray(customDomain)) {
-                    modifiedInstance.customDomain = customDomain.map((domain: string) =>
-                        addLanguageSuffixToUrl(domain, language)
-                    );
-                }
-            }
-
-            return modifiedInstance;
-        });
-    }
-
-    return modifiedConfig;
-}
-
-/**
- * Creates and writes a modified docs.yml file for a specific language.
- * @param originalDocsConfigPath - Path to the original docs.yml
- * @param targetDirectory - Directory where the modified config should be written
- * @param language - The target language
- * @param context - CLI context for logging
- */
-async function createLanguageSpecificDocsConfig(
-    originalDocsConfigPath: AbsoluteFilePath,
-    targetDirectory: AbsoluteFilePath,
-    language: string,
-    context: CliContext
-): Promise<void> {
-    try {
-        const originalConfigContent = await readFile(originalDocsConfigPath, "utf-8");
-        const originalConfig = yaml.load(originalConfigContent) as DocsConfiguration;
-
-        const modifiedConfig = modifyInstanceUrlsForLanguage(originalConfig, language);
-
-        const modifiedConfigPath = join(targetDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
-        const modifiedConfigContent = yaml.dump(modifiedConfig, { sortKeys: false });
-        await writeFile(modifiedConfigPath, modifiedConfigContent, "utf-8");
-
-        context.logger.debug(`Created language-specific docs config: ${modifiedConfigPath}`);
-    } catch (error) {
-        context.logger.warn(`Failed to create language-specific docs config for ${language}: ${error}`);
-    }
-}
+type Language = docsYml.RawSchemas.Language;
 
 export async function writeTranslationForProject({
     project,
-    cliContext
+    cliContext,
+    stub = false
 }: {
     project: Project;
     cliContext: CliContext;
+    stub?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -222,21 +61,21 @@ export async function writeTranslationForProject({
             await mkdir(translationsDirectory, { recursive: true });
         }
 
-        const languageStats: { [language: string]: ProcessingStats } = {};
+        const languageStats: Partial<Record<Language, ProcessingStats>> = {};
         const targetLanguages = languages.filter((lang) => lang !== sourceLanguage);
 
         const originalDocsConfigPath = join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
         const hasDocsConfig = existsSync(originalDocsConfigPath);
 
         for (const language of targetLanguages) {
-            const languageDirectory = join(translationsDirectory, RelativeFilePath.of(language));
+            const languageDirectory = join(
+                translationsDirectory,
+                RelativeFilePath.of(language),
+                RelativeFilePath.of("fern")
+            );
 
             if (!existsSync(languageDirectory)) {
                 await mkdir(languageDirectory, { recursive: true });
-            }
-
-            if (hasDocsConfig) {
-                await createLanguageSpecificDocsConfig(originalDocsConfigPath, languageDirectory, language, cliContext);
             }
 
             languageStats[language] = {
@@ -260,80 +99,256 @@ export async function writeTranslationForProject({
             let hashMappings = await loadHashMappings(translationsDirectory);
 
             const allFiles = await collectFiles(fernDirectory, "");
+            const allFilesEntries = Object.entries(allFiles);
 
             // clean up hash mappings for files that no longer exist
             const existingFileSet = new Set(Object.values(allFiles));
-            hashMappings = cleanupHashMappings(hashMappings, existingFileSet);
+            const cleanedHashMappings = cleanupHashMappings(hashMappings, existingFileSet);
 
-            for (const [filePath, relativePath] of Object.entries(allFiles)) {
+            // Save cleaned hash mappings if any entries were removed
+            if (Object.keys(cleanedHashMappings).length !== Object.keys(hashMappings).length) {
+                await saveHashMappings(translationsDirectory, cleanedHashMappings);
+            }
+            hashMappings = cleanedHashMappings;
+
+            const filesToProcess: Array<[string, RelativeFilePath]> = [];
+            for (const [filePath, relativePath] of allFilesEntries) {
                 if (hasDocsConfig && relativePath === DOCS_CONFIGURATION_FILENAME) {
-                    cliContext.logger.debug(
-                        `[SKIPPED] ${relativePath} (handled by language-specific docs config creation)`
-                    );
-                    // still update hash for source language tracking
-                    const originalContent = await readFile(filePath, "utf-8");
-                    updateHashForFile(hashMappings, relativePath, originalContent);
-                    const sourceStats = languageStats[sourceLanguage];
-                    if (sourceStats) {
-                        sourceStats.filesSkipped++; // count as skipped rather than processed
-                    }
                     continue;
                 }
 
-                const fileHasChanged = await hasFileChanged(filePath, relativePath, hashMappings);
-
-                if (!fileHasChanged) {
-                    for (const language of languages) {
-                        const stats = languageStats[language];
-                        if (stats) {
-                            stats.filesSkipped++;
-                        }
+                if (shouldProcessFile(filePath, stub)) {
+                    const fileHasChanged = await hasFileChanged(filePath, relativePath, hashMappings);
+                    if (fileHasChanged) {
+                        filesToProcess.push([filePath, relativePath]);
                     }
-                    cliContext.logger.debug(`[SKIPPED] ${relativePath} (no changes since last translation)`);
-                    continue;
-                }
-
-                cliContext.logger.debug(`[PROCESSING] ${relativePath} (detected changes)`);
-
-                const originalContent = await readFile(filePath, "utf-8");
-                updateHashForFile(hashMappings, relativePath, originalContent);
-
-                const sourceStats = languageStats[sourceLanguage];
-                if (sourceStats) {
-                    sourceStats.filesProcessed++;
-                }
-                cliContext.logger.debug(
-                    `[HASH UPDATED] ${relativePath} -> ${sourceLanguage} (source language - hash only)`
-                );
-
-                for (const language of targetLanguages) {
-                    const languageDirectory = join(translationsDirectory, RelativeFilePath.of(language));
-                    const destPath = join(languageDirectory, relativePath);
-
-                    const destDir = path.dirname(destPath);
-                    if (!existsSync(destDir)) {
-                        await mkdir(destDir, { recursive: true });
-                    }
-
-                    const transformation: ContentTransformation = {
-                        filePath: relativePath,
-                        language,
-                        sourceLanguage,
-                        originalContent
-                    };
-
-                    const transformedContent = transformContentForLanguage(transformation, cliContext);
-                    await writeFile(destPath, transformedContent, "utf-8");
-
-                    const languageStatsForLang = languageStats[language];
-                    if (languageStatsForLang) {
-                        languageStatsForLang.filesProcessed++;
-                    }
-                    cliContext.logger.debug(`[COMPLETED] ${relativePath} -> ${language}/${relativePath}`);
                 }
             }
 
-            await saveHashMappings(translationsDirectory, hashMappings);
+            // Check if docs config has changed to include it in progress calculation
+            let docsConfigHasChanged = false;
+            if (hasDocsConfig) {
+                docsConfigHasChanged = await hasFileChanged(
+                    originalDocsConfigPath,
+                    RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+                    hashMappings
+                );
+            }
+
+            const totalFilesToProcess = filesToProcess.length + (docsConfigHasChanged ? 1 : 0);
+            // Include docs config in total count if it exists and has changed
+            const totalProgressItems = totalFilesToProcess * targetLanguages.length;
+            const useProgressBar = process.stdout.isTTY && !IS_CI && totalProgressItems > 0;
+
+            let progressBar: cliProgress.SingleBar | undefined;
+            if (useProgressBar) {
+                progressBar = new cliProgress.SingleBar({
+                    format: "Processing files [{bar}] {percentage}% | {value}/{total} files",
+                    barCompleteChar: "\u2588",
+                    barIncompleteChar: "\u2591",
+                    hideCursor: true,
+                    clearOnComplete: false,
+                    stopOnComplete: true
+                });
+                progressBar.start(totalProgressItems, 0);
+            }
+
+            let processedFileIndex = 0;
+            let changedFileIndex = 0;
+            try {
+                // Process docs config first if it exists and has changed
+                if (hasDocsConfig) {
+                    if (docsConfigHasChanged) {
+                        // Create language-specific docs configs for all target languages
+                        for (const language of targetLanguages) {
+                            processedFileIndex++;
+                            changedFileIndex++;
+                            if (!useProgressBar) {
+                                context.logger.info(
+                                    chalk.gray(
+                                        `[${changedFileIndex}/${totalFilesToProcess + 1}] Processing: ${DOCS_CONFIGURATION_FILENAME} (docs config) for language: ${language}`
+                                    )
+                                );
+                            }
+                            cliContext.logger.debug(
+                                `[PROCESSING] ${DOCS_CONFIGURATION_FILENAME} (docs config) for language: ${language}`
+                            );
+
+                            const languageDirectory = join(
+                                translationsDirectory,
+                                RelativeFilePath.of(language),
+                                RelativeFilePath.of("fern")
+                            );
+
+                            await createLanguageSpecificDocsConfig({
+                                originalDocsConfigPath,
+                                targetDirectory: languageDirectory,
+                                language,
+                                sourceLanguage,
+                                context: cliContext,
+                                stub
+                            });
+
+                            const languageStatsForLang = languageStats[language];
+                            if (progressBar) {
+                                progressBar.update(processedFileIndex);
+                            }
+                            if (languageStatsForLang) {
+                                languageStatsForLang.filesProcessed++;
+                            }
+                            cliContext.logger.debug(
+                                `[COMPLETED] ${DOCS_CONFIGURATION_FILENAME} -> ${language}/${DOCS_CONFIGURATION_FILENAME}`
+                            );
+                        }
+
+                        // Update hash for source language tracking and save immediately
+                        const originalConfigContent = await readFile(originalDocsConfigPath, "utf-8");
+                        await updateAndSaveHashForFile(
+                            translationsDirectory,
+                            hashMappings,
+                            RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+                            originalConfigContent
+                        );
+                        const sourceStats = languageStats[sourceLanguage];
+                        if (sourceStats) {
+                            sourceStats.filesProcessed++;
+                        }
+                        cliContext.logger.debug(
+                            `[HASH UPDATED] ${DOCS_CONFIGURATION_FILENAME} -> ${sourceLanguage} (source language - hash updated)`
+                        );
+                    } else {
+                        // Docs config hasn't changed, update skip counts
+                        for (const language of languages) {
+                            const stats = languageStats[language];
+                            if (stats) {
+                                stats.filesSkipped++;
+                            }
+                        }
+                        cliContext.logger.debug(
+                            `[SKIPPED] ${DOCS_CONFIGURATION_FILENAME} (no changes since last translation)`
+                        );
+                    }
+                }
+
+                for (const [filePath, relativePath] of allFilesEntries) {
+                    if (hasDocsConfig && relativePath === DOCS_CONFIGURATION_FILENAME) {
+                        cliContext.logger.debug(
+                            `[SKIPPED] ${relativePath} (already handled by docs config processing)`
+                        );
+                        // Don't update hash here - it's already handled in the docs config processing
+                        continue;
+                    }
+
+                    const fileHasChanged = await hasFileChanged(filePath, relativePath, hashMappings);
+
+                    if (!fileHasChanged) {
+                        for (const language of languages) {
+                            const stats = languageStats[language];
+                            if (stats) {
+                                stats.filesSkipped++;
+                            }
+                        }
+                        cliContext.logger.debug(`[SKIPPED] ${relativePath} (no changes since last translation)`);
+                        continue;
+                    }
+
+                    cliContext.logger.debug(`[PROCESSING] ${relativePath} (detected changes)`);
+
+                    const originalContent = await readFile(filePath, "utf-8");
+                    await updateAndSaveHashForFile(translationsDirectory, hashMappings, relativePath, originalContent);
+
+                    const sourceStats = languageStats[sourceLanguage];
+                    if (sourceStats) {
+                        sourceStats.filesProcessed++;
+                    }
+                    cliContext.logger.debug(
+                        `[HASH UPDATED] ${relativePath} -> ${sourceLanguage} (source language - hash only)`
+                    );
+
+                    for (const language of targetLanguages) {
+                        changedFileIndex++;
+                        processedFileIndex++;
+                        if (!useProgressBar) {
+                            context.logger.info(
+                                chalk.gray(`[${changedFileIndex}/${totalFilesToProcess}] Processing: ${relativePath}`)
+                            );
+                        }
+                        const languageDirectory = join(
+                            translationsDirectory,
+                            RelativeFilePath.of(language),
+                            RelativeFilePath.of("fern")
+                        );
+                        const destPath = join(languageDirectory, relativePath);
+
+                        const destDir = path.dirname(destPath);
+                        if (!existsSync(destDir)) {
+                            await mkdir(destDir, { recursive: true });
+                        }
+
+                        const transformation: ContentTransformation = {
+                            filePath: relativePath,
+                            language,
+                            sourceLanguage,
+                            originalContent
+                        };
+
+                        const transformedContent = await transformContentForLanguage({
+                            transformation,
+                            cliContext,
+                            stub
+                        });
+                        await writeFile(destPath, transformedContent, "utf-8");
+
+                        const languageStatsForLang = languageStats[language];
+                        if (languageStatsForLang) {
+                            languageStatsForLang.filesProcessed++;
+                        }
+                        cliContext.logger.debug(`[COMPLETED] ${relativePath} -> ${language}/${relativePath}`);
+                        if (progressBar) {
+                            progressBar.update(processedFileIndex);
+                        }
+                    }
+                }
+            } finally {
+                if (progressBar) {
+                    progressBar.update(totalProgressItems);
+                    progressBar.stop();
+                    // Add a blank line after progress bar for cleaner output
+                    cliContext.logger.info();
+                }
+            }
+
+            // Hash mappings are now saved incrementally during processing, no need for final save
+
+            // Copy asset files directly without processing
+            context.logger.info(chalk.cyan("Copying asset files..."));
+            let assetsCopied = 0;
+            for (const [filePath, relativePath] of allFilesEntries) {
+                if (isAssetFile(filePath)) {
+                    for (const language of targetLanguages) {
+                        const languageDirectory = join(
+                            translationsDirectory,
+                            RelativeFilePath.of(language),
+                            RelativeFilePath.of("fern")
+                        );
+                        const destPath = join(languageDirectory, relativePath);
+
+                        const destDir = path.dirname(destPath);
+                        if (!existsSync(destDir)) {
+                            await mkdir(destDir, { recursive: true });
+                        }
+
+                        // Copy asset file exactly as-is (binary copy)
+                        await copyFile(filePath, destPath);
+                        assetsCopied++;
+                        cliContext.logger.debug(`[ASSET COPIED] ${relativePath} -> ${language}/${relativePath}`);
+                    }
+                }
+            }
+
+            if (assetsCopied > 0) {
+                context.logger.info(chalk.green(`✓ Copied ${assetsCopied} asset files to translation directories`));
+            }
 
             for (const language of languages) {
                 const stats = languageStats[language];
@@ -365,6 +380,9 @@ export async function writeTranslationForProject({
                 }
             }
         } catch (error) {
+            if (error instanceof Error && error.message.includes("403")) {
+                throw error;
+            }
             context.logger.error(`Failed to create translations: ${error}`);
             throw error;
         }
@@ -393,36 +411,4 @@ export async function writeTranslationForProject({
             }
         }
     });
-}
-
-async function collectFiles(
-    baseDirectory: string,
-    relativeBase: RelativeFilePath | ""
-): Promise<Record<string, RelativeFilePath>> {
-    const discoveredFiles: Record<string, RelativeFilePath> = {};
-
-    const entries = await readdir(baseDirectory);
-
-    for (const entry of entries) {
-        // skip the translations directory
-        if (entry === "translations") {
-            continue;
-        }
-
-        const fullPath = path.join(baseDirectory, entry);
-        const relativePath = relativeBase ? join(relativeBase, RelativeFilePath.of(entry)) : RelativeFilePath.of(entry);
-
-        const stat = statSync(fullPath);
-
-        if (stat.isDirectory()) {
-            const subdirectoryFiles = await collectFiles(fullPath, relativePath);
-            for (const [subPath, subRelativePath] of Object.entries(subdirectoryFiles)) {
-                discoveredFiles[subPath] = subRelativePath;
-            }
-        } else if (stat.isFile()) {
-            discoveredFiles[fullPath] = relativePath;
-        }
-    }
-
-    return discoveredFiles;
 }

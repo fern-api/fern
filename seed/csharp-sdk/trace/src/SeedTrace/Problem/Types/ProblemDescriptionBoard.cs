@@ -196,12 +196,12 @@ public record ProblemDescriptionBoard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ProblemDescriptionBoard>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(ProblemDescriptionBoard).IsAssignableFrom(typeToConvert);
 
         public override ProblemDescriptionBoard Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -33,7 +33,6 @@ export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
                     ts.factory.createParameterDeclaration(
                         undefined,
                         undefined,
-                        undefined,
                         VALUE_PARAMETER_NAME,
                         undefined,
                         undefined

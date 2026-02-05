@@ -21,6 +21,7 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 ## Key Directories
 
 ### Python v1 (generators/python/)
+
 - `sdk/` - SDK generation logic
 - `fastapi/` - FastAPI server generator
 - `pydantic/` - Pydantic model generator
@@ -30,6 +31,7 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 - `requirements.txt` - Python dependencies
 
 ### Python v2 (generators/python-v2/)
+
 - `ast/` - Python AST utilities (TypeScript)
 - `base/` - Base generator infrastructure
 - `sdk/` - SDK generator (TypeScript)
@@ -40,17 +42,20 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 ## Common Issues & Debugging
 
 ### v1 (Native Python) Issues
+
 - **Poetry lock conflicts**: Run `poetry lock --no-update` in generators/python/
 - **Python dependency issues**: Check `requirements.txt` and `pyproject.toml`
 - **Formatting issues**: v1 uses Black formatting (can be disabled with `skip_formatting: true`)
 - **Pydantic version conflicts**: Check `pydantic_config.version` setting ("v1", "v2", "both", "v1_on_v2")
 
 ### v2 (TypeScript) Issues
+
 - **TypeScript compilation**: Standard TS generator patterns apply
 - **AST generation**: Issues often in `ast/` utilities
 - **Coordination with v1**: Check how v1/v2 responsibilities are divided
 
 ### Tandem Operation Issues
+
 - **Version mismatches**: Ensure IR versions are compatible between v1 and v2
 - **Docker build failures**: Both generators must build successfully in single image
 - **Output conflicts**: Check that v1 and v2 don't overwrite each other's outputs
@@ -58,13 +63,17 @@ The Python generator operates as a **tandem system** with both v1 and v2 impleme
 ## Development Commands
 
 ### Python v1 Development
+
 ```bash
 cd generators/python
 poetry install
 poetry run python -m pytest tests/
+poetry run mypy .                # Run type checking
+poetry run pre-commit run -a     # Run all pre-commit hooks
 ```
 
 ### Python v2 Development
+
 ```bash
 cd generators/python-v2
 pnpm install
@@ -72,6 +81,7 @@ pnpm compile
 ```
 
 ### Testing Both Generators
+
 ```bash
 # From repository root
 pnpm seed test --generator python-sdk --fixture <fixture-name> --skip-scripts
@@ -83,6 +93,7 @@ pnpm seed run --generator python-sdk --path /path/to/test/project --skip-scripts
 The Python generator supports extensive configuration in `generators.yml`:
 
 ### SDK Generator
+
 - `timeout_in_seconds`: Request timeout (default: 60)
 - `client_class_name`: Custom client class name
 - `skip_formatting`: Disable Black formatting
@@ -91,11 +102,13 @@ The Python generator supports extensive configuration in `generators.yml`:
 - `pydantic_config.include_union_utils`: Generate union visitor utilities
 
 ### FastAPI Generator
+
 - `async_handlers`: Generate async endpoint handlers
 - `pydantic_config.version`: Pydantic compatibility
 - `skip_formatting`: Disable Black formatting
 
 ### Pydantic Generator
+
 - `version`: Pydantic compatibility mode
 
 ## Debug Patterns
@@ -110,3 +123,4 @@ The Python generator supports extensive configuration in `generators.yml`:
 - **Generated Python code**: Uses Black formatting (unless disabled)
 - **Import patterns**: v1 uses Python import conventions, v2 follows TS generator patterns
 - **Error handling**: Different between v1 (Python exceptions) and v2 (TS error patterns)
+- Add changelogs entries to the relevant versions.yml files. This should happen once per branch

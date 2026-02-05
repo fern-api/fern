@@ -1,3 +1,13 @@
+//! Request and response types for the Exhaustive
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 7 types for API operations
+//! - **Model Types**: 16 types for data representation
+
 pub mod endpoints_put_error;
 pub mod endpoints_put_error_category;
 pub mod endpoints_put_error_code;
@@ -12,6 +22,7 @@ pub mod types_object_nested_object_with_optional_field;
 pub mod types_object_nested_object_with_required_field;
 pub mod types_object_double_optional;
 pub mod types_object_optional_alias;
+pub mod types_object_object_with_datetime_like_string;
 pub mod types_union_animal;
 pub mod types_union_dog;
 pub mod types_union_cat;
@@ -35,6 +46,7 @@ pub use types_object_nested_object_with_optional_field::NestedObjectWithOptional
 pub use types_object_nested_object_with_required_field::NestedObjectWithRequiredField;
 pub use types_object_double_optional::DoubleOptional;
 pub use types_object_optional_alias::OptionalAlias;
+pub use types_object_object_with_datetime_like_string::ObjectWithDatetimeLikeString;
 pub use types_union_animal::Animal;
 pub use types_union_dog::Dog;
 pub use types_union_cat::Cat;

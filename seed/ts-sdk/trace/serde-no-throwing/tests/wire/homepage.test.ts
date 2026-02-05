@@ -3,10 +3,15 @@
 import { SeedTraceClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Homepage", () => {
+describe("HomepageClient", () => {
     test("getHomepageProblems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = ["string", "string"];
         server.mockEndpoint().get("/homepage-problems").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -22,7 +27,12 @@ describe("Homepage", () => {
 
     test("setHomepageProblems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = ["string", "string"];
 
         server.mockEndpoint().post("/homepage-problems").jsonBody(rawRequestBody).respondWith().statusCode(200).build();

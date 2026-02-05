@@ -14,14 +14,18 @@ pub struct ObjectWithOptionalField {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub bool: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub datetime: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub datetime: Option<DateTime<FixedOffset>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub date: Option<NaiveDate>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub uuid: Option<Uuid>,
     #[serde(rename = "base64")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub base_64: Option<String>,
+    #[serde(default)]
+    #[serde(with = "crate::core::base64_bytes::option")]
+    pub base_64: Option<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub list: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,5 +33,7 @@ pub struct ObjectWithOptionalField {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub map: Option<HashMap<i64, String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::bigint_string::option")]
     pub bigint: Option<num_bigint::BigInt>,
 }

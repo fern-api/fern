@@ -246,4 +246,28 @@ describe("casingsGenerator", () => {
         const actual = casingsGenerator.generateName(expected.originalName);
         expect(actual).toEqual(expected);
     });
+
+    it("array brackets", () => {
+        const expected: Name = {
+            originalName: "string[]",
+            camelCase: {
+                safeName: "stringArray",
+                unsafeName: "stringArray"
+            },
+            pascalCase: {
+                safeName: "StringArray",
+                unsafeName: "StringArray"
+            },
+            snakeCase: {
+                safeName: "string_array",
+                unsafeName: "string_array"
+            },
+            screamingSnakeCase: {
+                safeName: "STRING_ARRAY",
+                unsafeName: "STRING_ARRAY"
+            }
+        };
+        const actual = casingsGenerator.generateName("string[]");
+        expect(actual).toEqual(expected);
+    });
 });

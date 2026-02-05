@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Webhook Multipart Form Data Test
+  version: 1.0.0
+  description: |
+    Test OpenAPI spec for webhook endpoints with multipart/form-data payloads.
+
+    This test captures the current parser behavior with multipart/form-data webhooks.
+    When multipart support is added, the snapshots will change to show proper parsing.
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths: {}
+
+webhooks:
+  documentuploaded:
+    post:
+      operationId: documentUploadedWebhook
+      summary: Document uploaded webhook
+      description: Webhook with multipart form data including file uploads
+      tags:
+        - Document Management
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/DocumentUploadEvent"
+            encoding:
+              document:
+                contentType: application/pdf, image/png, image/jpeg
+              thumbnail:
+                contentType: image/png, image/jpeg
+      responses:
+        "200":
+          description: Webhook processed successfully
+        "400":
+          description: Invalid payload or missing required fields
+        "500":
+          description: Server error processing webhook
+
+components:
+  schemas:
+    DocumentUploadEvent:
+      type: object
+      required:
+        - eventId
+        - eventType
+        - document
+        - uploadedBy
+        - timestamp
+      properties:
+        eventId:
+          type: string
+          description: Unique event identifier
+          example: "evt_doc_abc123"
+        eventType:
+          type: string
+          enum: [document.uploaded]
+          description: Type of the event
+        document:
+          type: string
+          format: binary
+          description: The uploaded document file
+        thumbnail:
+          type: string
+          format: binary
+          description: Optional thumbnail image of the document
+        metadata:
+          type: string
+          description: JSON-encoded metadata about the document
+          example: '{"filename": "contract.pdf", "size": 1024000, "pages": 5}'
+        uploadedBy:
+          type: string
+          description: User ID who uploaded the document
+          example: "user_xyz789"
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the document
+          example: ["contract", "legal", "important"]
+        timestamp:
+          type: string
+          format: date-time
+          description: When the upload occurred
+        isPrivate:
+          type: boolean
+          description: Whether the document is private
+          default: false

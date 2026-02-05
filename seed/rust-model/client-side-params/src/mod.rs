@@ -1,3 +1,13 @@
+//! Request and response types for the ClientSideParams
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 14 types for API operations
+//! - **Model Types**: 5 types for data representation
+
 pub mod types_resource;
 pub mod types_search_response;
 pub mod types_user;

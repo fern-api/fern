@@ -4,11 +4,11 @@ import {
     visitAllDefinitionFiles,
     visitAllPackageMarkers
 } from "@fern-api/api-workspace-commons";
+import { CasingsGenerator } from "@fern-api/casings-generator";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { HttpMethod } from "@fern-api/ir-sdk";
 
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
-import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";
 import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
@@ -36,17 +36,28 @@ export class EndpointResolverImpl implements EndpointResolver {
 
     public resolveEndpointByMethodAndPath({
         method,
-        path
+        path,
+        namespace,
+        casingsGenerator
     }: {
         method: HttpMethod;
         path: string;
+        namespace: string | undefined;
+        casingsGenerator: CasingsGenerator;
     }): ResolvedEndpoint | undefined {
         let result: ResolvedEndpoint | undefined = undefined;
         visitAllDefinitionFiles(this.workspace, (relativeFilepath, file, metadata) => {
+            // Check namespace match if specified
+            if (namespace != null) {
+                const fileNamespace = this.getNamespaceFromFilepath(relativeFilepath);
+                if (fileNamespace !== namespace) {
+                    return;
+                }
+            }
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: file,
-                casingsGenerator: CASINGS_GENERATOR,
+                casingsGenerator,
                 rootApiFile: this.workspace.definition.rootApiFile.contents,
                 defaultUrl: metadata.defaultUrl
             });
@@ -61,10 +72,17 @@ export class EndpointResolverImpl implements EndpointResolver {
             }
         });
         visitAllPackageMarkers(this.workspace, (relativeFilepath, packageMarker) => {
+            // Check namespace match if specified
+            if (namespace != null) {
+                const fileNamespace = this.getNamespaceFromFilepath(relativeFilepath);
+                if (fileNamespace !== namespace) {
+                    return;
+                }
+            }
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: packageMarker,
-                casingsGenerator: CASINGS_GENERATOR,
+                casingsGenerator,
                 rootApiFile: this.workspace.definition.rootApiFile.contents
             });
             for (const [endpointId, endpointDeclaration] of Object.entries(packageMarker.service?.endpoints ?? {})) {
@@ -80,6 +98,17 @@ export class EndpointResolverImpl implements EndpointResolver {
         return result;
     }
 
+    private getNamespaceFromFilepath(relativeFilepath: string): string | undefined {
+        const parts = relativeFilepath.split("/");
+        // If there's more than one part, the first part is the namespace
+        // e.g., "oauth/service.yml" -> namespace is "oauth"
+        // e.g., "service.yml" -> no namespace
+        if (parts.length > 1) {
+            return parts[0];
+        }
+        return undefined;
+    }
+
     public resolveEndpoint({
         endpoint,
         file
@@ -90,7 +119,12 @@ export class EndpointResolverImpl implements EndpointResolver {
         const referenceParser = new HttpEndpointReferenceParser();
         const parsedEndpointReference = referenceParser.tryParse(endpoint);
         if (parsedEndpointReference != null) {
-            return this.resolveEndpointByMethodAndPath(parsedEndpointReference);
+            return this.resolveEndpointByMethodAndPath({
+                method: parsedEndpointReference.method,
+                path: parsedEndpointReference.path,
+                namespace: parsedEndpointReference.namespace,
+                casingsGenerator: file.casingsGenerator
+            });
         }
 
         const maybeDeclaration = this.getDeclarationOfEndpoint({

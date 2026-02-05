@@ -244,17 +244,19 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                 parse: (raw, opts) => {
                     return validateAndTransformExtendedObject({
                         extensionKeys: extension._getRawProperties(),
-                        value: raw as object,
+                        value: raw,
                         transformBase: (rawBase) => schema.parse(rawBase, opts),
                         transformExtension: (rawExtension) => extension.parse(rawExtension, opts),
+                        breadcrumbsPrefix: opts?.breadcrumbsPrefix,
                     });
                 },
                 json: (parsed, opts) => {
                     return validateAndTransformExtendedObject({
                         extensionKeys: extension._getParsedProperties(),
-                        value: parsed as object,
+                        value: parsed,
                         transformBase: (parsedBase) => schema.json(parsedBase, opts),
                         transformExtension: (parsedExtension) => extension.json(parsedExtension, opts),
+                        breadcrumbsPrefix: opts?.breadcrumbsPrefix,
                     });
                 },
                 getType: () => SchemaType.OBJECT,
@@ -268,6 +270,8 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
             };
         },
         passthrough: () => {
+            const knownRawKeys = new Set<string>(schema._getRawProperties() as string[]);
+            const knownParsedKeys = new Set<string>(schema._getParsedProperties() as string[]);
             const baseSchema: BaseObjectSchema<Raw & { [key: string]: unknown }, Parsed & { [key: string]: unknown }> =
                 {
                     _getParsedProperties: () => schema._getParsedProperties(),
@@ -277,10 +281,18 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const extraProperties: Record<string, unknown> = {};
+                        if (typeof raw === "object" && raw != null) {
+                            for (const [key, value] of Object.entries(raw)) {
+                                if (!knownRawKeys.has(key)) {
+                                    extraProperties[key] = value;
+                                }
+                            }
+                        }
                         return {
                             ok: true,
                             value: {
-                                ...(raw as any),
+                                ...extraProperties,
                                 ...transformed.value,
                             },
                         };
@@ -290,10 +302,18 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const extraProperties: Record<string, unknown> = {};
+                        if (typeof parsed === "object" && parsed != null) {
+                            for (const [key, value] of Object.entries(parsed)) {
+                                if (!knownParsedKeys.has(key)) {
+                                    extraProperties[key] = value;
+                                }
+                            }
+                        }
                         return {
                             ok: true,
                             value: {
-                                ...(parsed as any),
+                                ...extraProperties,
                                 ...transformed.value,
                             },
                         };
@@ -316,12 +336,26 @@ function validateAndTransformExtendedObject<PreTransformedExtension, Transformed
     value,
     transformBase,
     transformExtension,
+    breadcrumbsPrefix = [],
 }: {
     extensionKeys: (keyof PreTransformedExtension)[];
-    value: object;
+    value: unknown;
     transformBase: (value: object) => MaybeValid<TransformedBase>;
     transformExtension: (value: object) => MaybeValid<TransformedExtension>;
+    breadcrumbsPrefix?: string[];
 }): MaybeValid<TransformedBase & TransformedExtension> {
+    if (!isPlainObject(value)) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: breadcrumbsPrefix,
+                    message: getErrorMessageForIncorrectType(value, "object"),
+                },
+            ],
+        };
+    }
+
     const extensionPropertiesSet = new Set(extensionKeys);
     const [extensionProperties, baseProperties] = partition(keys(value), (key) =>
         extensionPropertiesSet.has(key as keyof PreTransformedExtension),

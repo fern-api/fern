@@ -96,7 +96,8 @@ public final class HttpUrlBuilder {
                                         .getContainer()
                                         .get()
                                         .isOptional());
-        this.inlinePathParams = context.getCustomConfig().inlinePathParameters()
+        this.inlinePathParams = requestName != null
+                && context.getCustomConfig().inlinePathParameters()
                 && httpEndpoint.getSdkRequest().isPresent()
                 && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
                 && (httpEndpoint
@@ -118,13 +119,10 @@ public final class HttpUrlBuilder {
         this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
-    public GeneratedHttpUrl generateBuilder(List<EnrichedObjectProperty> queryParamProperties) {
-        boolean shouldInline = queryParamProperties.isEmpty() && !hasOptionalPathParams;
-        if (shouldInline) {
-            return generateInlineableCodeBlock();
-        } else {
-            return generateUnInlineableCodeBlock(queryParamProperties);
-        }
+    public GeneratedHttpUrl generateBuilder(
+            List<EnrichedObjectProperty> queryParamProperties, boolean hasRequestOptions) {
+        // Always use uninlineable code block to support additional query parameters from RequestOptions
+        return generateUnInlineableCodeBlock(queryParamProperties, hasRequestOptions);
     }
 
     private GeneratedHttpUrl generateInlineableCodeBlock() {
@@ -143,7 +141,8 @@ public final class HttpUrlBuilder {
                 .build();
     }
 
-    private GeneratedHttpUrl generateUnInlineableCodeBlock(List<EnrichedObjectProperty> queryParamProperties) {
+    private GeneratedHttpUrl generateUnInlineableCodeBlock(
+            List<EnrichedObjectProperty> queryParamProperties, boolean hasRequestOptions) {
         CodeBlock.Builder codeBlock = CodeBlock.builder()
                 .add("$T $L = $T.parse(", HttpUrl.Builder.class, httpUrlname, HttpUrl.class)
                 .add(baseUrlReference)
@@ -157,7 +156,9 @@ public final class HttpUrlBuilder {
             codeBlock.add(CodeBlock.of(";"));
         }
         queryParamProperties.forEach(queryParamProperty -> {
-            boolean isOptional = isTypeNameOptional(queryParamProperty.poetTypeName());
+            boolean isJavaOptional = isTypeNameJavaOptional(queryParamProperty.poetTypeName());
+            boolean isOptionalNullable = isTypeNameOptionalNullable(queryParamProperty.poetTypeName());
+            boolean isOptional = isJavaOptional || isOptionalNullable;
 
             // Check if this parameter has a default value
             Optional<CodeBlock> defaultValue = defaultValueExtractor.extractDefaultValue(
@@ -166,6 +167,7 @@ public final class HttpUrlBuilder {
             if (isOptional) {
                 if (defaultValue.isPresent()) {
                     // If optional and has default, use the value if present, otherwise use default
+                    // Both Optional and OptionalNullable support .orElse(default)
                     codeBlock.addStatement(
                             "$T.addQueryParameter($L, $S, $L.$N().orElse($L), $L)",
                             context.getPoetClassNameFactory().getQueryStringMapperClassName(),
@@ -176,17 +178,33 @@ public final class HttpUrlBuilder {
                             defaultValue.get(),
                             queryParamProperty.allowMultiple());
                 } else {
-                    // If optional but no default, only add if present
-                    codeBlock.beginControlFlow(
-                            "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
-                    codeBlock.addStatement(
-                            "$T.addQueryParameter($L, $S, $L, $L)",
-                            context.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                            httpUrlname,
-                            queryParamProperty.wireKey().get(),
-                            CodeBlock.of("$L.$N().get()", requestName, queryParamProperty.getterProperty()),
-                            queryParamProperty.allowMultiple());
-                    codeBlock.endControlFlow();
+                    // If optional but no default, only add if present/specified
+                    if (isOptionalNullable) {
+                        // For OptionalNullable, use !isAbsent() to check if the value was specified
+                        // (either as a value or explicitly as null)
+                        codeBlock.beginControlFlow(
+                                "if (!$L.$N().isAbsent())", requestName, queryParamProperty.getterProperty());
+                        codeBlock.addStatement(
+                                "$T.addQueryParameter($L, $S, $L, $L)",
+                                context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                                httpUrlname,
+                                queryParamProperty.wireKey().get(),
+                                CodeBlock.of("$L.$N().orElse(null)", requestName, queryParamProperty.getterProperty()),
+                                queryParamProperty.allowMultiple());
+                        codeBlock.endControlFlow();
+                    } else {
+                        // For regular Optional, use isPresent()
+                        codeBlock.beginControlFlow(
+                                "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
+                        codeBlock.addStatement(
+                                "$T.addQueryParameter($L, $S, $L, $L)",
+                                context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                                httpUrlname,
+                                queryParamProperty.wireKey().get(),
+                                CodeBlock.of("$L.$N().get()", requestName, queryParamProperty.getterProperty()),
+                                queryParamProperty.allowMultiple());
+                        codeBlock.endControlFlow();
+                    }
                 }
             } else {
                 // Not optional, add directly
@@ -199,6 +217,18 @@ public final class HttpUrlBuilder {
                         queryParamProperty.allowMultiple());
             }
         });
+        // Add additional query parameters from RequestOptions (these override request-defined parameters)
+        // Only emit this block when the calling method has requestOptions in scope
+        if (hasRequestOptions) {
+            codeBlock.beginControlFlow(
+                    "if ($L != null)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            codeBlock.beginControlFlow(
+                    "$L.getQueryParameters().forEach((_key, _value) ->",
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            codeBlock.addStatement("$L.addQueryParameter(_key, _value)", httpUrlname);
+            codeBlock.endControlFlow(")");
+            codeBlock.endControlFlow();
+        }
         return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
                 .inlineableBuild(CodeBlock.of("$L.build()", httpUrlname))
@@ -256,15 +286,8 @@ public final class HttpUrlBuilder {
             } else {
                 String paramName = poetPathParameter.poetParam().name;
                 if (inlinePathParams
-                        && poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ENDPOINT)
-                        && httpEndpoint.getSdkRequest().isPresent()) {
-                    paramName = httpEndpoint
-                                    .getSdkRequest()
-                                    .get()
-                                    .getRequestParameterName()
-                                    .getCamelCase()
-                                    .getSafeName()
-                            // TODO(agateno): How do we get the getter name from the request body file?
+                        && poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ENDPOINT)) {
+                    paramName = requestName
                             + ".get" + paramName.substring(0, 1).toUpperCase(Locale.ROOT) + paramName.substring(1)
                             + "()";
                 }
@@ -368,9 +391,15 @@ public final class HttpUrlBuilder {
         return result;
     }
 
-    private static boolean isTypeNameOptional(TypeName typeName) {
+    private static boolean isTypeNameJavaOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+    }
+
+    private boolean isTypeNameOptionalNullable(TypeName typeName) {
+        return typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName)
+                        .rawType.equals(context.getPoetClassNameFactory().getOptionalNullableClassName());
     }
 
     @Value.Immutable

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user</a>(user_id: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user</a>(user_id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_user</a>(request: CreateUserRequest) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

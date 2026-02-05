@@ -12,6 +12,11 @@ export class FooTooMuch extends errors.SeedErrorsError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, FooTooMuch.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

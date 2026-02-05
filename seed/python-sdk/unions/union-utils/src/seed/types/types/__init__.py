@@ -7,16 +7,21 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .bar import Bar
+    from .first_item_type import FirstItemType
     from .foo import Foo
     from .foo_extended import FooExtended
+    from .second_item_type import SecondItemType
     from .union import Union
     from .union_with_base_properties import UnionWithBaseProperties
     from .union_with_discriminant import UnionWithDiscriminant
     from .union_with_duplicate_primitive import UnionWithDuplicatePrimitive
     from .union_with_duplicate_types import UnionWithDuplicateTypes
+    from .union_with_duplicative_discriminants import UnionWithDuplicativeDiscriminants
     from .union_with_literal import UnionWithLiteral
     from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
     from .union_with_no_properties import UnionWithNoProperties
+    from .union_with_nullable_reference import UnionWithNullableReference
+    from .union_with_optional_reference import UnionWithOptionalReference
     from .union_with_optional_time import UnionWithOptionalTime
     from .union_with_primitive import UnionWithPrimitive
     from .union_with_same_number_types import UnionWithSameNumberTypes
@@ -27,16 +32,21 @@ if typing.TYPE_CHECKING:
     from .union_without_key import UnionWithoutKey
 _dynamic_imports: typing.Dict[str, str] = {
     "Bar": ".bar",
+    "FirstItemType": ".first_item_type",
     "Foo": ".foo",
     "FooExtended": ".foo_extended",
+    "SecondItemType": ".second_item_type",
     "Union": ".union",
     "UnionWithBaseProperties": ".union_with_base_properties",
     "UnionWithDiscriminant": ".union_with_discriminant",
     "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
+    "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "UnionWithNoProperties": ".union_with_no_properties",
+    "UnionWithNullableReference": ".union_with_nullable_reference",
+    "UnionWithOptionalReference": ".union_with_optional_reference",
     "UnionWithOptionalTime": ".union_with_optional_time",
     "UnionWithPrimitive": ".union_with_primitive",
     "UnionWithSameNumberTypes": ".union_with_same_number_types",
@@ -71,16 +81,21 @@ def __dir__():
 
 __all__ = [
     "Bar",
+    "FirstItemType",
     "Foo",
     "FooExtended",
+    "SecondItemType",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",
     "UnionWithDuplicatePrimitive",
     "UnionWithDuplicateTypes",
+    "UnionWithDuplicativeDiscriminants",
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",
+    "UnionWithNullableReference",
+    "UnionWithOptionalReference",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
     "UnionWithSameNumberTypes",

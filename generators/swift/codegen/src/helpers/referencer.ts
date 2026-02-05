@@ -35,6 +35,15 @@ export class Referencer {
         return swift.TypeReference.symbol(symbolRef);
     }
 
+    public referenceSourceTemplateType(templateId: swift.SourceTemplateFileId) {
+        const symbol = this.nameRegistry.getSourceTemplateSymbolOrThrow(templateId);
+        const symbolRef = this.nameRegistry.reference({
+            fromSymbol: this.fromSymbol,
+            toSymbol: symbol
+        });
+        return swift.TypeReference.symbol(symbolRef);
+    }
+
     public referenceType(symbol: swift.Symbol | string) {
         const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,

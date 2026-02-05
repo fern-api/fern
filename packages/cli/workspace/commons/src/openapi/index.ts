@@ -1,5 +1,10 @@
 export { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "./BaseOpenAPIWorkspace";
 export { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "./constants";
+export {
+    type APIDefinitionSettings,
+    getAPIDefinitionSettings,
+    getAPIDefinitionSettingsDefaults
+} from "./getAPIDefinitionSettings";
 export { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "./getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation";
 export { isOpenAPIV2 } from "./isOpenAPIV2";
 export { isOpenAPIV3 } from "./isOpenAPIV3";

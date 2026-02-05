@@ -23,8 +23,8 @@ import {
 import {
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
-    getParameterNameForPropertyPathParameterName,
     getPropertyKey,
+    getSdkParameterPropertyName,
     getTextOfTsNode,
     PackageId,
     TypeReferenceNode
@@ -62,6 +62,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         shouldInlinePathParameters: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -75,10 +76,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     protected includeSerdeLayer: boolean;
     protected retainOriginalCasing: boolean;
     protected inlineFileProperties: boolean;
-    private enableInlineTypes: boolean;
-    private _shouldInlinePathParameters: boolean;
+    private readonly enableInlineTypes: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         service,
@@ -89,9 +90,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         retainOriginalCasing,
         inlineFileProperties,
         enableInlineTypes,
-        shouldInlinePathParameters,
         formDataSupport,
-        flattenRequestParameters
+        flattenRequestParameters,
+        parameterNaming
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -101,17 +102,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.enableInlineTypes = enableInlineTypes;
-        this._shouldInlinePathParameters = shouldInlinePathParameters;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
+        this.parameterNaming = parameterNaming;
     }
 
-    public shouldInlinePathParameters(): boolean {
-        return this._shouldInlinePathParameters;
+    public shouldInlinePathParameters(context: SdkContext): boolean {
+        return context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest);
     }
 
-    private getPathParamsForRequestWrapper(): PathParameter[] {
-        if (!this.shouldInlinePathParameters()) {
+    private getPathParamsForRequestWrapper(context: SdkContext): PathParameter[] {
+        if (!this.shouldInlinePathParameters(context)) {
             return [];
         }
 
@@ -130,7 +131,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             kind: StructureKind.Interface,
             name: this.wrapperName,
             isExported: true,
-            docs: docs != null ? [docs] : [],
+            docs: docs ? [docs] : [],
             properties: [],
             extends: []
         };
@@ -195,7 +196,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getRequestProperties(context: SdkContext): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
 
-        for (const pathParameter of this.getPathParamsForRequestWrapper()) {
+        for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
             const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
@@ -204,7 +205,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 safeName: getPropertyKey(propertyName.safeName),
                 type: type.typeNodeWithoutUndefined,
                 isOptional: type.isOptional || hasDefaultValue,
-                docs: pathParameter.docs != null ? [pathParameter.docs] : undefined
+                docs: pathParameter.docs ? [pathParameter.docs] : undefined
             });
         }
 
@@ -222,7 +223,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                       ])
                     : type.typeNodeWithoutUndefined,
                 isOptional: type.isOptional || hasDefaultValue,
-                docs: queryParameter.docs != null ? [queryParameter.docs] : undefined
+                docs: queryParameter.docs ? [queryParameter.docs] : undefined
             });
         }
 
@@ -235,7 +236,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 safeName: getPropertyKey(headerName.safeName),
                 type: type.typeNodeWithoutUndefined,
                 isOptional: type.isOptional || hasDefaultValue,
-                docs: header.docs != null ? [header.docs] : undefined
+                docs: header.docs ? [header.docs] : undefined
             });
         }
 
@@ -274,7 +275,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             safeName: name,
                             type: type.typeNodeWithoutUndefined,
                             isOptional: type.isOptional,
-                            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+                            docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
                         };
                         properties.push(requestProperty);
                     }
@@ -292,7 +293,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                     safeName: getPropertyKey(propertyName.safeName),
                                     type: this.getFileParameterType(fileProperty, context),
                                     isOptional: fileProperty.isOptional,
-                                    docs: fileProperty.docs != null ? [fileProperty.docs] : undefined
+                                    docs: fileProperty.docs ? [fileProperty.docs] : undefined
                                 });
                             },
                             bodyProperty: (inlinedProperty) => {
@@ -357,7 +358,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             safeName: getPropertyKey(name.safeName),
             type: type.typeNodeWithoutUndefined,
             isOptional: type.isOptional,
-            docs: property.docs != null ? [property.docs] : undefined
+            docs: property.docs ? [property.docs] : undefined
         };
     }
 
@@ -524,7 +525,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
         const properties = [
-            ...this.getPathParamsForRequestWrapper().map((pathParameter) =>
+            ...this.getPathParamsForRequestWrapper(context).map((pathParameter) =>
                 this.getPropertyNameOfPathParameter(pathParameter)
             ),
             ...this.getAllQueryParameters().map((queryParameter) =>
@@ -545,7 +546,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getNonBodyKeysWithData(context: SdkContext): RequestWrapperNonBodyPropertyWithData[] {
         const properties: RequestWrapperNonBodyPropertyWithData[] = [
-            ...this.getPathParamsForRequestWrapper().map((pathParameter) => ({
+            ...this.getPathParamsForRequestWrapper(context).map((pathParameter) => ({
                 ...this.getPropertyNameOfPathParameter(pathParameter),
                 originalParameter: {
                     type: "path" as const,
@@ -595,7 +596,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private expensivelyComputeIfAllPropertiesAreOptional(context: SdkContext): boolean {
-        for (const pathParameter of this.getPathParamsForRequestWrapper()) {
+        for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
             if (!this.isTypeOptional(pathParameter.valueType, context)) {
                 return false;
             }
@@ -688,8 +689,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: getSdkParameterPropertyName({
+                name,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
+            })
         };
     }
 
@@ -700,8 +705,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: getSdkParameterPropertyName({
+                name,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
+            })
         };
     }
 
@@ -712,10 +721,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfPathParameterFromName(name: Name): RequestWrapperNonBodyProperty {
         return {
             safeName: name.camelCase.safeName,
-            propertyName: getParameterNameForPropertyPathParameterName({
+            propertyName: getSdkParameterPropertyName({
+                name,
                 includeSerdeLayer: this.includeSerdeLayer,
                 retainOriginalCasing: this.retainOriginalCasing,
-                pathParameterName: name
+                parameterNaming: this.parameterNaming
             })
         };
     }
@@ -727,8 +737,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: getSdkParameterPropertyName({
+                name,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
+            })
         };
     }
 
@@ -800,6 +814,25 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.retainOriginalCasing
             ? this.endpoint.sdkRequest.shape.bodyKey.originalName
             : this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName;
+    }
+
+    public hasBodyProperty(context: SdkContext): boolean {
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody == null) {
+            return false;
+        }
+        return HttpRequestBody._visit(requestBody, {
+            inlinedRequestBody: () => false,
+            reference: () => {
+                if (!this.flattenRequestParameters) {
+                    return true;
+                }
+                return false;
+            },
+            bytes: () => false,
+            fileUpload: () => false,
+            _other: () => false
+        });
     }
 
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
@@ -883,7 +916,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             safeName: name,
             type: type.typeNodeWithoutUndefined,
             isOptional: type.isOptional,
-            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+            docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
         });
         return properties;
     }
@@ -922,7 +955,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 safeName: getPropertyKey(propertyName.safeName),
                 type: typeNode,
                 isOptional: propertyType.isOptional || hasDefaultValue,
-                docs: property.docs != null ? [property.docs] : undefined
+                docs: property.docs ? [property.docs] : undefined
             });
         }
 

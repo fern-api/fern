@@ -7,7 +7,7 @@ import {
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, isExpressionUndefined } from "@fern-typescript/commons";
+import { createNumericLiteralSafe, GetReferenceOpts, isExpressionUndefined } from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -52,17 +52,17 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         }
                         return ts.factory.createStringLiteral(stringExample.original);
                     },
-                    integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
-                    double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
+                    integer: (integerExample) => createNumericLiteralSafe(integerExample),
+                    double: (doubleExample) => createNumericLiteralSafe(doubleExample),
                     long: (longExample) => {
                         if (this.useBigInt) {
                             return createBigIntLiteral(longExample);
                         }
-                        return ts.factory.createNumericLiteral(longExample);
+                        return createNumericLiteralSafe(longExample);
                     },
-                    uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
-                    uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
-                    float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
+                    uint: (uintExample) => createNumericLiteralSafe(uintExample),
+                    uint64: (uint64Example) => createNumericLiteralSafe(uint64Example),
+                    float: (floatExample) => createNumericLiteralSafe(floatExample),
                     bigInteger: (bigIntegerExample) => {
                         if (this.useBigInt) {
                             return createBigIntLiteral(bigIntegerExample);
@@ -218,14 +218,26 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
-                    integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
-                    double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
-                    long: (longExample) => ts.factory.createNumericLiteral(longExample),
+                    integer: (integerExample) =>
+                        integerExample < 0
+                            ? ts.factory.createStringLiteral(integerExample.toString())
+                            : ts.factory.createNumericLiteral(integerExample),
+                    double: (doubleExample) =>
+                        doubleExample < 0
+                            ? ts.factory.createStringLiteral(doubleExample.toString())
+                            : ts.factory.createNumericLiteral(doubleExample),
+                    long: (longExample) =>
+                        longExample < 0
+                            ? ts.factory.createStringLiteral(longExample.toString())
+                            : ts.factory.createNumericLiteral(longExample),
                     boolean: (booleanExample) =>
                         booleanExample ? ts.factory.createIdentifier("true") : ts.factory.createIdentifier("false"),
                     uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
                     uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
-                    float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
+                    float: (floatExample) =>
+                        floatExample < 0
+                            ? ts.factory.createStringLiteral(floatExample.toString())
+                            : ts.factory.createNumericLiteral(floatExample),
                     bigInteger: (bigIntegerExample) => ts.factory.createStringLiteral(bigIntegerExample),
                     base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),

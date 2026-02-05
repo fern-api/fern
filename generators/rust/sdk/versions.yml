@@ -1,4 +1,186 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 0.17.2
+  changelogEntry:
+    - summary: |
+        Add serde helpers for base64 and BigInt types to properly serialize/deserialize these types
+        in JSON. Add execute_request_base64 method for handling base64 primitive endpoint responses.
+        Fix union variant serde rename to be case-sensitive for proper JSON deserialization.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 0.17.1
+  changelogEntry:
+    - summary: |
+        Fix compilation errors when generating SDKs without streaming endpoints by conditionally
+        including sse_stream.rs only when streaming endpoints exist. Also fix missing FixedOffset
+        import for DateTime types when dateTimeType is set to "offset" (the default).
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 62
+
+- version: 0.17.0
+  changelogEntry:
+    - summary: |
+        Add OAuthTokenProvider for automatic OAuth token management with caching and refresh support.
+        The provider implements thread-safe token caching with a 2-minute expiration buffer,
+        double-checked locking pattern for concurrent access, and automatic token refresh.
+      type: feat
+  createdAt: "2026-01-22"
+  irVersion: 62
+
+- version: 0.16.0
+  changelogEntry:
+    - summary: |
+        Add `packageLicenseFile` config option to support custom license files. When set, uses `license-file` instead of `license` in Cargo.toml, allowing users to reference custom LICENSE.md files that are not standard SPDX identifiers.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
+- version: 0.15.0
+  changelogEntry:
+    - summary: |
+        Add platform headers (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version) to all HTTP
+        requests. These headers help identify SDK usage and version for API analytics and debugging.
+      type: feat
+  createdAt: "2026-01-21"
+  irVersion: 62
+
+- version: 0.14.3
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 62
+
+- version: 0.14.2
+  changelogEntry:
+    - summary: |
+        Remove redundant type imports from README code snippets. The prelude import already re-exports all types via `pub use crate::api::*;`, so the additional explicit type imports were unnecessary.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 62
+
+- version: 0.14.1
+  changelogEntry:
+    - summary: |
+        Support complex dependency specs in extraDependencies and extraDevDependencies config. Dependencies can now be specified as either version strings or full RustDependencySpec objects with features, optional, git, path, and other Cargo.toml options. Also made API key header name configurable via IR auth schemes.
+      type: chore
+  createdAt: "2026-01-08"
+  irVersion: 62
+
+- version: 0.14.0
+  changelogEntry:
+    - summary: |
+        Change default datetime type to `DateTime<FixedOffset>` with flexible parsing. This preserves original timezone offsets from server responses while accepting any datetime format (with or without timezone). When no timezone is provided, UTC is assumed. Use `dateTimeType: "utc"` to convert all datetimes to UTC instead.
+      type: feat
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 0.13.10
+  changelogEntry:
+    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+      type: chore
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 0.13.9
+  createdAt: "2025-12-24"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Preserve parameter order in dynamic snippets to match API schema definition order. Struct fields in generated Rust code now appear in the same order as defined in the API specification.
+  irVersion: 62
+
+- version: 0.13.8
+  createdAt: "2025-12-22"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix wire test request type naming to use IR declaration names instead of synthetic endpoint-based names. This ensures generated tests use correct type names like ResponseChargeBack instead of AddResponseRequest.
+  irVersion: 61
+
+- version: 0.13.7
+  createdAt: "2025-12-22"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix wire test compilation by avoiding Default::default() on non-Default types. Always explicitly provide all fields in generated wire tests instead of relying on Default trait derivation.
+  irVersion: 61
+
+- version: 0.13.6
+  createdAt: "2025-12-21"
+  changelogEntry:
+    - type: fix
+      summary: |
+        dynamic snippets to match struct naming and default handling
+  irVersion: 61
+
+- version: 0.13.5
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 0.13.4
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix getGitHubConfig to return RawGithubConfig with undefined values instead of throwing errors when publishing config is missing, aligning with TypeScript/Python generator behavior.
+  irVersion: 61
+
+- version: 0.13.3
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Remove error on null config in README generation.
+  irVersion: 61
+
+- version: 0.13.2
+  createdAt: "2025-11-25"
+  changelogEntry:
+    - type: chore
+      summary: |
+        add circular reference detection and Box wrapping for recursive types
+  irVersion: 61
+
+- version: 0.13.1
+  createdAt: "2025-11-24"
+  changelogEntry:
+    - type: chore
+      summary: |
+        improved docs.rs with module documentation and dynamic getting started snippets
+  irVersion: 61
+
+- version: 0.13.0
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        enable custom Cargo features and conditional dependency management
+  irVersion: 61
+
+- version: 0.12.1
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: chore
+      summary: |
+        Bump generator CLI version to publish new Docker image.
+  irVersion: 61
+
+- version: 0.12.0
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        add wire test generation with WireMock integration
+  irVersion: 61
+
 - version: 0.11.0
   createdAt: "2025-11-07"
   changelogEntry:

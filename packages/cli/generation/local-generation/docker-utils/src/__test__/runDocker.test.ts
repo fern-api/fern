@@ -5,7 +5,7 @@ import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 
-import { runDocker } from "../runDocker";
+import { runContainer } from "../runDocker";
 
 const promisifiedExec = promisify(exec);
 
@@ -30,11 +30,11 @@ beforeAll(async () => {
     await mkdir(HOST_OUTPUT_DIR);
 }, 60_000);
 
-describe("runDocker", () => {
+describe("runContainer", () => {
     it("basic-writer", async () => {
         const expectedOutputFilePath = "my-file.txt";
 
-        await runDocker({
+        await runContainer({
             logger: CONSOLE_LOGGER,
             imageName: BASIC_WRITER_IMAGE_NAME,
             args: [expectedOutputFilePath],

@@ -6,7 +6,23 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
  * Validator for JSON assertions in wire tests.
  */
 export class JsonValidator {
+    // Thresholds for deciding when to use resource files vs inline JSON
+    private static readonly INLINE_JSON_THRESHOLD_LINES = 50;
+    private static readonly INLINE_JSON_THRESHOLD_BYTES = 2048;
+
     constructor(private readonly context: SdkGeneratorContext) {}
+
+    /**
+     * Checks if JSON data should be stored in a resource file instead of inline.
+     * Returns true if the JSON exceeds size thresholds (50 lines or 2KB).
+     */
+    public shouldUseResourceFile(jsonData: unknown): boolean {
+        const json = JSON.stringify(jsonData, null, 2);
+        const lines = json.split("\n").length;
+        return (
+            lines > JsonValidator.INLINE_JSON_THRESHOLD_LINES || json.length > JsonValidator.INLINE_JSON_THRESHOLD_BYTES
+        );
+    }
 
     /**
      * Formats a JSON object as a multi-line Java string variable with proper concatenation.
@@ -39,6 +55,7 @@ export class JsonValidator {
     /**
      * Generates enhanced JSON validation with support for complex types
      * Provides better validation than basic JsonNode.equals() for unions, generics, etc.
+     * Uses numeric equivalence comparison to handle 149.0 vs 149.
      */
     public generateEnhancedJsonValidation(
         writer: Writer,
@@ -48,7 +65,7 @@ export class JsonValidator {
         expectedVarName: string
     ): void {
         writer.writeLine(
-            `Assertions.assertEquals(${expectedVarName}, ${actualVarName}, ` +
+            `Assertions.assertTrue(jsonEquals(${expectedVarName}, ${actualVarName}), ` +
                 `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
         );
 
@@ -98,7 +115,7 @@ export class JsonValidator {
     /**
      * Generates union type validation assertions
      */
-    private generateUnionTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+    private generateUnionTypeValidation(writer: Writer, jsonVarName: string, _context: string): void {
         writer.writeLine(
             `if (${jsonVarName}.has("type") || ${jsonVarName}.has("_type") || ${jsonVarName}.has("kind")) {`
         );
@@ -131,7 +148,7 @@ export class JsonValidator {
     /**
      * Generates validation for generic/collection types
      */
-    private generateGenericTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+    private generateGenericTypeValidation(writer: Writer, jsonVarName: string, _context: string): void {
         writer.writeLine("");
         writer.writeLine(`if (${jsonVarName}.isArray()) {`);
         writer.indent();

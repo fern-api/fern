@@ -25,6 +25,7 @@ export declare namespace Expression {
         | { type: "none" }
         | { type: "string-literal"; value: string }
         | { type: "number-literal"; value: number }
+        | { type: "float-literal"; value: number }
         | { type: "boolean-literal"; value: boolean }
         | { type: "format-string"; template: string; args: Expression[] }
         | { type: "vec-literal"; elements: Expression[] }
@@ -201,6 +202,14 @@ export class Expression extends AstNode {
             case "number-literal":
                 writer.write(this.args.value.toString());
                 break;
+
+            case "float-literal": {
+                // Ensure float literal format: integers become "N.0" for Rust compatibility
+                const floatValue = (this.args as Extract<Expression.Args, { type: "float-literal" }>).value;
+                const floatStr = Number.isInteger(floatValue) ? `${floatValue}.0` : floatValue.toString();
+                writer.write(floatStr);
+                break;
+            }
 
             case "boolean-literal":
                 writer.write(this.args.value.toString());
@@ -498,6 +507,10 @@ export class Expression extends AstNode {
 
     public static numberLiteral(value: number): Expression {
         return new Expression({ type: "number-literal", value });
+    }
+
+    public static floatLiteral(value: number): Expression {
+        return new Expression({ type: "float-literal", value });
     }
 
     public static booleanLiteral(value: boolean): Expression {

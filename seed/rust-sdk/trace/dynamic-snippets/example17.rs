@@ -11,7 +11,7 @@ async fn main() {
     client
         .playlist
         .update_playlist(
-            &1,
+            1,
             &PlaylistId("playlistId".to_string()),
             &Some(UpdatePlaylistRequest {
                 name: "name".to_string(),

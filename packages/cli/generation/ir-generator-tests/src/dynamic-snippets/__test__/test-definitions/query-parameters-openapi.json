@@ -1,6 +1,53 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_:SearchRequestNeighbor": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "SearchRequestNeighbor",
+                    "camelCase": {
+                        "unsafeName": "searchRequestNeighbor",
+                        "safeName": "searchRequestNeighbor"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_request_neighbor",
+                        "safeName": "search_request_neighbor"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_REQUEST_NEIGHBOR",
+                        "safeName": "SEARCH_REQUEST_NEIGHBOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchRequestNeighbor",
+                        "safeName": "SearchRequestNeighbor"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_:User"
+                },
+                {
+                    "type": "named",
+                    "value": "type_:NestedUser"
+                },
+                {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                {
+                    "type": "primitive",
+                    "value": "INTEGER"
+                }
+            ]
+        },
         "type_:SearchRequestNeighborRequired": {
             "type": "undiscriminatedUnion",
             "declaration": {
@@ -114,6 +161,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:User": {
@@ -215,6 +263,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:NestedUser": {
@@ -313,6 +362,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },
@@ -465,7 +515,7 @@
                         },
                         "typeReference": {
                             "type": "primitive",
-                            "value": "STRING"
+                            "value": "DATE"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -661,11 +711,8 @@
                                     "value": "STRING"
                                 },
                                 "value": {
-                                    "type": "optional",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             }
                         },
@@ -870,7 +917,7 @@
                             "type": "optional",
                             "value": {
                                 "type": "named",
-                                "value": "type_:User"
+                                "value": "type_:SearchRequestNeighbor"
                             }
                         },
                         "propertyAccess": null,

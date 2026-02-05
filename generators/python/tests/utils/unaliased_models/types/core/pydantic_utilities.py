@@ -2,6 +2,7 @@
 
 # nopycln: file
 import datetime as dt
+import inspect
 import typing
 from collections import defaultdict
 
@@ -57,7 +58,33 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
-    dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
+    # convert_and_respect_annotation_metadata is still needed for TypedDict aliasing.
+    #
+    # For Pydantic models, whether we should pre-dealias depends on whether the model uses real
+    # Pydantic aliases (Field(alias=...)) vs only FieldMetadata aliasing.
+    if inspect.isclass(type_) and issubclass(type_, pydantic.BaseModel):
+        has_pydantic_aliases = False
+        if IS_PYDANTIC_V2:
+            for field_name, field_info in getattr(type_, "model_fields", {}).items():  # type: ignore[attr-defined]
+                alias = getattr(field_info, "alias", None)
+                if alias is not None and alias != field_name:
+                    has_pydantic_aliases = True
+                    break
+        else:
+            for field in getattr(type_, "__fields__", {}).values():
+                alias = getattr(field, "alias", None)
+                name = getattr(field, "name", None)
+                if alias is not None and name is not None and alias != name:
+                    has_pydantic_aliases = True
+                    break
+
+        dealiased_object = (
+            object_
+            if has_pydantic_aliases
+            else convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
+        )
+    else:
+        dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
     if IS_PYDANTIC_V2:
         adapter = pydantic.TypeAdapter(type_)  # type: ignore # Pydantic v2
         return adapter.validate_python(dealiased_object)

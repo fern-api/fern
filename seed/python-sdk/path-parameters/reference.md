@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization</a>(...)</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization</a>(...) -&gt; AsyncHttpResponse[Organization]</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ client.organizations.get_organization(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization_user</a>(...)</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ client.organizations.get_organization_user(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">search_organizations</a>(...)</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">search_organizations</a>(...) -&gt; AsyncHttpResponse[typing.List[Organization]]</code></summary>
 <dl>
 <dd>
 
@@ -211,7 +211,7 @@ client.organizations.search_organizations(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -275,7 +275,7 @@ client.user.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -348,7 +348,7 @@ client.user.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">update_user</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">update_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -430,7 +430,7 @@ client.user.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">search_users</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">search_users</a>(...) -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
 <dl>
 <dd>
 
@@ -503,7 +503,7 @@ client.user.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_metadata</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_metadata</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -571,6 +571,102 @@ client.user.get_user_metadata(
 <dd>
 
 **version:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_specifics</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedPathParameters
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.get_user_specifics(
+    user_id="user_id",
+    version=1,
+    thought="thought",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenant_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thought:** `str` 
     
 </dd>
 </dl>

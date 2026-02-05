@@ -12,7 +12,7 @@ from ...core.serialization import FieldMetadata
 
 class DebugMapValue(UniversalBaseModel):
     key_value_pairs: typing_extensions.Annotated[
-        typing.List["DebugKeyValuePairs"], FieldMetadata(alias="keyValuePairs")
+        typing.List["DebugKeyValuePairs"], FieldMetadata(alias="keyValuePairs"), pydantic.Field(alias="keyValuePairs")
     ]
 
     if IS_PYDANTIC_V2:
@@ -26,5 +26,6 @@ class DebugMapValue(UniversalBaseModel):
 
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
+from .debug_variable_value import DebugVariableValue  # noqa: E402, I001
 
-update_forward_refs(DebugMapValue)
+update_forward_refs(DebugMapValue, DebugKeyValuePairs=DebugKeyValuePairs, DebugVariableValue=DebugVariableValue)

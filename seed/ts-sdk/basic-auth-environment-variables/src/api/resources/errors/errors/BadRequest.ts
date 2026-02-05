@@ -10,6 +10,11 @@ export class BadRequest extends errors.SeedBasicAuthEnvironmentVariablesError {
             statusCode: 400,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, BadRequest.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

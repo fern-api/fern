@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: AnyOf Titled Test API
+  version: 1.0.0
+  description: Test API for anyOf with title field per OpenAPI spec
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /anyOf/titled:
+    post:
+      tags:
+        - anyOf Examples
+      summary: Example endpoint using anyOf with titles
+      description: Demonstrates anyOf with title field per OpenAPI spec.
+      operationId: anyOfExample
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - $ref: "#/components/schemas/AnyOfTitledA"
+                - $ref: "#/components/schemas/AnyOfTitledB"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        "400":
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: "#/components/schemas/AnyOfErrorTitledA"
+                  - $ref: "#/components/schemas/AnyOfErrorTitledB"
+
+components:
+  schemas:
+    AnyOfTitledA:
+      title: Option A
+      type: object
+      description: First variant for anyOf with title
+      required:
+        - optionA
+      properties:
+        optionA:
+          type: string
+    AnyOfTitledB:
+      title: Option B
+      type: object
+      description: Second variant for anyOf with title
+      required:
+        - optionB
+      properties:
+        optionB:
+          type: boolean
+    AnyOfErrorTitledA:
+      title: Field Error
+      type: object
+      description: AnyOf error variant A with title
+      required:
+        - fieldIssue
+      properties:
+        fieldIssue:
+          type: string
+    AnyOfErrorTitledB:
+      title: Format Error
+      type: object
+      description: AnyOf error variant B with title
+      required:
+        - formatIssue
+      properties:
+        formatIssue:
+          type: boolean

@@ -1,0 +1,275 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createAccount": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "name": "name",
+                  },
+                  "response": {
+                    "body": {
+                      "accountNumber": "accountNumber",
+                      "balance": 1.1,
+                      "email": "email",
+                      "id": "id",
+                      "name": "name",
+                      "pin": "pin",
+                      "securityQuestion": "securityQuestion",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/account",
+              "request": {
+                "body": "Account",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "Account",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createUser": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "email": "email",
+                    "password": "password",
+                    "username": "username",
+                  },
+                  "response": {
+                    "body": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "email": "email",
+                      "id": "id",
+                      "name": "name",
+                      "updatedAt": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/user",
+              "request": {
+                "body": {
+                  "properties": {
+                    "confirmPassword": "optional<string>",
+                    "email": "string",
+                    "password": "string",
+                    "username": "string",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "UserCreate",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Account": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "accountNumber": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "balance": {
+                "access": "read-only",
+                "type": "optional<double>",
+              },
+              "email": "optional<string>",
+              "id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "name": "string",
+              "pin": {
+                "access": "write-only",
+                "type": "optional<string>",
+              },
+              "securityQuestion": {
+                "access": "write-only",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "User": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "createdAt": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "email": "string",
+              "id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "name": "string",
+              "updatedAt": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createUser:
+      path: /user
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: UserCreate
+        body:
+          properties:
+            username: string
+            password: string
+            confirmPassword: optional<string>
+            email: string
+        content-type: application/json
+      response:
+        docs: Success
+        type: User
+        status-code: 200
+      examples:
+        - request:
+            username: username
+            password: password
+            email: email
+          response:
+            body:
+              id: id
+              createdAt: '2024-01-15T09:30:00Z'
+              updatedAt: '2024-01-15T09:30:00Z'
+              name: name
+              email: email
+    createAccount:
+      path: /account
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: Account
+        content-type: application/json
+      response:
+        docs: Success
+        type: Account
+        status-code: 200
+      examples:
+        - request:
+            name: name
+          response:
+            body:
+              id: id
+              accountNumber: accountNumber
+              balance: 1.1
+              pin: pin
+              securityQuestion: securityQuestion
+              name: name
+              email: email
+  source:
+    openapi: ../openapi.yml
+types:
+  User:
+    properties:
+      id:
+        type: optional<string>
+        access: read-only
+      createdAt:
+        type: optional<datetime>
+        access: read-only
+      updatedAt:
+        type: optional<datetime>
+        access: read-only
+      name: string
+      email: string
+    source:
+      openapi: ../openapi.yml
+  Account:
+    properties:
+      id:
+        type: optional<string>
+        access: read-only
+      accountNumber:
+        type: optional<string>
+        access: read-only
+      balance:
+        type: optional<double>
+        access: read-only
+      pin:
+        type: optional<string>
+        access: write-only
+      securityQuestion:
+        type: optional<string>
+        access: write-only
+      name: string
+      email: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "ReadOnly/WriteOnly Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: ReadOnly/WriteOnly Edge Cases
+",
+  },
+}

@@ -29,23 +29,27 @@ export async function runRemoteGenerationForDocsWorkspace({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
 }): Promise<void> {
-    const instances = docsWorkspace.config.instances;
-
     // Substitute templated environment variables:
-    // If the run is a preview, we'll substitute ALL environment variables as empty strings
+    // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
+    // environment variable even in preview mode. Will bubble up an error if the env var isn't found.
     //
-    // Otherwise, we'll attempt to read and replace the templated environment variable. Will
-    // bubble up an error if the env var isn't found.
+    // If substitute-env-vars is not enabled but the run is a preview, we'll substitute
+    // ALL environment variables as empty strings.
     //
     // Although this logic is separate from generating a remote, placing it here helps us
     // avoid making cascading changes to other workflows.
     // docsWorkspace = substituteEnvVariables(docsWorkspace, context, { substituteAsEmpty: preview });
+    const shouldSubstituteAsEmpty = preview && !docsWorkspace.config.settings?.substituteEnvVars;
     docsWorkspace.config = replaceEnvVariables(
         docsWorkspace.config,
         // Wrap in a closure for correct binding of `this` downstream
         { onError: (e) => context.failAndThrow(e) },
-        { substituteAsEmpty: preview }
+        { substituteAsEmpty: shouldSubstituteAsEmpty }
     );
+
+    // Get instances after env var substitution has been applied to the config
+    // This ensures the full instance object including custom domains goes through env var replacement
+    const instances = docsWorkspace.config.instances;
 
     if (instances.length === 0) {
         context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
@@ -75,7 +79,13 @@ export async function runRemoteGenerationForDocsWorkspace({
         }
     }
 
+    context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
+    context.logger.debug(
+        `Organization: ${organization}, Preview: ${preview}, APIs: ${apiWorkspaces.length}, OSS: ${ossWorkspaces.length}`
+    );
+
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
+        const publishStart = performance.now();
         await publishDocs({
             docsWorkspace,
             customDomains,
@@ -90,12 +100,18 @@ export async function runRemoteGenerationForDocsWorkspace({
             isPrivate: maybeInstance.private,
             disableTemplates,
             skipUpload,
+            withAiExamples:
+                docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
+            excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
             targetAudiences: maybeInstance.audiences
                 ? Array.isArray(maybeInstance.audiences)
                     ? maybeInstance.audiences
                     : [maybeInstance.audiences]
-                : undefined
+                : undefined,
+            docsUrl: maybeInstance.url
         });
+        const publishTime = performance.now() - publishStart;
+        context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
     return;
 }

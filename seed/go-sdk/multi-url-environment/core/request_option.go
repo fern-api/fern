@@ -18,6 +18,7 @@ type RequestOption interface {
 // to be used directly; use the option package instead.
 type RequestOptions struct {
 	BaseURL         string
+	Environment     interface{}
 	HTTPClient      HTTPClient
 	HTTPHeader      http.Header
 	BodyProperties  map[string]interface{}
@@ -56,7 +57,7 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/multi-url-environment/fern")
-	headers.Set("X-Fern-SDK-Version", "0.0.1")
+	headers.Set("X-Fern-SDK-Version", "v0.0.1")
 	headers.Set("User-Agent", "github.com/multi-url-environment/fern/0.0.1")
 	return headers
 }
@@ -113,6 +114,15 @@ type MaxAttemptsOption struct {
 
 func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
+}
+
+// EnvironmentOption implements the RequestOption interface.
+type EnvironmentOption struct {
+	Environment interface{}
+}
+
+func (e *EnvironmentOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Environment = e.Environment
 }
 
 // TokenOption implements the RequestOption interface.

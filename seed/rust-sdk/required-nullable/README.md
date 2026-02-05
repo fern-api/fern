@@ -5,6 +5,20 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -42,6 +56,8 @@ async fn main() {
             &GetFooQueryRequest {
                 required_baz: "required_baz".to_string(),
                 required_nullable_baz: Some("required_nullable_baz".to_string()),
+                optional_baz: None,
+                optional_nullable_baz: None,
             },
             None,
         )

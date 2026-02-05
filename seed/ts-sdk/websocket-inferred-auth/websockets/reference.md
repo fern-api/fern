@@ -42,7 +42,7 @@ await client.auth.getTokenWithClientCredentials({
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions` 
+**requestOptions:** `AuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -97,7 +97,7 @@ await client.auth.refreshToken({
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions` 
+**requestOptions:** `AuthClient.RequestOptions` 
     
 </dd>
 </dl>

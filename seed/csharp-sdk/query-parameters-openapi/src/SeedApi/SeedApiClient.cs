@@ -3,13 +3,14 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class SeedApiClient
+public partial class SeedApiClient : ISeedApiClient
 {
     private readonly RawClient _client;
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -18,8 +19,7 @@ public partial class SeedApiClient
                 { "User-Agent", "Fernquery-parameters-openapi/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,13 +29,95 @@ public partial class SeedApiClient
         _client = new RawClient(clientOptions);
     }
 
+    private async Task<WithRawResponse<SearchResponse>> SearchAsyncCore(
+        SearchRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 16)
+            .Add("limit", request.Limit)
+            .Add("id", request.Id)
+            .Add("date", request.Date)
+            .Add("deadline", request.Deadline)
+            .Add("bytes", request.Bytes)
+            .AddDeepObject("user", request.User)
+            .AddDeepObject("userList", request.UserList)
+            .Add("optionalDeadline", request.OptionalDeadline)
+            .Add("keyValue", request.KeyValue)
+            .Add("optionalString", request.OptionalString)
+            .AddDeepObject("nestedUser", request.NestedUser)
+            .AddDeepObject("optionalUser", request.OptionalUser)
+            .AddDeepObject("excludeUser", request.ExcludeUser)
+            .Add("filter", request.Filter)
+            .AddDeepObject("neighbor", request.Neighbor)
+            .AddDeepObject("neighborRequired", request.NeighborRequired)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "user/getUsername",
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
+                return new WithRawResponse<SearchResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     /// <example><code>
     /// await client.SearchAsync(
     ///     new SearchRequest
     ///     {
     ///         Limit = 1,
     ///         Id = "id",
-    ///         Date = "date",
+    ///         Date = new DateOnly(2023, 1, 15),
     ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Bytes = "bytes",
     ///         User = new User
@@ -52,7 +134,7 @@ public partial class SeedApiClient
     ///             },
     ///         ],
     ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         KeyValue = new Dictionary&lt;string, string?&gt;() { { "keyValue", "keyValue" } },
+    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "keyValue", "keyValue" } },
     ///         OptionalString = "optionalString",
     ///         NestedUser = new NestedUser
     ///         {
@@ -90,86 +172,14 @@ public partial class SeedApiClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<SearchResponse> SearchAsync(
+    public WithRawResponseTask<SearchResponse> SearchAsync(
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["limit"] = request.Limit.ToString();
-        _query["id"] = request.Id;
-        _query["date"] = request.Date;
-        _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
-        _query["bytes"] = request.Bytes;
-        _query["user"] = JsonUtils.Serialize(request.User);
-        _query["userList"] = request
-            .UserList.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["excludeUser"] = request
-            .ExcludeUser.Select(_value => JsonUtils.Serialize(_value))
-            .ToList();
-        _query["filter"] = request.Filter;
-        _query["neighborRequired"] = JsonUtils.Serialize(request.NeighborRequired);
-        if (request.OptionalDeadline != null)
-        {
-            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
-                Constants.DateTimeFormat
-            );
-        }
-        if (request.KeyValue != null)
-        {
-            _query["keyValue"] = JsonUtils.Serialize(request.KeyValue);
-        }
-        if (request.OptionalString != null)
-        {
-            _query["optionalString"] = request.OptionalString;
-        }
-        if (request.NestedUser != null)
-        {
-            _query["nestedUser"] = JsonUtils.Serialize(request.NestedUser);
-        }
-        if (request.OptionalUser != null)
-        {
-            _query["optionalUser"] = JsonUtils.Serialize(request.OptionalUser);
-        }
-        if (request.Neighbor != null)
-        {
-            _query["neighbor"] = JsonUtils.Serialize(request.Neighbor);
-        }
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = "user/getUsername",
-                    Query = _query,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<SearchResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask<SearchResponse>(
+            SearchAsyncCore(request, options, cancellationToken)
+        );
     }
 }

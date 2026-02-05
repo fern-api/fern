@@ -23,7 +23,11 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ruby.Type {
-        return ruby.Type.void();
+        if (this.requestBodyShape.type === "named") {
+            const classRef = this.context.getReferenceToTypeId(this.requestBodyShape.typeId);
+            return ruby.Type.class_({ name: classRef.name, modules: classRef.modules });
+        }
+        return ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped());
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -38,7 +42,15 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         return {
             requestBodyReference: ruby.codeblock((writer) => {
                 if (this.requestBodyShape.type === "named") {
-                    writer.write(`${this.context.getReferenceToTypeId(this.requestBodyShape.typeId)}.new(params).to_h`);
+                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(this.requestBodyShape.typeId);
+                    // Enums and aliases are modules, not classes, so they don't have a .new() method
+                    if (typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias") {
+                        writer.write(`params`);
+                    } else {
+                        writer.write(
+                            `${this.context.getReferenceToTypeId(this.requestBodyShape.typeId)}.new(params).to_h`
+                        );
+                    }
                 } else {
                     writer.write(`params`);
                 }

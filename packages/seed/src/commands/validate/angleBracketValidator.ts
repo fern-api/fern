@@ -8,7 +8,7 @@ export interface ChangelogEntry {
 }
 
 /**
- * Validates that angle brackets in changelog entries are properly escaped with backticks.
+ * Validates that angle brackets and curly braces in changelog entries are properly escaped with backticks.
  * This prevents breaking the docs publishing workflow.
  *
  * Returns an array of error messages for any violations found.
@@ -19,14 +19,36 @@ export function validateAngleBracketEscaping(entry: ChangelogEntry): string[] {
     if (entry.changelogEntry && Array.isArray(entry.changelogEntry)) {
         for (const changelogItem of entry.changelogEntry) {
             if (changelogItem.summary && typeof changelogItem.summary === "string") {
-                const unescapedBrackets = findUnescapedAngleBrackets(changelogItem.summary);
+                const unescapedAngleBrackets = findUnescapedAngleBrackets(changelogItem.summary);
 
-                if (unescapedBrackets.length > 0) {
+                if (unescapedAngleBrackets.length > 0) {
                     const version = entry.version || "unknown";
                     errors.push(
                         `Version ${version}: Found unescaped angle brackets in changelog summary. ` +
-                            `Patterns like ${unescapedBrackets.map((p) => `"${p}"`).join(", ")} should be wrapped in backticks. ` +
-                            `Example: \`${unescapedBrackets[0]}\``
+                            `Patterns like ${unescapedAngleBrackets.map((p) => `"${p}"`).join(", ")} should be wrapped in backticks. ` +
+                            `Example: \`${unescapedAngleBrackets[0]}\``
+                    );
+                }
+
+                const unescapedCurlyBraces = findUnescapedCurlyBraces(changelogItem.summary);
+
+                if (unescapedCurlyBraces.length > 0) {
+                    const version = entry.version || "unknown";
+                    errors.push(
+                        `Version ${version}: Found unescaped curly braces in changelog summary. ` +
+                            `Patterns like ${unescapedCurlyBraces.map((p) => `"${p}"`).join(", ")} should be wrapped in backticks. ` +
+                            `Example: \`${unescapedCurlyBraces[0]}\``
+                    );
+                }
+
+                const doubleBacktickErrors = findDoubleBackticks(changelogItem.summary);
+
+                if (doubleBacktickErrors.length > 0) {
+                    const version = entry.version || "unknown";
+                    errors.push(
+                        `Version ${version}: Found double backticks in changelog summary. ` +
+                            `This breaks the docs parsing. Found: ${doubleBacktickErrors.map((p) => `"${p}"`).join(", ")}. ` +
+                            `Make sure to close backticks properly (use single backticks, not double).`
                     );
                 }
             }
@@ -52,4 +74,63 @@ export function findUnescapedAngleBrackets(text: string): string[] {
     }
 
     return patterns;
+}
+
+export function findUnescapedCurlyBraces(text: string): string[] {
+    const patterns: string[] = [];
+
+    let textWithoutCodeBlocks = text.replace(/```[\s\S]*?```/g, "");
+
+    const textWithoutBackticks = textWithoutCodeBlocks.replace(/`[^`]*`/g, "");
+
+    const curlyPattern = /\{[^}]*\}/g;
+    const matches = textWithoutBackticks.match(curlyPattern);
+
+    if (matches) {
+        const uniquePatterns = [...new Set(matches)];
+        patterns.push(...uniquePatterns);
+    }
+
+    return patterns;
+}
+
+/**
+ * Finds instances of exactly double backticks (`` but not ```) in text.
+ * Double backticks can break MDX parsing in the docs.
+ * Triple backticks (```) are allowed as they're used for fenced code blocks.
+ *
+ * Returns an array of problematic patterns found.
+ */
+export function findDoubleBackticks(text: string): string[] {
+    const patterns: string[] = [];
+
+    const textWithoutFences = stripFencedBlocks(text);
+    const textWithoutInline = stripBalancedInlineCode(textWithoutFences);
+
+    const doubleBacktickPattern = /(?<!`)``(?!`)/g;
+    const matches = textWithoutInline.match(doubleBacktickPattern);
+
+    if (matches) {
+        patterns.push("``");
+    }
+
+    return patterns;
+}
+
+function stripFencedBlocks(text: string): string {
+    const tripleFencePattern = /(^|\r?\n)[ \t]*```[^\r\n]*\r?\n[\s\S]*?\r?\n[ \t]*```[ \t]*(?=\r?\n|$)/g;
+    return text.replace(tripleFencePattern, "$1");
+}
+
+function stripBalancedInlineCode(text: string): string {
+    const inlineCodePattern = /(`+)[\s\S]*?\1/g;
+
+    let previous: string;
+    let result = text;
+    do {
+        previous = result;
+        result = result.replace(inlineCodePattern, "");
+    } while (result !== previous);
+
+    return result;
 }

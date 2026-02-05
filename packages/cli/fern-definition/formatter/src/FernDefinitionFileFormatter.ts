@@ -1,6 +1,6 @@
 import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import * as prettier from "prettier2";
+import * as YAML from "yaml";
 
 const LANG_SERVER_BANNER =
     "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json";
@@ -66,9 +66,15 @@ export class FernDefinitionFileFormatter {
     }
 
     private async prettierFormat(content: string): Promise<string> {
-        return prettier.format(content, {
-            parser: "yaml"
-        });
+        try {
+            const parsed = YAML.parseDocument(content);
+            return parsed.toString({
+                lineWidth: 0, // Disable line wrapping
+                minContentWidth: 0
+            });
+        } catch (error) {
+            return content;
+        }
     }
 
     private writeNextLine({

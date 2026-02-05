@@ -4,8 +4,8 @@ import (
     client "github.com/file-upload-openapi/fern/client"
     option "github.com/file-upload-openapi/fern/option"
     fern "github.com/file-upload-openapi/fern"
-    context "context"
     strings "strings"
+    context "context"
 )
 
 func do() {
@@ -15,13 +15,13 @@ func do() {
         ),
     )
     request := &fern.UploadFileRequest{
+        File: strings.NewReader(
+            "",
+        ),
         Name: "name",
     }
     client.FileUploadExample.UploadFile(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
         request,
     )
 }

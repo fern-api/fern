@@ -46,6 +46,7 @@ import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -106,28 +107,14 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         List<ObjectProperty> pathParameterObjectProperties = new ArrayList<>();
         List<ObjectProperty> fileObjectProperties = new ArrayList<>();
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
-        httpService.getHeaders().forEach(httpHeader -> {
-            TypeReference valueType = httpHeader.getValueType();
-            if (defaultValueExtractor.hasDefaultValue(valueType)) {
-                valueType = TypeReference.container(ContainerType.optional(valueType));
-            }
-            headerObjectProperties.add(ObjectProperty.builder()
-                    .name(httpHeader.getName())
-                    .valueType(valueType)
-                    .docs(httpHeader.getDocs())
-                    .build());
-        });
-        httpEndpoint.getHeaders().forEach(httpHeader -> {
-            TypeReference valueType = httpHeader.getValueType();
-            if (defaultValueExtractor.hasDefaultValue(valueType)) {
-                valueType = TypeReference.container(ContainerType.optional(valueType));
-            }
-            headerObjectProperties.add(ObjectProperty.builder()
-                    .name(httpHeader.getName())
-                    .valueType(valueType)
-                    .docs(httpHeader.getDocs())
-                    .build());
-        });
+        // Map SDK parameter names (camelCase) to HTTP wire values for headers
+        Map<String, String> headerWireValues = new HashMap<>();
+        httpService
+                .getHeaders()
+                .forEach(httpHeader -> processHeader(httpHeader, headerWireValues, headerObjectProperties, "service"));
+        httpEndpoint
+                .getHeaders()
+                .forEach(httpHeader -> processHeader(httpHeader, headerWireValues, headerObjectProperties, "endpoint"));
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
             TypeReference valueType = queryParameter.getValueType();
             boolean hasDefault = defaultValueExtractor.hasDefaultValue(valueType);
@@ -269,6 +256,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
+                .putAllHeaderWireValues(headerWireValues)
                 .addAllQueryParams(queryParameterObjectProperties.stream()
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
@@ -278,6 +266,44 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+    /**
+     * Processes an HTTP header, storing its wire value in the map and creating the corresponding ObjectProperty.
+     *
+     * @param httpHeader The HTTP header to process
+     * @param headerWireValues Map to store SDK name -> wire value mapping
+     * @param headerObjectProperties List to add the created ObjectProperty to
+     * @param source Source of the header ("service" or "endpoint") for logging purposes
+     */
+    private void processHeader(
+            HttpHeader httpHeader,
+            Map<String, String> headerWireValues,
+            List<ObjectProperty> headerObjectProperties,
+            String source) {
+        TypeReference valueType = httpHeader.getValueType();
+        if (defaultValueExtractor.hasDefaultValue(valueType)) {
+            valueType = TypeReference.container(ContainerType.optional(valueType));
+        }
+        String sdkName = httpHeader.getName().getName().getCamelCase().getSafeName();
+        String wireValue = httpHeader.getName().getWireValue();
+        if (headerWireValues.containsKey(sdkName)) {
+            String existingWireValue = headerWireValues.get(sdkName);
+            if (!existingWireValue.equals(wireValue)) {
+                // This is expected when endpoint overrides service header, just informational
+                // but could indicate an issue if both are from the same source
+            }
+        }
+        headerWireValues.put(sdkName, wireValue);
+        NameAndWireValue nameWithoutWire = NameAndWireValue.builder()
+                .wireValue("")
+                .name(httpHeader.getName().getName())
+                .build();
+        headerObjectProperties.add(ObjectProperty.builder()
+                .name(nameWithoutWire)
+                .valueType(valueType)
+                .docs(httpHeader.getDocs())
+                .build());
     }
 
     private static final class RequestBodyGetterFactory implements HttpRequestBody.Visitor<RequestBodyGetter> {
@@ -412,7 +438,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         @Override
         public List<ObjectProperty> visitBytes(BytesRequest bytes) {
             TypeReference base64TypeReference = TypeReference.primitive(
-                    PrimitiveType.builder().v1(PrimitiveTypeV1.BASE_64).build());
+                    PrimitiveType.builder().v1(PrimitiveTypeV1.STRING).build());
             return List.of(ObjectProperty.builder()
                     .name(NameAndWireValue.builder()
                             .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())

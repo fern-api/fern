@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: nullable-request-body
+  description: This is a test API for nullable request body with a query param that's an object
+  version: ""
+paths:
+  /optional-request-body/{path_param}:
+    post:
+      tags:
+        - NullableRequestBody
+      summary: Post Nullable Request Body
+      description: Post a nullable request body
+      operationId: postOptionalRequestBodyPathParam
+      parameters:
+        - name: path_param
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Path Param
+        - name: query_param_object
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: "#/components/schemas/PlainObject"
+              - type: "null"
+            title: Final Status
+        - name: query_param_integer
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: integer
+              - type: "null"
+            title: Query Param Integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - $ref: "#/components/schemas/PlainObject"
+                - type: "null"
+              title: PlainObject
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Success
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlainObject"
+
+      x-fern-sdk-group-name: test_group
+      x-fern-sdk-method-name: test_method_name
+
+components:
+  schemas:
+    PlainObject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

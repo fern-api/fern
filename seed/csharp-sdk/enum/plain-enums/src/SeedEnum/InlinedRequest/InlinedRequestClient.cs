@@ -2,7 +2,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class InlinedRequestClient
+public partial class InlinedRequestClient : IInlinedRequestClient
 {
     private RawClient _client;
 
@@ -22,6 +22,12 @@ public partial class InlinedRequestClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +36,7 @@ public partial class InlinedRequestClient
                     Method = HttpMethod.Post,
                     Path = "inlined",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

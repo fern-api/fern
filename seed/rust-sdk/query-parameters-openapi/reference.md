@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option<i64>, id: Option<String>, date: Option<String>, deadline: Option<String>, bytes: Option<String>, user: Option<User>, optional_deadline: Option<Option<String>>, key_value: Option<Option<std::collections::HashMap<String, Option<String>>>>, optional_string: Option<Option<String>>, nested_user: Option<Option<NestedUser>>, optional_user: Option<Option<User>>, neighbor: Option<Option<User>>, neighbor_required: Option<SearchRequestNeighborRequired>) -> Result<SearchResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, optional_deadline: Option&lt;Option&lt;String&gt;&gt;, key_value: Option&lt;Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;&gt;, optional_string: Option&lt;Option&lt;String&gt;&gt;, nested_user: Option&lt;Option&lt;NestedUser&gt;&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;, neighbor: Option&lt;Option&lt;SearchRequestNeighbor&gt;&gt;, neighbor_required: Option&lt;SearchRequestNeighborRequired&gt;) -> Result&lt;SearchResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -25,10 +25,8 @@ async fn main() {
             &SearchQueryRequest {
                 limit: 1,
                 id: "id".to_string(),
-                date: "date".to_string(),
-                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 bytes: "bytes".to_string(),
                 user: User {
                     name: Some("name".to_string()),
@@ -39,13 +37,11 @@ async fn main() {
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 })],
                 optional_deadline: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
                 key_value: Some(HashMap::from([(
                     "keyValue".to_string(),
-                    Some("keyValue".to_string()),
+                    "keyValue".to_string(),
                 )])),
                 optional_string: Some("optionalString".to_string()),
                 nested_user: Some(NestedUser {
@@ -64,10 +60,10 @@ async fn main() {
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 })],
                 filter: vec![Some("filter".to_string())],
-                neighbor: Some(User {
+                neighbor: Some(SearchRequestNeighbor::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
-                }),
+                })),
                 neighbor_required: SearchRequestNeighborRequired::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
@@ -155,7 +151,7 @@ async fn main() {
 <dl>
 <dd>
 
-**key_value:** `Option<std::collections::HashMap<String, Option<String>>>` 
+**key_value:** `Option<std::collections::HashMap<String, String>>` 
     
 </dd>
 </dl>
@@ -203,7 +199,7 @@ async fn main() {
 <dl>
 <dd>
 
-**neighbor:** `Option<User>` 
+**neighbor:** `Option<SearchRequestNeighbor>` 
     
 </dd>
 </dl>

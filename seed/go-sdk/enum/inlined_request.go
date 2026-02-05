@@ -16,7 +16,7 @@ var (
 type SendEnumInlinedRequest struct {
 	Operand             Operand         `json:"operand" url:"-"`
 	MaybeOperand        *Operand        `json:"maybeOperand,omitempty" url:"-"`
-	OperandOrColor      *ColorOrOperand `json:"operandOrColor,omitempty" url:"-"`
+	OperandOrColor      *ColorOrOperand `json:"operandOrColor" url:"-"`
 	MaybeOperandOrColor *ColorOrOperand `json:"maybeOperandOrColor,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted

@@ -3,6 +3,10 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: ERRORS
+    description: |
+      The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
+
   - id: REQUEST_TYPES
     description: |
       The SDK exports all request types as Swift structs. Simply import the SDK module to access them:

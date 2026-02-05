@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: Code Samples Test API
+  version: 1.0.0
+  description: API for testing x-codeSamples extension in FDR pipeline
+
+paths:
+  /users/{userId}:
+    get:
+      operationId: getUser
+      summary: Get a user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+      x-codeSamples:
+        - lang: python
+          label: Python SDK
+          source: |-
+            from example_sdk import ExampleClient
+
+            client = ExampleClient(api_key="your-api-key")
+            user = client.users.get(user_id="123")
+            print(user.name)
+        - lang: typescript
+          label: TypeScript SDK
+          source: |-
+            import { ExampleClient } from '@example/sdk';
+
+            const client = new ExampleClient({
+              apiKey: 'your-api-key'
+            });
+
+            const user = await client.users.get('123');
+            console.log(user.name);
+        - lang: go
+          label: Go SDK
+          source: |-
+            package main
+
+            import (
+                "fmt"
+                "github.com/example/sdk-go"
+            )
+
+            func main() {
+                client := sdk.NewClient("your-api-key")
+                user, err := client.Users.Get("123")
+                if err != nil {
+                    panic(err)
+                }
+                fmt.Println(user.Name)
+            }

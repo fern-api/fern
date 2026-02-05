@@ -135,7 +135,7 @@ function filterExampleTypeReference({
                         ExampleContainer.map({
                             ...m,
                             map: m.map
-                                .map((v) => {
+                                .map((v: ExampleKeyValuePair) => {
                                     const filteredKey = filterExampleTypeReference({
                                         filteredIr,
                                         exampleTypeReference: v.key
@@ -148,7 +148,9 @@ function filterExampleTypeReference({
                                         ? { key: filteredKey, value: filteredValue }
                                         : undefined;
                                 })
-                                .filter((t): t is ExampleKeyValuePair => t !== undefined)
+                                .filter(
+                                    (t: ExampleKeyValuePair | undefined): t is ExampleKeyValuePair => t !== undefined
+                                )
                         })
                     )
                 }),
@@ -324,12 +326,12 @@ function filterExampleRequestBody({
             return {
                 ...requestBody,
                 properties: inlined.properties
-                    .filter((p) =>
+                    .filter((p: ExampleInlinedRequestBodyProperty) =>
                         p.originalTypeDeclaration
                             ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
                             : true
                     )
-                    .map((property) => {
+                    .map((property: ExampleInlinedRequestBodyProperty) => {
                         const filteredProperty = filterExampleTypeReference({
                             filteredIr,
                             exampleTypeReference: property.value

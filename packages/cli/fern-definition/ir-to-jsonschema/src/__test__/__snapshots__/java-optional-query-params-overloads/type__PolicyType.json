@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "HEALTH",
+    "AUTO",
+    "HOME",
+    "LIFE"
+  ],
+  "definitions": {}
+}

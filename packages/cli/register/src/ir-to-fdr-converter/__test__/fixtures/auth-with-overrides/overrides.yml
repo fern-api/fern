@@ -1,0 +1,12 @@
+paths:
+  /users:
+    get:
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: list
+      summary: List all users with custom SDK naming
+
+  /users/{id}:
+    get:
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: get
+      summary: Retrieve a specific user by ID

@@ -1,7 +1,7 @@
 namespace <%= namespace%>;
 
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-internal class JsonAccessAttribute(JsonAccessType accessType) : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Property | global::System.AttributeTargets.Field)]
+internal class JsonAccessAttribute(JsonAccessType accessType) : global::System.Attribute
 {
     internal JsonAccessType AccessType { get; init; } = accessType;
 }

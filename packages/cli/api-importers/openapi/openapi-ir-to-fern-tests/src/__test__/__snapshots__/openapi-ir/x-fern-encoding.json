@@ -52,7 +52,7 @@
                 "schema": {
                   "type": "double"
                 },
-                "generatedName": "MetadataValue",
+                "generatedName": "MetadataValueZero",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -60,7 +60,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "MetadataValue",
+                "generatedName": "MetadataValueOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -68,13 +68,13 @@
                 "schema": {
                   "type": "boolean"
                 },
-                "generatedName": "MetadataValue",
+                "generatedName": "MetadataValueTwo",
                 "groupName": [],
                 "type": "primitive"
               },
               {
                 "value": {
-                  "generatedName": "MetadataValueItem",
+                  "generatedName": "MetadataValueThreeItem",
                   "schema": "Value",
                   "source": {
                     "file": "../openapi.yml",
@@ -82,7 +82,7 @@
                   },
                   "type": "reference"
                 },
-                "generatedName": "MetadataValue",
+                "generatedName": "MetadataValueThree",
                 "groupName": [],
                 "type": "array"
               }

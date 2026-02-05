@@ -3,7 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum Node {
-        BranchNode(BranchNode),
+        BranchNode(Box<BranchNode>),
 
         LeafNode(LeafNode),
 }
@@ -18,7 +18,7 @@ impl Node {
     }
 
 
-    pub fn as_branchnode(&self) -> Option<&BranchNode> {
+    pub fn as_branchnode(&self) -> Option<&Box<BranchNode>> {
         match self {
                     Self::BranchNode(value) => Some(value),
                     _ => None,
@@ -27,7 +27,7 @@ impl Node {
 
     pub fn into_branchnode(self) -> Option<BranchNode> {
         match self {
-                    Self::BranchNode(value) => Some(value),
+                    Self::BranchNode(value) => Some(*value),
                     _ => None,
                 }
     }

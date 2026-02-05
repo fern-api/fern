@@ -124,6 +124,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_inlined:SomeAliasedLiteral": {
@@ -298,6 +299,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_inlined:ANestedLiteral": {
@@ -401,6 +403,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_inlined:DiscriminatedLiteral": {
@@ -1163,6 +1166,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_reference:ContainerObject": {
@@ -1266,6 +1270,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_reference:NestedObjectWithLiterals": {
@@ -1432,6 +1437,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_reference:SomeLiteral": {

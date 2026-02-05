@@ -23,6 +23,7 @@ it.skip("generates slug for endpoint", () => {
         defaultEnvironment: undefined,
         environments: [],
         auth: [],
+        multiAuth: undefined,
         responseHeaders: [],
         requests: [],
         errors: [],
@@ -83,6 +84,7 @@ it.skip("generates slug for webhook", () => {
         availability: undefined,
         headers: [],
         payloads: [],
+        responses: [],
         description: undefined
     };
     expect(

@@ -77,7 +77,9 @@ public final class DebugMapValue {
     )
     public Builder keyValuePairs(List<DebugKeyValuePairs> keyValuePairs) {
       this.keyValuePairs.clear();
-      this.keyValuePairs.addAll(keyValuePairs);
+      if (keyValuePairs != null) {
+        this.keyValuePairs.addAll(keyValuePairs);
+      }
       return this;
     }
 
@@ -87,7 +89,9 @@ public final class DebugMapValue {
     }
 
     public Builder addAllKeyValuePairs(List<DebugKeyValuePairs> keyValuePairs) {
-      this.keyValuePairs.addAll(keyValuePairs);
+      if (keyValuePairs != null) {
+        this.keyValuePairs.addAll(keyValuePairs);
+      }
       return this;
     }
 

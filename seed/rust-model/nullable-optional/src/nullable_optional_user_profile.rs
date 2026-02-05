@@ -16,7 +16,9 @@ pub struct UserProfile {
     pub nullable_boolean: Option<bool>,
     #[serde(rename = "nullableDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_date: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub nullable_date: Option<DateTime<FixedOffset>>,
     #[serde(rename = "nullableObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_object: Option<Address>,
@@ -37,7 +39,9 @@ pub struct UserProfile {
     pub optional_boolean: Option<bool>,
     #[serde(rename = "optionalDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_date: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub optional_date: Option<DateTime<FixedOffset>>,
     #[serde(rename = "optionalObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_object: Option<Address>,

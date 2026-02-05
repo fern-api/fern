@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMultiUrlEnvironmentNoDefaultEnvironment, SeedMultiUrlEnvironmentNoDefaultClient } from \"@fern/multi-url-environment-no-default\";\n\nconst client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.ec2.bootInstance({\n    size: \"size\"\n});\n"
+                "client": "import { SeedMultiUrlEnvironmentNoDefaultClient, SeedMultiUrlEnvironmentNoDefaultEnvironment } from \"@fern/multi-url-environment-no-default\";\n\nconst client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.ec2.bootInstance({\n    size: \"size\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMultiUrlEnvironmentNoDefaultEnvironment, SeedMultiUrlEnvironmentNoDefaultClient } from \"@fern/multi-url-environment-no-default\";\n\nconst client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.s3.getPresignedUrl({\n    s3Key: \"s3Key\"\n});\n"
+                "client": "import { SeedMultiUrlEnvironmentNoDefaultClient, SeedMultiUrlEnvironmentNoDefaultEnvironment } from \"@fern/multi-url-environment-no-default\";\n\nconst client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.s3.getPresignedUrl({\n    s3Key: \"s3Key\"\n});\n"
             }
         }
     ],

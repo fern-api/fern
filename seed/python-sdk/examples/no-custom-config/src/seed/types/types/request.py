@@ -17,7 +17,7 @@ class Request(UniversalBaseModel):
     )
     """
 
-    request: typing.Optional[typing.Any] = None
+    request: typing.Any
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

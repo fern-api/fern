@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: OneOf No Discriminator Test API
+  version: 1.0.0
+  description: Test API for oneOf without discriminator
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /oneOf/no-discriminator:
+    post:
+      tags:
+        - oneOf Examples
+      summary: Example endpoint using oneOf without discriminator
+      description: Demonstrates oneOf without discriminator or mapping.
+      operationId: oneOfExampleNoDiscriminator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/OneOfVariantA"
+                - $ref: "#/components/schemas/OneOfVariantB"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        "400":
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/ErrorVariantA"
+                  - $ref: "#/components/schemas/ErrorVariantB"
+
+components:
+  schemas:
+    OneOfVariantA:
+      type: object
+      description: First variant for oneOf without discriminator
+      required:
+        - variantAField
+      properties:
+        variantAField:
+          type: string
+    OneOfVariantB:
+      type: object
+      description: Second variant for oneOf without discriminator
+      required:
+        - variantBField
+      properties:
+        variantBField:
+          type: integer
+    ErrorVariantA:
+      type: object
+      description: Error variant A without discriminator
+      required:
+        - errorCodeA
+      properties:
+        errorCodeA:
+          type: string
+        details:
+          type: string
+    ErrorVariantB:
+      type: object
+      description: Error variant B without discriminator
+      required:
+        - errorCodeB
+      properties:
+        errorCodeB:
+          type: integer
+        reason:
+          type: string

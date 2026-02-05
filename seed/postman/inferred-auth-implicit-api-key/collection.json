@@ -1,0 +1,323 @@
+{
+  "info": {
+    "name": "Inferred Auth Implicit Api Key",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Auth",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Token",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "token"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-Api-Key",
+                "description": null,
+                "type": "text",
+                "value": "\"api_key\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/token",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-Api-Key",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"api_key\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"access_token\": \"access_token\",\n    \"token_type\": \"token_type\",\n    \"expires_in\": 1,\n    \"scope\": \"scope\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Nested No Auth",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Api",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get Something",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/nested-no-auth/get-something",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nested-no-auth",
+                    "get-something"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/nested-no-auth/get-something",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nested-no-auth",
+                        "get-something"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Nested",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Api",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get Something",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/nested/get-something",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nested",
+                    "get-something"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/nested/get-something",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nested",
+                        "get-something"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Simple",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Something",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/get-something",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "get-something"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/get-something",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "get-something"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

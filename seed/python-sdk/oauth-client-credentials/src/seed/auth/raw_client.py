@@ -45,12 +45,15 @@ class RawAuthClient:
         _response = self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
-            json={
+            data={
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "scope": scope,
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
+            },
+            headers={
+                "content-type": "application/x-www-form-urlencoded",
             },
             request_options=request_options,
             omit=OMIT,
@@ -100,13 +103,16 @@ class RawAuthClient:
         _response = self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
-            json={
+            data={
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "refresh_token": refresh_token,
                 "scope": scope,
                 "audience": "https://api.example.com",
                 "grant_type": "refresh_token",
+            },
+            headers={
+                "content-type": "application/x-www-form-urlencoded",
             },
             request_options=request_options,
             omit=OMIT,
@@ -158,12 +164,15 @@ class AsyncRawAuthClient:
         _response = await self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
-            json={
+            data={
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "scope": scope,
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
+            },
+            headers={
+                "content-type": "application/x-www-form-urlencoded",
             },
             request_options=request_options,
             omit=OMIT,
@@ -213,13 +222,16 @@ class AsyncRawAuthClient:
         _response = await self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
-            json={
+            data={
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "refresh_token": refresh_token,
                 "scope": scope,
                 "audience": "https://api.example.com",
                 "grant_type": "refresh_token",
+            },
+            headers={
+                "content-type": "application/x-www-form-urlencoded",
             },
             request_options=request_options,
             omit=OMIT,

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token_with_client_credentials</a>(request: GetTokenRequest) -> Result<TokenResponse, ApiError></code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token_with_client_credentials</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refresh_token</a>(request: RefreshTokenRequest) -> Result<TokenResponse, ApiError></code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refresh_token</a>(request: RefreshTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -198,7 +198,7 @@ async fn main() {
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth().api.<a href="/src/api/resources/nested_no_auth/api/client.rs">get_something</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.nested_no_auth().api.<a href="/src/api/resources/nested_no_auth/api/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -234,7 +234,7 @@ async fn main() {
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested().api.<a href="/src/api/resources/nested/api/client.rs">get_something</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.nested().api.<a href="/src/api/resources/nested/api/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -270,7 +270,7 @@ async fn main() {
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">post</a>(endpoint_param: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">post</a>(endpoint_param: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -321,7 +321,7 @@ async fn main() {
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">get_something</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

@@ -96,7 +96,7 @@ client.admin().sendTestSubmissionUpdate(
         .builder()
         .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .updateInfo(
-            TestSubmissionUpdateInfo.running()
+            TestSubmissionUpdateInfo.running(RunningSubmissionState.QUEUEING_SUBMISSION)
         )
         .build()
 );
@@ -204,7 +204,7 @@ client.admin().sendWorkspaceSubmissionUpdate(
         .builder()
         .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .updateInfo(
-            WorkspaceSubmissionUpdateInfo.running()
+            WorkspaceSubmissionUpdateInfo.running(RunningSubmissionState.QUEUEING_SUBMISSION)
         )
         .build()
 );
@@ -267,11 +267,11 @@ client.admin().storeTracedTestCase(
                     TestCaseResult
                         .builder()
                         .expectedResult(
-                            VariableValue.integerValue()
+                            VariableValue.integerValue(1)
                         )
                         .actualResult(
                             ActualResult.value(
-                                VariableValue.integerValue()
+                                VariableValue.integerValue(1)
                             )
                         )
                         .passed(true)
@@ -301,7 +301,7 @@ client.admin().storeTracedTestCase(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build(),
@@ -309,7 +309,7 @@ client.admin().storeTracedTestCase(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build()
@@ -320,7 +320,7 @@ client.admin().storeTracedTestCase(
                             .build()
                     )
                     .returnValue(
-                        DebugVariableValue.integerValue()
+                        DebugVariableValue.integerValue(1)
                     )
                     .expressionLocation(
                         ExpressionLocation
@@ -350,7 +350,7 @@ client.admin().storeTracedTestCase(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build(),
@@ -358,7 +358,7 @@ client.admin().storeTracedTestCase(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build()
@@ -369,7 +369,7 @@ client.admin().storeTracedTestCase(
                             .build()
                     )
                     .returnValue(
-                        DebugVariableValue.integerValue()
+                        DebugVariableValue.integerValue(1)
                     )
                     .expressionLocation(
                         ExpressionLocation
@@ -477,7 +477,7 @@ client.admin().storeTracedTestCaseV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build(),
@@ -485,7 +485,7 @@ client.admin().storeTracedTestCaseV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build()
@@ -496,7 +496,7 @@ client.admin().storeTracedTestCaseV2(
                     .build()
             )
             .returnValue(
-                DebugVariableValue.integerValue()
+                DebugVariableValue.integerValue(1)
             )
             .expressionLocation(
                 ExpressionLocation
@@ -533,7 +533,7 @@ client.admin().storeTracedTestCaseV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build(),
@@ -541,7 +541,7 @@ client.admin().storeTracedTestCaseV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build()
@@ -552,7 +552,7 @@ client.admin().storeTracedTestCaseV2(
                     .build()
             )
             .returnValue(
-                DebugVariableValue.integerValue()
+                DebugVariableValue.integerValue(1)
             )
             .expressionLocation(
                 ExpressionLocation
@@ -669,7 +669,7 @@ client.admin().storeTracedWorkspace(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build(),
@@ -677,7 +677,7 @@ client.admin().storeTracedWorkspace(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build()
@@ -688,7 +688,7 @@ client.admin().storeTracedWorkspace(
                             .build()
                     )
                     .returnValue(
-                        DebugVariableValue.integerValue()
+                        DebugVariableValue.integerValue(1)
                     )
                     .expressionLocation(
                         ExpressionLocation
@@ -718,7 +718,7 @@ client.admin().storeTracedWorkspace(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build(),
@@ -726,7 +726,7 @@ client.admin().storeTracedWorkspace(
                                                 .builder()
                                                 .variables(
                                                     new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
+                                                        put("variables", DebugVariableValue.integerValue(1));
                                                     }}
                                                 )
                                                 .build()
@@ -737,7 +737,7 @@ client.admin().storeTracedWorkspace(
                             .build()
                     )
                     .returnValue(
-                        DebugVariableValue.integerValue()
+                        DebugVariableValue.integerValue(1)
                     )
                     .expressionLocation(
                         ExpressionLocation
@@ -836,7 +836,7 @@ client.admin().storeTracedWorkspaceV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build(),
@@ -844,7 +844,7 @@ client.admin().storeTracedWorkspaceV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build()
@@ -855,7 +855,7 @@ client.admin().storeTracedWorkspaceV2(
                     .build()
             )
             .returnValue(
-                DebugVariableValue.integerValue()
+                DebugVariableValue.integerValue(1)
             )
             .expressionLocation(
                 ExpressionLocation
@@ -892,7 +892,7 @@ client.admin().storeTracedWorkspaceV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build(),
@@ -900,7 +900,7 @@ client.admin().storeTracedWorkspaceV2(
                                         .builder()
                                         .variables(
                                             new HashMap<String, DebugVariableValue>() {{
-                                                put("variables", DebugVariableValue.integerValue());
+                                                put("variables", DebugVariableValue.integerValue(1));
                                             }}
                                         )
                                         .build()
@@ -911,7 +911,7 @@ client.admin().storeTracedWorkspaceV2(
                     .build()
             )
             .returnValue(
-                DebugVariableValue.integerValue()
+                DebugVariableValue.integerValue(1)
             )
             .expressionLocation(
                 ExpressionLocation
@@ -959,7 +959,7 @@ client.admin().storeTracedWorkspaceV2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.getHomepageProblems() -> List&lt;String&gt;</code></summary>
+<details><summary><code>client.homepage.getHomepageProblems() -> List&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1027,7 +1027,7 @@ client.homepage().setHomepageProblems(
 </details>
 
 ## Migration
-<details><summary><code>client.migration.getAttemptedMigrations() -> List&lt;Migration&gt;</code></summary>
+<details><summary><code>client.migration.getAttemptedMigrations() -> List&amp;lt;Migration&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1167,7 +1167,7 @@ client.playlist().createPlaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.getPlaylists(serviceParam) -> List&lt;Playlist&gt;</code></summary>
+<details><summary><code>client.playlist.getPlaylists(serviceParam) -> List&amp;lt;Playlist&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1201,7 +1201,7 @@ client.playlist().getPlaylists(
         .otherField("otherField")
         .multiLineDocs("multiLineDocs")
         .optionalMultipleField(
-            Arrays.asList(Optional.of("optionalMultipleField"))
+            Arrays.asList("optionalMultipleField")
         )
         .multipleField(
             Arrays.asList("multipleField")
@@ -1340,7 +1340,7 @@ client.playlist().getPlaylist(1, "playlistId");
 </dl>
 </details>
 
-<details><summary><code>client.playlist.updatePlaylist(serviceParam, playlistId, request) -> Optional&lt;Playlist&gt;</code></summary>
+<details><summary><code>client.playlist.updatePlaylist(serviceParam, playlistId, request) -> Optional&amp;lt;Playlist&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1521,12 +1521,16 @@ client.problem().createProblem(
                 .builder()
                 .boards(
                     Arrays.asList(
-                        ProblemDescriptionBoard.html(),
-                        ProblemDescriptionBoard.html()
+                        ProblemDescriptionBoard.html("boards"),
+                        ProblemDescriptionBoard.html("boards")
                     )
                 )
                 .build()
         )
+        .outputType(
+            VariableType.integerType()
+        )
+        .methodName("methodName")
         .files(
             new HashMap<Language, ProblemFiles>() {{
                 put(Language.JAVA, ProblemFiles
@@ -1573,9 +1577,6 @@ client.problem().createProblem(
                     .build()
             )
         )
-        .outputType(
-            VariableType.integerType()
-        )
         .testcases(
             Arrays.asList(
                 TestCaseWithExpectedResult
@@ -1586,14 +1587,14 @@ client.problem().createProblem(
                             .id("id")
                             .params(
                                 Arrays.asList(
-                                    VariableValue.integerValue(),
-                                    VariableValue.integerValue()
+                                    VariableValue.integerValue(1),
+                                    VariableValue.integerValue(1)
                                 )
                             )
                             .build()
                     )
                     .expectedResult(
-                        VariableValue.integerValue()
+                        VariableValue.integerValue(1)
                     )
                     .build(),
                 TestCaseWithExpectedResult
@@ -1604,19 +1605,18 @@ client.problem().createProblem(
                             .id("id")
                             .params(
                                 Arrays.asList(
-                                    VariableValue.integerValue(),
-                                    VariableValue.integerValue()
+                                    VariableValue.integerValue(1),
+                                    VariableValue.integerValue(1)
                                 )
                             )
                             .build()
                     )
                     .expectedResult(
-                        VariableValue.integerValue()
+                        VariableValue.integerValue(1)
                     )
                     .build()
             )
         )
-        .methodName("methodName")
         .build()
 );
 ```
@@ -1682,12 +1682,16 @@ client.problem().updateProblem(
                 .builder()
                 .boards(
                     Arrays.asList(
-                        ProblemDescriptionBoard.html(),
-                        ProblemDescriptionBoard.html()
+                        ProblemDescriptionBoard.html("boards"),
+                        ProblemDescriptionBoard.html("boards")
                     )
                 )
                 .build()
         )
+        .outputType(
+            VariableType.integerType()
+        )
+        .methodName("methodName")
         .files(
             new HashMap<Language, ProblemFiles>() {{
                 put(Language.JAVA, ProblemFiles
@@ -1734,9 +1738,6 @@ client.problem().updateProblem(
                     .build()
             )
         )
-        .outputType(
-            VariableType.integerType()
-        )
         .testcases(
             Arrays.asList(
                 TestCaseWithExpectedResult
@@ -1747,14 +1748,14 @@ client.problem().updateProblem(
                             .id("id")
                             .params(
                                 Arrays.asList(
-                                    VariableValue.integerValue(),
-                                    VariableValue.integerValue()
+                                    VariableValue.integerValue(1),
+                                    VariableValue.integerValue(1)
                                 )
                             )
                             .build()
                     )
                     .expectedResult(
-                        VariableValue.integerValue()
+                        VariableValue.integerValue(1)
                     )
                     .build(),
                 TestCaseWithExpectedResult
@@ -1765,19 +1766,18 @@ client.problem().updateProblem(
                             .id("id")
                             .params(
                                 Arrays.asList(
-                                    VariableValue.integerValue(),
-                                    VariableValue.integerValue()
+                                    VariableValue.integerValue(1),
+                                    VariableValue.integerValue(1)
                                 )
                             )
                             .build()
                     )
                     .expectedResult(
-                        VariableValue.integerValue()
+                        VariableValue.integerValue(1)
                     )
                     .build()
             )
         )
-        .methodName("methodName")
         .build()
 );
 ```
@@ -1898,6 +1898,10 @@ Returns default starter files for problem
 client.problem().getDefaultStarterFiles(
     GetDefaultStarterFilesRequest
         .builder()
+        .outputType(
+            VariableType.integerType()
+        )
+        .methodName("methodName")
         .inputParams(
             Arrays.asList(
                 VariableTypeAndName
@@ -1916,10 +1920,6 @@ client.problem().getDefaultStarterFiles(
                     .build()
             )
         )
-        .outputType(
-            VariableType.integerType()
-        )
-        .methodName("methodName")
         .build()
 );
 ```
@@ -2026,7 +2026,7 @@ client.submission().createExecutionSession(Language.JAVA);
 </dl>
 </details>
 
-<details><summary><code>client.submission.getExecutionSession(sessionId) -> Optional&lt;ExecutionSessionResponse&gt;</code></summary>
+<details><summary><code>client.submission.getExecutionSession(sessionId) -> Optional&amp;lt;ExecutionSessionResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2208,7 +2208,7 @@ client.sysprop().setNumWarmInstances(Language.JAVA, 1);
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.getNumWarmInstances() -> Map&lt;Language, Integer&gt;</code></summary>
+<details><summary><code>client.sysprop.getNumWarmInstances() -> Map&amp;lt;Language, Integer&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2234,7 +2234,7 @@ client.sysprop().getNumWarmInstances();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v2.problem.getLightweightProblems() -> List&lt;LightweightProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.problem.getLightweightProblems() -> List&amp;lt;LightweightProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2273,7 +2273,7 @@ client.v2().problem().getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.getProblems() -> List&lt;ProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.problem.getProblems() -> List&amp;lt;ProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2429,7 +2429,7 @@ client.v2().problem().getProblemVersion("problemId", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v2.v3.problem.getLightweightProblems() -> List&lt;LightweightProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.v3.problem.getLightweightProblems() -> List&amp;lt;LightweightProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2468,7 +2468,7 @@ client.v2().problem().getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.getProblems() -> List&lt;ProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.v3.problem.getProblems() -> List&amp;lt;ProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 

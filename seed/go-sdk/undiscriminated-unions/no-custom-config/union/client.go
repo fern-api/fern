@@ -125,3 +125,19 @@ func (c *Client) NestedUnions(
 	}
 	return response.Body, nil
 }
+
+func (c *Client) TestCamelCaseProperties(
+	ctx context.Context,
+	request *undiscriminated.PaymentRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.TestCamelCaseProperties(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}

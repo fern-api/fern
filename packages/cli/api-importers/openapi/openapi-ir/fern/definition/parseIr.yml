@@ -23,7 +23,13 @@ types:
       - commons.WithNamespace
     properties:
       authed: boolean
-      security: finalIr.EndpointSecurity
+      security:
+        docs: |
+          Security requirements for this endpoint.
+          This is populated from the OpenAPI `security` field.
+          When absent, it inherits from the global security requirements.
+          When an empty list is provided, it means no security is required.
+        type: optional<finalIr.EndpointSecurity>
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: finalIr.HttpMethod
@@ -82,7 +88,26 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: SchemaWithExample
+      multipartFormData:
+        type: optional<MultipartFormDataWebhookPayloadWithExample>
+        docs: |
+          Optional multipart form data payload for webhooks that use multipart/form-data content type.
+          This is populated when the webhook request body uses multipart/form-data encoding.
+      response: optional<ResponseWithExample>
       examples: list<finalIr.WebhookExampleCall>
+
+  MultipartFormDataWebhookPayloadWithExample:
+    docs: |
+      Represents a multipart form data payload for webhooks.
+      This is used when a webhook request body uses multipart/form-data encoding.
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+    properties:
+      name:
+        type: optional<string>
+        docs: If multipart was a reference, this will be the schema name.
+      properties: list<finalIr.MultipartRequestProperty>
 
   HttpErrorWithExample:
     extends:
@@ -132,6 +157,8 @@ types:
     extends:
       - finalIr.MultipartRequest
       - commons.WithSdkMethodName
+    properties:
+      fullExamples: optional<list<NamedFullExample>>
 
   ResponseWithExample:
     union:
@@ -168,6 +195,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   QueryParameterWithExample:
     extends:
@@ -181,6 +212,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   HeaderWithExample:
     extends:
@@ -221,6 +256,8 @@ types:
       - commons.WithInline
     properties:
       value: SchemaWithExample
+      minItems: optional<integer>
+      maxItems: optional<integer>
       example: optional<list<unknown>>
 
   MapSchemaWithExample:
@@ -236,6 +273,8 @@ types:
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
+      minProperties: optional<integer>
+      maxProperties: optional<integer>
       example: optional<unknown>
 
   OptionalSchemaWithExample:
@@ -304,6 +343,8 @@ types:
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
       fullExamples: optional<list<NamedFullExample>>
       additionalProperties: boolean
+      minProperties: optional<integer>
+      maxProperties: optional<integer>
 
   ObjectPropertyWithExample:
     extends:
@@ -344,6 +385,12 @@ types:
       - commons.WithInline
     properties:
       discriminantProperty: string
+      discriminantPropertyNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-property-name` on a discriminator object.
+          When set, this is used as the code generation name while
+          discriminantProperty is used as the wire format.
       commonProperties: list<CommonPropertyWithExample>
       schemas: map<string, SchemaWithExample>
 

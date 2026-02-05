@@ -6,7 +6,8 @@ import java.nio.file.Path;
 
 public final class JavaV2Arguments {
 
-    private static final String JAVA_V2_EXECUTABLE_PATH = "/bin/java-v2";
+    private static final String DEFAULT_JAVA_V2_EXECUTABLE_PATH = "/bin/java-v2";
+    private static final String JAVA_V2_PATH_ENV_VAR = "JAVA_V2_PATH";
 
     private final File executable;
     private final File generatorConfig;
@@ -14,8 +15,13 @@ public final class JavaV2Arguments {
     // Useful for debugging locally but makes remote jobs fail
     private final boolean enableLogging = false;
 
+    private static String getJavaV2ExecutablePath() {
+        String envPath = System.getenv(JAVA_V2_PATH_ENV_VAR);
+        return (envPath != null && !envPath.isEmpty()) ? envPath : DEFAULT_JAVA_V2_EXECUTABLE_PATH;
+    }
+
     public JavaV2Arguments(String configPath) {
-        this(JAVA_V2_EXECUTABLE_PATH, configPath);
+        this(getJavaV2ExecutablePath(), configPath);
     }
 
     public JavaV2Arguments(String executablePath, String configPath) {

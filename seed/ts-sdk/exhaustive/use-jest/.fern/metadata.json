@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "testFramework": "jest"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

@@ -7,5 +7,5 @@ client = Seed::Client.new(
 
 client.file.service.get_file(
   filename: 'file.txt',
-  xFileApiVersion: '0.0.2'
+  x_file_api_version: '0.0.2'
 );

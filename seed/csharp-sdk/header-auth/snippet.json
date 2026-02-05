@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/apiKey",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithBearerToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedHeaderToken;\n\nvar client = new SeedHeaderTokenClient(\"HEADER_TOKEN_AUTH\");\nawait client.Service.GetWithBearerTokenAsync();\n"
+            }
+        }
+    ]
+}

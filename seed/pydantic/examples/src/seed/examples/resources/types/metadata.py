@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -43,4 +44,6 @@ from seed.examples.resources import Metadata_Html
 
 Metadata_Html(value="<head>...</head>")
 """
-Metadata = typing.Union[Metadata_Html, Metadata_Markdown]
+Metadata = typing_extensions.Annotated[
+    typing.Union[Metadata_Html, Metadata_Markdown], pydantic.Field(discriminator="type")
+]

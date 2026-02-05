@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Auth Test API
+  version: 1.0.0
+  description: Simple OpenAPI spec to test auth schemes
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /protected:
+    get:
+      operationId: getProtected
+      summary: Get protected resource
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Protected resource accessed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProtectedResource"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /public:
+    get:
+      operationId: getPublic
+      summary: Get public resource (no auth)
+      responses:
+        "200":
+          description: Public resource
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "public data"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token authentication
+
+  schemas:
+    ProtectedResource:
+      type: object
+      required:
+        - id
+        - data
+      properties:
+        id:
+          type: string
+          description: Resource identifier
+          example: "resource123"
+        data:
+          type: string
+          description: Protected data
+          example: "sensitive information"
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "UNAUTHORIZED"
+        message:
+          type: string
+          example: "Authentication required"

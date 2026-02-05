@@ -4,5 +4,6 @@ pub use crate::prelude::*;
 pub struct Moment {
     pub id: Uuid,
     pub date: NaiveDate,
-    pub datetime: DateTime<Utc>,
+    #[serde(with = "crate::core::flexible_datetime::offset")]
+    pub datetime: DateTime<FixedOffset>,
 }

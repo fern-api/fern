@@ -1,0 +1,59 @@
+openapi: 3.1.0
+info:
+  title: Overlapping Audiences Test
+  version: 1.0.0
+paths:
+  /teams/{teamId}/members/{userId}:
+    put:
+      operationId: TeamsController_addTeamMember
+      x-fern-sdk-method-name: add
+      x-fern-sdk-group-name:
+        - members
+      x-fern-audiences:
+        - admin
+        - internal
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /admin/teams/{teamId}/members/{userId}:
+    put:
+      operationId: TeamsAdminController_addTeamMember
+      x-fern-sdk-method-name: add
+      x-fern-sdk-group-name:
+        - members
+      x-fern-audiences:
+        - admin
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object

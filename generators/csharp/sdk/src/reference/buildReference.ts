@@ -1,5 +1,5 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { ast } from "@fern-api/csharp-codegen";
+import { is } from "@fern-api/csharp-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import path from "path";
@@ -15,7 +15,11 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
             : builder.addSection({ title: getSectionTitle({ service }) });
-        const endpoints = getEndpointReferencesForService({ context, serviceId, service });
+        const endpoints = getEndpointReferencesForService({
+            context,
+            serviceId,
+            service
+        });
         for (const endpoint of endpoints) {
             hasEndpoints = true;
             section.addEndpoint(endpoint);
@@ -98,7 +102,10 @@ function getEndpointReference({
                     }
                 },
                 {
-                    text: getReferenceEndpointInvocationParameters({ context, endpointSignatureInfo })
+                    text: getReferenceEndpointInvocationParameters({
+                        context,
+                        endpointSignatureInfo
+                    })
                 }
             ],
             returnValue:
@@ -111,7 +118,7 @@ function getEndpointReference({
         description: endpoint.docs,
         snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: endpointSignatureInfo.baseParameters.map((parameter) => {
-            const required = parameter.type instanceof ast.Type ? !parameter.type.isOptional : true;
+            const required = is.Type(parameter.type) ? !parameter.type.isOptional : true;
             return {
                 name: parameter.name,
                 type: context.printType(parameter.type),
@@ -157,7 +164,7 @@ function getServiceFilepath({
     const subpackage = context.getSubpackageForServiceId(serviceId);
     const clientClassReference = subpackage
         ? context.getSubpackageClassReference(subpackage)
-        : context.types.RootClientForSnippets;
+        : context.Types.RootClientForSnippets;
 
     return `/${path.join(
         context.constants.folders.project,

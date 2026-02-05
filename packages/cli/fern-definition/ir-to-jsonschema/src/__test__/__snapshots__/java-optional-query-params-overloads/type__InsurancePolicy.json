@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "policyType": {
+      "$ref": "#/definitions/PolicyType"
+    },
+    "isExpired": {
+      "type": "boolean"
+    },
+    "coverageAmount": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "id",
+    "userId",
+    "policyType",
+    "isExpired",
+    "coverageAmount"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "PolicyType": {
+      "type": "string",
+      "enum": [
+        "HEALTH",
+        "AUTO",
+        "HOME",
+        "LIFE"
+      ]
+    }
+  }
+}

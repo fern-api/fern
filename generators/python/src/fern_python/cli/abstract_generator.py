@@ -10,6 +10,7 @@ from .publisher import Publisher
 from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.version import GithubCIPythonVersionResolver
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import (
@@ -61,6 +62,19 @@ class AbstractGenerator(ABC):
             publish=lambda _: None,
             github=lambda github_output_mode: github_output_mode,
         )
+        # For self-hosted mode, populate installation_token from IR publish_config if available
+        if ir.self_hosted:
+            if maybe_github_output_mode is not None:
+                if maybe_github_output_mode.installation_token is None:
+                    if ir.publish_config is not None:
+                        ir_publish_config = ir.publish_config.get_as_union()
+                        if ir_publish_config.type == "github":
+                            if ir_publish_config.token is not None:
+                                # Create new instance with updated installation_token (Pydantic models are frozen)
+                                maybe_github_output_mode = maybe_github_output_mode.model_copy(
+                                    update={"installation_token": ir_publish_config.token}
+                                )
+
         python_version = "^3.8"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
@@ -80,6 +94,31 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "recursion_limit" in generator_config.custom_config:
             recursion_limit = generator_config.custom_config.get("recursion_limit")
 
+        enable_wire_tests = False
+        if generator_config.custom_config is not None:
+            # Check wire_tests.enabled first (preferred), fall back to enable_wire_tests (deprecated)
+            wire_tests_config = generator_config.custom_config.get("wire_tests")
+            wire_tests_enabled = None
+            if wire_tests_config is not None and isinstance(wire_tests_config, dict):
+                wire_tests_enabled = wire_tests_config.get("enabled")
+            # Use wire_tests.enabled if explicitly set, otherwise fall back to enable_wire_tests
+            if wire_tests_enabled is not None:
+                enable_wire_tests = wire_tests_enabled
+            elif "enable_wire_tests" in generator_config.custom_config:
+                enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
+
+        package_path = None
+        if generator_config.custom_config is not None and "package_path" in generator_config.custom_config:
+            package_path = generator_config.custom_config.get("package_path")
+
+        mypy_exclude = None
+        if generator_config.custom_config is not None and "mypy_exclude" in generator_config.custom_config:
+            mypy_exclude = generator_config.custom_config.get("mypy_exclude")
+
+        import_paths = None
+        if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
+            import_paths = generator_config.custom_config.get("import_paths")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -90,6 +129,7 @@ class AbstractGenerator(ABC):
             )
             if project_config is not None
             else generator_config.organization,
+            package_path=package_path,
             project_config=project_config,
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
@@ -102,6 +142,10 @@ class AbstractGenerator(ABC):
             exclude_types_from_init_exports=exclude_types_from_init_exports,
             lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
             recursion_limit=recursion_limit,
+            enable_wire_tests=enable_wire_tests,
+            generator_exec_wrapper=generator_exec_wrapper,
+            mypy_exclude=mypy_exclude,
+            import_paths=import_paths,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -126,6 +170,7 @@ class AbstractGenerator(ABC):
                     write_unit_tests=(
                         self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
                     ),
+                    python_version_constraint=python_version,
                 ),
                 publish=lambda x: None,
             )
@@ -146,11 +191,11 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_install()
+            publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            publisher.run_poetry_install()
+            publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
@@ -213,11 +258,16 @@ class AbstractGenerator(ABC):
         output_mode: GithubOutputMode,
         write_unit_tests: bool,
         publish_config: GeneratorPublishConfig | None,
+        python_version_constraint: str,
     ) -> None:
         import logging
 
         logger = logging.getLogger("fern_python.cli.abstract_generator._write_files_for_github_repo")
         logger.debug("Starting to write files for GitHub repository...")
+
+        resolved_version = GithubCIPythonVersionResolver.resolve(python_version_constraint)
+        ci_python_version = resolved_version.spec.to_string()
+        logger.debug(f"CI Python version: {ci_python_version} (from constraint: {python_version_constraint})")
 
         logger.debug("Adding .gitignore file to project.")
         project.add_file(
@@ -262,10 +312,10 @@ class AbstractGenerator(ABC):
         workflow_path = ".github/workflows/ci.yml"
         logger.debug(f"Adding workflow file: {workflow_path} (use_oidc_workflow={use_oidc_workflow})")
         if use_oidc_workflow:
-            workflow_content = self._get_github_workflow(output_mode, write_unit_tests)
+            workflow_content = self._get_github_workflow(output_mode, write_unit_tests, ci_python_version)
             logger.debug(f"CI workflow content from _get_github_workflow (OIDC):\n{workflow_content}")
         else:
-            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests)
+            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests, ci_python_version)
             logger.debug(f"CI workflow content from _get_github_workflow_legacy (legacy):\n{workflow_content}")
 
         project.add_file(
@@ -277,13 +327,16 @@ class AbstractGenerator(ABC):
         logger.debug("Adding test file: tests/custom/test_client.py")
         client_test_content = self._get_client_test()
         logger.debug(f"Client test file contents:\n{client_test_content}")
-        project.add_file("tests/custom/test_client.py", client_test_content)
+        project.add_source_file("tests/custom/test_client.py", client_test_content)
         logger.debug("Finished writing files for GitHub repository.")
 
-    def _get_github_workflow_legacy(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
-        workflow_yaml = """name: ci
+    def _get_github_workflow_legacy(
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, ci_python_version: str
+    ) -> str:
+        workflow_yaml = f"""name: ci
 on: [push]
 jobs:
+  compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -291,6 +344,8 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
+          python-version: {ci_python_version}
+      - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
@@ -305,7 +360,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: {ci_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -317,12 +372,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -344,7 +399,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: {ci_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -360,9 +415,11 @@ jobs:
 """
         return workflow_yaml
 
-    def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
+    def _get_github_workflow(
+        self, output_mode: GithubOutputMode, write_unit_tests: bool, ci_python_version: str
+    ) -> str:
         # new workflow that supports automated OIDC-attestation signing and publishing to PyPI
-        workflow_yaml = """name: ci
+        workflow_yaml = f"""name: ci
 
 on: [push]
 jobs:
@@ -374,7 +431,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: {ci_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -390,7 +447,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: {ci_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -402,12 +459,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -418,7 +475,7 @@ jobs:
                 publish_info_union.should_generate_publish_workflow is None
                 or publish_info_union.should_generate_publish_workflow
             ):
-                workflow_yaml += """
+                workflow_yaml += f"""
   build:
     name: Build distribution
     runs-on: ubuntu-latest
@@ -428,7 +485,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: {ci_python_version}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -452,7 +509,8 @@ jobs:
       name: pypi
       url: https://pypi.org/p/${{{{ github.event.repository.name }}}}
     permissions:
-      id-token: write
+      contents: read   # Required for checkout
+      id-token: write  # Required for OIDC
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4

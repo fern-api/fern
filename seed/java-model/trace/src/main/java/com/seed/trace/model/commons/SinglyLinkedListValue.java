@@ -104,12 +104,16 @@ public final class SinglyLinkedListValue {
     )
     public Builder nodes(Map<String, SinglyLinkedListNodeValue> nodes) {
       this.nodes.clear();
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 
     public Builder putAllNodes(Map<String, SinglyLinkedListNodeValue> nodes) {
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 

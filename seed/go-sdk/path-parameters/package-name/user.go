@@ -87,6 +87,58 @@ func (g *GetUserMetadataRequest) SetVersion(version int) {
 }
 
 var (
+	getUserSpecificsRequestFieldTenantId = big.NewInt(1 << 0)
+	getUserSpecificsRequestFieldUserId   = big.NewInt(1 << 1)
+	getUserSpecificsRequestFieldVersion  = big.NewInt(1 << 2)
+	getUserSpecificsRequestFieldThought  = big.NewInt(1 << 3)
+)
+
+type GetUserSpecificsRequest struct {
+	TenantId string `json:"-" url:"-"`
+	UserId   string `json:"-" url:"-"`
+	Version  int    `json:"-" url:"-"`
+	Thought  string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetUserSpecificsRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetTenantId sets the TenantId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserSpecificsRequest) SetTenantId(tenantId string) {
+	g.TenantId = tenantId
+	g.require(getUserSpecificsRequestFieldTenantId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserSpecificsRequest) SetUserId(userId string) {
+	g.UserId = userId
+	g.require(getUserSpecificsRequestFieldUserId)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserSpecificsRequest) SetVersion(version int) {
+	g.Version = version
+	g.require(getUserSpecificsRequestFieldVersion)
+}
+
+// SetThought sets the Thought field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserSpecificsRequest) SetThought(thought string) {
+	g.Thought = thought
+	g.require(getUserSpecificsRequestFieldThought)
+}
+
+var (
 	searchUsersRequestFieldTenantId = big.NewInt(1 << 0)
 	searchUsersRequestFieldUserId   = big.NewInt(1 << 1)
 	searchUsersRequestFieldLimit    = big.NewInt(1 << 2)

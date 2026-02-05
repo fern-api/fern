@@ -39,7 +39,7 @@ await client.headers.send({
 <dl>
 <dd>
 
-**requestOptions:** `Headers.RequestOptions` 
+**requestOptions:** `HeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -99,7 +99,7 @@ await client.inlined.send({
 <dl>
 <dd>
 
-**requestOptions:** `Inlined.RequestOptions` 
+**requestOptions:** `InlinedClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -149,7 +149,7 @@ await client.path.send("123");
 <dl>
 <dd>
 
-**requestOptions:** `Path.RequestOptions` 
+**requestOptions:** `PathClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -209,7 +209,7 @@ await client.query.send({
 <dl>
 <dd>
 
-**requestOptions:** `Query.RequestOptions` 
+**requestOptions:** `QueryClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -271,7 +271,7 @@ await client.reference.send({
 <dl>
 <dd>
 
-**requestOptions:** `Reference.RequestOptions` 
+**requestOptions:** `ReferenceClient.RequestOptions` 
     
 </dd>
 </dl>

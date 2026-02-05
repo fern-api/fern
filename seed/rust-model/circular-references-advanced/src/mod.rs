@@ -1,3 +1,12 @@
+//! Request and response types for the Api
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Model Types**: 20 types for data representation
+
 pub mod importing_a;
 pub mod root_type;
 pub mod a_a;

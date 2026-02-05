@@ -68,7 +68,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "MetadataValue",
                     "camelCase": {
@@ -95,7 +95,7 @@
                   "typeId": "type_:MetadataValue",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -116,7 +116,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "MetadataValue",
                     "camelCase": {
@@ -143,7 +143,7 @@
                   "typeId": "type_:MetadataValue",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -341,7 +341,7 @@
               "value": "type_:MetadataValue",
               "type": "named"
             },
-            "type": "optional"
+            "type": "nullable"
           },
           "type": "map"
         },
@@ -400,6 +400,7 @@
     "endpoints": {},
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

@@ -12,10 +12,18 @@ from ....core.serialization import FieldMetadata
 
 
 class LightweightProblemInfoV2(UniversalBaseModel):
-    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")]
-    problem_name: typing_extensions.Annotated[str, FieldMetadata(alias="problemName")]
-    problem_version: typing_extensions.Annotated[int, FieldMetadata(alias="problemVersion")]
-    variable_types: typing_extensions.Annotated[typing.List["VariableType"], FieldMetadata(alias="variableTypes")]
+    problem_id: typing_extensions.Annotated[
+        ProblemId, FieldMetadata(alias="problemId"), pydantic.Field(alias="problemId")
+    ]
+    problem_name: typing_extensions.Annotated[
+        str, FieldMetadata(alias="problemName"), pydantic.Field(alias="problemName")
+    ]
+    problem_version: typing_extensions.Annotated[
+        int, FieldMetadata(alias="problemVersion"), pydantic.Field(alias="problemVersion")
+    ]
+    variable_types: typing_extensions.Annotated[
+        typing.List["VariableType"], FieldMetadata(alias="variableTypes"), pydantic.Field(alias="variableTypes")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -27,6 +35,8 @@ class LightweightProblemInfoV2(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ....commons.types.list_type import ListType  # noqa: E402, I001
+from ....commons.types.map_type import MapType  # noqa: E402, I001
 from ....commons.types.variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(LightweightProblemInfoV2)
+update_forward_refs(LightweightProblemInfoV2, ListType=ListType, MapType=MapType, VariableType=VariableType)

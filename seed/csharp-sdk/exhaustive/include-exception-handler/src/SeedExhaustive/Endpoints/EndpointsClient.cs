@@ -2,42 +2,50 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class EndpointsClient
+public partial class EndpointsClient : IEndpointsClient
 {
     private RawClient _client;
 
     internal EndpointsClient(RawClient client)
     {
-        _client = client;
-        Container = new ContainerClient(_client);
-        ContentType = new ContentTypeClient(_client);
-        Enum = new EnumClient(_client);
-        HttpMethods = new HttpMethodsClient(_client);
-        Object = new ObjectClient(_client);
-        Params = new ParamsClient(_client);
-        Primitive = new PrimitiveClient(_client);
-        Put = new PutClient(_client);
-        Union = new UnionClient(_client);
-        Urls = new UrlsClient(_client);
+        try
+        {
+            _client = client;
+            Container = new ContainerClient(_client);
+            ContentType = new ContentTypeClient(_client);
+            Enum = new EnumClient(_client);
+            HttpMethods = new HttpMethodsClient(_client);
+            Object = new ObjectClient(_client);
+            Params = new ParamsClient(_client);
+            Primitive = new PrimitiveClient(_client);
+            Put = new PutClient(_client);
+            Union = new UnionClient(_client);
+            Urls = new UrlsClient(_client);
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
-    public ContainerClient Container { get; }
+    public IContainerClient Container { get; }
 
-    public ContentTypeClient ContentType { get; }
+    public IContentTypeClient ContentType { get; }
 
-    public EnumClient Enum { get; }
+    public IEnumClient Enum { get; }
 
-    public HttpMethodsClient HttpMethods { get; }
+    public IHttpMethodsClient HttpMethods { get; }
 
-    public ObjectClient Object { get; }
+    public IObjectClient Object { get; }
 
-    public ParamsClient Params { get; }
+    public IParamsClient Params { get; }
 
-    public PrimitiveClient Primitive { get; }
+    public IPrimitiveClient Primitive { get; }
 
-    public PutClient Put { get; }
+    public IPutClient Put { get; }
 
-    public UnionClient Union { get; }
+    public IUnionClient Union { get; }
 
-    public UrlsClient Urls { get; }
+    public IUrlsClient Urls { get; }
 }

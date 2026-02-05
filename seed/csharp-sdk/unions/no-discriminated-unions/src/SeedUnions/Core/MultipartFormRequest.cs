@@ -1,5 +1,5 @@
-using System.Net.Http;
-using System.Net.Http.Headers;
+using global::System.Net.Http;
+using global::System.Net.Http.Headers;
 
 namespace SeedUnions.Core;
 
@@ -40,6 +40,22 @@ internal record MultipartFormRequest : BaseRequest
         AddJsonParts(name, value, null);
 
     internal void AddJsonParts(string name, IEnumerable<object?>? value, string? contentType)
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        foreach (var item in value)
+        {
+            AddJsonPart(name, item, contentType);
+        }
+    }
+
+    internal void AddJsonParts<T>(string name, IEnumerable<T>? value) =>
+        AddJsonParts(name, value, null);
+
+    internal void AddJsonParts<T>(string name, IEnumerable<T>? value, string? contentType)
     {
         if (value is null)
         {
@@ -151,6 +167,9 @@ internal record MultipartFormRequest : BaseRequest
             }
         });
     }
+
+    internal void AddFileParameterPart(string name, Stream? stream) =>
+        AddStreamPart(name, stream, null, null);
 
     internal void AddFileParameterPart(string name, FileParameter? file) =>
         AddFileParameterPart(name, file, null);

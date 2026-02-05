@@ -59,10 +59,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up node
-        uses: actions/setup-node@v4${
+        uses: actions/setup-node@v6${
             usePnpm
                 ? `
 
@@ -72,7 +72,7 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
 
       - name: Compile
         run: ${packageManager} build
@@ -82,10 +82,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up node
-        uses: actions/setup-node@v4${
+        uses: actions/setup-node@v6${
             usePnpm
                 ? `
                 
@@ -95,7 +95,7 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
 
       - name: Test
         run: ${packageManager} test
@@ -118,15 +118,16 @@ jobs:
         useOidc
             ? `
     permissions:
+      contents: read   # Required for checkout
       id-token: write  # Required for OIDC`
             : ""
     }
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up node
-        uses: actions/setup-node@v4${
+        uses: actions/setup-node@v6${
             usePnpm
                 ? `
 
@@ -136,7 +137,7 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
 
       - name: Build
         run: ${packageManager} build
@@ -178,10 +179,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
       - name: Set up node
-        uses: actions/setup-node@v4${
+        uses: actions/setup-node@v6${
             usePnpm
                 ? `
 
@@ -191,7 +192,7 @@ jobs:
         }
       
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
       
       - name: Build
         run: ${packageManager} build

@@ -54,7 +54,7 @@ describe("Fetcher Logging Integration", () => {
                 expect.objectContaining({
                     method: "POST",
                     url: "https://example.com/api",
-                    headers: expect.objectContaining({
+                    headers: expect.toContainHeaders({
                         "Content-Type": "application/json",
                     }),
                     hasBody: true,

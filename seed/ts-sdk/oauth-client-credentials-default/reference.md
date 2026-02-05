@@ -40,7 +40,7 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions` 
+**requestOptions:** `AuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ await client.nestedNoAuth.api.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `Api.RequestOptions` 
+**requestOptions:** `ApiClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ await client.nested.api.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `Api.RequestOptions` 
+**requestOptions:** `ApiClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -166,7 +166,7 @@ await client.simple.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `Simple.RequestOptions` 
+**requestOptions:** `SimpleClient.RequestOptions` 
     
 </dd>
 </dl>

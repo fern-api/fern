@@ -65,13 +65,13 @@ class RawServiceClient:
         name: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         email: typing.Optional[str] = OMIT,
         nickname: typing.Optional[str] = OMIT,
         bio: typing.Optional[str] = OMIT,
         profile_image_url: typing.Optional[str] = OMIT,
-        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -90,7 +90,7 @@ class RawServiceClient:
 
         active : typing.Optional[bool]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         tags : typing.Optional[typing.Sequence[str]]
 
@@ -102,7 +102,7 @@ class RawServiceClient:
 
         profile_image_url : typing.Optional[str]
 
-        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        settings : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -348,13 +348,13 @@ class AsyncRawServiceClient:
         name: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         email: typing.Optional[str] = OMIT,
         nickname: typing.Optional[str] = OMIT,
         bio: typing.Optional[str] = OMIT,
         profile_image_url: typing.Optional[str] = OMIT,
-        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -373,7 +373,7 @@ class AsyncRawServiceClient:
 
         active : typing.Optional[bool]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         tags : typing.Optional[typing.Sequence[str]]
 
@@ -385,7 +385,7 @@ class AsyncRawServiceClient:
 
         profile_image_url : typing.Optional[str]
 
-        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        settings : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

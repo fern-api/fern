@@ -1,7 +1,5 @@
 import logging
 
-import starlette
-import starlette.exceptions
 from .fern_http_exception import FernHTTPException
 
 import fastapi
@@ -19,7 +17,7 @@ def fern_http_exception_handler(
 
 def http_exception_handler(
     request: fastapi.requests.Request,
-    exc: starlette.exceptions.HTTPException,
+    exc: fastapi.HTTPException,
     skip_log: bool = False,
 ) -> fastapi.responses.JSONResponse:
     if not skip_log:

@@ -1,5 +1,6 @@
 package com.seed.examples;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.resources.file.service.requests.GetFileRequest;
@@ -56,5 +57,35 @@ public class FileServiceWireTest {
         String responseJson = objectMapper.writeValueAsString(response);
         Assertions.assertNotNull(responseJson);
         Assertions.assertFalse(responseJson.isEmpty());
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence and null safety.
+     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
+     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
+     */
+    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
+        if (expected == null && actual == null) return true;
+        if (expected == null || actual == null) return false;
+        if (expected.equals(actual)) return true;
+        if (expected.isNumber() && actual.isNumber())
+            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
+        if (expected.isObject() && actual.isObject()) {
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                JsonNode actualValue = actual.get(entry.getKey());
+                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+            }
+            return true;
+        }
+        if (expected.isArray() && actual.isArray()) {
+            if (expected.size() != actual.size()) return false;
+            for (int i = 0; i < expected.size(); i++) {
+                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

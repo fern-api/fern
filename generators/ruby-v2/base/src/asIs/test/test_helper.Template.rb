@@ -1,1 +1,1 @@
-require_relative '../lib/<%= sdkName %>'
+require_relative '../lib/<%= rootFolderName %>'

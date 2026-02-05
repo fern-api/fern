@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -55,8 +70,6 @@ public class Example {
                 .xApiKey("X-Api-Key")
                 .clientId("client_id")
                 .clientSecret("client_secret")
-                .audience("https://api.example.com")
-                .grantType("client_credentials")
                 .scope("scope")
                 .build()
         );
@@ -84,9 +97,9 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 ```java
 import com.seed.inferredAuthImplicitNoExpiry.core.SeedInferredAuthImplicitNoExpiryApiException;
 
-try {
+try{
     client.auth().getTokenWithClientCredentials(...);
-} catch (SeedInferredAuthImplicitNoExpiryApiException e) {
+} catch (SeedInferredAuthImplicitNoExpiryApiException e){
     // Do something with the API exception...
 }
 ```
@@ -95,7 +108,7 @@ try {
 
 ### Custom Client
 
-This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one. 
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one.
 However, you can pass your own client like so:
 
 ```java
@@ -114,7 +127,9 @@ SeedInferredAuthImplicitNoExpiryClient client = SeedInferredAuthImplicitNoExpiry
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
-retry limit (default: 2).
+retry limit (default: 2). Before defaulting to exponential backoff, the SDK will first attempt to respect
+the `Retry-After` header (as either in seconds or as an HTTP date), and then the `X-RateLimit-Reset` header
+(as a Unix timestamp in epoch seconds); failing both of those, it will fall back to exponential backoff.
 
 A request is deemed retryable when any of the following HTTP status codes is returned:
 
@@ -136,7 +151,6 @@ SeedInferredAuthImplicitNoExpiryClient client = SeedInferredAuthImplicitNoExpiry
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.inferredAuthImplicitNoExpiry.SeedInferredAuthImplicitNoExpiryClient;
 import com.seed.inferredAuthImplicitNoExpiry.core.RequestOptions;
@@ -144,7 +158,7 @@ import com.seed.inferredAuthImplicitNoExpiry.core.RequestOptions;
 // Client level
 SeedInferredAuthImplicitNoExpiryClient client = SeedInferredAuthImplicitNoExpiryClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -152,7 +166,7 @@ client.auth().getTokenWithClientCredentials(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```
@@ -181,6 +195,19 @@ client.auth().getTokenWithClientCredentials(
         .addHeader("X-Request-Header", "request-value")
         .build()
 );
+```
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `withRawResponse()` method.
+The `withRawResponse()` method returns a raw client that wraps all responses with `body()` and `headers()` methods.
+(A normal client's `response` is identical to a raw client's `response.body()`.)
+
+```java
+GetTokenWithClientCredentialsHttpResponse response = client.auth().withRawResponse().getTokenWithClientCredentials(...);
+
+System.out.println(response.body());
+System.out.println(response.headers().get("X-My-Header"));
 ```
 
 ## Contributing

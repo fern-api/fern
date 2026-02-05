@@ -4,7 +4,7 @@ export const makeRequest = async (
     fetchFn: (url: string, init: RequestInit) => Promise<Response>,
     url: string,
     method: string,
-    headers: Record<string, string>,
+    headers: Headers | Record<string, string>,
     requestBody: BodyInit | undefined,
     timeoutMs?: number,
     abortSignal?: AbortSignal,
@@ -13,7 +13,7 @@ export const makeRequest = async (
 ): Promise<Response> => {
     const signals: AbortSignal[] = [];
 
-    let timeoutAbortId: NodeJS.Timeout | undefined;
+    let timeoutAbortId: ReturnType<typeof setTimeout> | undefined;
     if (timeoutMs != null) {
         const { signal, abortId } = getTimeoutSignal(timeoutMs);
         timeoutAbortId = abortId;

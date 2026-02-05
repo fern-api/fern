@@ -1,23 +1,18 @@
-import { ast, BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseCsharpGeneratorContext } from "./context/BaseCsharpGeneratorContext";
 import { FileGenerator } from "./FileGenerator";
 import { CSharpFile } from "./project";
 
-export class TestFileGenerator extends FileGenerator<
-    CSharpFile,
-    BaseCsharpCustomConfigSchema,
-    BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>
-> {
+export class TestFileGenerator extends FileGenerator<CSharpFile> {
     protected getFilepath(): RelativeFilePath {
-        return join(this.constants.folders.testFiles, RelativeFilePath.of(`${this.types.TestClient.name}.cs`));
+        return join(this.constants.folders.testFiles, RelativeFilePath.of(`${this.Types.TestClient.name}.cs`));
     }
 
     public doGenerate(): CSharpFile {
         const testClass = this.csharp.class_({
-            reference: this.types.TestClient,
+            reference: this.Types.TestClient,
             access: ast.Access.Public,
-            annotations: [this.extern.NUnit.Framework.TestFixture]
+            annotations: [this.NUnit.Framework.TestFixture]
         });
         return new CSharpFile({
             clazz: testClass,

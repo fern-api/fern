@@ -1,0 +1,1 @@
+export { addConfigCommand } from "./command";

@@ -12,6 +12,7 @@ export declare namespace NewtypeStruct {
         visibility?: Visibility;
         innerVisibility?: Visibility;
         attributes?: Attribute[];
+        innerAttributes?: Attribute[];
     }
 }
 
@@ -21,14 +22,16 @@ export class NewtypeStruct extends AstNode {
     public readonly visibility?: Visibility;
     public readonly innerVisibility?: Visibility;
     public readonly attributes?: Attribute[];
+    public readonly innerAttributes?: Attribute[];
 
-    public constructor({ name, innerType, visibility, innerVisibility, attributes }: NewtypeStruct.Args) {
+    public constructor({ name, innerType, visibility, innerVisibility, attributes, innerAttributes }: NewtypeStruct.Args) {
         super();
         this.name = name;
         this.innerType = innerType;
         this.visibility = visibility;
         this.innerVisibility = innerVisibility;
         this.attributes = attributes;
+        this.innerAttributes = innerAttributes;
     }
 
     public write(writer: Writer): void {
@@ -46,16 +49,41 @@ export class NewtypeStruct extends AstNode {
             writer.write(" ");
         }
 
-        writer.write(`struct ${this.name}(`);
+        // Check if we have inner attributes - if so, use multi-line format
+        if (this.innerAttributes && this.innerAttributes.length > 0) {
+            writer.writeLine(`struct ${this.name}(`);
+            writer.indent();
 
-        // Write inner field visibility
-        if (this.innerVisibility) {
-            writeVisibility(writer, this.innerVisibility);
-            writer.write(" ");
+            // Write inner field attributes
+            this.innerAttributes.forEach((attribute) => {
+                attribute.write(writer);
+                writer.newLine();
+            });
+
+            // Write inner field visibility
+            if (this.innerVisibility) {
+                writeVisibility(writer, this.innerVisibility);
+                writer.write(" ");
+            }
+
+            // Write inner type
+            this.innerType.write(writer);
+            writer.newLine();
+            writer.dedent();
+            writer.write(");");
+        } else {
+            // Single-line format for simple newtype structs
+            writer.write(`struct ${this.name}(`);
+
+            // Write inner field visibility
+            if (this.innerVisibility) {
+                writeVisibility(writer, this.innerVisibility);
+                writer.write(" ");
+            }
+
+            // Write inner type
+            this.innerType.write(writer);
+            writer.write(");");
         }
-
-        // Write inner type
-        this.innerType.write(writer);
-        writer.write(");");
     }
 }

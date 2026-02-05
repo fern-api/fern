@@ -34,7 +34,7 @@ function evaluateRuntime(): Runtime {
     if (isBrowser) {
         return {
             type: "browser",
-            version: window.navigator.userAgent
+            version: window.navigator.userAgent,
         };
     }
 
@@ -45,7 +45,7 @@ function evaluateRuntime(): Runtime {
     const isCloudflare = typeof globalThis !== "undefined" && globalThis?.navigator?.userAgent === "Cloudflare-Workers";
     if (isCloudflare) {
         return {
-            type: "workerd"
+            type: "workerd",
         };
     }
 
@@ -56,7 +56,7 @@ function evaluateRuntime(): Runtime {
     const isEdgeRuntime = typeof EdgeRuntime === "string";
     if (isEdgeRuntime) {
         return {
-            type: "edge-runtime"
+            type: "edge-runtime",
         };
     }
 
@@ -71,7 +71,7 @@ function evaluateRuntime(): Runtime {
             self.constructor?.name === "SharedWorkerGlobalScope");
     if (isWebWorker) {
         return {
-            type: "web-worker"
+            type: "web-worker",
         };
     }
 
@@ -84,7 +84,7 @@ function evaluateRuntime(): Runtime {
     if (isDeno) {
         return {
             type: "deno",
-            version: Deno.version.deno
+            version: Deno.version.deno,
         };
     }
 
@@ -95,7 +95,19 @@ function evaluateRuntime(): Runtime {
     if (isBun) {
         return {
             type: "bun",
-            version: Bun.version
+            version: Bun.version,
+        };
+    }
+
+    /**
+     * A constant that indicates whether the environment the code is running is in React-Native.
+     * This check should come before Node.js detection since React Native may have a process polyfill.
+     * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
+     */
+    const isReactNative = typeof navigator !== "undefined" && navigator?.product === "ReactNative";
+    if (isReactNative) {
+        return {
+            type: "react-native",
         };
     }
 
@@ -112,22 +124,11 @@ function evaluateRuntime(): Runtime {
         return {
             type: "node",
             version: process.versions.node,
-            parsedVersion: Number(process.versions.node.split(".")[0])
-        };
-    }
-
-    /**
-     * A constant that indicates whether the environment the code is running is in React-Native.
-     * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
-     */
-    const isReactNative = typeof navigator !== "undefined" && navigator?.product === "ReactNative";
-    if (isReactNative) {
-        return {
-            type: "react-native"
+            parsedVersion: Number(process.versions.node.split(".")[0]),
         };
     }
 
     return {
-        type: "unknown"
+        type: "unknown",
     };
 }

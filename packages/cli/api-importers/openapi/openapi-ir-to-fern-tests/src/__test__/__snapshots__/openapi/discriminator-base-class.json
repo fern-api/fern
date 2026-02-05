@@ -1,0 +1,208 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createForm": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/form",
+              "request": {
+                "body": {
+                  "properties": {
+                    "form_fields": {
+                      "docs": "Array of form fields with different types",
+                      "type": "optional<list<FormFieldBase>>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateFormRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "FormFieldBase": {
+            "availability": undefined,
+            "base-properties": {
+              "name": {
+                "docs": "Display name for the field",
+                "type": "string",
+              },
+              "x": {
+                "docs": "X coordinate",
+                "type": "integer",
+              },
+              "y": {
+                "docs": "Y coordinate",
+                "type": "integer",
+              },
+            },
+            "discriminant": "type",
+            "docs": "Base form field with discriminator",
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "checkbox": "FormFieldCheckbox",
+              "signature": "FormFieldSignature",
+              "text": "FormFieldText",
+            },
+          },
+          "FormFieldCheckbox": {
+            "docs": "Checkbox field",
+            "inline": undefined,
+            "properties": {
+              "checked": {
+                "docs": "Default checked state",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FormFieldSignature": {
+            "docs": "Signature field",
+            "inline": undefined,
+            "properties": {
+              "required": {
+                "docs": "Whether signature is required",
+                "type": "optional<boolean>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "FormFieldText": {
+            "docs": "Text input field",
+            "inline": undefined,
+            "properties": {
+              "maxLength": {
+                "docs": "Maximum length",
+                "type": "optional<integer>",
+              },
+              "placeholder": {
+                "docs": "Placeholder text",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createForm:
+      path: /form
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: CreateFormRequest
+        body:
+          properties:
+            form_fields:
+              type: optional<list<FormFieldBase>>
+              docs: Array of form fields with different types
+        content-type: application/json
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  FormFieldBase:
+    discriminant: type
+    base-properties:
+      name:
+        type: string
+        docs: Display name for the field
+      x:
+        type: integer
+        docs: X coordinate
+      'y':
+        type: integer
+        docs: Y coordinate
+    docs: Base form field with discriminator
+    union:
+      text: FormFieldText
+      checkbox: FormFieldCheckbox
+      signature: FormFieldSignature
+    source:
+      openapi: ../openapi.yml
+  FormFieldText:
+    docs: Text input field
+    properties:
+      placeholder:
+        type: optional<string>
+        docs: Placeholder text
+      maxLength:
+        type: optional<integer>
+        docs: Maximum length
+    source:
+      openapi: ../openapi.yml
+  FormFieldCheckbox:
+    docs: Checkbox field
+    properties:
+      checked:
+        type: optional<boolean>
+        docs: Default checked state
+    source:
+      openapi: ../openapi.yml
+  FormFieldSignature:
+    docs: Signature field
+    properties:
+      required:
+        type: optional<boolean>
+        docs: Whether signature is required
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Discriminator Base Class Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Discriminator Base Class Test
+",
+  },
+}

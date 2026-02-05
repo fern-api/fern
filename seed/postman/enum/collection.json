@@ -258,6 +258,12 @@
     {
       "_type": "container",
       "description": null,
+      "name": "Multipart Form",
+      "item": []
+    },
+    {
+      "_type": "container",
+      "description": null,
       "name": "Path Param",
       "item": [
         {
@@ -505,7 +511,8 @@
                     {
                       "key": "maybeOperand",
                       "description": null,
-                      "value": ">"
+                      "value": ">",
+                      "disabled": true
                     },
                     {
                       "key": "operandOrColor",
@@ -515,7 +522,8 @@
                     {
                       "key": "maybeOperandOrColor",
                       "description": null,
-                      "value": "red"
+                      "value": "red",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -559,7 +567,8 @@
                 {
                   "key": "maybeOperand",
                   "description": null,
-                  "value": ">"
+                  "value": ">",
+                  "disabled": true
                 },
                 {
                   "key": "operandOrColor",
@@ -569,7 +578,8 @@
                 {
                   "key": "maybeOperandOrColor",
                   "description": null,
-                  "value": "red"
+                  "value": "red",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -609,7 +619,8 @@
                     {
                       "key": "maybeOperand",
                       "description": null,
-                      "value": ">"
+                      "value": ">",
+                      "disabled": true
                     },
                     {
                       "key": "operandOrColor",
@@ -619,7 +630,8 @@
                     {
                       "key": "maybeOperandOrColor",
                       "description": null,
-                      "value": "red"
+                      "value": "red",
+                      "disabled": true
                     }
                   ],
                   "variable": []

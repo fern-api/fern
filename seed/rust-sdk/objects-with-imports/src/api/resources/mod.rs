@@ -1,4 +1,11 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Commons**
+//! - **File**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod commons;
 pub mod file;
@@ -10,8 +17,10 @@ impl ObjectsWithImportsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            
         })
     }
+
 }
 
 pub use commons::CommonsClient;

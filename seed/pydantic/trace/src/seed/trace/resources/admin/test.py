@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel
 
 
@@ -17,4 +19,4 @@ class Test_Or(UniversalBaseModel):
     type: typing.Literal["or"] = "or"
 
 
-Test = typing.Union[Test_And, Test_Or]
+Test = typing_extensions.Annotated[typing.Union[Test_And, Test_Or], pydantic.Field(discriminator="type")]

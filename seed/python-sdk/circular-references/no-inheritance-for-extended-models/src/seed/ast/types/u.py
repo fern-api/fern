@@ -22,5 +22,6 @@ class U(UniversalBaseModel):
 
 
 from .t import T  # noqa: E402, I001
+from .tor_u import TorU  # noqa: E402, I001
 
-update_forward_refs(U)
+update_forward_refs(U, T=T, TorU=TorU)

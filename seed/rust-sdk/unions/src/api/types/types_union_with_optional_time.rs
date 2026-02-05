@@ -3,7 +3,15 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithOptionalTime {
-    Date { value: Option<NaiveDate> },
+        #[serde(rename = "date")]
+        Date {
+            value: Option<NaiveDate>,
+        },
 
-    Datetime { value: Option<DateTime<Utc>> },
+        #[serde(rename = "datetime")]
+        Datetime {
+            #[serde(default)]
+            #[serde(with = "crate::core::flexible_datetime::offset::option")]
+            value: Option<DateTime<FixedOffset>>,
+        },
 }

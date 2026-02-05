@@ -11,13 +11,17 @@ from ...core.serialization import FieldMetadata
 
 
 class ListType(UniversalBaseModel):
-    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")]
-    is_fixed_length: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFixedLength")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
-    """
+    value_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="valueType"), pydantic.Field(alias="valueType")
+    ]
+    is_fixed_length: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isFixedLength"),
+        pydantic.Field(
+            alias="isFixedLength",
+            description="Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -29,6 +33,7 @@ class ListType(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .map_type import MapType  # noqa: E402, I001
 from .variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(ListType)
+update_forward_refs(ListType, MapType=MapType, VariableType=VariableType)

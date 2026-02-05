@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedSingleUrlEnvironmentNoDefaultEnvironment, SeedSingleUrlEnvironmentNoDefaultClient } from \"@fern/single-url-environment-no-default\";\n\nconst client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n"
+                "client": "import { SeedSingleUrlEnvironmentNoDefaultClient, SeedSingleUrlEnvironmentNoDefaultEnvironment } from \"@fern/single-url-environment-no-default\";\n\nconst client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n"
             }
         }
     ],

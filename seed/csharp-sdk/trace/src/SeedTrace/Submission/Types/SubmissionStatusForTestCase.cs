@@ -197,12 +197,12 @@ public record SubmissionStatusForTestCase
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubmissionStatusForTestCase>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(SubmissionStatusForTestCase).IsAssignableFrom(typeToConvert);
 
         public override SubmissionStatusForTestCase Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

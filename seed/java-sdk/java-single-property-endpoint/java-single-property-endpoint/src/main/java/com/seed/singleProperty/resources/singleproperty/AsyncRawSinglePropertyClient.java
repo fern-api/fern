@@ -34,6 +34,10 @@ public class AsyncRawSinglePropertyClient {
         return doThing(id, GetThingRequest.builder().build());
     }
 
+    public CompletableFuture<SeedSinglePropertyHttpResponse<String>> doThing(String id, RequestOptions requestOptions) {
+        return doThing(id, GetThingRequest.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<SeedSinglePropertyHttpResponse<String>> doThing(String id, GetThingRequest request) {
         return doThing(id, request, null);
     }
@@ -49,6 +53,11 @@ public class AsyncRawSinglePropertyClient {
                     "include-remote-data",
                     request.getIncludeRemoteData().get(),
                     false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.nullableOptional.core.OptionalNullable;
 import com.seed.nullableOptional.resources.nullableoptional.requests.ListUsersRequest;
 
 public class Example3 {
@@ -10,10 +11,10 @@ public class Example3 {
 
         client.nullableOptional()
                 .listUsers(ListUsersRequest.builder()
-                        .limit(1)
-                        .offset(1)
-                        .includeDeleted(true)
-                        .sortBy("sortBy")
+                        .limit(OptionalNullable.of(1))
+                        .offset(OptionalNullable.of(1))
+                        .includeDeleted(OptionalNullable.of(true))
+                        .sortBy(OptionalNullable.of("sortBy"))
                         .build());
     }
 }

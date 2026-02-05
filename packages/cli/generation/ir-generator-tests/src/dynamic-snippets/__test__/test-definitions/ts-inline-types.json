@@ -203,6 +203,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RequestTypeInlineType1": {
@@ -265,6 +266,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RootType1": {
@@ -490,6 +492,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RootType1FooMapValue": {
@@ -582,6 +585,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RootType1FooListItem": {
@@ -674,6 +678,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RootType1FooSetItem": {
@@ -766,6 +771,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RootType1InlineType1": {
@@ -888,6 +894,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:RootType1InlineType1NestedInlineType1": {
@@ -1040,6 +1047,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:DiscriminatedUnion1": {
@@ -1296,6 +1304,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:DiscriminatedUnion1InlineType1InlineType1": {
@@ -1388,6 +1397,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:DiscriminatedUnion1InlineType2": {
@@ -1480,6 +1490,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1": {
@@ -1682,6 +1693,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineType1InlineType1": {
@@ -1774,6 +1786,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineType2": {
@@ -1866,6 +1879,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:InlineEnum1": {
@@ -2241,6 +2255,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
@@ -2333,6 +2348,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
@@ -2425,6 +2441,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineEnum1": {
@@ -2669,6 +2686,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineSetItem1": {
@@ -2761,6 +2779,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:UndiscriminatedUnion1InlineMapItem1": {
@@ -2853,6 +2872,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:ReferenceType": {
@@ -2915,6 +2935,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

@@ -40,9 +40,14 @@ public class AsyncRawUnknownClient {
 
     public CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> post(
             Object request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -51,7 +56,7 @@ public class AsyncRawUnknownClient {
             throw new SeedUnknownAsAnyException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -98,10 +103,14 @@ public class AsyncRawUnknownClient {
 
     public CompletableFuture<SeedUnknownAsAnyHttpResponse<List<Object>>> postObject(
             MyObject request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("with-object")
-                .build();
+                .addPathSegments("with-object");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -110,7 +119,7 @@ public class AsyncRawUnknownClient {
             throw new SeedUnknownAsAnyException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

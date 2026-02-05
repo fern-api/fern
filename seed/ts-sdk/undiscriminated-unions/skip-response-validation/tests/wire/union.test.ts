@@ -3,10 +3,10 @@
 import { SeedUndiscriminatedUnionsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Union", () => {
+describe("UnionClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server
@@ -24,7 +24,7 @@ describe("Union", () => {
 
     test("getMetadata", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { name: "exampleName", value: "exampleValue", default: "exampleDefault" };
         server.mockEndpoint().get("/metadata").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -39,7 +39,7 @@ describe("Union", () => {
 
     test("updateMetadata", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { string: { key: "value" } };
         const rawResponseBody = true;
         server
@@ -61,7 +61,7 @@ describe("Union", () => {
 
     test("call", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { union: { string: { key: "value" } } };
         const rawResponseBody = true;
         server
@@ -85,7 +85,7 @@ describe("Union", () => {
 
     test("duplicateTypesUnion", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server
@@ -103,7 +103,7 @@ describe("Union", () => {
 
     test("nestedUnions", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server
@@ -117,5 +117,28 @@ describe("Union", () => {
 
         const response = await client.union.nestedUnions("string");
         expect(response).toEqual("string");
+    });
+
+    test("testCamelCaseProperties", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { paymentMethod: { method: "card", cardNumber: "1234567890123456" } };
+        const rawResponseBody = "success";
+        server
+            .mockEndpoint()
+            .post("/camel-case")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.union.testCamelCaseProperties({
+            paymentMethod: {
+                method: "card",
+                cardNumber: "1234567890123456",
+            },
+        });
+        expect(response).toEqual("success");
     });
 });

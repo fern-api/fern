@@ -8,6 +8,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -96,10 +97,9 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitPrimitive(PrimitiveType primitiveType) {
-            if (primitiveAllowed) {
-                return primitiveType.getV1().visit(PrimitiveToTypeNameConverter.PRIMITIVE_ALLOWED_CONVERTER);
-            }
-            return primitiveType.getV1().visit(PrimitiveToTypeNameConverter.PRIMITIVE_DISALLOWED_CONVERTER);
+            return primitiveType
+                    .getV1()
+                    .visit(new PrimitiveToTypeNameConverter(primitiveAllowed, customConfig.useLocalDateForDates()));
         }
 
         @Override
@@ -121,17 +121,14 @@ public final class PoetTypeNameMapper {
         }
     }
 
-    private static final class PrimitiveToTypeNameConverter implements PrimitiveTypeV1.Visitor<TypeName> {
-
-        private static final PrimitiveToTypeNameConverter PRIMITIVE_ALLOWED_CONVERTER =
-                new PrimitiveToTypeNameConverter(true);
-        private static final PrimitiveToTypeNameConverter PRIMITIVE_DISALLOWED_CONVERTER =
-                new PrimitiveToTypeNameConverter(false);
+    private final class PrimitiveToTypeNameConverter implements PrimitiveTypeV1.Visitor<TypeName> {
 
         private final boolean primitiveAllowed;
+        private final boolean useLocalDateForDates;
 
-        private PrimitiveToTypeNameConverter(boolean primitiveAllowed) {
+        private PrimitiveToTypeNameConverter(boolean primitiveAllowed, boolean useLocalDateForDates) {
             this.primitiveAllowed = primitiveAllowed;
+            this.useLocalDateForDates = useLocalDateForDates;
         }
 
         @Override
@@ -189,6 +186,9 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitDate() {
+            if (useLocalDateForDates) {
+                return ClassName.get(LocalDate.class);
+            }
             return ClassName.get(String.class);
         }
 
@@ -272,8 +272,27 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitNullable(TypeReference typeReference) {
             if (customConfig.collapseOptionalNullable()) {
-                TypeName innerTypeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
                 ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+
+                // Check if inner type is optional container - collapse nullable<optional<T>> to OptionalNullable<T>
+                if (typeReference.isContainer()
+                        && typeReference.getContainer().get().isOptional()) {
+                    TypeReference innerType =
+                            typeReference.getContainer().get().getOptional().get();
+                    TypeName innerTypeName = innerType.visit(primitiveDisAllowedTypeReferenceConverter);
+                    return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
+                }
+
+                // Visit inner type and check if result is already OptionalNullable
+                TypeName innerTypeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+
+                // If result is already OptionalNullable, don't wrap again
+                if (innerTypeName instanceof ParameterizedTypeName) {
+                    if (((ParameterizedTypeName) innerTypeName).rawType.equals(optionalNullableClassName)) {
+                        return innerTypeName;
+                    }
+                }
+
                 return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
             }
 
@@ -293,13 +312,29 @@ public final class PoetTypeNameMapper {
                         typeReference.getContainer().get().getNullable().get();
                 TypeName innerTypeName = innerType.visit(primitiveDisAllowedTypeReferenceConverter);
                 ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+
+                // Check if innerTypeName is already OptionalNullable - if so, don't wrap again
+                if (innerTypeName instanceof ParameterizedTypeName) {
+                    if (((ParameterizedTypeName) innerTypeName).rawType.equals(optionalNullableClassName)) {
+                        return innerTypeName;
+                    }
+                }
+
                 return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
             }
 
             TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+            ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+
             if (typeName instanceof ParameterizedTypeName) {
                 // Optional should not be re-wrapped in Optional
                 if (((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class))) {
+                    return typeName;
+                }
+
+                // When collapse flag is true, OptionalNullable should not be wrapped in Optional
+                if (customConfig.collapseOptionalNullable()
+                        && ((ParameterizedTypeName) typeName).rawType.equals(optionalNullableClassName)) {
                     return typeName;
                 }
             }

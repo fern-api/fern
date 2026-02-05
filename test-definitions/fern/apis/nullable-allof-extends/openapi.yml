@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: Nullable AllOf Extends Test
+  version: 1.0.0
+  description: Test for nullable schema inheritance via allOf (Issue #11071)
+servers:
+  - url: https://api.example.com
+paths:
+  /test:
+    get:
+      summary: Get Test
+      description: Returns a RootObject which inherits from a nullable schema.
+      operationId: getTest
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RootObject"
+    post:
+      summary: Create Test
+      description: Creates a test object with nullable allOf in request body.
+      operationId: createTest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RootObject"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RootObject"
+components:
+  schemas:
+    RootObject:
+      description: Object inheriting from a nullable schema via allOf.
+      allOf:
+        - $ref: "#/components/schemas/NormalObject"
+        - $ref: "#/components/schemas/NullableObject"
+      type: object
+    NormalObject:
+      description: A standard object with no nullable issues.
+      type: object
+      properties:
+        normalField:
+          type: string
+    NullableObject:
+      description: This schema has nullable:true at the top level.
+      type: object
+      nullable: true
+      properties:
+        nullableField:
+          type: string

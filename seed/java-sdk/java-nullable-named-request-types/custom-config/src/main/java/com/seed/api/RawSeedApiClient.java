@@ -29,11 +29,6 @@ public class RawSeedApiClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedApiHttpResponse<ResponseBody> postWithNullableNamedRequestBodyType(String id) {
-        return postWithNullableNamedRequestBodyType(
-                id, PostWithNullableNamedRequestBodyTypeRequest.builder().build());
-    }
-
     public SeedApiHttpResponse<ResponseBody> postWithNullableNamedRequestBodyType(
             String id, PostWithNullableNamedRequestBodyTypeRequest request) {
         return postWithNullableNamedRequestBodyType(id, request, null);
@@ -41,25 +36,24 @@ public class RawSeedApiClient {
 
     public SeedApiHttpResponse<ResponseBody> postWithNullableNamedRequestBodyType(
             String id, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNullableNamedRequestBodyType")
-                .addPathSegment(id)
-                .build();
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
-            body = RequestBody.create("", null);
-            if (request.getBody().isPresent()) {
-                body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(
-                                request.getBody().get()),
-                        MediaTypes.APPLICATION_JSON);
-            }
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -90,17 +84,27 @@ public class RawSeedApiClient {
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
+            String id, RequestOptions requestOptions) {
+        return postWithNonNullableNamedRequestBodyType(
+                id, NonNullableObject.builder().build(), requestOptions);
+    }
+
+    public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
             String id, NonNullableObject request) {
         return postWithNonNullableNamedRequestBodyType(id, request, null);
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
             String id, NonNullableObject request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNonNullableNamedRequestBodyType")
-                .addPathSegment(id)
-                .build();
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -109,7 +113,7 @@ public class RawSeedApiClient {
             throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

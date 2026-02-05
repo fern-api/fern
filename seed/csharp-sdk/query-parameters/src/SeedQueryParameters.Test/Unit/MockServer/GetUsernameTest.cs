@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using SeedQueryParameters;
-using SeedQueryParameters.Core;
+using SeedQueryParameters.Test.Utils;
 
 namespace SeedQueryParameters.Test.Unit.MockServer;
 
@@ -105,9 +105,6 @@ public class GetUsernameTest : BaseMockServerTest
                 Filter = ["filter"],
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

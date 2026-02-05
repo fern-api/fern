@@ -91,7 +91,8 @@ async function getIntermediateRepresentation({
             context,
             audiences,
             enableUniqueErrorsPerEndpoint: true,
-            generateV1Examples: false
+            generateV1Examples: false,
+            logWarnings: false
         });
     } else {
         const fernWorkspace = await workspace.toFernWorkspace({ context });

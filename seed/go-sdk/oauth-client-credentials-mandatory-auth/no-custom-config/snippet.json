@@ -1,0 +1,48 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/oauth-client-credentials-mandatory-auth/fern/client\"\n\toption \"github.com/oauth-client-credentials-mandatory-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nerr := client.Simple.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/oauth-client-credentials-mandatory-auth/fern/client\"\n\toption \"github.com/oauth-client-credentials-mandatory-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nerr := client.Nested.Api.GetSomething(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-mandatory-auth/fern\"\n\tfernclient \"github.com/oauth-client-credentials-mandatory-auth/fern/client\"\n\toption \"github.com/oauth-client-credentials-mandatory-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"my_oauth_app_123\",\n\t\tClientSecret: \"sk_live_abcdef123456789\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-mandatory-auth/fern\"\n\tfernclient \"github.com/oauth-client-credentials-mandatory-auth/fern/client\"\n\toption \"github.com/oauth-client-credentials-mandatory-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithClientCredentials(\n\t\t\"\u003cYOUR_CLIENT_ID\u003e\",\n\t\t\"\u003cYOUR_CLIENT_SECRET\u003e\",\n\t),\n)\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"my_oauth_app_123\",\n\t\tClientSecret: \"sk_live_abcdef123456789\",\n\t\tRefreshToken: \"refresh_token\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

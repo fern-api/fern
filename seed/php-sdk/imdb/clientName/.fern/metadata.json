@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "clientName": "FernClient"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

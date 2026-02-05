@@ -4,7 +4,7 @@ using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 
@@ -13,14 +13,17 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.User.HeadAsync();
-    /// </code></example>
-    public async Task<HttpResponseHeaders> HeadAsync(
+    private async Task<WithRawResponse<HttpResponseHeaders>> HeadAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedHttpHead.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +31,7 @@ public partial class UserClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Head,
                     Path = "/users",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -35,7 +39,16 @@ public partial class UserClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return response.Raw.Headers;
+            return new WithRawResponse<HttpResponseHeaders>()
+            {
+                Data = response.Raw.Headers,
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -47,17 +60,22 @@ public partial class UserClient
         }
     }
 
-    /// <example><code>
-    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
-    /// </code></example>
-    public async Task<IEnumerable<User>> ListAsync(
+    private async Task<WithRawResponse<IEnumerable<User>>> ListAsyncCore(
         ListUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["limit"] = request.Limit.ToString();
+        var _queryString = new SeedHttpHead.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("limit", request.Limit)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedHttpHead.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -65,7 +83,8 @@ public partial class UserClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users",
-                    Query = _query,
+                    QueryString = _queryString,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -76,14 +95,28 @@ public partial class UserClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
+                return new WithRawResponse<IEnumerable<User>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedHttpHeadException("Failed to deserialize response", e);
+                throw new SeedHttpHeadApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedHttpHeadApiException(
@@ -92,5 +125,32 @@ public partial class UserClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.User.HeadAsync();
+    /// </code></example>
+    public WithRawResponseTask<HttpResponseHeaders> HeadAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<HttpResponseHeaders>(
+            HeadAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<User>> ListAsync(
+        ListUsersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<User>>(
+            ListAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -80,7 +80,7 @@ class ServiceClient:
         from_: str,
         rating: float,
         tag: Tag,
-        metadata: typing.Dict[str, typing.Optional[typing.Any]],
+        metadata: typing.Dict[str, typing.Any],
         revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
@@ -100,7 +100,7 @@ class ServiceClient:
 
         tag : Tag
 
-        metadata : typing.Dict[str, typing.Optional[typing.Any]]
+        metadata : typing.Dict[str, typing.Any]
 
         revenue : int
 
@@ -591,7 +591,7 @@ class AsyncServiceClient:
         from_: str,
         rating: float,
         tag: Tag,
-        metadata: typing.Dict[str, typing.Optional[typing.Any]],
+        metadata: typing.Dict[str, typing.Any],
         revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
@@ -611,7 +611,7 @@ class AsyncServiceClient:
 
         tag : Tag
 
-        metadata : typing.Dict[str, typing.Optional[typing.Any]]
+        metadata : typing.Dict[str, typing.Any]
 
         revenue : int
 

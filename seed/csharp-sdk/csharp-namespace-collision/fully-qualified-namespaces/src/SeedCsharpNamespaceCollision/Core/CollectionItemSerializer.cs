@@ -67,7 +67,7 @@ internal class CollectionItemSerializer<TDatatype, TConverterType>
         JsonSerializerOptions options
     )
     {
-        if (value == null)
+        if (value is null)
         {
             writer.WriteNullValue();
             return;

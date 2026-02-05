@@ -13,7 +13,9 @@ from .parameter import Parameter
 
 class NonVoidFunctionSignature(UniversalBaseModel):
     parameters: typing.List[Parameter]
-    return_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="returnType")]
+    return_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="returnType"), pydantic.Field(alias="returnType")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -25,6 +27,8 @@ class NonVoidFunctionSignature(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .....commons.types.list_type import ListType  # noqa: E402, I001
+from .....commons.types.map_type import MapType  # noqa: E402, I001
 from .....commons.types.variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(NonVoidFunctionSignature)
+update_forward_refs(NonVoidFunctionSignature, ListType=ListType, MapType=MapType, VariableType=VariableType)

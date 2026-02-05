@@ -14,6 +14,6 @@ import resources.simple.exceptions.FooTooMuch;
 public final class FooTooMuchExceptionHandler {
   @ExceptionHandler(FooTooMuch.class)
   ResponseEntity<Object> handle(FooTooMuch fooTooMuch) {
-    return new ResponseEntity<>(fooTooMuch.getBody(), null, FooTooMuch.STATUS_CODE);
+    return ResponseEntity.status(FooTooMuch.STATUS_CODE).body(fooTooMuch.getBody());
   }
 }

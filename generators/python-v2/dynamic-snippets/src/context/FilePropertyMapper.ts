@@ -77,10 +77,12 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): python.TypeInstantiation {
-        const fileValue = this.context.getSingleFileValue({ property, record });
+        let fileValue = this.context.getSingleFileValue({ property, record });
+
         if (fileValue == null) {
-            return python.TypeInstantiation.nop();
+            fileValue = `example_${property.wireValue ?? "file"}`;
         }
+
         return this.context.getFileFromString(fileValue);
     }
 
@@ -93,7 +95,8 @@ export class FilePropertyMapper {
     }): python.TypeInstantiation {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return python.TypeInstantiation.nop();
+            const fallback = `example_${property.wireValue ?? "files"}`;
+            return python.TypeInstantiation.list([this.context.getFileFromString(fallback)]);
         }
         return python.TypeInstantiation.list(fileValues.map((value) => this.context.getFileFromString(value)));
     }

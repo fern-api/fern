@@ -8,10 +8,12 @@ pub struct Type {
     pub three: String,
     pub four: bool,
     pub five: i64,
-    pub six: DateTime<Utc>,
+    #[serde(with = "crate::core::flexible_datetime::offset")]
+    pub six: DateTime<FixedOffset>,
     pub seven: NaiveDate,
     pub eight: Uuid,
-    pub nine: String,
+    #[serde(with = "crate::core::base64_bytes")]
+    pub nine: Vec<u8>,
     pub ten: Vec<i64>,
     pub eleven: HashSet<ordered_float::OrderedFloat<f64>>,
     pub twelve: HashMap<String, bool>,
@@ -26,9 +28,12 @@ pub struct Type {
     pub twenty: i64,
     pub twentyone: i64,
     pub twentytwo: f64,
+    #[serde(with = "crate::core::bigint_string")]
     pub twentythree: num_bigint::BigInt,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub twentyfour: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub twentyfour: Option<DateTime<FixedOffset>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub twentyfive: Option<NaiveDate>,
 }

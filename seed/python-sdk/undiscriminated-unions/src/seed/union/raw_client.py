@@ -13,6 +13,7 @@ from .types.metadata import Metadata
 from .types.metadata_union import MetadataUnion
 from .types.my_union import MyUnion
 from .types.nested_union_root import NestedUnionRoot
+from .types.payment_method_union import PaymentMethodUnion
 from .types.union_with_duplicate_types import UnionWithDuplicateTypes
 
 # this is used as the default value for optional parameters
@@ -246,6 +247,47 @@ class RawUnionClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def test_camel_case_properties(
+        self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[str]:
+        """
+        Parameters
+        ----------
+        payment_method : PaymentMethodUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[str]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "camel-case",
+            method="POST",
+            json={
+                "paymentMethod": convert_and_respect_annotation_metadata(
+                    object_=payment_method, annotation=PaymentMethodUnion, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -458,6 +500,47 @@ class AsyncRawUnionClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=NestedUnionRoot, direction="write"
             ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def test_camel_case_properties(
+        self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[str]:
+        """
+        Parameters
+        ----------
+        payment_method : PaymentMethodUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[str]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "camel-case",
+            method="POST",
+            json={
+                "paymentMethod": convert_and_respect_annotation_metadata(
+                    object_=payment_method, annotation=PaymentMethodUnion, direction="write"
+                ),
+            },
             request_options=request_options,
             omit=OMIT,
         )

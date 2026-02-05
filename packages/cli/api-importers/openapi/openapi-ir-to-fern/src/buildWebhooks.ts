@@ -10,6 +10,7 @@ import { convertFullExample } from "./utils/convertFullExample";
 import { convertEndpointSdkNameToFile } from "./utils/convertSdkGroupName";
 import { tokenizeString } from "./utils/getEndpointLocation";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildWebhooks(context: OpenApiIrConverterContext): void {
     for (const webhook of context.ir.webhooks) {
@@ -53,6 +54,86 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                       })
                     : undefined
         };
+
+        // Add response if it exists
+        if (webhook.response != null) {
+            webhook.response._visit({
+                json: (jsonResponse) => {
+                    const responseTypeReference = buildTypeReference({
+                        schema: jsonResponse.schema,
+                        context,
+                        fileContainingReference: webhookLocation.file,
+                        namespace: maybeWebhookNamespace,
+                        declarationDepth: 0
+                    });
+                    webhookDefinition.response = {
+                        docs: jsonResponse.description ?? undefined,
+                        type: getTypeFromTypeReference(responseTypeReference)
+                    };
+                    if (jsonResponse.statusCode != null) {
+                        webhookDefinition.response["status-code"] = jsonResponse.statusCode;
+                    }
+                },
+                file: (fileResponse) => {
+                    webhookDefinition.response = {
+                        docs: fileResponse.description ?? undefined,
+                        type: "file",
+                        "status-code": fileResponse.statusCode
+                    };
+                },
+                bytes: (bytesResponse) => {
+                    webhookDefinition.response = {
+                        docs: bytesResponse.description ?? undefined,
+                        type: "bytes",
+                        "status-code": bytesResponse.statusCode
+                    };
+                },
+                text: (textResponse) => {
+                    webhookDefinition.response = {
+                        docs: textResponse.description ?? undefined,
+                        type: "text",
+                        "status-code": textResponse.statusCode
+                    };
+                },
+                streamingJson: (jsonResponse) => {
+                    const responseTypeReference = buildTypeReference({
+                        schema: jsonResponse.schema,
+                        context,
+                        fileContainingReference: webhookLocation.file,
+                        namespace: maybeWebhookNamespace,
+                        declarationDepth: 0
+                    });
+                    webhookDefinition["response-stream"] = {
+                        docs: jsonResponse.description ?? undefined,
+                        type: getTypeFromTypeReference(responseTypeReference),
+                        format: "json"
+                    };
+                },
+                streamingSse: (jsonResponse) => {
+                    const responseTypeReference = buildTypeReference({
+                        schema: jsonResponse.schema,
+                        context,
+                        fileContainingReference: webhookLocation.file,
+                        namespace: maybeWebhookNamespace,
+                        declarationDepth: 0
+                    });
+                    webhookDefinition["response-stream"] = {
+                        docs: jsonResponse.description ?? undefined,
+                        type: getTypeFromTypeReference(responseTypeReference),
+                        format: "sse"
+                    };
+                },
+                streamingText: (textResponse) => {
+                    webhookDefinition["response-stream"] = {
+                        docs: textResponse.description ?? undefined,
+                        type: "text"
+                    };
+                },
+                _other: () => {
+                    throw new Error("Unrecognized Response type: " + webhook.response?.type);
+                }
+            });
+        }
         context.builder.addWebhook(webhookLocation.file, {
             name: webhookLocation.endpointId,
             schema: webhookDefinition

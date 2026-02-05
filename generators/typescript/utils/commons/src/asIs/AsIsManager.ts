@@ -14,7 +14,7 @@ export namespace AsIsManager {
         relativePackagePath: string;
         relativeTestPath: string;
         generatorType: "sdk" | "model" | "express";
-        formatter: "prettier" | "biome" | "oxfmt";
+        formatter: "prettier" | "biome" | "oxfmt" | "none";
         linter: "biome" | "oxlint" | "none";
     }
 }
@@ -25,7 +25,7 @@ export class AsIsManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generatorType: "sdk" | "model" | "express";
-    private readonly formatter: "prettier" | "biome" | "oxfmt";
+    private readonly formatter: "prettier" | "biome" | "oxfmt" | "none";
     private readonly linter: "biome" | "oxlint" | "none";
 
     constructor({
@@ -109,8 +109,9 @@ export class AsIsManager {
 
                 for (const match of matches) {
                     const sourceFilePath = path.join(asIsFilePath, match);
-                    const relativePath = path.relative(asIsFilePath, match);
-                    const targetFilePath = path.join(targetPattern, relativePath);
+                    // Extract just the filename from the match to append to the target pattern
+                    const fileName = path.basename(match);
+                    const targetFilePath = path.join(targetPattern, fileName);
                     let fileContent = await fs.readFile(sourceFilePath, "utf-8");
 
                     // Transform import paths in test files

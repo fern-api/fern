@@ -39,6 +39,7 @@ export class UndiscriminatedUnionGenerator {
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {
         return swift.enumWithAssociatedValues({
             name: this.symbol.name,
+            indirect: this.context.shouldGenerateEnumAsIndirect(this.symbol),
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             cases: this.generateCasesForTypeDeclaration(),

@@ -1,4 +1,4 @@
-from typing import List, Optional, Set, Union
+from typing import List, Optional, Union
 
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
@@ -7,15 +7,18 @@ from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractSimpleDiscriminatedUnionGenerator,
 )
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.external_dependencies import Pydantic
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
 from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import (
+    get_discriminant_parameter_name,
     get_single_union_type_class_name,
 )
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
+from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
 
@@ -62,6 +65,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     base_union_pydantic_model.add_field(**vars(field))
 
     def _maybe_wrap_type_hint(self, type_hint: AST.TypeHint) -> AST.TypeHint:
+        if len(self._union.types) <= 1:
+            return type_hint
+
         if self._custom_config.skip_validation:
             return AST.TypeHint.annotated(
                 type=type_hint,
@@ -71,13 +77,27 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                         kwargs=[
                             (
                                 "discriminant",
-                                AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                                AST.Expression(f'"{get_discriminant_parameter_name(self._union.discriminant)}"'),
                             )
                         ],
                     )
                 ),
             )
-        return type_hint
+
+        field_invocation = AST.FunctionInvocation(
+            function_definition=Pydantic(self._custom_config.version).Field(),
+            kwargs=[
+                (
+                    "discriminator",
+                    AST.Expression(f'"{get_discriminant_parameter_name(self._union.discriminant)}"'),
+                )
+            ],
+        )
+
+        return AST.TypeHint.annotated(
+            type=type_hint,
+            annotation=AST.Expression(field_invocation),
+        )
 
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
         return get_single_union_type_class_name(
@@ -126,6 +146,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
+            positional_single_property_constructors=self._custom_config.positional_single_property_constructors,
         ) as internal_pydantic_model_for_single_union_type:
             for pydantic_field in properties:
                 internal_pydantic_model_for_single_union_type.add_field(pydantic_field)
@@ -184,20 +205,41 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         internal_pydantic_model_for_single_union_type: PydanticModel,
         single_union_type: ir_types.SingleUnionType,
     ) -> None:
-        referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-            same_properties_as_object=lambda _: set(),
-            single_property=lambda single_property: set(
+        referenced_type_ids: OrderedSet[ir_types.TypeId] = single_union_type.shape.visit(
+            same_properties_as_object=lambda _: OrderedSet(),
+            single_property=lambda single_property: OrderedSet(
                 self._context.get_referenced_types_of_type_reference(single_property.type) or []
             ),
-            no_properties=lambda: set(),
+            no_properties=lambda: OrderedSet(),
         )
 
+        # Check if any referenced types are in a cycle with this union type
+        ghost_reference_type_ids: List[ir_types.TypeId] = []
+
         for referenced_type_id in referenced_type_ids:
-            if self._context.does_type_reference_other_type(
-                type_id=referenced_type_id, other_type_id=self._name.type_id
+            # Check if this referenced type is in a mutual reference cycle with the union
+            types_in_cycle = self._context.get_types_in_cycle_with(referenced_type_id)
+            if self._name.type_id in types_in_cycle or self._context.do_types_reference_each_other(
+                referenced_type_id, self._name.type_id
             ):
-                internal_pydantic_model_for_single_union_type.update_forward_refs()
-                break
+                ghost_reference_type_ids.append(referenced_type_id)
+                # Add as ghost reference so it gets imported
+                internal_pydantic_model_for_single_union_type.add_ghost_reference(
+                    self._context.get_class_reference_for_type_id(referenced_type_id, as_request=False)
+                )
+
+        # If we have ghost references, use the special update method; otherwise use regular
+        if ghost_reference_type_ids:
+            ghost_references = [
+                self._context.get_class_reference_for_type_id(type_id, as_request=False)
+                for type_id in ghost_reference_type_ids
+            ]
+            internal_pydantic_model_for_single_union_type.update_forward_refs_with_ghost_references(ghost_references)
+        elif any(
+            self._context.does_type_reference_other_type(type_id=ref_id, other_type_id=self._name.type_id)
+            for ref_id in referenced_type_ids
+        ):
+            internal_pydantic_model_for_single_union_type.update_forward_refs()
 
 
 class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnippetGenerator):

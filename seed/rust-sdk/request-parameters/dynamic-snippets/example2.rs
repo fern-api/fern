@@ -9,6 +9,13 @@ async fn main() {
     let client = RequestParametersClient::new(config).expect("Failed to build client");
     client
         .user
-        .create_username_optional(&Some(Some(CreateUsernameBodyOptionalProperties {})), None)
+        .create_username_optional(
+            &Some(Some(CreateUsernameBodyOptionalProperties {
+                username: None,
+                password: None,
+                name: None,
+            })),
+            None,
+        )
         .await;
 }

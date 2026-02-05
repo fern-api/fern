@@ -1,14 +1,19 @@
+import { GraphQLSpec } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
+    isValidRelativeSlug,
     parseImagePaths,
+    type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
-    replaceReferencedMarkdown
+    replaceReferencedMarkdown,
+    transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
+import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -18,8 +23,8 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
-import { kebabCase } from "lodash-es";
-
+import { camelCase, kebabCase } from "lodash-es";
+import { Target } from "../../configuration/src/docs-yml/schemas";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -52,6 +57,8 @@ type RegisterApiFn = (opts: {
     playgroundConfig?: PlaygroundConfig;
     apiName?: string;
     workspace?: FernWorkspace;
+    graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+    graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
 
 type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AiChatConfig | undefined }) => AsyncOrSync<void>;
@@ -66,6 +73,26 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
+/**
+ * Context provided to the pythonDocsSectionHandler callback for creating placeholder pages.
+ */
+export interface PythonDocsSectionContext {
+    /** Add a page to the docs definition */
+    addPage: (pageId: string, markdown: string) => void;
+    /** Generate a unique node ID */
+    generateId: (key: string) => FernNavigation.V1.NodeId;
+}
+
+/**
+ * Handler for pythonDocsSection navigation items.
+ * Return a PageNode to show a placeholder, or null to skip the section.
+ */
+export type PythonDocsSectionHandler = (
+    item: docsYml.DocsNavigationItem.PythonDocsSection,
+    parentSlug: FernNavigation.V1.SlugGenerator,
+    context: PythonDocsSectionContext
+) => FernNavigation.V1.PageNode | null;
+
 export interface DocsDefinitionResolverArgs {
     domain: string;
     docsWorkspace: DocsWorkspace;
@@ -77,6 +104,12 @@ export interface DocsDefinitionResolverArgs {
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
+    /**
+     * Handler for pythonDocsSection navigation items.
+     * If provided, called to create placeholder pages during local dev.
+     * If not provided, pythonDocsSection items are skipped (FDR adds generated docs during publish).
+     */
+    pythonDocsSectionHandler?: PythonDocsSectionHandler;
 }
 
 export class DocsDefinitionResolver {
@@ -89,6 +122,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private pythonDocsSectionHandler?: PythonDocsSectionHandler;
 
     constructor({
         domain,
@@ -99,7 +133,8 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
-        targetAudiences
+        targetAudiences,
+        pythonDocsSectionHandler
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -110,6 +145,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
+        this.pythonDocsSectionHandler = pythonDocsSectionHandler;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -215,16 +251,30 @@ export class DocsDefinitionResolver {
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
+    private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
+    private markdownFilesToAvailability: Map<AbsoluteFilePath, docsYml.RawSchemas.Availability> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
+    private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
+        const resolveStartTime = performance.now();
+        const startMemory = process.memoryUsage();
+
+        // Reset referenced markdown files to prevent accumulation if resolver is reused
+        this.referencedMarkdownFiles = [];
+
+        this.taskContext.logger.debug("Parsing docs configuration...");
+        const parseStart = performance.now();
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+        const parseTime = performance.now() - parseStart;
+        const pageCount = Object.keys(this.parsedDocsConfig.pages).length;
+        this.taskContext.logger.debug(`Parsed docs configuration in ${parseTime.toFixed(0)}ms: ${pageCount} pages`);
 
         // Apply audience-based filtering to the navigation if target audiences are specified
         if (this.targetAudiences && this.targetAudiences.length > 0) {
@@ -232,6 +282,7 @@ export class DocsDefinitionResolver {
         }
 
         // Store raw markdown content before any processing
+        this.taskContext.logger.debug("Storing raw markdown content...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = markdown;
         }
@@ -240,6 +291,8 @@ export class DocsDefinitionResolver {
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV1Parser = openapiParserV3 != null && !openapiParserV3;
         if (this.docsWorkspace.config.navigation != null && useV1Parser) {
+            this.taskContext.logger.debug("Visiting navigation AST for changelog files...");
+            const navStart = performance.now();
             await visitNavigationAst({
                 navigation: this.docsWorkspace.config.navigation,
                 visitor: {
@@ -266,50 +319,80 @@ export class DocsDefinitionResolver {
                 apiWorkspaces: this.apiWorkspaces,
                 context: this.taskContext
             });
+            const navTime = performance.now() - navStart;
+            this.taskContext.logger.debug(`Visited navigation AST in ${navTime.toFixed(0)}ms`);
         }
 
-        // create a map of markdown files to their URL pathnames
+        // create maps of markdown files to their frontmatter values
         // this will be used to resolve relative markdown links to their final URLs
-        this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
+        this.taskContext.logger.debug("Building markdown file maps...");
+        const mapStart = performance.now();
+        this.extractAllFrontmatterData(this.parsedDocsConfig.pages);
+        const mapTime = performance.now() - mapStart;
+        this.taskContext.logger.debug(`Built markdown file maps in ${mapTime.toFixed(0)}ms`);
 
-        // create a map of markdown files to their noindex values
-        this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
-
-        // create a map of markdown files to their tags
-        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages);
-
-        // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
-        // this should happen before we parse image paths, as the referenced markdown files may contain images.
+        // Replace all instances of <Markdown src="..."/> and <Code src="..."/> with their content
+        // This should happen before we parse image paths, as the referenced files may contain images.
+        // Also collects all referenced markdown files to store in jsFiles
+        this.taskContext.logger.debug("Replacing referenced markdown and code files...");
+        const refStart = performance.now();
+        // Use a Set for O(1) deduplication instead of O(N) array scan
+        const seenReferencedFiles = new Set<AbsoluteFilePath>();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+            // First replace markdown includes, then code includes (order matters: snippets can contain code)
+            const result = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
-        }
-
-        // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
-                markdown,
+            // Collect referenced markdown files (deduplicated by absolute path using Set for O(1) lookup)
+            for (const refFile of result.referencedFiles) {
+                if (!seenReferencedFiles.has(refFile.absoluteFilePath)) {
+                    seenReferencedFiles.add(refFile.absoluteFilePath);
+                    this.referencedMarkdownFiles.push(refFile);
+                }
+            }
+            const codeReplacedMarkdown = await replaceReferencedCode({
+                markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
-        }
 
+            const newMarkdown = transformAtPrefixImports({
+                markdown: codeReplacedMarkdown,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath)
+            });
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
+        }
+        const refTime = performance.now() - refStart;
+        this.taskContext.logger.debug(
+            `Replaced referenced content in ${refTime.toFixed(0)}ms, found ${this.referencedMarkdownFiles.length} referenced markdown files`
+        );
+
+        this.taskContext.logger.debug("Collecting files from docs config...");
+        const collectStart = performance.now();
         const filesToUploadSet = await collectFilesFromDocsConfig({
             parsedDocsConfig: this.parsedDocsConfig
         });
+        const collectTime = performance.now() - collectStart;
+        this.taskContext.logger.debug(`Collected ${filesToUploadSet.size} files in ${collectTime.toFixed(0)}ms`);
 
         // preprocess markdown files to extract image paths
+        this.taskContext.logger.debug("Parsing image paths from markdown files...");
+        const imageParseStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             try {
-                const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
-                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-                });
+                const { filepaths, markdown: newMarkdown } = parseImagePaths(
+                    markdown,
+                    {
+                        absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                        absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                    },
+                    this.taskContext
+                );
 
                 // store the updated markdown in pages
                 this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
@@ -325,6 +408,8 @@ export class DocsDefinitionResolver {
                 throw error;
             }
         }
+        const imageParseTime = performance.now() - imageParseStart;
+        this.taskContext.logger.debug(`Parsed image paths in ${imageParseTime.toFixed(0)}ms`);
 
         const filesToUpload: FilePathPair[] = Array.from(filesToUploadSet).map(
             (absoluteFilePath): FilePathPair => ({
@@ -333,21 +418,35 @@ export class DocsDefinitionResolver {
             })
         );
 
+        this.taskContext.logger.info(`Uploading ${filesToUpload.length} files...`);
+        const uploadStart = performance.now();
         const uploadedFiles = await this.uploadFiles(filesToUpload);
+        const uploadTime = performance.now() - uploadStart;
+        this.taskContext.logger.info(`Uploaded ${uploadedFiles.length} files in ${uploadTime.toFixed(0)}ms`);
 
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
 
         // store root here so we only process once
+        this.taskContext.logger.debug("Building navigation tree...");
+        const rootStart = performance.now();
         const root = await this.toRootNode();
+        const rootTime = performance.now() - rootStart;
+        this.taskContext.logger.debug(`Built navigation tree in ${rootTime.toFixed(0)}ms`);
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
 
         // TODO: include more (canonical) slugs from the navigation tree
+        this.taskContext.logger.debug("Getting fully qualified path names...");
+        const pathNameStart = performance.now();
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
+        const pathNameTime = performance.now() - pathNameStart;
+        this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
 
+        this.taskContext.logger.debug("Replacing image paths and URLs in markdown...");
+        const replaceStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                 markdown,
@@ -361,24 +460,37 @@ export class DocsDefinitionResolver {
                 this.taskContext
             );
         }
+        const replaceTime = performance.now() - replaceStart;
+        this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);
 
+        this.taskContext.logger.debug("Building page content...");
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
-            const url = createEditThisPageUrl(this.editThisPage, relativePageFilepath);
+            const { url: editThisPageUrl, launch: editThisPageLaunch } = createEditThisPageUrl(
+                this.editThisPage,
+                relativePageFilepath
+            );
             const rawMarkdown = this.rawMarkdownFiles[RelativeFilePath.of(relativePageFilepath)];
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown,
-                editThisPageUrl: url ? DocsV1Write.Url(url) : undefined,
+                editThisPageUrl: editThisPageUrl ? DocsV1Write.Url(editThisPageUrl) : undefined,
+                editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch,
                 rawMarkdown: rawMarkdown
             };
         });
 
+        this.taskContext.logger.debug("Converting docs configuration...");
+        const configStart = performance.now();
         const config = await this.convertDocsConfiguration(root);
+        const configTime = performance.now() - configStart;
+        this.taskContext.logger.debug(`Converted docs configuration in ${configTime.toFixed(0)}ms`);
 
         // detect experimental js files to include in the docs
         let jsFiles: Record<string, string> = {};
         if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
+            this.taskContext.logger.debug("Processing MDX components...");
+            const mdxStart = performance.now();
             const jsFilePaths = new Set<AbsoluteFilePath>();
             await Promise.all(
                 this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
@@ -408,7 +520,42 @@ export class DocsDefinitionResolver {
                     })
                 )
             );
+            const mdxTime = performance.now() - mdxStart;
+            this.taskContext.logger.debug(
+                `Processed ${jsFilePaths.size} MDX component files in ${mdxTime.toFixed(0)}ms`
+            );
         }
+
+        // Add referenced markdown files to jsFiles so they are preserved in the docs definition
+        if (this.referencedMarkdownFiles.length > 0) {
+            this.taskContext.logger.debug(
+                `Adding ${this.referencedMarkdownFiles.length} referenced markdown files to jsFiles...`
+            );
+            for (const refFile of this.referencedMarkdownFiles) {
+                // Use the relative path as the key, and the raw content as the value
+                jsFiles[refFile.relativeFilePath] = refFile.content;
+            }
+        }
+
+        // Add custom header/footer component files to jsFiles
+        if (this._parsedDocsConfig.header != null) {
+            const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.header);
+            const contents = (await readFile(this._parsedDocsConfig.header)).toString();
+            jsFiles[relativeFilePath] = contents;
+            this.taskContext.logger.debug(`Added custom header component: ${relativeFilePath}`);
+        }
+        if (this._parsedDocsConfig.footer != null) {
+            const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.footer);
+            const contents = (await readFile(this._parsedDocsConfig.footer)).toString();
+            jsFiles[relativeFilePath] = contents;
+            this.taskContext.logger.debug(`Added custom footer component: ${relativeFilePath}`);
+        }
+
+        const totalResolveTime = performance.now() - resolveStartTime;
+        const endMemory = process.memoryUsage();
+        this.taskContext.logger.debug(
+            `Total resolve time: ${totalResolveTime.toFixed(0)}ms, Memory delta: RSS=${((endMemory.rss - startMemory.rss) / 1024 / 1024).toFixed(2)}MB`
+        );
 
         return { config, pages, jsFiles };
     }
@@ -432,68 +579,91 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Creates a map of markdown files to their full slugs specified in the frontmatter only
-     * @param pages - the pages to convert to slugs
-     * @returns a map of markdown files to their full slugs
+     * Extracts all frontmatter data (slug, sidebar-title, noindex, tags, availability) from pages in a single pass.
+     * This is more efficient than parsing frontmatter multiple times for each field.
+     * @param pages - the pages to extract frontmatter from
      */
-    private async getMarkdownFilesToFullSlugs(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string>> {
-        const mdxFilePathToSlug = new Map<AbsoluteFilePath, string>();
+    private extractAllFrontmatterData(pages: Record<RelativeFilePath, string>): void {
         for (const [relativePath, markdown] of Object.entries(pages)) {
             const frontmatter = matter(markdown);
+            const absolutePath = this.resolveFilepath(relativePath);
+
+            // Extract slug
             const slug = frontmatter.data.slug;
             if (typeof slug === "string" && slug.trim().length > 0) {
-                mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim());
+                const trimmedSlug = slug.trim();
+                if (isValidRelativeSlug(trimmedSlug)) {
+                    this.markdownFilesToFullSlugs.set(absolutePath, trimmedSlug);
+                } else {
+                    this.taskContext.logger.warn(
+                        `Ignoring absolute URL slug "${trimmedSlug}" in ${relativePath}. Absolute URLs are not allowed for frontmatter slugs.`
+                    );
+                }
             }
-        }
-        return mdxFilePathToSlug;
-    }
 
-    /**
-     * Creates a list of markdown files that have noindex:true specified in the frontmatter
-     * @param pages - the pages to check
-     * @returns a map of markdown files to their noindex value
-     */
-    private async getMarkdownFilesToNoIndex(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, boolean>> {
-        const mdxFilePathToNoIndex = new Map<AbsoluteFilePath, boolean>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract sidebar-title
+            const sidebarTitle = frontmatter.data["sidebar-title"];
+            if (typeof sidebarTitle === "string" && sidebarTitle.trim().length > 0) {
+                this.markdownFilesToSidebarTitle.set(absolutePath, sidebarTitle.trim());
+            }
+
+            // Extract noindex
             const noindex = frontmatter.data.noindex;
             if (typeof noindex === "boolean") {
-                mdxFilePathToNoIndex.set(this.resolveFilepath(relativePath), noindex);
+                this.markdownFilesToNoIndex.set(absolutePath, noindex);
             }
-        }
-        return mdxFilePathToNoIndex;
-    }
 
-    /**
-     * Creates a map of markdown files to their tags specified in the frontmatter
-     * @param pages - the pages to check
-     * @returns a map of markdown files to their tags
-     */
-    private async getMarkdownFilesToTags(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string[]>> {
-        const mdxFilePathToTags = new Map<AbsoluteFilePath, string[]>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract tags
             const tags = frontmatter.data.tags;
             if (typeof tags === "string") {
-                mdxFilePathToTags.set(
-                    this.resolveFilepath(relativePath),
+                this.markdownFilesToTags.set(
+                    absolutePath,
                     tags
                         .split(",")
                         .map((item) => item.trim())
                         .filter((item) => item.length > 0)
                 );
             } else if (Array.isArray(tags)) {
-                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
+                this.markdownFilesToTags.set(absolutePath, tags);
+            }
+
+            // Extract availability
+            const availability = frontmatter.data.availability;
+            if (typeof availability === "string") {
+                const parsedAvailability = this.parseAvailabilityFromFrontmatter(availability);
+                if (parsedAvailability != null) {
+                    this.markdownFilesToAvailability.set(absolutePath, parsedAvailability);
+                }
             }
         }
-        return mdxFilePathToTags;
+    }
+
+    /**
+     * Parses an availability string from frontmatter into the Availability enum value.
+     * @param value - the availability string from frontmatter
+     * @returns the Availability enum value, or undefined if the value is not valid
+     */
+    private parseAvailabilityFromFrontmatter(value: string): docsYml.RawSchemas.Availability | undefined {
+        const normalizedValue = value.toLowerCase().trim();
+        switch (normalizedValue) {
+            case "stable":
+                return "stable";
+            case "generally-available":
+                return "generally-available";
+            case "in-development":
+                return "in-development";
+            case "pre-release":
+                return "pre-release";
+            case "deprecated":
+                return "deprecated";
+            case "beta":
+                return "beta";
+            default:
+                this.taskContext.logger.warn(
+                    `Invalid availability value "${value}" in frontmatter. Valid values are: stable, generally-available, in-development, pre-release, deprecated, beta`
+                );
+                return undefined;
+        }
     }
 
     /**
@@ -548,6 +718,7 @@ export class DocsDefinitionResolver {
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
             logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
+            logoRightText: this.parsedDocsConfig.logo?.rightText,
             favicon: this.getFileId(this.parsedDocsConfig.favicon),
             navigation: undefined, // <-- this is now deprecated
             root,
@@ -636,12 +807,18 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            pageActions: this.parsedDocsConfig.pageActions,
+            editThisPageLaunch: (this.editThisPage?.launch ?? "github") as DocsV1Write.EditThisPageLaunch,
+            pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
                     ? {
-                          ...this.parsedDocsConfig.theme,
-                          "page-actions": undefined
+                          sidebar: this.parsedDocsConfig.theme.sidebar,
+                          body: this.parsedDocsConfig.theme.body,
+                          tabs: this.parsedDocsConfig.theme.tabs,
+                          "page-actions": this.parsedDocsConfig.theme.pageActions,
+                          footerNav: this.parsedDocsConfig.theme.footerNav,
+                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
+                          "product-switcher": this.parsedDocsConfig.theme.productSwitcher
                       }
                     : undefined,
             // deprecated
@@ -650,7 +827,10 @@ export class DocsDefinitionResolver {
             colors: undefined,
             colorsV2: undefined,
             typography: undefined,
-            backgroundImage: undefined
+            backgroundImage: undefined,
+            // custom components - the compiled JS will be stored in jsFiles and referenced by relative path
+            header: this.parsedDocsConfig.header ? this.toRelativeFilepath(this.parsedDocsConfig.header) : undefined,
+            footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined
         };
         return config;
     }
@@ -669,8 +849,8 @@ export class DocsDefinitionResolver {
             return this.apiWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : "Failed to load API Definition referenced in docs";
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
+            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
         throw new Error(errorMessage);
     }
 
@@ -684,8 +864,8 @@ export class DocsDefinitionResolver {
             return this.ossWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : "Failed to load API Definition referenced in docs";
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
+            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
         throw new Error(errorMessage);
     }
 
@@ -790,13 +970,30 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.VersionedNode> {
         const id = this.#idgen.get("versioned");
 
+        const defaultVersion = versioned.versions[0];
+        if (defaultVersion?.hidden === true) {
+            throw new Error(
+                `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`
+            );
+        }
+
+        // Process versions in batches to reduce memory usage for customers with many API versions.
+        // Each version generates a large IR and API definition, so processing all in parallel
+        // can cause memory issues (e.g., 35 versions * ~100-200MB each = 3.5-7GB).
+        const BATCH_SIZE = 5;
+        const children: FernNavigation.V1.VersionNode[] = [];
+        for (let i = 0; i < versioned.versions.length; i += BATCH_SIZE) {
+            const batch = versioned.versions.slice(i, i + BATCH_SIZE);
+            const batchResults = await Promise.all(
+                batch.map((item, batchIdx) => this.toVersionNode(item, parentSlug, i + batchIdx === 0))
+            );
+            children.push(...batchResults);
+        }
+
         return {
             id,
             type: "versioned",
-            // TODO: should the first version always be default? We should make this configurable.
-            children: await Promise.all(
-                versioned.versions.map((item, idx) => this.toVersionNode(item, parentSlug, idx === 0))
-            )
+            children
         };
     }
 
@@ -875,7 +1072,8 @@ export class DocsDefinitionResolver {
                 pointsTo: undefined,
                 viewers: product.viewers,
                 orphaned: product.orphaned,
-                featureFlags: product.featureFlags
+                featureFlags: product.featureFlags,
+                announcement: product.announcement != null ? { text: product.announcement.message } : undefined
             };
         } else {
             return {
@@ -885,6 +1083,7 @@ export class DocsDefinitionResolver {
                 title: product.product,
                 subtitle: product.subtitle ?? "",
                 href: DocsV1Write.Url(product.href ?? ""),
+                target: product.target,
                 default: false,
                 hidden: undefined,
                 authed: undefined,
@@ -918,13 +1117,14 @@ export class DocsDefinitionResolver {
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
             landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, slug) : undefined,
-            hidden: undefined,
+            hidden: version.hidden,
             authed: undefined,
             viewers: version.viewers,
             orphaned: version.orphaned,
             icon: undefined,
             pointsTo: undefined,
-            featureFlags: version.featureFlags
+            featureFlags: version.featureFlags,
+            announcement: version.announcement != null ? { text: version.announcement.message } : undefined
         };
     }
 
@@ -935,9 +1135,10 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
 
-        const children = await Promise.all(
+        const childrenWithNulls = await Promise.all(
             items.map((item) => this.toNavigationChild({ prefix: id, item, parentSlug }))
         );
+        const children = childrenWithNulls.filter((child): child is FernNavigation.V1.NavigationChild => child != null);
 
         const grouped: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
@@ -1003,7 +1204,10 @@ export class DocsDefinitionResolver {
             urlSlug: item.slug ?? kebabCase(item.title),
             skipUrlSlug: item.skipUrlSlug
         });
-        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, variantSlug)));
+        const childrenWithNulls = await Promise.all(
+            item.layout.map((item) => this.toVariantChild(item, id, variantSlug))
+        );
+        const children = childrenWithNulls.filter((child): child is FernNavigation.V1.VariantChild => child != null);
         return {
             type: "variant",
             id,
@@ -1028,13 +1232,16 @@ export class DocsDefinitionResolver {
         item: docsYml.DocsNavigationItem,
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator
-    ): Promise<FernNavigation.V1.VariantChild> {
-        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild>>({
+    ): Promise<FernNavigation.V1.VariantChild | null> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug }),
             apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
             section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug),
+            // Library sections are handled by FDR during registration
+            // If handler provided (dev mode), create placeholder; otherwise skip (FDR adds generated docs)
+            pythonDocsSection: async (value) => this.handlePythonDocsSection(value, parentSlug)
         });
     }
 
@@ -1050,15 +1257,18 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator;
         hideChildren?: boolean;
         parentAvailability?: docsYml.RawSchemas.Availability;
-    }): Promise<FernNavigation.V1.NavigationChild> {
-        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild>>({
+    }): Promise<FernNavigation.V1.NavigationChild | null> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild | null>>({
             page: async (value) => this.toPageNode({ item: value, parentSlug, hideChildren, parentAvailability }),
             apiSection: async (value) =>
                 this.toApiSectionNode({ item: value, parentSlug, hideChildren, parentAvailability }),
             section: async (value) =>
                 this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
+            // Library sections are handled by FDR during registration
+            // If handler provided (dev mode), create placeholder; otherwise skip (FDR adds generated docs)
+            pythonDocsSection: async (value) => this.handlePythonDocsSection(value, parentSlug)
         });
     }
 
@@ -1076,33 +1286,69 @@ export class DocsDefinitionResolver {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
         let ir: IntermediateRepresentation | undefined = undefined;
-        const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
-            { context: this.taskContext },
-            {
-                enableUniqueErrorsPerEndpoint: true,
-                detectGlobalHeaders: false,
-                objectQueryParameters: true,
-                preserveSchemaIds: true
-            }
-        );
+        let workspace: FernWorkspace | undefined = undefined;
+        let openapiWorkspace: OSSWorkspace | undefined = undefined;
+        let openapiError: unknown = undefined;
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser) {
             try {
-                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
                     audiences: item.audiences,
                     enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false
+                    generateV1Examples: false,
+                    logWarnings: false
                 });
             } catch (error) {
-                // noop
+                openapiError = error;
+            }
+        }
+
+        // Extract OpenAPI IR tags when tag description pages are enabled
+        let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
+        if (item.tagDescriptionPages && useV3Parser) {
+            try {
+                const workspaceForTags = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
+                const openApiIr = await workspaceForTags.getOpenAPIIr({
+                    context: this.taskContext,
+                    loadAiExamples: true
+                });
+                if (openApiIr.tags.tagsById) {
+                    // Tag keys must be normalized to camelCase because subpackage names are derived
+                    // from OpenAPI tags using camelCase conversion. The lookup in
+                    // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
+                    // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
+                    // tags are converted to camelCase when generating file/subpackage names.
+                    openApiTags = Object.fromEntries(
+                        Object.entries(openApiIr.tags.tagsById)
+                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                            .map(([tagId, tag]) => [
+                                camelCase(tagId),
+                                { id: String(tag.id), description: tag.description }
+                            ])
+                    );
+                }
+            } catch (error) {
+                this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
             }
         }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
+            if (this.apiWorkspaces.length === 0 && openapiError != null) {
+                throw openapiError;
+            }
+            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                { context: this.taskContext },
+                {
+                    enableUniqueErrorsPerEndpoint: true,
+                    detectGlobalHeaders: false,
+                    objectQueryParameters: true,
+                    preserveSchemaIds: true
+                }
+            );
             ir = generateIntermediateRepresentation({
                 workspace,
                 audiences: item.audiences,
@@ -1120,20 +1366,68 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
+        } else if (Object.keys(snippetsConfig).length > 0) {
+            // When using the v3 parser (ir != null), we still need to load the workspace
+            // for dynamic snippet generation, which requires access to generators.yml configuration.
+            // Only load if there's a snippets configuration to avoid unnecessary work.
+            try {
+                workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                    { context: this.taskContext },
+                    {
+                        enableUniqueErrorsPerEndpoint: true,
+                        detectGlobalHeaders: false,
+                        objectQueryParameters: true,
+                        preserveSchemaIds: true
+                    }
+                );
+            } catch (error) {
+                // If we can't load the workspace for dynamic snippets, log a warning but continue
+                // since the IR was already successfully generated by the v3 parser
+                this.taskContext.logger.debug(
+                    `Could not load workspace for dynamic snippets: ${error}. Dynamic snippets may not be available.`
+                );
+            }
         }
+
+        // Apply environment variable substitution to the IR if enabled in docs.yml settings
+        // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
+        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            ir = replaceEnvVariables(
+                ir,
+                {
+                    onError: (e) =>
+                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
+                },
+                { substituteAsEmpty: false }
+            );
+        }
+
+        // Extract GraphQL operations and types from the workspace
+        const graphqlData = await this.extractGraphQLData();
+
+        // Use item.apiName (from api-name in docs.yml) if explicitly set,
+        // otherwise fall back to the workspace's folder name for FDR registration.
+        // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
+        const apiNameForRegistration = item.apiName ?? workspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
-            apiName: item.apiName,
-            workspace
+            apiName: apiNameForRegistration,
+            workspace,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types
         });
+
+        // Create API definition WITH GraphQL operations (single full conversion)
         const api = convertIrToApiDefinition({
             ir,
             apiDefinitionId,
             playgroundConfig: { oauth: item.playground?.oauth },
-            context: this.taskContext
+            context: this.taskContext,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types
         });
 
         const node = new ApiReferenceNodeConverter(
@@ -1149,8 +1443,38 @@ export class DocsDefinitionResolver {
             this.collectedFileIds,
             workspace,
             hideChildren,
-            parentAvailability ?? item.availability
+            parentAvailability ?? item.availability,
+            openApiTags,
+            graphqlData.namespacesByOperationId
         );
+
+        // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
+        const tagDescriptionContent = node.getTagDescriptionContent();
+        for (const [absolutePath, content] of tagDescriptionContent.entries()) {
+            // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
+            const filename = absolutePath.split("/").pop() || absolutePath;
+            const relativePath = RelativeFilePath.of(filename);
+
+            // Apply environment variable substitution if enabled
+            let processedContent = content;
+            if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+                processedContent = replaceEnvVariables(
+                    content,
+                    {
+                        onError: (e) =>
+                            this.taskContext.logger.error(
+                                `Error in tag description environment variable substitution: ${e}`
+                            )
+                    },
+                    { substituteAsEmpty: false }
+                );
+            }
+
+            // Add to both collections so the file appears in the final pages output
+            this.rawMarkdownFiles[relativePath] = processedContent;
+            this.parsedDocsConfig.pages[relativePath] = processedContent;
+        }
+
         return node.get();
     }
 
@@ -1184,8 +1508,75 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
-            icon: this.resolveIconFileId(item.icon)
+            icon: this.resolveIconFileId(item.icon),
+            target: item.target
         };
+    }
+
+    /**
+     * Extract GraphQL operations from a workspace
+     */
+    private async extractGraphQLData(): Promise<{
+        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
+        types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
+        namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
+    }> {
+        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
+        const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+        const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
+
+        // Get pre-processed GraphQL data from workspaces and build namespace mapping
+        for (const ossWorkspace of this.ossWorkspaces) {
+            // Merge processed GraphQL data from workspace
+            Object.assign(graphqlOperations, ossWorkspace.getGraphqlOperations());
+            Object.assign(graphqlTypes, ossWorkspace.getGraphqlTypes());
+
+            // Build namespace mapping by processing individual specs
+            const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+            for (const spec of graphqlSpecs) {
+                if (spec.namespace != null) {
+                    try {
+                        // Process each spec individually to map operations to namespaces
+                        const converter = new GraphQLConverter({
+                            context: this.taskContext,
+                            filePath: spec.absoluteFilepath
+                        });
+                        const graphqlResult = await converter.convert();
+
+                        // Map operations from this spec to its namespace
+                        for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
+                            namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
+                        }
+                    } catch (error) {
+                        this.taskContext.logger.error(
+                            `Failed to process GraphQL spec for namespace mapping ${spec.absoluteFilepath}:`,
+                            String(error)
+                        );
+                    }
+                }
+            }
+        }
+
+        return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
+    }
+
+    /**
+     * Handles pythonDocsSection navigation items by delegating to the handler if provided.
+     * If no handler is provided, returns null (skips the section - FDR adds generated docs during publish).
+     */
+    private handlePythonDocsSection(
+        item: docsYml.DocsNavigationItem.PythonDocsSection,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.PageNode | null {
+        if (this.pythonDocsSectionHandler == null) {
+            return null;
+        }
+        return this.pythonDocsSectionHandler(item, parentSlug, {
+            addPage: (pageId, markdown) => {
+                this.parsedDocsConfig.pages[RelativeFilePath.of(pageId)] = markdown;
+            },
+            generateId: (key) => this.#idgen.get(key)
+        });
     }
 
     private async toPageNode({
@@ -1205,11 +1596,12 @@ export class DocsDefinitionResolver {
             fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/")
         });
         const id = this.#idgen.get(pageId);
+        const frontmatterAvailability = this.markdownFilesToAvailability.get(item.absolutePath);
         return {
             id,
             type: "page",
             slug: slug.get(),
-            title: item.title,
+            title: this.markdownFilesToSidebarTitle.get(item.absolutePath) ?? item.title,
             icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
@@ -1218,7 +1610,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: item.availability ?? parentAvailability
+            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
         };
     }
 
@@ -1236,7 +1628,7 @@ export class DocsDefinitionResolver {
         parentAvailability?: docsYml.RawSchemas.Availability;
     }): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
-        const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
+        let pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -1247,34 +1639,60 @@ export class DocsDefinitionResolver {
         });
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
+        const frontmatterAvailability =
+            item.overviewAbsolutePath != null
+                ? this.markdownFilesToAvailability.get(item.overviewAbsolutePath)
+                : undefined;
         const hiddenSection = hideChildren || item.hidden;
+        const children = await Promise.all(
+            item.contents.map((child) =>
+                this.toNavigationChild({
+                    prefix: id,
+                    item: child,
+                    parentSlug: slug,
+                    hideChildren: hiddenSection,
+                    parentAvailability: item.availability ?? parentAvailability
+                })
+            )
+        );
+
+        // Filter out null children first
+        const filteredChildren = children.filter((child): child is FernNavigation.V1.NavigationChild => child != null);
+
+        // If the section has no overview page and contains a flattened API reference with an overview page,
+        // inherit the API reference's overview page for the section (e.g., tag description page).
+        // We search through all children to find a flattened API reference, rather than assuming
+        // the first child is an API reference (which may not be true for all section configurations).
+        if (pageId == null) {
+            const flattenedApiRef = filteredChildren.find(
+                (child): child is FernNavigation.V1.ApiReferenceNode =>
+                    child.type === "apiReference" && child.hideTitle === true && child.overviewPageId != null
+            );
+            if (flattenedApiRef != null) {
+                pageId = flattenedApiRef.overviewPageId;
+            }
+        }
+
         return {
             id,
             type: "section",
             overviewPageId: pageId,
             slug: slug.get(),
-            title: item.title,
+            title:
+                item.overviewAbsolutePath != null
+                    ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
+                    : item.title,
             icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(
-                item.contents.map((child) =>
-                    this.toNavigationChild({
-                        prefix: id,
-                        item: child,
-                        parentSlug: slug,
-                        hideChildren: hiddenSection,
-                        parentAvailability: item.availability ?? parentAvailability
-                    })
-                )
-            ),
+            children: filteredChildren,
             authed: undefined,
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: item.availability ?? parentAvailability
+            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
         };
     }
 
@@ -1297,7 +1715,7 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.TabChild> {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
-            link: ({ href }) => this.toTabLinkNode(item, href),
+            link: ({ href, target }) => this.toTabLinkNode(item, href, target),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
             changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
             variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug)
@@ -1327,12 +1745,17 @@ export class DocsDefinitionResolver {
         });
     }
 
-    private async toTabLinkNode(item: docsYml.TabbedNavigation, href: string): Promise<FernNavigation.V1.LinkNode> {
+    private async toTabLinkNode(
+        item: docsYml.TabbedNavigation,
+        href: string,
+        target?: Target
+    ): Promise<FernNavigation.V1.LinkNode> {
         return {
             type: "link",
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
+            target: target,
             icon: this.resolveIconFileId(item.icon)
         };
     }
@@ -1416,6 +1839,32 @@ export class DocsDefinitionResolver {
         }
 
         return iconPath as string;
+    }
+
+    private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {
+        if (this.parsedDocsConfig.pageActions == null) {
+            return undefined;
+        }
+
+        return {
+            default: this.parsedDocsConfig.pageActions.default,
+            options: {
+                askAi: this.parsedDocsConfig.pageActions.options.askAi,
+                copyPage: this.parsedDocsConfig.pageActions.options.copyPage,
+                viewAsMarkdown: this.parsedDocsConfig.pageActions.options.viewAsMarkdown,
+                openAi: this.parsedDocsConfig.pageActions.options.openAi,
+                claude: this.parsedDocsConfig.pageActions.options.claude,
+                cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                vscode: this.parsedDocsConfig.pageActions.options.vscode,
+                custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
+                    title: customAction.title,
+                    subtitle: customAction.subtitle,
+                    url: customAction.url,
+                    icon: this.resolveIconFileId(customAction.icon),
+                    default: customAction.default
+                }))
+            }
+        };
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {
@@ -1563,14 +2012,17 @@ export class DocsDefinitionResolver {
 function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
-): string | undefined {
+): { url: string | undefined; launch: string } {
+    const launch = editThisPage?.launch ?? "github";
+
     if (editThisPage?.github == null) {
-        return undefined;
+        return { url: undefined, launch };
     }
 
     const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
+    const url = `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 
-    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
+    return { url, launch };
 }
 
 function convertAvailability(
@@ -1588,4 +2040,79 @@ function convertAvailability(
         default:
             assertNever(availability);
     }
+}
+
+/**
+ * Creates a placeholder page for Python docs sections during local development.
+ * This handler can be passed to DocsDefinitionResolver.pythonDocsSectionHandler
+ * to show a helpful placeholder page when running `fern docs dev`.
+ */
+export function createPythonDocsSectionPlaceholder(
+    item: docsYml.DocsNavigationItem.PythonDocsSection,
+    parentSlug: FernNavigation.V1.SlugGenerator,
+    context: PythonDocsSectionContext
+): FernNavigation.V1.PageNode {
+    const title = item.title ?? "Python Reference";
+    const urlSlug = item.slug ?? "python-docs";
+    const slug = parentSlug.apply({ urlSlug });
+
+    const syntheticPageId = `__python-docs-placeholder-${urlSlug}__.mdx`;
+    const pageId = FernNavigation.PageId(syntheticPageId);
+
+    const placeholderMarkdown = `---
+title: ${title}
+---
+
+<Warning>
+Python library documentation is not yet supported with \`fern docs dev\`. This feature will be added in a future release. To view the generated documentation, run \`fern generate --docs --preview\`.
+</Warning>
+
+## About Python Library Docs
+
+When you publish your documentation using \`fern generate --docs\`, Fern will:
+
+1. Clone and analyze your Python repository from: \`${item.githubUrl}\`
+2. Parse the Python source code to extract docstrings and type information
+3. Generate comprehensive API reference documentation
+4. Integrate the generated docs into your documentation site
+
+## How to Generate
+
+To generate the full Python library documentation, run:
+
+\`\`\`bash
+fern generate --docs
+\`\`\`
+
+Or to preview without publishing:
+
+\`\`\`bash
+fern generate --docs --preview
+\`\`\`
+
+The generated documentation will replace this placeholder page with complete API reference content including:
+
+- Module and package documentation
+- Class and function references
+- Type annotations and signatures
+- Docstring content
+`;
+
+    context.addPage(syntheticPageId, placeholderMarkdown);
+
+    return {
+        id: context.generateId(pageId),
+        type: "page",
+        slug: slug.get(),
+        title,
+        icon: undefined,
+        hidden: false,
+        viewers: undefined,
+        orphaned: undefined,
+        pageId,
+        authed: undefined,
+        noindex: true,
+        featureFlags: undefined,
+        availability: undefined
+    };
 }

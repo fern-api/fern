@@ -6,8 +6,9 @@ namespace SeedBearerTokenEnvironmentVariable;
 public class SeedBearerTokenEnvironmentVariableApiException(
     string message,
     int statusCode,
-    object body
-) : SeedBearerTokenEnvironmentVariableException(message)
+    object body,
+    Exception? innerException = null
+) : SeedBearerTokenEnvironmentVariableException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

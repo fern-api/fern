@@ -261,7 +261,8 @@
                                 "v1": "LONG",
                                 "v2": {
                                     "type": "long",
-                                    "default": null
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -612,7 +613,8 @@
                                         "v1": "LONG",
                                         "v2": {
                                             "type": "long",
-                                            "default": null
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -2148,7 +2150,8 @@
                                                     "v1": "LONG",
                                                     "v2": {
                                                         "type": "long",
-                                                        "default": null
+                                                        "default": null,
+                                                        "validation": null
                                                     }
                                                 }
                                             }
@@ -4684,6 +4687,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:Name": {
@@ -4776,6 +4780,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -4788,6 +4793,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

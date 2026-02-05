@@ -58,7 +58,7 @@ export class ClientGeneratorContext {
                 unsafeName: name,
                 accessLevel: swift.AccessLevel.Private,
                 declarationType: swift.DeclarationType.Let,
-                type: this.referencer.referenceAsIsType("HTTPClient")
+                type: this.referencer.referenceSourceTemplateType("HTTPClient")
             }),
             clientName: "HTTPClient"
         };

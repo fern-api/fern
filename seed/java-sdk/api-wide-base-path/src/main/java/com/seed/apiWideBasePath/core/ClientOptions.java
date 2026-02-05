@@ -40,6 +40,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:api-wide-base-path/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:api-wide-base-path-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;
@@ -204,6 +205,9 @@ public final class ClientOptions {
             builder.environment = clientOptions.environment();
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
+            builder.headers.putAll(clientOptions.headers);
+            builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
+            builder.maxRetries = clientOptions.maxRetries();
             return builder;
         }
     }

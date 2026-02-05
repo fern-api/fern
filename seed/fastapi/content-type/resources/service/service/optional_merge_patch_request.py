@@ -3,15 +3,27 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 
 
 class OptionalMergePatchRequest(UniversalBaseModel):
-    required_field: str = pydantic.Field(alias="requiredField")
-    optional_string: typing.Optional[str] = pydantic.Field(alias="optionalString", default=None)
-    optional_integer: typing.Optional[int] = pydantic.Field(alias="optionalInteger", default=None)
-    optional_boolean: typing.Optional[bool] = pydantic.Field(alias="optionalBoolean", default=None)
-    nullable_string: typing.Optional[str] = pydantic.Field(alias="nullableString", default=None)
+    required_field: typing_extensions.Annotated[
+        str, FieldMetadata(alias="requiredField"), pydantic.Field(alias="requiredField")
+    ]
+    optional_string: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="optionalString"), pydantic.Field(alias="optionalString")
+    ] = None
+    optional_integer: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="optionalInteger"), pydantic.Field(alias="optionalInteger")
+    ] = None
+    optional_boolean: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="optionalBoolean"), pydantic.Field(alias="optionalBoolean")
+    ] = None
+    nullable_string: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="nullableString"), pydantic.Field(alias="nullableString")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

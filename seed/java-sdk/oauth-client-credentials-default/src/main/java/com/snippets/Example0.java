@@ -5,9 +5,8 @@ import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRe
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.builder()
-                .clientId("<clientId>")
-                .clientSecret("<clientSecret>")
+        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withCredentials(
+                        "<clientId>", "<clientSecret>")
                 .url("https://api.fern.com")
                 .build();
 
@@ -15,7 +14,6 @@ public class Example0 {
                 .getToken(GetTokenRequest.builder()
                         .clientId("client_id")
                         .clientSecret("client_secret")
-                        .grantType("client_credentials")
                         .build());
     }
 }

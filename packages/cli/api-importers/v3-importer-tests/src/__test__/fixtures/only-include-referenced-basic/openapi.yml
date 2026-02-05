@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: Schema Pruning Test
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      operationId: getItems
+      summary: Get items
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemResponse"
+components:
+  schemas:
+    ItemResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+    Item:
+      type: object
+      required:
+        - id
+        - details
+      properties:
+        id:
+          type: integer
+        details:
+          $ref: "#/components/schemas/ItemDetails"
+    ItemDetails:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    UnreferencedSchema:
+      type: object
+      description: This schema should be pruned as it's not referenced
+      properties:
+        unused:
+          type: string

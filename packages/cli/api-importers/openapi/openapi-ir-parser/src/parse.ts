@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
     Endpoint,
+    GlobalSecurity,
     OpenApiIntermediateRepresentation,
     Source as OpenApiIrSource,
     Schemas,
@@ -65,6 +66,7 @@ export function parse({
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
+        security: undefined,
         globalHeaders: [],
         idempotencyHeaders: [],
         groups: {}
@@ -101,7 +103,10 @@ export function parse({
                             ...parsedAsyncAPI.servers.map((server) => ({
                                 ...server,
                                 audiences: undefined,
-                                description: undefined
+                                description: undefined,
+                                defaultUrl: undefined,
+                                urlTemplate: undefined,
+                                variables: undefined
                             }))
                         ];
                     }
@@ -147,7 +152,16 @@ function getParseAsyncOptions({
     };
 }
 
-interface ServerInput {
+interface ApiServerConfig {
+    url: string;
+    audiences: string[] | undefined;
+}
+
+/**
+ * A single server from an OpenAPI spec (fresh from parsing).
+ */
+interface SingleServerInput {
+    type?: "single";
     url: string;
     description: string | undefined;
     name: string | undefined;
@@ -155,23 +169,20 @@ interface ServerInput {
     "x-fern-server-name"?: string;
 }
 
-interface ApiServerConfig {
-    url: string;
-    audiences: string[] | undefined;
-}
-
-interface SingleApiServer extends Server {
-    type: "single";
-}
-
-interface GroupedMultiApiServer {
+/**
+ * A grouped server containing multiple API URLs (result of merging multiple specs).
+ */
+interface GroupedServerInput {
     type: "grouped";
     name: string;
     description: string;
     urls: Record<string, ApiServerConfig>;
 }
 
-type MergedServer = SingleApiServer | GroupedMultiApiServer;
+/**
+ * Discriminated union of server types that can appear in the IR during merging.
+ */
+type AnyServerInput = SingleServerInput | GroupedServerInput;
 
 interface StandardEndpoint extends Endpoint {
     type: "standard";
@@ -184,7 +195,7 @@ interface MultiApiEndpoint extends Endpoint {
 
 type TypedEndpoint = StandardEndpoint | MultiApiEndpoint;
 
-function getEnvironmentName(server: ServerInput): string {
+function getEnvironmentName(server: SingleServerInput): string {
     const rawName = String(server.description || server.name || server["x-fern-server-name"] || "default").trim();
 
     const normalized = rawName.toUpperCase();
@@ -223,15 +234,18 @@ function extractApiNameFromUrl(url: string): string {
         const commonTerms = new Set(["api", "www", "service", "services", "example", "com", "org", "net", "io"]);
 
         for (const part of parts) {
-            const cleanPart = part.split("-")[0]; // Handle cases like "payments-service"
+            // Try the prefix before hyphen (e.g., "payments" from "payments-service")
+            const prefix = part.split("-")[0];
+            // Use prefix if it's meaningful, otherwise use the full part
+            const cleanPart = prefix && prefix.length > 2 ? prefix : part;
             if (cleanPart && !commonTerms.has(cleanPart.toLowerCase()) && cleanPart.length > 2) {
                 return cleanPart.toLowerCase();
             }
         }
 
-        // Fallback: use first part of hostname
-        const firstPart = parts[0]?.split("-")[0];
-        return firstPart ? firstPart.toLowerCase() : "api";
+        // Fallback: use first part of hostname (full, not split)
+        const firstPart = parts[0];
+        return firstPart && firstPart.length > 0 ? firstPart.toLowerCase() : "api";
     } catch {
         // If URL parsing fails, extract from string pattern
         const match = url.match(/https?:\/\/([^./-]+)/);
@@ -239,7 +253,46 @@ function extractApiNameFromUrl(url: string): string {
     }
 }
 
-function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]): boolean {
+/**
+ * Merges two security arrays and removes duplicates.
+ * Security items are considered equal if they have the same keys and values.
+ */
+function mergeDistinctSecurity(
+    security1: GlobalSecurity | undefined,
+    security2: GlobalSecurity | undefined
+): GlobalSecurity | undefined {
+    const arr1 = security1 ?? [];
+    const arr2 = security2 ?? [];
+
+    if (arr1.length === 0 && arr2.length === 0) {
+        return undefined;
+    }
+
+    // Use a Map with JSON stringified keys for deduplication
+    const seen = new Map<string, GlobalSecurity[number]>();
+
+    for (const item of [...arr1, ...arr2]) {
+        // Sort keys for consistent comparison
+        const sortedKeys = Object.keys(item).sort();
+        const normalized: Record<string, string[]> = {};
+        for (const key of sortedKeys) {
+            normalized[key] = item[key] ?? [];
+        }
+        const key = JSON.stringify(normalized);
+        if (!seen.has(key)) {
+            seen.set(key, item);
+        }
+    }
+
+    return Array.from(seen.values());
+}
+
+function detectMultipleBaseUrls(servers1: AnyServerInput[], servers2: AnyServerInput[]): boolean {
+    // If servers1 already contains grouped servers, we should continue grouping
+    if (hasGroupedServers(servers1)) {
+        return true;
+    }
+
     // Check if we have the same environment names but different URLs
     if (servers1.length === 0 || servers2.length === 0) {
         return false;
@@ -251,6 +304,9 @@ function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]
 
     const envMap = new Map<string, string>();
     for (const server of servers1) {
+        if (server.type === "grouped") {
+            continue; // Already handled above
+        }
         const envName = getEnvironmentName(server);
         envMap.set(envName, server.url);
     }
@@ -259,6 +315,9 @@ function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]
     let allDifferent = true;
 
     for (const server of servers2) {
+        if (server.type === "grouped") {
+            continue;
+        }
         const envName = getEnvironmentName(server);
         const existingUrl = envMap.get(envName);
         if (!existingUrl) {
@@ -271,13 +330,23 @@ function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]
     return allMatch && allDifferent;
 }
 
-function extractApiNameFromServers(servers: ServerInput[]): string {
+function extractApiNameFromServers(servers: AnyServerInput[]): string {
     if (servers.length === 0 || !servers[0]) {
         return "api";
     }
 
-    const firstUrl = servers[0].url;
-    return extractApiNameFromUrl(firstUrl);
+    const firstServer = servers[0];
+    if (firstServer.type === "grouped") {
+        // For grouped servers, use the first URL's name
+        const firstUrlName = Object.keys(firstServer.urls)[0];
+        return firstUrlName ?? "api";
+    }
+
+    return extractApiNameFromUrl(firstServer.url);
+}
+
+function hasGroupedServers(servers: AnyServerInput[]): boolean {
+    return servers.some((server) => server.type === "grouped");
 }
 
 function merge(
@@ -327,6 +396,7 @@ function merge(
                 ...ir1.securitySchemes,
                 ...ir2.securitySchemes
             },
+            security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
@@ -342,29 +412,45 @@ function merge(
     // Only do complex merging when flag is enabled
     const hasMultipleApis = detectMultipleBaseUrls(ir1.servers, ir2.servers);
     if (hasMultipleApis) {
-        let mergedServers: MergedServer[] = [];
+        const mergedServers: GroupedServerInput[] = [];
         let mergedEndpoints: TypedEndpoint[] = [];
-        const api1Name = extractApiNameFromServers(ir1.servers);
         const api2Name = extractApiNameFromServers(ir2.servers);
 
         const environmentMap = new Map<string, Record<string, ApiServerConfig>>();
 
-        // Process servers from first API
-        for (const server of ir1.servers) {
-            const envName = getEnvironmentName(server);
-            if (!environmentMap.has(envName)) {
-                environmentMap.set(envName, {});
-            }
-            const envUrls = environmentMap.get(envName);
-            if (envUrls) {
-                envUrls[api1Name] = {
-                    url: server.url,
-                    audiences: server.audiences
-                };
+        // Process servers from first API - handle already-grouped servers from previous merges
+        for (const server of ir1.servers as AnyServerInput[]) {
+            if (server.type === "grouped") {
+                // Preserve existing grouped URLs from previous merges
+                const envName = server.name ?? "default";
+                if (!environmentMap.has(envName)) {
+                    environmentMap.set(envName, {});
+                }
+                const envUrls = environmentMap.get(envName);
+                if (envUrls) {
+                    // Copy all existing URLs from the grouped server
+                    for (const [urlName, urlConfig] of Object.entries(server.urls)) {
+                        envUrls[urlName] = urlConfig;
+                    }
+                }
+            } else {
+                // Handle single server (first merge case)
+                const api1Name = extractApiNameFromUrl(server.url);
+                const envName = getEnvironmentName(server);
+                if (!environmentMap.has(envName)) {
+                    environmentMap.set(envName, {});
+                }
+                const envUrls = environmentMap.get(envName);
+                if (envUrls) {
+                    envUrls[api1Name] = {
+                        url: server.url,
+                        audiences: server.audiences
+                    };
+                }
             }
         }
 
-        // Process servers from second API
+        // Process servers from second API (always single servers from fresh IR)
         for (const server of ir2.servers) {
             const envName = getEnvironmentName(server);
             if (!environmentMap.has(envName)) {
@@ -380,7 +466,7 @@ function merge(
         }
 
         for (const [envName, urls] of environmentMap.entries()) {
-            const groupedServer: GroupedMultiApiServer = {
+            const groupedServer: GroupedServerInput = {
                 type: "grouped",
                 name: envName,
                 description: `${envName} environment`,
@@ -390,12 +476,29 @@ function merge(
         }
 
         // Tag endpoints with their API name for routing
-        const ir1EndpointsWithApiTag: MultiApiEndpoint[] = ir1.endpoints.map((endpoint) => ({
-            ...endpoint,
-            type: "multi-api" as const,
-            apiName: api1Name,
-            servers: [{ name: api1Name, url: undefined, audiences: undefined }]
-        }));
+        // Preserve existing tags from ir1 endpoints (from previous merges)
+        const ir1EndpointsWithApiTag: TypedEndpoint[] = ir1.endpoints.map((endpoint) => {
+            // Check if endpoint already has an API name from previous merge
+            const existingApiName = (endpoint as unknown as { __apiName?: string }).__apiName;
+            if (existingApiName) {
+                return {
+                    ...endpoint,
+                    type: "multi-api" as const,
+                    apiName: existingApiName,
+                    servers: [{ name: existingApiName, url: undefined, audiences: undefined }]
+                };
+            }
+            // First merge - derive API name from the first server
+            const firstServer = ir1.servers[0] as AnyServerInput | undefined;
+            const api1Name =
+                firstServer != null && firstServer.type !== "grouped" ? extractApiNameFromUrl(firstServer.url) : "api";
+            return {
+                ...endpoint,
+                type: "multi-api" as const,
+                apiName: api1Name,
+                servers: [{ name: api1Name, url: undefined, audiences: undefined }]
+            };
+        });
 
         const ir2EndpointsWithApiTag: MultiApiEndpoint[] = ir2.endpoints.map((endpoint) => ({
             ...endpoint,
@@ -412,16 +515,9 @@ function merge(
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
             basePath: ir1.basePath ?? ir2.basePath,
-            servers: mergedServers.map((s) => {
-                if (s.type === "single") {
-                    return s;
-                } else {
-                    // Preserve grouped server structure for buildEnvironments.ts
-                    // Cast to any then to Server to preserve all properties
-                    // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
-                    return s as any as Server;
-                }
-            }),
+            // Cast grouped servers to Server[] - buildEnvironments.ts handles the grouped structure
+            // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
+            servers: mergedServers as any as Server[],
             websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
             tags: {
                 tagsById: {
@@ -460,6 +556,7 @@ function merge(
                 ...ir1.securitySchemes,
                 ...ir2.securitySchemes
             },
+            security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
@@ -507,6 +604,7 @@ function merge(
             ...ir1.securitySchemes,
             ...ir2.securitySchemes
         },
+        security: mergeDistinctSecurity(ir1.security, ir2.security),
         globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
         idempotencyHeaders:
             ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,

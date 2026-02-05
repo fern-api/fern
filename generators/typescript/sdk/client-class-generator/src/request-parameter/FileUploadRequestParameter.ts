@@ -111,9 +111,21 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
     }
 
     private getReferenceToProperty(propertyName: string): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(
-            ts.factory.createIdentifier(this.getRequestParameterName()),
-            propertyName
-        );
+        // Check if property name is a valid JavaScript identifier
+        // Valid identifiers: start with letter, _, or $, followed by letters, numbers, _, or $
+        const isValidIdentifier = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(propertyName);
+
+        if (isValidIdentifier) {
+            return ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(this.getRequestParameterName()),
+                propertyName
+            );
+        } else {
+            // Use bracket notation for property names with hyphens or other invalid characters
+            return ts.factory.createElementAccessExpression(
+                ts.factory.createIdentifier(this.getRequestParameterName()),
+                ts.factory.createStringLiteral(propertyName)
+            );
+        }
     }
 }

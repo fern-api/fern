@@ -114,3 +114,20 @@ func (c *Client) GetUserMetadata(
 	}
 	return response.Body, nil
 }
+
+// Test endpoint with path parameters listed in different order than found in path
+func (c *Client) GetUserSpecifics(
+	ctx context.Context,
+	request *path.GetUserSpecificsRequest,
+	opts ...option.RequestOption,
+) (*path.User, error) {
+	response, err := c.WithRawResponse.GetUserSpecifics(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

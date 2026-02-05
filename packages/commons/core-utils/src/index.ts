@@ -1,5 +1,15 @@
+// Force cache invalidation for CI - server URL templating feature
 export { addPrefixToString } from "./addPrefixToString";
-export { assert, assertDefined, assertNever, assertNeverNoThrow, assertNonNull, assertVoidNoThrow } from "./assert";
+export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay";
+export {
+    assert,
+    assertDefined,
+    assertNever,
+    assertNeverNoThrow,
+    assertNonNull,
+    assertString,
+    assertVoidNoThrow
+} from "./assert";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
@@ -29,6 +39,7 @@ export { PLATFORM, type Platform } from "./platform";
 export { removeSuffix } from "./removeSuffix";
 export { replaceEnvVariables } from "./replaceEnvVars";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry";
+export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils";
 export { type SetRequired } from "./setRequired";
 export { stripLeadingSlash } from "./stripLeadingSlash";

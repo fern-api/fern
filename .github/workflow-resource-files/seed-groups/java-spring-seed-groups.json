@@ -49,7 +49,7 @@
     {
       "fixtures": [
         "file-upload-openapi",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "pagination",
         "path-parameters",
         "mixed-case",
@@ -84,7 +84,7 @@
         "enum",
         "errors",
         "websocket-inferred-auth",
-        "custom-auth",
+        "header-auth",
         "empty-clients",
         "server-sent-event-examples",
         "examples"

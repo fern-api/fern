@@ -64,6 +64,19 @@ export function convertApiAuth({
                     endpointResolver
                 })
             )
+        }),
+        endpointSecurity: () => ({
+            docs,
+            requirement: AuthSchemesRequirement.EndpointSecurity,
+            schemes: Object.keys(rawApiFileSchema["auth-schemes"] ?? {}).map((schemeName) =>
+                convertSchemeReference({
+                    reference: schemeName,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
+                    file,
+                    propertyResolver,
+                    endpointResolver
+                })
+            )
         })
     });
 }
@@ -200,8 +213,10 @@ function generateBasicAuth({
         docs,
         username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
+        usernameOmit: rawScheme?.username?.omit,
         password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
-        passwordEnvVar: rawScheme?.password?.env
+        passwordEnvVar: rawScheme?.password?.env,
+        passwordOmit: rawScheme?.password?.omit
     });
 }
 

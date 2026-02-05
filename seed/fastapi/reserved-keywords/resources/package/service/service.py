@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -37,12 +36,19 @@ class AbstractPackageService(AbstractFernService):
     @classmethod
     def __init_test(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.test)
+        type_hints = typing.get_type_hints(cls.test)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "for_":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="for")))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="for")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -59,14 +65,10 @@ class AbstractPackageService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test.__globals__)
-
         router.post(
             path="/",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractPackageService.test.__doc__,
             **get_route_args(cls.test, default_tag="package"),
         )(wrapper)

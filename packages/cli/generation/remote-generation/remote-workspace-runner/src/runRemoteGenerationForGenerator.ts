@@ -5,8 +5,9 @@ import { createFdrService, createVenusService } from "@fern-api/core";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { FernIr } from "@fern-api/ir-sdk";
+import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -31,7 +32,9 @@ export async function runRemoteGenerationForGenerator({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
-    readme
+    readme,
+    fernignorePath,
+    dynamicIrOnly
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -46,8 +49,13 @@ export async function runRemoteGenerationForGenerator({
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
+    fernignorePath: string | undefined;
+    dynamicIrOnly: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
+
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, interactiveTaskContext.logger);
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
@@ -69,6 +77,8 @@ export async function runRemoteGenerationForGenerator({
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions
     });
 
+    const resolvedVersion = version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }));
+
     const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
@@ -82,7 +92,7 @@ export async function runRemoteGenerationForGenerator({
         audiences,
         readme,
         packageName,
-        version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
+        version: resolvedVersion,
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
         dynamicGeneratorConfig,
@@ -95,18 +105,24 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const venus = createVenusService({ token: token.value });
-    const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+    if (!isAirGapped) {
+        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
 
-    if (orgResponse.ok) {
-        if (orgResponse.body.isWhitelabled) {
-            if (ir.readmeConfig == null) {
-                ir.readmeConfig = emptyReadmeConfig;
+        if (orgResponse.ok) {
+            if (orgResponse.body.isWhitelabled) {
+                if (ir.readmeConfig == null) {
+                    ir.readmeConfig = emptyReadmeConfig;
+                }
+                ir.readmeConfig.whiteLabel = true;
             }
-            ir.readmeConfig.whiteLabel = true;
+            ir.selfHosted = orgResponse.body.selfHostedSdKs;
         }
     }
 
     const sources = workspace.getSources();
+    let fdrApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
+    let sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload> | undefined;
+
     const apiDefinition = convertIrToFdrApi({
         ir,
         snippetsConfig: {
@@ -129,8 +145,6 @@ export async function runRemoteGenerationForGenerator({
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
 
-    let fdrApiDefinitionId;
-    let sourceUploads;
     if (response.ok) {
         fdrApiDefinitionId = response.body.apiDefinitionId;
         sourceUploads = response.body.sources;
@@ -143,8 +157,6 @@ export async function runRemoteGenerationForGenerator({
                 `Failed to register API definition: ${JSON.stringify(response.error.content)}`
             );
         }
-        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
-        // files are required for successful code generation.
         interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
     }
 
@@ -154,6 +166,53 @@ export async function runRemoteGenerationForGenerator({
 
         interactiveTaskContext.logger.debug("Setting IR source configuration ...");
         ir.sourceConfig = sourceConfig;
+    }
+
+    // handle dynamic-ir-only mode: skip SDK generation and only upload dynamic IR
+    if (dynamicIrOnly) {
+        interactiveTaskContext.logger.info(
+            "Dynamic IR only mode: skipping SDK generation and uploading dynamic IR only"
+        );
+
+        if (version == null) {
+            interactiveTaskContext.failAndThrow("Version is required for dynamic IR only mode");
+            return undefined;
+        }
+
+        if (generatorInvocation.language == null) {
+            interactiveTaskContext.failAndThrow("Language is required for dynamic IR only mode");
+            return undefined;
+        }
+
+        if (packageName == null) {
+            interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode");
+            return undefined;
+        }
+
+        try {
+            await uploadDynamicIRForSdkGeneration({
+                fdr,
+                organization,
+                version,
+                language: generatorInvocation.language,
+                packageName,
+                ir,
+                smartCasing: generatorInvocation.smartCasing,
+                dynamicGeneratorConfig,
+                context: interactiveTaskContext
+            });
+        } catch (error) {
+            interactiveTaskContext.failAndThrow(
+                `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+
+        // Return a minimal response since no SDK generation occurred
+        return {
+            createdSnippets: false,
+            snippetsS3PreSignedReadUrl: undefined,
+            actualVersion: version
+        };
     }
 
     const job = await createAndStartJob({
@@ -172,7 +231,8 @@ export async function runRemoteGenerationForGenerator({
         token,
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
-        absolutePathToPreview
+        absolutePathToPreview,
+        fernignorePath
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
@@ -191,12 +251,43 @@ export async function runRemoteGenerationForGenerator({
         absolutePathToPreview
     });
 
-    return await pollJobAndReportStatus({
+    const result = await pollJobAndReportStatus({
         job,
         taskHandler,
         taskId,
         context: interactiveTaskContext
     });
+
+    // use the actual version from the generation result, fallback to pre-computed version
+    const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+
+    if (
+        result != null &&
+        actualVersionForUpload != null &&
+        generatorInvocation.language != null &&
+        packageName != null &&
+        !isPreview
+    ) {
+        try {
+            await uploadDynamicIRForSdkGeneration({
+                fdr,
+                organization,
+                version: actualVersionForUpload,
+                language: generatorInvocation.language,
+                packageName,
+                ir,
+                smartCasing: generatorInvocation.smartCasing,
+                dynamicGeneratorConfig,
+                context: interactiveTaskContext
+            });
+        } catch (error) {
+            interactiveTaskContext.logger.warn(
+                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+    }
+
+    return result;
 }
 
 function getPublishConfig({
@@ -331,3 +422,79 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
+
+/**
+ * Uploads dynamic IR for SDK generation to enable dynamic snippets.
+ * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
+ * generates the dynamic IR, and uploads it.
+ */
+async function uploadDynamicIRForSdkGeneration({
+    fdr,
+    organization,
+    version,
+    language,
+    packageName,
+    ir,
+    smartCasing,
+    dynamicGeneratorConfig,
+    context
+}: {
+    fdr: FdrClient;
+    organization: string;
+    version: string;
+    language: generatorsYml.GenerationLanguage;
+    packageName: string;
+    ir: IntermediateRepresentation;
+    smartCasing: boolean | undefined;
+    dynamicGeneratorConfig: dynamic.GeneratorConfig | undefined;
+    context: InteractiveTaskContext;
+}): Promise<void> {
+    context.logger.debug(`Uploading dynamic IR for ${language} SDK...`);
+
+    // Get presigned upload URLs from FDR
+    const uploadUrlsResponse = await fdr.api.v1.register.getSdkDynamicIrUploadUrls({
+        orgId: FdrAPI.OrgId(organization),
+        version,
+        snippetConfiguration: {
+            [language]: packageName
+        }
+    });
+
+    if (!uploadUrlsResponse.ok) {
+        // Log warning but don't fail the generation - dynamic IR upload is optional
+        context.logger.warn(`Failed to get dynamic IR upload URLs: ${uploadUrlsResponse.error.error}`);
+        return;
+    }
+
+    const uploadUrl = uploadUrlsResponse.body.uploadUrls[language]?.uploadUrl;
+    if (uploadUrl == null) {
+        context.logger.warn(`No upload URL returned for ${language}`);
+        return;
+    }
+
+    // Generate the dynamic IR
+    const dynamicIR = convertIrToDynamicSnippetsIr({
+        ir,
+        disableExamples: true,
+        smartCasing,
+        generationLanguage: language,
+        generatorConfig: dynamicGeneratorConfig
+    });
+
+    // Upload the dynamic IR to S3
+    const dynamicIRJson = JSON.stringify(dynamicIR);
+    const uploadResponse = await fetch(uploadUrl, {
+        method: "PUT",
+        body: dynamicIRJson,
+        headers: {
+            "Content-Type": "application/octet-stream",
+            "Content-Length": dynamicIRJson.length.toString()
+        }
+    });
+
+    if (uploadResponse.ok) {
+        context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
+    } else {
+        context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+    }
+}

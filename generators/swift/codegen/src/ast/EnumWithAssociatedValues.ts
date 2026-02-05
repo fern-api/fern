@@ -18,6 +18,7 @@ export declare namespace EnumWithAssociatedValues {
 
     interface Args {
         name: string;
+        indirect?: boolean;
         accessLevel?: AccessLevel;
         conformances?: Protocol[];
         cases: Case[];
@@ -31,6 +32,7 @@ export declare namespace EnumWithAssociatedValues {
 export class EnumWithAssociatedValues extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
+    public readonly indirect: boolean;
     public readonly conformances: Protocol[];
     public readonly cases: EnumWithAssociatedValues.Case[];
     public readonly initializers: Initializer[];
@@ -40,6 +42,7 @@ export class EnumWithAssociatedValues extends AstNode {
 
     public constructor({
         accessLevel,
+        indirect,
         name,
         conformances,
         cases,
@@ -50,6 +53,7 @@ export class EnumWithAssociatedValues extends AstNode {
     }: EnumWithAssociatedValues.Args) {
         super();
         this.name = name;
+        this.indirect = indirect ?? false;
         this.accessLevel = accessLevel;
         this.conformances = conformances ?? [];
         this.cases = cases;
@@ -66,6 +70,9 @@ export class EnumWithAssociatedValues extends AstNode {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
+        }
+        if (this.indirect) {
+            writer.write("indirect ");
         }
         writer.write(`enum ${this.name}`);
         this.conformances.forEach((conformance, index) => {

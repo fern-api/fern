@@ -1,5 +1,6 @@
 package com.fern.java.output;
 
+import com.fern.java.ICustomConfig.OutputDirectory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -10,21 +11,23 @@ public abstract class GeneratedFile {
 
     public abstract Optional<String> directoryPrefix();
 
-    public final void write(Path directory, boolean isLocal, Optional<String> existingPrefix) {
-        Path outputDirectory = directory;
+    public final void write(
+            Path directory, boolean isLocal, Optional<String> existingPrefix, OutputDirectory outputDirectoryMode) {
+        Path effectiveDirectory = directory;
         if (directoryPrefix().isPresent()) {
-            outputDirectory = directory.resolve(directoryPrefix().get());
-            if (!outputDirectory.toFile().exists()) {
-                outputDirectory.toFile().mkdirs();
+            effectiveDirectory = directory.resolve(directoryPrefix().get());
+            if (!effectiveDirectory.toFile().exists()) {
+                effectiveDirectory.toFile().mkdirs();
             }
         }
         try {
-            writeToFile(outputDirectory, isLocal, existingPrefix);
+            writeToFile(effectiveDirectory, isLocal, existingPrefix, outputDirectoryMode);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to write " + outputDirectory.resolve(filename()), e);
+            throw new RuntimeException("Failed to write " + effectiveDirectory.resolve(filename()), e);
         }
     }
 
-    protected abstract void writeToFile(Path directory, boolean isLocal, Optional<String> existingPrefix)
+    protected abstract void writeToFile(
+            Path directory, boolean isLocal, Optional<String> existingPrefix, OutputDirectory outputDirectoryMode)
             throws IOException;
 }

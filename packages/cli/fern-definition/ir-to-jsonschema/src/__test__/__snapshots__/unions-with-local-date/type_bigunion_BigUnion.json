@@ -1,0 +1,448 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "normalSweet",
+        "thankfulFactor",
+        "jumboEnd",
+        "hastyPain",
+        "mistySnow",
+        "distinctFailure",
+        "practicalPrinciple",
+        "limpingStep",
+        "vibrantExcitement",
+        "activeDiamond",
+        "popularLimit",
+        "falseMirror",
+        "primaryBlock",
+        "rotatingRatio",
+        "colorfulCover",
+        "disloyalValue",
+        "gruesomeCoach",
+        "totalWork",
+        "harmoniousPlay",
+        "uniqueStress",
+        "unwillingSmoke",
+        "frozenSleep",
+        "diligentDeal",
+        "attractiveScript",
+        "hoarseMouse",
+        "circularCard",
+        "potableBad",
+        "triangularRepair",
+        "gaseousRoad"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "normalSweet"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "thankfulFactor"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "jumboEnd"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "hastyPain"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "mistySnow"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "distinctFailure"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "practicalPrinciple"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "limpingStep"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "vibrantExcitement"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "activeDiamond"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "popularLimit"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "falseMirror"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "primaryBlock"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "rotatingRatio"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "colorfulCover"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "disloyalValue"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "gruesomeCoach"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "totalWork"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "harmoniousPlay"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "uniqueStress"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "unwillingSmoke"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "frozenSleep"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "diligentDeal"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "attractiveScript"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "hoarseMouse"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "circularCard"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "potableBad"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "triangularRepair"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "gaseousRoad"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ]
+    }
+  ],
+  "definitions": {}
+}

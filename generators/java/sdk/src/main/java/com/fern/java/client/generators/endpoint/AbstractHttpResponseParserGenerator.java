@@ -19,11 +19,13 @@ import com.fern.ir.model.types.UndiscriminatedUnionMember;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.ClientPoetClassNameFactory;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.ObjectMapperUtils;
 import com.fern.java.utils.TypeReferenceUtils;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -35,9 +37,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
@@ -46,6 +50,16 @@ public abstract class AbstractHttpResponseParserGenerator {
 
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
+
+    /** Helper method to generate diagnostic string for container types. Useful for debugging and error messages. */
+    private static String getContainerDiagnosticString(com.fern.ir.model.types.ContainerType container) {
+        return "Container details - isOptional:" + container.isOptional()
+                + ", isNullable:" + container.isNullable()
+                + ", isList:" + container.isList()
+                + ", isSet:" + container.isSet()
+                + ", isMap:" + container.isMap()
+                + ", isLiteral:" + container.getLiteral().isPresent();
+    }
 
     protected final AbstractEndpointWriterVariableNameContext variables;
     protected final ClientGeneratorContext clientGeneratorContext;
@@ -93,6 +107,28 @@ public abstract class AbstractHttpResponseParserGenerator {
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec);
 
+    public abstract void addEndpointWithoutRequestWithRequestOptionsReturnStatement(
+            MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> paramNamesWoBodyWithRequestOptions,
+            ParameterSpec bodyParameterSpec);
+
+    public abstract void addBodyOnlyReturnStatement(
+            MethodSpec.Builder bodyOnlyMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyParamNames,
+            ParameterSpec bodyParam,
+            TypeName wrapperTypeName,
+            String bodyPropertyName);
+
+    public abstract void addBodyOnlyWithRequestOptionsReturnStatement(
+            MethodSpec.Builder bodyOnlyWithRequestOptionsMethodBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> bodyOnlyWithRequestOptionsParamNames,
+            ParameterSpec bodyParam,
+            TypeName wrapperTypeName,
+            String bodyPropertyName);
+
     public abstract CodeBlock getByteArrayEndpointBaseMethodBody(
             CodeBlock.Builder methodBodyBuilder,
             MethodSpec byteArrayBaseMethodSpec,
@@ -137,6 +173,25 @@ public abstract class AbstractHttpResponseParserGenerator {
                         generatedClientOptions.httpClientWithTimeout(),
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
+        maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
+
+        addResponseHandlingCode(
+                httpResponseBuilder,
+                builder -> {
+                    beginResponseProcessingTryBlock(builder);
+                    addSuccessResponseCodeBlock(builder, endpointMethodBuilder);
+                    httpResponseBuilder.endControlFlow();
+                    addMappedFailuresCodeBlock(builder);
+                    httpResponseBuilder.endControlFlow();
+                },
+                this::addGenericFailureCodeBlock);
+
+        return httpResponseBuilder.build();
+    }
+
+    public CodeBlock getResponseParserCodeBlockWithoutRequestOptions(MethodSpec.Builder endpointMethodBuilder) {
+        CodeBlock.Builder httpResponseBuilder = CodeBlock.builder();
+        // Note: OkHttpClient is already initialized by the caller, so we skip that here
         maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
 
         addResponseHandlingCode(
@@ -212,9 +267,39 @@ public abstract class AbstractHttpResponseParserGenerator {
                     }
 
                     if (pagination) {
-                        ClassName pagerClassName = clientGeneratorContext
-                                .getPoetClassNameFactory()
-                                .getPaginationClassName("SyncPagingIterable");
+                        final ClassName pagerClassName = httpEndpoint
+                                .getPagination()
+                                .get()
+                                .visit(new Pagination.Visitor<ClassName>() {
+                                    @Override
+                                    public ClassName visitCursor(CursorPagination cursor) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
+                                    public ClassName visitOffset(OffsetPagination offset) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
+                                    public ClassName visitCustom(CustomPagination custom) {
+                                        return ((ClientPoetClassNameFactory)
+                                                        clientGeneratorContext.getPoetClassNameFactory())
+                                                .getCustomPaginationClassName();
+                                    }
+
+                                    @Override
+                                    public ClassName _visitUnknown(Object unknownType) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+                                });
+
                         return httpEndpoint.getPagination().get().visit(new Pagination.Visitor<TypeName>() {
                             @Override
                             public TypeName visitCursor(CursorPagination cursor) {
@@ -262,7 +347,60 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                             @Override
                             public TypeName visitCustom(CustomPagination customPagination) {
-                                throw new RuntimeException("Unknown pagination type custom");
+                                if (AbstractHttpResponseParserGenerator.this
+                                        instanceof AsyncHttpResponseParserGenerator) {
+                                    ClassName asyncPagerClassName = ((ClientPoetClassNameFactory)
+                                                    clientGeneratorContext.getPoetClassNameFactory())
+                                            .getAsyncCustomPaginationClassName();
+
+                                    SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                            customPagination
+                                                    .getResults()
+                                                    .getPropertyPath()
+                                                    .map(path -> path.stream()
+                                                            .map(PropertyPathItem::getName)
+                                                            .collect(Collectors.toList())),
+                                            customPagination.getResults().getProperty(),
+                                            body.getResponseBodyType());
+                                    com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                            .typeReference
+                                            .getContainer()
+                                            .orElseThrow(() -> new RuntimeException(
+                                                    "Unexpected non-container pagination result type"));
+                                    com.fern.ir.model.types.TypeReference resultUnderlyingType =
+                                            resultContainerType.visit(
+                                                    new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+
+                                    return ParameterizedTypeName.get(
+                                            ClassName.get(CompletableFuture.class),
+                                            ParameterizedTypeName.get(
+                                                    asyncPagerClassName,
+                                                    clientGeneratorContext
+                                                            .getPoetTypeNameMapper()
+                                                            .convertToTypeName(true, resultUnderlyingType)));
+                                }
+
+                                SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                        customPagination
+                                                .getResults()
+                                                .getPropertyPath()
+                                                .map(path -> path.stream()
+                                                        .map(PropertyPathItem::getName)
+                                                        .collect(Collectors.toList())),
+                                        customPagination.getResults().getProperty(),
+                                        body.getResponseBodyType());
+                                com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                        .typeReference
+                                        .getContainer()
+                                        .orElseThrow(() -> new RuntimeException(
+                                                "Unexpected non-container pagination result type"));
+                                com.fern.ir.model.types.TypeReference resultUnderlyingType = resultContainerType.visit(
+                                        new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+                                return ParameterizedTypeName.get(
+                                        pagerClassName,
+                                        clientGeneratorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(true, resultUnderlyingType));
                             }
 
                             @Override
@@ -287,7 +425,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public TypeName visitBytes(BytesResponse bytesResponse) {
-                    throw new RuntimeException("Returning bytes is not supported.");
+                    return ArrayTypeName.of(byte.class);
                 }
 
                 @Override
@@ -402,7 +540,8 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public Void visitBytes(BytesResponse bytesResponse) {
-                    throw new RuntimeException("Returning bytes is not supported.");
+                    addTryWithResourcesVariant(httpResponseBuilder);
+                    return null;
                 }
 
                 @Override
@@ -449,13 +588,23 @@ public abstract class AbstractHttpResponseParserGenerator {
                             .get(responseError.getError().getErrorId()))
                     .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
                     .collect(Collectors.toList());
-            if (!errorDeclarations.isEmpty()) {
-                boolean multipleErrors = errorDeclarations.size() > 1;
+
+            // Deduplicate by status code, keeping the first declaration for each code.
+            // This prevents duplicate case labels in switch statements when multiple
+            // error types map to the same HTTP status code.
+            Map<Integer, ErrorDeclaration> dedupedByStatusCode = new LinkedHashMap<>();
+            for (ErrorDeclaration errorDeclaration : errorDeclarations) {
+                dedupedByStatusCode.putIfAbsent(errorDeclaration.getStatusCode(), errorDeclaration);
+            }
+            List<ErrorDeclaration> uniqueErrorDeclarations = new ArrayList<>(dedupedByStatusCode.values());
+
+            if (!uniqueErrorDeclarations.isEmpty()) {
+                boolean multipleErrors = uniqueErrorDeclarations.size() > 1;
                 httpResponseBuilder.beginControlFlow("try");
                 if (multipleErrors) {
                     httpResponseBuilder.beginControlFlow("switch ($L.code())", variables.getResponseName());
                 }
-                errorDeclarations.forEach(errorDeclaration -> {
+                uniqueErrorDeclarations.forEach(errorDeclaration -> {
                     GeneratedJavaFile generatedError =
                             generatedErrors.get(errorDeclaration.getName().getErrorId());
                     ClassName errorClassName = generatedError.getClassName();
@@ -651,7 +800,14 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitBytes(BytesResponse bytesResponse) {
-            throw new RuntimeException("Returning bytes is not supported.");
+            endpointMethodBuilder.returns(ArrayTypeName.of(byte.class));
+            handleSuccessfulResult(
+                    httpResponseBuilder,
+                    CodeBlock.of(
+                            "$L != null ? $L.bytes() : new byte[0]",
+                            variables.getResponseBodyName(),
+                            variables.getResponseBodyName()));
+            return null;
         }
 
         @Override
@@ -839,26 +995,43 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (propertyPath.isEmpty() && !container.isOptional()) {
                 addPreviousIfPresent();
                 if (currentOptional || previousWasOptional) {
-                    String emptyCollectionString;
-                    if (container.isList()) {
-                        emptyCollectionString = "List";
+                    if (container.isNullable()) {
+                        codeBlocks.add(CodeBlock.builder().add(".orElse(null)").build());
+                        // For nullable containers, return the underlying type since we've unwrapped it
+                        com.fern.ir.model.types.TypeReference nullableType = container
+                                .getNullable()
+                                .orElseThrow(() -> new IllegalStateException(
+                                        "Container marked as nullable but getNullable() returned empty"));
+                        return new GetSnippetOutput(nullableType, codeBlocks);
+                    } else if (container.isList()) {
+                        codeBlocks.add(CodeBlock.builder()
+                                .add(".orElse($T.emptyList())", Collections.class)
+                                .build());
                     } else if (container.isSet()) {
-                        emptyCollectionString = "Set";
+                        codeBlocks.add(CodeBlock.builder()
+                                .add(".orElse($T.emptySet())", Collections.class)
+                                .build());
                     } else if (container.isMap()) {
-                        emptyCollectionString = "Map";
+                        codeBlocks.add(CodeBlock.builder()
+                                .add(".orElse($T.emptyMap())", Collections.class)
+                                .build());
+                    } else if (container.getLiteral().isPresent()) {
+                        throw new RuntimeException("Unexpected literal container in response parsing. " + "Literal: "
+                                + container.getLiteral().get());
                     } else {
-                        throw new RuntimeException("Unexpected container type");
+                        // This should not happen if we've covered all container types
+                        throw new RuntimeException(
+                                "Unexpected container type. " + getContainerDiagnosticString(container));
                     }
-                    codeBlocks.add(CodeBlock.builder()
-                            .add(".orElse($T.empty$L())", Collections.class, emptyCollectionString)
-                            .build());
                 }
                 return new GetSnippetOutput(typeReference, codeBlocks);
             }
             com.fern.ir.model.types.TypeReference ref = container
                     .getOptional()
-                    .orElseThrow(
-                            () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
+                    .or(() -> container.getNullable())
+                    .orElseThrow(() -> new RuntimeException(
+                            "Unexpected non-optional, non-nullable container type in snippet generation. "
+                                    + getContainerDiagnosticString(container)));
             return ref.visit(new NestedPropertySnippetGenerator(
                     ref,
                     propertyPath,
@@ -1248,12 +1421,17 @@ public abstract class AbstractHttpResponseParserGenerator {
             CodeBlock hasNextPageBlock;
 
             if (nextSnippet.typeReference.getContainer().isPresent()) {
-                if (nextSnippet.typeReference.getContainer().get().isOptional()) {
+                com.fern.ir.model.types.ContainerType containerType =
+                        nextSnippet.typeReference.getContainer().get();
+                if (containerType.isOptional()) {
                     hasNextPageBlock = CodeBlock.of("$L.isPresent()", variables.getStartingAfterVariableName());
+                } else if (containerType.isNullable()) {
+                    hasNextPageBlock = CodeBlock.of("$L != null", variables.getStartingAfterVariableName());
                 } else {
                     throw new IllegalStateException(
-                            "Found non-optional container as next page token. This should be impossible "
-                                    + "due to fern check validation.");
+                            "Found non-optional, non-nullable container as next page token. This should be impossible "
+                                    + "due to fern check validation. "
+                                    + getContainerDiagnosticString(containerType));
                 }
             } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
                 hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
@@ -1515,7 +1693,44 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitCustom(CustomPagination customPagination) {
-            throw new RuntimeException("Unknown pagination type custom");
+            TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
+
+            if (AbstractHttpResponseParserGenerator.this instanceof AsyncHttpResponseParserGenerator) {
+                ClassName asyncPagerClassName = ((ClientPoetClassNameFactory)
+                                clientGeneratorContext.getPoetClassNameFactory())
+                        .getAsyncCustomPaginationClassName();
+
+                // Generate AsyncCustomPager.createAsync() call
+                CodeBlock asyncPagerCreation = CodeBlock.builder()
+                        .add(
+                                "$T.createAsync($L, $L, $L)",
+                                asyncPagerClassName,
+                                variables.getParsedResponseVariableName(),
+                                clientOptionsField.name,
+                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                        .build();
+
+                handleSuccessfulResult(httpResponseBuilder, asyncPagerCreation);
+                endpointMethodBuilder.returns(responseType);
+                return null;
+            }
+
+            ClassName customPagerClassName = ((ClientPoetClassNameFactory)
+                            clientGeneratorContext.getPoetClassNameFactory())
+                    .getCustomPaginationClassName();
+
+            CodeBlock customPagerCreation = CodeBlock.builder()
+                    .add(
+                            "$T.create($L, $L, $L)",
+                            customPagerClassName,
+                            variables.getParsedResponseVariableName(),
+                            clientOptionsField.name,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                    .build();
+
+            handleSuccessfulResult(httpResponseBuilder, customPagerCreation);
+            endpointMethodBuilder.returns(responseType);
+            return null;
         }
 
         @Override

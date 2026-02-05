@@ -32,9 +32,7 @@ import com.seed.clientSideParams.resources.types.types.SearchResponse;
 import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
 import com.seed.clientSideParams.resources.types.types.User;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -85,6 +83,11 @@ public class AsyncRawServiceClient {
         if (request.getSearch().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "search", request.getSearch().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -150,6 +153,11 @@ public class AsyncRawServiceClient {
                 httpUrl, "include_metadata", request.getIncludeMetadata().orElse(false), false);
         QueryStringMapper.addQueryParameter(
                 httpUrl, "format", request.getFormat().orElse("json"), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -210,13 +218,15 @@ public class AsyncRawServiceClient {
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(100), false);
         QueryStringMapper.addQueryParameter(
                 httpUrl, "offset", request.getOffset().orElse(0), false);
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("query", request.getQuery());
-        properties.put("filters", request.getFilters());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -273,6 +283,14 @@ public class AsyncRawServiceClient {
      * List or search for users
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> listUsers(
+            RequestOptions requestOptions) {
+        return listUsers(ListUsersRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List or search for users
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> listUsers(
             ListUsersRequest request) {
         return listUsers(request, null);
     }
@@ -312,6 +330,11 @@ public class AsyncRawServiceClient {
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -365,6 +388,14 @@ public class AsyncRawServiceClient {
      * Get a user by ID
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<User>> getUserById(
+            String userId, RequestOptions requestOptions) {
+        return getUserById(userId, GetUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> getUserById(
             String userId, GetUserRequest request) {
         return getUserById(userId, request, null);
     }
@@ -385,6 +416,11 @@ public class AsyncRawServiceClient {
         }
         QueryStringMapper.addQueryParameter(
                 httpUrl, "include_fields", request.getIncludeFields().orElse(true), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -437,11 +473,15 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<User>> createUser(
             CreateUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
-                .addPathSegments("users")
-                .build();
+                .addPathSegments("users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -450,7 +490,7 @@ public class AsyncRawServiceClient {
             throw new SeedClientSideParamsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -501,6 +541,14 @@ public class AsyncRawServiceClient {
      * Update a user
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(
+            String userId, RequestOptions requestOptions) {
+        return updateUser(userId, UpdateUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Update a user
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(
             String userId, UpdateUserRequest request) {
         return updateUser(userId, request, null);
     }
@@ -510,12 +558,16 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<User>> updateUser(
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -524,7 +576,7 @@ public class AsyncRawServiceClient {
             throw new SeedClientSideParamsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -576,14 +628,18 @@ public class AsyncRawServiceClient {
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<Void>> deleteUser(
             String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
@@ -631,6 +687,14 @@ public class AsyncRawServiceClient {
      * List all connections
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> listConnections(
+            RequestOptions requestOptions) {
+        return listConnections(ListConnectionsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all connections
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> listConnections(
             ListConnectionsRequest request) {
         return listConnections(request, null);
     }
@@ -655,6 +719,11 @@ public class AsyncRawServiceClient {
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -709,6 +778,14 @@ public class AsyncRawServiceClient {
      * Get a connection by ID
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> getConnection(
+            String connectionId, RequestOptions requestOptions) {
+        return getConnection(connectionId, GetConnectionRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> getConnection(
             String connectionId, GetConnectionRequest request) {
         return getConnection(connectionId, request, null);
     }
@@ -726,6 +803,11 @@ public class AsyncRawServiceClient {
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -778,6 +860,14 @@ public class AsyncRawServiceClient {
      * List all clients/applications
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> listClients(
+            RequestOptions requestOptions) {
+        return listClients(ListClientsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> listClients(
             ListClientsRequest request) {
         return listClients(request, null);
     }
@@ -822,6 +912,11 @@ public class AsyncRawServiceClient {
         if (request.getAppType().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "app_type", request.getAppType().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -875,6 +970,14 @@ public class AsyncRawServiceClient {
      * Get a client by ID
      */
     public CompletableFuture<SeedClientSideParamsHttpResponse<Client>> getClient(
+            String clientId, RequestOptions requestOptions) {
+        return getClient(clientId, GetClientRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public CompletableFuture<SeedClientSideParamsHttpResponse<Client>> getClient(
             String clientId, GetClientRequest request) {
         return getClient(clientId, request, null);
     }
@@ -896,6 +999,11 @@ public class AsyncRawServiceClient {
         if (request.getIncludeFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "include_fields", request.getIncludeFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

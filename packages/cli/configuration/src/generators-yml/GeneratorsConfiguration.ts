@@ -7,19 +7,27 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { generatorsYml } from "..";
 import { Audiences } from "../commons";
 import {
+    ApiConfigurationV2SpecsSchema,
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
     OpenApiFilterSchema,
-    ReadmeSchema
+    ReadmeSchema,
+    RemoveDiscriminantsFromSchemas
 } from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
     defaultGroup: string | undefined;
+    /**
+     * Aliases that map to multiple groups. When running `fern generate <alias>`,
+     * all groups in the alias will be run.
+     */
+    groupAliases: Record<string, string[]>;
     reviewers: Reviewers | undefined;
     groups: GeneratorGroup[];
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    ai: generatorsYml.AiServicesSchema | undefined;
 
     rawConfiguration: GeneratorsConfigurationSchema;
     absolutePathToConfiguration: AbsoluteFilePath;
@@ -33,6 +41,7 @@ export interface SingleNamespaceAPIDefinition
         RawSchemas.WithHeadersSchema {
     type: "singleNamespace";
     definitions: APIDefinitionLocation[];
+    settings?: APIDefinitionSettings;
 }
 
 export interface MultiNamespaceAPIDefinition
@@ -42,6 +51,7 @@ export interface MultiNamespaceAPIDefinition
     type: "multiNamespace";
     rootDefinitions: APIDefinitionLocation[] | undefined;
     definitions: Record<string, APIDefinitionLocation[]>;
+    settings?: APIDefinitionSettings;
 }
 
 export interface ConjureAPIDefinition
@@ -50,6 +60,7 @@ export interface ConjureAPIDefinition
         RawSchemas.WithHeadersSchema {
     type: "conjure";
     pathToConjureDefinition: string;
+    settings?: APIDefinitionSettings;
 }
 
 export interface APIDefinitionSettings {
@@ -78,17 +89,25 @@ export interface APIDefinitionSettings {
     groupEnvironmentsByHost: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
+    removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
+    pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
+    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
 }
 
 export interface APIDefinitionLocation {
     schema: APIDefinitionSchema;
     origin: string | undefined;
     overrides: string | undefined;
+    overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema;
+export type APIDefinitionSchema =
+    | ProtoAPIDefinitionSchema
+    | OSSAPIDefinitionSchema
+    | OpenRPCDefinitionSchema
+    | GraphQLDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -106,6 +125,11 @@ export interface OSSAPIDefinitionSchema {
 
 export interface OpenRPCDefinitionSchema {
     type: "openrpc";
+    path: string;
+}
+
+export interface GraphQLDefinitionSchema {
+    type: "graphql";
     path: string;
 }
 
@@ -144,6 +168,15 @@ export interface GeneratorInvocation {
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
     settings: ApiDefinitionSettingsSchema | undefined;
+    /**
+     * Override the API configuration for this generator.
+     * When provided, these values take precedence over the top-level api configuration.
+     */
+    apiOverride?: {
+        specs?: ApiConfigurationV2SpecsSchema;
+        auth?: RawSchemas.ApiAuthSchema;
+        "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+    };
 }
 
 export const GenerationLanguage = {

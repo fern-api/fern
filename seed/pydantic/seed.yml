@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v62
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model
 changelogLocation: ../../generators/python/pydantic/versions.yml
@@ -10,6 +10,7 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
+      - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
 
 publish:
   workingDirectory: generators/python

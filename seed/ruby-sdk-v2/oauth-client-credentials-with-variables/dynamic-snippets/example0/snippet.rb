@@ -7,9 +7,9 @@ client = Seed::Client.new(
 );
 
 client.auth.get_token_with_client_credentials(
-  clientId: 'client_id',
-  clientSecret: 'client_secret',
+  client_id: 'client_id',
+  client_secret: 'client_secret',
   audience: 'https://api.example.com',
-  grantType: 'client_credentials',
+  grant_type: 'client_credentials',
   scope: 'scope'
 );

@@ -48,13 +48,11 @@ class ServiceClient:
         _response = self._raw_client.endpoint(request_options=request_options)
         return _response.data
 
-    def unknown_request(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def unknown_request(self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -125,12 +123,12 @@ class AsyncServiceClient:
         return _response.data
 
     async def unknown_request(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

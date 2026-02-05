@@ -1,4 +1,53 @@
 # Reference
+<details><summary><code>client.<a href="/src/Client.ts">echo</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SeedExamplesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="/src/Client.ts">createType</a>({ ...params }) -> SeedExamples.Identifier</code></summary>
 <dl>
 <dd>
@@ -48,7 +97,6 @@ await client.createType("primitive");
 </dl>
 </details>
 
-## 
 ## File Notification Service
 <details><summary><code>client.file.notification.service.<a href="/src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code></summary>
 <dl>
@@ -87,7 +135,7 @@ await client.file.notification.service.getException("notification-hsy129x");
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -161,7 +209,7 @@ await client.file.service.getFile("file.txt", {
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -225,7 +273,7 @@ await client.health.service.check("id-2sdx82h");
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -280,7 +328,7 @@ await client.health.service.ping();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -330,7 +378,7 @@ await client.service.getMovie("movie-c06a4ad7");
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -400,7 +448,7 @@ await client.service.createMovie({
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -453,7 +501,7 @@ await client.service.getMetadata({
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -678,7 +726,7 @@ await client.service.createBigEntity({
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -727,7 +775,7 @@ await client.service.refreshToken(undefined);
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>

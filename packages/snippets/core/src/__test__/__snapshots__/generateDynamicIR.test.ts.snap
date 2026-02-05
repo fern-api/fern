@@ -82,6 +82,7 @@ exports[`generateDynamicIR > go 1`] = `
           },
         },
       },
+      "extends": undefined,
       "properties": [
         {
           "name": {

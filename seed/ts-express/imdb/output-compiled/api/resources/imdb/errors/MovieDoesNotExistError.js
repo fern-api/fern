@@ -50,7 +50,11 @@ class MovieDoesNotExistError extends errors.SeedApiError {
     constructor(body) {
         super("MovieDoesNotExistError");
         this.body = body;
-        Object.setPrototypeOf(this, MovieDoesNotExistError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
     }
     send(res) {
         return __awaiter(this, void 0, void 0, function* () {

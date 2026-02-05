@@ -103,7 +103,7 @@
     {
       "fixtures": [
         "accept-header",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "variables",
         "inferred-auth-implicit-no-expiry",
         "public-object"
@@ -115,7 +115,7 @@
       "groupTotalTimeSeconds": 420
     },
     {
-      "fixtures": ["alias-extends", "bytes-download", "query-parameters", "custom-auth", "required-nullable"],
+      "fixtures": ["alias-extends", "bytes-download", "query-parameters", "header-auth", "required-nullable"],
       "groupTotalTimeSeconds": 427
     },
     {

@@ -193,7 +193,12 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             sdkRequest: undefined,
             response:
                 jsonResponseBody != null
-                    ? { body: HttpResponseBody.json(JsonResponse.response(jsonResponseBody)), statusCode: undefined }
+                    ? {
+                          body: HttpResponseBody.json(JsonResponse.response(jsonResponseBody)),
+                          statusCode: undefined,
+                          isWildcardStatusCode: undefined,
+                          docs: jsonResponseBody.docs
+                      }
                     : undefined,
             v2Responses: undefined,
             errors: [],
@@ -209,7 +214,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             availability: undefined,
             source: HttpEndpointSource.openrpc(),
             audiences,
-            retries: undefined
+            retries: undefined,
+            apiPlayground: undefined,
+            responseHeaders: []
         };
 
         return {

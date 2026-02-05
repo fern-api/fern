@@ -1,6 +1,7 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 
@@ -28,7 +29,10 @@ export async function generateAPIWorkspaces({
     force,
     runner,
     inspect,
-    lfsOverride
+    lfsOverride,
+    fernignorePath,
+    dynamicIrOnly,
+    outputDir
 }: {
     project: Project;
     cliContext: CliContext;
@@ -43,6 +47,9 @@ export async function generateAPIWorkspaces({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    fernignorePath: string | undefined;
+    dynamicIrOnly: boolean;
+    outputDir: string | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -63,7 +70,10 @@ export async function generateAPIWorkspaces({
     }
 
     for (const workspace of project.apiWorkspaces) {
-        for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? []) {
+        const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
+        for (const generator of workspace.generatorsConfiguration?.groups
+            .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
+            .flatMap((group) => group.generators) ?? []) {
             const { shouldProceed } = await checkOutputDirectory(
                 generator.absolutePathToLocalOutput,
                 cliContext,
@@ -80,11 +90,12 @@ export async function generateAPIWorkspaces({
         command: "fern generate",
         properties: {
             workspaces: project.apiWorkspaces.map((workspace) => {
+                const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
                 return {
                     name: workspace.workspaceName,
                     group: groupName,
                     generators: workspace.generatorsConfiguration?.groups
-                        .filter((group) => (groupName == null ? true : group.groupName === groupName))
+                        .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
                         .map((group) => {
                             return group.generators.map((generator) => {
                                 return {
@@ -104,7 +115,9 @@ export async function generateAPIWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
-                    ? join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                    ? outputDir != null
+                        ? AbsoluteFilePath.of(resolve(cwd(), outputDir))
+                        : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
                     : undefined;
 
                 if (absolutePathToPreview != null) {
@@ -126,9 +139,38 @@ export async function generateAPIWorkspaces({
                     mode,
                     runner,
                     inspect,
-                    lfsOverride
+                    lfsOverride,
+                    fernignorePath,
+                    dynamicIrOnly
                 });
             });
         })
     );
+}
+
+/**
+ * Resolves a group name to a list of group names, handling aliases.
+ * Returns null if no group name is specified (meaning all groups should be included).
+ * Returns the resolved list of group names if a group name or alias is specified.
+ */
+function resolveGroupNamesForWorkspace(
+    groupName: string | undefined,
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined
+): string[] | null {
+    if (groupName == null) {
+        return null; // No filter - include all groups
+    }
+
+    if (generatorsConfiguration == null) {
+        return [groupName]; // No configuration - just use the group name as-is
+    }
+
+    // Check if it's an alias
+    const aliasGroups = generatorsConfiguration.groupAliases[groupName];
+    if (aliasGroups != null) {
+        return aliasGroups;
+    }
+
+    // Not an alias - return as single group
+    return [groupName];
 }

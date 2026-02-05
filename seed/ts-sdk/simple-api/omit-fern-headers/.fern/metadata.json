@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "omitFernHeaders": true
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

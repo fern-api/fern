@@ -79,8 +79,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/transactions/{transactionId}",
-              "path-parameters": {
-                "transactionId": "string",
+              "request": {
+                "name": "GetTransactionRequest",
+                "path-parameters": {
+                  "transactionId": "string",
+                },
               },
               "response": {
                 "docs": "Successful response",
@@ -113,8 +116,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/wallets/{walletId}",
-              "path-parameters": {
-                "walletId": "string",
+              "request": {
+                "name": "GetWalletRequest",
+                "path-parameters": {
+                  "walletId": "string",
+                },
               },
               "response": {
                 "docs": "Successful response",
@@ -146,8 +152,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/wallets/{walletId}/balance",
-              "path-parameters": {
-                "walletId": "string",
+              "request": {
+                "name": "GetWalletBalanceRequest",
+                "path-parameters": {
+                  "walletId": "string",
+                },
               },
               "response": {
                 "docs": "Successful response",
@@ -303,9 +312,6 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/payments/{paymentId}/refund",
-              "path-parameters": {
-                "paymentId": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -316,7 +322,9 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "RefundRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "paymentId": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -505,9 +513,11 @@
       method: GET
       source:
         openapi: ../fintech-api.yml
-      path-parameters:
-        walletId: string
       display-name: Get wallet by ID
+      request:
+        name: GetWalletRequest
+        path-parameters:
+          walletId: string
       response:
         docs: Successful response
         type: Wallet
@@ -526,9 +536,11 @@
       method: GET
       source:
         openapi: ../fintech-api.yml
-      path-parameters:
-        walletId: string
       display-name: Get wallet balance
+      request:
+        name: GetWalletBalanceRequest
+        path-parameters:
+          walletId: string
       response:
         docs: Successful response
         type: Balance
@@ -580,9 +592,11 @@
       method: GET
       source:
         openapi: ../payments-api.yml
-      path-parameters:
-        transactionId: string
       display-name: Get transaction by ID
+      request:
+        name: GetTransactionRequest
+        path-parameters:
+          transactionId: string
       response:
         docs: Successful response
         type: Transaction
@@ -631,11 +645,11 @@
       method: POST
       source:
         openapi: ../payments-api.yml
-      path-parameters:
-        paymentId: string
       display-name: Refund a payment
       request:
         name: RefundRequest
+        path-parameters:
+          paymentId: string
         body:
           properties:
             amount: double

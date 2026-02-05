@@ -46,6 +46,11 @@ export interface Fetcher {
             statusCode: "statusCode";
             rawBody: "rawBody";
         };
+        BodyIsNullError: {
+            _getReferenceToType: () => ts.TypeNode;
+            _reasonLiteralValue: "body-is-null";
+            statusCode: "statusCode";
+        };
         TimeoutSdkError: {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "timeout";
@@ -202,7 +207,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             ignore.push("tests/unit/fetcher/getFetchFn.test.ts");
         }
         return {
-            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
+            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**", "tests/setup.template.ts"],
             ignore
         };
     }
@@ -248,6 +253,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             _reasonLiteralValue: "non-json",
             statusCode: "statusCode",
             rawBody: "rawBody"
+        },
+        BodyIsNullError: {
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule("BodyIsNullError"),
+            _reasonLiteralValue: "body-is-null",
+            statusCode: "statusCode"
         },
         TimeoutSdkError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutSdkError"),

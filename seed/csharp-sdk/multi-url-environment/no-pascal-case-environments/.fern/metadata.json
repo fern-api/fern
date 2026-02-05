@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "pascal-case-environments": false
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

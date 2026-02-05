@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .payment_request import PaymentRequest
 from .service import AbstractUnionService
 
-__all__ = ["AbstractUnionService"]
+__all__ = ["AbstractUnionService", "PaymentRequest"]

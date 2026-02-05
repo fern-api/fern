@@ -210,6 +210,58 @@ var expectedRetryDurations = []time.Duration{
 	8000 * time.Millisecond, // 500ms * 2^4 = 8000ms
 }
 
+func TestRetryWithRequestBody(t *testing.T) {
+	// This test verifies that POST requests with a body are properly retried.
+	// The request body should be re-sent on each retry attempt.
+	expectedBody := `{"id":"test-id"}`
+	var requestBodies []string
+	var requestCount int
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requestCount++
+		bodyBytes, err := io.ReadAll(r.Body)
+		require.NoError(t, err)
+		requestBodies = append(requestBodies, string(bodyBytes))
+
+		if requestCount == 1 {
+			// First request - return retryable error
+			w.WriteHeader(http.StatusServiceUnavailable)
+			return
+		}
+		// Second request - return success
+		w.WriteHeader(http.StatusOK)
+		response := &InternalTestResponse{Id: "success"}
+		bytes, _ := json.Marshal(response)
+		w.Write(bytes)
+	}))
+	defer server.Close()
+
+	caller := NewCaller(&CallerParams{
+		Client: server.Client(),
+	})
+
+	var response *InternalTestResponse
+	_, err := caller.Call(
+		context.Background(),
+		&CallParams{
+			URL:                server.URL,
+			Method:             http.MethodPost,
+			Request:            &InternalTestRequest{Id: "test-id"},
+			Response:           &response,
+			MaxAttempts:        2,
+			ResponseIsOptional: true,
+		},
+	)
+
+	require.NoError(t, err)
+	require.Equal(t, 2, requestCount, "Expected exactly 2 requests")
+	require.Len(t, requestBodies, 2, "Expected 2 request bodies to be captured")
+
+	// Both requests should have the same non-empty body
+	assert.Equal(t, expectedBody, requestBodies[0], "First request body should match expected")
+	assert.Equal(t, expectedBody, requestBodies[1], "Second request body should match expected (retry should re-send body)")
+}
+
 func TestRetryDelayTiming(t *testing.T) {
 	tests := []struct {
 		name            string

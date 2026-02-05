@@ -3,6 +3,60 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext, APIError } from "..";
 
+const LITERAL_REGEX = /^literal<\s*(?:"(.*)"|(true|false))\s*>$/;
+
+/**
+ * Checks if a schema is "simple" (primitive-like, no nested structure).
+ * Simple schemas are those that don't have properties, items, or nested unions.
+ */
+function isSimpleSchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+    // Arrays are always considered complex for our heuristic
+    if (schema.type === "array") {
+        return false;
+    }
+
+    // Check for nested structure that would make this complex
+    if (schema.properties || schema.oneOf || schema.anyOf || schema.allOf || schema.additionalProperties) {
+        return false;
+    }
+
+    // Primitive types are simple
+    if (
+        schema.type === "string" ||
+        schema.type === "number" ||
+        schema.type === "integer" ||
+        schema.type === "boolean"
+    ) {
+        return true;
+    }
+
+    // Const-only schemas are simple
+    if (schema.const !== undefined) {
+        return true;
+    }
+
+    // Enum-only schemas are simple
+    if (Array.isArray(schema.enum) && schema.enum.length > 0) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Gets the literal/const value from a schema if it has one.
+ * Returns undefined if the schema doesn't have a const or enum value.
+ */
+function getLiteralValueFromSchema(schema: OpenAPIV3_1.SchemaObject): unknown | undefined {
+    if (schema.const !== undefined) {
+        return schema.const;
+    }
+    if (Array.isArray(schema.enum) && schema.enum.length > 0) {
+        return schema.enum[0];
+    }
+    return undefined;
+}
+
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
@@ -167,6 +221,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 validExample: this.example,
                 errors: []
             };
+        }
+
+        // Check for x-fern-type: literal<...> extension and return the literal value as the example
+        const maybeLiteralExample = this.maybeConvertLiteralFernType(resolvedSchema);
+        if (maybeLiteralExample != null) {
+            return maybeLiteralExample;
         }
 
         if (Array.isArray(resolvedSchema.type)) {
@@ -772,7 +832,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 };
             } else {
                 const propExampleFromParent = exampleObj[key];
-                const propertyExample = propExampleFromParent ?? this.maybeResolveSchemaExample(property);
+                // Use the example from parent if it exists (including explicit null values)
+                // Only fall back to schema example if the property is truly undefined
+                const propertyExample =
+                    propExampleFromParent !== undefined
+                        ? propExampleFromParent
+                        : this.maybeResolveSchemaExample(property);
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
                     context: this.context,
@@ -789,6 +854,25 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         });
 
         const allOfResults = (resolvedSchema.allOf ?? []).map((subSchema, index) => {
+            // Resolve the sub-schema to check if it's a constraint-only schema
+            const resolvedSubSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
+                skipErrorCollector: true
+            });
+
+            // Skip validation for constraint-only schemas (only have 'required', no actual structure)
+            // These schemas are meant to add constraints to the merged schema, not define structure
+            if (resolvedSubSchema && this.isConstraintOnlySchema(resolvedSubSchema)) {
+                return {
+                    isValid: true,
+                    coerced: false,
+                    usedProvidedExample: this.example !== undefined,
+                    validExample: this.example,
+                    errors: []
+                };
+            }
+
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
                 context: this.context,
@@ -828,39 +912,54 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         // Handle additional properties
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
-        if (resolvedSchema.additionalProperties !== false) {
-            const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject =
-                typeof resolvedSchema.additionalProperties === "object"
-                    ? resolvedSchema.additionalProperties
-                    : ({
-                          oneOf: [
-                              { type: "string" },
-                              { type: "number" },
-                              { type: "boolean" },
-                              { type: "object" },
-                              { type: "array" }
-                          ]
-                          // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                      } as any);
 
-            // Find properties in the example that are not defined in the schema
-            const definedPropertyKeys = new Set(Object.keys(example ?? {}));
-            const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
+        // Find properties in the example that are not defined in the schema
+        // Include properties from both the schema itself and any allOf schemas (recursively)
+        const definedPropertyKeys = this.collectAllPropertyKeys(resolvedSchema);
 
-            additionalPropertyKeys.forEach((key) => {
-                const exampleConverter = new ExampleConverter({
-                    breadcrumbs: [...this.breadcrumbs, key],
-                    context: this.context,
-                    schema: additionalPropertiesSchema,
-                    example: exampleObj[key],
-                    depth: this.depth + 1,
-                    generateOptionalProperties: false,
-                    exampleGenerationStrategy: this.exampleGenerationStrategy,
-                    seenRefs: this.getMaybeUpdatedSeenRefs()
+        const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
+
+        if (additionalPropertyKeys.length > 0) {
+            if (resolvedSchema.additionalProperties === false) {
+                // Additional properties are not allowed, create errors for each extra property
+                additionalPropertyKeys.forEach((key) => {
+                    const breadcrumbPath = [...this.breadcrumbs, key].join(".");
+                    const error = {
+                        message: `Found unexpected property '${key}' in example. This property does not exist in the schema${breadcrumbPath ? ` at path: ${breadcrumbPath}` : ""}`,
+                        path: [...this.breadcrumbs, key]
+                    };
+                    additionalPropertiesResults.push({
+                        key,
+                        result: {
+                            isValid: false,
+                            coerced: false,
+                            usedProvidedExample: true,
+                            validExample: undefined,
+                            errors: [error]
+                        }
+                    });
                 });
-                const result = exampleConverter.convert();
-                additionalPropertiesResults.push({ key, result });
-            });
+            } else {
+                // Additional properties are allowed, but create warning errors for unexpected properties
+                // We'll add these as separate warning results that don't affect validation
+                additionalPropertyKeys.forEach((key) => {
+                    const breadcrumbPath = [...this.breadcrumbs, key].join(".");
+                    const warningError = {
+                        message: `Additional property ${key} is not allowed`,
+                        path: [...this.breadcrumbs, key]
+                    };
+                    additionalPropertiesResults.push({
+                        key,
+                        result: {
+                            isValid: true, // Keep as valid since additional properties are allowed
+                            coerced: false,
+                            usedProvidedExample: true,
+                            validExample: undefined, // Don't provide a valid example to avoid further validation
+                            errors: [warningError] // Include as warning error
+                        }
+                    });
+                });
+            }
         }
 
         // Add additional properties to the example
@@ -888,7 +987,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             validExample: example,
             errors: [
                 ...resultsByKey.flatMap(({ result }) => result.errors),
-                ...allOfResults.flatMap((result) => result.errors)
+                ...allOfResults.flatMap((result) => result.errors),
+                ...additionalPropertiesResults.flatMap(({ result }) => result.errors)
             ]
         };
     }
@@ -957,6 +1057,67 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const containerExample = this.example ?? this.maybeResolveSchemaExample(resolvedSchema);
+
+        // For simple unions (all members are primitives/literals/enums) without a provided example,
+        // prefer const/literal variants over primitive types that would fall back to generic examples
+        if (this.example === undefined) {
+            const resolvedUnionSchemas: OpenAPIV3_1.SchemaObject[] = [];
+            for (const subSchema of unionSchemas) {
+                if (!subSchema) {
+                    continue;
+                }
+                const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                    schemaOrReference: subSchema,
+                    breadcrumbs: this.breadcrumbs,
+                    skipErrorCollector: true
+                });
+                if (resolved) {
+                    resolvedUnionSchemas.push(resolved);
+                }
+            }
+
+            const hasOnlySimpleMembers =
+                resolvedUnionSchemas.length > 0 && resolvedUnionSchemas.every((s) => isSimpleSchema(s));
+
+            if (hasOnlySimpleMembers) {
+                const literalCandidateIndex = resolvedUnionSchemas.findIndex(
+                    (s) => getLiteralValueFromSchema(s) !== undefined
+                );
+
+                if (literalCandidateIndex !== -1) {
+                    const literalSchema = unionSchemas[literalCandidateIndex];
+                    const resolvedLiteralSchema = resolvedUnionSchemas[literalCandidateIndex];
+                    if (literalSchema && resolvedLiteralSchema) {
+                        const literalValue = getLiteralValueFromSchema(resolvedLiteralSchema);
+
+                        const exampleConverter = new ExampleConverter({
+                            breadcrumbs: [...this.breadcrumbs, `${unionType}[${literalCandidateIndex}]`],
+                            context: this.context,
+                            schema:
+                                unionType === "oneOf"
+                                    ? { ...resolvedSchema, ...literalSchema, oneOf: undefined }
+                                    : literalSchema,
+                            example: literalValue,
+                            depth: this.depth + 1,
+                            generateOptionalProperties: this.generateOptionalProperties,
+                            exampleGenerationStrategy: this.exampleGenerationStrategy,
+                            seenRefs: this.getMaybeUpdatedSeenRefs()
+                        });
+
+                        const literalResult = exampleConverter.convert();
+                        if (literalResult.isValid) {
+                            return {
+                                isValid: true,
+                                coerced: false,
+                                usedProvidedExample: true,
+                                validExample: literalResult.validExample,
+                                errors: []
+                            };
+                        }
+                    }
+                }
+            }
+        }
 
         const results: ExampleConverter.Output[] = [];
         let firstValidResult: ExampleConverter.Output | null = null;
@@ -1053,6 +1214,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private maybeResolveSchemaExample<Type>(
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): Type | undefined {
+        // In OpenAPI 3.1+, $ref siblings are supported. Check for sibling examples first
+        // before falling back to the referenced schema's examples.
+        if ("example" in schema) {
+            return schema.example as Type;
+        }
+        if ("examples" in schema) {
+            const examples = schema.examples;
+            if (Array.isArray(examples) && examples.length > 0) {
+                return examples[0] as Type;
+            }
+            if (examples != null && typeof examples === "object") {
+                return Object.values(examples)[0] as Type;
+            }
+        }
+
+        // Fall back to the resolved schema's examples
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
             breadcrumbs: this.breadcrumbs,
@@ -1074,6 +1251,92 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return undefined;
     }
 
+    private maybeConvertLiteralFernType(resolvedSchema: OpenAPIV3_1.SchemaObject): ExampleConverter.Output | undefined {
+        const fernType = (resolvedSchema as Record<string, unknown>)["x-fern-type"];
+        if (typeof fernType !== "string") {
+            return undefined;
+        }
+
+        const literalMatch = fernType.match(LITERAL_REGEX);
+        if (literalMatch == null) {
+            return undefined;
+        }
+
+        // Group 1 captures string literals (e.g., literal<"value">)
+        if (literalMatch[1] != null) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: false,
+                validExample: literalMatch[1],
+                errors: []
+            };
+        }
+
+        // Group 2 captures boolean literals (e.g., literal<true> or literal<false>)
+        if (literalMatch[2] != null) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: false,
+                validExample: literalMatch[2] === "true",
+                errors: []
+            };
+        }
+
+        return undefined;
+    }
+
+    /**
+     * Checks if a schema is a "constraint-only" schema that only has validation constraints
+     * like 'required' but no actual structure (no type, properties, allOf, oneOf, anyOf, etc.).
+     * These schemas are used in allOf compositions to add constraints to the merged schema.
+     */
+    private isConstraintOnlySchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+        // If the schema has any structural elements, it's not constraint-only
+        if (
+            schema.type !== undefined ||
+            schema.properties !== undefined ||
+            schema.allOf !== undefined ||
+            schema.oneOf !== undefined ||
+            schema.anyOf !== undefined ||
+            "items" in schema ||
+            schema.additionalProperties !== undefined ||
+            schema.enum !== undefined ||
+            schema.const !== undefined
+        ) {
+            return false;
+        }
+
+        // Check if it only has constraint-related fields (required, description, etc.)
+        const constraintOnlyFields = new Set([
+            "required",
+            "description",
+            "title",
+            "deprecated",
+            "readOnly",
+            "writeOnly",
+            "nullable",
+            "example",
+            "examples",
+            "default",
+            "minLength",
+            "maxLength",
+            "minimum",
+            "maximum",
+            "exclusiveMinimum",
+            "exclusiveMaximum",
+            "minItems",
+            "maxItems",
+            "uniqueItems",
+            "pattern",
+            "format"
+        ]);
+
+        const schemaKeys = Object.keys(schema);
+        return schemaKeys.length > 0 && schemaKeys.every((key) => constraintOnlyFields.has(key));
+    }
+
     private isDeprecatedProperty(
         property: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): property is OpenAPIV3_1.SchemaObject & { availability: "deprecated" } {
@@ -1088,5 +1351,61 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         resolvedSchema: OpenAPIV3_1.SchemaObject;
     }): boolean {
         return resolvedSchema.required?.includes(key) ?? false;
+    }
+
+    /**
+     * Recursively collects all property keys from a schema, including properties
+     * from allOf, oneOf, and anyOf compositions.
+     */
+    private collectAllPropertyKeys(schema: OpenAPIV3_1.SchemaObject, visited: Set<string> = new Set()): Set<string> {
+        const propertyKeys = new Set<string>();
+
+        // Add direct properties
+        if (schema.properties) {
+            for (const key of Object.keys(schema.properties)) {
+                propertyKeys.add(key);
+            }
+        }
+
+        // Recursively collect from allOf schemas
+        for (const subSchema of schema.allOf ?? []) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                // Prevent infinite recursion by tracking visited schemas
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    const nestedKeys = this.collectAllPropertyKeys(resolved, visited);
+                    for (const key of nestedKeys) {
+                        propertyKeys.add(key);
+                    }
+                }
+            }
+        }
+
+        // Also collect from oneOf/anyOf schemas (properties could be in any variant)
+        for (const subSchema of [...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    const nestedKeys = this.collectAllPropertyKeys(resolved, visited);
+                    for (const key of nestedKeys) {
+                        propertyKeys.add(key);
+                    }
+                }
+            }
+        }
+
+        return propertyKeys;
     }
 }

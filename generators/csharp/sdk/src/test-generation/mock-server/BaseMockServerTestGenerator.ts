@@ -1,15 +1,15 @@
 import { NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleEndpointCall, Name, OAuthScheme } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, InferredAuthScheme, Name, OAuthScheme } from "@fern-fern/ir-sdk/api";
+import { fail } from "assert";
 import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
-export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
     constructor(context: SdkGeneratorContext) {
@@ -20,17 +20,17 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.BaseMockServerTest,
+            reference: this.Types.BaseMockServerTest,
             partial: false,
             access: ast.Access.Public,
-            annotations: [this.extern.NUnit.Framework.SetUpFixture]
+            annotations: [this.NUnit.Framework.SetUpFixture]
         });
 
         class_.addField({
             origin: class_.explicit("Server"),
             access: ast.Access.Protected,
             static_: true,
-            type: this.csharp.Type.reference(this.extern.WireMock.Server),
+            type: this.WireMock.Server,
             get: true,
             initializer: this.csharp.codeblock("null!"),
             set: true
@@ -40,7 +40,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             origin: class_.explicit("Client"),
             access: ast.Access.Protected,
             static_: true,
-            type: this.csharp.Type.reference(this.types.RootClient),
+            type: this.Types.RootClient,
             get: true,
             initializer: this.csharp.codeblock("null!"),
             set: true
@@ -50,7 +50,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             origin: class_.explicit("RequestOptions"),
             access: ast.Access.Protected,
             static_: true,
-            type: this.csharp.Type.reference(this.types.RequestOptions),
+            type: this.Types.RequestOptions,
             get: true,
             initializer: this.csharp.codeblock("new()"),
             set: true
@@ -58,7 +58,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
         if (this.context.hasIdempotencyHeaders()) {
             // create an initializer for the fields
-            const initializer = this.csharp.codeblock((writer) => {
+            const initializer = this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("new()");
                 writer.pushScope();
                 this.context.getIdempotencyInitializers(writer);
@@ -69,7 +69,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 origin: class_.explicit("IdempotentRequestOptions"),
                 access: ast.Access.Protected,
                 static_: true,
-                type: this.csharp.Type.reference(this.types.IdempotentRequestOptions),
+                type: this.Types.IdempotentRequestOptions,
                 get: true,
                 initializer,
                 set: true
@@ -77,17 +77,18 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         }
 
         const oauth = this.context.getOauth();
+        const inferred = this.context.getInferredAuth();
 
         class_.addMethod({
             name: "GlobalSetup",
             access: ast.Access.Public,
-            body: this.csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("// Start the WireMock server");
                 writer.writeStatement(
                     "Server = WireMockServer.Start(new ",
-                    this.extern.WireMock.WireMockServerSettings,
+                    this.WireMock.WireMockServerSettings,
                     " { Logger = new ",
-                    this.extern.WireMock.WireMockConsoleLogger,
+                    this.WireMock.WireMockConsoleLogger,
                     "() })"
                 );
                 writer.writeLine();
@@ -97,8 +98,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 writer.writeNodeStatement(
                     this.rootClientGenerator.generateExampleClientInstantiationSnippet({
                         includeEnvVarArguments: true,
+                        asSnippet: false,
                         clientOptionsArgument: this.csharp.instantiateClass({
-                            classReference: this.types.ClientOptions,
+                            classReference: this.Types.ClientOptions,
                             arguments_: [
                                 this.context.ir.environments?.environments._visit<NamedArgument>({
                                     singleBaseUrl: () => ({
@@ -120,7 +122,10 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                                     _other: () => {
                                         throw new Error("Internal error; Unexpected environment type");
                                     }
-                                }) ?? { name: "BaseUrl", assignment: this.csharp.codeblock("Server.Urls[0]") },
+                                }) ?? {
+                                    name: "BaseUrl",
+                                    assignment: this.csharp.codeblock("Server.Urls[0]")
+                                },
                                 { name: "MaxRetries", assignment: this.csharp.codeblock("0") }
                             ]
                         })
@@ -135,26 +140,37 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                         })
                     );
                 }
+                if (inferred) {
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            method: this.names.methods.mockInferredAuth,
+                            arguments_: []
+                        })
+                    );
+                }
             }),
             isAsync: false,
             parameters: [],
-            annotations: [this.extern.NUnit.Framework.OneTimeSetUp]
+            annotations: [this.NUnit.Framework.OneTimeSetUp]
         });
 
         if (oauth) {
             this.generateMockAuthMethod(oauth, class_);
         }
+        if (inferred) {
+            this.generateMockInferredAuthMethod(inferred, class_);
+        }
 
         class_.addMethod({
             name: "GlobalTeardown",
             access: ast.Access.Public,
-            body: this.csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("Server.Stop();");
                 writer.writeLine("Server.Dispose();");
             }),
             isAsync: false,
             parameters: [],
-            annotations: [this.extern.NUnit.Framework.OneTimeTearDown]
+            annotations: [this.NUnit.Framework.OneTimeTearDown]
         });
 
         return new CSharpFile({
@@ -167,20 +183,91 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         });
     }
 
+    protected generateMockInferredAuthMethod(scheme: InferredAuthScheme, cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Private,
+            name: this.names.methods.mockInferredAuth,
+            parameters: [],
+            body: this.csharp.codeblock((writer: Writer) => {
+                // token endpoint
+                const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+                const tokenEndpointHttpService =
+                    this.context.getHttpService(tokenEndpointReference.serviceId) ??
+                    fail(`Service with id ${tokenEndpointReference.serviceId} not found`);
+                const tokenHttpEndpoint = this.context.resolveEndpoint(
+                    tokenEndpointHttpService,
+                    tokenEndpointReference.endpointId
+                );
+                const tokenAllExamples = [
+                    ...tokenHttpEndpoint.autogeneratedExamples,
+                    ...tokenHttpEndpoint.userSpecifiedExamples
+                ].map((example) => example.example);
+                // TODO: support other response body types
+                const tokenUseableExamples = tokenAllExamples.filter((example): example is ExampleEndpointCall => {
+                    const response = example?.response;
+                    return response?.type === "ok" && response.value.type === "body";
+                });
+
+                // Update example values to match the placeholder values used in client instantiation
+                tokenUseableExamples.forEach((example) => {
+                    // Update header values in the example
+                    for (const exampleHeader of [
+                        ...(example.serviceHeaders ?? []),
+                        ...(example.endpointHeaders ?? [])
+                    ]) {
+                        const matchingHeader = tokenHttpEndpoint.headers.find(
+                            (h) => h.name.wireValue === exampleHeader.name.wireValue
+                        );
+                        if (
+                            matchingHeader &&
+                            !(
+                                matchingHeader.valueType.type === "container" &&
+                                matchingHeader.valueType.container.type === "literal"
+                            )
+                        ) {
+                            // Update the example header value to match what the client sends (wireValue)
+                            exampleHeader.value = {
+                                ...exampleHeader.value,
+                                jsonExample: matchingHeader.name.wireValue
+                            };
+                        }
+                    }
+
+                    // Update body property values in the JSON example
+                    const jsonExample = example.request?.jsonExample as Record<string, unknown> | undefined;
+                    if (jsonExample && tokenHttpEndpoint.requestBody?.type === "inlinedRequestBody") {
+                        for (const prop of tokenHttpEndpoint.requestBody.properties) {
+                            if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
+                                continue;
+                            }
+                            deepSetProperty(jsonExample, [], prop.name.name, prop.name.wireValue);
+                        }
+                    }
+                });
+
+                writer.writeNode(
+                    this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples)
+                );
+            })
+        });
+    }
+
     protected generateMockAuthMethod(scheme: OAuthScheme, cls: ast.Class) {
         const shouldScope = !!scheme.configuration.refreshEndpoint;
         cls.addMethod({
             access: ast.Access.Private,
             name: this.names.methods.mockOauth,
             parameters: [],
-            body: this.csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer: Writer) => {
                 if (shouldScope) {
                     writer.pushScope();
                 }
                 // token endpoint
                 const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
-                const tokenEndpointHttpService = this.context.getHttpServiceOrThrow(tokenEndpointReference.serviceId);
-                const tokenHttpEndpoint = this.context.resolveEndpointOrThrow(
+                const tokenEndpointHttpService =
+                    this.context.getHttpService(tokenEndpointReference.serviceId) ??
+                    fail(`Service with id ${tokenEndpointReference.serviceId} not found`);
+                const tokenHttpEndpoint = this.context.resolveEndpoint(
                     tokenEndpointHttpService,
                     tokenEndpointReference.endpointId
                 );
@@ -215,8 +302,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                         "CLIENT_SECRET"
                     );
                 });
+                // Skip body matching for OAuth endpoints because the OAuthTokenProvider only sends
+                // required fields (client_id, client_secret), while the example may include optional
+                // fields (scope, audience, grant_type) that won't be in the actual request
                 writer.writeNode(
-                    this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples)
+                    this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples, {
+                        skipBodyMatch: true
+                    })
                 );
                 if (shouldScope) {
                     writer.popScope();
@@ -228,10 +320,10 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 }
                 if (scheme.configuration.refreshEndpoint) {
                     const refreshEndpointReference = scheme.configuration.refreshEndpoint.endpointReference;
-                    const refreshEndpointHttpService = this.context.getHttpServiceOrThrow(
-                        refreshEndpointReference.serviceId
-                    );
-                    const refreshHttpEndpoint = this.context.resolveEndpointOrThrow(
+                    const refreshEndpointHttpService =
+                        this.context.getHttpService(refreshEndpointReference.serviceId) ??
+                        fail(`Service with id ${refreshEndpointReference.serviceId} not found`);
+                    const refreshHttpEndpoint = this.context.resolveEndpoint(
                         refreshEndpointHttpService,
                         refreshEndpointReference.endpointId
                     );
@@ -246,8 +338,11 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                             return response?.type === "ok" && response.value.type === "body";
                         }
                     );
+                    // Skip body matching for refresh endpoint as well
                     writer.writeNode(
-                        this.mockEndpointGenerator.generateForExamples(refreshHttpEndpoint, refreshUseableExamples)
+                        this.mockEndpointGenerator.generateForExamples(refreshHttpEndpoint, refreshUseableExamples, {
+                            skipBodyMatch: true
+                        })
                     );
                 }
                 if (shouldScope) {
@@ -261,7 +356,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         return join(
             this.constants.folders.testFiles,
             this.generation.constants.folders.mockServerTests,
-            RelativeFilePath.of(`${this.types.BaseMockServerTest.name}.cs`)
+            RelativeFilePath.of(`${this.Types.BaseMockServerTest.name}.cs`)
         );
     }
 }

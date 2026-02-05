@@ -63,6 +63,20 @@ public interface SpringCustomConfig extends ICustomConfig, IDownloadFilesCustomC
         return false;
     }
 
+    @Override
+    @Value.Default
+    @JsonProperty("gradle-central-dependency-management")
+    default Boolean gradleCentralDependencyManagement() {
+        return false;
+    }
+
+    @Override
+    @Value.Default
+    @JsonProperty("output-directory")
+    default OutputDirectory outputDirectory() {
+        return OutputDirectory.PROJECT_ROOT;
+    }
+
     static ImmutableSpringCustomConfig.Builder builder() {
         return ImmutableSpringCustomConfig.builder();
     }

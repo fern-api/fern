@@ -41,10 +41,14 @@ public class RawSimpleClient {
 
     public SeedErrorsHttpResponse<FooResponse> fooWithoutEndpointError(
             FooRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("foo1")
-                .build();
+                .addPathSegments("foo1");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -53,7 +57,7 @@ public class RawSimpleClient {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -98,10 +102,14 @@ public class RawSimpleClient {
     }
 
     public SeedErrorsHttpResponse<FooResponse> foo(FooRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("foo2")
-                .build();
+                .addPathSegments("foo2");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -110,7 +118,7 @@ public class RawSimpleClient {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -140,9 +148,6 @@ public class RawSimpleClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
                     case 500:
                         throw new FooTooLittle(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
-                    case 500:
-                        throw new InternalServerError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
                 }
             } catch (JsonProcessingException ignored) {
@@ -161,10 +166,14 @@ public class RawSimpleClient {
     }
 
     public SeedErrorsHttpResponse<FooResponse> fooWithExamples(FooRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("foo3")
-                .build();
+                .addPathSegments("foo3");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -173,7 +182,7 @@ public class RawSimpleClient {
             throw new SeedErrorsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -203,9 +212,6 @@ public class RawSimpleClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
                     case 500:
                         throw new FooTooLittle(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
-                    case 500:
-                        throw new InternalServerError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
                 }
             } catch (JsonProcessingException ignored) {

@@ -40,7 +40,7 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
  * If the group name is a string, the group name will be camel cased and a .yml extension will be added.
  * If the group name is an array, we create a directory with the group name and add a file with the group name camel cased and a .yml extension.
  */
-function getDeclarationFileFromGroupName({
+export function getDeclarationFileFromGroupName({
     namespace,
     groupName
 }: {

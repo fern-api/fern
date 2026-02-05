@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">echo</a>(request: String) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">echo</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/client.rs">create_type</a>(request: Type) -> Result<Identifier, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">create_type</a>(request: Type) -> Result&lt;Identifier, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ async fn main() {
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file().notification().service.<a href="/src/api/resources/file/notification/service/client.rs">get_exception</a>(notification_id: String) -> Result<Exception, ApiError></code></summary>
+<details><summary><code>client.file().notification().service.<a href="/src/api/resources/file/notification/service/client.rs">get_exception</a>(notification_id: String) -> Result&lt;Exception, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -128,7 +128,7 @@ async fn main() {
 </details>
 
 ## File Service
-<details><summary><code>client.file().service.<a href="/src/api/resources/file/service/client.rs">get_file</a>(filename: String) -> Result<File, ApiError></code></summary>
+<details><summary><code>client.file().service.<a href="/src/api/resources/file/service/client.rs">get_file</a>(filename: String) -> Result&lt;File, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -167,7 +167,10 @@ async fn main() {
     client
         .file
         .service
-        .get_file(&"file.txt".to_string(), None)
+        .get_file(
+            &"file.txt".to_string(),
+            Some(RequestOptions::new().additional_header("X-File-API-Version", "0.0.2")),
+        )
         .await;
 }
 ```
@@ -197,7 +200,7 @@ async fn main() {
 </details>
 
 ## Health Service
-<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">check</a>(id: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">check</a>(id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -265,7 +268,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">ping</a>() -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">ping</a>() -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -315,7 +318,7 @@ async fn main() {
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(movie_id: MovieId) -> Result<Movie, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -368,7 +371,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_movie</a>(request: Movie) -> Result<MovieId, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_movie</a>(request: Movie) -> Result&lt;MovieId, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -398,19 +401,16 @@ async fn main() {
                 prequel: Some(MovieId("movie-cv9b914f".to_string())),
                 title: "The Boy and the Heron".to_string(),
                 from: "Hayao Miyazaki".to_string(),
-                rating: 8,
+                rating: 8.0,
                 r#type: "movie".to_string(),
                 tag: Tag("tag-wf9as23d".to_string()),
+                book: None,
                 metadata: HashMap::from([
                     (
                         "actors".to_string(),
-                        vec![
-                            "Christian Bale".to_string(),
-                            "Florence Pugh".to_string(),
-                            "Willem Dafoe".to_string(),
-                        ],
+                        serde_json::json!(["Christian Bale", "Florence Pugh", "Willem Dafoe"]),
                     ),
-                    ("releaseDate".to_string(), "2023-12-08".to_string()),
+                    ("releaseDate".to_string(), serde_json::json!("2023-12-08")),
                     (
                         "ratings".to_string(),
                         serde_json::json!({"rottenTomatoes":97,"imdb":7.6}),
@@ -433,7 +433,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_metadata</a>(shallow: Option<Option<bool>>) -> Result<Metadata, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_metadata</a>(shallow: Option&lt;Option&lt;bool&gt;&gt;) -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -461,9 +461,8 @@ async fn main() {
             &GetMetadataQueryRequest {
                 shallow: Some(false),
                 tag: vec![Some("development".to_string())],
-                x_api_version: "0.0.1".to_string(),
             },
-            None,
+            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1")),
         )
         .await;
 }
@@ -501,7 +500,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_big_entity</a>(request: BigEntity) -> Result<Response, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_big_entity</a>(request: BigEntity) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -532,26 +531,32 @@ async fn main() {
                     id: "id".to_string(),
                 })),
                 extended_movie: Some(ExtendedMovie {
+                    movie_fields: Movie {
+                        id: MovieId("id".to_string()),
+                        prequel: Some(MovieId("prequel".to_string())),
+                        title: "title".to_string(),
+                        from: "from".to_string(),
+                        rating: 1.1,
+                        r#type: "movie".to_string(),
+                        tag: Tag("tag".to_string()),
+                        book: Some("book".to_string()),
+                        metadata: HashMap::from([(
+                            "metadata".to_string(),
+                            serde_json::json!({"key":"value"}),
+                        )]),
+                        revenue: 1000000,
+                    },
                     cast: vec!["cast".to_string(), "cast".to_string()],
-                    id: MovieId("id".to_string()),
-                    prequel: Some(MovieId("prequel".to_string())),
-                    title: "title".to_string(),
-                    from: "from".to_string(),
-                    rating: 1.1,
-                    r#type: "movie".to_string(),
-                    tag: Tag("tag".to_string()),
-                    book: Some("book".to_string()),
-                    metadata: HashMap::from([(
-                        "metadata".to_string(),
-                        serde_json::json!({"key":"value"}),
-                    )]),
-                    revenue: 1000000,
                 }),
                 entity: Some(Entity {
                     r#type: Type::BasicType(BasicType::Primitive),
                     name: "name".to_string(),
                 }),
-                metadata: Some(Metadata::Html { value: None }),
+                metadata: Some(Metadata2::Html {
+                    value: "value".to_string(),
+                    extra: HashMap::from([("extra".to_string(), "extra".to_string())]),
+                    tags: HashSet::from(["tags".to_string()]),
+                }),
                 common_metadata: Some(Metadata {
                     id: "id".to_string(),
                     data: Some(HashMap::from([("data".to_string(), "data".to_string())])),
@@ -564,7 +569,9 @@ async fn main() {
                         json_string: Some("jsonString".to_string()),
                     },
                 }),
-                data: Some(Data::String_ { value: None }),
+                data: Some(Data::r#String {
+                    value: "value".to_string(),
+                }),
                 migration: Some(Migration {
                     name: "name".to_string(),
                     status: MigrationStatus::Running,
@@ -576,7 +583,7 @@ async fn main() {
                         exception_stacktrace: "exceptionStacktrace".to_string(),
                     },
                 }),
-                test: Some(Test::And { value: None }),
+                test: Some(Test::And { value: false }),
                 node: Some(Node {
                     name: "name".to_string(),
                     nodes: Some(vec![
@@ -726,9 +733,7 @@ async fn main() {
                 moment: Some(Moment {
                     id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                     date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 }),
             },
             None,
@@ -746,7 +751,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">refresh_token</a>(request: Option<RefreshTokenRequest>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">refresh_token</a>(request: Option&lt;RefreshTokenRequest&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

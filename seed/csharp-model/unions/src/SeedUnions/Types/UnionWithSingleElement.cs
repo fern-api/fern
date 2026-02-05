@@ -96,12 +96,12 @@ public record UnionWithSingleElement
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSingleElement>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithSingleElement).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSingleElement Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

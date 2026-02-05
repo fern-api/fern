@@ -5,6 +5,7 @@ package com.seed.inferredAuthImplicit.resources.auth.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -48,7 +49,7 @@ public final class RefreshTokenRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("X-Api-Key")
+    @JsonIgnore
     public String getXApiKey() {
         return xApiKey;
     }
@@ -171,7 +172,6 @@ public final class RefreshTokenRequest {
         }
 
         @java.lang.Override
-        @JsonSetter("X-Api-Key")
         public ClientIdStage xApiKey(@NotNull String xApiKey) {
             this.xApiKey = Objects.requireNonNull(xApiKey, "xApiKey must not be null");
             return this;

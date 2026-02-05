@@ -3,7 +3,6 @@ package com.snippets;
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import java.util.Arrays;
-import java.util.Optional;
 
 public class Example17 {
     public static void main(String[] args) {
@@ -15,7 +14,7 @@ public class Example17 {
         client.service()
                 .getMetadata(GetMetadataRequest.builder()
                         .xApiVersion("0.0.1")
-                        .tag(Arrays.asList(Optional.of("development")))
+                        .tag(Arrays.asList("development"))
                         .shallow(false)
                         .build());
     }

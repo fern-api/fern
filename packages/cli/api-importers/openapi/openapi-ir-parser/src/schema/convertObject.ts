@@ -1,24 +1,24 @@
 import {
-    AllOfPropertyConflict,
-    Availability,
-    Encoding,
-    NamedFullExample,
-    ObjectPropertyConflictInfo,
-    ObjectPropertyWithExample,
-    ReferencedSchema,
-    SchemaId,
+    type AllOfPropertyConflict,
+    type Availability,
+    type Encoding,
+    type NamedFullExample,
+    type ObjectPropertyConflictInfo,
+    type ObjectPropertyWithExample,
+    type ReferencedSchema,
+    type SchemaId,
     SchemaWithExample,
-    SdkGroupName,
-    Source
+    type SdkGroupName,
+    type Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+import type { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
 import { convertAvailability } from "./convertAvailability";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
+import type { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
@@ -48,7 +48,9 @@ export function convertObject({
     fullExamples,
     additionalProperties,
     availability,
-    source
+    source,
+    minProperties,
+    maxProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -69,6 +71,8 @@ export function convertObject({
     availability: Availability | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...getNonIgnoredProperties({ properties, breadcrumbs, context }) };
@@ -140,7 +144,8 @@ export function convertObject({
                     allOfElement,
                     [schemaId],
                     source,
-                    context.options.preserveSchemaIds
+                    context.options.preserveSchemaIds,
+                    context
                 ),
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });
@@ -304,7 +309,9 @@ export function convertObject({
         additionalProperties,
         availability,
         source,
-        context
+        context,
+        minProperties,
+        maxProperties
     });
 }
 
@@ -324,7 +331,9 @@ export function wrapObject({
     additionalProperties,
     availability,
     source,
-    context
+    context,
+    minProperties,
+    maxProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -342,6 +351,8 @@ export function wrapObject({
     availability: Availability | undefined;
     source: Source;
     context: SchemaParserContext;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }): SchemaWithExample {
     let result: SchemaWithExample = SchemaWithExample.object({
         description,
@@ -357,7 +368,9 @@ export function wrapObject({
         additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
         availability,
         source,
-        inline: undefined
+        inline: undefined,
+        minProperties,
+        maxProperties
     });
     if (wrapAsNullable) {
         result = SchemaWithExample.nullable({

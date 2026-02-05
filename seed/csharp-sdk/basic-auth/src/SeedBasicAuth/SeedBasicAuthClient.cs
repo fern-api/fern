@@ -2,7 +2,7 @@ using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth;
 
-public partial class SeedBasicAuthClient
+public partial class SeedBasicAuthClient : ISeedBasicAuthClient
 {
     private readonly RawClient _client;
 
@@ -12,7 +12,8 @@ public partial class SeedBasicAuthClient
         ClientOptions? clientOptions = null
     )
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -21,8 +22,7 @@ public partial class SeedBasicAuthClient
                 { "User-Agent", "Fernbasic-auth/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -33,5 +33,5 @@ public partial class SeedBasicAuthClient
         BasicAuth = new BasicAuthClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; }
+    public IBasicAuthClient BasicAuth { get; }
 }

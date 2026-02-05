@@ -33,6 +33,7 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
         class_.addConstructor({
             parameters: this.getConstructorParameters(context),
             statements: [
+                // 1. Call super(message) - must be first
                 ts.factory.createExpressionStatement(
                     ts.factory.createCallExpression(
                         ts.factory.createSuper(),
@@ -40,6 +41,8 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
                         this.getSuperArguments(context)
                     )
                 ),
+                // 2. Fix the prototype chain - Object.setPrototypeOf(this, new.target.prototype)
+                // Use new.target.prototype (not ErrorClassName.prototype) to support subclassing
                 ts.factory.createExpressionStatement(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
@@ -50,10 +53,59 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
                         [
                             ts.factory.createThis(),
                             ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier(this.errorClassName),
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("new"),
+                                    ts.factory.createIdentifier("target")
+                                ),
                                 ts.factory.createIdentifier("prototype")
                             )
                         ]
+                    )
+                ),
+                // 3. Capture stack trace - conditionally call if Error.captureStackTrace exists (V8-specific)
+                ts.factory.createIfStatement(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("Error"),
+                        ts.factory.createIdentifier("captureStackTrace")
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createExpressionStatement(
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier("Error"),
+                                        ts.factory.createIdentifier("captureStackTrace")
+                                    ),
+                                    undefined,
+                                    [
+                                        ts.factory.createThis(),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createThis(),
+                                            ts.factory.createIdentifier("constructor")
+                                        )
+                                    ]
+                                )
+                            )
+                        ],
+                        true
+                    ),
+                    undefined
+                ),
+                // 4. Set the error name - this.name = this.constructor.name
+                ts.factory.createExpressionStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createThis(),
+                            ts.factory.createIdentifier("name")
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createThis(),
+                                ts.factory.createIdentifier("constructor")
+                            ),
+                            ts.factory.createIdentifier("name")
+                        )
                     )
                 ),
                 ...this.getConstructorStatements(context)

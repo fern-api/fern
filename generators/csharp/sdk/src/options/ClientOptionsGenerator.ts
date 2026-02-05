@@ -4,11 +4,10 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { Name } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator";
 
-export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
     constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
@@ -21,10 +20,10 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.ClientOptions,
+            reference: this.Types.ClientOptions,
             partial: true,
             access: ast.Access.Public,
-            annotations: [this.extern.System.Serializable]
+            annotations: [this.System.Serializable]
         });
         const optionArgs: OptionArgs = {
             optional: false,
@@ -33,6 +32,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         this.createBaseUrlField(class_);
         this.baseOptionsGenerator.getHttpClientField(class_, optionArgs);
 
+        // Headers property is used for lazy auth header evaluation in root client
         this.baseOptionsGenerator.getHttpHeadersField(class_, {
             optional: false,
             includeInitializer: true,
@@ -57,13 +57,13 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 summary: "A handler that will handle exceptions thrown by the client.",
                 access: ast.Access.Internal,
                 origin: class_.explicit("ExceptionHandler"),
-                type: this.csharp.Type.reference(this.types.ExceptionHandler),
+                type: this.Types.ExceptionHandler,
                 get: true,
                 set: true,
                 initializer: this.csharp.codeblock((writer) => {
                     writer.writeNode(
                         this.csharp.instantiateClass({
-                            classReference: this.types.ExceptionHandler,
+                            classReference: this.Types.ExceptionHandler,
                             arguments_: [this.csharp.codeblock("null")]
                         })
                     );
@@ -84,7 +84,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.types.ClientOptions.name}.cs`));
+        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.Types.ClientOptions.name}.cs`));
     }
 
     private createBaseUrlField(classOrInterface: ast.Interface | ast.Class): ast.Field | undefined {
@@ -118,12 +118,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                         get: true,
                         init: true,
                         useRequired: defaultEnvironment != null,
-                        type: this.csharp.Type.string,
+                        type: this.Primitive.string,
                         summary: this.baseOptionsGenerator.members.baseUrlSummary,
                         initializer:
                             defaultEnvironment != null
                                 ? this.csharp.codeblock((writer) => {
-                                      writer.writeNode(this.types.Environments);
+                                      writer.writeNode(this.Types.Environments);
                                       writer.write(`.${defaultEnvironmentName}`);
                                   })
                                 : this.csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
@@ -136,12 +136,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                         get: true,
                         init: true,
                         useRequired: defaultEnvironment != null,
-                        type: this.csharp.Type.reference(this.types.Environments),
+                        type: this.Types.Environments,
                         summary: "The Environment for the API.",
                         initializer:
                             defaultEnvironment != null
                                 ? this.csharp.codeblock((writer) => {
-                                      writer.writeNode(this.types.Environments);
+                                      writer.writeNode(this.Types.Environments);
                                       writer.write(`.${defaultEnvironmentName}`);
                                   })
                                 : this.csharp.codeblock("null") // TODO: remove this logic since it sets url to null
@@ -158,12 +158,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             get: true,
             init: true,
             useRequired: defaultEnvironment != null,
-            type: this.csharp.Type.string,
+            type: this.Primitive.string,
             summary: this.baseOptionsGenerator.members.baseUrlSummary,
             initializer:
                 defaultEnvironment != null
                     ? this.csharp.codeblock((writer) => {
-                          writer.writeNode(this.types.Environments);
+                          writer.writeNode(this.Types.Environments);
                           writer.write(`.${defaultEnvironmentName}`);
                       })
                     : this.csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
@@ -176,7 +176,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: this.csharp.Type.optional(this.csharp.Type.reference(this.types.GrpcChannelOptions)),
+            type: this.Types.GrpcChannelOptions.asOptional(),
             summary: "The options used for gRPC client endpoints."
         });
     }
@@ -184,13 +184,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     private getCloneMethod(cls: ast.Class): void {
         // TODO: add the GRPC options here eventually
         // TODO: iterate over all public fields and generate the clone logic
-        // for Headers, we should add a `.Clone` method on it and call that
 
         cls.addMethod({
             access: ast.Access.Internal,
             summary: "Clones this and returns a new instance",
             name: "Clone",
-            return_: this.csharp.Type.reference(this.types.ClientOptions),
+            return_: this.Types.ClientOptions,
             body: this.csharp.codeblock((writer) => {
                 writer.writeStatement(
                     `return new ClientOptions
@@ -199,10 +198,11 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     MaxRetries = MaxRetries,
     Timeout = Timeout,
     Headers = new `,
-                    this.types.Headers,
+                    this.Types.Headers,
                     `(new Dictionary<string, `,
-                    this.types.HeaderValue,
+                    this.Types.HeaderValue,
                     `>(Headers)),
+    AdditionalHeaders = AdditionalHeaders,
     ${this.settings.includeExceptionHandler ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                 );

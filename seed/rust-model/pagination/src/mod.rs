@@ -1,3 +1,13 @@
+//! Request and response types for the Pagination
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 45 types for API operations
+//! - **Model Types**: 28 types for data representation
+
 pub mod username_cursor;
 pub mod username_page;
 pub mod complex_search_request_query;
@@ -38,13 +48,16 @@ pub mod users_username_container;
 pub mod users_list_users_extended_response;
 pub mod users_list_users_extended_optional_list_response;
 pub mod users_list_users_pagination_response;
+pub mod users_list_users_optional_data_pagination_response;
 pub mod users_list_users_mixed_type_pagination_response;
+pub mod users_list_users_top_level_cursor_pagination_response;
 pub mod users_page;
 pub mod users_next_page;
 pub mod users_user;
 pub mod list_users_body_cursor_pagination_request;
 pub mod list_users_body_offset_pagination_request;
 pub mod list_users_body_cursor_pagination_request_request;
+pub mod list_users_top_level_body_cursor_pagination_request;
 pub mod list_users_body_offset_pagination_request_request;
 pub mod inline_users_inline_users_list_with_cursor_pagination_query_request;
 pub mod inline_users_inline_users_list_with_mixed_type_cursor_pagination_query_request;
@@ -65,7 +78,9 @@ pub mod users_list_with_offset_pagination_has_next_page_query_request;
 pub mod users_list_with_extended_results_query_request;
 pub mod users_list_with_extended_results_and_optional_data_query_request;
 pub mod users_list_usernames_query_request;
+pub mod list_usernames_with_optional_response_query_request;
 pub mod users_list_with_global_config_query_request;
+pub mod list_with_optional_data_query_request;
 
 pub use username_cursor::UsernameCursor;
 pub use username_page::UsernamePage;
@@ -107,13 +122,16 @@ pub use users_username_container::UsernameContainer2;
 pub use users_list_users_extended_response::ListUsersExtendedResponse2;
 pub use users_list_users_extended_optional_list_response::ListUsersExtendedOptionalListResponse2;
 pub use users_list_users_pagination_response::ListUsersPaginationResponse2;
+pub use users_list_users_optional_data_pagination_response::ListUsersOptionalDataPaginationResponse;
 pub use users_list_users_mixed_type_pagination_response::ListUsersMixedTypePaginationResponse2;
+pub use users_list_users_top_level_cursor_pagination_response::ListUsersTopLevelCursorPaginationResponse;
 pub use users_page::Page2;
 pub use users_next_page::NextPage2;
 pub use users_user::User2;
 pub use list_users_body_cursor_pagination_request::ListUsersBodyCursorPaginationRequest;
 pub use list_users_body_offset_pagination_request::ListUsersBodyOffsetPaginationRequest;
 pub use list_users_body_cursor_pagination_request_request::ListUsersBodyCursorPaginationRequest2;
+pub use list_users_top_level_body_cursor_pagination_request::ListUsersTopLevelBodyCursorPaginationRequest;
 pub use list_users_body_offset_pagination_request_request::ListUsersBodyOffsetPaginationRequest2;
 pub use inline_users_inline_users_list_with_cursor_pagination_query_request::InlineUsersInlineUsersListWithCursorPaginationQueryRequest;
 pub use inline_users_inline_users_list_with_mixed_type_cursor_pagination_query_request::InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest;
@@ -134,5 +152,7 @@ pub use users_list_with_offset_pagination_has_next_page_query_request::UsersList
 pub use users_list_with_extended_results_query_request::UsersListWithExtendedResultsQueryRequest;
 pub use users_list_with_extended_results_and_optional_data_query_request::UsersListWithExtendedResultsAndOptionalDataQueryRequest;
 pub use users_list_usernames_query_request::UsersListUsernamesQueryRequest;
+pub use list_usernames_with_optional_response_query_request::ListUsernamesWithOptionalResponseQueryRequest;
 pub use users_list_with_global_config_query_request::UsersListWithGlobalConfigQueryRequest;
+pub use list_with_optional_data_query_request::ListWithOptionalDataQueryRequest;
 

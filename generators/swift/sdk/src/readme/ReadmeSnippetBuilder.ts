@@ -50,6 +50,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+        snippets[FernGeneratorCli.StructuredFeatureId.Errors] = this.buildErrorHandlingSnippets();
         snippets[ReadmeSnippetBuilder.REQUEST_TYPES_FEATURE_ID] = this.buildRequestTypesSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
@@ -72,6 +73,58 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         return snippets;
+    }
+
+    private buildErrorHandlingSnippets(): string[] {
+        const snippets: string[] = [];
+        const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Errors);
+
+        usageEndpointIds.forEach((endpointId) => {
+            const snippet = this.getErrorHandlingSnippetForEndpoint(endpointId);
+            snippets.push(snippet);
+        });
+
+        return snippets;
+    }
+
+    private getErrorHandlingSnippetForEndpoint(endpointId: string): string {
+        const endpoint = this.endpointsById[endpointId];
+        if (endpoint == null) {
+            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+        }
+        const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
+        const details = this.context.getEndpointMethodDetails(endpoint);
+        const errorTypeName = `${moduleSymbol.name}Error`;
+
+        const snippetLines = [
+            `import ${moduleSymbol.name}`,
+            ``,
+            `let client = ${rootClientSymbol.name}(...)`,
+            ``,
+            `do {`,
+            `    let response = try await client.${details.fullyQualifiedMethodName}(...)`,
+            `    // Handle successful response`,
+            `} catch let error as ${errorTypeName} {`,
+            `    switch error {`,
+            `    case .httpError(let httpError):`,
+            `        print("Status code:", httpError.statusCode)`,
+            `        print("Kind:", httpError.kind)`,
+            `        print("Message:", httpError.body?.message ?? httpError.localizedDescription)`,
+            `    case .encodingError(let underlying):`,
+            `        print("Encoding error:", underlying)`,
+            `    case .networkError(let underlying):`,
+            `        print("Network error:", underlying)`,
+            `    default:`,
+            `        print("Other client error:", error)`,
+            `    }`,
+            `} catch {`,
+            `    print("Unexpected error:", error)`,
+            `}`,
+            ``
+        ];
+
+        return snippetLines.join("\n");
     }
 
     private buildRequestTypesSnippets(): string[] {

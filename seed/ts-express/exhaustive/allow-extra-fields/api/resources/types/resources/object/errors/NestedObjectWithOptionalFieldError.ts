@@ -8,7 +8,12 @@ import type * as SeedExhaustive from "../../../../../index";
 export class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
     constructor(private readonly body: SeedExhaustive.types.NestedObjectWithOptionalField) {
         super("NestedObjectWithOptionalFieldError");
-        Object.setPrototypeOf(this, NestedObjectWithOptionalFieldError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

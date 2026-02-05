@@ -5,6 +5,6 @@ package enum
 type SendEnumInlinedRequest struct {
 	Operand             Operand         `json:"operand" url:"-"`
 	MaybeOperand        *Operand        `json:"maybeOperand,omitempty" url:"-"`
-	OperandOrColor      *ColorOrOperand `json:"operandOrColor,omitempty" url:"-"`
+	OperandOrColor      *ColorOrOperand `json:"operandOrColor" url:"-"`
 	MaybeOperandOrColor *ColorOrOperand `json:"maybeOperandOrColor,omitempty" url:"-"`
 }

@@ -8,7 +8,12 @@ import type * as SeedErrors from "../../../index";
 export class FooTooLittle extends errors.SeedErrorsError {
     constructor(private readonly body: SeedErrors.ErrorBody) {
         super("FooTooLittle");
-        Object.setPrototypeOf(this, FooTooLittle.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

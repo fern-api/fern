@@ -153,7 +153,7 @@ public abstract class AbstractEndpointWriterVariableNameContext {
     }
 
     protected final String getMultipartBodyPropertiesName() {
-        return getVariableName("body");
+        return getVariableName("multipartBodyBuilder");
     }
 
     protected final String getStartingAfterVariableName() {
@@ -182,6 +182,14 @@ public abstract class AbstractEndpointWriterVariableNameContext {
                         sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
                 .build();
     }
+
+    public abstract Optional<TypeName> getBodyTypeName();
+
+    public abstract String getBodyParameterName();
+
+    public abstract String getBodyPropertyName();
+
+    public abstract Optional<TypeName> getWrapperTypeName();
 
     private HttpUrlBuilder.PathParamInfo convertPathParameter(PathParameter pathParameter) {
         TypeName typeName =

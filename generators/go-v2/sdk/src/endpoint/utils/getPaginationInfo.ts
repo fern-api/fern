@@ -143,6 +143,7 @@ function getReadPageResponse({
         requestPagePropertyReference,
         requestPagePropertyFormat
     });
+    const responseType = signature.returnType ?? go.Type.any();
     return go.codeblock((writer) => {
         if (initializer != null) {
             writer.writeNode(initializer);
@@ -154,21 +155,23 @@ function getReadPageResponse({
                 parameters: [
                     go.parameter({
                         name: "response",
-                        type: signature.returnType ?? go.Type.any()
+                        type: responseType
                     })
                 ],
                 return_: [
                     getPageResponseType({
                         context,
                         pagination,
-                        pageType
+                        pageType,
+                        responseType
                     })
                 ],
                 body: getReadPageResponseBody({
                     context,
                     pagination,
                     pageType,
-                    nextPageType
+                    nextPageType,
+                    responseType
                 }),
                 multiline: false
             })
@@ -277,12 +280,14 @@ function getReadPageResponseBody({
     context,
     pagination,
     pageType,
-    nextPageType
+    nextPageType,
+    responseType
 }: {
     context: SdkGeneratorContext;
     pagination: Pagination;
     pageType: go.Type;
     nextPageType: go.Type | undefined;
+    responseType: go.Type;
 }): go.AstNode {
     switch (pagination.type) {
         case "cursor":
@@ -291,13 +296,15 @@ function getReadPageResponseBody({
                 pagination,
                 cursor: pagination,
                 pageType,
-                nextPageType
+                nextPageType,
+                responseType
             });
         case "offset":
             return getReadPageResponseBodyForOffset({
                 context,
                 pagination,
-                pageType
+                pageType,
+                responseType
             });
         case "custom":
             return go.TypeInstantiation.nop();
@@ -311,13 +318,15 @@ function getReadPageResponseBodyForCursor({
     pagination,
     cursor,
     pageType,
-    nextPageType
+    nextPageType,
+    responseType
 }: {
     context: SdkGeneratorContext;
     pagination: Pagination;
     cursor: CursorPagination;
     pageType: go.Type;
     nextPageType: go.Type | undefined;
+    responseType: go.Type;
 }): go.AstNode {
     return go.codeblock((writer) => {
         writer.write("var zeroValue ");
@@ -328,15 +337,19 @@ function getReadPageResponseBodyForCursor({
         writer.write("return ");
         writer.writeNode(
             go.TypeInstantiation.structPointer({
-                typeReference: getPageResponseTypeReference({ context, pagination, pageType }),
+                typeReference: getPageResponseTypeReference({ context, pagination, pageType, responseType }),
                 fields: [
-                    {
-                        name: "Next",
-                        value: getNextReference({ pageType, nextPageType })
-                    },
                     {
                         name: "Results",
                         value: go.TypeInstantiation.reference(go.codeblock("results"))
+                    },
+                    {
+                        name: "Response",
+                        value: go.TypeInstantiation.reference(go.codeblock("response"))
+                    },
+                    {
+                        name: "Next",
+                        value: getNextReference({ pageType, nextPageType })
                     },
                     {
                         name: "Done",
@@ -351,11 +364,13 @@ function getReadPageResponseBodyForCursor({
 function getReadPageResponseBodyForOffset({
     context,
     pagination,
-    pageType
+    pageType,
+    responseType
 }: {
     context: SdkGeneratorContext;
     pagination: Pagination;
     pageType: go.Type;
+    responseType: go.Type;
 }): go.AstNode {
     return go.codeblock((writer) => {
         writer.writeLine("next += 1");
@@ -363,15 +378,19 @@ function getReadPageResponseBodyForOffset({
         writer.write("return ");
         writer.writeNode(
             go.TypeInstantiation.structPointer({
-                typeReference: getPageResponseTypeReference({ context, pagination, pageType }),
+                typeReference: getPageResponseTypeReference({ context, pagination, pageType, responseType }),
                 fields: [
-                    {
-                        name: "Next",
-                        value: go.TypeInstantiation.reference(go.codeblock(pageType.isOptional() ? "&next" : "next"))
-                    },
                     {
                         name: "Results",
                         value: go.TypeInstantiation.reference(go.codeblock("results"))
+                    },
+                    {
+                        name: "Response",
+                        value: go.TypeInstantiation.reference(go.codeblock("response"))
+                    },
+                    {
+                        name: "Next",
+                        value: go.TypeInstantiation.reference(go.codeblock(pageType.isOptional() ? "&next" : "next"))
                     }
                 ]
             })
@@ -730,28 +749,34 @@ function getPageRequestType({ context, pageType }: { context: SdkGeneratorContex
 function getPageResponseType({
     context,
     pagination,
-    pageType
+    pageType,
+    responseType
 }: {
     context: SdkGeneratorContext;
     pagination: Pagination;
     pageType: go.Type;
+    responseType: go.Type;
 }): go.Type {
-    return go.Type.pointer(go.Type.reference(getPageResponseTypeReference({ context, pagination, pageType })));
+    return go.Type.pointer(
+        go.Type.reference(getPageResponseTypeReference({ context, pagination, pageType, responseType }))
+    );
 }
 
 function getPageResponseTypeReference({
     context,
     pagination,
-    pageType
+    pageType,
+    responseType
 }: {
     context: SdkGeneratorContext;
     pagination: Pagination;
     pageType: go.Type;
+    responseType: go.Type;
 }): go.TypeReference {
     return go.typeReference({
         name: "PageResponse",
         importPath: context.getCoreImportPath(),
-        generics: [pageType, getResponseElementType({ context, pagination })]
+        generics: [pageType, getResponseElementType({ context, pagination }), responseType]
     });
 }
 

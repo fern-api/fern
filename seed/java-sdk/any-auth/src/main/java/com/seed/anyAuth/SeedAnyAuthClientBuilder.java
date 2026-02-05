@@ -5,8 +5,10 @@ package com.seed.anyAuth;
 
 import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.Environment;
+import com.seed.anyAuth.core.InferredAuthTokenSupplier;
 import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -23,11 +25,15 @@ public class SeedAnyAuthClientBuilder {
 
     private String apiKey = System.getenv("MY_API_KEY");
 
-    private String clientId = System.getenv("MY_CLIENT_ID");
+    private String username = System.getenv("MY_USERNAME");
 
-    private String clientSecret = System.getenv("MY_CLIENT_SECRET");
+    private String password = System.getenv("MY_PASSWORD");
 
-    private Environment environment;
+    private String clientId = null;
+
+    private String clientSecret = null;
+
+    protected Environment environment;
 
     private OkHttpClient httpClient;
 
@@ -50,8 +56,47 @@ public class SeedAnyAuthClientBuilder {
     }
 
     /**
-     * Sets clientId.
-     * Defaults to the MY_CLIENT_ID environment variable.
+     * Creates a builder that uses a pre-generated access token for authentication.
+     * Use this when you already have a valid access token and want to bypass
+     * the OAuth client credentials flow.
+     *
+     * @param token The access token to use for Authorization header
+     * @return A builder configured for token authentication
+     */
+    public static _TokenAuth withToken(String token) {
+        return new _TokenAuth(token);
+    }
+
+    /**
+     * Creates a builder that uses OAuth client credentials for authentication.
+     * The builder will automatically handle token acquisition and refresh.
+     *
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth client credentials authentication
+     */
+    public static _CredentialsAuth withCredentials(String clientId, String clientSecret) {
+        return new _CredentialsAuth(clientId, clientSecret);
+    }
+
+    /**
+     * Creates a new client builder.
+     * Use this method to start building a client with the classic builder pattern.
+     *
+     * @return A builder for configuring authentication and creating the client
+     */
+    public static _Builder builder() {
+        return new _Builder();
+    }
+
+    public SeedAnyAuthClientBuilder credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+        return this;
+    }
+
+    /**
+     * Sets clientId
      */
     public SeedAnyAuthClientBuilder clientId(String clientId) {
         this.clientId = clientId;
@@ -59,8 +104,7 @@ public class SeedAnyAuthClientBuilder {
     }
 
     /**
-     * Sets clientSecret.
-     * Defaults to the MY_CLIENT_SECRET environment variable.
+     * Sets clientSecret
      */
     public SeedAnyAuthClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
@@ -153,13 +197,19 @@ public class SeedAnyAuthClientBuilder {
             builder.addHeader("Authorization", "Bearer " + this.token);
         }
         builder.addHeader("X-API-Key", this.apiKey);
+        if (this.username != null && this.password != null) {
+            String unencodedToken = this.username + ":" + this.password;
+            String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
+            builder.addHeader("Authorization", "Basic " + encodedToken);
+        }
         if (this.clientId != null && this.clientSecret != null) {
             ClientOptions.Builder authClientOptionsBuilder =
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
-            builder.addHeader("Authorization", oAuthTokenSupplier);
+            InferredAuthTokenSupplier inferredAuthTokenSupplier =
+                    new InferredAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+            builder.addHeader(
+                    "Authorization", () -> inferredAuthTokenSupplier.get().get("Authorization"));
         }
     }
 
@@ -241,5 +291,150 @@ public class SeedAnyAuthClientBuilder {
         }
         validateConfiguration();
         return new SeedAnyAuthClient(buildClientOptions());
+    }
+
+    public static final class _TokenAuth extends SeedAnyAuthClientBuilder {
+        private final String token;
+
+        _TokenAuth(String token) {
+            this.token = token;
+        }
+
+        @Override
+        protected void setAuthentication(ClientOptions.Builder builder) {
+            builder.addHeader("Authorization", "Bearer " + this.token);
+        }
+    }
+
+    public static final class _CredentialsAuth extends SeedAnyAuthClientBuilder {
+        private final String clientId;
+
+        private final String clientSecret;
+
+        _CredentialsAuth(String clientId, String clientSecret) {
+            this.clientId = clientId;
+            this.clientSecret = clientSecret;
+        }
+
+        @Override
+        public SeedAnyAuthClient build() {
+            validateConfiguration();
+            ClientOptions baseOptions = buildClientOptions();
+            AuthClient authClient = new AuthClient(baseOptions);
+            OAuthTokenSupplier oAuthTokenSupplier =
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+            ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
+                    .addHeader("Authorization", oAuthTokenSupplier)
+                    .build();
+            return new SeedAnyAuthClient(finalOptions);
+        }
+    }
+
+    public static final class _Builder {
+        private Environment environment;
+
+        private Optional<Integer> timeout = Optional.empty();
+
+        private Optional<Integer> maxRetries = Optional.empty();
+
+        private OkHttpClient httpClient;
+
+        private final Map<String, String> headers = new HashMap<>();
+
+        public _Builder url(String url) {
+            this.environment = Environment.custom(url);
+            return this;
+        }
+
+        /**
+         * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
+         */
+        public _Builder timeout(int timeout) {
+            this.timeout = Optional.of(timeout);
+            return this;
+        }
+
+        /**
+         * Sets the maximum number of retries for the client. Defaults to 2 retries.
+         */
+        public _Builder maxRetries(int maxRetries) {
+            this.maxRetries = Optional.of(maxRetries);
+            return this;
+        }
+
+        /**
+         * Sets the underlying OkHttp client
+         */
+        public _Builder httpClient(OkHttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
+        /**
+         * Add a custom header to be sent with all requests.
+         * @param name The header name
+         * @param value The header value
+         * @return This builder for method chaining
+         */
+        public _Builder addHeader(String name, String value) {
+            this.headers.put(name, value);
+            return this;
+        }
+
+        /**
+         * Configure the client to use a pre-generated access token for authentication.
+         * Use this when you already have a valid access token and want to bypass
+         * the OAuth client credentials flow.
+         *
+         * @param token The access token to use for Authorization header
+         * @return A builder configured for token authentication
+         */
+        public _TokenAuth token(String token) {
+            _TokenAuth auth = new _TokenAuth(token);
+            if (this.environment != null) {
+                auth.environment = this.environment;
+            }
+            if (this.timeout.isPresent()) {
+                auth.timeout(this.timeout.get());
+            }
+            if (this.maxRetries.isPresent()) {
+                auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.httpClient != null) {
+                auth.httpClient(this.httpClient);
+            }
+            for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                auth.addHeader(header.getKey(), header.getValue());
+            }
+            return auth;
+        }
+
+        /**
+         * Configure the client to use OAuth client credentials for authentication.
+         * The builder will automatically handle token acquisition and refresh.
+         *
+         * @param clientId The OAuth client ID
+         * @param clientSecret The OAuth client secret
+         * @return A builder configured for OAuth client credentials authentication
+         */
+        public _CredentialsAuth credentials(String clientId, String clientSecret) {
+            _CredentialsAuth auth = new _CredentialsAuth(clientId, clientSecret);
+            if (this.environment != null) {
+                auth.environment = this.environment;
+            }
+            if (this.timeout.isPresent()) {
+                auth.timeout(this.timeout.get());
+            }
+            if (this.maxRetries.isPresent()) {
+                auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.httpClient != null) {
+                auth.httpClient(this.httpClient);
+            }
+            for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                auth.addHeader(header.getKey(), header.getValue());
+            }
+            return auth;
+        }
     }
 }

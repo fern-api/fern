@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -76,14 +75,26 @@ class AbstractProblemService(AbstractFernService):
     @classmethod
     def __init_create_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_problem)
+        type_hints = typing.get_type_hints(cls.create_problem)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -100,13 +111,9 @@ class AbstractProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_problem.__globals__)
-
         router.post(
             path="/problem-crud/create",
-            response_model=CreateProblemResponse,
+            response_model=None,
             description=AbstractProblemService.create_problem.__doc__,
             **get_route_args(cls.create_problem, default_tag="problem"),
         )(wrapper)
@@ -114,16 +121,30 @@ class AbstractProblemService(AbstractFernService):
     @classmethod
     def __init_update_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_problem)
+        type_hints = typing.get_type_hints(cls.update_problem)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "problem_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="problemId")])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -140,13 +161,9 @@ class AbstractProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_problem.__globals__)
-
         router.post(
             path="/problem-crud/update/{problem_id}",
-            response_model=UpdateProblemResponse,
+            response_model=None,
             description=AbstractProblemService.update_problem.__doc__,
             **get_route_args(cls.update_problem, default_tag="problem"),
         )(wrapper)
@@ -154,14 +171,26 @@ class AbstractProblemService(AbstractFernService):
     @classmethod
     def __init_delete_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.delete_problem)
+        type_hints = typing.get_type_hints(cls.delete_problem)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="problemId")])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.delete_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -178,14 +207,10 @@ class AbstractProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.delete_problem.__globals__)
-
         router.delete(
             path="/problem-crud/delete/{problem_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractProblemService.delete_problem.__doc__,
             **get_route_args(cls.delete_problem, default_tag="problem"),
         )(wrapper)
@@ -193,14 +218,26 @@ class AbstractProblemService(AbstractFernService):
     @classmethod
     def __init_get_default_starter_files(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_default_starter_files)
+        type_hints = typing.get_type_hints(cls.get_default_starter_files)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_default_starter_files, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -217,13 +254,9 @@ class AbstractProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_default_starter_files.__globals__)
-
         router.post(
             path="/problem-crud/default-starter-files",
-            response_model=GetDefaultStarterFilesResponse,
+            response_model=None,
             description=AbstractProblemService.get_default_starter_files.__doc__,
             **get_route_args(cls.get_default_starter_files, default_tag="problem"),
         )(wrapper)

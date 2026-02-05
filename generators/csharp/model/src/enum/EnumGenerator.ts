@@ -1,13 +1,12 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
+export class EnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly classReference: ast.ClassReference;
 
     constructor(
@@ -25,10 +24,10 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
             access: ast.Access.Public,
             annotations: [
                 this.csharp.annotation({
-                    reference: this.extern.System.Text.Json.Serialization.JsonConverter(),
-                    argument: this.csharp.codeblock((writer) => {
+                    reference: this.System.Text.Json.Serialization.JsonConverter(),
+                    argument: this.csharp.codeblock((writer: Writer) => {
                         writer.write("typeof(");
-                        writer.writeNode(this.csharp.classReferenceInternal(this.types.EnumSerializer));
+                        writer.writeNode(this.csharp.classReferenceInternal(this.Types.EnumSerializer));
                         writer.write("<");
                         writer.writeNode(this.classReference);
                         writer.write(">");

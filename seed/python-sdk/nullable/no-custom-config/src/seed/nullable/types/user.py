@@ -18,9 +18,11 @@ class User(UniversalBaseModel):
     tags: typing.Optional[typing.List[str]] = None
     metadata: typing.Optional[Metadata] = None
     email: Email
-    favorite_number: typing_extensions.Annotated[WeirdNumber, FieldMetadata(alias="favorite-number")]
+    favorite_number: typing_extensions.Annotated[
+        WeirdNumber, FieldMetadata(alias="favorite-number"), pydantic.Field(alias="favorite-number")
+    ]
     numbers: typing.Optional[typing.List[int]] = None
-    strings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    strings: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

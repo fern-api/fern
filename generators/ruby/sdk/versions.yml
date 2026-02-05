@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 0.8.3
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: chore
+      summary: >-
+        Bump generator CLI version to publish new Docker image.
+  irVersion: 39
+
 - version: 0.8.2
   createdAt: "2024-08-05"
   changelogEntry:

@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsMandatoryAuthClient } from \"@fern/oauth-client-credentials-mandatory-auth\";\n\nconst client = new SeedOauthClientCredentialsMandatoryAuthClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    client_id: \"my_oauth_app_123\",\n    client_secret: \"sk_live_abcdef123456789\",\n    scope: \"read:users\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsMandatoryAuthClient } from \"@fern/oauth-client-credentials-mandatory-auth\";\n\nconst client = new SeedOauthClientCredentialsMandatoryAuthClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    client_id: \"my_oauth_app_123\",\n    client_secret: \"sk_live_abcdef123456789\",\n    refresh_token: \"refresh_token\",\n    scope: \"read:users\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsMandatoryAuthClient } from \"@fern/oauth-client-credentials-mandatory-auth\";\n\nconst client = new SeedOauthClientCredentialsMandatoryAuthClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nested.api.getSomething();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsMandatoryAuthClient } from \"@fern/oauth-client-credentials-mandatory-auth\";\n\nconst client = new SeedOauthClientCredentialsMandatoryAuthClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n"
+            }
+        }
+    ],
+    "types": {}
+}

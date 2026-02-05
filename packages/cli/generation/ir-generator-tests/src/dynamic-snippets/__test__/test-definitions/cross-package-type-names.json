@@ -212,6 +212,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_folder-b/common:Foo": {
@@ -354,6 +355,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_folder-c/common:Foo": {
@@ -493,6 +495,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_folder-d/service:Response": {
@@ -635,6 +638,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_foo:ImportingType": {
@@ -735,6 +739,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_foo:OptionalString": {

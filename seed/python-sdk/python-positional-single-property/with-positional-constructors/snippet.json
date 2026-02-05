@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/create",
+                "method": "POST",
+                "identifier_override": "endpoint_.create"
+            },
+            "snippet": {
+                "sync_client": "from seed import (\n    BondSingleLeg,\n    Isin,\n    Quantity,\n    SeedPythonPositionalSingleProperty,\n    TakerParty,\n    Trader,\n)\n\nclient = SeedPythonPositionalSingleProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create(\n    instrument=BondSingleLeg(\n        identifier=Isin(\n            isin=\"US0378331005\",\n        ),\n        quantity=Quantity(\n            quantity=10000.0,\n        ),\n    ),\n    taker=TakerParty(\n        trader=Trader(\n            uuid_=1234567,\n        ),\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import (\n    AsyncSeedPythonPositionalSingleProperty,\n    BondSingleLeg,\n    Isin,\n    Quantity,\n    TakerParty,\n    Trader,\n)\n\nclient = AsyncSeedPythonPositionalSingleProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create(\n        instrument=BondSingleLeg(\n            identifier=Isin(\n                isin=\"US0378331005\",\n            ),\n            quantity=Quantity(\n                quantity=10000.0,\n            ),\n        ),\n        taker=TakerParty(\n            trader=Trader(\n                uuid_=1234567,\n            ),\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

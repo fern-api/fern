@@ -17,7 +17,7 @@ import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions
 import { ParseOpenAPIOptions } from "../../options";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas";
-import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../../schema/convertUndiscriminatedOneOf";
+import { convertUndiscriminatedOneOf, UndiscriminatedOneOfSuffix } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
@@ -73,10 +73,14 @@ export function parseAsyncAPIV2({
         const pathParameters: PathParameterWithExample[] = [];
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters ?? {})) {
+                const parameterNameOverride = getExtension<string>(
+                    parameter,
+                    FernAsyncAPIExtension.FERN_PARAMETER_NAME
+                );
                 pathParameters.push({
                     name,
                     description: parameter.description,
-                    parameterNameOverride: undefined,
+                    parameterNameOverride,
                     schema:
                         parameter.schema != null
                             ? convertSchema(
@@ -107,7 +111,8 @@ export function parseAsyncAPIV2({
                               }),
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
-                    source
+                    source,
+                    explode: undefined
                 });
             }
         }
@@ -120,12 +125,16 @@ export function parseAsyncAPIV2({
                 for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
                     if (isReferenceObject(schema)) {
                         const resolvedSchema = context.resolveSchemaReference(schema);
+                        const isRequired = required.includes(name);
+                        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                            ? [false, !isRequired]
+                            : [!isRequired, false];
                         headers.push({
                             name,
                             schema: convertReferenceObject(
                                 schema,
-                                false,
-                                false,
+                                isOptional,
+                                isNullable,
                                 context,
                                 breadcrumbs,
                                 undefined,
@@ -169,12 +178,16 @@ export function parseAsyncAPIV2({
                 for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
                     if (isReferenceObject(schema)) {
                         const resolvedSchema = context.resolveSchemaReference(schema);
+                        const isRequired = required.includes(name);
+                        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                            ? [false, !isRequired]
+                            : [!isRequired, false];
                         queryParameters.push({
                             name,
                             schema: convertReferenceObject(
                                 schema,
-                                false,
-                                false,
+                                isOptional,
+                                isNullable,
                                 context,
                                 breadcrumbs,
                                 undefined,
@@ -184,7 +197,8 @@ export function parseAsyncAPIV2({
                             description: resolvedSchema.description,
                             parameterNameOverride: undefined,
                             availability: convertAvailability(resolvedSchema),
-                            source
+                            source,
+                            explode: undefined
                         });
                         continue;
                     }
@@ -206,7 +220,8 @@ export function parseAsyncAPIV2({
                         description: schema.description,
                         parameterNameOverride: undefined,
                         availability: convertAvailability(schema),
-                        source
+                        source,
+                        explode: undefined
                     });
                 }
             }
@@ -306,14 +321,16 @@ export function parseAsyncAPIV2({
                 messages.push({
                     origin: "client",
                     name: "publish",
-                    body: convertSchemaWithExampleToSchema(publishSchema)
+                    body: convertSchemaWithExampleToSchema(publishSchema),
+                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
                 });
             }
             if (subscribeSchema != null) {
                 messages.push({
                     origin: "server",
                     name: "subscribe",
-                    body: convertSchemaWithExampleToSchema(subscribeSchema)
+                    body: convertSchemaWithExampleToSchema(subscribeSchema),
+                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
                 });
             }
             parsedChannels[channelPath] = {
@@ -335,7 +352,6 @@ export function parseAsyncAPIV2({
                     pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
-                            parameterNameOverride: undefined, // come back
                             schema: convertSchemaWithExampleToSchema(param.schema)
                         };
                     })
@@ -389,10 +405,10 @@ function convertOneOfToSchema({
 }): SchemaWithExample | undefined {
     if ("oneOf" in event.message && event.message.oneOf != null) {
         const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
-        const prefixes: UndiscriminatedOneOfPrefix[] = [];
+        const prefixes: UndiscriminatedOneOfSuffix[] = [];
         for (const schema of event.message.oneOf) {
             let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
-            let namePrefix: UndiscriminatedOneOfPrefix = { type: "notFound" };
+            let namePrefix: UndiscriminatedOneOfSuffix = { type: "notFound" };
             if (isReferenceObject(schema)) {
                 const resolvedMessage = context.resolveMessageReference(schema);
                 if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === "v2") {
@@ -426,7 +442,7 @@ function convertOneOfToSchema({
             encoding: undefined,
             source,
             namespace: context.namespace,
-            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
+            subtypeSuffixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
     }
     return undefined;

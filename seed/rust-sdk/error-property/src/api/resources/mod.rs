@@ -1,4 +1,11 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Errors**
+//! - **PropertyBasedError**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod errors;
 pub mod property_based_error;
@@ -11,9 +18,10 @@ impl ErrorPropertyClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            property_based_error: PropertyBasedErrorClient::new(config.clone())?,
+            property_based_error: PropertyBasedErrorClient::new(config.clone())?
         })
     }
+
 }
 
 pub use errors::ErrorsClient;

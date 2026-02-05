@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "value",
+        "date",
+        "datetime"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "value"
+        },
+        "value": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "date"
+        },
+        "value": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "datetime"
+        },
+        "value": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {}
+}

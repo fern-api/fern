@@ -1,0 +1,91 @@
+{
+  "title": "Vapi API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Thing": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "thingProblem",
+            "key": "problem",
+            "schema": {
+              "generatedName": "ThingProblem",
+              "value": {
+                "value": {
+                  "generatedName": "ThingProblem",
+                  "schemas": [
+                    {
+                      "generatedName": "ThingProblemZero",
+                      "values": [
+                        {
+                          "generatedName": "foo",
+                          "value": "foo",
+                          "casing": {}
+                        },
+                        {
+                          "generatedName": "bar",
+                          "value": "bar",
+                          "casing": {}
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.json",
+                        "type": "openapi"
+                      },
+                      "type": "enum"
+                    },
+                    {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ThingProblemOne",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "undiscriminated"
+                },
+                "type": "oneOf"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Thing",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -1,7 +1,7 @@
 import { type Generation } from "../../context/generation-info";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
-import { type Type } from "../types/Type";
+import { type Type } from "../types/IType";
 
 export declare namespace MethodInvocation {
     interface Args {

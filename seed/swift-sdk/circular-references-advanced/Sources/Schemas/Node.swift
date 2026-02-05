@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Node: Codable, Hashable, Sendable {
+public indirect enum Node: Codable, Hashable, Sendable {
     case branchNode(BranchNode)
     case leafNode(LeafNode)
 

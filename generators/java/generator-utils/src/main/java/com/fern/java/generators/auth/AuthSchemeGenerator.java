@@ -42,8 +42,9 @@ public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJa
     }
 
     @Override
-    public GeneratedJavaFile visitInferred(InferredAuthScheme oauth) {
-        throw new UnsupportedOperationException("Inferred auth schemes are not supported");
+    public GeneratedJavaFile visitInferred(InferredAuthScheme inferred) {
+        BearerAuthGenerator bearerAuthGenerator = new BearerAuthGenerator(generatorContext);
+        return bearerAuthGenerator.generateFile();
     }
 
     @Override

@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.service().upload();
+client.service().upload("".getBytes());
 ```
 </dd>
 </dl>

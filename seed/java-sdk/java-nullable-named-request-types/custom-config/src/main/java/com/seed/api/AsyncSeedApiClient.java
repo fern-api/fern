@@ -27,10 +27,6 @@ public class AsyncSeedApiClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<ResponseBody> postWithNullableNamedRequestBodyType(String id) {
-        return this.rawClient.postWithNullableNamedRequestBodyType(id).thenApply(response -> response.body());
-    }
-
     public CompletableFuture<ResponseBody> postWithNullableNamedRequestBodyType(
             String id, PostWithNullableNamedRequestBodyTypeRequest request) {
         return this.rawClient.postWithNullableNamedRequestBodyType(id, request).thenApply(response -> response.body());
@@ -45,6 +41,13 @@ public class AsyncSeedApiClient {
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(String id) {
         return this.rawClient.postWithNonNullableNamedRequestBodyType(id).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
+            String id, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithNonNullableNamedRequestBodyType(id, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(

@@ -12,6 +12,11 @@ export class PlaylistIdNotFoundError extends errors.SeedTraceError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, PlaylistIdNotFoundError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

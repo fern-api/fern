@@ -3,16 +3,16 @@
   "compilerOptions": {
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"],
+    "types": ["node", "vitest/globals"],
     "composite": false
   },
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../packages/commons/github"
+      "path": "../commons/github"
     },
     {
-      "path": "../../packages/commons/fs-utils"
+      "path": "../commons/fs-utils"
     }
   ]
 }

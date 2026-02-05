@@ -39,7 +39,7 @@ await client.ec2.bootInstance({
 <dl>
 <dd>
 
-**requestOptions:** `Ec2.RequestOptions` 
+**requestOptions:** `Ec2Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -91,7 +91,7 @@ await client.s3.getPresignedUrl({
 <dl>
 <dd>
 
-**requestOptions:** `S3.RequestOptions` 
+**requestOptions:** `S3Client.RequestOptions` 
     
 </dd>
 </dl>

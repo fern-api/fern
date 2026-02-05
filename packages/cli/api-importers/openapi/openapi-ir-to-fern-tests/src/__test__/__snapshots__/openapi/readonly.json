@@ -94,8 +94,11 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/users/{userId}",
-              "path-parameters": {
-                "userId": "string",
+              "request": {
+                "name": "GetUsersUserIdRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
               },
               "response": {
                 "docs": "User retrieved successfully",
@@ -222,9 +225,11 @@
       method: GET
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId: string
       display-name: Get a user
+      request:
+        name: GetUsersUserIdRequest
+        path-parameters:
+          userId: string
       response:
         docs: User retrieved successfully
         type: User

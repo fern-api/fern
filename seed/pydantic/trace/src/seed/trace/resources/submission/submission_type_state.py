@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 from ..commons.problem_id import ProblemId
 from ..commons.test_case import TestCase
 from .test_submission_status import TestSubmissionStatus
@@ -14,9 +16,15 @@ from .workspace_submission_status import WorkspaceSubmissionStatus
 
 class SubmissionTypeState_Test(UniversalBaseModel):
     type: typing.Literal["test"] = "test"
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    default_test_cases: typing.List[TestCase] = pydantic.Field(alias="defaultTestCases")
-    custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
+    problem_id: typing_extensions.Annotated[
+        ProblemId, FieldMetadata(alias="problemId"), pydantic.Field(alias="problemId")
+    ]
+    default_test_cases: typing_extensions.Annotated[
+        typing.List[TestCase], FieldMetadata(alias="defaultTestCases"), pydantic.Field(alias="defaultTestCases")
+    ]
+    custom_test_cases: typing_extensions.Annotated[
+        typing.List[TestCase], FieldMetadata(alias="customTestCases"), pydantic.Field(alias="customTestCases")
+    ]
     status: TestSubmissionStatus
 
     if IS_PYDANTIC_V2:
@@ -39,5 +47,7 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]
+SubmissionTypeState = typing_extensions.Annotated[
+    typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace], pydantic.Field(discriminator="type")
+]
 update_forward_refs(SubmissionTypeState_Test)

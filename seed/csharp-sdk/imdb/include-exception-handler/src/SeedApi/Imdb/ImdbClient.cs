@@ -3,22 +3,24 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class ImdbClient
+public partial class ImdbClient : IImdbClient
 {
     private RawClient _client;
 
     internal ImdbClient(RawClient client)
     {
-        _client = client;
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
-    /// <summary>
-    /// Add a movie to the database using the movies/* /... path.
-    /// </summary>
-    /// <example><code>
-    /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
-    /// </code></example>
-    public async Task<string> CreateMovieAsync(
+    private async Task<WithRawResponse<string>> CreateMovieAsyncCore(
         CreateMovieRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -27,6 +29,12 @@ public partial class ImdbClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -35,6 +43,7 @@ public partial class ImdbClient
                             Method = HttpMethod.Post,
                             Path = "/movies/create-movie",
                             Body = request,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -45,14 +54,30 @@ public partial class ImdbClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<string>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedApiException("Failed to deserialize response", e);
+                        throw new SeedApiApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     throw new SeedApiApiException(
@@ -65,10 +90,7 @@ public partial class ImdbClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Imdb.GetMovieAsync("movieId");
-    /// </code></example>
-    public async Task<Movie> GetMovieAsync(
+    private async Task<WithRawResponse<Movie>> GetMovieAsyncCore(
         string movieId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -77,6 +99,12 @@ public partial class ImdbClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -87,6 +115,7 @@ public partial class ImdbClient
                                 "/movies/{0}",
                                 ValueConvert.ToPathParameterString(movieId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -97,14 +126,30 @@ public partial class ImdbClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<Movie>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<Movie>(responseBody)!;
+                        return new WithRawResponse<Movie>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new SeedApiException("Failed to deserialize response", e);
+                        throw new SeedApiApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -129,5 +174,36 @@ public partial class ImdbClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Add a movie to the database using the movies/* /... path.
+    /// </summary>
+    /// <example><code>
+    /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
+    /// </code></example>
+    public WithRawResponseTask<string> CreateMovieAsync(
+        CreateMovieRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            CreateMovieAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Imdb.GetMovieAsync("movieId");
+    /// </code></example>
+    public WithRawResponseTask<Movie> GetMovieAsync(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Movie>(
+            GetMovieAsyncCore(movieId, options, cancellationToken)
+        );
     }
 }

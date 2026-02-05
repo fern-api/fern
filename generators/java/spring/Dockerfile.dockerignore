@@ -1,3 +1,4 @@
 *
 !build/distributions/spring.tar
 !init.sh
+**/.DS_Store

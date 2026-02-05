@@ -11,11 +11,13 @@ import { convertIrToOpenApi } from "./convertIrToOpenApi";
 export async function generateOpenAPIForWorkspaces({
     project,
     cliContext,
-    outputPath
+    outputPath,
+    indent
 }: {
     project: Project;
     cliContext: CliContext;
     outputPath: AbsoluteFilePath;
+    indent: number;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -43,7 +45,9 @@ export async function generateOpenAPIForWorkspaces({
                 await mkdir(dirname(outputPath), { recursive: true });
                 await writeFile(
                     outputPath,
-                    outputPath.endsWith(".json") ? JSON.stringify(openapi, undefined, 2) : yaml.dump(openapi)
+                    outputPath.endsWith(".json")
+                        ? JSON.stringify(openapi, undefined, indent)
+                        : yaml.dump(openapi, { indent })
                 );
             });
         })

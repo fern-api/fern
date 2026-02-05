@@ -2,13 +2,14 @@ using SeedApiWideBasePath.Core;
 
 namespace SeedApiWideBasePath;
 
-public partial class SeedApiWideBasePathClient
+public partial class SeedApiWideBasePathClient : ISeedApiWideBasePathClient
 {
     private readonly RawClient _client;
 
     public SeedApiWideBasePathClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedApiWideBasePathClient
                 { "User-Agent", "Fernapi-wide-base-path/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -29,5 +29,5 @@ public partial class SeedApiWideBasePathClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

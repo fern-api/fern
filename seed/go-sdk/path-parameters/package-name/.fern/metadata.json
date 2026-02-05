@@ -8,5 +8,6 @@
     "module": {
       "path": "github.com/fern-api/path-parameters-go"
     }
-  }
+  },
+  "sdkVersion": "v0.0.1"
 }

@@ -1,8 +1,8 @@
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
+import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-
+import { FernBasePathExtension } from "../extensions/x-fern-base-path";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
@@ -30,9 +30,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             spec: this.context.spec
         })) as OpenAPIV3_1.Document;
 
+        this.overrideOpenApiAuthWithGeneratorsAuth();
+
         this.convertSecuritySchemes();
 
         this.convertGlobalHeaders();
+
+        this.convertBasePath();
 
         this.convertSchemas();
 
@@ -45,6 +49,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const { defaultUrl } = this.convertServers({ endpointLevelServers });
 
         this.updateEndpointsWithDefaultUrl(defaultUrl);
+
+        // Set apiDisplayName from OpenAPI info.title if it's a meaningful value
+        const title = this.context.spec.info?.title?.trim();
+        if (title && title !== '""') {
+            this.ir.apiDisplayName = title;
+        }
 
         return this.finalizeIr();
     }
@@ -70,17 +80,44 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
+    private convertBasePath(): void {
+        const basePathExtension = new FernBasePathExtension({
+            breadcrumbs: ["x-fern-base-path"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const basePath = basePathExtension.convert();
+        if (basePath != null) {
+            this.ir.basePath = constructHttpPath(basePath);
+        }
+    }
+
     private convertSecuritySchemes(): void {
         if (this.context.authOverrides) {
-            this.addAuthToIR(
-                convertApiAuth({
-                    rawApiFileSchema: this.context.authOverrides,
-                    casingsGenerator: this.context.casingsGenerator
-                })
-            );
+            const overrideAuth = convertApiAuth({
+                rawApiFileSchema: this.context.authOverrides,
+                casingsGenerator: this.context.casingsGenerator
+            });
+
+            this.addAuthToIR({
+                requirement: overrideAuth.requirement,
+                schemes: overrideAuth.schemes,
+                docs: overrideAuth.docs
+            });
             return;
         }
 
+        const openApiSchemes = this.convertOpenApiSecuritySchemes();
+        if (openApiSchemes.length > 0) {
+            this.addAuthToIR({
+                requirement: openApiSchemes.length === 1 ? "ALL" : "ANY",
+                schemes: openApiSchemes,
+                docs: undefined
+            });
+        }
+    }
+
+    private convertOpenApiSecuritySchemes(): AuthScheme[] {
         const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
@@ -99,23 +136,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 schemeId: id
             });
             const convertedScheme = securitySchemeConverter.convert();
-            if (convertedScheme == null) {
-                continue;
+            if (convertedScheme != null) {
+                securitySchemes.push(convertedScheme);
             }
-
-            securitySchemes.push(convertedScheme);
         }
 
-        if (securitySchemes.length > 0) {
-            // TODO(kenny): we're not using `requirement` here, and should remove.
-            //              this field is oversimplified, since it implies either all,
-            //              or any, but endpoints can have a subset.
-            this.addAuthToIR({
-                requirement: securitySchemes.length === 1 ? "ALL" : "ANY",
-                schemes: securitySchemes,
-                docs: undefined
-            });
-        }
+        return securitySchemes;
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {
@@ -289,5 +315,45 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
         }
         return { endpointLevelServers, errors };
+    }
+
+    private overrideOpenApiAuthWithGeneratorsAuth(): void {
+        if (!this.context.authOverrides?.["auth-schemes"]) {
+            return;
+        }
+
+        if (!this.context.spec.components) {
+            this.context.spec.components = {};
+        }
+        this.context.spec.components.securitySchemes = {};
+
+        const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
+        for (const schemeId of Object.keys(this.context.authOverrides["auth-schemes"])) {
+            this.context.spec.components.securitySchemes[schemeId] = { type: "http", scheme: "bearer" };
+            securityRequirement[schemeId] = [];
+        }
+
+        this.context.spec.security = [securityRequirement];
+        this.removeEndpointSpecificAuth();
+    }
+
+    private removeEndpointSpecificAuth(): void {
+        if (!this.context.spec.paths) {
+            return;
+        }
+
+        for (const pathItem of Object.values(this.context.spec.paths)) {
+            if (!pathItem) {
+                continue;
+            }
+
+            const methods = ["get", "post", "put", "patch", "delete", "options", "head", "trace"] as const;
+            for (const method of methods) {
+                const operation = pathItem[method];
+                if (operation?.security) {
+                    delete operation.security;
+                }
+            }
+        }
     }
 }

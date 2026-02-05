@@ -1,4 +1,14 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Headers**
+//! - **Inlined**
+//! - **Path**
+//! - **Query**
+//! - **Reference**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod headers;
 pub mod inlined;
@@ -22,9 +32,10 @@ impl LiteralClient {
             inlined: InlinedClient::new(config.clone())?,
             path: PathClient::new(config.clone())?,
             query: QueryClient::new(config.clone())?,
-            reference: ReferenceClient::new(config.clone())?,
+            reference: ReferenceClient::new(config.clone())?
         })
     }
+
 }
 
 pub use headers::HeadersClient;

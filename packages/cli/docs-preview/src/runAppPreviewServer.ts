@@ -7,13 +7,14 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
-import { readFile } from "fs/promises";
+import { readFile, rm } from "fs/promises";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
-import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
+import { DebugLogger } from "./DebugLogger";
+import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -35,6 +36,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         footerLinks: undefined,
         logoHeight: undefined,
         logoHref: undefined,
+        logoRightText: undefined,
         favicon: undefined,
         metadata: undefined,
         redirects: undefined,
@@ -47,11 +49,144 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         css: undefined,
         js: undefined,
         pageActions: undefined,
-        theme: undefined
+        theme: undefined,
+        header: undefined,
+        footer: undefined,
+        editThisPageLaunch: undefined
     },
     jsFiles: undefined,
-    id: undefined
+    id: undefined,
+    apiNameToId: {}
 };
+
+/**
+ * Slug tracking system for navigation changes
+ */
+class SlugChangeTracker {
+    private pageSlugMap = new Map<string, string>(); // pageId -> slug
+
+    constructor(private context: TaskContext) {}
+
+    /**
+     * Extract all page slugs using the FernNavigation NodeCollector
+     * This handles both navigation structure and frontmatter slug overrides
+     */
+    private extractSlugsFromNavigationRoot(root: FernNavigation.RootNode): Map<string, string> {
+        const slugMap = new Map<string, string>();
+
+        if (!root) {
+            return slugMap;
+        }
+
+        try {
+            // Use FernNavigation's NodeCollector to get the definitive slug mappings
+            // This already processes frontmatter slugs, navigation slugs, and all overrides
+            const collector = FernNavigation.NodeCollector.collect(root);
+
+            if (collector?.slugMap) {
+                // collector.slugMap is Map<string, FernNavigationNode> where key is the final resolved slug
+                collector.slugMap.forEach((node: FernNavigation.NavigationNode | null, slug: string) => {
+                    if (node && node.type === "page" && node.pageId) {
+                        slugMap.set(node.pageId, slug);
+                    }
+                });
+            } else {
+                // Fallback to manual traversal if NodeCollector is not available
+                this.traverseNavigationManually(root, slugMap);
+            }
+        } catch (error) {
+            // Fallback to manual traversal on any error
+            this.traverseNavigationManually(root, slugMap);
+        }
+
+        return slugMap;
+    }
+
+    /**
+     * Fallback method for manual navigation traversal
+     */
+    private traverseNavigationManually(obj: unknown, slugMap: Map<string, string>): void {
+        if (obj && typeof obj === "object") {
+            // Type guard to check if object has the expected navigation node properties
+            if (this.isNavigationNodeLike(obj) && obj.type === "page" && obj.pageId && obj.slug) {
+                slugMap.set(obj.pageId, obj.slug);
+            }
+
+            if (Array.isArray(obj)) {
+                obj.forEach((item) => {
+                    this.traverseNavigationManually(item, slugMap);
+                });
+            } else {
+                Object.entries(obj).forEach(([key, value]) => {
+                    if (value && (typeof value === "object" || Array.isArray(value))) {
+                        this.traverseNavigationManually(value, slugMap);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Type guard to check if an object has navigation node properties
+     */
+    private isNavigationNodeLike(obj: object): obj is { type?: string; pageId?: string; slug?: string } {
+        return typeof obj === "object" && obj !== null;
+    }
+
+    /**
+     * Update the slug mappings from a docs definition and detect changes
+     */
+    updateAndDetectChanges(docsDefinition: DocsV1Read.DocsDefinition): Array<{ oldSlug: string; newSlug: string }> {
+        const changes: Array<{ oldSlug: string; newSlug: string }> = [];
+
+        // Extract new slug mappings - use the FernNavigation root structure
+        let newSlugMap: Map<string, string>;
+        if (docsDefinition.config.root) {
+            // Convert V1 navigation root to latest version
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
+                docsDefinition.config.root
+            );
+            newSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
+
+            // If this is the first time we have navigation root, treat all as "new" but don't report changes
+            if (this.pageSlugMap.size === 0) {
+                this.pageSlugMap = newSlugMap;
+                return []; // No changes to report on first population
+            }
+        } else {
+            return []; // Can't detect changes without navigation
+        }
+
+        // Compare with previous mappings
+        for (const [pageId, newSlug] of newSlugMap.entries()) {
+            const oldSlug = this.pageSlugMap.get(pageId);
+
+            if (oldSlug && oldSlug !== newSlug) {
+                changes.push({ oldSlug, newSlug });
+            }
+        }
+
+        // Update the stored mappings
+        this.pageSlugMap = newSlugMap;
+        return changes;
+    }
+
+    /**
+     * Initialize slug mappings from a docs definition
+     */
+    initialize(docsDefinition: DocsV1Read.DocsDefinition): void {
+        if (docsDefinition.config.root) {
+            // Convert V1 navigation root to latest version
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
+                docsDefinition.config.root
+            );
+            this.pageSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
+        } else {
+            // Initialize empty map, will be populated when navigation is ready during change detection
+            this.pageSlugMap = new Map();
+        }
+    }
+}
 
 /**
  * Dependency tracking system for markdown snippets
@@ -232,7 +367,8 @@ export async function runAppPreviewServer({
     context,
     port,
     bundlePath,
-    backendPort
+    backendPort,
+    forceDownload
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -241,7 +377,16 @@ export async function runAppPreviewServer({
     port: number;
     bundlePath?: string;
     backendPort: number;
+    forceDownload?: boolean;
 }): Promise<void> {
+    if (forceDownload) {
+        const appPreviewFolder = getPathToPreviewFolder({ app: true });
+        if (await doesPathExist(appPreviewFolder)) {
+            context.logger.info("Force download requested. Deleting cached bundle...");
+            await rm(appPreviewFolder, { recursive: true });
+        }
+    }
+
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
@@ -294,125 +439,17 @@ export async function runAppPreviewServer({
     const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
 
-    const env = {
-        ...process.env,
-        PORT: port.toString(),
-        HOSTNAME: "0.0.0.0",
-        NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
-        NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
-        NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
-        NEXT_PUBLIC_IS_LOCAL: "1",
-        NEXT_DISABLE_CACHE: "1",
-        NODE_ENV: "production",
-        NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
-    };
-
-    const serverProcess = runExeca(context.logger, "node", [serverPath], {
-        env,
-        doNotPipeOutput: true
-    });
-
-    serverProcess.stdout?.on("data", (data) => {
-        context.logger.debug(`[Next.js] ${data.toString()}`);
-    });
-
-    // some errors from the frontend don't need to be sent to user
-    serverProcess.stderr?.on("data", (data) => {
-        context.logger.debug(`[Next.js] ${data.toString()}`);
-    });
-
-    context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("error", (err) => {
-        context.logger.debug(`Server process error: ${err.message}`);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("exit", (code, signal) => {
-        if (code) {
-            context.logger.debug(`Server process exited with code: ${code}`);
-        } else if (signal) {
-            context.logger.debug(`Server process killed with signal: ${signal}`);
-        } else {
-            context.logger.debug("Server process exited");
-        }
-    });
-
-    const cleanup = () => {
-        if (!serverProcess.killed) {
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
-            try {
-                // First try graceful shutdown
-                serverProcess.kill();
-
-                // If process doesn't exit within 2 seconds, force kill
-                setTimeout(() => {
-                    if (!serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
-                        try {
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
-                    }
-                }, 2000);
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
-            }
-        }
-
-        context.logger.debug("Cleaning up WebSocket connections...");
-        for (const [ws, metadata] of connections) {
-            clearInterval(metadata.pingInterval);
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.close(1000, "Server shutting down");
-            }
-        }
-        connections.clear();
-        httpServer.close();
-    };
-
-    // handle termination signals
-    const shutdownSignals = ["SIGTERM", "SIGINT"];
-    const failureSignals = ["SIGHUP"];
-    for (const shutSig of shutdownSignals) {
-        process.on(shutSig, () => {
-            context.logger.debug("Shutting down server...");
-            cleanup();
-        });
-    }
-    for (const failSig of failureSignals) {
-        process.on(failSig, () => {
-            context.logger.debug("Server failed, shutting down process...");
-            cleanup();
-        });
-    }
-
-    // handle normal exit
-    process.on("exit", cleanup);
-
-    // handle uncaught exits
-    process.on("uncaughtException", (err) => {
-        context.logger.debug(`Uncaught exception: ${err}`);
-        cleanup();
-        process.exit(1);
-    });
-    process.on("unhandledRejection", (reason) => {
-        context.logger.debug(`Unhandled rejection: ${reason}`);
-        cleanup();
-        process.exit(1);
-    });
-
-    // Ensure cleanup runs before process exits
-    process.on("beforeExit", cleanup);
-
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    context.logger.debug(`Next.js server should now be running on http://localhost:${port}`);
-
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
+    // Initialize the debug logger for metrics collection
+    const debugLogger = new DebugLogger();
+    await debugLogger.initialize();
+    const debugLogPath = debugLogger.getLogFilePath();
+    if (debugLogPath) {
+        context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
+    }
+
+    // Set up backend server first (before Next.js) so it's ready to serve requests
     const app = express();
     const httpServer = http.createServer(app);
     const wss = new WebSocketServer({
@@ -494,6 +531,9 @@ export async function runAppPreviewServer({
                 if (parsed.type === "pong") {
                     metadata.isAlive = true;
                     metadata.lastPong = Date.now();
+                } else if (DebugLogger.isMetricsMessage(parsed)) {
+                    // Handle metrics messages from the frontend
+                    void debugLogger.logFrontendMetrics(parsed);
                 }
             } catch (error) {
                 context.logger.debug(`Failed to parse message from ${connectionId}: ${error}`);
@@ -530,6 +570,9 @@ export async function runAppPreviewServer({
     const snippetTracker = new SnippetDependencyTracker(context);
     await snippetTracker.buildDependencyMap(project);
 
+    // Initialize the slug change tracker
+    const slugTracker = new SlugChangeTracker(context);
+
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 1000;
@@ -537,6 +580,10 @@ export async function runAppPreviewServer({
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
+
+        // Log CLI reload start
+        void debugLogger.logCliReloadStart();
+
         try {
             project = await reloadProject();
 
@@ -545,17 +592,24 @@ export async function runAppPreviewServer({
 
             // Start validation in background - don't block the reload
             const validationStartTime = Date.now();
-            void validateProject(project).catch((err) => {
-                const validationTime = Date.now() - validationStartTime;
-                context.logger.error(
-                    `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
-                );
-                // Still log validation errors to help developers
-                if (err instanceof Error && err.stack) {
-                    context.logger.debug(`Validation error stack: ${err.stack}`);
-                }
-            });
+            void validateProject(project)
+                .then(() => {
+                    const validationTime = Date.now() - validationStartTime;
+                    void debugLogger.logCliValidation(validationTime, true);
+                })
+                .catch((err) => {
+                    const validationTime = Date.now() - validationStartTime;
+                    void debugLogger.logCliValidation(validationTime, false);
+                    context.logger.error(
+                        `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
+                    );
+                    // Still log validation errors to help developers
+                    if (err instanceof Error && err.stack) {
+                        context.logger.debug(`Validation error stack: ${err.stack}`);
+                    }
+                });
 
+            const docsGenStartTime = Date.now();
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
@@ -563,9 +617,34 @@ export async function runAppPreviewServer({
                 previousDocsDefinition: docsDefinition,
                 editedAbsoluteFilepaths
             });
-            context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
+            const docsGenTime = Date.now() - docsGenStartTime;
+
+            // Log CLI docs generation time
+            void debugLogger.logCliDocsGeneration(docsGenTime, {
+                filesEdited: editedAbsoluteFilepaths?.length ?? 0
+            });
+
+            const totalTime = Date.now() - startTime;
+            context.logger.info(`Reload completed in ${totalTime}ms`);
+
+            // Log CLI reload finish with total time and memory
+            void debugLogger.logCliReloadFinish(totalTime, {
+                docsGenerationMs: docsGenTime,
+                filesEdited: editedAbsoluteFilepaths?.length ?? 0
+            });
+            void debugLogger.logCliMemory();
+
             return newDocsDefinition;
         } catch (err) {
+            const totalTime = Date.now() - startTime;
+
+            // Log CLI reload finish even on error
+            void debugLogger.logCliReloadFinish(totalTime, {
+                error: true,
+                errorMessage: err instanceof Error ? err.message : String(err)
+            });
+            void debugLogger.logCliMemory();
+
             if (docsDefinition == null) {
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
             } else {
@@ -583,8 +662,14 @@ export async function runAppPreviewServer({
 
     docsDefinition = await reloadDocsDefinition();
 
+    // Initialize slug mappings from the initial docs definition
+    if (docsDefinition) {
+        slugTracker.initialize(docsDefinition);
+    }
+
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
+    // Create watcher but don't attach the event handler yet - we'll do that after restartNextJsServer is defined
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
@@ -595,7 +680,151 @@ export async function runAppPreviewServer({
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    app.post("/v2/registry/docs/load-with-url", async (_, res) => {
+        try {
+            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
+            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+            const response: DocsV2Read.LoadDocsForUrlResponse = {
+                baseUrl: {
+                    domain: instance.host,
+                    basePath: instance.pathname
+                },
+                definition,
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+                orgId: FernNavigation.OrgId(initialProject.config.organization)
+            };
+            res.send(response);
+        } catch (error) {
+            context.logger.error("Stack trace:", (error as Error).stack ?? "");
+            context.logger.error("Error loading docs", (error as Error).message);
+            res.status(500).send();
+        }
+    });
+
+    app.get(/^\/_local\/(.*)/, (req, res) => {
+        return res.sendFile(`/${req.params[0]}`);
+    });
+
+    // Start backend server first and wait for it to be ready
+    await new Promise<void>((resolve) => {
+        httpServer.listen(backendPort, () => {
+            context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+            resolve();
+        });
+    });
+
+    // Now start Next.js after backend is ready
+    const env = {
+        ...process.env,
+        PORT: port.toString(),
+        HOSTNAME: "0.0.0.0",
+        NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
+        NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
+        NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
+        NEXT_PUBLIC_IS_LOCAL: "1",
+        NEXT_DISABLE_CACHE: "1",
+        NODE_ENV: "production",
+        NODE_PATH: bundleRoot,
+        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
+    };
+
+    // Track the current server process
+    let serverProcess: ReturnType<typeof runExeca> | null = null;
+
+    // Function to start the Next.js server
+    const startNextJsServer = (): Promise<void> => {
+        return new Promise((resolve) => {
+            serverProcess = runExeca(context.logger, "node", [serverPath], {
+                env,
+                doNotPipeOutput: true
+            });
+
+            const checkReady = (data: Buffer) => {
+                const output = data.toString();
+                context.logger.debug(`[Next.js] ${output}`);
+                if (output.includes("Ready in") || output.includes("✓ Ready")) {
+                    resolve();
+                }
+            };
+            serverProcess.stdout?.on("data", checkReady);
+
+            // Also log stderr but don't block on it
+            serverProcess.stderr?.on("data", (data) => {
+                context.logger.debug(`[Next.js] ${data.toString()}`);
+            });
+
+            context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
+
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            serverProcess.on("error", (err) => {
+                context.logger.debug(`Server process error: ${err.message}`);
+            });
+
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            serverProcess.on("exit", (code, signal) => {
+                if (code) {
+                    context.logger.debug(`Server process exited with code: ${code}`);
+                } else if (signal) {
+                    context.logger.debug(`Server process killed with signal: ${signal}`);
+                } else {
+                    context.logger.debug("Server process exited");
+                }
+            });
+
+            // Fallback timeout in case we miss the ready message
+            setTimeout(() => {
+                resolve();
+            }, 10000);
+        });
+    };
+
+    // Function to stop the current Next.js server
+    const stopNextJsServer = (): Promise<void> => {
+        return new Promise((resolve) => {
+            if (serverProcess == null || serverProcess.killed) {
+                resolve();
+                return;
+            }
+
+            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
+            try {
+                serverProcess.kill();
+                // Give it a moment to clean up
+                setTimeout(() => {
+                    if (serverProcess != null && !serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                    resolve();
+                }, 1000);
+            } catch (err) {
+                context.logger.error(`Failed to kill server process: ${err}`);
+                resolve();
+            }
+        });
+    };
+
+    // Function to restart the Next.js server
+    const restartNextJsServer = async (): Promise<void> => {
+        await stopNextJsServer();
+        await startNextJsServer();
+    };
+
+    // Start the initial server
+    await startNextJsServer();
+
+    // Now that restartNextJsServer is defined, attach the watcher event handler
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
+        // Ignore changes to .fern/logs/ directory (contains debug logs)
+        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
+            return;
+        }
+
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
 
         if (isReloading) {
@@ -628,51 +857,112 @@ export async function runAppPreviewServer({
                 });
 
                 const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
-                if (reloadedDocsDefinition != null) {
-                    docsDefinition = reloadedDocsDefinition;
-                }
 
                 editedAbsoluteFilepaths.length = 0;
+
+                // Restart the docs server
+                context.logger.info("Restarting docs server...");
+                await restartNextJsServer();
+
+                // Wait 1 second for the server to be ready
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                context.logger.info("Refreshing page. Please refresh manually if you don't see changes.");
 
                 sendData({
                     version: 1,
                     type: "finishReload"
                 });
                 isReloading = false;
+
+                if (reloadedDocsDefinition != null) {
+                    // Detect slug changes before updating the docs definition
+                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
+
+                    docsDefinition = reloadedDocsDefinition;
+
+                    // Send navigateToSlug events for any slug changes
+                    if (slugChanges.length > 0) {
+                        slugChanges.forEach((change) => {
+                            const eventData = {
+                                version: 1,
+                                type: "navigateToSlug",
+                                oldSlug: change.oldSlug,
+                                newSlug: change.newSlug
+                            };
+
+                            sendData(eventData);
+                        });
+                    }
+                }
             })();
         }, RELOAD_DEBOUNCE_MS);
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    app.post("/v2/registry/docs/load-with-url", async (_, res) => {
-        try {
-            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
-            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
-            const response: DocsV2Read.LoadDocsForUrlResponse = {
-                baseUrl: {
-                    domain: instance.host,
-                    basePath: instance.pathname
-                },
-                definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
-                orgId: FernNavigation.OrgId(initialProject.config.organization)
-            };
-            res.send(response);
-        } catch (error) {
-            context.logger.error("Stack trace:", (error as Error).stack ?? "");
-            context.logger.error("Error loading docs", (error as Error).message);
-            res.status(500).send();
+    const cleanup = () => {
+        if (serverProcess != null && !serverProcess.killed) {
+            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
+            try {
+                serverProcess.kill();
+                setTimeout(() => {
+                    if (serverProcess != null && !serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                }, 2000);
+            } catch (err) {
+                context.logger.error(`Failed to kill server process: ${err}`);
+            }
         }
+
+        context.logger.debug("Cleaning up WebSocket connections...");
+        for (const [ws, metadata] of connections) {
+            clearInterval(metadata.pingInterval);
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.close(1000, "Server shutting down");
+            }
+        }
+        connections.clear();
+        httpServer.close();
+    };
+
+    // handle termination signals
+    const shutdownSignals = ["SIGTERM", "SIGINT"];
+    const failureSignals = ["SIGHUP"];
+    for (const shutSig of shutdownSignals) {
+        process.on(shutSig, () => {
+            context.logger.debug("Shutting down server...");
+            cleanup();
+        });
+    }
+    for (const failSig of failureSignals) {
+        process.on(failSig, () => {
+            context.logger.debug("Server failed, shutting down process...");
+            cleanup();
+        });
+    }
+
+    process.on("exit", cleanup);
+
+    process.on("uncaughtException", (err) => {
+        context.logger.debug(`Uncaught exception: ${err}`);
+        cleanup();
+        process.exit(1);
+    });
+    process.on("unhandledRejection", (reason) => {
+        context.logger.debug(`Unhandled rejection: ${reason}`);
+        cleanup();
+        process.exit(1);
     });
 
-    app.get(/^\/_local\/(.*)/, (req, res) => {
-        return res.sendFile(`/${req.params[0]}`);
-    });
+    process.on("beforeExit", cleanup);
 
-    httpServer.listen(backendPort, () => {
-        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
-        context.logger.info(`Development server ready on http://localhost:${port}`);
-    });
+    // Server is ready after startNextJsServer completes
+    context.logger.info(`Docs preview server ready on http://localhost:${port}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -8,6 +8,7 @@ import { getErrorResponseBody } from "./getErrorResponseBody.js";
 import { getFetchFn } from "./getFetchFn.js";
 import { getRequestBody } from "./getRequestBody.js";
 import { getResponseBody } from "./getResponseBody.js";
+import { Headers } from "./Headers.js";
 import { makeRequest } from "./makeRequest.js";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
 import { requestWithRetries } from "./requestWithRetries.js";
@@ -19,7 +20,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
+        headers?: Record<string, unknown>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;
@@ -34,7 +35,7 @@ export declare namespace Fetcher {
         logging?: LogConfig | Logger;
     }
 
-    export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
+    export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
 
     export interface FailedStatusCodeError {
         reason: "status-code";
@@ -46,6 +47,11 @@ export declare namespace Fetcher {
         reason: "non-json";
         statusCode: number;
         rawBody: string;
+    }
+
+    export interface BodyIsNullError {
+        reason: "body-is-null";
+        statusCode: number;
     }
 
     export interface TimeoutError {
@@ -77,9 +83,9 @@ const SENSITIVE_HEADERS = new Set([
     "x-access-token",
 ]);
 
-function redactHeaders(headers: Record<string, string>): Record<string, string> {
+function redactHeaders(headers: Headers | Record<string, string>): Record<string, string> {
     const filtered: Record<string, string> = {};
-    for (const [key, value] of Object.entries(headers)) {
+    for (const [key, value] of headers instanceof Headers ? headers.entries() : Object.entries(headers)) {
         if (SENSITIVE_HEADERS.has(key.toLowerCase())) {
             filtered[key] = "[REDACTED]";
         } else {
@@ -207,10 +213,15 @@ function redactUrl(url: string): string {
     return url.slice(0, queryStart + 1) + redactedParams.join("&") + url.slice(queryEnd);
 }
 
-async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
-    const newHeaders: Record<string, string> = {};
+async function getHeaders(args: Fetcher.Args): Promise<Headers> {
+    const newHeaders: Headers = new Headers();
+
+    newHeaders.set(
+        "Accept",
+        args.responseType === "json" ? "application/json" : args.responseType === "text" ? "text/plain" : "*/*",
+    );
     if (args.body !== undefined && args.contentType != null) {
-        newHeaders["Content-Type"] = args.contentType;
+        newHeaders.set("Content-Type", args.contentType);
     }
 
     if (args.headers == null) {
@@ -220,13 +231,13 @@ async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
     for (const [key, value] of Object.entries(args.headers)) {
         const result = await EndpointSupplier.get(value, { endpointMetadata: args.endpointMetadata ?? {} });
         if (typeof result === "string") {
-            newHeaders[key] = result;
+            newHeaders.set(key, result);
             continue;
         }
         if (result == null) {
             continue;
         }
-        newHeaders[key] = `${result}`;
+        newHeaders.set(key, `${result}`);
     }
     return newHeaders;
 }
@@ -275,13 +286,14 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     method: args.method,
                     url: redactUrl(url),
                     statusCode: response.status,
-                    responseHeaders: redactHeaders(Object.fromEntries(response.headers.entries())),
+                    responseHeaders: redactHeaders(response.headers),
                 };
                 logger.debug("HTTP request succeeded", metadata);
             }
+            const body = await getResponseBody(response, args.responseType);
             return {
                 ok: true,
-                body: (await getResponseBody(response, args.responseType)) as R,
+                body: body as R,
                 headers: response.headers,
                 rawResponse: toRawResponse(response),
             };

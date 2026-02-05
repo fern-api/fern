@@ -76,12 +76,14 @@ export function constructNpmPackage({
     }
 }
 
-function getRepoUrlFromUrl(repoUrl: string | undefined): string | undefined {
+export function getRepoUrlFromUrl(repoUrl: string | undefined): string | undefined {
     if (repoUrl == null) {
         return undefined;
     }
     if (repoUrl.startsWith("https://github.com/")) {
-        return `github:${removeGitSuffix(repoUrl).replace("https://github.com/", "")}`;
+        // Maybe temporary. Simplifying output so local generation matches remote generation.
+        // return `github:${removeGitSuffix(repoUrl).replace("https://github.com/", "")}`;
+        return `git+${repoUrl}`;
     }
     if (repoUrl.startsWith("ssh://github.com/")) {
         return `github:${removeGitSuffix(repoUrl).replace("ssh://github.com/", "")}`;

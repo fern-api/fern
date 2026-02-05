@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v63
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -12,7 +12,7 @@ publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :sdk:distTar
-    - pnpm --filter @fern-api/java-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/java-sdk
   docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
@@ -25,17 +25,30 @@ test:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - cd ../../
-      - pnpm --filter @fern-api/java-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
       - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
+  podman:
+    image: fernapi/fern-java-sdk:latest
+    context: .
+    command:
+      - cd generators/java
+      - ./gradlew :sdk:distTar
+      - cd ../../
+      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
+      - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
     buildCommand:
       - ./gradlew :sdk:distTar
       - chmod +x install-gradle.sh && ./install-gradle.sh
-      - cd sdk
-      - tar -xvf build/distributions/sdk.tar -C .
+      - cd sdk && tar -xvf build/distributions/sdk.tar -C .
+      - pnpm turbo run compile --filter @fern-api/java-sdk && pnpm turbo run dist:cli --filter @fern-api/java-sdk
     runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
-    env: {}
+    env:
+      # Path to Node.js executable (uses system node)
+      NODE_PATH: node
+      # Path to the built v2 CLI (relative to generators/java/sdk/sdk where Java runs)
+      JAVA_V2_PATH: ../../../../generators/java-v2/sdk/dist/cli.cjs
 
 language: java
 generatorType: SDK
@@ -155,9 +168,18 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+  pagination-custom:
+    - customConfig:
+        custom-pager-name: "FernCustomPaginator"
+      outputFolder: default
   unions:
     - customConfig:
         enable-wire-tests: true
+      outputFolder: default
+  unions-with-local-date:
+    - customConfig:
+        use-local-date-for-dates: true
+        package-prefix: com.seed.unions
       outputFolder: default
   accept-header:
     - outputFolder: accept-header
@@ -247,10 +269,13 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-  custom-auth:
+  oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+  header-auth:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: custom-auth
+      outputFolder: header-auth
   nullable-optional:
     - customConfig:
         use-nullable-annotation: true
@@ -265,17 +290,52 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: wire-tests
+  streaming:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: streaming
+  java-optional-nullable-query-params:
+    - customConfig:
+        use-default-request-parameter-values: true
+        collapse-optional-nullable: true
+      outputFolder: default
+  java-default-timeout:
+    - customConfig:
+        default-timeout-in-seconds: 120
+      outputFolder: default
+  java-with-property-conflict:
+    - outputFolder: default
+  java-path-param-key-conflict:
+    - outputFolder: default
+  java-output-directory:
+    # Test with no output-directory config (should use default PROJECT_ROOT)
+    - customConfig:
+        package-prefix: com.test.sdk
+      outputMode: local_files
+      outputFolder: no-config
+      skipScripts: true
+    # Test with explicit project-root (should behave same as default)
+    - customConfig:
+        package-prefix: com.test.sdk
+        output-directory: project-root
+      outputMode: local_files
+      outputFolder: project-root
+      skipScripts: true
+    # Test with source-root (should NOT add src/main/java)
+    - customConfig:
+        package-prefix: com.test.sdk
+        output-directory: source-root
+      outputMode: local_files
+      outputFolder: source-root
+      skipScripts: true
 scripts:
-  - docker: fernapi/java-seed
+  - image: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
 allowedFailures:
   - alias-extends
-  - bytes-download
-  - bytes-upload
   - enum:forward-compatible-enums
   - enum:no-custom-config
-  - errors
   - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
@@ -284,37 +344,30 @@ allowedFailures:
   - exhaustive:publish-to
   - exhaustive:signed_publish
   - extends
-  - inferred-auth-explicit
-  - inferred-auth-implicit
-  - inferred-auth-implicit-no-expiry
   - java-inline-types:no-wrapped-aliases
-  - literal
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
+  - oauth-client-credentials
   - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth:no-custom-config
+  - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
-  - query-parameters-openapi
-  - query-parameters-openapi-as-objects
+  - oauth-client-credentials-reference
   - request-parameters
   - streaming-parameter
-  - trace
-  - websocket-inferred-auth
+  - inferred-auth-implicit-reference
+  - endpoint-security-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - any-auth
-  - extra-properties
   - java-inline-types:inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
   - pagination-custom
-  - query-parameters
-  - streaming
 
   - java-pagination-deep-cursor-path:wire-tests
 
@@ -327,3 +380,7 @@ allowedFailures:
   - file-upload:wrapped-aliases
   - file-upload:inline-file-properties
   - file-upload-openapi
+
+  # Optional wire tests have snippet generation bug with optional(nullable(T))
+  # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
+  - optional:wire-tests

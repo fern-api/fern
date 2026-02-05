@@ -39,7 +39,7 @@ await client.user.get("id");
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `UserClient.RequestOptions`
 
 </dd>
 </dl>

@@ -109,6 +109,17 @@ export class ExampleResolverImpl implements ExampleResolver {
             };
         }
 
+        // First check if this is a valid example reference format.
+        // If not (e.g., "$3.00"), treat it as a literal string.
+        const parsedReference = this.parseExampleReference(example);
+        if (parsedReference == null) {
+            // Not a valid example reference format, treat as literal string
+            return {
+                resolvedExample: example,
+                file
+            };
+        }
+
         return this.resolveExampleReference(example, file);
     }
 
@@ -165,16 +176,42 @@ export class ExampleResolverImpl implements ExampleResolver {
         // if third is null, then the reference is to a $Type.Example in the
         // same file
         if (third == null) {
+            const rawTypeReference = first.slice(EXAMPLE_REFERENCE_PREFIX.length);
+            // Type names must start with a letter (per Fern's naming rules).
+            // This ensures strings like "$3.00" are treated as literals, not references.
+            if (!isValidTypeNameStart(rawTypeReference)) {
+                return undefined;
+            }
             return {
-                rawTypeReference: first.slice(EXAMPLE_REFERENCE_PREFIX.length),
+                rawTypeReference,
                 exampleName: second
             };
         }
 
         // otherwise, the reference is $imported.Type.Example
+        const importName = first.slice(EXAMPLE_REFERENCE_PREFIX.length);
+        // Import names must start with a letter (per Fern's naming rules).
+        // This ensures strings like "$3.00" are treated as literals, not references.
+        if (!isValidTypeNameStart(importName) || !isValidTypeNameStart(second)) {
+            return undefined;
+        }
         return {
-            rawTypeReference: `${first}.${second}`.slice(EXAMPLE_REFERENCE_PREFIX.length),
+            rawTypeReference: `${importName}.${second}`,
             exampleName: third
         };
     }
+}
+
+/**
+ * Checks if a string is a valid start for a Fern type or import name.
+ * Type names must start with a letter (per Fern's naming rules).
+ * This ensures strings like "$3.00" are treated as literals, not example references.
+ */
+function isValidTypeNameStart(name: string): boolean {
+    if (name.length === 0) {
+        return false;
+    }
+    const firstChar = name.charAt(0);
+    // Type names must start with a letter (a-z or A-Z)
+    return (firstChar >= "a" && firstChar <= "z") || (firstChar >= "A" && firstChar <= "Z");
 }

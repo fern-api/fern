@@ -68,6 +68,36 @@ paths:
                 value:
                   operand: '>'
                   operandOrColor: red
+  /multipart:
+    post:
+      operationId: multipartForm_multipartForm
+      tags:
+        - MultipartForm
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                color:
+                  $ref: '#/components/schemas/Color'
+                maybeColor:
+                  $ref: '#/components/schemas/Color'
+                  nullable: true
+                colorList:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Color'
+                maybeColorList:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Color'
+                  nullable: true
   /path/{operand}/{operandOrColor}:
     post:
       operationId: pathParam_send

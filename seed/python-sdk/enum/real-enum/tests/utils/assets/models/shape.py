@@ -16,21 +16,13 @@ class Base(typing_extensions.TypedDict):
 
 
 class Shape_CircleParams(Base):
-    shape_type: typing_extensions.Annotated[
-        typing.Literal["circle"], FieldMetadata(alias="shapeType")
-    ]
-    radius_measurement: typing_extensions.Annotated[
-        float, FieldMetadata(alias="radiusMeasurement")
-    ]
+    shape_type: typing_extensions.Annotated[typing.Literal["circle"], FieldMetadata(alias="shapeType")]
+    radius_measurement: typing_extensions.Annotated[float, FieldMetadata(alias="radiusMeasurement")]
 
 
 class Shape_SquareParams(Base):
-    shape_type: typing_extensions.Annotated[
-        typing.Literal["square"], FieldMetadata(alias="shapeType")
-    ]
-    length_measurement: typing_extensions.Annotated[
-        float, FieldMetadata(alias="lengthMeasurement")
-    ]
+    shape_type: typing_extensions.Annotated[typing.Literal["square"], FieldMetadata(alias="shapeType")]
+    length_measurement: typing_extensions.Annotated[float, FieldMetadata(alias="lengthMeasurement")]
 
 
 ShapeParams = typing.Union[Shape_CircleParams, Shape_SquareParams]

@@ -77,8 +77,12 @@ class VariableType_CharType(UniversalBaseModel):
 
 class VariableType_ListType(UniversalBaseModel):
     type: typing.Literal["listType"] = "listType"
-    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")]
-    is_fixed_length: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFixedLength")] = None
+    value_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="valueType"), pydantic.Field(alias="valueType")
+    ]
+    is_fixed_length: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="isFixedLength"), pydantic.Field(alias="isFixedLength")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -92,8 +96,12 @@ class VariableType_ListType(UniversalBaseModel):
 
 class VariableType_MapType(UniversalBaseModel):
     type: typing.Literal["mapType"] = "mapType"
-    key_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="keyType")]
-    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")]
+    key_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="keyType"), pydantic.Field(alias="keyType")
+    ]
+    value_type: typing_extensions.Annotated[
+        "VariableType", FieldMetadata(alias="valueType"), pydantic.Field(alias="valueType")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -144,17 +152,23 @@ class VariableType_DoublyLinkedListType(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-VariableType = typing.Union[
-    VariableType_IntegerType,
-    VariableType_DoubleType,
-    VariableType_BooleanType,
-    VariableType_StringType,
-    VariableType_CharType,
-    VariableType_ListType,
-    VariableType_MapType,
-    VariableType_BinaryTreeType,
-    VariableType_SinglyLinkedListType,
-    VariableType_DoublyLinkedListType,
+VariableType = typing_extensions.Annotated[
+    typing.Union[
+        VariableType_IntegerType,
+        VariableType_DoubleType,
+        VariableType_BooleanType,
+        VariableType_StringType,
+        VariableType_CharType,
+        VariableType_ListType,
+        VariableType_MapType,
+        VariableType_BinaryTreeType,
+        VariableType_SinglyLinkedListType,
+        VariableType_DoublyLinkedListType,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
-update_forward_refs(VariableType_ListType)
-update_forward_refs(VariableType_MapType)
+from .map_type import MapType  # noqa: E402, I001
+from .list_type import ListType  # noqa: E402, I001
+
+update_forward_refs(VariableType_ListType, MapType=MapType, VariableType=VariableType)
+update_forward_refs(VariableType_MapType, ListType=ListType, VariableType=VariableType)

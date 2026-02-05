@@ -1,6 +1,7 @@
+import { toMultipartDataPart, type Uploadable } from "../../core/file/index";
 import { toJson } from "../../core/json";
 import { RUNTIME } from "../runtime/index";
-import { toMultipartDataPart, type Uploadable } from "../../core/file/index";
+
 <% if (formDataSupport === "Node16") { %>
 <% if (streamType === "wrapper") { %>
 export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<import("readable-stream").Readable> {

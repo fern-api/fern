@@ -1,0 +1,226 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "CorrectOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/simple",
+                "identifier_override": "endpoint_service.createSimple"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"a\")\n                .second(\"b\")\n                .third(\"c\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"a\")\n                .second(\"b\")\n                .third(\"c\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ReverseOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/simple",
+                "identifier_override": "endpoint_service.createSimple"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"a\")\n                .second(\"b\")\n                .third(\"c\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"a\")\n                .second(\"b\")\n                .third(\"c\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "RandomOrder1",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/simple",
+                "identifier_override": "endpoint_service.createSimple"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"a\")\n                .second(\"b\")\n                .third(\"c\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"a\")\n                .second(\"b\")\n                .third(\"c\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "370c1ef9",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/simple",
+                "identifier_override": "endpoint_service.createSimple"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"first\")\n                .second(\"second\")\n                .third(\"third\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createSimple(\n            SimpleStaged\n                .builder()\n                .first(\"first\")\n                .second(\"second\")\n                .third(\"third\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "CorrectOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/medium",
+                "identifier_override": "endpoint_service.createMedium"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMedium(\n            MediumStaged\n                .builder()\n                .alpha(\"alpha\")\n                .beta(1)\n                .gamma(\"gamma\")\n                .delta(true)\n                .optional(\"optional\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMedium(\n            MediumStaged\n                .builder()\n                .alpha(\"alpha\")\n                .beta(1)\n                .gamma(\"gamma\")\n                .delta(true)\n                .optional(\"optional\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ScrambledOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/medium",
+                "identifier_override": "endpoint_service.createMedium"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMedium(\n            MediumStaged\n                .builder()\n                .alpha(\"alpha\")\n                .beta(1)\n                .gamma(\"gamma\")\n                .delta(true)\n                .optional(\"optional\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMedium(\n            MediumStaged\n                .builder()\n                .alpha(\"alpha\")\n                .beta(1)\n                .gamma(\"gamma\")\n                .delta(true)\n                .optional(\"optional\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ec81cb92",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/medium",
+                "identifier_override": "endpoint_service.createMedium"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMedium(\n            MediumStaged\n                .builder()\n                .alpha(\"alpha\")\n                .beta(1)\n                .gamma(\"gamma\")\n                .delta(true)\n                .optional(\"optional\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMedium(\n            MediumStaged\n                .builder()\n                .alpha(\"alpha\")\n                .beta(1)\n                .gamma(\"gamma\")\n                .delta(true)\n                .optional(\"optional\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "CorrectOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/complex",
+                "identifier_override": "endpoint_service.createComplex"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"a\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"d\")\n                .fieldE(1.5)\n                .optionalX(\"x\")\n                .optionalY(2)\n                .optionalZ(false)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"a\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"d\")\n                .fieldE(1.5)\n                .optionalX(\"x\")\n                .optionalY(2)\n                .optionalZ(false)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "RequiredScrambled",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/complex",
+                "identifier_override": "endpoint_service.createComplex"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"a\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"d\")\n                .fieldE(1.5)\n                .optionalX(\"x\")\n                .optionalY(2)\n                .optionalZ(false)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"a\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"d\")\n                .fieldE(1.5)\n                .optionalX(\"x\")\n                .optionalY(2)\n                .optionalZ(false)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "PartialReverse",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/complex",
+                "identifier_override": "endpoint_service.createComplex"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"a\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"d\")\n                .fieldE(1.5)\n                .optionalX(\"x\")\n                .optionalY(2)\n                .optionalZ(false)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"a\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"d\")\n                .fieldE(1.5)\n                .optionalX(\"x\")\n                .optionalY(2)\n                .optionalZ(false)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "241d6c5c",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/complex",
+                "identifier_override": "endpoint_service.createComplex"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"fieldA\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"fieldD\")\n                .fieldE(1.1)\n                .optionalX(\"optionalX\")\n                .optionalY(1)\n                .optionalZ(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createComplex(\n            ComplexStaged\n                .builder()\n                .fieldA(\"fieldA\")\n                .fieldB(1)\n                .fieldC(true)\n                .fieldD(\"fieldD\")\n                .fieldE(1.1)\n                .optionalX(\"optionalX\")\n                .optionalY(1)\n                .optionalZ(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "CorrectOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/mixed",
+                "identifier_override": "endpoint_service.createMixed"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MixedStaged;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\nimport java.time.OffsetDateTime;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMixed(\n            MixedStaged\n                .builder()\n                .id(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .name(\"test\")\n                .timestamp(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .nested(\n                    SimpleStaged\n                        .builder()\n                        .first(\"a\")\n                        .second(\"b\")\n                        .third(\"c\")\n                        .build()\n                )\n                .count(42)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MixedStaged;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\nimport java.time.OffsetDateTime;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMixed(\n            MixedStaged\n                .builder()\n                .id(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .name(\"test\")\n                .timestamp(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .nested(\n                    SimpleStaged\n                        .builder()\n                        .first(\"a\")\n                        .second(\"b\")\n                        .third(\"c\")\n                        .build()\n                )\n                .count(42)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "WrongOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/mixed",
+                "identifier_override": "endpoint_service.createMixed"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MixedStaged;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\nimport java.time.OffsetDateTime;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMixed(\n            MixedStaged\n                .builder()\n                .id(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .name(\"test\")\n                .timestamp(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .nested(\n                    SimpleStaged\n                        .builder()\n                        .first(\"a\")\n                        .second(\"b\")\n                        .third(\"c\")\n                        .build()\n                )\n                .count(42)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MixedStaged;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\nimport java.time.OffsetDateTime;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMixed(\n            MixedStaged\n                .builder()\n                .id(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .name(\"test\")\n                .timestamp(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .nested(\n                    SimpleStaged\n                        .builder()\n                        .first(\"a\")\n                        .second(\"b\")\n                        .third(\"c\")\n                        .build()\n                )\n                .count(42)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "cee4b7ee",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/mixed",
+                "identifier_override": "endpoint_service.createMixed"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MixedStaged;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\nimport java.time.OffsetDateTime;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMixed(\n            MixedStaged\n                .builder()\n                .id(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .name(\"name\")\n                .timestamp(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .nested(\n                    SimpleStaged\n                        .builder()\n                        .first(\"first\")\n                        .second(\"second\")\n                        .third(\"third\")\n                        .build()\n                )\n                .count(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.MixedStaged;\nimport com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;\nimport java.time.OffsetDateTime;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createMixed(\n            MixedStaged\n                .builder()\n                .id(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .name(\"name\")\n                .timestamp(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .nested(\n                    SimpleStaged\n                        .builder()\n                        .first(\"first\")\n                        .second(\"second\")\n                        .third(\"third\")\n                        .build()\n                )\n                .count(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "CorrectOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/parent",
+                "identifier_override": "endpoint_service.createParent"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Child;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Parent;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createParent(\n            Parent\n                .builder()\n                .parentId(\"parent-123\")\n                .child(\n                    Child\n                        .builder()\n                        .childId(\"child-456\")\n                        .childValue(789)\n                        .build()\n                )\n                .parentName(\"Parent Name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Child;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Parent;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createParent(\n            Parent\n                .builder()\n                .parentId(\"parent-123\")\n                .child(\n                    Child\n                        .builder()\n                        .childId(\"child-456\")\n                        .childValue(789)\n                        .build()\n                )\n                .parentName(\"Parent Name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ParentWrongOrder",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/parent",
+                "identifier_override": "endpoint_service.createParent"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Child;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Parent;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createParent(\n            Parent\n                .builder()\n                .parentId(\"parent-123\")\n                .child(\n                    Child\n                        .builder()\n                        .childId(\"child-456\")\n                        .childValue(789)\n                        .build()\n                )\n                .parentName(\"Parent Name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Child;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Parent;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createParent(\n            Parent\n                .builder()\n                .parentId(\"parent-123\")\n                .child(\n                    Child\n                        .builder()\n                        .childId(\"child-456\")\n                        .childValue(789)\n                        .build()\n                )\n                .parentName(\"Parent Name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b2d3dcf3",
+            "id": {
+                "method": "POST",
+                "path": "/staged-builder/parent",
+                "identifier_override": "endpoint_service.createParent"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Child;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Parent;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createParent(\n            Parent\n                .builder()\n                .parentId(\"parentId\")\n                .child(\n                    Child\n                        .builder()\n                        .childId(\"childId\")\n                        .childValue(1)\n                        .build()\n                )\n                .parentName(\"parentName\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Child;\nimport com.seed.stagedBuilderOrdering.resources.types.types.Parent;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient\n            .builder()\n            .build();\n\n        client.service().createParent(\n            Parent\n                .builder()\n                .parentId(\"parentId\")\n                .child(\n                    Child\n                        .builder()\n                        .childId(\"childId\")\n                        .childValue(1)\n                        .build()\n                )\n                .parentName(\"parentName\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

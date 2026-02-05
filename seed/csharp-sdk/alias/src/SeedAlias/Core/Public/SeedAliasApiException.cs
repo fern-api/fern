@@ -3,8 +3,12 @@ namespace SeedAlias;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedAliasApiException(string message, int statusCode, object body)
-    : SeedAliasException(message)
+public class SeedAliasApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedAliasException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

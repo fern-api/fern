@@ -6,12 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import NestedUser, SearchRequestNeighborRequired, SearchResponse, User
+    from .types import NestedUser, SearchRequestNeighbor, SearchRequestNeighborRequired, SearchResponse, User
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApi": ".client",
     "NestedUser": ".types",
+    "SearchRequestNeighbor": ".types",
     "SearchRequestNeighborRequired": ".types",
     "SearchResponse": ".types",
     "SeedApi": ".client",
@@ -44,6 +45,7 @@ def __dir__():
 __all__ = [
     "AsyncSeedApi",
     "NestedUser",
+    "SearchRequestNeighbor",
     "SearchRequestNeighborRequired",
     "SearchResponse",
     "SeedApi",

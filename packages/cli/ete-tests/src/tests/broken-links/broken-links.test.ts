@@ -19,4 +19,25 @@ describe("fern docs broken-links", () => {
                 .slice(0, -15)
         ).toMatchSnapshot();
     }, 20_000);
+
+    it("external link with docs domain in query param should not be flagged", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("external-link-query-param")),
+            reject: false
+        });
+        // This fixture should have no broken links - external URLs with the docs domain
+        // in query parameters (e.g., ?source=docs.example.com) should NOT be flagged
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 20_000);
+
+    it("links to paths with external redirects should not be flagged as broken", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("external-redirect")),
+            reject: false
+        });
+        // This fixture tests that links to internal paths (e.g., /ui) that have
+        // redirects configured to external URLs (e.g., https://auth-platform.example.com)
+        // should NOT be flagged as broken links
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 20_000);
 });

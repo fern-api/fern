@@ -1,0 +1,59 @@
+openapi: 3.0.3
+info:
+  title: Parameter Allow Empty Value Test
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      operationId: listItems
+      summary: List items with optional empty parameters
+      parameters:
+        - name: sortBy
+          in: query
+          allowEmptyValue: true
+          description: Sort results by the provided value
+          required: false
+          schema:
+            type: string
+            enum:
+              - name
+              - createdAt
+              - updatedAt
+        - name: sortOrder
+          in: query
+          allowEmptyValue: true
+          description: Sort order (asc or desc)
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: filter
+          in: query
+          allowEmptyValue: true
+          description: Filter string
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Item"
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

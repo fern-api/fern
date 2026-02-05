@@ -28,6 +28,10 @@ public class SinglePropertyClient {
         return this.rawClient.doThing(id).body();
     }
 
+    public String doThing(String id, RequestOptions requestOptions) {
+        return this.rawClient.doThing(id, requestOptions).body();
+    }
+
     public String doThing(String id, GetThingRequest request) {
         return this.rawClient.doThing(id, request).body();
     }

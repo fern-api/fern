@@ -3,11 +3,13 @@ import { type Generation } from "../../context/generation-info";
 import { type Origin } from "../../context/model-navigator";
 import { type TypeScope } from "../../context/name-registry";
 import { type ClassInstantiation } from "../code/ClassInstantiation";
+import { Literal } from "../code/Literal";
 import { Node } from "../core/AstNode";
 import type { Writer } from "../core/Writer";
 import { type Field } from "./Field";
-import { Type } from "./Type";
-import { TypeParameter } from "./TypeParameter";
+import { Type } from "./IType";
+import { Nullable, Optional } from "./Type";
+
 export declare namespace ClassReference {
     interface Identity {
         /* The name of the C# class */
@@ -22,11 +24,37 @@ export declare namespace ClassReference {
         /* The namespace alias for C# class */
         namespaceAlias?: string;
         /* Any generics used in the class reference */
-        generics?: (Type | TypeParameter | ClassReference)[];
+        generics?: Type[];
         /* Whether or not the class reference should be fully-qualified */
         fullyQualified?: boolean;
         /* force global:: qualifier */
         global?: boolean;
+        /* Whether or not the class reference is a collection */
+        isCollection?: boolean;
+
+        /**
+         * The multipart form method name used when this type is added to a multipart/form-data request.
+         * For example, primitives use "AddStringPart", while objects use "AddJsonPart".
+         *
+         * If this is null, then the type does not support adding to a multipart form.
+         * If this is undefined, then the type supports adding to a multipart form, and the default method name is used.
+         */
+        multipartMethodName?: string | null;
+        /**
+         * The multipart form method name used when a collection of this type is added to a multipart/form-data request.
+         * For example, primitives use "AddStringParts", while objects use "AddJsonParts".
+         *
+         * If this is null, then the type does not support adding to a multipart form.
+         * If this is undefined, then the type supports adding to a multipart form, and the default method name is used.
+         */
+        multipartMethodNameForCollection?: string | null;
+
+        /**
+         * Whether or not the class reference is a reference type.
+         * If this is undefined, then the type is indeterminate.
+         * (interpreted as false, in a lot of cases, but sometimes it's used to see if it's a class reference)
+         */
+        isReferenceType?: boolean;
     }
 
     interface CreationArgs extends Args {
@@ -35,16 +63,20 @@ export declare namespace ClassReference {
     }
 }
 
-export class ClassReference extends Node {
+export class ClassReference extends Node implements Type {
     public readonly name: string;
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
     public readonly enclosingType: ClassReference | undefined;
-    public readonly generics: (Type | TypeParameter | ClassReference)[];
+    public readonly generics: Type[];
     public readonly fullyQualified: boolean;
     public readonly global: boolean;
     public readonly fullyQualifiedName: string;
+    public readonly isCollection: boolean;
     private readonly namespaceSegments: string[];
+    public readonly isReferenceType: boolean | undefined;
+    public readonly multipartMethodName: string | null;
+    public readonly multipartMethodNameForCollection: string | null;
 
     constructor(
         {
@@ -56,7 +88,11 @@ export class ClassReference extends Node {
             fullyQualified,
             global,
             fullyQualifiedName,
-            origin
+            origin,
+            isCollection,
+            multipartMethodName,
+            multipartMethodNameForCollection,
+            isReferenceType
         }: ClassReference.CreationArgs,
         readonly scope: TypeScope,
         generation: Generation
@@ -70,11 +106,18 @@ export class ClassReference extends Node {
         this.fullyQualified = fullyQualified ?? false;
         this.global = global ?? false;
         this.namespaceSegments = this.namespace.split(".");
+        this.isCollection = isCollection ?? false;
         if (enclosingType != null) {
-            this.fullyQualifiedName = `${enclosingType.fullyQualifiedName}.${name}`;
+            this.fullyQualifiedName = enclosingType.fullyQualifiedName
+                ? `${enclosingType.fullyQualifiedName}.${name}`
+                : name;
         } else {
-            this.fullyQualifiedName = fullyQualifiedName;
+            this.fullyQualifiedName = fullyQualifiedName ? fullyQualifiedName : name;
         }
+        this.multipartMethodName = multipartMethodName === undefined ? "AddJsonPart" : multipartMethodName;
+        this.multipartMethodNameForCollection =
+            multipartMethodNameForCollection === undefined ? "AddJsonParts" : multipartMethodNameForCollection;
+        this.isReferenceType = isReferenceType;
     }
 
     public write(writer: Writer): void {
@@ -89,7 +132,15 @@ export class ClassReference extends Node {
         return this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
     }
 
+    private getScopedName(isAttribute: boolean): string {
+        const nameToWrite =
+            isAttribute && this.name.endsWith("Attribute") ? this.name.slice(0, -"Attribute".length) : this.name;
+        return this.enclosingType ? `${this.enclosingType.name}.${nameToWrite}` : nameToWrite;
+    }
+
     private writeInternal(writer: Writer, isAttribute: boolean): void {
+        const nameToWrite = this.getScopedName(isAttribute);
+
         // if the name (or the enclosing type name) is ambiguous
         const isAmbiguous =
             this.registry.isAmbiguousTypeName(this.name) ||
@@ -109,17 +160,35 @@ export class ClassReference extends Node {
             writer.generation.settings.useFullyQualifiedNamespaces;
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
-        const fqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
+        // For attributes, strip the "Attribute" suffix from the fully qualified name
+        let fqNameBase = this.fullyQualifiedName;
+        if (isAttribute && fqNameBase.endsWith("Attribute")) {
+            // Replace the last occurrence of "Attribute" with empty string
+            const lastDotIndex = fqNameBase.lastIndexOf(".");
+            if (lastDotIndex >= 0) {
+                const namespacePart = fqNameBase.substring(0, lastDotIndex + 1);
+                const namePart = fqNameBase.substring(lastDotIndex + 1);
+                if (namePart.endsWith("Attribute")) {
+                    fqNameBase = namespacePart + namePart.slice(0, -"Attribute".length);
+                }
+            } else {
+                fqNameBase = fqNameBase.slice(0, -"Attribute".length);
+            }
+        }
+        const fqName = `${shouldGlobal ? "global::" : ""}${fqNameBase}`;
 
+        if (!this.namespace) {
+            writer.write(nameToWrite);
+            return;
+        }
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
-            writer.write(`${alias}.${this.scopedName}`);
+            writer.write(`${alias}.${nameToWrite}`);
         } else {
             if (writer.skipImports) {
-                writer.write(this.scopedName);
+                writer.write(nameToWrite);
             } else {
                 if (this.fullyQualified) {
-                    // explicitly express namespaces
                     writer.write(fqName);
                 } else {
                     // if the class needs to be partially qualified, or we're skipping imports,
@@ -138,7 +207,7 @@ export class ClassReference extends Node {
                         ) {
                             writer.write(fqName);
                         } else {
-                            writer.write(`${typeQualification}${this.scopedName}`);
+                            writer.write(`${typeQualification}${nameToWrite}`);
                         }
                     } else if (isAmbiguous && this.resolveNamespace() !== writer.namespace) {
                         // If the class is ambiguous and not in this specific namespace
@@ -149,7 +218,7 @@ export class ClassReference extends Node {
                         // If the class is not ambiguous and is in this specific namespace,
                         // we can use the short name
                         writer.addReference(this);
-                        writer.write(this.scopedName);
+                        writer.write(nameToWrite);
                     }
                 }
             }
@@ -288,21 +357,37 @@ export class ClassReference extends Node {
             return true;
         }
 
+        // For attributes, check if there's a real conflict with another attribute type
+        // In C#, [Foo] automatically looks for FooAttribute, not Foo
+        // So [Nullable] won't conflict with System.Nullable<T> - it looks for NullableAttribute
+        if (isAttribute) {
+            const hasConflict = this.potentialConflictWithGeneratedType(writer, isAttribute);
+            if (!hasConflict) {
+                // No conflict with another attribute, so we can rely on the using statement
+                return false;
+            }
+        }
+
         // For child namespaces (like SeedCsharpNamespaceConflict.A.Aa from SeedCsharpNamespaceConflict.A),
         // we generally don't need qualification unless there's a specific conflict
         if (this.namespace.startsWith(`${currentNamespace}.`)) {
             // Only require qualification if there's an actual naming conflict
-            return this.potentialConflictWithGeneratedType(writer);
+            return this.potentialConflictWithGeneratedType(writer, isAttribute);
         }
 
         // Check for potential conflicts with generated types regardless of namespace
         // This handles both internal and external types consistently
-        return this.potentialConflictWithGeneratedType(writer);
+        return this.potentialConflictWithGeneratedType(writer, isAttribute);
     }
 
-    private potentialConflictWithGeneratedType(writer: Writer) {
+    private potentialConflictWithGeneratedType(writer: Writer, isAttribute: boolean = false) {
+        // For attributes, we check for conflicts differently
+        // In C#, [Foo] looks for FooAttribute first, then falls back to Foo
+        // Since our attribute classes are registered with names like "Nullable" (not "NullableAttribute"),
+        // we just check if there's another type with the same name in a different namespace
         const matchingNamespaces = writer.getAllTypeClassReferences().get(this.name);
         if (matchingNamespaces == null) {
+            // No types with this name at all, so no conflict
             return false;
         }
 
@@ -312,6 +397,12 @@ export class ClassReference extends Node {
         matchingNamespacesCopy.delete(this.namespace);
 
         if (matchingNamespacesCopy.size === 0) {
+            // No other types with this name in other namespaces
+            // For attributes in attribute context, there's no conflict with non-attribute types
+            // because C# looks for FooAttribute when you write [Foo]
+            if (isAttribute) {
+                return false;
+            }
             // Even if there's no type conflict, check for namespace conflicts
             // This handles cases like class "A" conflicting with namespace "A"
             return this.hasProjectNamespaceConflict(writer);
@@ -327,6 +418,12 @@ export class ClassReference extends Node {
             }
         }
 
+        // For attributes, if we haven't found a conflict yet, there isn't one
+        // (because C# disambiguates [Foo] vs Foo<T> automatically)
+        if (isAttribute) {
+            return false;
+        }
+
         // Also check if the class name matches any namespace segment in the project
         return this.hasProjectNamespaceConflict(writer);
     }
@@ -338,16 +435,6 @@ export class ClassReference extends Node {
 
     public resolveNamespace(): string {
         return this.registry.resolveNamespace(this.namespace);
-    }
-
-    /** returns true if this class reference is the IAsyncEnumerable class */
-    public get isAsyncEnumerable() {
-        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
-    }
-
-    /** returns this class reference as a type reference */
-    public asTypeRef(): Type {
-        return this.csharp.Type.reference(this);
     }
 
     /** returns this class reference as a fully qualified class reference */
@@ -386,5 +473,28 @@ export class ClassReference extends Node {
 
     public registerMethod(name: string, origin?: Origin): string {
         return name;
+    }
+
+    public get isOptional(): boolean {
+        return false;
+    }
+
+    public asOptional(): Type {
+        return new Optional(this, this.generation);
+    }
+
+    public asNullable(): Type {
+        return new Nullable(this, this.generation);
+    }
+
+    public asNonOptional(): Type {
+        return this;
+    }
+    public get defaultValue(): Literal {
+        return this.csharp.Literal.null();
+    }
+    /** returns true if this class reference is the IAsyncEnumerable class */
+    public get isAsyncEnumerable() {
+        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
     }
 }

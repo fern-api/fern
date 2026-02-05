@@ -14,14 +14,14 @@ func do() {
         ),
     )
     request := &fern.SearchUsersRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
         Limit: fern.Int(
             1,
         ),
     }
     client.User.SearchUsers(
         context.TODO(),
-        "tenant_id",
-        "user_id",
         request,
     )
 }

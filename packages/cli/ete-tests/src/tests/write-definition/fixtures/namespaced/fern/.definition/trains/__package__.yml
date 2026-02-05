@@ -89,7 +89,7 @@ types:
         type: BookingPaymentSourceBankAccount
       card:
         docs: A card (debit or credit) to take payment from.
-        type: Card
+        type: BookingPaymentSourceCard
   BookingPaymentSourceBankAccount:
     docs: >-
       A bank account to take payment from. Must be able to make payments in the
@@ -130,16 +130,7 @@ types:
     inline: true
     source:
       openapi: openapi/trains/openapi.yml
-  BookingPaymentStatus:
-    docs: The status of the payment, one of `pending`, `succeeded`, or `failed`.
-    enum:
-      - pending
-      - succeeded
-      - failed
-    inline: true
-    source:
-      openapi: openapi/trains/openapi.yml
-  Card:
+  BookingPaymentSourceCard:
     docs: A card (debit or credit) to take payment from.
     inline: true
     properties:
@@ -172,6 +163,15 @@ types:
           The card number, as a string without any separators. On read all but
           the last four digits will be masked for security.
         type: string
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentStatus:
+    docs: The status of the payment, one of `pending`, `succeeded`, or `failed`.
+    enum:
+      - pending
+      - succeeded
+      - failed
+    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   LinksBooking:

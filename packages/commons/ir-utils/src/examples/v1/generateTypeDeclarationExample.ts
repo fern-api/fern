@@ -6,12 +6,40 @@ import {
     ExampleUnionBaseProperty,
     ObjectTypeDeclaration,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    TypeReference
 } from "@fern-api/ir-sdk";
 
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+
+/**
+ * Checks if a union member is "simple" (primitive, literal, or enum).
+ * Simple unions are those where all members are scalar-like types.
+ * For simple unions, we prefer literal/enum variants over primitives
+ * because primitives fall back to using the field name as the example.
+ */
+function isSimpleUnionMember(typeRef: TypeReference, typeDeclarations: Record<TypeId, TypeDeclaration>): boolean {
+    if (typeRef.type === "primitive") {
+        return true;
+    }
+
+    if (typeRef.type === "container" && typeRef.container.type === "literal") {
+        return true;
+    }
+
+    if (typeRef.type === "named") {
+        const td = typeDeclarations[typeRef.typeId];
+        if (td != null && td.shape.type === "enum") {
+            return true;
+        }
+    }
+
+    // Everything else (objects, aliases to objects, nested unions, containers that aren't literal, etc.)
+    // is considered complex.
+    return false;
+}
 
 export declare namespace generateTypeDeclarationExample {
     interface Args {
@@ -127,8 +155,63 @@ export function generateTypeDeclarationExample({
             };
         }
         case "undiscriminatedUnion": {
+            const members = typeDeclaration.shape.members;
+
+            // Only apply preference logic for "simple" unions (all members are primitives, literals, or enums)
+            // For unions with complex types (objects, etc.), use the original first-successful-variant behavior
+            const hasOnlySimpleMembers = members.every((member) => isSimpleUnionMember(member.type, typeDeclarations));
+
+            if (hasOnlySimpleMembers) {
+                // For simple unions, prefer literal/enum variants over primitives
+                // because primitives fall back to using the field name as the example
+                const preferredVariantIndex = members.findIndex((variant) => {
+                    // Check for literal container types (e.g., const values converted to literals)
+                    if (variant.type.type === "container" && variant.type.container.type === "literal") {
+                        return true;
+                    }
+                    // Check for named types that are enums
+                    if (variant.type.type === "named") {
+                        const variantTypeDeclaration = typeDeclarations[variant.type.typeId];
+                        if (variantTypeDeclaration != null) {
+                            // Prefer enum types (including single-value enums from const)
+                            if (variantTypeDeclaration.shape.type === "enum") {
+                                return variantTypeDeclaration.shape.values.length > 0;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+                // If we found a preferred variant, try to generate an example for it first
+                if (preferredVariantIndex !== -1) {
+                    const preferredVariant = members[preferredVariantIndex];
+                    if (preferredVariant != null) {
+                        const variantExample = generateTypeReferenceExample({
+                            fieldName,
+                            typeReference: preferredVariant.type,
+                            typeDeclarations,
+                            currentDepth: currentDepth + 1,
+                            maxDepth,
+                            skipOptionalProperties
+                        });
+                        if (variantExample.type === "success") {
+                            const { example, jsonExample } = variantExample;
+                            return {
+                                type: "success",
+                                example: ExampleTypeShape.undiscriminatedUnion({
+                                    index: preferredVariantIndex,
+                                    singleUnionType: example
+                                }),
+                                jsonExample
+                            };
+                        }
+                    }
+                }
+            }
+
+            // Fall back to the original behavior: try each variant in order
             let i = 0;
-            for (const variant of typeDeclaration.shape.members) {
+            for (const variant of members) {
                 const variantExample = generateTypeReferenceExample({
                     fieldName,
                     typeReference: variant.type,

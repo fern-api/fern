@@ -39,7 +39,8 @@ describe("openapi-v2-sdks", async () => {
                     context,
                     audiences: { type: "all" },
                     enableUniqueErrorsPerEndpoint: false,
-                    generateV1Examples: true
+                    generateV1Examples: true,
+                    logWarnings: false
                 });
                 await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
                     `./__snapshots__/v3-sdks/${fixture.name}.json`

@@ -22,7 +22,7 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         readmeConfigBuilder: ReadmeConfigBuilder;
         ir: IntermediateRepresentation;
     }) {
-        super({ logger, config, selfHosted: ir.selfHosted });
+        super({ logger, config, selfHosted: ir.selfHosted, skipInstall: true });
         this.readmeConfigBuilder = readmeConfigBuilder;
         this.publishConfig = ir.publishConfig;
     }
@@ -43,12 +43,14 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
     }
 
     public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
+        const githubConfig = this.publishConfig?.type === "github" ? this.publishConfig : undefined;
         return {
             sourceDirectory: "/fern/output",
             type: this.publishConfig?.type,
-            uri: this.publishConfig?.type === "github" ? this.publishConfig.uri : undefined,
-            token: this.publishConfig?.type === "github" ? this.publishConfig.token : undefined,
-            mode: this.publishConfig?.type === "github" ? this.publishConfig.mode : undefined
+            uri: githubConfig?.uri,
+            token: githubConfig?.token,
+            branch: undefined,
+            mode: githubConfig?.mode
         };
     }
 }

@@ -6,6 +6,7 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -48,4 +49,6 @@ class Status_SoftDeleted(UniversalBaseModel):
             smart_union = True
 
 
-Status = typing.Union[Status_Active, Status_Archived, Status_SoftDeleted]
+Status = typing_extensions.Annotated[
+    typing.Union[Status_Active, Status_Archived, Status_SoftDeleted], pydantic.Field(discriminator="type")
+]

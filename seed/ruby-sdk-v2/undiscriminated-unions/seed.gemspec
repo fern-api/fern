@@ -6,7 +6,7 @@ require_relative "custom.gemspec"
 # NOTE: A handful of these fields are required as part of the Ruby specification.
 #       You can change them here or overwrite them in the custom gemspec file.
 Gem::Specification.new do |spec|
-  spec.name = "seed"
+  spec.name = "fern_undiscriminated-unions"
   spec.authors = ["Seed"]
   spec.version = Seed::VERSION
   spec.summary = "Ruby client library for the Seed API"
@@ -26,9 +26,6 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

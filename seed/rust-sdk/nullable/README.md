@@ -5,6 +5,20 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -44,12 +58,8 @@ async fn main() {
                 username: "username".to_string(),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 metadata: Some(Metadata {
-                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                     avatar: Some("avatar".to_string()),
                     activated: Some(Some(true)),
                     status: Status::Active,

@@ -7,6 +7,23 @@
 
 The CustomName Rust library provides convenient access to the CustomName APIs from Rust.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Override Section](#override-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
@@ -64,19 +81,16 @@ async fn main() {
                 prequel: Some(MovieId("movie-cv9b914f".to_string())),
                 title: "The Boy and the Heron".to_string(),
                 from: "Hayao Miyazaki".to_string(),
-                rating: 8,
+                rating: 8.0,
                 r#type: "movie".to_string(),
                 tag: Tag("tag-wf9as23d".to_string()),
+                book: None,
                 metadata: HashMap::from([
                     (
                         "actors".to_string(),
-                        vec![
-                            "Christian Bale".to_string(),
-                            "Florence Pugh".to_string(),
-                            "Willem Dafoe".to_string(),
-                        ],
+                        serde_json::json!(["Christian Bale", "Florence Pugh", "Willem Dafoe"]),
                     ),
-                    ("releaseDate".to_string(), "2023-12-08".to_string()),
+                    ("releaseDate".to_string(), serde_json::json!("2023-12-08")),
                     (
                         "ratings".to_string(),
                         serde_json::json!({"rottenTomatoes":97,"imdb":7.6}),

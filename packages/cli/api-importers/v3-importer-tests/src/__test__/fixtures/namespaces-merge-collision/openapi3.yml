@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: API 3
+  version: 1.0.0
+paths:
+  /comments:
+    get:
+      operationId: getComments
+      summary: Get comments
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+components:
+  schemas:
+    Comment:
+      type: object
+      required:
+        - id
+        - text
+      properties:
+        id:
+          type: integer
+        text:
+          type: string

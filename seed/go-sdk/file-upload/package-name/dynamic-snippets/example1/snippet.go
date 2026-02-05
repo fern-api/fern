@@ -4,8 +4,8 @@ import (
     client "github.com/fern-api/file-upload-go/client"
     option "github.com/fern-api/file-upload-go/option"
     upload "github.com/fern-api/file-upload-go"
-    context "context"
     strings "strings"
+    context "context"
 )
 
 func do() {
@@ -14,12 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &upload.OptionalArgsRequest{}
-    client.Service.OptionalArgs(
-        context.TODO(),
-        strings.NewReader(
+    request := &upload.OptionalArgsRequest{
+        ImageFile: strings.NewReader(
             "",
         ),
+    }
+    client.Service.OptionalArgs(
+        context.TODO(),
         request,
     )
 }

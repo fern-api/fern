@@ -31,7 +31,7 @@ class Connection(UniversalBaseModel):
     The identity provider identifier (auth0, google-oauth2, facebook, etc.)
     """
 
-    options: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    options: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Connection-specific configuration options
     """
@@ -51,7 +51,7 @@ class Connection(UniversalBaseModel):
     Whether this is a domain connection
     """
 
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Additional metadata
     """

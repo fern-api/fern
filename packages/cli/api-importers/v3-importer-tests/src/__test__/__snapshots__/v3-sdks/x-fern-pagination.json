@@ -582,6 +582,7 @@
             }
           ],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -1841,7 +1842,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Success"
           },
           "docs": "",
           "v2Examples": {
@@ -1936,7 +1938,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Success"
               }
             ]
           }
@@ -2046,6 +2049,7 @@
             }
           ],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -3305,7 +3309,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Success"
           },
           "docs": "",
           "v2Examples": {
@@ -3400,7 +3405,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Success"
               }
             ]
           }
@@ -3412,6 +3418,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-pagination`",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -3449,22 +3456,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-pagination`",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernPagination",
+      "safeName": "testExtensionXFernPagination"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_pagination",
+      "safeName": "test_extension_x_fern_pagination"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_PAGINATION",
+      "safeName": "TEST_EXTENSION_X_FERN_PAGINATION"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernPagination",
+      "safeName": "TestExtensionXFernPagination"
     }
   },
   "constants": {

@@ -1,18 +1,12 @@
-import { defineConfig } from "vitest/config";
+import { defaultConfig, defineConfig, mergeConfig } from "@fern-api/configs/vitest/base.mjs";
 
-export default defineConfig({
-    test: {
-        globals: true,
-        include: ["**/*.{test,spec}.ts"],
-        server: {
-            deps: {
-                fallbackCJS: true
+export default mergeConfig(
+    defaultConfig,
+    defineConfig({
+        test: {
+            env: {
+                FERN_STACK_TRACK: "1"
             }
-        },
-        maxConcurrency: 10,
-        passWithNoTests: true,
-        env: {
-            FERN_STACK_TRACK: "1"
         }
-    }
-});
+    })
+);

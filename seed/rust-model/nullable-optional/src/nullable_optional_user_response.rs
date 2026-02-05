@@ -9,10 +9,13 @@ pub struct UserResponse {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub phone: Option<String>,
     #[serde(rename = "createdAt")]
-    pub created_at: DateTime<Utc>,
+    #[serde(with = "crate::core::flexible_datetime::offset")]
+    pub created_at: DateTime<FixedOffset>,
     #[serde(rename = "updatedAt")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub updated_at: Option<DateTime<FixedOffset>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub address: Option<Address>,
 }

@@ -23,4 +23,4 @@ class MultipleFilterSearchRequest(UniversalBaseModel):
 
 from .multiple_filter_search_request_value import MultipleFilterSearchRequestValue  # noqa: E402, I001
 
-update_forward_refs(MultipleFilterSearchRequest)
+update_forward_refs(MultipleFilterSearchRequest, MultipleFilterSearchRequestValue=MultipleFilterSearchRequestValue)
