@@ -235,9 +235,6 @@ jobs:
         id: create-dynamic-matrix
         shell: bash
         run: |
-          # Query all fixtures for all generators and capture directly into variable
-          FIXTURES_JSON=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures)
-          
           # Define the number of groups for each generator that needs parallelization
           declare -A NUM_GROUPS
           NUM_GROUPS[java-sdk]=14
@@ -253,11 +250,15 @@ jobs:
           for GEN in $GENERATORS; do
             GROUPS_COUNT=${NUM_GROUPS[$GEN]:-0}
             
+            # Query fixtures for this specific generator (keeps JSON small)
+            FIXTURES_JSON=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator "$GEN")
+            
             # Use Node.js to extract and optionally group fixtures for this generator
-            MATRIX=$(node -e "
-              const data = $FIXTURES_JSON;
-              const fixtures = data.generators['$GEN'] || [];
-              const numGroups = $GROUPS_COUNT;
+            # Pass JSON via environment variable to avoid bash interpolation issues
+            MATRIX=$(FIXTURES_JSON="$FIXTURES_JSON" GROUPS_COUNT="$GROUPS_COUNT" GEN="$GEN" node -e "
+              const data = JSON.parse(process.env.FIXTURES_JSON);
+              const fixtures = data.generators[process.env.GEN] || [];
+              const numGroups = parseInt(process.env.GROUPS_COUNT, 10);
               
               // If numGroups is 0 or fixtures <= 20, return single group with 'all'
               if (numGroups === 0 || fixtures.length <= 20) {
