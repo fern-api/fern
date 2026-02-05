@@ -2,6 +2,17 @@
     "endpoints": [
         {
             "id": {
+                "path": "/auth/token",
+                "method": "POST",
+                "identifier_override": "endpoint_.getToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-url-templating/fern\"\n\tfernclient \"github.com/server-url-templating/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetToken(\n\tcontext.TODO(),\n\t\u0026fern.TokenRequest{\n\t\tClientId:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_.getUsers"

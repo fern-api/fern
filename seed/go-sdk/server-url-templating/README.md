@@ -31,13 +31,19 @@ package example
 
 import (
     client "github.com/server-url-templating/fern/client"
+    fern "github.com/server-url-templating/fern"
     context "context"
 )
 
 func do() {
     client := client.NewClient()
-    client.GetUsers(
+    request := &fern.TokenRequest{
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+    }
+    client.GetToken(
         context.TODO(),
+        request,
     )
 }
 ```
@@ -49,7 +55,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(api.Environments.Default),
+    option.WithBaseURL(api.Environments.RegionalApiServer),
 )
 ```
 
@@ -59,7 +65,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.GetUsers(...)
+response, err := client.GetToken(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -93,7 +99,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.GetUsers(
+response, err := client.GetToken(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -108,7 +114,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.WithRawResponse.GetUsers(...)
+response, err := client.WithRawResponse.GetToken(...)
 if err != nil {
     return err
 }
@@ -138,7 +144,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.GetUsers(
+response, err := client.GetToken(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -152,7 +158,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.GetUsers(ctx, ...)
+response, err := client.GetToken(ctx, ...)
 ```
 
 ### Explicit Null
@@ -174,7 +180,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.GetUsers(ctx, request, ...)
+response, err := client.GetToken(ctx, request, ...)
 ```
 
 ## Contributing

@@ -10,6 +10,40 @@ import (
 )
 
 var (
+	tokenRequestFieldClientId     = big.NewInt(1 << 0)
+	tokenRequestFieldClientSecret = big.NewInt(1 << 1)
+)
+
+type TokenRequest struct {
+	ClientId     string `json:"client_id" url:"-"`
+	ClientSecret string `json:"client_secret" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (t *TokenRequest) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenRequest) SetClientId(clientId string) {
+	t.ClientId = clientId
+	t.require(tokenRequestFieldClientId)
+}
+
+// SetClientSecret sets the ClientSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenRequest) SetClientSecret(clientSecret string) {
+	t.ClientSecret = clientSecret
+	t.require(tokenRequestFieldClientSecret)
+}
+
+var (
 	getUserRequestFieldUserId = big.NewInt(1 << 0)
 )
 
@@ -32,6 +66,100 @@ func (g *GetUserRequest) require(field *big.Int) {
 func (g *GetUserRequest) SetUserId(userId string) {
 	g.UserId = userId
 	g.require(getUserRequestFieldUserId)
+}
+
+var (
+	tokenResponseFieldAccessToken = big.NewInt(1 << 0)
+	tokenResponseFieldExpiresIn   = big.NewInt(1 << 1)
+)
+
+type TokenResponse struct {
+	AccessToken string `json:"access_token" url:"access_token"`
+	ExpiresIn   int    `json:"expires_in" url:"expires_in"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TokenResponse) GetAccessToken() string {
+	if t == nil {
+		return ""
+	}
+	return t.AccessToken
+}
+
+func (t *TokenResponse) GetExpiresIn() int {
+	if t == nil {
+		return 0
+	}
+	return t.ExpiresIn
+}
+
+func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TokenResponse) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenResponse) SetAccessToken(accessToken string) {
+	t.AccessToken = accessToken
+	t.require(tokenResponseFieldAccessToken)
+}
+
+// SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenResponse) SetExpiresIn(expiresIn int) {
+	t.ExpiresIn = expiresIn
+	t.require(tokenResponseFieldExpiresIn)
+}
+
+func (t *TokenResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler TokenResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TokenResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TokenResponse) MarshalJSON() ([]byte, error) {
+	type embed TokenResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TokenResponse) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 var (
