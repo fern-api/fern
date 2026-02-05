@@ -73,10 +73,10 @@ export function parse({
     };
     let documentIndex = 0;
     for (const document of documents) {
-        try {
-            const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" });
-            switch (document.type) {
-                case "openapi": {
+        const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" });
+        switch (document.type) {
+            case "openapi": {
+                try {
                     const openapiIr = generateIrFromV3({
                         taskContext: context,
                         openApi: document.value,
@@ -86,55 +86,53 @@ export function parse({
                     });
                     ir = merge(ir, openapiIr, getParseOptions({ options: document.settings, overrides: options }));
                     documentIndex++;
-                    break;
+                } catch (error) {
+                    context.logger.debug(`Skipping parsing document ${document.value.info?.title}`);
+                    if (error instanceof Error) {
+                        context.logger.debug(error.message, error.stack ? "\n" + error.stack : "");
+                    }
                 }
-                case "asyncapi": {
-                    const parsedAsyncAPI = parseAsyncAPI({
-                        document: document.value,
-                        taskContext: context,
-                        options: getParseOptions({ options: document.settings, overrides: options }),
-                        source,
-                        asyncApiOptions: getParseAsyncOptions({ options: document.settings }),
-                        namespace: document.namespace
-                    });
-                    if (parsedAsyncAPI.servers != null) {
-                        ir.websocketServers = [
-                            ...ir.websocketServers,
-                            ...parsedAsyncAPI.servers.map((server) => ({
-                                ...server,
-                                audiences: undefined,
-                                description: undefined,
-                                defaultUrl: undefined,
-                                urlTemplate: undefined,
-                                variables: undefined
-                            }))
-                        ];
-                    }
-                    if (parsedAsyncAPI.channels != null) {
-                        ir.channels = {
-                            ...ir.channels,
-                            ...parsedAsyncAPI.channels
-                        };
-                    }
-                    if (parsedAsyncAPI.groupedSchemas != null) {
-                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
-                    }
-                    if (parsedAsyncAPI.basePath != null) {
-                        ir.basePath = parsedAsyncAPI.basePath;
-                    }
-                    documentIndex++;
-                    break;
+                break;
+            }
+            case "asyncapi": {
+                const parsedAsyncAPI = parseAsyncAPI({
+                    document: document.value,
+                    taskContext: context,
+                    options: getParseOptions({ options: document.settings, overrides: options }),
+                    source,
+                    asyncApiOptions: getParseAsyncOptions({ options: document.settings }),
+                    namespace: document.namespace
+                });
+                if (parsedAsyncAPI.servers != null) {
+                    ir.websocketServers = [
+                        ...ir.websocketServers,
+                        ...parsedAsyncAPI.servers.map((server) => ({
+                            ...server,
+                            audiences: undefined,
+                            description: undefined,
+                            defaultUrl: undefined,
+                            urlTemplate: undefined,
+                            variables: undefined
+                        }))
+                    ];
                 }
-                default:
-                    assertNever(document);
+                if (parsedAsyncAPI.channels != null) {
+                    ir.channels = {
+                        ...ir.channels,
+                        ...parsedAsyncAPI.channels
+                    };
+                }
+                if (parsedAsyncAPI.groupedSchemas != null) {
+                    ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
+                }
+                if (parsedAsyncAPI.basePath != null) {
+                    ir.basePath = parsedAsyncAPI.basePath;
+                }
+                documentIndex++;
+                break;
             }
-        } catch (error) {
-            context.logger.debug(
-                `Skipping parsing document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
-            );
-            if (error instanceof Error) {
-                context.logger.debug(error.message, error.stack ? "\n" + error.stack : "");
-            }
+            default:
+                assertNever(document);
         }
     }
     return ir;

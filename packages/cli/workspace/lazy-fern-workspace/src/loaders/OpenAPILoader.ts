@@ -76,26 +76,19 @@ export class OpenAPILoader {
                 }
 
                 if (contents.includes("asyncapi")) {
-                    try {
-                        const asyncAPI = await loadAsyncAPI({
-                            context,
-                            absoluteFilePath: spec.absoluteFilepath,
-                            absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
-                        });
-                        documents.push({
-                            type: "asyncapi",
-                            value: asyncAPI,
-                            source,
-                            namespace: spec.namespace,
-                            settings: getParseOptions({ options: spec.settings })
-                        });
-                        continue;
-                    } catch (error) {
-                        context.logger.error(
-                            `Failed to parse AsyncAPI document at ${spec.absoluteFilepath}: ${error}. Skipping...`
-                        );
-                        continue;
-                    }
+                    const asyncAPI = await loadAsyncAPI({
+                        context,
+                        absoluteFilePath: spec.absoluteFilepath,
+                        absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
+                    });
+                    documents.push({
+                        type: "asyncapi",
+                        value: asyncAPI,
+                        source,
+                        namespace: spec.namespace,
+                        settings: getParseOptions({ options: spec.settings })
+                    });
+                    continue;
                 }
 
                 if (contents.includes("openrpc")) {
