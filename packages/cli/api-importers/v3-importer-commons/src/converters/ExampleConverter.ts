@@ -1288,10 +1288,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
      * Recursively collects all property keys from a schema, including properties
      * from allOf, oneOf, and anyOf compositions.
      */
-    private collectAllPropertyKeys(
-        schema: OpenAPIV3_1.SchemaObject,
-        visited: Set<string> = new Set()
-    ): Set<string> {
+    private collectAllPropertyKeys(schema: OpenAPIV3_1.SchemaObject, visited: Set<string> = new Set()): Set<string> {
         const propertyKeys = new Set<string>();
 
         // Add direct properties
