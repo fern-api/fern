@@ -632,5 +632,254 @@ describe("ExampleConverter", () => {
             expect(result.validExample).toEqual(example);
             expect(result.errors).toHaveLength(0);
         });
+
+        it("should report error when additionalProperties is string schema but example contains array", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    id: { type: "string" }
+                },
+                required: ["id"],
+                additionalProperties: { type: "string" }
+            };
+
+            const example = {
+                id: "123",
+                invalidField: ["not", "a", "string"]
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThan(0);
+        });
+
+        it("should coerce number to string when additionalProperties is string schema", () => {
+            // Numbers can be coerced to strings, so this should be valid with coercion
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    id: { type: "string" }
+                },
+                required: ["id"],
+                additionalProperties: { type: "string" }
+            };
+
+            const example = {
+                id: "123",
+                coercedField: 42
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            // Numbers are coerced to strings, so this is valid
+            expect(result.isValid).toBe(true);
+            expect(result.validExample).toEqual({
+                id: "123",
+                coercedField: "42"
+            });
+        });
+
+        it("should report error when additionalProperties is number schema but example contains string", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: { type: "number" }
+            };
+
+            const example = {
+                name: "Test",
+                invalidField: "not a number"
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThan(0);
+        });
+
+        it("should report error when additionalProperties is object schema with required fields but example contains string", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: {
+                    type: "object",
+                    properties: {
+                        value: { type: "string" }
+                    },
+                    required: ["value"]
+                }
+            };
+
+            const example = {
+                name: "Test",
+                invalidField: "not an object"
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThan(0);
+        });
+
+        it("should report error when additionalProperties is array schema but example contains object", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: {
+                    type: "array",
+                    items: { type: "string" }
+                }
+            };
+
+            const example = {
+                name: "Test",
+                invalidField: { not: "an array" }
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThan(0);
+        });
+
+        it("should report error when additionalProperties is boolean schema but example contains array", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: { type: "boolean" }
+            };
+
+            const example = {
+                name: "Test",
+                invalidField: [1, 2, 3]
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThan(0);
+        });
+
+        it("should report multiple errors when multiple additional properties have type mismatches", () => {
+            // Using number schema since strings/numbers/booleans can be coerced to strings
+            // but arrays/objects/strings cannot be coerced to numbers
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: { type: "number" }
+            };
+
+            const example = {
+                name: "Test",
+                invalidField1: "not a number",
+                invalidField2: ["array"],
+                invalidField3: { object: true }
+            };
+
+            const mockContextWithResolve = {
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            } as unknown as AbstractConverterContext<object>;
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThanOrEqual(3);
+        });
     });
 });

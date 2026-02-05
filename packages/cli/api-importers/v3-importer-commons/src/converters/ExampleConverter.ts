@@ -936,8 +936,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                         }
                     });
                 });
-            } else {
-                // Additional properties are allowed - preserve them in the example
+            } else if (
+                resolvedSchema.additionalProperties === true ||
+                resolvedSchema.additionalProperties === undefined
+            ) {
+                // additionalProperties: true or undefined - preserve values without validation
                 additionalPropertyKeys.forEach((key) => {
                     additionalPropertiesResults.push({
                         key,
@@ -948,6 +951,26 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                             validExample: exampleObj[key],
                             errors: []
                         }
+                    });
+                });
+            } else {
+                // additionalProperties is a schema object - validate each additional property against it
+                const additionalPropsSchema = resolvedSchema.additionalProperties as OpenAPIV3_1.SchemaObject;
+                additionalPropertyKeys.forEach((key) => {
+                    const exampleConverter = new ExampleConverter({
+                        breadcrumbs: [...this.breadcrumbs, key],
+                        context: this.context,
+                        schema: additionalPropsSchema,
+                        example: exampleObj[key],
+                        depth: this.depth + 1,
+                        generateOptionalProperties: this.generateOptionalProperties,
+                        exampleGenerationStrategy: this.exampleGenerationStrategy,
+                        seenRefs: this.getMaybeUpdatedSeenRefs()
+                    });
+                    const result = exampleConverter.convert();
+                    additionalPropertiesResults.push({
+                        key,
+                        result
                     });
                 });
             }
