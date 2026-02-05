@@ -43,6 +43,27 @@ func (t *TokenRequest) SetClientSecret(clientSecret string) {
 	t.require(tokenRequestFieldClientSecret)
 }
 
+func (t *TokenRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler TokenRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*t = TokenRequest(body)
+	return nil
+}
+
+func (t *TokenRequest) MarshalJSON() ([]byte, error) {
+	type embed TokenRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	getUserRequestFieldUserId = big.NewInt(1 << 0)
 )
