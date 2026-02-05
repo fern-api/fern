@@ -574,6 +574,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The group to generate"
                 })
+                .option("generator", {
+                    type: "string",
+                    description: "The name of a specific generator to run"
+                })
                 .option("mode", {
                     choices: Object.values(GenerationMode),
                     description: "Defaults to the mode specified in generators.yml"
@@ -703,6 +707,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     version: argv.version,
                     groupName: argv.group,
+                    generatorName: argv.generator,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -752,6 +757,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
+                generatorName: argv.generator,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,

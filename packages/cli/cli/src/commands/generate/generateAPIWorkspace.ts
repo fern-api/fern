@@ -23,6 +23,7 @@ export async function generateWorkspace({
     projectConfig,
     context,
     groupName,
+    generatorName,
     version,
     shouldLogS3Url,
     token,
@@ -42,6 +43,7 @@ export async function generateWorkspace({
     context: TaskContext;
     version: string | undefined;
     groupName: string | undefined;
+    generatorName: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken | undefined;
     useLocalDocker: boolean;
@@ -64,20 +66,37 @@ export async function generateWorkspace({
         return;
     }
 
-    const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
-    if (groupNameOrDefault == null) {
-        return context.failAndThrow(
-            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
+    // When --generator is specified without --group, find which groups contain the generator
+    let resolvedGroupNames: string[];
+    if (generatorName != null && groupName == null) {
+        const allGroups = workspace.generatorsConfiguration.groups;
+        const matchingGroups = allGroups.filter((group) => group.generators.some((gen) => gen.name === generatorName));
+        if (matchingGroups.length === 0) {
+            const allGeneratorNames = [
+                ...new Set(allGroups.flatMap((group) => group.generators.map((gen) => gen.name)))
+            ];
+            return context.failAndThrow(
+                `Generator '${generatorName}' not found in any group. ` +
+                    `Available generators: ${allGeneratorNames.join(", ")}`
+            );
+        }
+        resolvedGroupNames = matchingGroups.map((group) => group.groupName);
+    } else {
+        const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
+        if (groupNameOrDefault == null) {
+            return context.failAndThrow(
+                `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
+            );
+        }
+
+        // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
+        resolvedGroupNames = resolveGroupAlias(
+            groupNameOrDefault,
+            workspace.generatorsConfiguration.groupAliases,
+            workspace.generatorsConfiguration.groups.map((g) => g.groupName),
+            context
         );
     }
-
-    // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
-    const resolvedGroupNames = resolveGroupAlias(
-        groupNameOrDefault,
-        workspace.generatorsConfiguration.groupAliases,
-        workspace.generatorsConfiguration.groups.map((g) => g.groupName),
-        context
-    );
 
     const { ai } = workspace.generatorsConfiguration;
 
@@ -101,6 +120,19 @@ export async function generateWorkspace({
             );
             if (group == null) {
                 return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
+            }
+
+            // Filter to specific generator if --generator is specified
+            if (generatorName != null) {
+                const filteredGenerators = group.generators.filter((gen) => gen.name === generatorName);
+                if (filteredGenerators.length === 0) {
+                    const availableGenerators = group.generators.map((gen) => gen.name);
+                    return context.failAndThrow(
+                        `Generator '${generatorName}' not found in group '${resolvedGroupName}'. ` +
+                            `Available generators: ${availableGenerators.join(", ")}`
+                    );
+                }
+                group = { ...group, generators: filteredGenerators };
             }
 
             // Apply lfs-override if specified
