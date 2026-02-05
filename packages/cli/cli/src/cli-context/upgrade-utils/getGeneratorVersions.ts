@@ -1,9 +1,9 @@
 import {
     addDefaultDockerOrgIfNotPresent,
     generatorsYml,
-    getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
-    loadGeneratorsConfiguration
+    loadGeneratorsConfiguration,
+    normalizeGeneratorName
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
@@ -67,7 +67,11 @@ export async function getLatestGeneratorVersions({
                     versions.versions[group] = {};
                 }
 
-                const normalizedGeneratorName = getGeneratorNameOrThrow(generator.name, context);
+                const normalizedGeneratorName = normalizeGeneratorName(generator.name);
+                if (normalizedGeneratorName == null) {
+                    context.logger.debug(`Skipping unknown generator: ${generator.name}`);
+                    return;
+                }
 
                 const latestVersion = await getLatestGeneratorVersion({
                     generatorName: normalizedGeneratorName,
@@ -110,7 +114,12 @@ export async function getLatestGeneratorVersions({
                 versions.versions[api]![group] = {};
             }
 
-            const normalizedGeneratorName = getGeneratorNameOrThrow(generator.name, context);
+            const normalizedGeneratorName = normalizeGeneratorName(generator.name);
+            if (normalizedGeneratorName == null) {
+                context.logger.debug(`Skipping unknown generator: ${generator.name}`);
+                return;
+            }
+
             const latestVersion = await getLatestGeneratorVersion({
                 generatorName: normalizedGeneratorName,
                 cliVersion: cliContext.environment.packageVersion,

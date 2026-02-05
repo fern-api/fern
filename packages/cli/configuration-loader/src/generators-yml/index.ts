@@ -9,6 +9,7 @@ export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export {
     addDefaultDockerOrgIfNotPresent,
     getGeneratorNameOrThrow,
+    normalizeGeneratorName,
     removeDefaultDockerOrgIfPresent
 } from "./getGeneratorName";
 export { getLatestGeneratorVersion } from "./getGeneratorVersions";
