@@ -55,6 +55,10 @@ if IS_PYDANTIC_V2:
             value = value[:-1] + "+00:00"
         return dt.datetime.fromisoformat(value)
 
+    from pydantic.fields import FieldInfo
+
+    ModelField = FieldInfo  # type: ignore[misc,assignment]
+
     import decimal
     from collections import deque
     from enum import Enum as _Enum
@@ -62,8 +66,6 @@ if IS_PYDANTIC_V2:
     from pathlib import Path
     from types import GeneratorType
     from uuid import UUID
-
-    from pydantic.fields import FieldInfo as ModelField  # type: ignore[misc,assignment]
 
     encoders_by_type: Dict[Type[Any], Callable[[Any], Any]] = {  # type: ignore[no-redef]
         bytes: lambda o: o.decode(),
