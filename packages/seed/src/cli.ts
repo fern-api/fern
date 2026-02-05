@@ -13,7 +13,11 @@ import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
-import { calculateRecommendedGroups, getAvailableFixtures, splitFixturesIntoGroups } from "./commands/list-test-fixtures";
+import {
+    calculateRecommendedGroups,
+    getAvailableFixtures,
+    splitFixturesIntoGroups
+} from "./commands/list-test-fixtures";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
@@ -620,16 +624,13 @@ function addListTestFixturesCommand(cli: Argv) {
 
             // Determine number of groups
             const groupsArg = argv.groups;
-            const numGroups =
-                groupsArg === "auto" ? -1 : groupsArg != null ? parseInt(groupsArg, 10) : undefined;
+            const numGroups = groupsArg === "auto" ? -1 : groupsArg != null ? parseInt(groupsArg, 10) : undefined;
 
             // If groups is specified, output grouped fixtures
             if (numGroups !== undefined) {
                 // For grouped output, we expect a single generator
                 if (targetGenerators.length !== 1) {
-                    throw new Error(
-                        "When using --groups, you must specify exactly one generator with --generator"
-                    );
+                    throw new Error("When using --groups, you must specify exactly one generator with --generator");
                 }
 
                 const generator = targetGenerators[0];
