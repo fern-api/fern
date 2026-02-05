@@ -4,5 +4,5 @@ import type * as SeedPagination from "../../../../../index.js";
 
 export interface UserPage {
     data: SeedPagination.inlineUsers.UserListContainer;
-    next?: string;
+    next?: string | undefined;
 }

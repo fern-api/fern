@@ -2,5 +2,5 @@
 
 export interface RegularResponse {
     id: string;
-    name?: string;
+    name?: string | undefined;
 }

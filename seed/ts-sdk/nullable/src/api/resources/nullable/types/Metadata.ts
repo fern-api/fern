@@ -6,7 +6,7 @@ export interface Metadata {
     createdAt: string;
     updatedAt: string;
     avatar: string | null;
-    activated?: boolean | null;
+    activated?: (boolean | null) | undefined;
     status: SeedNullable.Status;
-    values?: Record<string, (string | null) | undefined>;
+    values?: Record<string, (string | null) | undefined> | undefined;
 }
