@@ -8,7 +8,8 @@ import {
     type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
-    replaceReferencedMarkdown
+    replaceReferencedMarkdown,
+    transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
@@ -352,11 +353,17 @@ export class DocsDefinitionResolver {
                     this.referencedMarkdownFiles.push(refFile);
                 }
             }
-            const newMarkdown = await replaceReferencedCode({
+            const codeReplacedMarkdown = await replaceReferencedCode({
                 markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
+            });
+
+            const newMarkdown = transformAtPrefixImports({
+                markdown: codeReplacedMarkdown,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: this.resolveFilepath(relativePath)
             });
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }
@@ -528,6 +535,20 @@ export class DocsDefinitionResolver {
                 // Use the relative path as the key, and the raw content as the value
                 jsFiles[refFile.relativeFilePath] = refFile.content;
             }
+        }
+
+        // Add custom header/footer component files to jsFiles
+        if (this._parsedDocsConfig.header != null) {
+            const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.header);
+            const contents = (await readFile(this._parsedDocsConfig.header)).toString();
+            jsFiles[relativeFilePath] = contents;
+            this.taskContext.logger.debug(`Added custom header component: ${relativeFilePath}`);
+        }
+        if (this._parsedDocsConfig.footer != null) {
+            const relativeFilePath = this.toRelativeFilepath(this._parsedDocsConfig.footer);
+            const contents = (await readFile(this._parsedDocsConfig.footer)).toString();
+            jsFiles[relativeFilePath] = contents;
+            this.taskContext.logger.debug(`Added custom footer component: ${relativeFilePath}`);
         }
 
         const totalResolveTime = performance.now() - resolveStartTime;
@@ -807,8 +828,9 @@ export class DocsDefinitionResolver {
             colorsV2: undefined,
             typography: undefined,
             backgroundImage: undefined,
-            header: undefined,
-            footer: undefined
+            // custom components - the compiled JS will be stored in jsFiles and referenced by relative path
+            header: this.parsedDocsConfig.header ? this.toRelativeFilepath(this.parsedDocsConfig.header) : undefined,
+            footer: this.parsedDocsConfig.footer ? this.toRelativeFilepath(this.parsedDocsConfig.footer) : undefined
         };
         return config;
     }

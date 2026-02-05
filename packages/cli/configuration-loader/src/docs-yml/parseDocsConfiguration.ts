@@ -215,8 +215,9 @@ export async function parseDocsConfiguration({
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
-        header: undefined,
-        footer: undefined,
+        /* custom components */
+        header: resolveFilepath(rawDocsConfiguration.header, absoluteFilepathToDocsConfig),
+        footer: resolveFilepath(rawDocsConfiguration.footer, absoluteFilepathToDocsConfig),
 
         experimental
     };

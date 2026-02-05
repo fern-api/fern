@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from .container_object import ContainerObject
 from .some_literal import SomeLiteral
 
@@ -14,8 +16,12 @@ class SendRequest(UniversalBaseModel):
     stream: typing.Literal[False] = False
     ending: typing.Literal["$ending"] = "$ending"
     context: SomeLiteral = "You're super wise"
-    maybe_context: typing.Optional[SomeLiteral] = pydantic.Field(alias="maybeContext", default=None)
-    container_object: ContainerObject = pydantic.Field(alias="containerObject")
+    maybe_context: typing_extensions.Annotated[
+        typing.Optional[SomeLiteral], FieldMetadata(alias="maybeContext"), pydantic.Field(alias="maybeContext")
+    ] = None
+    container_object: typing_extensions.Annotated[
+        ContainerObject, FieldMetadata(alias="containerObject"), pydantic.Field(alias="containerObject")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

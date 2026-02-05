@@ -10,9 +10,9 @@ from ...core.serialization import FieldMetadata
 
 class MyObjectWithOptional(UniversalBaseModel):
     prop: str
-    optional_prop: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="optionalProp")] = (
-        pydantic.Field(alias="optionalProp", default=None)
-    )
+    optional_prop: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="optionalProp"), pydantic.Field(alias="optionalProp")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

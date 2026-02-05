@@ -798,7 +798,7 @@ types:
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "response": {
                     "body": {
@@ -834,7 +834,7 @@ types:
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "path-parameters": {
                     "id": "id",
@@ -867,7 +867,7 @@ types:
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "response": {
                     "body": [
@@ -905,7 +905,7 @@ types:
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "path-parameters": {
                     "id": "id",
@@ -972,7 +972,7 @@ service:
         status-code: 200
       examples:
         - headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           response:
             body:
               - api_key: api_key
@@ -997,7 +997,7 @@ service:
         status-code: 200
       examples:
         - headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           response:
             body:
               api_key: api_key
@@ -1024,7 +1024,7 @@ service:
         - path-parameters:
             id: id
           headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
     UpdateApiKey:
       path: /v1/token/{id}
       method: PATCH
@@ -1051,7 +1051,7 @@ service:
         - path-parameters:
             id: id
           headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           request: string
           response:
             body:
@@ -1091,7 +1091,7 @@ service:
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "request": {
                     "input": "input",
@@ -1168,7 +1168,7 @@ simba-turbo ModelTurbo",
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "request": {
                     "input": "input",
@@ -1266,7 +1266,7 @@ simba-turbo ModelTurbo",
                 {
                   "headers": {
                     "Accept": "audio/mpeg",
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "request": {
                     "input": "input",
@@ -1634,7 +1634,7 @@ service:
         - root.InternalServerError
       examples:
         - headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           request:
             input: input
             voice_id: voice_id
@@ -1716,7 +1716,7 @@ service:
         - root.InternalServerError
       examples:
         - headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           request:
             input: input
             voice_id: voice_id
@@ -1805,7 +1805,7 @@ service:
       examples:
         - headers:
             Accept: audio/mpeg
-            Authorization: '[object Object]'
+            Authorization: Authorization
           request:
             input: input
             voice_id: voice_id
@@ -1839,7 +1839,7 @@ service:
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "request": {
                     "grant_type": "client_credentials",
@@ -2011,7 +2011,7 @@ service:
         - root.BadRequestError
       examples:
         - headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           request:
             grant_type: client_credentials
           response:
@@ -2049,7 +2049,7 @@ service:
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "request": {
                     "consent": "consent",
@@ -2126,7 +2126,7 @@ This should include the fullName and email of the consenting individual.",
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "path-parameters": {
                     "id": "id",
@@ -2163,7 +2163,7 @@ This should include the fullName and email of the consenting individual.",
               "examples": [
                 {
                   "headers": {
-                    "Authorization": "[object Object]",
+                    "Authorization": "Authorization",
                   },
                   "response": {
                     "body": [
@@ -2226,7 +2226,7 @@ service:
         - root.InternalServerError
       examples:
         - headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           response:
             body:
               - avatar_image: avatar_image
@@ -2281,7 +2281,7 @@ service:
         - root.InternalServerError
       examples:
         - headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
           request:
             name: name
             consent: consent
@@ -2316,7 +2316,7 @@ service:
         - path-parameters:
             id: id
           headers:
-            Authorization: '[object Object]'
+            Authorization: Authorization
   source:
     openapi: ../openapi.json
 ",
