@@ -3,7 +3,9 @@
 package fern
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/idempotency-headers/fern/internal"
 	big "math/big"
 )
 
@@ -39,6 +41,27 @@ func (c *CreatePaymentRequest) SetAmount(amount int) {
 func (c *CreatePaymentRequest) SetCurrency(currency Currency) {
 	c.Currency = currency
 	c.require(createPaymentRequestFieldCurrency)
+}
+
+func (c *CreatePaymentRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreatePaymentRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreatePaymentRequest(body)
+	return nil
+}
+
+func (c *CreatePaymentRequest) MarshalJSON() ([]byte, error) {
+	type embed CreatePaymentRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 type Currency string

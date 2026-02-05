@@ -333,3 +333,24 @@ func (u *UploadDocumentRequest) SetTitle(title *string) {
 	u.Title = title
 	u.require(uploadDocumentRequestFieldTitle)
 }
+
+func (u *UploadDocumentRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UploadDocumentRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UploadDocumentRequest(body)
+	return nil
+}
+
+func (u *UploadDocumentRequest) MarshalJSON() ([]byte, error) {
+	type embed UploadDocumentRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
