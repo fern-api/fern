@@ -162,7 +162,7 @@
         "cross-package-type-names",
         "no-environment",
         "literal:use_typeddict_requests",
-        "websocket-bearer-auth"
+        "websocket-bearer-auth:no-custom-config"
       ],
       "groupTotalTimeSeconds": 192
     },
