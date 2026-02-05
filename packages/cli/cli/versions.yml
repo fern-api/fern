@@ -2,7 +2,7 @@
 - version: 3.64.1
   changelogEntry:
     - summary: |
-        Remove spurious example validation warnings.
+        Fix example validation to correctly handle allOf schema compositions. Properties from composed schemas are now properly recognized, eliminating false positive "unexpected property" warnings.
       type: fix
   createdAt: "2026-02-05"
   irVersion: 63

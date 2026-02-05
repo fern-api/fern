@@ -348,12 +348,32 @@ export class ExampleValidator {
             skipErrorCollector: true
         });
 
-        if (!schema || !schema.properties) {
+        if (!schema) {
+            return false;
+        }
+
+        // If schema has no properties and no allOf, we can't determine what's expected
+        if (!schema.properties && !schema.allOf) {
             return false;
         }
 
         const exampleObj = example as Record<string, unknown>;
-        const definedProperties = new Set(Object.keys(schema.properties));
+        const definedProperties = new Set(Object.keys(schema.properties ?? {}));
+
+        // Also include properties from allOf schemas
+        for (const subSchema of schema.allOf ?? []) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: [],
+                skipErrorCollector: true
+            });
+            if (resolved?.properties) {
+                for (const key of Object.keys(resolved.properties)) {
+                    definedProperties.add(key);
+                }
+            }
+        }
+
         const exampleProperties = Object.keys(exampleObj);
 
         // Check if any example property is not defined in the schema

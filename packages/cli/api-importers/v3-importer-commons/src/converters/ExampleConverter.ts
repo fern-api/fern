@@ -895,7 +895,23 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
 
         // Find properties in the example that are not defined in the schema
+        // Include properties from both the schema itself and any allOf schemas
         const definedPropertyKeys = new Set(Object.keys(resolvedSchema.properties ?? {}));
+
+        // Also include properties from allOf schemas
+        for (const subSchema of resolvedSchema.allOf ?? []) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved?.properties) {
+                for (const key of Object.keys(resolved.properties)) {
+                    definedPropertyKeys.add(key);
+                }
+            }
+        }
+
         const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
         if (additionalPropertyKeys.length > 0) {
