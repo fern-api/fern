@@ -74,6 +74,7 @@ export async function buildCli(config) {
         outDir,
         sourcemap: true,
         clean: true,
+        inlineOnly: false,
         env: {
             ...env,
             CLI_VERSION: process.argv[2] || packageJson.version

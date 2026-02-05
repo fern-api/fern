@@ -20,6 +20,7 @@ async function main() {
         outDir: "dist",
         sourcemap: true,
         clean: true,
+        inlineOnly: false,
         inputOptions: {
             resolve: {
                 conditionNames: ["development", "source", "import", "default"]

@@ -30,6 +30,7 @@ export async function buildGenerator(dirname, options = {}) {
         format: ["cjs"],
         sourcemap: true,
         clean: true,
+        inlineOnly: false,
         outDir: "dist"
     };
 
@@ -88,6 +89,7 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
         dts: true,
         sourcemap: true,
         platform: "browser",
+        inlineOnly: false,
         plugins: [nodePolyfills()],
         tsconfig: tsconfigPath,
         format: ["cjs", "esm"],
