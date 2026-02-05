@@ -599,13 +599,15 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getSetterMethod({ name, field }: { name: Name; field: php.Field }): php.Method {
+        const propertyName = this.getPropertyName(name);
         return php.method({
             name: this.getPropertySetterName(name),
             access: php.Access.Public,
             parameters: [php.parameter({ name: "value", type: field.type })],
             return_: SELF,
             body: php.codeblock((writer) => {
-                writer.write(`$this->${this.getPropertyName(name)} = $value;`);
+                writer.writeLine(`$this->${propertyName} = $value;`);
+                writer.writeLine(`$this->_setField('${propertyName}');`);
                 writer.write("return $this;");
             })
         });

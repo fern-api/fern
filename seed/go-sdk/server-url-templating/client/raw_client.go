@@ -37,7 +37,15 @@ func (r *RawClient) GetUsers(
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
+		internal.ResolveEnvironmentBaseURL(
+			options.Environment,
+			"Base",
+		),
 		r.baseURL,
+		internal.ResolveEnvironmentBaseURL(
+			r.options.Environment,
+			"Base",
+		),
 		"https://api.us-east-1.prod.example.com/v1",
 	)
 	endpointURL := baseURL + "/users"
@@ -77,7 +85,15 @@ func (r *RawClient) GetUser(
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
+		internal.ResolveEnvironmentBaseURL(
+			options.Environment,
+			"Base",
+		),
 		r.baseURL,
+		internal.ResolveEnvironmentBaseURL(
+			r.options.Environment,
+			"Base",
+		),
 		"https://api.us-east-1.prod.example.com/v1",
 	)
 	endpointURL := internal.EncodeURL(
@@ -106,6 +122,56 @@ func (r *RawClient) GetUser(
 		return nil, err
 	}
 	return &core.Response[*fern.User]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetToken(
+	ctx context.Context,
+	request *fern.TokenRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*fern.TokenResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		internal.ResolveEnvironmentBaseURL(
+			options.Environment,
+			"Auth",
+		),
+		r.baseURL,
+		internal.ResolveEnvironmentBaseURL(
+			r.options.Environment,
+			"Auth",
+		),
+		"https://auth.us-east-1.example.com",
+	)
+	endpointURL := baseURL + "/auth/token"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response *fern.TokenResponse
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*fern.TokenResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

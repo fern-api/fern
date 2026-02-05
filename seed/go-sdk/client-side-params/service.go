@@ -3,6 +3,8 @@
 package clientsideparams
 
 import (
+	json "encoding/json"
+	internal "github.com/client-side-params/fern/internal"
 	big "math/big"
 )
 
@@ -517,4 +519,25 @@ func (s *SearchResourcesRequest) SetQuery(query *string) {
 func (s *SearchResourcesRequest) SetFilters(filters map[string]interface{}) {
 	s.Filters = filters
 	s.require(searchResourcesRequestFieldFilters)
+}
+
+func (s *SearchResourcesRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchResourcesRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SearchResourcesRequest(body)
+	return nil
+}
+
+func (s *SearchResourcesRequest) MarshalJSON() ([]byte, error) {
+	type embed SearchResourcesRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

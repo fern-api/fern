@@ -2,12 +2,21 @@
 
 package api
 
+// Environment defines the environment with multiple base URLs.
+type Environment struct {
+	Base string
+	Auth string
+}
+
 // Environments defines all of the API environments.
 // These values can be used with the WithBaseURL
 // RequestOption to override the client's default environment,
 // if any.
 var Environments = struct {
-	Default string
+	RegionalApiServer Environment
 }{
-	Default: "https://api.us-east-1.prod.example.com/v1",
+	RegionalApiServer: Environment{
+		Auth: "https://auth.us-east-1.example.com",
+		Base: "https://api.us-east-1.prod.example.com/v1",
+	},
 }
