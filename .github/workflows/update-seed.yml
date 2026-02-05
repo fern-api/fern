@@ -320,14 +320,6 @@ jobs:
         run: |
           SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
           
-          # Define the number of groups for each generator that needs parallelization
-          declare -A NUM_GROUPS
-          NUM_GROUPS[java-sdk]=14
-          NUM_GROUPS[python-sdk]=14
-          NUM_GROUPS[ts-sdk]=10
-          NUM_GROUPS[go-sdk]=10
-          NUM_GROUPS[csharp-sdk]=10
-          
           # List of all generators
           GENERATORS="ruby-model ruby-sdk ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
@@ -338,33 +330,8 @@ jobs:
               echo "Specific fixture selected: $SELECTED_FIXTURE"
               MATRIX="[{\"fixtures\":[\"$SELECTED_FIXTURE\"]}]"
             else
-              GROUPS_COUNT=${NUM_GROUPS[$GEN]:-0}
-              
-              # Query fixtures for this specific generator (keeps JSON small)
-              FIXTURES_JSON=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator "$GEN")
-              
-              # Use Node.js to extract and optionally group fixtures for this generator
-              # Pass JSON via environment variable to avoid bash interpolation issues
-              MATRIX=$(FIXTURES_JSON="$FIXTURES_JSON" GROUPS_COUNT="$GROUPS_COUNT" GEN="$GEN" node -e "
-                const data = JSON.parse(process.env.FIXTURES_JSON);
-                const fixtures = data.generators[process.env.GEN] || [];
-                const numGroups = parseInt(process.env.GROUPS_COUNT, 10);
-                
-                  // If numGroups is 0 or fixtures <= 20, return single group with 'all'
-                  if (numGroups === 0 || fixtures.length <= 20) {
-                    console.log(JSON.stringify([{fixtures: ['all']}]));
-                  } else {
-                    // Split fixtures into balanced groups
-                    const groups = [];
-                    for (let i = 0; i < numGroups; i++) {
-                      groups.push({fixtures: []});
-                    }
-                    fixtures.forEach((fixture, idx) => {
-                      groups[idx % numGroups].fixtures.push(fixture);
-                    });
-                    console.log(JSON.stringify(groups));
-                  }
-              ")
+              # Query fixtures with auto-grouping (seed CLI calculates optimal group count)
+              MATRIX=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator "$GEN" --groups auto)
             fi
             
             if [ -z "$MATRIX" ] || [ "$MATRIX" = "null" ] || [ "$MATRIX" = "undefined" ]; then

@@ -1,2 +1,7 @@
 export type { FixtureGroup } from "./getAvailableFixtures";
-export { getAvailableFixtures, getAvailableFixturesFromList, splitFixturesIntoGroups } from "./getAvailableFixtures";
+export {
+    calculateRecommendedGroups,
+    getAvailableFixtures,
+    getAvailableFixturesFromList,
+    splitFixturesIntoGroups
+} from "./getAvailableFixtures";

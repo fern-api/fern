@@ -2,6 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 
 import {
+    calculateRecommendedGroups,
     getAvailableFixturesFromList,
     splitFixturesIntoGroups
 } from "../commands/list-test-fixtures/getAvailableFixtures";
@@ -351,5 +352,74 @@ describe("splitFixturesIntoGroups", () => {
             expect(result).toHaveLength(1);
             expect(result[0]?.fixtures).toHaveLength(50);
         });
+    });
+
+    describe("auto-calculate groups (numGroups = -1)", () => {
+        it("returns single group with 'all' when fixture count is 20 or less", () => {
+            const fixtures = Array.from({ length: 20 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, -1);
+
+            expect(result).toEqual([{ fixtures: ["all"] }]);
+        });
+
+        it("auto-calculates groups for 50 fixtures", () => {
+            const fixtures = Array.from({ length: 50 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, -1);
+
+            // 50 fixtures / 10 = 5 groups
+            expect(result).toHaveLength(5);
+        });
+
+        it("auto-calculates groups for 100 fixtures", () => {
+            const fixtures = Array.from({ length: 100 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, -1);
+
+            // 100 fixtures / 10 = 10 groups
+            expect(result).toHaveLength(10);
+        });
+
+        it("caps at 15 groups for very large fixture counts", () => {
+            const fixtures = Array.from({ length: 200 }, (_, i) => `fixture${i}`);
+
+            const result = splitFixturesIntoGroups(fixtures, -1);
+
+            // 200 / 10 = 20, but capped at 15
+            expect(result).toHaveLength(15);
+        });
+    });
+});
+
+describe("calculateRecommendedGroups", () => {
+    it("returns 0 for fixture count <= 20", () => {
+        expect(calculateRecommendedGroups(0)).toBe(0);
+        expect(calculateRecommendedGroups(10)).toBe(0);
+        expect(calculateRecommendedGroups(20)).toBe(0);
+    });
+
+    it("returns minimum of 2 groups for 21-30 fixtures", () => {
+        expect(calculateRecommendedGroups(21)).toBe(3);
+        expect(calculateRecommendedGroups(25)).toBe(3);
+        expect(calculateRecommendedGroups(30)).toBe(3);
+    });
+
+    it("calculates 1 group per 10 fixtures", () => {
+        expect(calculateRecommendedGroups(40)).toBe(4);
+        expect(calculateRecommendedGroups(50)).toBe(5);
+        expect(calculateRecommendedGroups(70)).toBe(7);
+        expect(calculateRecommendedGroups(100)).toBe(10);
+    });
+
+    it("caps at 15 groups maximum", () => {
+        expect(calculateRecommendedGroups(150)).toBe(15);
+        expect(calculateRecommendedGroups(200)).toBe(15);
+        expect(calculateRecommendedGroups(500)).toBe(15);
+    });
+
+    it("handles edge case of exactly 21 fixtures", () => {
+        // 21 / 10 = 2.1, ceiling = 3
+        expect(calculateRecommendedGroups(21)).toBe(3);
     });
 });

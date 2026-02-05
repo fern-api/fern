@@ -13,7 +13,7 @@ import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
-import { getAvailableFixtures } from "./commands/list-test-fixtures";
+import { calculateRecommendedGroups, getAvailableFixtures, splitFixturesIntoGroups } from "./commands/list-test-fixtures";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
@@ -593,13 +593,20 @@ function addListTestFixturesCommand(cli: Argv) {
         "list-test-fixtures",
         "List all test fixtures for all generators or a specific generator, with output folders, in JSON format for CI consumption",
         (yargs) =>
-            yargs.option("generator", {
-                type: "array",
-                string: true,
-                demandOption: false,
-                alias: "g",
-                description: "The generators to list fixtures for (lists all if not provided)"
-            }),
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to list fixtures for (lists all if not provided)"
+                })
+                .option("groups", {
+                    type: "string",
+                    demandOption: false,
+                    description:
+                        "Split fixtures into groups for parallel execution. Use 'auto' to automatically calculate based on fixture count, or a number for a specific group count."
+                }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
             if (argv.generator != null) {
@@ -610,6 +617,30 @@ function addListTestFixturesCommand(cli: Argv) {
                 argv.generator != null
                     ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
                     : generators;
+
+            // Determine number of groups
+            const groupsArg = argv.groups;
+            const numGroups =
+                groupsArg === "auto" ? -1 : groupsArg != null ? parseInt(groupsArg, 10) : undefined;
+
+            // If groups is specified, output grouped fixtures
+            if (numGroups !== undefined) {
+                // For grouped output, we expect a single generator
+                if (targetGenerators.length !== 1) {
+                    throw new Error(
+                        "When using --groups, you must specify exactly one generator with --generator"
+                    );
+                }
+
+                const generator = targetGenerators[0];
+                if (generator == null) {
+                    throw new Error("Generator not found");
+                }
+                const fixtures = await getAvailableFixtures(generator, true);
+                const groups = splitFixturesIntoGroups(fixtures, numGroups);
+                console.log(JSON.stringify(groups));
+                return;
+            }
 
             // Output flat list of fixtures for each generator
             const result: Record<string, string[]> = {};
