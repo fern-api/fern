@@ -24,7 +24,7 @@ def is_literal_type(type_: Any) -> bool:
 
 
 def is_union(tp: Optional[Type[Any]]) -> bool:
-    return tp is Union or typing_extensions.get_origin(tp) is Union
+    return tp is Union or typing_extensions.get_origin(tp) is Union  # type: ignore[comparison-overlap]
 
 
 def parse_date(value: Any) -> dt.date:

@@ -27,7 +27,7 @@ if IS_PYDANTIC_V2:
         return typing_extensions.get_origin(type_) is typing_extensions.Literal
 
     def is_union(tp: Optional[Type[Any]]) -> bool:  # type: ignore[no-redef]
-        return tp is Union or typing_extensions.get_origin(tp) is Union
+        return tp is Union or typing_extensions.get_origin(tp) is Union  # type: ignore[comparison-overlap]
 
     def parse_date(value: Any) -> dt.date:  # type: ignore[no-redef]
         if isinstance(value, dt.date):
