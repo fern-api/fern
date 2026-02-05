@@ -1,7 +1,9 @@
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { resolve } from "@fern-api/fs-utils";
 import type { Argv } from "yargs";
+import { GitOutputModeSchema } from "../../../../../config/lib/schemas";
 import { ApiChecker } from "../../../api/checker/ApiChecker";
 import type { Context } from "../../../context/Context";
 import type { GlobalArgs } from "../../../context/GlobalArgs";
@@ -9,11 +11,9 @@ import { CliError } from "../../../errors/CliError";
 import type { Target } from "../../../sdk/config/Target";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline";
 import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup";
+import type { TaskStageLabels } from "../../../ui/TaskStageLabels";
 import type { Workspace } from "../../../workspace/Workspace";
 import { command } from "../../_internal/command";
-import { GitOutputModeSchema, GitOutputSchema } from "../../../../../config/lib/schemas";
-import { assertNever } from "@fern-api/core-utils";
-import type { TaskStageLabels } from "../../../ui/TaskStageLabels";
 
 export declare namespace GenerateCommand {
     export interface Args extends GlobalArgs {

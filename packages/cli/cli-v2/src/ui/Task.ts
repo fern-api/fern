@@ -1,6 +1,6 @@
 import type { TaskLog } from "./TaskLog";
-import type { TaskStatus } from "./TaskStatus";
 import type { TaskStage } from "./TaskStage";
+import type { TaskStatus } from "./TaskStatus";
 
 export interface Task {
     /** Unique identifier for the task */

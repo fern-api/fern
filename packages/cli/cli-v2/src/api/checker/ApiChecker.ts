@@ -5,9 +5,9 @@ import { AbsoluteFilePath, join, RelativeFilePath, relativize } from "@fern-api/
 import chalk from "chalk";
 import type { Context } from "../../context/Context";
 import { Colors, formatMessage, Icons } from "../../ui/format";
+import { Task } from "../../ui/Task";
 import type { Workspace } from "../../workspace/Workspace";
 import { ApiDefinitionValidator } from "../validator/ApiDefinitionValidator";
-import { Task } from "../../ui/Task";
 
 const INDENT = {
     /** Base indent for file paths */
