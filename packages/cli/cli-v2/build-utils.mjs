@@ -23,6 +23,7 @@ function getDependencyVersion(packageName) {
  */
 export const FULL_EXTERNALS = [
     "@boundaryml/baml",
+    /^keytar(?:\/.*)?$/,
     /^prettier(?:\/.*)?$/,
     /^prettier2(?:\/.*)?$/,
     /^vitest(?:\/.*)?$/,
@@ -35,7 +36,7 @@ export const FULL_EXTERNALS = [
 /**
  * Minimal external dependencies for local/unminified builds
  */
-export const MINIMAL_EXTERNALS = ["@boundaryml/baml"];
+export const MINIMAL_EXTERNALS = ["@boundaryml/baml", /^keytar(?:\/.*)?$/];
 
 /**
  * Common tsdown overrides for production-like builds with optimization
