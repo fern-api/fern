@@ -350,22 +350,20 @@ jobs:
                 const fixtures = data.generators[process.env.GEN] || [];
                 const numGroups = parseInt(process.env.GROUPS_COUNT, 10);
                 
-                // If numGroups is 0 or fixtures <= 20, return single group with 'all'
-                if (numGroups === 0 || fixtures.length <= 20) {
-                  console.log(JSON.stringify([{fixtures: ['all']}]));
-                } else {
-                  // Split fixtures into balanced groups
-                  const groups = [];
-                  for (let i = 0; i < numGroups; i++) {
-                    groups.push({fixtures: []});
+                  // If numGroups is 0 or fixtures <= 20, return single group with 'all'
+                  if (numGroups === 0 || fixtures.length <= 20) {
+                    console.log(JSON.stringify([{fixtures: ['all']}]));
+                  } else {
+                    // Split fixtures into balanced groups
+                    const groups = [];
+                    for (let i = 0; i < numGroups; i++) {
+                      groups.push({fixtures: []});
+                    }
+                    fixtures.forEach((fixture, idx) => {
+                      groups[idx % numGroups].fixtures.push(fixture);
+                    });
+                    console.log(JSON.stringify(groups));
                   }
-                  fixtures.forEach((fixture, idx) => {
-                    groups[idx % numGroups].fixtures.push(fixture);
-                  });
-                  // Add leftovers group
-                  groups.push({fixtures: ['leftovers']});
-                  console.log(JSON.stringify(groups));
-                }
               ")
             fi
             

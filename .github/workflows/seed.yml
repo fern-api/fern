@@ -272,8 +272,6 @@ jobs:
                 fixtures.forEach((fixture, idx) => {
                   groups[idx % numGroups].fixtures.push(fixture);
                 });
-                // Add leftovers group
-                groups.push({fixtures: ['leftovers']});
                 console.log(JSON.stringify(groups));
               }
             ")
