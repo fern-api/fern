@@ -122,7 +122,8 @@ function convertMultipleBaseUrlEnvironments({
                             | Record<string, Array<{ id: string; default?: string; values?: string[] }>>
                             | undefined;
 
-                        const urlTemplates = rawUrlTemplates && Object.keys(rawUrlTemplates).length > 0 ? rawUrlTemplates : undefined;
+                        const urlTemplates =
+                            rawUrlTemplates && Object.keys(rawUrlTemplates).length > 0 ? rawUrlTemplates : undefined;
                         const defaultUrls =
                             rawDefaultUrls && Object.keys(rawDefaultUrls).length > 0
                                 ? mapValues(rawDefaultUrls, (url) => removeTrailingSlash(url))
