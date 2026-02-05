@@ -49,13 +49,15 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_property_type(self, property: ir_types.FileUploadRequestProperty) -> AST.TypeHint:
         return property.visit(
             file=lambda x: self._get_file_property_type(x),
-            body_property=lambda body_property: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                body_property.value_type,
-                # This is a temporary flag introduced due to an oversight in the `use_typeddict_requests` flag implementation.
-                # Given that TypedDicts have already been released, we need to gate this with a flag specific to file upload
-                # requests.
-                in_endpoint=self._context.custom_config.use_typeddict_requests
-                and self._context.custom_config.use_typeddict_requests_for_file_upload,
+            body_property=lambda body_property: (
+                self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    body_property.value_type,
+                    # This is a temporary flag introduced due to an oversight in the `use_typeddict_requests` flag implementation.
+                    # Given that TypedDicts have already been released, we need to gate this with a flag specific to file upload
+                    # requests.
+                    in_endpoint=self._context.custom_config.use_typeddict_requests
+                    and self._context.custom_config.use_typeddict_requests_for_file_upload,
+                )
             ),
         )
 
