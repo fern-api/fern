@@ -13,7 +13,7 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
-import { open } from "yauzl-promise";
+import yauzl from "yauzl";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -394,21 +394,43 @@ async function downloadAndExtractZipToDirectory({
 }
 
 export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
-    const zip = await open(zipPath);
+    return new Promise((resolve, reject) => {
+        yauzl.open(zipPath, { lazyEntries: true }, (err, zipFile) => {
+            if (err || !zipFile) {
+                reject(err ?? new Error("Failed to open zip file"));
+                return;
+            }
 
-    for await (const entry of zip) {
-        const outputPath = path.join(outputDir, entry.filename);
+            zipFile.on("error", reject);
+            zipFile.on("end", resolve);
 
-        if (entry.filename.endsWith("/")) {
-            await mkdir(outputPath, { recursive: true });
-            continue;
-        }
+            zipFile.on("entry", (entry: yauzl.Entry) => {
+                const outputPath = path.join(outputDir, entry.fileName);
 
-        await mkdir(path.dirname(outputPath), { recursive: true });
+                if (entry.fileName.endsWith("/")) {
+                    mkdir(outputPath, { recursive: true })
+                        .then(() => zipFile.readEntry())
+                        .catch(reject);
+                    return;
+                }
 
-        const readStream = await entry.openReadStream();
-        await new Promise<void>((resolve, reject) => {
-            readStream.pipe(createWriteStream(outputPath)).on("finish", resolve).on("error", reject);
+                mkdir(path.dirname(outputPath), { recursive: true })
+                    .then(() => {
+                        zipFile.openReadStream(entry, (streamErr, readStream) => {
+                            if (streamErr || !readStream) {
+                                reject(streamErr ?? new Error("Failed to open read stream"));
+                                return;
+                            }
+                            readStream
+                                .pipe(createWriteStream(outputPath))
+                                .on("finish", () => zipFile.readEntry())
+                                .on("error", reject);
+                        });
+                    })
+                    .catch(reject);
+            });
+
+            zipFile.readEntry();
         });
-    }
+    });
 }
