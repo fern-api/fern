@@ -23,6 +23,35 @@ types:
       id: EnvironmentId
       name: commons.Name
       url: EnvironmentUrl
+      defaultUrl:
+        type: optional<string>
+        docs: |
+          A separate default URL to use when no variables are provided.
+          If present and no variables are passed, use this URL instead of the template.
+          This is typically a server without variables that serves as the fallback.
+      urlTemplate:
+        type: optional<string>
+        docs: |
+          The original URL template with variable placeholders (e.g., "https://api.{region}.example.com").
+          If present, the SDK should use this template with urlVariables to construct the final URL.
+      urlVariables:
+        type: optional<list<ServerVariable>>
+        docs: |
+          Variables that can be substituted into the urlTemplate at runtime.
+          Each variable has a name, default value, and optional enum of allowed values.
+  ServerVariable:
+    docs: A variable that can be substituted into a URL template at runtime.
+    properties:
+      id:
+        type: string
+        docs: The unique identifier for this variable (matches the placeholder in the URL template).
+      name: commons.Name
+      default:
+        type: optional<string>
+        docs: The default value for this variable.
+      values:
+        type: optional<list<string>>
+        docs: If present, the allowed values for this variable (from OpenAPI enum).
   MultipleBaseUrlsEnvironments:
     properties:
       baseUrls: list<EnvironmentBaseUrlWithId>
@@ -33,6 +62,21 @@ types:
       id: EnvironmentId
       name: commons.Name
       urls: map<EnvironmentBaseUrlId, EnvironmentUrl>
+      defaultUrls:
+        type: optional<map<EnvironmentBaseUrlId, string>>
+        docs: |
+          A map of default URLs to use when no variables are provided for each base URL.
+          If present and no variables are passed, use these URLs instead of the templates.
+      urlTemplates:
+        type: optional<map<EnvironmentBaseUrlId, string>>
+        docs: |
+          A map of URL templates with variable placeholders for each base URL.
+          If present, the SDK should use these templates with urlVariables to construct the final URLs.
+      urlVariables:
+        type: optional<map<EnvironmentBaseUrlId, list<ServerVariable>>>
+        docs: |
+          A map of variables that can be substituted into the urlTemplates at runtime for each base URL.
+          Each variable has a name, default value, and optional enum of allowed values.
   EnvironmentBaseUrlWithId:
     properties:
       id: EnvironmentBaseUrlId

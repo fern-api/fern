@@ -7,13 +7,13 @@ import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
-import decompress from "decompress";
 import { createWriteStream } from "fs";
 import { chmod, cp, mkdir, readdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
+import yauzl from "yauzl";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -237,7 +237,7 @@ async function downloadZipForTask({
     // Force remove the directory to handle read-only files (e.g., .git/objects)
     await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
-    await decompress(outputZipPath, absolutePathToLocalOutput);
+    await extractZipToDirectory(outputZipPath, absolutePathToLocalOutput);
 }
 
 async function forceRemoveDirectory(dirPath: AbsoluteFilePath): Promise<void> {
@@ -390,5 +390,47 @@ async function downloadAndExtractZipToDirectory({
     const outputZipPath = path.join(tmpDir.path, "output.zip");
     await pipeline(request.data, createWriteStream(outputZipPath));
 
-    await decompress(outputZipPath, outputPath);
+    await extractZipToDirectory(outputZipPath, outputPath);
+}
+
+export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
+    return new Promise((resolve, reject) => {
+        yauzl.open(zipPath, { lazyEntries: true }, (err, zipFile) => {
+            if (err || !zipFile) {
+                reject(err ?? new Error("Failed to open zip file"));
+                return;
+            }
+
+            zipFile.on("error", reject);
+            zipFile.on("end", resolve);
+
+            zipFile.on("entry", (entry: yauzl.Entry) => {
+                const outputPath = path.join(outputDir, entry.fileName);
+
+                if (entry.fileName.endsWith("/")) {
+                    mkdir(outputPath, { recursive: true })
+                        .then(() => zipFile.readEntry())
+                        .catch(reject);
+                    return;
+                }
+
+                mkdir(path.dirname(outputPath), { recursive: true })
+                    .then(() => {
+                        zipFile.openReadStream(entry, (streamErr, readStream) => {
+                            if (streamErr || !readStream) {
+                                reject(streamErr ?? new Error("Failed to open read stream"));
+                                return;
+                            }
+                            readStream
+                                .pipe(createWriteStream(outputPath))
+                                .on("finish", () => zipFile.readEntry())
+                                .on("error", reject);
+                        });
+                    })
+                    .catch(reject);
+            });
+
+            zipFile.readEntry();
+        });
+    });
 }

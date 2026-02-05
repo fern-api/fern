@@ -1,4 +1,5 @@
 import type { TaskLog } from "./TaskLog";
+import type { TaskStage } from "./TaskStage";
 import type { TaskStatus } from "./TaskStatus";
 
 export interface Task {
@@ -14,10 +15,14 @@ export interface Task {
     output?: string[];
     /** The error message (shown if status is error) */
     error?: string;
+    /** The reason the task was skipped (shown if status is skipped) */
+    skipReason?: string;
     /** The start time of the task */
     startTime?: number;
     /** The end time of the task */
     endTime?: number;
     /** Logs collected during task execution */
     logs?: TaskLog[];
+    /** Structured stages for progress tracking */
+    stages?: TaskStage[];
 }

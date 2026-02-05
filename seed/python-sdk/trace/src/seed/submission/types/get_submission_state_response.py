@@ -14,14 +14,14 @@ from .submission_type_state import SubmissionTypeState
 
 
 class GetSubmissionStateResponse(UniversalBaseModel):
-    time_submitted: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="timeSubmitted")] = (
-        pydantic.Field(alias="timeSubmitted", default=None)
-    )
+    time_submitted: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="timeSubmitted"), pydantic.Field(alias="timeSubmitted")
+    ] = None
     submission: str
     language: Language
     submission_type_state: typing_extensions.Annotated[
-        SubmissionTypeState, FieldMetadata(alias="submissionTypeState")
-    ] = pydantic.Field(alias="submissionTypeState")
+        SubmissionTypeState, FieldMetadata(alias="submissionTypeState"), pydantic.Field(alias="submissionTypeState")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

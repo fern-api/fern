@@ -652,7 +652,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         parsedEndpoint
     }: {
         endpoint: FernIr.dynamic.Endpoint;
-        parsedEndpoint: HttpEndpointReferenceParser.Parsed;
+        parsedEndpoint: { method: string; path: string; namespace?: string };
     }): boolean {
         return endpoint.location.method === parsedEndpoint.method && endpoint.location.path === parsedEndpoint.path;
     }

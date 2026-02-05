@@ -55,6 +55,7 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
     public function setPage(?int $value = null): self
     {
         $this->page = $value;
+        $this->_setField('page');
         return $this;
     }
 
@@ -72,6 +73,7 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
     public function setLimit(?int $value = null): self
     {
         $this->limit = $value;
+        $this->_setField('limit');
         return $this;
     }
 
@@ -89,6 +91,7 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
     public function setOrder(?string $value = null): self
     {
         $this->order = $value;
+        $this->_setField('order');
         return $this;
     }
 }

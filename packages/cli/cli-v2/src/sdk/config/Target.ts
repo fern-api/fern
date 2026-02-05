@@ -1,7 +1,5 @@
 import { schemas } from "@fern-api/config";
 import type { Language } from "./Language";
-import type { OutputConfig } from "./OutputConfig";
-import type { PublishConfig } from "./PublishConfig";
 
 export interface Target {
     /** Target name from fern.yml (e.g., "node", "python") */
@@ -15,15 +13,17 @@ export interface Target {
     /** SDK version to generate */
     version: string;
     /** Output configuration for local/git publishing */
-    output: OutputConfig;
+    output: schemas.OutputSchema;
     /** Target-specific configuration */
     config?: Record<string, unknown>;
     /** Publish configuration for package registries */
-    publish?: PublishConfig;
+    publish?: schemas.PublishSchema;
     /** Groups this target belongs to */
     groups?: string[];
     /** README.md configuration */
     readme?: schemas.ReadmeSchema;
+    /** SDK metadata (description, authors) */
+    metadata?: schemas.MetadataSchema;
     /** Configure smart casing for generated code (default: true) */
     smartCasing?: boolean;
 }

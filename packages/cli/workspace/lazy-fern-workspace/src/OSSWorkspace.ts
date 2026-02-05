@@ -2,6 +2,7 @@ import {
     AbstractAPIWorkspace,
     BaseOpenAPIWorkspace,
     FernWorkspace,
+    GraphQLSpec,
     getOpenAPISettings,
     IdentifiableSource,
     OpenAPISpec,
@@ -11,6 +12,7 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
@@ -64,6 +66,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private loader: OpenAPILoader;
     private readonly parseOptions: Partial<ParseOpenAPIOptions>;
     private readonly groupMultiApiEnvironments: boolean;
+
+    private graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
+    private graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         super({
@@ -133,6 +138,46 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             defaultIntegerFormat: this.defaultIntegerFormat,
             pathParameterOrder: this.pathParameterOrder
         };
+    }
+
+    public getGraphqlOperations(): Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> {
+        return this.graphqlOperations;
+    }
+
+    public getGraphqlTypes(): Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> {
+        return this.graphqlTypes;
+    }
+
+    public getGraphqlOperationsCount(): number {
+        return Object.keys(this.graphqlOperations).length;
+    }
+
+    public getGraphqlTypesCount(): number {
+        return Object.keys(this.graphqlTypes).length;
+    }
+
+    public async processGraphQLSpecs(context: TaskContext): Promise<void> {
+        const { GraphQLConverter } = await import("@fern-api/graphql-to-fdr");
+        const graphqlSpecs = this.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+
+        for (const spec of graphqlSpecs) {
+            try {
+                const converter = new GraphQLConverter({
+                    context,
+                    filePath: spec.absoluteFilepath
+                });
+                const result = await converter.convert();
+
+                // Merge GraphQL operations and types into workspace
+                Object.assign(this.graphqlOperations, result.graphqlOperations);
+                Object.assign(this.graphqlTypes, result.types);
+            } catch (error) {
+                context.logger.error(
+                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                    error instanceof Error ? error.message : String(error)
+                );
+            }
+        }
     }
 
     public async getOpenAPIIr(
@@ -374,23 +419,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     ? ` for ${errorCollector.relativeFilepathToSpec}`
                     : "";
 
-                // TODO(kenny): we should do something more useful with the warnings here, or remove.
-
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",
-                        `API validation${specInfo} completed with ${errorStats.numErrors} errors and ${errorStats.numWarnings} warnings.`
+                        `API validation${specInfo} completed with ${errorStats.numErrors} errors.`
                     );
-                } else if (errorStats.numWarnings > 0) {
+                } else if (errorStats.numWarnings > 0 && logWarnings) {
                     context.logger.log(
                         "warn",
                         `API validation${specInfo} completed with ${errorStats.numWarnings} warnings.`
                     );
-                } else {
-                    context.logger.log("info", `All checks passed when parsing OpenAPI${specInfo}.`);
                 }
-
-                context.logger.log("info", "");
 
                 await errorCollector.logErrors({ logWarnings });
             }

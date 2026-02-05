@@ -26,7 +26,7 @@ export namespace LegacyGenerationRunner {
     }
 
     export interface RunArgs {
-        /** Task for log display */
+        /** The current task */
         task: Task;
 
         /** The target to generate */

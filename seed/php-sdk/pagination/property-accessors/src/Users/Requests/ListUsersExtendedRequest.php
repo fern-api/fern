@@ -36,6 +36,7 @@ class ListUsersExtendedRequest extends JsonSerializableType
     public function setCursor(?string $value = null): self
     {
         $this->cursor = $value;
+        $this->_setField('cursor');
         return $this;
     }
 }

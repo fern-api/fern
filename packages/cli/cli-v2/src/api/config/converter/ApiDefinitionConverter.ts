@@ -127,8 +127,19 @@ export class ApiDefinitionConverter {
             specs: api.specs,
             sourced: sourcedApi.specs
         });
+
+        const apiDefinition: ApiDefinition = {
+            specs,
+            auth: api.auth,
+            authSchemes: api.authSchemes,
+            defaultUrl: api.defaultUrl,
+            defaultEnvironment: api.defaultEnvironment,
+            environments: api.environments,
+            headers: api.headers
+        };
+
         return {
-            [DEFAULT_API_NAME]: { specs }
+            [DEFAULT_API_NAME]: apiDefinition
         };
     }
 
@@ -155,7 +166,15 @@ export class ApiDefinitionConverter {
                 specs: apiDef.specs,
                 sourced: sourcedApiDef.specs
             });
-            result[apiName] = { specs };
+            result[apiName] = {
+                specs,
+                auth: apiDef.auth,
+                authSchemes: apiDef.authSchemes,
+                defaultUrl: apiDef.defaultUrl,
+                defaultEnvironment: apiDef.defaultEnvironment,
+                environments: apiDef.environments,
+                headers: apiDef.headers
+            };
         }
         return result;
     }

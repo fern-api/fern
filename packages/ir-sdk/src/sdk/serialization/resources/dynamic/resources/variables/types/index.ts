@@ -1,1 +1,1 @@
-export * from "./VariableDeclaration";
+export * from "./VariableDeclaration.js";

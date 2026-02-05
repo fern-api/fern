@@ -1,4 +1,4 @@
-import { Logger } from "@fern-api/logger";
+import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import type {
     CreateInteractiveTaskParams,
     Finishable,
@@ -14,14 +14,34 @@ import { TaskContextLogger } from "./TaskContextLogger";
 
 /**
  * Adapts the CLI context to the legacy TaskContext interface.
+ *
+ * When a task is provided, logs are written to the task's log display
+ * and to the log file via TaskContextLogger.
+ *
+ * When no task is provided (e.g., during validation), logs are written
+ * directly to stderr, filtered by logLevel (defaults to Warn).
+ *
+ * @param context - The CLI context
+ * @param task - Optional task for log file writing
+ * @param logLevel - Minimum log level to display. Defaults to Warn (only warnings and errors).
+ *                   Pass LogLevel.Info to include info messages (e.g., for device code flow).
  */
 export class TaskContextAdapter implements TaskContext {
     private result: TaskResult = TaskResult.Success;
 
     public readonly logger: Logger;
 
-    constructor({ context, task }: { context: Context; task: Task }) {
-        this.logger = new TaskContextLogger({ context, task });
+    constructor({ context, task, logLevel = LogLevel.Warn }: { context: Context; task?: Task; logLevel?: LogLevel }) {
+        if (task != null) {
+            this.logger = new TaskContextLogger({ context, task, logLevel });
+        } else {
+            // When no task is provided, write directly to stderr.
+            this.logger = createLogger((level: LogLevel, ...args: string[]) => {
+                if (LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(logLevel)) {
+                    context.stderr.log(level, ...args);
+                }
+            });
+        }
     }
 
     public async takeOverTerminal(run: () => void | Promise<void>): Promise<void> {
@@ -47,7 +67,7 @@ export class TaskContextAdapter implements TaskContext {
         return this.result;
     }
 
-    public addInteractiveTask(params: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
+    public addInteractiveTask(_params: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
         const subtask: InteractiveTaskContext & Startable<InteractiveTaskContext> & Finishable = {
             logger: this.logger,
             takeOverTerminal: this.takeOverTerminal.bind(this),

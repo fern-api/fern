@@ -1,0 +1,134 @@
+openapi: 3.0.1
+info:
+  title: Server URL Templating API
+  version: ''
+paths:
+  /users:
+    get:
+      operationId: getUsers
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
+                      email: email
+      summary: Get all users
+      servers:
+        - url: https://api.us-east-1.prod.example.com/v1
+  /users/{userId}:
+    get:
+      operationId: getUser
+      tags:
+        - ''
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: userId
+          examples:
+            Example1:
+              value: userId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    email: email
+      summary: Get a user by ID
+      servers:
+        - url: https://api.us-east-1.prod.example.com/v1
+  /auth/token:
+    post:
+      operationId: getToken
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+      summary: Get authentication token
+      servers:
+        - url: https://auth.us-east-1.example.com
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  example: client_id
+                client_secret:
+                  type: string
+                  example: client_secret
+              required:
+                - client_id
+                - client_secret
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+          example: id
+        name:
+          type: string
+          example: name
+        email:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: access_token
+        expires_in:
+          type: integer
+          example: 1
+      required:
+        - access_token
+        - expires_in
+  securitySchemes: {}

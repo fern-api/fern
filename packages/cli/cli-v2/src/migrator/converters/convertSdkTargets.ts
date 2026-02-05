@@ -296,49 +296,85 @@ function convertOutputConfig(
                 const npmOutput = outputLocation as generatorsYml.GeneratorOutputSchema.Npm;
                 publish = {
                     npm: {
-                        packageName: npmOutput["package-name"]
+                        packageName: npmOutput["package-name"],
+                        url: npmOutput.url,
+                        token: npmOutput.token
                     }
                 };
                 break;
             }
             case "pypi": {
-                warnings.push({
-                    type: "info",
-                    message: "PyPI publishing configuration detected but not fully supported in fern.yml yet",
-                    suggestion: "Configure PyPI publishing manually"
-                });
+                const pypiOutput = outputLocation as generatorsYml.GeneratorOutputSchema.Pypi;
+                publish = {
+                    pypi: {
+                        packageName: pypiOutput["package-name"],
+                        url: pypiOutput.url,
+                        token: pypiOutput.token,
+                        username: pypiOutput.username,
+                        password: pypiOutput.password,
+                        metadata:
+                            pypiOutput.metadata != null
+                                ? {
+                                      keywords: pypiOutput.metadata.keywords,
+                                      documentationLink: pypiOutput.metadata["documentation-link"],
+                                      homepageLink: pypiOutput.metadata["homepage-link"]
+                                  }
+                                : undefined
+                    }
+                };
                 break;
             }
             case "maven": {
-                warnings.push({
-                    type: "info",
-                    message: "Maven publishing configuration detected but not fully supported in fern.yml yet",
-                    suggestion: "Configure Maven publishing manually"
-                });
+                const mavenOutput = outputLocation as generatorsYml.GeneratorOutputSchema.Maven;
+                publish = {
+                    maven: {
+                        coordinate: mavenOutput.coordinate,
+                        url: mavenOutput.url,
+                        username: mavenOutput.username,
+                        password: mavenOutput.password,
+                        signature:
+                            mavenOutput.signature != null
+                                ? {
+                                      keyId: mavenOutput.signature.keyId,
+                                      password: mavenOutput.signature.password,
+                                      secretKey: mavenOutput.signature.secretKey
+                                  }
+                                : undefined
+                    }
+                };
                 break;
             }
             case "nuget": {
-                warnings.push({
-                    type: "info",
-                    message: "NuGet publishing configuration detected but not fully supported in fern.yml yet",
-                    suggestion: "Configure NuGet publishing manually"
-                });
+                const nugetOutput = outputLocation as generatorsYml.GeneratorOutputSchema.Nuget;
+                publish = {
+                    nuget: {
+                        packageName: nugetOutput["package-name"],
+                        url: nugetOutput.url,
+                        apiKey: nugetOutput["api-key"]
+                    }
+                };
                 break;
             }
             case "rubygems": {
-                warnings.push({
-                    type: "info",
-                    message: "RubyGems publishing configuration detected but not fully supported in fern.yml yet",
-                    suggestion: "Configure RubyGems publishing manually"
-                });
+                const rubygemsOutput = outputLocation as generatorsYml.GeneratorOutputSchema.Rubygems;
+                publish = {
+                    rubygems: {
+                        packageName: rubygemsOutput["package-name"],
+                        url: rubygemsOutput.url,
+                        apiKey: rubygemsOutput["api-key"]
+                    }
+                };
                 break;
             }
             case "crates": {
-                warnings.push({
-                    type: "info",
-                    message: "Crates publishing configuration detected but not fully supported in fern.yml yet",
-                    suggestion: "Configure Crates publishing manually"
-                });
+                const cratesOutput = outputLocation as generatorsYml.GeneratorOutputSchema.Crates;
+                publish = {
+                    crates: {
+                        packageName: cratesOutput["package-name"],
+                        url: cratesOutput.url,
+                        token: cratesOutput.token
+                    }
+                };
                 break;
             }
             case "postman": {
@@ -589,48 +625,143 @@ function convertRawOutputConfig(
             }
 
             if (githubConfig.reviewers != null) {
-                warnings.push({
-                    type: "unsupported",
-                    message: "GitHub PR reviewers configuration is not supported in fern.yml",
-                    suggestion: "Configure reviewers directly in your GitHub repository settings"
-                });
+                const reviewers = githubConfig.reviewers as { teams?: string[]; users?: string[] };
+                if (reviewers.teams != null || reviewers.users != null) {
+                    output.git.reviewers = {
+                        teams: reviewers.teams,
+                        users: reviewers.users
+                    };
+                }
             }
         }
     }
 
     if (generator.output?.location != null) {
         const location = generator.output.location;
+        const rawOutput = generator.output;
 
         switch (location) {
             case "local-file-system": {
-                if (generator.output.path != null) {
-                    output.path = generator.output.path as string;
+                if (rawOutput.path != null) {
+                    output.path = rawOutput.path as string;
                 }
                 break;
             }
 
             case "npm": {
-                const packageName = generator.output["package-name"];
+                const packageName = rawOutput["package-name"];
                 if (typeof packageName === "string") {
                     publish = {
                         npm: {
-                            packageName
+                            packageName,
+                            url: rawOutput["url"] as string | undefined,
+                            token: rawOutput["token"] as string | undefined
                         }
                     };
                 }
                 break;
             }
 
-            case "pypi":
-            case "maven":
-            case "nuget":
-            case "rubygems":
+            case "pypi": {
+                const packageName = rawOutput["package-name"];
+                if (typeof packageName === "string") {
+                    const metadata = rawOutput["metadata"] as
+                        | {
+                              keywords?: string[];
+                              documentationLink?: string;
+                              homepageLink?: string;
+                          }
+                        | undefined;
+                    publish = {
+                        pypi: {
+                            packageName,
+                            url: rawOutput["url"] as string | undefined,
+                            token: rawOutput["token"] as string | undefined,
+                            username: rawOutput["username"] as string | undefined,
+                            password: rawOutput["password"] as string | undefined,
+                            metadata:
+                                metadata != null
+                                    ? {
+                                          keywords: metadata.keywords,
+                                          documentationLink: metadata.documentationLink,
+                                          homepageLink: metadata.homepageLink
+                                      }
+                                    : undefined
+                        }
+                    };
+                }
+                break;
+            }
+
+            case "maven": {
+                const coordinate = rawOutput["coordinate"];
+                if (typeof coordinate === "string") {
+                    const signature = rawOutput["signature"] as
+                        | {
+                              keyId: string;
+                              password: string;
+                              secretKey: string;
+                          }
+                        | undefined;
+                    publish = {
+                        maven: {
+                            coordinate,
+                            url: rawOutput["url"] as string | undefined,
+                            username: rawOutput["username"] as string | undefined,
+                            password: rawOutput["password"] as string | undefined,
+                            signature:
+                                signature != null
+                                    ? {
+                                          keyId: signature.keyId,
+                                          password: signature.password,
+                                          secretKey: signature.secretKey
+                                      }
+                                    : undefined
+                        }
+                    };
+                }
+                break;
+            }
+
+            case "nuget": {
+                const packageName = rawOutput["package-name"];
+                if (typeof packageName === "string") {
+                    publish = {
+                        nuget: {
+                            packageName,
+                            url: rawOutput["url"] as string | undefined,
+                            apiKey: rawOutput["api-key"] as string | undefined
+                        }
+                    };
+                }
+                break;
+            }
+
+            case "rubygems": {
+                const packageName = rawOutput["package-name"];
+                if (typeof packageName === "string") {
+                    publish = {
+                        rubygems: {
+                            packageName,
+                            url: rawOutput["url"] as string | undefined,
+                            apiKey: rawOutput["api-key"] as string | undefined
+                        }
+                    };
+                }
+                break;
+            }
+
             case "crates": {
-                warnings.push({
-                    type: "info",
-                    message: `${location} publishing configuration detected but not fully supported in fern.yml yet`,
-                    suggestion: `Configure ${location} publishing manually`
-                });
+                const packageName = rawOutput["package-name"];
+                if (typeof packageName === "string") {
+                    publish = {
+                        crates: {
+                            packageName,
+                            url: rawOutput["url"] as string | undefined,
+                            token: rawOutput["token"] as string | undefined
+                        }
+                    };
+                }
                 break;
             }
 

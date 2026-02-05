@@ -1,1 +1,1 @@
-export * from "./Declaration";
+export * from "./Declaration.js";

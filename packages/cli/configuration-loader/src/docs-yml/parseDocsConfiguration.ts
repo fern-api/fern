@@ -215,8 +215,9 @@ export async function parseDocsConfiguration({
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
-        header: undefined,
-        footer: undefined,
+        /* custom components */
+        header: resolveFilepath(rawDocsConfiguration.header, absoluteFilepathToDocsConfig),
+        footer: resolveFilepath(rawDocsConfiguration.footer, absoluteFilepathToDocsConfig),
 
         experimental
     };
@@ -441,7 +442,7 @@ function convertLayoutConfig(
                   ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
                   : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         switcherPlacement:
-            layout.switcherPlacement === "header"
+            !layout.switcherPlacement || layout.switcherPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
         tabsPlacement:
@@ -969,6 +970,16 @@ async function expandFolderConfiguration({
 
     const contents = await buildNavigationForDirectory({ directoryPath: folderPath });
 
+    const indexPage = contents.find(
+        (item) =>
+            item.type === "page" &&
+            (item.slug === "index" ||
+                item.absolutePath.toLowerCase().endsWith("/index.mdx") ||
+                item.absolutePath.toLowerCase().endsWith("/index.md"))
+    );
+
+    const filteredContents = indexPage ? contents.filter((item) => item !== indexPage) : contents;
+
     const folderName = path.basename(folderPath);
     const title = rawConfig.title ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
@@ -977,12 +988,12 @@ async function expandFolderConfiguration({
         type: "section",
         title,
         icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-        contents,
+        contents: filteredContents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
-        overviewAbsolutePath: undefined,
+        overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
         viewers: parseRoles(rawConfig.viewers),
         orphaned: rawConfig.orphaned,
         featureFlags: convertFeatureFlag(rawConfig.featureFlag),

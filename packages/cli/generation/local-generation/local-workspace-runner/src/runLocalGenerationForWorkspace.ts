@@ -177,6 +177,27 @@ export async function runLocalGenerationForWorkspace({
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
 
+                    // Log git environment info for debugging
+                    interactiveTaskContext.logger.debug(
+                        `Self-hosted GitHub mode: cloning ${selfhostedGithubConfig.uri} to ${absolutePathToLocalOutput}`
+                    );
+                    try {
+                        const { execSync } = await import("child_process");
+                        const gitPath = execSync("which git 2>/dev/null || echo 'not found'", {
+                            encoding: "utf-8"
+                        }).trim();
+                        const gitVersion = execSync("git --version 2>/dev/null || echo 'unknown'", {
+                            encoding: "utf-8"
+                        }).trim();
+                        interactiveTaskContext.logger.debug(
+                            `Git environment: path=${gitPath}, version=${gitVersion}, PATH=${process.env.PATH ?? "unset"}`
+                        );
+                    } catch {
+                        interactiveTaskContext.logger.debug(
+                            `Git environment: unable to determine git info, PATH=${process.env.PATH ?? "unset"}`
+                        );
+                    }
+
                     try {
                         const repo = await cloneRepository({
                             githubRepository: selfhostedGithubConfig.uri,

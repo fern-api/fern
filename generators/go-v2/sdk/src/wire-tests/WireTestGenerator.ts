@@ -607,7 +607,7 @@ export class WireTestGenerator {
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
-                        name: "NewClient",
+                        name: this.context.getClientConstructorName(),
                         importPath: this.context.getRootClientImportPath()
                     }),
                     arguments_: [

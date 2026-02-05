@@ -1,0 +1,233 @@
+openapi: 3.0.3
+info:
+  title: Petstore API
+  version: 1.0.0
+  description: A sample Pet Store API for SDK generation testing
+servers:
+  - url: https://api.petstore.example.com/v1
+tags:
+  - name: pets
+    description: Pet operations
+  - name: store
+    description: Store operations
+paths:
+  /pets:
+    get:
+      tags:
+        - pets
+      operationId: listPets
+      summary: List all pets
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of pets to return
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: status
+          in: query
+          description: Filter by pet status
+          schema:
+            type: string
+            enum:
+              - available
+              - pending
+              - sold
+      responses:
+        "200":
+          description: A list of pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
+    post:
+      tags:
+        - pets
+      operationId: createPet
+      summary: Create a new pet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePetRequest"
+      responses:
+        "201":
+          description: Pet created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /pets/{petId}:
+    get:
+      tags:
+        - pets
+      operationId: getPet
+      summary: Get a pet by ID
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The pet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        "404":
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - pets
+      operationId: updatePet
+      summary: Update a pet
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePetRequest"
+      responses:
+        "200":
+          description: Pet updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        "404":
+          description: Pet not found
+    delete:
+      tags:
+        - pets
+      operationId: deletePet
+      summary: Delete a pet
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Pet deleted successfully
+        "404":
+          description: Pet not found
+  /store/inventory:
+    get:
+      tags:
+        - store
+      operationId: getInventory
+      summary: Get store inventory
+      responses:
+        "200":
+          description: Inventory counts by status
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: "pet_123"
+        name:
+          type: string
+          example: "Fluffy"
+        category:
+          $ref: "#/components/schemas/Category"
+        status:
+          type: string
+          enum:
+            - available
+            - pending
+            - sold
+          default: available
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tag"
+        createdAt:
+          type: string
+          format: date-time
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    CreatePetRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    UpdatePetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - available
+            - pending
+            - sold
+        tags:
+          type: array
+          items:
+            type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string

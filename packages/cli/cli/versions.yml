@@ -1,4 +1,204 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.64.5
+  changelogEntry:
+    - summary: |
+        Add support for legacy generator names (`fernapi/java-model`, `fernapi/fern-typescript`) used in older IR version configurations.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.4
+  changelogEntry:
+    - summary: |
+        Fix additionalProperties in examples being lost when a schema defines `additionalProperties: true`. Previously, additional properties in examples were set to undefined during conversion, causing them to be stripped from the output. Now the actual values from the example are preserved.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.3
+  changelogEntry:
+    - summary: |
+        Fix extraction of large generated ZIP files (>2 GiB) by using the `yauzl-promise` library instead of the `decompress` library. Node.js has a 2 GiB limit for reading files into buffers, which caused the `decompress` library to fail with `ERR_FS_FILE_TOO_LARGE` errors for large SDK outputs. The `yauzl-promise` library streams ZIP entries individually instead of loading the entire file into memory.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.2
+  changelogEntry:
+    - summary: |
+        Add support for OpenAPI server templating. Server variables are now preserved in the IR instead of being exploded into multiple environments, enabling SDKs to configure URL variables at runtime. Supports both single and multiple base URL environments.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.1
+  changelogEntry:
+    - summary: |
+        Fix example validation to correctly handle allOf schema compositions. Properties from composed schemas are now properly recognized, eliminating false positive "unexpected property" warnings.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.0
+  changelogEntry:
+    - summary: |
+        Improve `.fernignore` to prevent generation of new files. Previously, `.fernignore` only prevented modification or deletion of existing files during SDK regeneration.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.63.0
+  changelogEntry:
+    - summary: |
+        Add support for setting subfolder position based on the `position` field in the index file's frontmatter when using `folder` navigation. Subfolders with a position are sorted before those without, and items with the same position are sorted alphabetically.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.62.0
+  changelogEntry:
+    - summary: |
+        Add `title-source` configuration option for folder navigation. When using `folder` navigation, you can now set `title-source: frontmatter` to use the `title` field from frontmatter for page and section titles instead of deriving titles from file names. The default behavior (`title-source: filename`) remains unchanged.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.61.0
+  changelogEntry:
+    - summary: |
+        Add support for `@/` prefix in MDX import statements to indicate absolute paths from the fern folder root.
+        Users can now write `import { Banner } from '@/components/Banner'` instead of using relative paths like
+        `import { Banner } from '../../../components/Banner'`. The imports are transformed to relative paths at
+        publish time.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.60.2
+  changelogEntry:
+    - summary: |
+        Fix header example generation to use global header literal values when defined in generators.yml
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.60.1
+  changelogEntry:
+    - summary: |
+        Fix custom header and footer components not being recognized in docs.yml. The serialization schema
+        was missing the header and footer fields, causing validation errors when using these new fields.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Add support for custom header and footer components in docs.yml. Users can now specify
+        `header: ./path/to/header.tsx` and `footer: ./path/to/footer.tsx` to replace the default
+        header and footer with custom React components. The components must have a default export.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix unknown argument error for `fern completion`.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.59.0
+  changelogEntry:
+    - summary: |
+        Add shell completion support via `fern completion`. Running this command outputs a shell script that can be sourced in your `.bashrc` or `.zshrc` to enable tab completion for Fern CLI commands and options.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.58.0
+  changelogEntry:
+    - summary: |
+        Add support for setting page availability in frontmatter. Users can now add `availability: beta` (or other values like `stable`, `generally-available`, `in-development`, `pre-release`, `deprecated`) to a page's frontmatter to display an availability badge. When set in frontmatter, it overrides the availability defined in the navigation (docs.yml).
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Add availability support for webhooks. Webhooks can now inherit availability status from their parent section/package, and display availability badges in the docs UI.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.57.0
+  changelogEntry:
+    - summary: |
+        Add support for `index.mdx` (or `index.md`) files as section overviews when using `folder` navigation. When a nested subfolder contains an `index.mdx` file, it is now automatically used as the section overview page instead of appearing as a regular page in the navigation.
+      type: feat
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.56.10
+  changelogEntry:
+    - summary: |
+        Add proactive debug logging for git environment when using self-hosted GitHub mode. Running with
+        `--log-level debug` now outputs git path, version, and PATH before attempting to clone, helping
+        diagnose git availability issues without requiring manual debug prints.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.56.9
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant displayName to only use user-specified values. Previously, displayName would fall back to the type's originalName, which for OpenAPI-sourced APIs could be long generated schema names (e.g., "ObjectsObjectTypeBatchUpsertPostRequestBody..."). Now displayName is only set when explicitly specified via `display-name` in the Fern definition.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.56.8
+  changelogEntry:
+    - summary: |
+        Support GraphQL API References. You can now add a `graphql` spec to `generators.yml` to render an auto-generated reference in the docs.
+      type: fix
+  createdAt: "2026-02-2"
+  irVersion: 63
+
+- version: 3.55.7
+  changelogEntry:
+    - summary: |
+        Improve `fern docs diff` region detection with top-down and bottom-up scanning. The algorithm now finds the first change by scanning from the top, and the last change by scanning from the bottom (aligning footers). This handles content shifts naturally and skips small footer changes like timestamps.
+      type: fix
+  createdAt: "2026-01-31"
+  irVersion: 63
+
+- version: 3.55.6
+  changelogEntry:
+    - summary: |
+        Regenerate types for fern-definition, docs-yml, generators-yml, conjure-sdk, openapi-ir, and ir-types-latest schemas.
+      type: internal
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.55.5
+  changelogEntry:
+    - summary: |
+        Fix default value for `switcher-placement` in docs.yml layout configuration.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.4
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants with optional or nullable object types incorrectly using `samePropertiesAsObject`. When a union variant has a type like `body: optional<SomeObjectType>`, the IR generator now correctly uses `singleProperty` instead of `samePropertiesAsObject`, which ensures the generated TypeScript code has a `value` property with the optional type instead of extending the object type directly.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
 - version: 3.55.3
   changelogEntry:
     - summary: Fix schema namespace resolution to OpenAPI importers for proper type reference targeting
@@ -14,13 +214,20 @@
   createdAt: "2026-01-30"
   irVersion: 63
 
-
 - version: 3.55.1
   changelogEntry:
     - summary: |
         Add docs param when publishing a doc site to support fine grain access controlls
       type: chore
   createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add namespace prefix support for endpoint references. When working with multiple OpenAPI specs that have namespaces, you can now disambiguate endpoints using the `namespace::METHOD /path` syntax (e.g., `oauth::POST /v2/token`). This is useful for OAuth configuration when multiple specs may have overlapping paths.
+      type: feat
+  createdAt: "2026-02-02"
   irVersion: 63
 
 - version: 3.55.0

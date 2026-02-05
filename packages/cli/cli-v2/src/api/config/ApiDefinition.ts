@@ -1,3 +1,5 @@
+import type { schemas } from "@fern-api/config";
+
 import type { ApiSpec } from "./ApiSpec";
 
 /**
@@ -7,6 +9,16 @@ import type { ApiSpec } from "./ApiSpec";
 export interface ApiDefinition {
     /** The specs that compose this API definition */
     specs: ApiSpec[];
-
-    // TODO: Add support for auth schemes and other API configuration.
+    /** Reference to the auth scheme (e.g. "BearerAuth") */
+    auth?: string;
+    /** Auth scheme declarations (e.g. oauth, bearer, basic, header) */
+    authSchemes?: schemas.AuthSchemesSchema;
+    /** Default URL when no environment is specified */
+    defaultUrl?: string;
+    /** Default environment name */
+    defaultEnvironment?: string;
+    /** Named environments */
+    environments?: Record<string, schemas.EnvironmentSchema>;
+    /** Global headers */
+    headers?: Record<string, schemas.HeaderSchema>;
 }

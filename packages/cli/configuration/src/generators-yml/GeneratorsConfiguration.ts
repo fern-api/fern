@@ -103,7 +103,11 @@ export interface APIDefinitionLocation {
     settings: APIDefinitionSettings | undefined;
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema;
+export type APIDefinitionSchema =
+    | ProtoAPIDefinitionSchema
+    | OSSAPIDefinitionSchema
+    | OpenRPCDefinitionSchema
+    | GraphQLDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -121,6 +125,11 @@ export interface OSSAPIDefinitionSchema {
 
 export interface OpenRPCDefinitionSchema {
     type: "openrpc";
+    path: string;
+}
+
+export interface GraphQLDefinitionSchema {
+    type: "graphql";
     path: string;
 }
 

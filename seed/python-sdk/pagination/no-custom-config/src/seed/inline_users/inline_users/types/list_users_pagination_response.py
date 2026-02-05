@@ -11,9 +11,9 @@ from .users import Users
 
 
 class ListUsersPaginationResponse(UniversalBaseModel):
-    has_next_page: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hasNextPage")] = (
-        pydantic.Field(alias="hasNextPage", default=None)
-    )
+    has_next_page: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="hasNextPage"), pydantic.Field(alias="hasNextPage")
+    ] = None
     page: typing.Optional[Page] = None
     total_count: int = pydantic.Field()
     """
