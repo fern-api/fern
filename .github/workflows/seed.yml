@@ -235,15 +235,8 @@ jobs:
         id: create-dynamic-matrix
         shell: bash
         run: |
-          # Query all fixtures for all generators at once
-          # The seed CLI outputs JSON with all generators and their fixtures
-          node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --output-file /tmp/fixtures.json
-          
-          # Verify the output file was created successfully
-          if [ ! -f /tmp/fixtures.json ]; then
-            echo "Error: Output file /tmp/fixtures.json was not created"
-            exit 1
-          fi
+          # Query all fixtures for all generators and capture directly into variable
+          FIXTURES_JSON=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures)
           
           # Define the number of groups for each generator that needs parallelization
           declare -A NUM_GROUPS
@@ -262,8 +255,7 @@ jobs:
             
             # Use Node.js to extract and optionally group fixtures for this generator
             MATRIX=$(node -e "
-              const fs = require('fs');
-              const data = JSON.parse(fs.readFileSync('/tmp/fixtures.json', 'utf8'));
+              const data = $FIXTURES_JSON;
               const fixtures = data.generators['$GEN'] || [];
               const numGroups = $GROUPS_COUNT;
               
@@ -1257,8 +1249,8 @@ jobs:
         id: extract-all-fixture-info
         run: |
           # Query fixtures dynamically using the seed CLI
-          FIXTURES_JSON=$(pnpm seed list-test-fixtures --generator ${{ matrix.seed-generator-alias }} 2>/dev/null | sed -n '/^{/,/^}/p')
-          FIXTURE_COUNT=$(echo "$FIXTURES_JSON" | jq '.generators["${{ matrix.seed-generator-alias }}"].fixtures | length')
+          FIXTURES_JSON=$(pnpm seed list-test-fixtures --generator ${{ matrix.seed-generator-alias }})
+          FIXTURE_COUNT=$(echo "$FIXTURES_JSON" | jq '.generators["${{ matrix.seed-generator-alias }}"] | length')
 
           # Output for debugging
           echo "Found $FIXTURE_COUNT total fixtures"

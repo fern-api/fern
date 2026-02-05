@@ -593,19 +593,13 @@ function addListTestFixturesCommand(cli: Argv) {
         "list-test-fixtures",
         "List all test fixtures for all generators or a specific generator, with output folders, in JSON format for CI consumption",
         (yargs) =>
-            yargs
-                .option("generator", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    alias: "g",
-                    description: "The generators to list fixtures for (lists all if not provided)"
-                })
-                .option("output-file", {
-                    string: true,
-                    demandOption: false,
-                    description: "Path to write the JSON output to (prints to stdout if not provided)"
-                }),
+            yargs.option("generator", {
+                type: "array",
+                string: true,
+                demandOption: false,
+                alias: "g",
+                description: "The generators to list fixtures for (lists all if not provided)"
+            }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
             if (argv.generator != null) {
@@ -625,17 +619,8 @@ function addListTestFixturesCommand(cli: Argv) {
                 result[generator.workspaceName] = fixtures;
             }
 
-            const output = JSON.stringify({ generators: result }, null, 2);
-
-            if (argv["output-file"] != null) {
-                const outputPath = argv["output-file"].startsWith("/")
-                    ? AbsoluteFilePath.of(argv["output-file"])
-                    : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-file"]));
-                await writeFile(outputPath, output);
-                console.log(`Output written to ${outputPath}`);
-            } else {
-                console.log(output);
-            }
+            // Output JSON to stdout (can be piped or captured directly)
+            console.log(JSON.stringify({ generators: result }));
         }
     );
 }
