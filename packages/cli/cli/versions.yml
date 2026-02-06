@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.67.2
+- version: 3.68.2
   changelogEntry:
     - summary: |
         Add validation fields to ContainerType in the IR. ContainerType now has an optional
@@ -10,6 +10,29 @@
   createdAt: "2026-02-06"
   irVersion: 63
 
+- version: 3.68.1
+  changelogEntry:
+    - summary: |
+        Fix grouped multi-API environment server handling to preserve `defaultUrl`, `urlTemplate`,
+        and `variables` metadata when merging multiple OpenAPI specs with
+        `group-multi-api-environments: true`. Previously, server URL templating metadata was silently
+        dropped during the merge, causing generated SDKs to use malformed template-substituted URLs
+        as defaults. Also fixes API name extraction for grouped base URL keys to use the clean
+        `x-fern-default-url` value instead of the variable-substituted URL.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.68.0
+  changelogEntry:
+    - summary: |
+        Add `folder-title-source` global setting in `docs.yml` under `settings`. When set,
+        this value is used as the default `title-source` for all folder navigations that do not
+        explicitly specify their own `title-source`. This allows configuring `frontmatter` or
+        `filename` as the default title derivation strategy for all folders in one place.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
 - version: 3.67.1
   changelogEntry:
     - summary: |
@@ -21,7 +44,6 @@
       type: fix
   createdAt: "2026-02-06"
   irVersion: 63
-
 - version: 3.67.0
   changelogEntry:
     - summary: |

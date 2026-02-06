@@ -795,6 +795,13 @@ types:
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
+      folder-title-source:
+        type: optional<TitleSource>
+        docs: |
+          Sets the default title source for all folder navigations. When set, this value is used as the
+          default `title-source` for any folder that does not explicitly specify its own `title-source`.
+          Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename`
+          (derive title from the file name).
       substitute-env-vars:
         type: optional<boolean>
         docs: |

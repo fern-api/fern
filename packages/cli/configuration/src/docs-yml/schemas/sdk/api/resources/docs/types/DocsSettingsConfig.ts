@@ -60,6 +60,13 @@ export interface DocsSettingsConfig {
     disableAnalytics?: boolean;
     language?: FernDocsConfig.Language;
     /**
+     * Sets the default title source for all folder navigations. When set, this value is used as the
+     * default `title-source` for any folder that does not explicitly specify its own `title-source`.
+     * Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename`
+     * (derive title from the file name).
+     */
+    folderTitleSource?: FernDocsConfig.TitleSource;
+    /**
      * When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
      * including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
      * Use \$\{VAR\} to escape and output literal ${VAR} without substitution.

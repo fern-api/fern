@@ -6,6 +6,9 @@ import { extractPathSegment, generateWebsocketUrlId, getProtocol } from "./utils
 interface ApiServerConfig {
     url: string;
     audiences?: string[];
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariable[];
 }
 
 interface ServerVariable {
@@ -177,8 +180,29 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 urls: {}
             };
 
+            const groupedUrlTemplates: Record<string, string> = {};
+            const groupedDefaultUrls: Record<string, string> = {};
+            const groupedVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
+
             for (const [apiName, apiConfig] of Object.entries(server.urls)) {
-                multiUrlEnvironment.urls[apiName] = apiConfig.url;
+                multiUrlEnvironment.urls[apiName] = apiConfig.defaultUrl ?? apiConfig.url;
+                if (apiConfig.urlTemplate) {
+                    groupedUrlTemplates[apiName] = apiConfig.urlTemplate;
+                }
+                if (apiConfig.defaultUrl) {
+                    groupedDefaultUrls[apiName] = apiConfig.defaultUrl;
+                }
+                if (apiConfig.variables && apiConfig.variables.length > 0) {
+                    groupedVariables[apiName] = apiConfig.variables;
+                }
+            }
+
+            const hasGroupedTemplateData =
+                Object.keys(groupedUrlTemplates).length > 0 || Object.keys(groupedVariables).length > 0;
+            if (hasGroupedTemplateData) {
+                multiUrlEnvironment["url-templates"] = groupedUrlTemplates;
+                multiUrlEnvironment["default-urls"] = groupedDefaultUrls;
+                multiUrlEnvironment.variables = groupedVariables;
             }
 
             if (server.name) {
