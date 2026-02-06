@@ -5,7 +5,7 @@
         Adds schema name and title collision detection for OpenAPI/AsyncAPI specs. When
         `title-as-schema-name` is enabled and multiple schemas share the same title, `fern check`
         now reports an error identifying the conflicting schemas. To opt in to automatic resolution,
-        set `resolve-schema-collisions: true` in your spec settings:
+        set `resolve-schema-collisions: true` in your generators.yml settings under api/specs:
 
         ```yaml
         api:
