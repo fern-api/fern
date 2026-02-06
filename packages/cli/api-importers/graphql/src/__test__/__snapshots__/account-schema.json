@@ -76,10 +76,10 @@
         "value": "System"
       }
     },
-    "mutation_account.addUserToAccount": {
-      "id": "mutation_account.addUserToAccount",
+    "mutation_account_addUserToAccount": {
+      "id": "mutation_account_addUserToAccount",
       "operationType": "MUTATION",
-      "name": "account.addUserToAccount",
+      "name": "account_addUserToAccount",
       "description": "Adds a user to an account.",
       "arguments": [
         {
@@ -98,10 +98,10 @@
         }
       }
     },
-    "mutation_account.removeUserFromAccount": {
-      "id": "mutation_account.removeUserFromAccount",
+    "mutation_account_removeUserFromAccount": {
+      "id": "mutation_account_removeUserFromAccount",
       "operationType": "MUTATION",
-      "name": "account.removeUserFromAccount",
+      "name": "account_removeUserFromAccount",
       "description": "Removes a user from an account and all associated entities.",
       "arguments": [
         {
@@ -120,10 +120,10 @@
         }
       }
     },
-    "mutation_checkout.createCheckout": {
-      "id": "mutation_checkout.createCheckout",
+    "mutation_checkout_createCheckout": {
+      "id": "mutation_checkout_createCheckout",
       "operationType": "MUTATION",
-      "name": "checkout.createCheckout",
+      "name": "checkout_createCheckout",
       "description": "Creates a Checkout for a Merchant.",
       "arguments": [
         {
@@ -142,10 +142,10 @@
         }
       }
     },
-    "mutation_subscription.cancelSubscription": {
-      "id": "mutation_subscription.cancelSubscription",
+    "mutation_subscription_cancelSubscription": {
+      "id": "mutation_subscription_cancelSubscription",
       "operationType": "MUTATION",
-      "name": "subscription.cancelSubscription",
+      "name": "subscription_cancelSubscription",
       "description": "Cancels a Subscription for a Merchant.",
       "arguments": [
         {
@@ -164,10 +164,10 @@
         }
       }
     },
-    "mutation_user.createUserWithPassword": {
-      "id": "mutation_user.createUserWithPassword",
+    "mutation_user_createUserWithPassword": {
+      "id": "mutation_user_createUserWithPassword",
       "operationType": "MUTATION",
-      "name": "user.createUserWithPassword",
+      "name": "user_createUserWithPassword",
       "description": "Creates a user with password.",
       "arguments": [
         {
@@ -186,10 +186,10 @@
         }
       }
     },
-    "mutation_user.createUser": {
-      "id": "mutation_user.createUser",
+    "mutation_user_createUser": {
+      "id": "mutation_user_createUser",
       "operationType": "MUTATION",
-      "name": "user.createUser",
+      "name": "user_createUser",
       "description": "Creates a user.",
       "arguments": [
         {
@@ -208,10 +208,10 @@
         }
       }
     },
-    "mutation_user.addUserToStore": {
-      "id": "mutation_user.addUserToStore",
+    "mutation_user_addUserToStore": {
+      "id": "mutation_user_addUserToStore",
       "operationType": "MUTATION",
-      "name": "user.addUserToStore",
+      "name": "user_addUserToStore",
       "description": "Adds a user to a store.",
       "arguments": [
         {
@@ -230,10 +230,10 @@
         }
       }
     },
-    "mutation_user.removeUserFromStore": {
-      "id": "mutation_user.removeUserFromStore",
+    "mutation_user_removeUserFromStore": {
+      "id": "mutation_user_removeUserFromStore",
       "operationType": "MUTATION",
-      "name": "user.removeUserFromStore",
+      "name": "user_removeUserFromStore",
       "description": "Removes user from a store.",
       "arguments": [
         {
@@ -252,10 +252,10 @@
         }
       }
     },
-    "mutation_app.createEventSource": {
-      "id": "mutation_app.createEventSource",
+    "mutation_app_createEventSource": {
+      "id": "mutation_app_createEventSource",
       "operationType": "MUTATION",
-      "name": "app.createEventSource",
+      "name": "app_createEventSource",
       "description": "Creates an Amazon EventSource.",
       "arguments": [
         {
@@ -274,10 +274,10 @@
         }
       }
     },
-    "mutation_app.deleteEventSource": {
-      "id": "mutation_app.deleteEventSource",
+    "mutation_app_deleteEventSource": {
+      "id": "mutation_app_deleteEventSource",
       "operationType": "MUTATION",
-      "name": "app.deleteEventSource",
+      "name": "app_deleteEventSource",
       "description": "Deletes an Amazon EventSource.",
       "arguments": [
         {
@@ -296,10 +296,10 @@
         }
       }
     },
-    "mutation_userGroup.addUsersToUserGroups": {
-      "id": "mutation_userGroup.addUsersToUserGroups",
+    "mutation_userGroup_addUsersToUserGroups": {
+      "id": "mutation_userGroup_addUsersToUserGroups",
       "operationType": "MUTATION",
-      "name": "userGroup.addUsersToUserGroups",
+      "name": "userGroup_addUsersToUserGroups",
       "description": "Adds users to user groups.",
       "arguments": [
         {
@@ -318,10 +318,10 @@
         }
       }
     },
-    "mutation_userGroup.removeUsersFromUserGroup": {
-      "id": "mutation_userGroup.removeUsersFromUserGroup",
+    "mutation_userGroup_removeUsersFromUserGroup": {
+      "id": "mutation_userGroup_removeUsersFromUserGroup",
       "operationType": "MUTATION",
-      "name": "userGroup.removeUsersFromUserGroup",
+      "name": "userGroup_removeUsersFromUserGroup",
       "description": "Removes users from a user group.",
       "arguments": [
         {

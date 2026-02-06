@@ -198,7 +198,7 @@ export class GraphQLConverter {
     ): void {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const qualifiedName = `${parentName}.${fieldName}`;
+            const qualifiedName = `${parentName}_${fieldName}`;
             const operationId = FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${qualifiedName}`);
             operations[operationId] = this.convertField(field, qualifiedName, operationType);
         }
