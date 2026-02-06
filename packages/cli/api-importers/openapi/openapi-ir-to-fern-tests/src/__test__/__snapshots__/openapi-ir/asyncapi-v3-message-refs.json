@@ -106,27 +106,28 @@
   "groupedSchemas": {
     "rootSchemas": {
       "UserMessagePayload": {
-        "allOf": [],
         "properties": [
           {
-            "conflict": {},
-            "generatedName": "userMessagePayloadText",
             "key": "text",
             "schema": {
-              "description": "Message text",
+              "generatedName": "UserMessagePayloadText",
               "schema": {
                 "type": "string"
               },
-              "generatedName": "UserMessagePayloadText",
+              "description": "Message text",
               "groupName": [],
               "type": "primitive"
             },
-            "audiences": []
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessagePayloadText"
           }
         ],
-        "allOfPropertyConflicts": [],
         "generatedName": "UserMessagePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
         "groupName": [],
+        "fullExamples": [],
         "additionalProperties": false,
         "source": {
           "file": "../asyncapi.yml",
@@ -135,51 +136,34 @@
         "type": "object"
       },
       "ServerResponsePayload": {
-        "allOf": [],
         "properties": [
           {
-            "conflict": {},
-            "generatedName": "serverResponsePayloadReply",
             "key": "reply",
             "schema": {
-              "description": "Response text",
+              "generatedName": "ServerResponsePayloadReply",
               "schema": {
                 "type": "string"
               },
-              "generatedName": "ServerResponsePayloadReply",
+              "description": "Response text",
               "groupName": [],
               "type": "primitive"
             },
-            "audiences": []
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "serverResponsePayloadReply"
           }
         ],
-        "allOfPropertyConflicts": [],
         "generatedName": "ServerResponsePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
         "groupName": [],
+        "fullExamples": [],
         "additionalProperties": false,
         "source": {
           "file": "../asyncapi.yml",
           "type": "openapi"
         },
         "type": "object"
-      },
-      "userMessage": {
-        "generatedName": "UserMessage",
-        "schema": "UserMessagePayload",
-        "source": {
-          "file": "../asyncapi.yml",
-          "type": "openapi"
-        },
-        "type": "reference"
-      },
-      "serverResponse": {
-        "generatedName": "ServerResponse",
-        "schema": "ServerResponsePayload",
-        "source": {
-          "file": "../asyncapi.yml",
-          "type": "openapi"
-        },
-        "type": "reference"
       }
     },
     "namespacedSchemas": {}

@@ -6,7 +6,6 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
-          "ServerNotification": "ServerNotificationPayload",
           "ServerNotificationPayload": {
             "docs": undefined,
             "inline": undefined,
@@ -36,7 +35,6 @@
               "openapi": "../asyncapi.yml",
             },
           },
-          "UserMessage": "UserMessagePayload",
           "UserMessagePayload": {
             "docs": undefined,
             "inline": undefined,
@@ -79,8 +77,6 @@
         docs: Notification type
     source:
       openapi: ../asyncapi.yml
-  UserMessage: UserMessagePayload
-  ServerNotification: ServerNotificationPayload
 ",
     },
     "chat.yml": {

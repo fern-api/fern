@@ -428,7 +428,7 @@ export function parseAsyncAPIV3({
         allSchemas[uniqueSchemaId] = convertSchemaWithExampleToSchema(schemaWithExample);
     }
 
-    const groupedSchemas = getSchemas(context.namespace, allSchemas);
+    const groupedSchemas = getSchemas(context.namespace, schemas);
     const finalServers = Object.values(servers).map((server) => ({
         ...server,
         name: server.name as string

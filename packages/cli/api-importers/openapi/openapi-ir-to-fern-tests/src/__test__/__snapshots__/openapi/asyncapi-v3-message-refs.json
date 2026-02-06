@@ -6,7 +6,6 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
-          "ServerResponse": "ServerResponsePayload",
           "ServerResponsePayload": {
             "docs": undefined,
             "inline": undefined,
@@ -20,7 +19,6 @@
               "openapi": "../asyncapi.yml",
             },
           },
-          "UserMessage": "UserMessagePayload",
           "UserMessagePayload": {
             "docs": undefined,
             "inline": undefined,
@@ -51,8 +49,6 @@
         docs: Response text
     source:
       openapi: ../asyncapi.yml
-  UserMessage: UserMessagePayload
-  ServerResponse: ServerResponsePayload
 ",
     },
     "chat.yml": {

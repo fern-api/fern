@@ -4,19 +4,8 @@
   "namedDefinitionFiles": {
     "__package__.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
-      "contents": {
-        "types": {
-          "TestChannel2SendMessage": "string",
-          "TestChannelSendMessage": "string",
-          "TestChannels2SendMessage": "string",
-          "TestChannelsSendMessage": "string",
-        },
-      },
-      "rawContents": "types:
-  TestChannelSendMessage: string
-  TestChannel2SendMessage: string
-  TestChannelsSendMessage: string
-  TestChannels2SendMessage: string
+      "contents": {},
+      "rawContents": "{}
 ",
     },
     "alpha.yml": {

@@ -125,27 +125,28 @@
   "groupedSchemas": {
     "rootSchemas": {
       "UserMessagePayload": {
-        "allOf": [],
         "properties": [
           {
-            "conflict": {},
-            "generatedName": "userMessagePayloadText",
             "key": "text",
             "schema": {
-              "description": "Message text",
+              "generatedName": "UserMessagePayloadText",
               "schema": {
                 "type": "string"
               },
-              "generatedName": "UserMessagePayloadText",
+              "description": "Message text",
               "groupName": [],
               "type": "primitive"
             },
-            "audiences": []
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessagePayloadText"
           }
         ],
-        "allOfPropertyConflicts": [],
         "generatedName": "UserMessagePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
         "groupName": [],
+        "fullExamples": [],
         "additionalProperties": false,
         "source": {
           "file": "../asyncapi.yml",
@@ -154,29 +155,25 @@
         "type": "object"
       },
       "ServerNotificationPayload": {
-        "allOf": [],
         "properties": [
           {
-            "conflict": {},
-            "generatedName": "serverNotificationPayloadMessage",
             "key": "message",
             "schema": {
-              "description": "Notification message",
+              "generatedName": "ServerNotificationPayloadMessage",
               "schema": {
                 "type": "string"
               },
-              "generatedName": "ServerNotificationPayloadMessage",
+              "description": "Notification message",
               "groupName": [],
               "type": "primitive"
             },
-            "audiences": []
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "serverNotificationPayloadMessage"
           },
           {
-            "conflict": {},
-            "generatedName": "serverNotificationPayloadType",
             "key": "type",
             "schema": {
-              "description": "Notification type",
               "generatedName": "ServerNotificationPayloadType",
               "values": [
                 {
@@ -195,6 +192,7 @@
                   "casing": {}
                 }
               ],
+              "description": "Notification type",
               "groupName": [],
               "source": {
                 "file": "../asyncapi.yml",
@@ -202,36 +200,22 @@
               },
               "type": "enum"
             },
-            "audiences": []
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "serverNotificationPayloadType"
           }
         ],
-        "allOfPropertyConflicts": [],
         "generatedName": "ServerNotificationPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
         "groupName": [],
+        "fullExamples": [],
         "additionalProperties": false,
         "source": {
           "file": "../asyncapi.yml",
           "type": "openapi"
         },
         "type": "object"
-      },
-      "userMessage": {
-        "generatedName": "UserMessage",
-        "schema": "UserMessagePayload",
-        "source": {
-          "file": "../asyncapi.yml",
-          "type": "openapi"
-        },
-        "type": "reference"
-      },
-      "serverNotification": {
-        "generatedName": "ServerNotification",
-        "schema": "ServerNotificationPayload",
-        "source": {
-          "file": "../asyncapi.yml",
-          "type": "openapi"
-        },
-        "type": "reference"
       }
     },
     "namespacedSchemas": {}
