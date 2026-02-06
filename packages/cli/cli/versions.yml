@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.68.0
+  changelogEntry:
+    - summary: |
+        Add `folder-title-source` global setting in `docs.yml` under `settings`. When set,
+        this value is used as the default `title-source` for all folder navigations that do not
+        explicitly specify their own `title-source`. This allows configuring `frontmatter` or
+        `filename` as the default title derivation strategy for all folders in one place.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.67.1
   changelogEntry:
     - summary: |
