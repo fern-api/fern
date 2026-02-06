@@ -153,9 +153,18 @@ function getParseAsyncOptions({
     };
 }
 
+interface ServerVariableConfig {
+    id: string;
+    default?: string;
+    values?: string[];
+}
+
 interface ApiServerConfig {
     url: string;
     audiences: string[] | undefined;
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariableConfig[];
 }
 
 /**
@@ -443,9 +452,21 @@ function merge(
                 }
                 const envUrls = environmentMap.get(envName);
                 if (envUrls) {
+                    const serverRecord = server as unknown as Record<string, unknown>;
                     envUrls[api1Name] = {
                         url: server.url,
-                        audiences: server.audiences
+                        audiences: server.audiences,
+                        defaultUrl:
+                            typeof serverRecord["defaultUrl"] === "string"
+                                ? (serverRecord["defaultUrl"] as string)
+                                : undefined,
+                        urlTemplate:
+                            typeof serverRecord["urlTemplate"] === "string"
+                                ? (serverRecord["urlTemplate"] as string)
+                                : undefined,
+                        variables: Array.isArray(serverRecord["variables"])
+                            ? (serverRecord["variables"] as ServerVariableConfig[])
+                            : undefined
                     };
                 }
             }
@@ -459,9 +480,21 @@ function merge(
             }
             const envUrls = environmentMap.get(envName);
             if (envUrls) {
+                const serverRecord2 = server as unknown as Record<string, unknown>;
                 envUrls[api2Name] = {
                     url: server.url,
-                    audiences: server.audiences
+                    audiences: server.audiences,
+                    defaultUrl:
+                        typeof serverRecord2["defaultUrl"] === "string"
+                            ? (serverRecord2["defaultUrl"] as string)
+                            : undefined,
+                    urlTemplate:
+                        typeof serverRecord2["urlTemplate"] === "string"
+                            ? (serverRecord2["urlTemplate"] as string)
+                            : undefined,
+                    variables: Array.isArray(serverRecord2["variables"])
+                        ? (serverRecord2["variables"] as ServerVariableConfig[])
+                        : undefined
                 };
             }
         }
