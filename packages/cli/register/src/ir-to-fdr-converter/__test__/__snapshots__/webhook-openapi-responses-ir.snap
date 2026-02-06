@@ -1065,6 +1065,7 @@
                   "type": "primitive",
                 },
                 "type": "optional",
+                "validation": undefined,
               },
               "type": "container",
             },

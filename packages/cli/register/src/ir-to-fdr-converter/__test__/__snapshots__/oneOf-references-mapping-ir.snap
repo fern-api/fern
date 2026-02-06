@@ -1061,6 +1061,7 @@
                   "typeId": "ErrorEventSeverity",
                 },
                 "type": "optional",
+                "validation": undefined,
               },
               "type": "container",
             },
@@ -2369,6 +2370,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
@@ -2391,6 +2393,7 @@
                   "type": "container",
                 },
                 "type": "optional",
+                "validation": undefined,
               },
               "type": "container",
             },
@@ -2747,6 +2750,7 @@
                   "type": "primitive",
                 },
                 "type": "optional",
+                "validation": undefined,
               },
               "type": "container",
             },
