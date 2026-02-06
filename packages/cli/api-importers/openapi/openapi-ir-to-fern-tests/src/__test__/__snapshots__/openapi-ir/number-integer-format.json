@@ -1,0 +1,186 @@
+{
+  "title": "Test spec for `number` type with `integer` format.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "Post",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostRequest",
+          "schema": "Request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "PostResponse",
+          "schema": "Response",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/post",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "shippingCost": {
+                  "value": {
+                    "value": 4999,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Request": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "requestShippingCost",
+            "key": "shippingCost",
+            "schema": {
+              "generatedName": "RequestShippingCost",
+              "description": "Cost of shipping in the currency's lowest denomination.",
+              "value": {
+                "description": "Cost of shipping in the currency's lowest denomination.",
+                "schema": {
+                  "minimum": 0,
+                  "maximum": 999999,
+                  "example": 4999,
+                  "type": "int"
+                },
+                "generatedName": "RequestShippingCost",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A generic request type used throughout the API.\n",
+        "generatedName": "Request",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Response": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "responseShippingCost",
+            "key": "shippingCost",
+            "schema": {
+              "generatedName": "ResponseShippingCost",
+              "description": "Cost of shipping in the currency's lowest denomination.",
+              "value": {
+                "description": "Cost of shipping in the currency's lowest denomination.",
+                "schema": {
+                  "minimum": 0,
+                  "maximum": 999999,
+                  "example": 4999,
+                  "type": "int"
+                },
+                "generatedName": "ResponseShippingCost",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A generic response type used throughout the API.\n",
+        "generatedName": "Response",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -75,7 +75,7 @@ export function convertNumber({
             namespace,
             groupName
         });
-    } else if (format === "int32") {
+    } else if (format === "integer" || format === "int32") {
         return wrapPrimitive({
             nameOverride,
             generatedName,

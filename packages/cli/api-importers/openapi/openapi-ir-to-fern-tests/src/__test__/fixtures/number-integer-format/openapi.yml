@@ -1,0 +1,49 @@
+openapi: 3.0.3
+info:
+  title: Test spec for `number` type with `integer` format.
+  version: 1.0.0
+
+paths:
+  /post:
+    post:
+      operationId: Post
+      requestBody:
+        required: true
+        description: A simple API request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request"
+      responses:
+        "200":
+          description: A simple API response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+
+components:
+  schemas:
+    Request:
+      description: |
+        A generic request type used throughout the API.
+      properties:
+        shippingCost:
+          type: number
+          format: integer
+          description: Cost of shipping in the currency's lowest denomination.
+          example: 4999
+          minimum: 0
+          maximum: 999999
+
+    Response:
+      description: |
+        A generic response type used throughout the API.
+      properties:
+        shippingCost:
+          type: number
+          format: integer
+          description: Cost of shipping in the currency's lowest denomination.
+          example: 4999
+          minimum: 0
+          maximum: 999999
