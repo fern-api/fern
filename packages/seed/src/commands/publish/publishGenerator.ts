@@ -25,7 +25,7 @@ export async function publishGenerator({
     context: TaskContext;
 }): Promise<void> {
     const generatorId = generator.workspaceName;
-    context.logger.info(`Publishing generator ${generatorId}@${version}...`);
+    context.logger.info(`Publishing generator ${generatorId}@${typeof version === "string" ? version : "latest"}...`);
 
     let publishVersion: string;
     if (typeof version !== "string") {

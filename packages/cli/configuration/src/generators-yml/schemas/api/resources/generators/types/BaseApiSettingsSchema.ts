@@ -45,4 +45,10 @@ export interface BaseApiSettingsSchema {
      * Defaults to `url-order`.
      */
     "path-parameter-order"?: GeneratorsYml.PathParameterOrder;
+    /**
+     * If true, resolve schema name collisions by appending numbers (e.g., Schema2, Schema3) and emit warnings.
+     * If false, throw hard errors when schema collisions are detected.
+     * Defaults to false.
+     */
+    "resolve-schema-collisions"?: boolean;
 }

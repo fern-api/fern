@@ -40,4 +40,14 @@ describe("fern docs broken-links", () => {
         // should NOT be flagged as broken links
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
+
+    it("broken links in sections with path property should be detected", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),
+            reject: false
+        });
+        // This fixture tests that markdown files referenced by sections with a path
+        // property are validated for broken links (not just pages)
+        expect(stripAnsi(stdout).slice(0, -15)).toMatchSnapshot();
+    }, 20_000);
 });

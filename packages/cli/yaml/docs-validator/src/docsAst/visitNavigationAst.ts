@@ -180,16 +180,15 @@ async function visitNavigationItem({
         availability: noop
     });
 
-    if (navigationItemIsPage(navigationItem)) {
-        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
+    const markdownPath = getNavigationItemMarkdownPath(navigationItem);
+    if (markdownPath != null) {
+        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), markdownPath);
         if (await doesPathExist(absoluteFilepath)) {
             const fileStats = await stat(absoluteFilepath);
             const fileSizeMB = fileStats.size / (1024 * 1024);
 
             if (fileSizeMB > 1) {
-                context.logger.trace(
-                    `Processing large markdown file: ${navigationItem.path} (${fileSizeMB.toFixed(2)} MB)`
-                );
+                context.logger.trace(`Processing large markdown file: ${markdownPath} (${fileSizeMB.toFixed(2)} MB)`);
             }
 
             const startTime = performance.now();
@@ -197,16 +196,17 @@ async function visitNavigationItem({
             const readTime = performance.now() - startTime;
 
             if (readTime > 2000) {
-                context.logger.debug(`Slow file read: ${navigationItem.path} took ${readTime.toFixed(0)}ms`);
+                context.logger.debug(`Slow file read: ${markdownPath} took ${readTime.toFixed(0)}ms`);
             }
 
+            const title = getNavigationItemTitle(navigationItem);
             await visitor.markdownPage?.(
                 {
-                    title: navigationItem.page,
+                    title,
                     content,
                     absoluteFilepath
                 },
-                [...nodePath, navigationItem.path]
+                [...nodePath, markdownPath]
             );
 
             try {
@@ -218,9 +218,7 @@ async function visitNavigationItem({
                 const parseTime = performance.now() - parseStart;
 
                 if (parseTime > 2000) {
-                    context.logger.debug(
-                        `Slow image path parsing: ${navigationItem.path} took ${parseTime.toFixed(0)}ms`
-                    );
+                    context.logger.debug(`Slow image path parsing: ${markdownPath} took ${parseTime.toFixed(0)}ms`);
                 }
 
                 for (const filepath of filepaths) {
@@ -230,11 +228,11 @@ async function visitNavigationItem({
                             value: relative(absolutePathToFernFolder, filepath),
                             willBeUploaded: true
                         },
-                        [...nodePath, navigationItem.path]
+                        [...nodePath, markdownPath]
                     );
                 }
             } catch (err) {
-                context.logger.trace(`Failed to parse image paths in ${navigationItem.path}: ${err}`);
+                context.logger.trace(`Failed to parse image paths in ${markdownPath}: ${err}`);
             }
         }
     }
@@ -298,6 +296,33 @@ function navigationItemIsChangelog(
 function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as docsYml.RawSchemas.PageConfiguration)?.page != null;
+}
+
+function navigationItemIsSection(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.SectionConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as docsYml.RawSchemas.SectionConfiguration)?.section != null;
+}
+
+function getNavigationItemMarkdownPath(item: docsYml.RawSchemas.NavigationItem): string | undefined {
+    if (navigationItemIsPage(item)) {
+        return item.path;
+    }
+    if (navigationItemIsSection(item) && item.path != null) {
+        return item.path;
+    }
+    return undefined;
+}
+
+function getNavigationItemTitle(item: docsYml.RawSchemas.NavigationItem): string {
+    if (navigationItemIsPage(item)) {
+        return item.page;
+    }
+    if (navigationItemIsSection(item)) {
+        return item.section;
+    }
+    return "Unknown";
 }
 
 function navigationItemIsApi(

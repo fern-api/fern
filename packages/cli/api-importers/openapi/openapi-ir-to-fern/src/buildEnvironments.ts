@@ -6,6 +6,9 @@ import { extractPathSegment, generateWebsocketUrlId, getProtocol } from "./utils
 interface ApiServerConfig {
     url: string;
     audiences?: string[];
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariable[];
 }
 
 interface ServerVariable {
@@ -177,8 +180,29 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 urls: {}
             };
 
+            const groupedUrlTemplates: Record<string, string> = {};
+            const groupedDefaultUrls: Record<string, string> = {};
+            const groupedVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
+
             for (const [apiName, apiConfig] of Object.entries(server.urls)) {
-                multiUrlEnvironment.urls[apiName] = apiConfig.url;
+                multiUrlEnvironment.urls[apiName] = apiConfig.defaultUrl ?? apiConfig.url;
+                if (apiConfig.urlTemplate) {
+                    groupedUrlTemplates[apiName] = apiConfig.urlTemplate;
+                }
+                if (apiConfig.defaultUrl) {
+                    groupedDefaultUrls[apiName] = apiConfig.defaultUrl;
+                }
+                if (apiConfig.variables && apiConfig.variables.length > 0) {
+                    groupedVariables[apiName] = apiConfig.variables;
+                }
+            }
+
+            const hasGroupedTemplateData =
+                Object.keys(groupedUrlTemplates).length > 0 || Object.keys(groupedVariables).length > 0;
+            if (hasGroupedTemplateData) {
+                multiUrlEnvironment["url-templates"] = groupedUrlTemplates;
+                multiUrlEnvironment["default-urls"] = groupedDefaultUrls;
+                multiUrlEnvironment.variables = groupedVariables;
             }
 
             if (server.name) {
@@ -220,6 +244,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     > = {};
     const endpointLevelServersWithName: Record<string, string | RawSchemas.SingleBaseUrlEnvironmentSchema> = {};
     const endpointLevelSkippedServers = [];
+    const endpointLevelUrlTemplates: Record<string, string> = {};
+    const endpointLevelDefaultUrls: Record<string, string> = {};
+    const endpointLevelVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
 
     for (const endpoint of context.ir.endpoints) {
         for (const server of endpoint.servers) {
@@ -234,12 +261,26 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 continue;
             }
 
+            const serverRecord = server as unknown as Record<string, unknown>;
+            const serverDefaultUrl =
+                "defaultUrl" in server && typeof serverRecord["defaultUrl"] === "string"
+                    ? (serverRecord["defaultUrl"] as string)
+                    : undefined;
+            const serverUrlTemplate =
+                "urlTemplate" in server && typeof serverRecord["urlTemplate"] === "string"
+                    ? (serverRecord["urlTemplate"] as string)
+                    : undefined;
+            const serverVariables =
+                "variables" in server && Array.isArray(serverRecord["variables"])
+                    ? (serverRecord["variables"] as Array<{ id: string; default?: string; values?: string[] }>)
+                    : undefined;
+            const serverUrl = serverDefaultUrl ?? server.url;
             const environmentSchema = server.audiences
                 ? {
-                      url: server.url,
+                      url: serverUrl,
                       audiences: server.audiences
                   }
-                : server.url;
+                : serverUrl;
             if (server.name == null) {
                 endpointLevelSkippedServers.push(environmentSchema);
                 continue;
@@ -250,11 +291,22 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 endpointLevelServersByName[server.name] = [];
             }
             endpointLevelServersByName[server.name]?.push({
-                url: server.url,
+                url: serverUrl,
                 audiences: server.audiences
             });
 
             endpointLevelServersWithName[server.name] = environmentSchema;
+
+            // Track URL template and variable data for multi-URL environments
+            if (serverUrlTemplate && server.name) {
+                endpointLevelUrlTemplates[server.name] = serverUrlTemplate;
+            }
+            if (serverDefaultUrl && server.name) {
+                endpointLevelDefaultUrls[server.name] = serverDefaultUrl;
+            }
+            if (serverVariables && serverVariables.length > 0 && server.name) {
+                endpointLevelVariables[server.name] = serverVariables;
+            }
         }
     }
 
@@ -525,7 +577,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             ? schema
                             : isRawMultipleBaseUrlsEnvironment(schema)
                               ? Object.values(schema.urls)[0]
-                              : schema.url;
+                              : (schema["default-url"] ?? schema.url);
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -550,7 +602,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             ? schema
                             : isRawMultipleBaseUrlsEnvironment(schema)
                               ? Object.values(schema.urls)[0]
-                              : schema.url;
+                              : (schema["default-url"] ?? schema.url);
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -583,16 +635,50 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     ? topLevelServerSchema
                     : isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)
                       ? Object.values(topLevelServerSchema.urls)[0]
-                      : topLevelServerSchema.url;
+                      : (topLevelServerSchema["default-url"] ?? topLevelServerSchema.url);
+
+            // Collect URL template/variable data for multi-URL environments
+            const multiUrlTemplates: Record<string, string> = {};
+            const multiDefaultUrls: Record<string, string> = {};
+            const multiVariables: Record<string, Array<{ id: string; default?: string; values?: string[] }>> = {};
+
+            if (typeof topLevelServerSchema !== "string" && !isRawMultipleBaseUrlsEnvironment(topLevelServerSchema)) {
+                if (topLevelServerSchema["url-template"]) {
+                    multiUrlTemplates[DEFAULT_URL_NAME] = topLevelServerSchema["url-template"];
+                }
+                if (topLevelServerSchema["default-url"]) {
+                    multiDefaultUrls[DEFAULT_URL_NAME] = topLevelServerSchema["default-url"];
+                }
+                if (topLevelServerSchema.variables && topLevelServerSchema.variables.length > 0) {
+                    multiVariables[DEFAULT_URL_NAME] = topLevelServerSchema.variables;
+                }
+            }
+
+            // Add endpoint-level URL template/variable data
+            Object.assign(multiUrlTemplates, endpointLevelUrlTemplates);
+            Object.assign(multiDefaultUrls, endpointLevelDefaultUrls);
+            Object.assign(multiVariables, endpointLevelVariables);
+
+            const hasTemplateData = Object.keys(multiUrlTemplates).length > 0 || Object.keys(multiVariables).length > 0;
+
+            const multiUrlSchema: RawSchemas.MultipleBaseUrlsEnvironmentSchema = {
+                urls: {
+                    ...{ [DEFAULT_URL_NAME]: topLevelServerUrl ?? "" },
+                    ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
+                    ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
+                },
+                ...(hasTemplateData
+                    ? {
+                          "url-templates": multiUrlTemplates,
+                          "default-urls": multiDefaultUrls,
+                          variables: multiVariables
+                      }
+                    : {})
+            };
+
             context.builder.addEnvironment({
                 name: environmentName,
-                schema: {
-                    urls: {
-                        ...{ [DEFAULT_URL_NAME]: topLevelServerUrl ?? "" },
-                        ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
-                        ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
-                    }
-                }
+                schema: multiUrlSchema
             });
             context.builder.setDefaultEnvironment(environmentName);
             context.builder.setDefaultUrl(DEFAULT_URL_NAME);
@@ -624,7 +710,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             ? envSchema
                             : isRawMultipleBaseUrlsEnvironment(envSchema)
                               ? Object.values(envSchema.urls)[0]
-                              : envSchema.url;
+                              : (envSchema["default-url"] ?? envSchema.url);
 
                     if (!baseUrl) {
                         continue; // Skip if no base URL
@@ -680,7 +766,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                                 ? schema
                                 : isRawMultipleBaseUrlsEnvironment(schema)
                                   ? Object.values(schema.urls)[0]
-                                  : schema.url;
+                                  : (schema["default-url"] ?? schema.url);
                         context.builder.addEnvironment({
                             name,
                             schema: {

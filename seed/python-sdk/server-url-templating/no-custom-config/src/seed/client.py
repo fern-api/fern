@@ -29,6 +29,12 @@ class SeedApi:
 
 
 
+    region : typing.Optional[str]
+        Server URL variable for 'region'. Defaults to 'us-east-1'.
+
+    server_url_environment : typing.Optional[str]
+        Server URL variable for 'environment'. Defaults to 'prod'.
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -52,6 +58,8 @@ class SeedApi:
         self,
         *,
         environment: SeedApiEnvironment = SeedApiEnvironment.REGIONAL_API_SERVER,
+        region: typing.Optional[str] = None,
+        server_url_environment: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -60,6 +68,17 @@ class SeedApi:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if region is not None or server_url_environment is not None:
+            _region = region if region is not None else "us-east-1"
+            _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
+            environment = SeedApiEnvironment(
+                base="https://api.{region}.{environment}.example.com/v1".format(
+                    region=_region, environment=_server_url_environment
+                ),
+                auth="https://auth.{region}.example.com".format(
+                    region=_region,
+                ),
+            )
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
             headers=headers,
@@ -180,6 +199,12 @@ class AsyncSeedApi:
 
 
 
+    region : typing.Optional[str]
+        Server URL variable for 'region'. Defaults to 'us-east-1'.
+
+    server_url_environment : typing.Optional[str]
+        Server URL variable for 'environment'. Defaults to 'prod'.
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -203,6 +228,8 @@ class AsyncSeedApi:
         self,
         *,
         environment: SeedApiEnvironment = SeedApiEnvironment.REGIONAL_API_SERVER,
+        region: typing.Optional[str] = None,
+        server_url_environment: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -211,6 +238,17 @@ class AsyncSeedApi:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if region is not None or server_url_environment is not None:
+            _region = region if region is not None else "us-east-1"
+            _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
+            environment = SeedApiEnvironment(
+                base="https://api.{region}.{environment}.example.com/v1".format(
+                    region=_region, environment=_server_url_environment
+                ),
+                auth="https://auth.{region}.example.com".format(
+                    region=_region,
+                ),
+            )
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,
             headers=headers,
