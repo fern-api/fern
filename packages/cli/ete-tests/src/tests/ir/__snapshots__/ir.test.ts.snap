@@ -2603,6 +2603,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                         "_type": "primitive"
                     },
                     "_type": "optional"
+                    "validation": null
                 },
                 "_type": "container"
             },
@@ -3192,6 +3193,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                             "type": "string"
                         },
                         "_type": "literal"
+                        "validation": null
                     },
                     "_type": "container"
                 },
@@ -3202,6 +3204,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                             "type": "string"
                         },
                         "_type": "literal"
+                        "validation": null
                     },
                     "_type": "container"
                 },
@@ -4121,6 +4124,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                     "_type": "primitive"
                                 },
                                 "_type": "list"
+                                "validation": null
                             },
                             "_type": "container"
                         }
@@ -4222,6 +4226,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                         }
                                     ],
                                     "type": "list"
+                                    "validation": null
                                 },
                                 "type": "container"
                             },
@@ -6392,6 +6397,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                     "_type": "named"
                                 },
                                 "_type": "list"
+                                "validation": null
                             },
                             "_type": "container"
                         }
@@ -6493,6 +6499,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                         }
                                     ],
                                     "type": "list"
+                                    "validation": null
                                 },
                                 "type": "container"
                             },
@@ -6695,6 +6702,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                                                     }
                                                                 ],
                                                                 "type": "list"
+                                                                "validation": null
                                                             },
                                                             "type": "container"
                                                         },
@@ -6758,6 +6766,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                                             "container": {
                                                                 "list": [],
                                                                 "type": "list"
+                                                                "validation": null
                                                             },
                                                             "type": "container"
                                                         },
@@ -6945,6 +6954,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                                             "container": {
                                                                 "list": [],
                                                                 "type": "list"
+                                                                "validation": null
                                                             },
                                                             "type": "container"
                                                         },
@@ -7008,6 +7018,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                                             "container": {
                                                                 "list": [],
                                                                 "type": "list"
+                                                                "validation": null
                                                             },
                                                             "type": "container"
                                                         },
@@ -7072,6 +7083,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                         }
                                     ],
                                     "type": "list"
+                                    "validation": null
                                 },
                                 "type": "container"
                             },
@@ -7225,6 +7237,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                         }
                                     ],
                                     "type": "list"
+                                    "validation": null
                                 },
                                 "type": "container"
                             },
@@ -7288,6 +7301,7 @@ exports[`ir > {"name":"migration","version":"v1"} 1`] = `
                                 "container": {
                                     "list": [],
                                     "type": "list"
+                                    "validation": null
                                 },
                                 "type": "container"
                             },
@@ -10717,9 +10731,11 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                             "typeId": "type_nested:Product",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -10849,7 +10865,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -11472,7 +11489,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                                             },
                                                                                                                             "valueType": {
                                                                                                                                 "_type": "unknown"
-                                                                                                                            }
+                                                                                                                            },
+                                                                                                                            "validation": null
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "jsonExample": {
@@ -11644,7 +11662,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                         "typeId": "type_nested:Product",
                                                                                         "default": null,
                                                                                         "inline": null
-                                                                                    }
+                                                                                    },
+                                                                                    "validation": null
                                                                                 }
                                                                             },
                                                                             "jsonExample": {
@@ -11741,9 +11760,11 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                     "typeId": "type_nested:Product",
                                                                                     "default": null,
                                                                                     "inline": null
-                                                                                }
+                                                                                },
+                                                                                "validation": null
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "validation": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -12098,7 +12119,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                                             },
                                                                                                                             "valueType": {
                                                                                                                                 "_type": "unknown"
-                                                                                                                            }
+                                                                                                                            },
+                                                                                                                            "validation": null
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "jsonExample": {
@@ -12264,7 +12286,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                         "typeId": "type_nested:Product",
                                                                                         "default": null,
                                                                                         "inline": null
-                                                                                    }
+                                                                                    },
+                                                                                    "validation": null
                                                                                 }
                                                                             },
                                                                             "jsonExample": {
@@ -12358,9 +12381,11 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                     "typeId": "type_nested:Product",
                                                                                     "default": null,
                                                                                     "inline": null
-                                                                                }
+                                                                                },
+                                                                                "validation": null
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "validation": null
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -17658,7 +17683,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                 "validation": null
                             }
                         }
-                    }
+                    },
+                    "validation": null
                 }
             },
             "env": null,
@@ -19786,7 +19812,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "validation": null
                             }
                         }
-                    }
+                    },
+                    "validation": null
                 }
             },
             "env": null,
@@ -20227,7 +20254,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -20445,7 +20473,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                         "validation": null
                                                     }
                                                 }
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "jsonExample": [
@@ -21422,7 +21451,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
@@ -21902,7 +21932,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
@@ -22372,7 +22403,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
@@ -22837,7 +22869,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
@@ -23890,7 +23923,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "validation": null
                             }
                         }
-                    }
+                    },
+                    "validation": null
                 }
             },
             "env": null,
@@ -24264,7 +24298,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -24302,9 +24337,11 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -25086,7 +25123,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "literal": {
                             "type": "boolean",
                             "boolean": true
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -25096,7 +25134,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "literal": {
                             "type": "boolean",
                             "boolean": true
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -25189,7 +25228,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "literal": {
                             "type": "string",
                             "string": "hello"
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -25199,7 +25239,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "literal": {
                             "type": "string",
                             "string": "hello"
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -26415,7 +26456,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -26633,7 +26675,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "validation": null
                                                     }
                                                 }
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "jsonExample": [
@@ -28928,7 +28971,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "typeId": "type_imdb:RecursiveType",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -29021,7 +29065,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -29222,7 +29267,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "validation": null
                                                     }
                                                 }
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "jsonExample": [
@@ -29563,7 +29609,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                             "validation": null
                                                                                         }
                                                                                     }
-                                                                                }
+                                                                                },
+                                                                                "validation": null
                                                                             }
                                                                         },
                                                                         "jsonExample": [
@@ -29736,7 +29783,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                     "typeId": "type_imdb:RecursiveType",
                                                                                     "default": null,
                                                                                     "inline": null
-                                                                                }
+                                                                                },
+                                                                                "validation": null
                                                                             }
                                                                         },
                                                                         "jsonExample": []
@@ -30036,7 +30084,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                             "validation": null
                                                                                         }
                                                                                     }
-                                                                                }
+                                                                                },
+                                                                                "validation": null
                                                                             }
                                                                         },
                                                                         "jsonExample": []
@@ -30206,7 +30255,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                     "typeId": "type_imdb:RecursiveType",
                                                                                     "default": null,
                                                                                     "inline": null
-                                                                                }
+                                                                                },
+                                                                                "validation": null
                                                                             }
                                                                         },
                                                                         "jsonExample": []
@@ -30358,7 +30408,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 "typeId": "type_imdb:RecursiveType",
                                                 "default": null,
                                                 "inline": null
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "jsonExample": [
@@ -30651,7 +30702,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "validation": null
                                                     }
                                                 }
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "jsonExample": [
@@ -30825,7 +30877,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 "typeId": "type_imdb:RecursiveType",
                                                 "default": null,
                                                 "inline": null
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "jsonExample": []
@@ -32833,7 +32886,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
@@ -33313,7 +33367,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
@@ -33783,7 +33838,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
@@ -34248,7 +34304,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "validation": null
                                                                         }
                                                                     }
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         },
                                                         "jsonExample": [
