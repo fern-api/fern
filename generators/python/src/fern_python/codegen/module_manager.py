@@ -55,7 +55,7 @@ def _write_dynamic_exports_dict(writer: AST.Writer, sorted_export_module_mapping
 
 
 def _write_attr_function(writer: AST.Writer) -> None:
-    writer.write_line("def __getattr__(attr_name: str) -> typing.Any:")
+    writer.write_line("def __getattr__(attr_name: str):")
     with writer.indent():
         writer.write_line("module_name = _dynamic_imports.get(attr_name)")
         writer.write_line("if module_name is None:")

@@ -42,7 +42,7 @@ _dynamic_imports: typing.Dict[str, str] = {
 }
 
 
-def __getattr__(attr_name: str) -> typing.Any:
+def __getattr__(attr_name: str):
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")

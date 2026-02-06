@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.54.5
+  changelogEntry:
+    - summary: |
+        Remove `-> typing.Any` return annotation from `__getattr__` in generated `__init__.py` files.
+        Per PEP 562, this annotation caused type checkers to resolve any unrecognized module attribute
+        to `Any`, silently disabling type checking for all imports. The `TYPE_CHECKING` block is now
+        the sole source of truth for static analysis.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 62
+
 - version: 4.54.4
   changelogEntry:
     - summary: |
