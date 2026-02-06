@@ -17,8 +17,8 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface ConstructorParameters {
     all: ConstructorParameter[];

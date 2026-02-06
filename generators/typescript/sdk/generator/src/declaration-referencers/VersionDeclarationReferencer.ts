@@ -8,7 +8,7 @@ import {
 } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
 
 export declare namespace VersionDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {

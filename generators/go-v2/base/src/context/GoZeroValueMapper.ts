@@ -8,7 +8,7 @@ import {
     PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 
 export declare namespace GoZeroValueMapper {
     interface Args {

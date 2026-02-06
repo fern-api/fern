@@ -3,8 +3,8 @@ import { exec } from "child_process";
 import stripAnsi from "strip-ansi";
 import { vi } from "vitest";
 
-import { runFernCli, runFernCliWithoutAuthToken } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli, runFernCliWithoutAuthToken } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 

@@ -16,8 +16,8 @@ import {
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
 
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace TypeSchemaContextImpl {
     export interface Init {

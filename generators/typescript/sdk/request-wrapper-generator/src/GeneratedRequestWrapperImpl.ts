@@ -47,7 +47,7 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
+import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator.js";
 
 export declare namespace GeneratedRequestWrapperImpl {
     export interface Init {

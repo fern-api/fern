@@ -4,8 +4,8 @@ import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
-import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
+import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
+import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl.js";
 
 export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
     export interface Init {

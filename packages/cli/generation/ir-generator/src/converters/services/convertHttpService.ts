@@ -19,26 +19,26 @@ import {
 import { constructHttpPath, IdGenerator } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 import urlJoin from "url-join";
-import { FernFileContext } from "../../FernFileContext";
-import { ErrorResolver } from "../../resolvers/ErrorResolver";
-import { ExampleResolver } from "../../resolvers/ExampleResolver";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { VariableResolver } from "../../resolvers/VariableResolver";
-import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-import { IRGenerationSettings } from "../../utils/getIrGenerationSettings";
-import { orderPathParametersByUrl } from "../../utils/orderPathParametersByUrl";
-import { convertAvailability, convertDeclaration } from "../convertDeclaration";
-import { convertCodeSample } from "./convertCodeSamples";
-import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
-import { convertHttpRequestBody } from "./convertHttpRequestBody";
-import { convertHttpResponse } from "./convertHttpResponse";
-import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
-import { convertPagination } from "./convertPagination";
-import { convertQueryParameter } from "./convertQueryParameter";
-import { convertResponseErrors } from "./convertResponseErrors";
-import { convertRetries } from "./convertRetries";
-import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ErrorResolver } from "../../resolvers/ErrorResolver.js";
+import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
+import { PropertyResolver } from "../../resolvers/PropertyResolver.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { VariableResolver } from "../../resolvers/VariableResolver.js";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters.js";
+import { IRGenerationSettings } from "../../utils/getIrGenerationSettings.js";
+import { orderPathParametersByUrl } from "../../utils/orderPathParametersByUrl.js";
+import { convertAvailability, convertDeclaration } from "../convertDeclaration.js";
+import { convertCodeSample } from "./convertCodeSamples.js";
+import { convertExampleEndpointCall } from "./convertExampleEndpointCall.js";
+import { convertHttpRequestBody } from "./convertHttpRequestBody.js";
+import { convertHttpResponse } from "./convertHttpResponse.js";
+import { convertHttpSdkRequest } from "./convertHttpSdkRequest.js";
+import { convertPagination } from "./convertPagination.js";
+import { convertQueryParameter } from "./convertQueryParameter.js";
+import { convertResponseErrors } from "./convertResponseErrors.js";
+import { convertRetries } from "./convertRetries.js";
+import { getTransportForEndpoint, getTransportForService } from "./convertTransport.js";
 
 export function convertHttpService({
     rootDefaultUrl,

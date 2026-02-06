@@ -9,7 +9,7 @@ import {
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
 import { isEqual, startCase } from "lodash";
 
-import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
+import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest.js";
 
 export function convertExampleEndpointCall({
     ir,

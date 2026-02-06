@@ -1,11 +1,11 @@
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 
-import { LocationGenerator } from "../utils/LocationGenerator";
-import { BLOCK_END } from "../utils/RubyConstants";
-import { Class_ } from "./classes/Class_";
-import { ClassReference } from "./classes/ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Import } from "./Import";
+import { LocationGenerator } from "../utils/LocationGenerator.js";
+import { BLOCK_END } from "../utils/RubyConstants.js";
+import { Class_ } from "./classes/Class_.js";
+import { ClassReference } from "./classes/ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Import } from "./Import.js";
 
 export declare namespace Module_ {
     export interface Init extends AstNode.Init {

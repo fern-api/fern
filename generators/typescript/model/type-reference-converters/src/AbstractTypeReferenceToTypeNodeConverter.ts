@@ -3,7 +3,7 @@ import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReferenc
 import { InlineConsts, TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter.js";
 
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {

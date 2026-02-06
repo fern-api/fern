@@ -3,22 +3,25 @@ import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    AuthScheme,
-    HttpHeader,
-    InferredAuthScheme,
-    Literal,
-    OAuthScheme,
-    PrimitiveTypeV1,
-    PrimitiveTypeV2,
-    ServiceId,
-    Subpackage,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { RawClient } from "../endpoint/http/RawClient";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils";
-import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type AuthScheme = FernIr.AuthScheme;
+type InferredAuthScheme = FernIr.InferredAuthScheme;
+type OAuthScheme = FernIr.OAuthScheme;
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type PrimitiveTypeV2 = FernIr.PrimitiveTypeV2;
+const PrimitiveTypeV2 = FernIr.PrimitiveTypeV2;
+type ServiceId = FernIr.ServiceId;
+type Subpackage = FernIr.Subpackage;
+type HttpHeader = FernIr.HttpHeader;
+type Literal = FernIr.Literal;
+type TypeReference = FernIr.TypeReference;
+
+import { RawClient } from "../endpoint/http/RawClient.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -638,7 +641,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             name: "Authorization",
                             prefix: "Bearer"
                         },
-                        typeReference: TypeReference.primitive({
+                        typeReference: FernIr.TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({
                                 default: undefined,
@@ -660,7 +663,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive({
+                        typeReference: FernIr.TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({
                                 default: undefined,
@@ -675,7 +678,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive({
+                        typeReference: FernIr.TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({
                                 default: undefined,
@@ -695,7 +698,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: "clientId",
                         docs: "The clientId to use for authentication.",
                         isOptional,
-                        typeReference: TypeReference.primitive({
+                        typeReference: FernIr.TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({
                                 default: undefined,
@@ -710,7 +713,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: "clientSecret",
                         docs: "The clientSecret to use for authentication.",
                         isOptional,
-                        typeReference: TypeReference.primitive({
+                        typeReference: FernIr.TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
                             v2: PrimitiveTypeV2.string({
                                 default: undefined,

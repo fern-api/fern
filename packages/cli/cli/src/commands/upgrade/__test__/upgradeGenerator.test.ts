@@ -6,7 +6,7 @@ import { join } from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
 
-import { loadAndUpdateGenerators } from "../upgradeGenerator";
+import { loadAndUpdateGenerators } from "../upgradeGenerator.js";
 
 vi.mock("@fern-api/configuration-loader", () => ({
     getPathToGeneratorsConfiguration: vi.fn(),

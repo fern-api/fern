@@ -4,10 +4,10 @@ import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation, Literal } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
     snippetAst: ruby.AstNode;

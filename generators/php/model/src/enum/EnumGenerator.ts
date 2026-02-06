@@ -4,8 +4,8 @@ import { php } from "@fern-api/php-codegen";
 
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: php.ClassReference;

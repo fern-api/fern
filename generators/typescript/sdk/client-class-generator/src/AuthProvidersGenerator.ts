@@ -12,7 +12,7 @@ import {
     InferredAuthProviderGenerator,
     OAuthAuthProviderGenerator,
     RoutingAuthProviderGenerator
-} from "./auth-provider";
+} from "./auth-provider/index.js";
 
 export declare namespace AuthProvidersGenerator {
     export interface Init {

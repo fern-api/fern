@@ -20,12 +20,12 @@ import {
     GeneratedUnionType
 } from "@fern-typescript/contexts";
 
-import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
-import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
-import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl";
-import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl";
-import { GeneratedUndiscriminatedUnionTypeImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl";
-import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl";
+import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl.js";
+import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl.js";
+import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl.js";
+import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl.js";
+import { GeneratedUndiscriminatedUnionTypeImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl.js";
+import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl.js";
 
 export declare namespace TypeGenerator {
     export interface Init {

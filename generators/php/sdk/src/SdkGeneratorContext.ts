@@ -22,14 +22,14 @@ import {
     UserAgent
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants";
-import { RawClient } from "./core/RawClient";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { GuzzleClient } from "./external/GuzzleClient";
-import { PhpGeneratorAgent } from "./PhpGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants.js";
+import { RawClient } from "./core/RawClient.js";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { GuzzleClient } from "./external/GuzzleClient.js";
+import { PhpGeneratorAgent } from "./PhpGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;

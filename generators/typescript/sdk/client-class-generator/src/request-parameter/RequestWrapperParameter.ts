@@ -14,7 +14,7 @@ import { createNumericLiteralSafe, GetReferenceOpts } from "@fern-typescript/com
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { AbstractRequestParameter } from "./AbstractRequestParameter";
+import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 type DefaultNonBodyKeyName = string & {
     __DefaultNonBodyKeyName: void;

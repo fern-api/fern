@@ -5,7 +5,7 @@ import {
     TypeReference,
     UndiscriminatedUnionMember
 } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 /**
  * Utility functions to check primitive types without repeating the visitor pattern

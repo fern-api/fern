@@ -2,7 +2,7 @@ import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-import { RawSingleUnionType } from "./RawSingleUnionType";
+import { RawSingleUnionType } from "./RawSingleUnionType.js";
 
 export declare namespace AbstractRawSingleUnionType {
     export interface Init {

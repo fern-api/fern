@@ -1,7 +1,7 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php, STATIC } from "@fern-api/php-codegen";
-
 import {
     Name,
     NameAndWireValue,
@@ -10,10 +10,8 @@ import {
     TypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-
-import { assertNever } from "../../../../../packages/commons/core-utils/src";
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;

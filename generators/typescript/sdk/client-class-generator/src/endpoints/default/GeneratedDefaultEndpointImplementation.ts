@@ -2,18 +2,18 @@ import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
-import { buildUrl } from "../utils/buildUrl";
-import { generateEndpointMetadata } from "../utils/generateEndpointMetadata";
+import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest.js";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { buildUrl } from "../utils/buildUrl.js";
+import { generateEndpointMetadata } from "../utils/generateEndpointMetadata.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression,
     REQUEST_OPTIONS_PARAMETER_NAME
-} from "../utils/requestOptionsParameter";
-import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
+} from "../utils/requestOptionsParameter.js";
+import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {

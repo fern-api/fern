@@ -6,7 +6,7 @@ import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
 export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;

@@ -2,8 +2,8 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import type * as FernIr from "@fern-fern/ir-sdk/api";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { AsIsFileDefinition } from "../AsIs";
-import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project";
+import { AsIsFileDefinition } from "../AsIs.js";
+import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project/index.js";
 import {
     convertPascalToSnakeCase,
     convertToSnakeCase,
@@ -12,7 +12,7 @@ import {
     generateDefaultCrateName,
     RustCycleDetector,
     validateAndSanitizeCrateName
-} from "../utils";
+} from "../utils/index.js";
 
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema

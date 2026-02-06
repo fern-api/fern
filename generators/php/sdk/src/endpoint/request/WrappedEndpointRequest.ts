@@ -18,13 +18,13 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {

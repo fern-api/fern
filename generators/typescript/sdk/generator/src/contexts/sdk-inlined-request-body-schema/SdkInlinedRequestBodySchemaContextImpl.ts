@@ -5,8 +5,8 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace SdkInlinedRequestBodySchemaContextImpl {
     export interface Init {

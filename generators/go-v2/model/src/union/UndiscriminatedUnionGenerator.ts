@@ -10,8 +10,8 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "../AbstractModelGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
     constructor(

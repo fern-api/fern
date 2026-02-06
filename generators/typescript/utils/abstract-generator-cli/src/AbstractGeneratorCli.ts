@@ -23,9 +23,9 @@ import {
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { publishPackage } from "./publishPackage";
-import { writeGenerationMetadata } from "./writeGenerationMetadata";
-import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+import { publishPackage } from "./publishPackage.js";
+import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
+import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 

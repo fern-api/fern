@@ -3,8 +3,8 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { TypeDeclaration, UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 interface UnionMember {
     typeReference: ruby.ClassReference | ruby.Type;

@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService, PathParameter } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 
-import { getNonVariablePathParameters } from "./getNonVariablePathParameters";
+import { getNonVariablePathParameters } from "./getNonVariablePathParameters.js";
 
 export function getPathParametersForEndpointSignature({
     service,

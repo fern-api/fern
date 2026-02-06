@@ -6,7 +6,7 @@ import {
     HttpEndpoint,
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 /**
  * Extracts test data directly from the static IR for wire test validation.

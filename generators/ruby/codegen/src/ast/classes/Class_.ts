@@ -1,13 +1,13 @@
-import { BLOCK_END } from "../../utils/RubyConstants";
-import { Argument } from "../Argument";
-import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
-import { Function_ } from "../functions/Function_";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
-import { Import } from "../Import";
-import { Property } from "../Property";
-import { Yardoc } from "../Yardoc";
-import { ClassReference } from "./ClassReference";
+import { BLOCK_END } from "../../utils/RubyConstants.js";
+import { Argument } from "../Argument.js";
+import { AstNode } from "../core/AstNode.js";
+import { Expression } from "../expressions/Expression.js";
+import { Function_ } from "../functions/Function_.js";
+import { FunctionInvocation } from "../functions/FunctionInvocation.js";
+import { Import } from "../Import.js";
+import { Property } from "../Property.js";
+import { Yardoc } from "../Yardoc.js";
+import { ClassReference } from "./ClassReference.js";
 
 export declare namespace Class_ {
     export interface Init extends AstNode.Init {

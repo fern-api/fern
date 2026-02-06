@@ -11,9 +11,9 @@ import {
     Subpackage,
     SubpackageId
 } from "@fern-fern/ir-sdk/api";
-import { RustGeneratorAgent } from "./RustGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { RustGeneratorAgent } from "./RustGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/index.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: RustGeneratorAgent;

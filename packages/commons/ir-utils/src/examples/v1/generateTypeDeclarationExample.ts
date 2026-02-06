@@ -10,9 +10,9 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
 /**
  * Checks if a union member is "simple" (primitive, literal, or enum).

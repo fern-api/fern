@@ -17,12 +17,12 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
-import { SwiftProject } from "../project";
-import { CycleDetector } from "./cycle-detector";
-import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
-import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
-import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
+import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs.js";
+import { SwiftProject } from "../project/index.js";
+import { CycleDetector } from "./cycle-detector.js";
+import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions.js";
+import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
+import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema

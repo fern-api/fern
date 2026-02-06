@@ -8,8 +8,8 @@ import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 import { upperFirst } from "lodash-es";
-import { RubyProject } from "../project/RubyProject";
-import { RubyTypeMapper } from "./RubyTypeMapper";
+import { RubyProject } from "../project/RubyProject.js";
+import { RubyTypeMapper } from "./RubyTypeMapper.js";
 
 /**
  * Converts a string to snake_case for Ruby naming conventions.

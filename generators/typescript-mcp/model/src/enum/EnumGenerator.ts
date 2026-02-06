@@ -4,7 +4,7 @@ import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-
 
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string;

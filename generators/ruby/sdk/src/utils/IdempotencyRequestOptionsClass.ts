@@ -10,7 +10,7 @@ import {
 
 import { HttpHeader } from "@fern-fern/ir-sdk/api";
 
-import { RequestOptions } from "./RequestOptionsClass";
+import { RequestOptions } from "./RequestOptionsClass.js";
 
 export declare namespace IdempotencyRequestOptions {
     export interface Init extends RequestOptions.Init {

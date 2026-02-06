@@ -3,11 +3,11 @@ import { php } from "@fern-api/php-codegen";
 
 import { HttpEndpoint, HttpService, PathParameter, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
-import { EndpointRequest } from "./request/EndpointRequest";
-import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { EndpointRequest } from "./request/EndpointRequest.js";
+import { getEndpointRequest } from "./utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;

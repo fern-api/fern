@@ -2,7 +2,7 @@ import { go } from "@fern-api/go-ast";
 
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace Caller {
     export interface CallArgs {

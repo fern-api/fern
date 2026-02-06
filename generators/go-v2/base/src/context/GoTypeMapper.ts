@@ -10,7 +10,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 
 export declare namespace GoTypeMapper {
     interface Args {

@@ -1,1 +1,1 @@
-export { addStatusCommand } from "./command";
+export { addStatusCommand } from "./command.js";

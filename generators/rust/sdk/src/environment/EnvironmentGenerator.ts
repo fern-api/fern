@@ -25,7 +25,7 @@ import {
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
 } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace EnvironmentGenerator {
     interface Args {

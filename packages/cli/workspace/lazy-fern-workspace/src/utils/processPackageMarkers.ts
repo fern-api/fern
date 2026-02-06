@@ -6,11 +6,11 @@ import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { size } from "lodash-es";
 
-import { OSSWorkspace } from "../OSSWorkspace";
-import { LoadAPIWorkspace } from "./loadAPIWorkspace";
-import { loadDependency } from "./loadDependency";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
-import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
+import { OSSWorkspace } from "../OSSWorkspace.js";
+import { LoadAPIWorkspace } from "./loadAPIWorkspace.js";
+import { loadDependency } from "./loadDependency.js";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
+import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles.js";
 
 export declare namespace processPackageMarkers {
     export type Return = SuccessfulResult | FailedResult;

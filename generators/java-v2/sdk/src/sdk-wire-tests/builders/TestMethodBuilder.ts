@@ -1,14 +1,13 @@
-import { java } from "@fern-api/java-ast";
-import { Writer } from "@fern-api/java-ast/src/ast";
+import { java, Writer } from "@fern-api/java-ast";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { SnippetExtractor } from "../extractors/SnippetExtractor";
-import { WireTestExample } from "../extractors/TestDataExtractor";
-import { TestResourceWriter } from "../resources/TestResourceWriter";
-import { HeaderValidator } from "../validators/HeaderValidator";
-import { JsonValidator } from "../validators/JsonValidator";
-import { PaginationValidator } from "../validators/PaginationValidator";
-import { TestClassBuilder } from "./TestClassBuilder";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { SnippetExtractor } from "../extractors/SnippetExtractor.js";
+import { WireTestExample } from "../extractors/TestDataExtractor.js";
+import { TestResourceWriter } from "../resources/TestResourceWriter.js";
+import { HeaderValidator } from "../validators/HeaderValidator.js";
+import { JsonValidator } from "../validators/JsonValidator.js";
+import { PaginationValidator } from "../validators/PaginationValidator.js";
+import { TestClassBuilder } from "./TestClassBuilder.js";
 
 /**
  * Builder for generating individual test methods in wire tests.

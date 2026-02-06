@@ -1,7 +1,7 @@
 import { isRawMultipleBaseUrlsEnvironment, RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { extractPathSegment, generateWebsocketUrlId, getProtocol } from "./utils/generateUrlId";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { extractPathSegment, generateWebsocketUrlId, getProtocol } from "./utils/generateUrlId.js";
 
 interface ApiServerConfig {
     url: string;

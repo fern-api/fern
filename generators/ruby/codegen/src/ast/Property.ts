@@ -1,11 +1,11 @@
 import { Name } from "@fern-fern/ir-sdk/api";
 
-import { Argument } from "./Argument";
-import { ClassReference } from "./classes/ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Import } from "./Import";
-import { Parameter } from "./Parameter";
-import { Variable, VariableType } from "./Variable";
+import { Argument } from "./Argument.js";
+import { ClassReference } from "./classes/ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Import } from "./Import.js";
+import { Parameter } from "./Parameter.js";
+import { Variable, VariableType } from "./Variable.js";
 
 export declare namespace Property {
     export interface Init extends AstNode.Init {

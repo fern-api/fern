@@ -13,11 +13,11 @@ import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { createAndStartJob } from "./createAndStartJob";
-import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
-import { RemoteTaskHandler } from "./RemoteTaskHandler";
-import { SourceUploader } from "./SourceUploader";
+import { createAndStartJob } from "./createAndStartJob.js";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
+import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
+import { SourceUploader } from "./SourceUploader.js";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,

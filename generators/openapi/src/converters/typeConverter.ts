@@ -21,7 +21,7 @@ import {
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 
-import { convertObject } from "./convertObject";
+import { convertObject } from "./convertObject.js";
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema;

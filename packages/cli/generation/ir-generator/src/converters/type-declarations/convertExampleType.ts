@@ -23,18 +23,18 @@ import {
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
-import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
-import { FernFileContext } from "../../FernFileContext";
-import { ExampleResolver } from "../../resolvers/ExampleResolver";
-import { TypeResolver } from "../../resolvers/TypeResolver";
+import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample.js";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
 import {
     getSingleUnionTypeName,
     getSingleUnionTypeProperties,
     getUnionDiscriminant,
     getUnionDiscriminantName
-} from "./convertDiscriminatedUnionTypeDeclaration";
-import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration";
-import { getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
+} from "./convertDiscriminatedUnionTypeDeclaration.js";
+import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration.js";
+import { getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration.js";
 
 const MAX_EXAMPLE_RECURSION_DEPTH = 128;
 

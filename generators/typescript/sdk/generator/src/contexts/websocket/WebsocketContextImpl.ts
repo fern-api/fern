@@ -5,7 +5,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
 
-import { WebsocketSocketDeclarationReferencer } from "../../declaration-referencers/WebsocketSocketDeclarationReferencer";
+import { WebsocketSocketDeclarationReferencer } from "../../declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 
 export declare namespace WebsocketContextImpl {
     export interface Init {

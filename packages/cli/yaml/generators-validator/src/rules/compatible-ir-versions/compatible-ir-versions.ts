@@ -2,7 +2,7 @@ import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader"
 import { createFdrGeneratorsSdkService, getIrVersionForGenerator } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 function getMaybeBadVersionMessage(
     generatorName: string,

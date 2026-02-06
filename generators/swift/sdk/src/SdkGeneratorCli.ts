@@ -23,12 +23,12 @@ import {
     SubClientGenerator,
     TemplateDataGenerator,
     WireTestSuiteGenerator
-} from "./generators";
-import { ReferenceConfigAssembler } from "./reference";
-import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
+} from "./generators/index.js";
+import { ReferenceConfigAssembler } from "./reference/index.js";
+import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly defaultCustomConfig: SdkCustomConfigSchema = {

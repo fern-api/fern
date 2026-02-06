@@ -1,5 +1,5 @@
 import { EnvironmentsConfig, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 interface CreateSampleGeneratorContextArgs {
     environments?: EnvironmentsConfig;

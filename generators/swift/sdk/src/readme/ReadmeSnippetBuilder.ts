@@ -4,7 +4,7 @@ import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";

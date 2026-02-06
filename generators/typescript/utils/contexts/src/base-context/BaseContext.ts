@@ -3,8 +3,8 @@ import { Constants } from "@fern-fern/ir-sdk/api";
 import { CoreUtilities, ExternalDependencies } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
-import { TypeContext, TypeSchemaContext } from "../model-context";
-import { JsonContext } from "./json";
+import { TypeContext, TypeSchemaContext } from "../model-context/index.js";
+import { JsonContext } from "./json/index.js";
 
 export interface BaseContext {
     logger: Logger;

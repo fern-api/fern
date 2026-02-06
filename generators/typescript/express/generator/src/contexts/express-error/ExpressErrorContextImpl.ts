@@ -5,7 +5,7 @@ import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator"
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
+import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer.js";
 
 export declare namespace ExpressErrorContextImpl {
     export interface Init {

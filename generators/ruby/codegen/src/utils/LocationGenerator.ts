@@ -1,7 +1,7 @@
 import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
 
-import { TYPES_DIRECTORY, TYPES_MODULE } from "./RubyConstants";
+import { TYPES_DIRECTORY, TYPES_MODULE } from "./RubyConstants.js";
 
 export class LocationGenerator {
     public rootModule: string;

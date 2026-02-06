@@ -3,9 +3,9 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpService, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
-import { RawClient } from "../endpoint/http/RawClient";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { RawClient } from "../endpoint/http/RawClient.js";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";

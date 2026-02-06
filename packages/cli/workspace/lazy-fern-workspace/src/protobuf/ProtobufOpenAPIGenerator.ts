@@ -3,7 +3,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils";
+import { detectAirGappedModeForProtobuf, getProtobufYamlV1 } from "./utils.js";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";

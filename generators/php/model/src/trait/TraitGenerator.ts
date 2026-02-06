@@ -4,8 +4,8 @@ import { php } from "@fern-api/php-codegen";
 
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;

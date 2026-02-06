@@ -4,8 +4,8 @@ import { AbstractPythonGeneratorContext, PythonProject } from "@fern-api/python-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { PythonGeneratorAgent } from "./PythonGeneratorAgent";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { PythonGeneratorAgent } from "./PythonGeneratorAgent.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: PythonGeneratorAgent;

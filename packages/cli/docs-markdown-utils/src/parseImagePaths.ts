@@ -6,11 +6,10 @@ import grayMatter from "gray-matter";
 import { isAbsolute } from "path";
 import { CONTINUE, visit } from "unist-util-visit";
 import { z } from "zod";
-
-import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals";
-import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element";
-import { parseMarkdownToTree } from "./parseMarkdownToTree";
-import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
+import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals.js";
+import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element.js";
+import { parseMarkdownToTree } from "./parseMarkdownToTree.js";
+import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes.js";
 
 function getLargeFileBytes(): number {
     return parseInt(process.env.FERN_DOCS_LARGE_FILE_BYTES ?? "5000000", 10);

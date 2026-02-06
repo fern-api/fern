@@ -1,1 +1,1 @@
-export * from "./PackageSwiftGenerator";
+export * from "./PackageSwiftGenerator.js";

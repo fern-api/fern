@@ -3,7 +3,7 @@ import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { AbstractRequestParameter } from "./AbstractRequestParameter";
+import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 export declare namespace RequestBodyParameter {
     export interface Init extends AbstractRequestParameter.Init {

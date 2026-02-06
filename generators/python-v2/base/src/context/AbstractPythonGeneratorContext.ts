@@ -2,9 +2,9 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
 
-import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
-import { PythonProject } from "../project";
-import { PythonTypeMapper } from "./PythonTypeMapper";
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema.js";
+import { PythonProject } from "../project/index.js";
+import { PythonTypeMapper } from "./PythonTypeMapper.js";
 
 export abstract class AbstractPythonGeneratorContext<
     CustomConfig extends BasePythonCustomConfigSchema

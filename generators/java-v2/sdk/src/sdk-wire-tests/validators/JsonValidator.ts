@@ -1,6 +1,6 @@
-import { Writer } from "@fern-api/java-ast/src/ast";
+import { Writer } from "@fern-api/java-ast";
 import { HttpEndpoint, Pagination } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 /**
  * Validator for JSON assertions in wire tests.

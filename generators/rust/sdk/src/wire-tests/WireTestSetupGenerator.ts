@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration

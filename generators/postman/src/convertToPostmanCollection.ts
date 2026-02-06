@@ -17,10 +17,10 @@ import {
 } from "@fern-fern/postman-sdk/api";
 import { startCase } from "lodash";
 
-import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth";
-import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
-import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
-import { ORIGIN_VARIABLE_NAME } from "./utils";
+import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth.js";
+import { convertExampleEndpointCall } from "./convertExampleEndpointCall.js";
+import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest.js";
+import { ORIGIN_VARIABLE_NAME } from "./utils.js";
 
 export function convertToPostmanCollection({
     ir,

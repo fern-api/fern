@@ -4,7 +4,7 @@ import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { ExpressContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpointTypeSchema";
+import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpointTypeSchema.js";
 
 export declare namespace GeneratedEndpointTypeSchemaImpl {
     export interface Init extends AbstractGeneratedEndpointTypeSchema.Init {

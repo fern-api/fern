@@ -4,7 +4,7 @@ import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
 
-import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl.js";
 
 export declare namespace GeneratedWrappedService {
     interface Init {

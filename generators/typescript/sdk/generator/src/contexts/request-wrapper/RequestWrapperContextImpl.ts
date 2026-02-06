@@ -6,7 +6,7 @@ import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-genera
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
 
-import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
+import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer.js";
 
 export declare namespace RequestWrapperContextImpl {
     export interface Init {

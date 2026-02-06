@@ -1,8 +1,8 @@
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
-import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace ObjectGenerator {
     interface Args {

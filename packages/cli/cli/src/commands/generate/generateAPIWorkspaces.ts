@@ -5,10 +5,10 @@ import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-ap
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { PREVIEW_DIRECTORY } from "../../constants";
-import { checkOutputDirectory } from "./checkOutputDirectory";
-import { generateWorkspace } from "./generateAPIWorkspace";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { PREVIEW_DIRECTORY } from "../../constants.js";
+import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { generateWorkspace } from "./generateAPIWorkspace.js";
 
 export const GenerationMode = {
     PullRequest: "pull-request"

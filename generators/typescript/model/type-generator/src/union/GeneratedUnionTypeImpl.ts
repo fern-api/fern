@@ -9,10 +9,10 @@ import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
-import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
-import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
-import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
+import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion.js";
+import { UnknownSingleUnionType } from "./UnknownSingleUnionType.js";
+import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator.js";
 
 export declare namespace GeneratedUnionTypeImpl {
     export interface Init<Context extends BaseContext>

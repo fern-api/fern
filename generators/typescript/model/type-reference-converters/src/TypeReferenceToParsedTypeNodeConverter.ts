@@ -2,8 +2,8 @@ import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
-import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter.js";
+import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter.js";
 
 export declare namespace TypeReferenceToParsedTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceToTypeNodeConverter.Init {}

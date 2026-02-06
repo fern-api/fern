@@ -2,7 +2,7 @@ import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
 
-import { BaseGeneratedType } from "./BaseGeneratedType";
+import { BaseGeneratedType } from "./BaseGeneratedType.js";
 
 export interface GeneratedObjectType<Context> extends BaseGeneratedType<Context> {
     type: "object";

@@ -3,7 +3,7 @@ import { PackageId } from "@fern-typescript/commons";
 import { GeneratedExpressService } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedExpressServiceImpl } from "./GeneratedExpressServiceImpl";
+import { GeneratedExpressServiceImpl } from "./GeneratedExpressServiceImpl.js";
 
 export declare namespace ExpressServiceGenerator {
     export interface Init {

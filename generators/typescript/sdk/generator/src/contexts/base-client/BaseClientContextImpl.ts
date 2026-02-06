@@ -11,7 +11,7 @@ import {
     StructureKind,
     ts
 } from "ts-morph";
-import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer";
+import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer.js";
 
 export declare namespace BaseClientContextImpl {
     export interface Init {

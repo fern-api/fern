@@ -12,11 +12,11 @@ import {
     PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;

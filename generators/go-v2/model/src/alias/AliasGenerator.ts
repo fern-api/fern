@@ -2,8 +2,8 @@ import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 
 import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "../AbstractModelGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class AliasGenerator extends AbstractModelGenerator {
     private readonly aliasType: go.Type;

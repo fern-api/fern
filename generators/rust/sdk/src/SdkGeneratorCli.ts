@@ -19,16 +19,16 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { dynamic, HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { exec } from "child_process";
 import { promisify } from "util";
-import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
-import { ErrorGenerator } from "./error/ErrorGenerator";
-import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
-import { RootClientGenerator } from "./generators/RootClientGenerator";
-import { SubClientGenerator } from "./generators/SubClientGenerator";
-import { ReferenceConfigAssembler } from "./reference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
-import { WireTestGenerator } from "./wire-tests";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
+import { ErrorGenerator } from "./error/ErrorGenerator.js";
+import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
+import { RootClientGenerator } from "./generators/RootClientGenerator.js";
+import { SubClientGenerator } from "./generators/SubClientGenerator.js";
+import { ReferenceConfigAssembler } from "./reference/index.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils/index.js";
+import { WireTestGenerator } from "./wire-tests/index.js";
 
 const execAsync = promisify(exec);
 

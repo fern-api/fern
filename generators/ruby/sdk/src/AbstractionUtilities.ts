@@ -44,13 +44,13 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 
-import { ArtifactRegistry } from "./utils/ArtifactRegistry";
-import { EndpointGenerator } from "./utils/EndpointGenerator";
-import { FileUploadUtility } from "./utils/FileUploadUtility";
-import { HeadersGenerator } from "./utils/HeadersGenerator";
-import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
-import { RequestOptions } from "./utils/RequestOptionsClass";
+import { ArtifactRegistry } from "./utils/ArtifactRegistry.js";
+import { EndpointGenerator } from "./utils/EndpointGenerator.js";
+import { FileUploadUtility } from "./utils/FileUploadUtility.js";
+import { HeadersGenerator } from "./utils/HeadersGenerator.js";
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass.js";
+import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider.js";
+import { RequestOptions } from "./utils/RequestOptionsClass.js";
 
 export interface ClientClassPair {
     subpackageName: Name;

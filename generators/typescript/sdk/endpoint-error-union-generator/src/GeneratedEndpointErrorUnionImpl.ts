@@ -4,9 +4,9 @@ import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-t
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 
-import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
-import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
-import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";
+import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError.js";
+import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType.js";
+import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator.js";
 
 export declare namespace GeneratedEndpointErrorUnionImpl {
     export interface Init {

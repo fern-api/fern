@@ -16,9 +16,9 @@ import {
 
 import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
-import { SubClientGenerator } from "./SubClientGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { SubClientGenerator } from "./SubClientGenerator.js";
 
 export class RootClientGenerator {
     private readonly context: SdkGeneratorContext;

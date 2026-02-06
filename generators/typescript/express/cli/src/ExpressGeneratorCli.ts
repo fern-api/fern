@@ -6,8 +6,8 @@ import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
-import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
-import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";
+import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig.js";
+import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema.js";
 
 export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfig> {
     protected parseCustomConfig(customConfig: unknown, logger: Logger): ExpressCustomConfig {

@@ -7,12 +7,12 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { writeFile } from "fs/promises";
-import { buildReference } from "./reference/buildReference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
+import { buildReference } from "./reference/buildReference.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({

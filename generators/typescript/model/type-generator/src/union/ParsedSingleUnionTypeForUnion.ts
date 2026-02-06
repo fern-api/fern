@@ -13,7 +13,7 @@ import {
     SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
 
-import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
+import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator.js";
 
 export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {

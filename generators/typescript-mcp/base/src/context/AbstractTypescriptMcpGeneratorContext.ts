@@ -4,8 +4,8 @@ import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { TypescriptMcpProject } from "../project/TypescriptMcpProject";
-import { ZodTypeMapper } from "./ZodTypeMapper";
+import { TypescriptMcpProject } from "../project/TypescriptMcpProject.js";
+import { ZodTypeMapper } from "./ZodTypeMapper.js";
 
 export interface FileLocation {
     importPath: string;

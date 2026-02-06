@@ -2,7 +2,7 @@ import { swift } from "@fern-api/swift-codegen";
 
 import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {

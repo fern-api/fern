@@ -21,14 +21,14 @@ import {
     StreamingResponse,
     Subpackage
 } from "@fern-fern/ir-sdk/api";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType";
-import { GoGeneratorAgent } from "./GoGeneratorAgent";
-import { Caller } from "./internal/Caller";
-import { Streamer } from "./internal/Streamer";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType.js";
+import { GoGeneratorAgent } from "./GoGeneratorAgent.js";
+import { Caller } from "./internal/Caller.js";
+import { Streamer } from "./internal/Streamer.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
     public readonly caller: Caller;

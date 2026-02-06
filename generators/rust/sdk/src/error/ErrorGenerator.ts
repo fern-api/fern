@@ -17,7 +17,7 @@ import {
     UseStatement
 } from "@fern-api/rust-codegen";
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}

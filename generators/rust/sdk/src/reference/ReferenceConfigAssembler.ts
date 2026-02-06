@@ -3,9 +3,9 @@ import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;

@@ -5,8 +5,8 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { WebsocketTypeSchemaDeclarationReferencer } from "../../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { WebsocketTypeSchemaDeclarationReferencer } from "../../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace WebsocketTypeSchemaContextImpl {
     export interface Init {

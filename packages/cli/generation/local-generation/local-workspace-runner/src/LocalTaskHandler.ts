@@ -1,7 +1,6 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
-import { FERNIGNORE_FILENAME, getFernIgnorePaths } from "@fern-api/configuration";
-import { AiServicesSchema } from "@fern-api/configuration/src/generators-yml";
+import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -11,8 +10,8 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService";
-import { isAutoVersion } from "./VersionUtils";
+import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
+import { isAutoVersion } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -24,7 +23,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
         version: string | undefined;
-        ai: AiServicesSchema | undefined;
+        ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
     }
 }
@@ -38,7 +37,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     private version: string | undefined;
-    private ai: AiServicesSchema | undefined;
+    private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
 
     constructor({

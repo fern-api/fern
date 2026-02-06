@@ -20,8 +20,8 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp } from "fs/promises";
 
-import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
-import { TypesGenerator } from "./TypesGenerator";
+import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig.js";
+import { TypesGenerator } from "./TypesGenerator.js";
 
 export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomConfig> {
     // TODO: This will probably be used across CLIs (e.g. storing and then writing these files)

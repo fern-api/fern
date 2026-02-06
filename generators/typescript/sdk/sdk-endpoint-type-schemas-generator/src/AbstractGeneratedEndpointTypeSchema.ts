@@ -3,7 +3,7 @@ import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-genera
 import { PackageId, Reference } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 
-import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
+import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
 
 export declare namespace AbstractGeneratedEndpointTypeSchema {
     export interface Init extends AbstractGeneratedSchema.Init {

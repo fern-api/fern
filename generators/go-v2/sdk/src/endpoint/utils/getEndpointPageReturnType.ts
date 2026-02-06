@@ -2,9 +2,9 @@ import { go } from "@fern-api/go-ast";
 
 import { HttpEndpoint, HttpResponseBody, Pagination, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { getPageType } from "./getPaginationInfo";
-import { getResponseBodyType } from "./getResponseBodyType";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { getPageType } from "./getPaginationInfo.js";
+import { getResponseBodyType } from "./getResponseBodyType.js";
 
 export function getEndpointPageReturnType({
     context,

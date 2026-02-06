@@ -4,7 +4,7 @@ import { ArrayLiteralNode, ExportNode, FileGenerator, TypescriptFile } from "@fe
 
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string;

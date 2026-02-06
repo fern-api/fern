@@ -14,8 +14,8 @@ import {
     ServiceId
 } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointRequest } from "./EndpointRequest";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointRequest } from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {

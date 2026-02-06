@@ -14,7 +14,7 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 export declare namespace GeneratedEnumTypeImpl {
     export interface Init<Context> extends AbstractGeneratedType.Init<EnumTypeDeclaration, Context> {

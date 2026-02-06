@@ -15,14 +15,14 @@ import {
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
-import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile";
-import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
-import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
+import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData.js";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile.js";
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
+import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter.js";
+import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest.js";
 
 export declare namespace GeneratedFileUploadEndpointRequest {
     export interface Init {

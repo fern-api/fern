@@ -3,7 +3,7 @@ import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedSdkEndpointTypeSchemasImpl } from "./GeneratedSdkEndpointTypeSchemasImpl";
+import { GeneratedSdkEndpointTypeSchemasImpl } from "./GeneratedSdkEndpointTypeSchemasImpl.js";
 
 export declare namespace SdkEndpointTypeSchemasGenerator {
     export interface Init {

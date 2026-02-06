@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator {
     private readonly typeDeclaration: TypeDeclaration;

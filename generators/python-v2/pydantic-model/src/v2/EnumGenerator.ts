@@ -4,7 +4,7 @@ import { WriteablePythonFile } from "@fern-api/python-base";
 
 import { EnumTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 
-import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator {
     constructor(

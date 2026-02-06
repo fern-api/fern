@@ -25,7 +25,7 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 interface Property {
     name: string;

@@ -2,8 +2,8 @@ import * as FernIr from "@fern-fern/ir-sdk/api";
 
 import { ErrorDeclaration, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { describe, expect, it } from "vitest";
-import { ErrorGenerator } from "../error/ErrorGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ErrorGenerator } from "../error/ErrorGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 // Mock function to create IR with specific error definitions
 function createMockIR(errors: Record<string, ErrorDeclaration>): IntermediateRepresentation {

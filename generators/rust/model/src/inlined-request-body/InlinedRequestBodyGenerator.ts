@@ -11,8 +11,8 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { RequestGenerator } from "./RequestGenerator";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { RequestGenerator } from "./RequestGenerator.js";
 
 export class InlinedRequestBodyGenerator {
     private readonly ir: IntermediateRepresentation;

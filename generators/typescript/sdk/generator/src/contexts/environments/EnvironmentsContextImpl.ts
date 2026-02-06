@@ -4,7 +4,7 @@ import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/con
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SourceFile } from "ts-morph";
 
-import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
+import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer.js";
 
 export declare namespace EnvironmentsContextImpl {
     export interface Init {

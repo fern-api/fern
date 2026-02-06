@@ -1,13 +1,13 @@
 import { ruby } from "@fern-api/ruby-ast";
 import { FileUploadBodyProperty, FileUploadRequest, HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export class FileUploadEndpointRequest extends EndpointRequest {
     private fileUploadRequest: FileUploadRequest;

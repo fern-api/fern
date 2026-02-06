@@ -7,11 +7,11 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
-import { validateProductConfigFileSchema } from "./validateProductConfig";
-import { validateVersionConfigFileSchema } from "./validateVersionConfig";
-import { visitFilepath } from "./visitFilepath";
-import { visitNavigationAst } from "./visitNavigationAst";
+import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
+import { validateProductConfigFileSchema } from "./validateProductConfig.js";
+import { validateVersionConfigFileSchema } from "./validateVersionConfig.js";
+import { visitFilepath } from "./visitFilepath.js";
+import { visitNavigationAst } from "./visitNavigationAst.js";
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {

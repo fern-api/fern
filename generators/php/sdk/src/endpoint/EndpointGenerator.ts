@@ -2,9 +2,9 @@ import { php } from "@fern-api/php-codegen";
 
 import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
-import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator.js";
+import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator.js";
 
 export class EndpointGenerator extends AbstractEndpointGenerator {
     private http: HttpEndpointGenerator;

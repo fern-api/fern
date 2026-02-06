@@ -4,8 +4,8 @@ import { FileGenerator, GoFile } from "@fern-api/go-base";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { join } from "path";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export abstract class AbstractModelGenerator extends FileGenerator<
     GoFile,

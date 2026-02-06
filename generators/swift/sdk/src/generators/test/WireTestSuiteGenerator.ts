@@ -2,8 +2,8 @@ import { assertDefined } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, Package, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { WireTestFunctionGenerator } from "./WireTestFunctionGenerator";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { WireTestFunctionGenerator } from "./WireTestFunctionGenerator.js";
 
 export declare namespace WireTestSuiteGenerator {
     interface Args {

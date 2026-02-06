@@ -13,7 +13,7 @@ import {
     Variable
 } from "@fern-api/ruby-codegen";
 
-import { HeadersGenerator } from "./HeadersGenerator";
+import { HeadersGenerator } from "./HeadersGenerator.js";
 
 export declare namespace RequestOptions {
     export interface Init {

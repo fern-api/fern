@@ -24,8 +24,8 @@ import {
     VariableStatementStructure,
     WriterFunction
 } from "ts-morph";
-import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
-import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
+import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType.js";
+import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType.js";
 
 export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends ModelContext> {

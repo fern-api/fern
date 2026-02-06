@@ -2,11 +2,11 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { BytesRequest } from "../request/BytesRequest";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { ReferencedEndpointRequest } from "../request/ReferencedEndpointRequest";
-import { WrappedEndpointRequest } from "../request/WrappedEndpointRequest";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { BytesRequest } from "../request/BytesRequest.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
+import { ReferencedEndpointRequest } from "../request/ReferencedEndpointRequest.js";
+import { WrappedEndpointRequest } from "../request/WrappedEndpointRequest.js";
 
 export function getEndpointRequest({
     context,

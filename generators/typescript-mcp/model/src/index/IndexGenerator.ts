@@ -4,7 +4,7 @@ import { FileGenerator, ReExportAsNamedNode, TypescriptFile } from "@fern-api/ty
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class IndexGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableNames: string[];

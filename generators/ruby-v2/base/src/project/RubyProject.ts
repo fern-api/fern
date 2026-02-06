@@ -6,9 +6,9 @@ import dedent from "dedent";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import { join as pathJoin } from "path";
-import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs";
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
-import { RubocopFile } from "./RubocopFile";
+import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
+import { RubocopFile } from "./RubocopFile.js";
 
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";

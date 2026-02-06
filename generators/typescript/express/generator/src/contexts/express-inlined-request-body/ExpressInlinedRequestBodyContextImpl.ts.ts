@@ -5,7 +5,7 @@ import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inl
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer.js";
 
 export declare namespace ExpressInlinedRequestBodyContextImpl {
     export interface Init {

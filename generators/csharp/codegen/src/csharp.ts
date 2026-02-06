@@ -1,6 +1,11 @@
 import { fail } from "node:assert";
 import { at } from "@fern-api/browser-compatible-base-generator";
-import { dynamic, Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
+import { FernIr as dynamic } from "@fern-api/dynamic-ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type Name = FernIr.Name;
+type NameAndWireValue = FernIr.NameAndWireValue;
+
 import {
     And,
     Annotation,
@@ -31,11 +36,11 @@ import {
     Ternary,
     TestClass,
     XmlDocBlock
-} from "./ast";
-import { Type } from "./ast/types/IType";
-import { Generation } from "./context/generation-info";
-import { IrNode, Origin } from "./context/model-navigator";
-import { NameRegistry } from "./context/name-registry";
+} from "./ast/index.js";
+import { Type } from "./ast/types/IType.js";
+import { Generation } from "./context/generation-info.js";
+import { IrNode, Origin } from "./context/model-navigator.js";
+import { NameRegistry } from "./context/name-registry.js";
 
 interface ClassRefArgsWithNamespace extends ClassReference.Args {
     namespace: string;
@@ -70,10 +75,10 @@ interface ClassArgsWithName extends Class.Args {
 
 interface ClassArgsWithReference extends Class.Args {
     reference: ClassReference;
-    name?: never; // this should be propogated from reference
-    namespace?: never; // this should be propogated from reference
-    enclosingType?: never; // this should be propogated from reference
-    //origin?: never; // (TODO: removethis?)  this should be propogated from reference
+    name?: never; // this should be propagated from reference
+    namespace?: never; // this should be propagated from reference
+    enclosingType?: never; // this should be propagated from reference
+    //origin?: never; // (TODO: removethis?)  this should be propagated from reference
 }
 
 /**

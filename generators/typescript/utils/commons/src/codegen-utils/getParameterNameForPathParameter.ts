@@ -1,5 +1,5 @@
 import { ExamplePathParameter, Name, PathParameter } from "@fern-fern/ir-sdk/api";
-import { getSdkParameterPropertyName } from "./getSdkParameterPropertyName";
+import { getSdkParameterPropertyName } from "./getSdkParameterPropertyName.js";
 
 /**
  * Determines the casing of the path parameter when used as a positional function parameter

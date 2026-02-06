@@ -12,7 +12,7 @@ import {
 
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
-import { ServerGeneratorContext } from "../ServerGeneratorContext";
+import { ServerGeneratorContext } from "../ServerGeneratorContext.js";
 
 export class ToolsGenerator extends FileGenerator<
     TypescriptFile,

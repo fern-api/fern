@@ -1,7 +1,7 @@
 import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
 import { Reference, Zurg } from "@fern-typescript/commons";
 
-import { GeneratedExpressErrorSchema } from "./GeneratedExpressErrorSchema";
+import { GeneratedExpressErrorSchema } from "./GeneratedExpressErrorSchema.js";
 
 export interface ExpressErrorSchemaContext {
     getGeneratedExpressErrorSchema: (errorName: DeclaredErrorName) => GeneratedExpressErrorSchema | undefined;

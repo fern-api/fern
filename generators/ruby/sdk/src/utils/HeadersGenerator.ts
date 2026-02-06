@@ -22,8 +22,8 @@ import {
     HttpHeader,
     OAuthScheme
 } from "@fern-fern/ir-sdk/api";
-import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
-import { isTypeOptional } from "./TypeUtilities";
+import { OauthTokenProvider } from "./oauth/OauthTokenProvider.js";
+import { isTypeOptional } from "./TypeUtilities.js";
 
 export interface BasicAuth {
     username: string;

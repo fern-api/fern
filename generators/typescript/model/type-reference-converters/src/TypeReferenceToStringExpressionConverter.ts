@@ -9,7 +9,7 @@ import {
 import { getSchemaOptions } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter.js";
 
 export declare namespace TypeReferenceToStringExpressionConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {}

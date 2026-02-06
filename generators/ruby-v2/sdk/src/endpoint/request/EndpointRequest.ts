@@ -1,7 +1,7 @@
 import { ruby } from "@fern-api/ruby-ast";
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 
 export interface QueryParameterCodeBlock {
     code: ruby.CodeBlock;

@@ -19,14 +19,14 @@ import {
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
-import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
-import { RequestParameter } from "../request-parameter/RequestParameter";
-import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter";
-import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
+import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter.js";
+import { RequestParameter } from "../request-parameter/RequestParameter.js";
+import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter.js";
+import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest.js";
 
 export declare namespace GeneratedDefaultEndpointRequest {
     export interface Init {

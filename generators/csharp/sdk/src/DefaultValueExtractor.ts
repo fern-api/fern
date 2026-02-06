@@ -1,5 +1,5 @@
 import { TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 /**
  * Represents an extracted default value with its C# representation

@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ObjectPropertyAccess } from "@fern-api/dynamic-ir-sdk/api";
 import { ts } from "@fern-api/typescript-ast";
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 const UNION_VALUE_KEY = "value";
 

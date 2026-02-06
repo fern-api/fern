@@ -5,8 +5,8 @@ import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-en
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace ExpressEndpointTypeSchemasContextImpl {
     export interface Init {

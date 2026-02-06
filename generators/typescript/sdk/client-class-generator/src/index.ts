@@ -1,5 +1,5 @@
-export { AuthProvidersGenerator } from "./AuthProvidersGenerator";
-export { BaseClientTypeGenerator } from "./BaseClientTypeGenerator";
-export * from "./endpoints";
-export { SdkClientClassGenerator } from "./SdkClientClassGenerator";
-export { WebsocketClassGenerator } from "./WebsocketClassGenerator";
+export { AuthProvidersGenerator } from "./AuthProvidersGenerator.js";
+export { BaseClientTypeGenerator } from "./BaseClientTypeGenerator.js";
+export * from "./endpoints/index.js";
+export { SdkClientClassGenerator } from "./SdkClientClassGenerator.js";
+export { WebsocketClassGenerator } from "./WebsocketClassGenerator.js";

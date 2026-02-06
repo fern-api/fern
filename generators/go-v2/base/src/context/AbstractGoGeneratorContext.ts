@@ -23,11 +23,11 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GoProject } from "../project/GoProject";
-import { GoFieldMapper } from "./GoFieldMapper";
-import { GoTypeMapper } from "./GoTypeMapper";
-import { GoValueFormatter } from "./GoValueFormatter";
-import { GoZeroValueMapper } from "./GoZeroValueMapper";
+import { GoProject } from "../project/GoProject.js";
+import { GoFieldMapper } from "./GoFieldMapper.js";
+import { GoTypeMapper } from "./GoTypeMapper.js";
+import { GoValueFormatter } from "./GoValueFormatter.js";
+import { GoZeroValueMapper } from "./GoZeroValueMapper.js";
 
 export interface FileLocation {
     importPath: string;

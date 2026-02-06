@@ -13,8 +13,8 @@ import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
-import { convertToOpenApi } from "./convertToOpenApi";
-import { getCustomConfig } from "./customConfig";
+import { convertToOpenApi } from "./convertToOpenApi.js";
+import { getCustomConfig } from "./customConfig.js";
 
 export type Mode = "stoplight" | "openapi";
 

@@ -1,7 +1,7 @@
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
-import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
     extractNamedTypesFromTypeReference,
     getInnerTypeFromOptional,
@@ -17,7 +17,7 @@ import {
     isUuidType,
     typeSupportsHashAndEq,
     typeSupportsPartialEq
-} from "./primitiveTypeUtils";
+} from "./primitiveTypeUtils.js";
 
 /**
  * Struct and Request generation utility functions

@@ -1,6 +1,6 @@
 import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
-import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
+import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator.js";
 
 export class NoPropertiesSingleUnionTypeGenerator<Context extends ModelContext>
     implements SingleUnionTypeGenerator<Context>

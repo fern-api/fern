@@ -12,8 +12,8 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
-import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext";
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema.js";
+import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext.js";
 
 export declare namespace PythonTypeMapper {
     interface Args {

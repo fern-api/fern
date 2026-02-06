@@ -3,7 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 
 export abstract class AbstractRubyGeneratorCli<
     CustomConfig extends BaseRubyCustomConfigSchema,

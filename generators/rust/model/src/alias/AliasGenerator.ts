@@ -2,14 +2,14 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { generateRustTypeForTypeReference } from "../converters";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { generateRustTypeForTypeReference } from "../converters/index.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
     getInnerTypeFromOptional,
     isDateTimeOnlyType,
     isOptionalType,
     typeSupportsHashAndEq
-} from "../utils/primitiveTypeUtils";
+} from "../utils/primitiveTypeUtils.js";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;

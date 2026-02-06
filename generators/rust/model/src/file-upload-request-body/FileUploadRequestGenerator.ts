@@ -10,14 +10,14 @@ import {
     Type
 } from "@fern-api/rust-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isOptionalType } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { isOptionalType } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export declare namespace FileUploadRequestGenerator {
     interface Args {

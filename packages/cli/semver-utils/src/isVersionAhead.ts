@@ -1,6 +1,6 @@
 import semverDiff from "semver-diff";
 
-import { ParsedVersion, parseVersion } from "./parseVersion";
+import { ParsedVersion, parseVersion } from "./parseVersion.js";
 
 /**
  * returns whether version a came after version b

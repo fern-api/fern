@@ -4,9 +4,9 @@ import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/ru
 import { Writer } from "@fern-api/rust-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { generateModels } from "./generateModels.js";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({

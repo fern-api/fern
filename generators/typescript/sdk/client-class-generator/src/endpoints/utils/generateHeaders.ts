@@ -9,11 +9,11 @@ import {
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { GeneratedHeader } from "../../GeneratedHeader";
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
-import { RequestParameter } from "../../request-parameter/RequestParameter";
-import { getLiteralValueForHeader } from "./isLiteralHeader";
-import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter";
+import { GeneratedHeader } from "../../GeneratedHeader.js";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { RequestParameter } from "../../request-parameter/RequestParameter.js";
+import { getLiteralValueForHeader } from "./isLiteralHeader.js";
+import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter.js";
 
 export const HEADERS_VAR_NAME = "_headers";
 export function generateHeaders({

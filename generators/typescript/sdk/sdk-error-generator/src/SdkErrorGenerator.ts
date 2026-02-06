@@ -1,7 +1,7 @@
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { GeneratedSdkError } from "@fern-typescript/contexts";
 
-import { GeneratedSdkErrorClassImpl } from "./GeneratedSdkErrorClassImpl";
+import { GeneratedSdkErrorClassImpl } from "./GeneratedSdkErrorClassImpl.js";
 
 export declare namespace SdkErrorGenerator {
     export interface Init {

@@ -12,8 +12,8 @@ import {
     HttpService,
     IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
  * Local interface for wire test examples.

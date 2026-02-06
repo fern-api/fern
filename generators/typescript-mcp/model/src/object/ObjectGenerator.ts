@@ -4,7 +4,7 @@ import { ExportNode, FileGenerator, ObjectLiteralNode, TypescriptFile } from "@f
 
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class ObjectGenerator extends FileGenerator<
     TypescriptFile,

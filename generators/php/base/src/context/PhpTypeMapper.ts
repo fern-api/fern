@@ -12,7 +12,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { isEqual, uniqWith } from "lodash-es";
 
-import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
+import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext.js";
 
 export declare namespace PhpTypeMapper {
     interface Args {

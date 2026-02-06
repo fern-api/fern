@@ -18,16 +18,16 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 
-import { LocationGenerator } from "../../utils/LocationGenerator";
-import { Argument } from "../Argument";
-import { ConditionalStatement } from "../abstractions/ConditionalStatement";
-import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
-import { Function_ } from "../functions/Function_";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
-import { Import } from "../Import";
-import { Property } from "../Property";
-import { Variable } from "../Variable";
+import { LocationGenerator } from "../../utils/LocationGenerator.js";
+import { Argument } from "../Argument.js";
+import { ConditionalStatement } from "../abstractions/ConditionalStatement.js";
+import { AstNode } from "../core/AstNode.js";
+import { Expression } from "../expressions/Expression.js";
+import { Function_ } from "../functions/Function_.js";
+import { FunctionInvocation } from "../functions/FunctionInvocation.js";
+import { Import } from "../Import.js";
+import { Property } from "../Property.js";
+import { Variable } from "../Variable.js";
 
 enum RubyClass {
     INTEGER = "Integer",

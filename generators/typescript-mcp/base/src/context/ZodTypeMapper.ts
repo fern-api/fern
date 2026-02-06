@@ -2,7 +2,7 @@ import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
 import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext";
+import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext.js";
 
 export declare namespace ZodTypeMapper {
     interface Args {

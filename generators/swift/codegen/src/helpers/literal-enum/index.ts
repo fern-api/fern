@@ -1,1 +1,1 @@
-export * as LiteralEnum from "./literal-enum";
+export * as LiteralEnum from "./literal-enum.js";

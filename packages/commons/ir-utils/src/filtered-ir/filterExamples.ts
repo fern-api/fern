@@ -19,7 +19,7 @@ import {
     ExampleTypeShape
 } from "@fern-api/ir-sdk";
 
-import { FilteredIr } from "./FilteredIr";
+import { FilteredIr } from "./FilteredIr.js";
 
 function filterExampleSingleUnionTypeProperties({
     filteredIr,

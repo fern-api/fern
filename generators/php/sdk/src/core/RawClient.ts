@@ -3,7 +3,7 @@ import { php } from "@fern-api/php-codegen";
 
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace RawClient {
     export interface SendRequestArgs {

@@ -12,10 +12,10 @@ import {
     PropertyPathItem,
     ResponseProperty
 } from "@fern-fern/ir-sdk/api";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
-import { Comments } from "../utils/comments";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
+import { Comments } from "../utils/comments.js";
 
 export declare namespace InferredAuthProviderGenerator {
     interface Args {

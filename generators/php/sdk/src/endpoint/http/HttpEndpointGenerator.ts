@@ -15,9 +15,9 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { upperFirst } from "lodash-es";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 
 type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
 

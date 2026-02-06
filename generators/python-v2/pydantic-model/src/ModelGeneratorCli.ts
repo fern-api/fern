@@ -4,9 +4,9 @@ import { AbstractPythonGeneratorCli } from "@fern-api/python-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { PydanticModelCustomConfigSchema } from "./ModelCustomConfig";
-import { PydanticModelGeneratorContext } from "./ModelGeneratorContext";
-import { generateV2Models } from "./v2/generateV2Models";
+import { PydanticModelCustomConfigSchema } from "./ModelCustomConfig.js";
+import { PydanticModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { generateV2Models } from "./v2/generateV2Models.js";
 
 export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
     PydanticModelCustomConfigSchema,

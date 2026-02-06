@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock } from "@fern-api/mock-utils";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration

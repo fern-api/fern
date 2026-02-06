@@ -1,7 +1,7 @@
-import { AstNode } from "./AstNode";
-import { Reference } from "./Reference";
-import { PrimitiveType } from "./types";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Reference } from "./Reference.js";
+import { PrimitiveType } from "./types.js";
+import { Writer } from "./Writer.js";
 
 export abstract class Type extends AstNode {
     public static primitive(primitive: PrimitiveType): Type {

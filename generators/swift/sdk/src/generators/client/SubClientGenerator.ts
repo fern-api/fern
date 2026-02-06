@@ -1,8 +1,8 @@
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
-import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { EndpointMethodGenerator } from "./EndpointMethodGenerator.js";
 
 export declare namespace SubClientGenerator {
     interface Args {

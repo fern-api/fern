@@ -5,8 +5,8 @@ import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-sche
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace ExpressErrorSchemaContextImpl {
     export interface Init {

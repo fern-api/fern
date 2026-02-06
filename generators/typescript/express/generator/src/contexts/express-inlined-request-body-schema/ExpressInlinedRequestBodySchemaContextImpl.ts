@@ -8,8 +8,8 @@ import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/expre
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
     export interface Init {

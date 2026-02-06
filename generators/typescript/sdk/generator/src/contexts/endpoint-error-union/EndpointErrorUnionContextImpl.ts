@@ -5,7 +5,7 @@ import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-uni
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer.js";
 
 export declare namespace EndpointErrorUnionContextImpl {
     export interface Init {

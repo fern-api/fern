@@ -13,8 +13,8 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { FileUploadRequestGenerator } from "./FileUploadRequestGenerator";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { FileUploadRequestGenerator } from "./FileUploadRequestGenerator.js";
 
 export class FileUploadRequestBodyGenerator {
     private readonly ir: IntermediateRepresentation;

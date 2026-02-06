@@ -1,8 +1,8 @@
-import { AstNode } from "./AstNode";
-import { Expression } from "./Expression";
-import { MatchArm } from "./MatchArm";
-import { Type } from "./Type";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Expression } from "./Expression.js";
+import { MatchArm } from "./MatchArm.js";
+import { Type } from "./Type.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace Statement {
     type Args =
@@ -13,7 +13,7 @@ export declare namespace Statement {
         | { type: "if"; condition: Expression; then: Statement[]; else_?: Statement[] }
         | { type: "if-let"; pattern: string; value: Expression; then: Statement[]; else_?: Statement[] }
         | { type: "match"; expression: Expression; arms: MatchArm[] }
-        | { type: "match-enhanced"; expression: Expression; arms: import("./MatchArm").MatchArm[] }
+        | { type: "match-enhanced"; expression: Expression; arms: import("./MatchArm.js").MatchArm[] }
         | { type: "while"; condition: Expression; body: Statement[] }
         | { type: "while-let"; pattern: string; value: Expression; body: Statement[] }
         | { type: "for"; pattern: string; iterable: Expression; body: Statement[] }
@@ -314,7 +314,7 @@ export class Statement extends AstNode {
         return new Statement({ type: "match", expression, arms });
     }
 
-    public static matchEnhanced(expression: Expression, arms: import("./MatchArm").MatchArm[]): Statement {
+    public static matchEnhanced(expression: Expression, arms: import("./MatchArm.js").MatchArm[]): Statement {
         return new Statement({ type: "match-enhanced", expression, arms });
     }
 

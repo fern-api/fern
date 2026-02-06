@@ -16,12 +16,11 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-
-import { AsIsFiles } from "../../../base/src/AsIs";
-import { TRAITS_DIRECTORY } from "../constants";
-import { PhpProject } from "../project/PhpProject";
-import { PhpAttributeMapper } from "./PhpAttributeMapper";
-import { PhpTypeMapper } from "./PhpTypeMapper";
+import { AsIsFiles } from "../AsIs.js";
+import { TRAITS_DIRECTORY } from "../constants.js";
+import { PhpProject } from "../project/PhpProject.js";
+import { PhpAttributeMapper } from "./PhpAttributeMapper.js";
+import { PhpTypeMapper } from "./PhpTypeMapper.js";
 
 export interface FileLocation {
     namespace: string;

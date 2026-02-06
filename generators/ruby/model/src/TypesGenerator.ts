@@ -22,8 +22,8 @@ import {
     generateSerializableObjectFromTypeDeclaration,
     generateUndiscriminatedUnionFromTypeDeclaration,
     generateUnionFromTypeDeclaration
-} from "./AbstractionUtilities";
-import { RootFile } from "./RootFile";
+} from "./AbstractionUtilities.js";
+import { RootFile } from "./RootFile.js";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {

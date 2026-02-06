@@ -7,7 +7,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/api";
 
-import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest";
+import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest.js";
 
 export declare namespace GeneratedExampleRequest {
     export interface Init extends AbstractGeneratedRequest.Init {

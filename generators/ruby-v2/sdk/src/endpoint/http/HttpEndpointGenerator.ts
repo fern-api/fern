@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { HttpEndpoint, PathParameter, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { getEndpointRequest } from "../utils/getEndpointRequest";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
-import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { getEndpointRequest } from "../utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
 
 export declare namespace HttpEndpointGenerator {
     export interface GenerateArgs {

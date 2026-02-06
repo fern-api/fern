@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { ContainerType, Literal, NameAndWireValue, TypeReference } from "@fern-fern/ir-sdk/api";
-import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 
 const IGNORE_TAG = "-";
 const OMIT_EMPTY_TAG = "omitempty";

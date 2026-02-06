@@ -5,7 +5,7 @@ import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
-import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext";
+import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext.js";
 
 export abstract class AbstractPhpGeneratorCli<
     CustomConfig extends BasePhpCustomConfigSchema,

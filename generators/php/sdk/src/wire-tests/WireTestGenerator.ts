@@ -10,10 +10,10 @@ import {
     InferredAuthScheme,
     IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
  * Generates WireMock-based integration tests for PHP SDK.

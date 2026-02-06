@@ -1,6 +1,6 @@
 import { ruby } from "@fern-api/ruby-ast";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export const RAW_CLIENT_REQUEST_VARIABLE_NAME = "request";
 export declare namespace RawClient {

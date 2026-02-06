@@ -11,11 +11,11 @@ import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/co
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
-import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
-import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
-import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
-import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema";
+import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema.js";
+import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl.js";
+import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
+import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl.js";
+import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema.js";
 
 export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
     export interface Init {

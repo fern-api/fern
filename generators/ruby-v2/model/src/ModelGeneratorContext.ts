@@ -3,7 +3,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
 
 import { TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {

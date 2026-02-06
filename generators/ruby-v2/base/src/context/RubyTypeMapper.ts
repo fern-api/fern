@@ -9,7 +9,7 @@ import {
     PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { AbstractRubyGeneratorContext } from "./AbstractRubyGeneratorContext";
+import { AbstractRubyGeneratorContext } from "./AbstractRubyGeneratorContext.js";
 
 export declare namespace RubyTypeMapper {
     interface Args {

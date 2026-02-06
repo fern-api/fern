@@ -1,6 +1,6 @@
-import { Writer } from "@fern-api/java-ast/src/ast";
+import { Writer } from "@fern-api/java-ast";
 import { AuthScheme, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 interface MultiUrlEnvironment {
     urls?: Record<string, unknown>;

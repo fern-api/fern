@@ -5,8 +5,8 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
 
-import { ReadmeConfigBuilder } from "./readme";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { ReadmeConfigBuilder } from "./readme/index.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;

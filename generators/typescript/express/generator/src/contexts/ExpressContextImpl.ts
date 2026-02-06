@@ -30,24 +30,24 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
-import { ExpressErrorDeclarationReferencer } from "../declaration-referencers/ExpressErrorDeclarationReferencer";
-import { ExpressInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
-import { ExpressServiceDeclarationReferencer } from "../declaration-referencers/ExpressServiceDeclarationReferencer";
-import { GenericAPIExpressErrorDeclarationReferencer } from "../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
-import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
-import { ExpressEndpointTypeSchemasContextImpl } from "./express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl";
-import { ExpressErrorContextImpl } from "./express-error/ExpressErrorContextImpl";
-import { ExpressErrorSchemaContextImpl } from "./express-error-schema/ExpressErrorSchemaContextImpl";
+import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer.js";
+import { ExpressErrorDeclarationReferencer } from "../declaration-referencers/ExpressErrorDeclarationReferencer.js";
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer.js";
+import { ExpressServiceDeclarationReferencer } from "../declaration-referencers/ExpressServiceDeclarationReferencer.js";
+import { GenericAPIExpressErrorDeclarationReferencer } from "../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer.js";
+import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer.js";
+import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer.js";
+import { ExpressEndpointTypeSchemasContextImpl } from "./express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl.js";
+import { ExpressErrorContextImpl } from "./express-error/ExpressErrorContextImpl.js";
+import { ExpressErrorSchemaContextImpl } from "./express-error-schema/ExpressErrorSchemaContextImpl.js";
 import { ExpressInlinedRequestBodyContextImpl } from "./express-inlined-request-body/ExpressInlinedRequestBodyContextImpl.ts";
-import { ExpressInlinedRequestBodySchemaContextImpl } from "./express-inlined-request-body-schema/ExpressInlinedRequestBodySchemaContextImpl";
+import { ExpressInlinedRequestBodySchemaContextImpl } from "./express-inlined-request-body-schema/ExpressInlinedRequestBodySchemaContextImpl.js";
 import { ExpressRegisterContextImpl } from "./express-register/ExpressRegisterContextImpl.ts";
 import { ExpressServiceContextImpl } from "./express-service/ExpressServiceContextImpl.ts";
-import { GenericAPIExpressErrorContextImpl } from "./generic-api-express-error/GenericAPIExpressErrorContextImpl";
-import { JsonContextImpl } from "./json/JsonContextImpl";
-import { TypeContextImpl } from "./type/TypeContextImpl";
-import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl";
+import { GenericAPIExpressErrorContextImpl } from "./generic-api-express-error/GenericAPIExpressErrorContextImpl.js";
+import { JsonContextImpl } from "./json/JsonContextImpl.js";
+import { TypeContextImpl } from "./type/TypeContextImpl.js";
+import { TypeSchemaContextImpl } from "./type-schema/TypeSchemaContextImpl.js";
 
 export declare namespace ExpressContextImpl {
     export interface Init {

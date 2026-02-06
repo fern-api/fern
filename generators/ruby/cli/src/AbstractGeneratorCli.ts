@@ -11,7 +11,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp, readdir } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
+import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation.js";
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
     public async runCli(): Promise<void> {

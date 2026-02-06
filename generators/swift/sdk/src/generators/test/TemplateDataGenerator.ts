@@ -3,8 +3,8 @@ import { TestTemplateFileId } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
 
 export declare namespace TemplateDataGenerator {
     interface Args {

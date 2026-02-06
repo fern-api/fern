@@ -20,11 +20,11 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { getPaginationInfo } from "../utils/getPaginationInfo";
-import { getResponseBodyType } from "../utils/getResponseBodyType";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { getPaginationInfo } from "../utils/getPaginationInfo.js";
+import { getResponseBodyType } from "../utils/getResponseBodyType.js";
 
 export declare namespace HttpEndpointGenerator {
     export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";

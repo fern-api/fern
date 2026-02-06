@@ -6,10 +6,10 @@ import {
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isDateTimeOnlyType, typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils";
-import { isFieldRecursive } from "../utils/recursiveTypeUtils";
+import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { isDateTimeOnlyType, typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;

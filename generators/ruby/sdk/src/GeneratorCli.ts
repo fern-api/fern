@@ -25,8 +25,8 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { cp } from "fs/promises";
 
-import { ClientsGenerator } from "./ClientsGenerator";
-import { parseCustomConfig, RubySdkCustomConfigConsumed } from "./CustomConfig";
+import { ClientsGenerator } from "./ClientsGenerator.js";
+import { parseCustomConfig, RubySdkCustomConfigConsumed } from "./CustomConfig.js";
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfigConsumed> {
     generatedFiles: GeneratedFile[] = [];

@@ -24,15 +24,14 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { camelCase, kebabCase } from "lodash-es";
-import { Target } from "../../configuration/src/docs-yml/schemas";
-import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
-import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
-import { NodeIdGenerator } from "./NodeIdGenerator";
-import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
-import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
-import { visitNavigationAst } from "./visitNavigationAst";
-import { wrapWithHttps } from "./wrapWithHttps";
+import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
+import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
+import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
+import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { visitNavigationAst } from "./visitNavigationAst.js";
+import { wrapWithHttps } from "./wrapWithHttps.js";
 
 dayjs.extend(utc);
 
@@ -1748,7 +1747,7 @@ export class DocsDefinitionResolver {
     private async toTabLinkNode(
         item: docsYml.TabbedNavigation,
         href: string,
-        target?: Target
+        target?: docsYml.RawSchemas.Target
     ): Promise<FernNavigation.V1.LinkNode> {
         return {
             type: "link",

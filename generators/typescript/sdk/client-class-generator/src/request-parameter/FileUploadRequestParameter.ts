@@ -3,7 +3,7 @@ import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { AbstractRequestParameter } from "./AbstractRequestParameter";
+import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 export class FileUploadRequestParameter extends AbstractRequestParameter {
     protected getParameterType(context: SdkContext): {

@@ -10,9 +10,9 @@ import {
     ResponseProperty
 } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { PaginationInfo } from "../PaginationInfo";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { PaginationInfo } from "../PaginationInfo.js";
 
 const PAGE_REQUEST_VARIABLE_NAME = "pageRequest";
 const PAGE_REQUEST_CURSOR_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Cursor`;

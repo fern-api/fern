@@ -1,8 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
-import { ruby } from "@fern-api/ruby-ast";
-import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
+import { ClassReference, ruby } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -20,11 +19,11 @@ import {
     TypeDeclaration,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { RubyGeneratorAgent } from "./RubyGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { RubyGeneratorAgent } from "./RubyGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 const ROOT_TYPES_FOLDER = "types";
 

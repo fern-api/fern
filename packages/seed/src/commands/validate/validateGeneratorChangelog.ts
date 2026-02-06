@@ -4,9 +4,9 @@ import * as serializers from "@fern-fern/generators-sdk/serialization";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { validateAngleBracketEscaping } from "./angleBracketValidator";
-import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { validateAngleBracketEscaping } from "./angleBracketValidator.js";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils.js";
 
 const parseReleaseOrThrow = serializers.generators.GeneratorReleaseRequest.parseOrThrow;
 

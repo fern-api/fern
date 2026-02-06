@@ -16,7 +16,7 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
+import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer.js";
 
 export declare namespace TypeContextImpl {
     export interface Init {

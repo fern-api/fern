@@ -4,12 +4,12 @@ import {
     ClassReference,
     ClassReferenceFactory,
     DiscriminatedUnionClassReference
-} from "./classes/ClassReference";
-import { AstNode } from "./core/AstNode";
-import { ExampleGenerator } from "./ExampleGenerator";
-import { Function_ } from "./functions/Function_";
-import { Parameter } from "./Parameter";
-import { Property } from "./Property";
+} from "./classes/ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { ExampleGenerator } from "./ExampleGenerator.js";
+import { Function_ } from "./functions/Function_.js";
+import { Parameter } from "./Parameter.js";
+import { Property } from "./Property.js";
 
 export interface YardocDocString {
     readonly name: "docString";

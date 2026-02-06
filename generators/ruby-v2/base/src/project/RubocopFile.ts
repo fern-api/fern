@@ -1,4 +1,4 @@
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 
 export declare namespace RubocopFile {
     interface Args {

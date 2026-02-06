@@ -1,8 +1,8 @@
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
-import { LiteralEnumGenerator } from "../../literal";
-import { ModelGeneratorContext } from "../../ModelGeneratorContext";
-import { AdditionalPropertiesMetadata, computeAdditionalPropertiesMetadata } from "./additional-properties";
+import { LiteralEnumGenerator } from "../../literal/index.js";
+import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
+import { AdditionalPropertiesMetadata, computeAdditionalPropertiesMetadata } from "./additional-properties.js";
 
 export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {

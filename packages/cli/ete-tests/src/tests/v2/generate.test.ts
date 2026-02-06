@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
-import { createTempFixture } from "../../utils/createTempFixture";
-import { cliV2, runCliV2 } from "../../utils/runCliV2";
+import { createTempFixture } from "../../utils/createTempFixture.js";
+import { cliV2, runCliV2 } from "../../utils/runCliV2.js";
 
 const FIXTURES = {
     petstore: "petstore",

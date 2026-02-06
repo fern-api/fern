@@ -1,10 +1,10 @@
 import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointRequest } from "./EndpointRequest";
-import { FileUploadEndpointRequest } from "./FileUploadEndpointRequest";
-import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";
-import { WrappedEndpointRequest } from "./WrappedEndpointRequest";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointRequest } from "./EndpointRequest.js";
+import { FileUploadEndpointRequest } from "./FileUploadEndpointRequest.js";
+import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest.js";
+import { WrappedEndpointRequest } from "./WrappedEndpointRequest.js";
 
 export declare namespace CreateEndpointRequest {
     interface Args {

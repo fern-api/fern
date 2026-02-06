@@ -4,7 +4,7 @@ import { getParameterNameForPositionalPathParameter } from "@fern-typescript/com
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 
 export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression;
 

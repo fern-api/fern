@@ -1,7 +1,7 @@
 import { ExampleTypeReference } from "@fern-fern/ir-sdk/api";
 import { GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 
-import { GeneratedTypeReferenceExampleImpl } from "./GeneratedTypeReferenceExampleImpl";
+import { GeneratedTypeReferenceExampleImpl } from "./GeneratedTypeReferenceExampleImpl.js";
 
 export declare namespace TypeReferenceExampleGenerator {
     export interface Init {

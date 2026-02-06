@@ -16,8 +16,8 @@ import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { copyFile } from "fs/promises";
 import path from "path";
 
-import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
-import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
+import { SdkCustomConfig } from "./custom-config/SdkCustomConfig.js";
+import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema.js";
 
 export declare namespace SdkGeneratorCli {
     export interface Init {

@@ -5,7 +5,7 @@ import { ts } from "ts-morph";
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
-} from "./requestOptionsParameter";
+} from "./requestOptionsParameter.js";
 
 export declare namespace GeneratedQueryParams {
     export interface Init {

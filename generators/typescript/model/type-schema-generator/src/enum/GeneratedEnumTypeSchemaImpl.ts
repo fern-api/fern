@@ -4,7 +4,7 @@ import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumTypeSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
 export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
     extends AbstractGeneratedTypeSchema<EnumTypeDeclaration, Context>

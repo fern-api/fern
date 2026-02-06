@@ -13,14 +13,14 @@ import {
     ServiceId
 } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
-import { EndpointRequest } from "./request/EndpointRequest";
-import { getEndpointPageReturnType } from "./utils/getEndpointPageReturnType";
-import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
-import { getEndpointReturnZeroValue } from "./utils/getEndpointReturnZeroValue";
-import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { EndpointRequest } from "./request/EndpointRequest.js";
+import { getEndpointPageReturnType } from "./utils/getEndpointPageReturnType.js";
+import { getEndpointRequest } from "./utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
+import { getEndpointReturnZeroValue } from "./utils/getEndpointReturnZeroValue.js";
+import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference.js";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;

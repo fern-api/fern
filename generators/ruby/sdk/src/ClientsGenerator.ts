@@ -36,15 +36,15 @@ import {
     getOauthAccessTokenFunctionMetadata,
     getOauthRefreshTokenFunctionMetadata,
     getSubpackagePropertyNameFromIr
-} from "./AbstractionUtilities";
-import { ArtifactRegistry } from "./utils/ArtifactRegistry";
-import { FileUploadUtility } from "./utils/FileUploadUtility";
-import { HeadersGenerator } from "./utils/HeadersGenerator";
-import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { AccessToken } from "./utils/oauth/AccessToken";
-import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
-import { RequestOptions } from "./utils/RequestOptionsClass";
-import { RootImportsFile } from "./utils/RootImportsFile";
+} from "./AbstractionUtilities.js";
+import { ArtifactRegistry } from "./utils/ArtifactRegistry.js";
+import { FileUploadUtility } from "./utils/FileUploadUtility.js";
+import { HeadersGenerator } from "./utils/HeadersGenerator.js";
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass.js";
+import { AccessToken } from "./utils/oauth/AccessToken.js";
+import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider.js";
+import { RequestOptions } from "./utils/RequestOptionsClass.js";
+import { RootImportsFile } from "./utils/RootImportsFile.js";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class ClientsGenerator {

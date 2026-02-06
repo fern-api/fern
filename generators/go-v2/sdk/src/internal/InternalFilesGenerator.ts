@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileLocation, GoFile } from "@fern-api/go-base";
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class InternalFilesGenerator {
     private context: SdkGeneratorContext;

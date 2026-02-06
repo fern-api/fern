@@ -3,7 +3,7 @@ import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
-import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
 
 export interface EndpointSignature {
     parameters: OptionalKind<ParameterDeclarationStructure>[];

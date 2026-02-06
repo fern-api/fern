@@ -3,7 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext";
+import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext.js";
 
 export abstract class AbstractTypescriptMcpGeneratorCli<
     CustomConfig extends TypescriptCustomConfigSchema,

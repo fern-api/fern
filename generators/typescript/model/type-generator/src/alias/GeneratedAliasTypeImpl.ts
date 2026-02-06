@@ -15,7 +15,7 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 export class GeneratedAliasTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<TypeReference, Context>

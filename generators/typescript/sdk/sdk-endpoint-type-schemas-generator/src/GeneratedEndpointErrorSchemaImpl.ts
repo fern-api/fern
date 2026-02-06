@@ -5,8 +5,8 @@ import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
-import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType";
+import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema.js";
+import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType.js";
 
 export declare namespace GeneratedEndpointErrorSchemaImpl {
     export interface Init {

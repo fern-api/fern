@@ -22,9 +22,9 @@ import {
     StructureKind,
     ts
 } from "ts-morph";
-import { buildUrl } from "../endpoints/utils/buildUrl";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { buildUrl } from "../endpoints/utils/buildUrl.js";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {

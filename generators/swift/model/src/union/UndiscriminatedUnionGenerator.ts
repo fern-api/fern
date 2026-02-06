@@ -1,8 +1,8 @@
 import { assertDefined } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { LiteralEnumGenerator } from "../literal";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { LiteralEnumGenerator } from "../literal/index.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace UndiscriminatedUnionGenerator {
     interface Args {

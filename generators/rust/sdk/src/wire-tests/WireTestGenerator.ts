@@ -4,9 +4,9 @@ import { RustFile } from "@fern-api/rust-base";
 import { Module, UseStatement } from "@fern-api/rust-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "../utils";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest, convertIr } from "../utils/index.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
  * Generates WireMock-based integration tests for Rust SDK.

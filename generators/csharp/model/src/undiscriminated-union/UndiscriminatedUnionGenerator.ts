@@ -2,8 +2,13 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, is, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { PrimitiveTypeV1, TypeDeclaration, UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type UndiscriminatedUnionTypeDeclaration = FernIr.UndiscriminatedUnionTypeDeclaration;
+
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 interface UnionMemberInfo {
     typeReference: FernIr.TypeReference;

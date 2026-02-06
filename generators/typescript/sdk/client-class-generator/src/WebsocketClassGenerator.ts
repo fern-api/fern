@@ -2,7 +2,7 @@ import { IntermediateRepresentation, WebSocketChannel } from "@fern-fern/ir-sdk/
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass } from "@fern-typescript/contexts";
 
-import { GeneratedWebsocketSocketClassImpl } from "./GeneratedWebsocketSocketClassImpl";
+import { GeneratedWebsocketSocketClassImpl } from "./GeneratedWebsocketSocketClassImpl.js";
 
 export declare namespace WebsocketClassGenerator {
     export interface Init {

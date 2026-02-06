@@ -1,7 +1,7 @@
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
-import { Audiences } from "../commons";
+import { Audiences } from "../commons/index.js";
 import {
     AiChatConfig,
     AnnouncementConfig,
@@ -13,7 +13,7 @@ import {
     Target,
     ThemeConfig,
     VersionAvailability
-} from "./schemas";
+} from "./schemas/index.js";
 
 export interface ParsedCustomPageAction {
     title: string;

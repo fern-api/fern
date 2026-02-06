@@ -2,14 +2,14 @@ import { ruby } from "@fern-api/ruby-ast";
 
 import { HttpEndpoint, SdkRequest, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {

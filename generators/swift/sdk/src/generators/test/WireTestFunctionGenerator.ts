@@ -2,8 +2,8 @@ import { assertDefined } from "@fern-api/core-utils";
 import { LiteralEnum, Referencer, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {

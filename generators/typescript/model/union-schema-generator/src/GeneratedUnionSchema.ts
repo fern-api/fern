@@ -4,7 +4,7 @@ import { getPropertyKey, getTextOfTsNode, Reference, Zurg } from "@fern-typescri
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 
-import { RawSingleUnionType } from "./RawSingleUnionType";
+import { RawSingleUnionType } from "./RawSingleUnionType.js";
 
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {

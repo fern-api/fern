@@ -3,7 +3,7 @@ import { php } from "@fern-api/php-codegen";
 
 import { FileUploadRequest, HttpEndpoint, HttpService, InlinedRequestBody, SdkRequest } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export interface QueryParameterCodeBlock {
     code: php.CodeBlock;

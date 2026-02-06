@@ -5,7 +5,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import dedent from "dedent";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;

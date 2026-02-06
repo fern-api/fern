@@ -1,8 +1,8 @@
 import { assertNever, noop } from "@fern-api/core-utils";
 import { Referencer, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace DiscriminatedUnionGenerator {
     interface Args {

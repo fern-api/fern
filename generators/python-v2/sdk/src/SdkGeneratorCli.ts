@@ -4,9 +4,9 @@ import { AbstractPythonGeneratorCli } from "@fern-api/python-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
 export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({

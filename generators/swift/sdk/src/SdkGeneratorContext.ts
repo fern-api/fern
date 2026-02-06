@@ -3,9 +3,9 @@ import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { ReadmeConfigBuilder } from "./readme";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SwiftGeneratorAgent } from "./SwiftGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme/index.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SwiftGeneratorAgent } from "./SwiftGeneratorAgent.js";
 
 type SPMDetails = {
     gitUrl: string | null;

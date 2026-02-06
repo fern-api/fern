@@ -9,8 +9,8 @@ import {
     QueryParameter
 } from "@fern-fern/ir-sdk/api";
 
-import { RequestGenerator } from "../inlined-request-body/RequestGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { RequestGenerator } from "../inlined-request-body/RequestGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class ReferencedRequestWithQueryGenerator {
     private readonly ir: IntermediateRepresentation;

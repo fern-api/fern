@@ -9,7 +9,7 @@ import {
 } from "@fern-typescript/commons";
 import { PackageResolver } from "@fern-typescript/resolvers";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
 
 const SERVICE_DIRECTORY = "service";
 

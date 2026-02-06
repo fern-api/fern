@@ -1,1 +1,1 @@
-export { QueryParameterRequestGenerator } from "./QueryParameterRequestGenerator";
+export { QueryParameterRequestGenerator } from "./QueryParameterRequestGenerator.js";

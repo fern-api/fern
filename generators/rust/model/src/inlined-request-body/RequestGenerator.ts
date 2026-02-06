@@ -1,13 +1,13 @@
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export declare namespace RequestGenerator {
     interface Args {

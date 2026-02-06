@@ -2,15 +2,15 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
-import { isFieldRecursive } from "../utils/recursiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export class StructGenerator {
     private readonly typeDeclaration: TypeDeclaration;

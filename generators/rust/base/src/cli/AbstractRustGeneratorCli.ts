@@ -3,7 +3,7 @@ import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
-import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";
+import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext.js";
 
 export abstract class AbstractRustGeneratorCli<
     CustomConfig extends BaseRustCustomConfigSchema,

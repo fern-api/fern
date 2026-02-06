@@ -3,8 +3,8 @@ import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/comm
 import { GeneratedVersion, VersionContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 
-import { VersionDeclarationReferencer } from "../../declaration-referencers/VersionDeclarationReferencer";
-import { VersionGenerator } from "../../version/VersionGenerator";
+import { VersionDeclarationReferencer } from "../../declaration-referencers/VersionDeclarationReferencer.js";
+import { VersionGenerator } from "../../version/VersionGenerator.js";
 
 export declare namespace VersionContextImpl {
     export interface Init {

@@ -3,7 +3,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { FileGenerator } from "@fern-api/typescript-mcp-base";
 
-import { ServerGeneratorContext } from "../ServerGeneratorContext";
+import { ServerGeneratorContext } from "../ServerGeneratorContext.js";
 
 export class ReadmeGenerator extends FileGenerator<File, TypescriptCustomConfigSchema, ServerGeneratorContext> {
     public doGenerate(): File {

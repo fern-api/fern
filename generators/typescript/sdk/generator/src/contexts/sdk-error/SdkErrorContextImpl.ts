@@ -5,7 +5,7 @@ import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SourceFile } from "ts-morph";
 
-import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
+import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer.js";
 
 export declare namespace SdkErrorContextImpl {
     export interface Init {

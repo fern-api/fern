@@ -3,14 +3,14 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { TestClassBuilder } from "./builders/TestClassBuilder";
-import { TestMethodBuilder } from "./builders/TestMethodBuilder";
-import { SnippetExtractor } from "./extractors/SnippetExtractor";
-import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor";
-import { TestResourceWriter } from "./resources/TestResourceWriter";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { TestClassBuilder } from "./builders/TestClassBuilder.js";
+import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
+import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
+import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
+import { TestResourceWriter } from "./resources/TestResourceWriter.js";
 
 /**
  * Generates wire tests that validate SDK adherence to API specifications.

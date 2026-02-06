@@ -2,8 +2,8 @@ import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter";
-import { getParameterNameForFile } from "./getParameterNameForFile";
+import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter.js";
+import { getParameterNameForFile } from "./getParameterNameForFile.js";
 
 export function appendPropertyToFormData({
     property,

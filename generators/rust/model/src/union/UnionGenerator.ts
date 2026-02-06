@@ -2,8 +2,8 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { SingleUnionType, TypeDeclaration, TypeReference, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
     getInnerTypeFromOptional,
     isCollectionType,
@@ -17,9 +17,9 @@ import {
     namedTypeSupportsPartialEq,
     typeSupportsHashAndEq,
     typeSupportsPartialEq
-} from "../utils/primitiveTypeUtils";
-import { isFieldRecursive } from "../utils/recursiveTypeUtils";
-import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils";
+} from "../utils/primitiveTypeUtils.js";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
+import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils.js";
 
 export class UnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;

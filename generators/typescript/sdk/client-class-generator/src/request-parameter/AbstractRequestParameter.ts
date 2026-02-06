@@ -10,7 +10,7 @@ import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/c
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
-import { RequestParameter } from "./RequestParameter";
+import { RequestParameter } from "./RequestParameter.js";
 
 export declare namespace AbstractRequestParameter {
     export interface Init {

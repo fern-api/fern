@@ -1,10 +1,10 @@
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { HttpEndpoint, HttpMethod, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
-import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
-import { parseEndpointPath } from "./util/parse-endpoint-path";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift.js";
+import { parseEndpointPath } from "./util/parse-endpoint-path.js";
 
 export declare namespace EndpointMethodGenerator {
     interface Args {

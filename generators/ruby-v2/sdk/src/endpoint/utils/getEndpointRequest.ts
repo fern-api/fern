@@ -1,8 +1,8 @@
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { createEndpointRequest } from "../request/EndpointRequestFactory";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
+import { createEndpointRequest } from "../request/EndpointRequestFactory.js";
 
 export function getEndpointRequest({
     context,

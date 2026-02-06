@@ -15,11 +15,11 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase } from "lodash-es";
-import { TYPES_DIRECTORY } from "./constants";
-import { JavaGeneratorAgent } from "./JavaGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { TYPES_DIRECTORY } from "./constants.js";
+import { JavaGeneratorAgent } from "./JavaGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: JavaGeneratorAgent;

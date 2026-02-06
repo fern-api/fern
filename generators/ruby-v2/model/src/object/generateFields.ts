@@ -1,6 +1,6 @@
 import { ruby } from "@fern-api/ruby-ast";
 import { ObjectProperty, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export function generateFields({
     typeDeclaration,

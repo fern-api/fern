@@ -2,8 +2,8 @@ import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 const FERNIGNORE_FILECONTENTS = `
 fern.js

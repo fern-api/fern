@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { rust } from "@fern-api/rust-codegen";
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
-import { isFloatingPointType } from "../utils/primitiveTypeUtils";
+import { isFloatingPointType } from "../utils/primitiveTypeUtils.js";
 
 export interface RustTypeGeneratorContext {
     getUniqueTypeNameForReference(declaredTypeName: {

@@ -5,8 +5,8 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();

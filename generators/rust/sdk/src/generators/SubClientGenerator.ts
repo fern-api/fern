@@ -19,8 +19,8 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 
 interface EndpointParameter {
     name: string;

@@ -4,7 +4,7 @@ import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
-import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext";
+import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext.js";
 
 export abstract class AbstractSwiftGeneratorCli<
     CustomConfig extends BaseSwiftCustomConfigSchema,

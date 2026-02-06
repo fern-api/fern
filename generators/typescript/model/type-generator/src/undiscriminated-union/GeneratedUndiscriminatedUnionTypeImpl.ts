@@ -21,7 +21,7 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<UndiscriminatedUnionTypeDeclaration, Context>

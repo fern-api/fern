@@ -1,8 +1,8 @@
 import type { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { YamlConfigLoader } from "@fern-api/yaml-loader";
-import { ValidationError } from "../../errors/ValidationError";
-import { FernYmlSchemaLoader } from "./FernYmlSchemaLoader";
+import { ValidationError } from "../../errors/ValidationError.js";
+import { FernYmlSchemaLoader } from "./FernYmlSchemaLoader.js";
 
 /**
  * Loads and validates a fern.yml configuration file.

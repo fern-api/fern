@@ -25,10 +25,10 @@ import {
     TypeId,
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
-import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent.js";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
 export class SdkGeneratorContext extends GeneratorContext {
     public readonly formatter: AbstractFormatter;

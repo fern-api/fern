@@ -7,10 +7,10 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
-import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { convertColorsConfiguration } from "./convertColorsConfiguration";
-import { getAllPages, loadAllPages } from "./getAllPages";
-import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils";
+import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
+import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
+import { getAllPages, loadAllPages } from "./getAllPages.js";
+import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {

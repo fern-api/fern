@@ -6,8 +6,8 @@ import {
     SingleBaseUrlEnvironment
 } from "@fern-fern/ir-sdk/api";
 import { describe, expect, it } from "vitest";
-import { EnvironmentGenerator } from "../environment/EnvironmentGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 // Mock function to create IR with specific environment configurations
 function createMockIR(environmentsConfig?: EnvironmentsConfig): IntermediateRepresentation {

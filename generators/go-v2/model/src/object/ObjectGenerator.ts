@@ -10,8 +10,8 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "../AbstractModelGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 const EMBED_TYPE_NAME = "embed";
 const MARSHALER_TYPE_NAME = "marshaler";

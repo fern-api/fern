@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { createTempFixture } from "../../utils/createTempFixture";
-import { runCliV2 } from "../../utils/runCliV2";
+import { createTempFixture } from "../../utils/createTempFixture.js";
+import { runCliV2 } from "../../utils/runCliV2.js";
 
 const VALID_FERN_YML = `edition: 2026-01-01
 org: acme

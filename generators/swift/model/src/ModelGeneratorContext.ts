@@ -2,7 +2,7 @@ import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-
 import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
 
 export class ModelGeneratorContext extends AbstractSwiftGeneratorContext<ModelCustomConfigSchema> {
     // biome-ignore lint/complexity/noUselessConstructor: allow

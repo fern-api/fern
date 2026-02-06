@@ -3,7 +3,7 @@ import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { getReadableTypeNode } from "../../../getReadableTypeNode";
+import { getReadableTypeNode } from "../../../getReadableTypeNode.js";
 
 export function getSuccessReturnType(
     endpoint: HttpEndpoint,

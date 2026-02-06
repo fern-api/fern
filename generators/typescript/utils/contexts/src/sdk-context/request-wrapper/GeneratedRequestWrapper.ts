@@ -10,14 +10,14 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { ts } from "ts-morph";
 
-import { GeneratedFile } from "../../commons/GeneratedFile";
-import { SdkContext } from "../SdkContext";
-import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample";
+import { GeneratedFile } from "../../commons/GeneratedFile.js";
+import { SdkContext } from "../SdkContext.js";
+import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample.js";
 import {
     RequestWrapperBodyProperty,
     RequestWrapperNonBodyProperty,
     RequestWrapperNonBodyPropertyWithData
-} from "./types";
+} from "./types.js";
 
 export namespace GeneratedRequestWrapper {
     export interface Property {

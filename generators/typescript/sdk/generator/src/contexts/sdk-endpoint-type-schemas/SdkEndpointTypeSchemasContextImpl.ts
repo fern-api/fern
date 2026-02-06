@@ -5,8 +5,8 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace SdkEndpointTypeSchemasContextImpl {
     export interface Init {

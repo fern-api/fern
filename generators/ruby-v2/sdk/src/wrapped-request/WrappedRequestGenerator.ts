@@ -3,8 +3,8 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { generateFields } from "@fern-api/ruby-model";
 import { HttpEndpoint, ObjectProperty, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {

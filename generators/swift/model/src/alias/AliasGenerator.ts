@@ -1,7 +1,7 @@
 import { swift } from "@fern-api/swift-codegen";
 import { AliasTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace AliasGenerator {
     interface Args {

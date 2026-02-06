@@ -9,7 +9,7 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { InlineConsts } from "./inlineConsts";
+import { InlineConsts } from "./inlineConsts.js";
 
 export function generateInlinePropertiesModule({
     generateStatements,

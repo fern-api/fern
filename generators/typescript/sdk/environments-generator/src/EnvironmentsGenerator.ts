@@ -1,9 +1,9 @@
 import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
 
-import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl";
-import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl";
-import { GeneratedSingleUrlEnvironmentsImpl } from "./GeneratedSingleUrlEnvironmentsImpl";
+import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl.js";
+import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl.js";
+import { GeneratedSingleUrlEnvironmentsImpl } from "./GeneratedSingleUrlEnvironmentsImpl.js";
 
 export declare namespace EnvironmentsGenerator {
     export namespace generateEnvironments {

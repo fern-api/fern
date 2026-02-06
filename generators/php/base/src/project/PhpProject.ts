@@ -6,9 +6,9 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { cloneDeep, isArray, mergeWith, template } from "lodash-es";
 import path from "path";
 
-import { AsIsFiles } from "../AsIs";
-import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext";
-import { PhpFile } from "./PhpFile";
+import { AsIsFiles } from "../AsIs.js";
+import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext.js";
+import { PhpFile } from "./PhpFile.js";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const CORE_DIRECTORY_NAME = "Core";

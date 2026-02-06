@@ -4,7 +4,7 @@ import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
-import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
+import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext.js";
 
 export abstract class AbstractJavaGeneratorCli<
     CustomConfig extends BaseJavaCustomConfigSchema,

@@ -4,7 +4,7 @@ import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedUndiscriminatedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
 export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<UndiscriminatedUnionTypeDeclaration, Context>

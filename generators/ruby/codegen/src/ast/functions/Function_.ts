@@ -1,15 +1,15 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 
-import { BLOCK_END } from "../../utils/RubyConstants";
-import { Argument } from "../Argument";
-import { Class_ } from "../classes/Class_";
-import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference";
-import { AstNode } from "../core/AstNode";
-import { ExampleGenerator } from "../ExampleGenerator";
-import { Import } from "../Import";
-import { Parameter } from "../Parameter";
-import { Yardoc } from "../Yardoc";
-import { FunctionInvocation } from "./FunctionInvocation";
+import { BLOCK_END } from "../../utils/RubyConstants.js";
+import { Argument } from "../Argument.js";
+import { Class_ } from "../classes/Class_.js";
+import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference.js";
+import { AstNode } from "../core/AstNode.js";
+import { ExampleGenerator } from "../ExampleGenerator.js";
+import { Import } from "../Import.js";
+import { Parameter } from "../Parameter.js";
+import { Yardoc } from "../Yardoc.js";
+import { FunctionInvocation } from "./FunctionInvocation.js";
 
 export declare namespace Function_ {
     export interface Init extends AstNode.Init {

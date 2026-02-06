@@ -3,7 +3,7 @@ import { ExportsManager, ImportsManager, NpmPackage, PackageId } from "@fern-typ
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl.js";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {

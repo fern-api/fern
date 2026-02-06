@@ -11,10 +11,10 @@ import {
 import path from "path";
 import urlJoin from "url-join";
 
-import { GeneratedFile } from "../utils/GeneratedFile";
-import { generateEnumNameFromValues } from "../utils/NamingUtilities";
-import { Argument } from "./Argument";
-import { Class_ } from "./classes/Class_";
+import { GeneratedFile } from "../utils/GeneratedFile.js";
+import { generateEnumNameFromValues } from "../utils/NamingUtilities.js";
+import { Argument } from "./Argument.js";
+import { Class_ } from "./classes/Class_.js";
 import {
     ArrayInstance,
     ClassReferenceFactory,
@@ -22,14 +22,14 @@ import {
     EnumReference,
     HashInstance,
     SetInstance
-} from "./classes/ClassReference";
-import { AstNode } from "./core/AstNode";
-import { ExampleNode } from "./ExampleNode";
-import { Expression } from "./expressions/Expression";
-import { Function_ } from "./functions/Function_";
-import { FunctionInvocation } from "./functions/FunctionInvocation";
-import { Import } from "./Import";
-import { Property } from "./Property";
+} from "./classes/ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { ExampleNode } from "./ExampleNode.js";
+import { Expression } from "./expressions/Expression.js";
+import { Function_ } from "./functions/Function_.js";
+import { FunctionInvocation } from "./functions/FunctionInvocation.js";
+import { Import } from "./Import.js";
+import { Property } from "./Property.js";
 
 export declare namespace ExampleGenerator {
     export interface Init {
