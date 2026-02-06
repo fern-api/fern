@@ -726,6 +726,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 if (argv.group != null) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
+                if (argv.generator != null) {
+                    cliContext.logger.warn("--generator is ignored when generating docs");
+                }
                 if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
                 }
