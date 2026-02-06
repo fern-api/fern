@@ -408,8 +408,8 @@ types:
       cursor: CursorPagination
       offset: OffsetPagination
       custom: CustomPagination
-      nextUri: NextUriPagination
-      nextPath: NextPathPagination
+      uri: UriPagination
+      path: PathPagination
 
   CursorPagination:
     docs: |
@@ -451,7 +451,7 @@ types:
           generated in the endpoint.
         type: ResponseProperty
 
-  NextUriPagination:
+  UriPagination:
     docs: |
       If set, the endpoint will be generated with auto-pagination features.
 
@@ -461,7 +461,7 @@ types:
       nextUri: ResponseProperty
       results: ResponseProperty
 
-  NextPathPagination:
+  PathPagination:
     docs: |
       If set, the endpoint will be generated with auto-pagination features.
 

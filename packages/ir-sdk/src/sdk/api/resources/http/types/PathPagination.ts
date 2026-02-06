@@ -8,7 +8,7 @@ import type * as FernIr from "../../../index.js";
  * The next is a property on the response that contains the next path (everything after the base hostname and port), and
  * the results are resolved from properties defined on the response.
  */
-export interface NextPathPagination {
+export interface PathPagination {
     nextPath: FernIr.ResponseProperty;
     results: FernIr.ResponseProperty;
 }

@@ -64,7 +64,7 @@ describe("migrateFromV64ToV63", () => {
     });
 
     it("throws error for nextUri pagination", () => {
-        const nextUriPagination = IrVersions.V64.Pagination.nextUri({
+        const nextUriPagination = IrVersions.V64.Pagination.uri({
             nextUri: mockResponseProperty,
             results: mockResponseProperty
         });
@@ -77,7 +77,7 @@ describe("migrateFromV64ToV63", () => {
     });
 
     it("throws error for nextPath pagination", () => {
-        const nextPathPagination = IrVersions.V64.Pagination.nextPath({
+        const nextPathPagination = IrVersions.V64.Pagination.path({
             nextPath: mockResponseProperty,
             results: mockResponseProperty
         });

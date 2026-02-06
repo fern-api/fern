@@ -5,17 +5,15 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ResponseProperty } from "./ResponseProperty.js";
 
-export const NextUriPagination: core.serialization.ObjectSchema<
-    serializers.NextUriPagination.Raw,
-    FernIr.NextUriPagination
-> = core.serialization.objectWithoutOptionalProperties({
-    nextUri: ResponseProperty,
-    results: ResponseProperty,
-});
+export const PathPagination: core.serialization.ObjectSchema<serializers.PathPagination.Raw, FernIr.PathPagination> =
+    core.serialization.objectWithoutOptionalProperties({
+        nextPath: ResponseProperty,
+        results: ResponseProperty,
+    });
 
-export declare namespace NextUriPagination {
+export declare namespace PathPagination {
     export interface Raw {
-        nextUri: ResponseProperty.Raw;
+        nextPath: ResponseProperty.Raw;
         results: ResponseProperty.Raw;
     }
 }

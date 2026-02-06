@@ -9,8 +9,8 @@ export type Pagination =
     | FernIr.Pagination.Cursor
     | FernIr.Pagination.Offset
     | FernIr.Pagination.Custom
-    | FernIr.Pagination.NextUri
-    | FernIr.Pagination.NextPath;
+    | FernIr.Pagination.Uri
+    | FernIr.Pagination.Path;
 
 export namespace Pagination {
     export interface Cursor extends FernIr.CursorPagination, _Utils {
@@ -25,12 +25,12 @@ export namespace Pagination {
         type: "custom";
     }
 
-    export interface NextUri extends FernIr.NextUriPagination, _Utils {
-        type: "nextUri";
+    export interface Uri extends FernIr.UriPagination, _Utils {
+        type: "uri";
     }
 
-    export interface NextPath extends FernIr.NextPathPagination, _Utils {
-        type: "nextPath";
+    export interface Path extends FernIr.PathPagination, _Utils {
+        type: "path";
     }
 
     export interface _Utils {
@@ -41,8 +41,8 @@ export namespace Pagination {
         cursor: (value: FernIr.CursorPagination) => _Result;
         offset: (value: FernIr.OffsetPagination) => _Result;
         custom: (value: FernIr.CustomPagination) => _Result;
-        nextUri: (value: FernIr.NextUriPagination) => _Result;
-        nextPath: (value: FernIr.NextPathPagination) => _Result;
+        uri: (value: FernIr.UriPagination) => _Result;
+        path: (value: FernIr.PathPagination) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -78,21 +78,21 @@ export const Pagination = {
         };
     },
 
-    nextUri: (value: FernIr.NextUriPagination): FernIr.Pagination.NextUri => {
+    uri: (value: FernIr.UriPagination): FernIr.Pagination.Uri => {
         return {
             ...value,
-            type: "nextUri",
-            _visit: function <_Result>(this: FernIr.Pagination.NextUri, visitor: FernIr.Pagination._Visitor<_Result>) {
+            type: "uri",
+            _visit: function <_Result>(this: FernIr.Pagination.Uri, visitor: FernIr.Pagination._Visitor<_Result>) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };
     },
 
-    nextPath: (value: FernIr.NextPathPagination): FernIr.Pagination.NextPath => {
+    path: (value: FernIr.PathPagination): FernIr.Pagination.Path => {
         return {
             ...value,
-            type: "nextPath",
-            _visit: function <_Result>(this: FernIr.Pagination.NextPath, visitor: FernIr.Pagination._Visitor<_Result>) {
+            type: "path",
+            _visit: function <_Result>(this: FernIr.Pagination.Path, visitor: FernIr.Pagination._Visitor<_Result>) {
                 return FernIr.Pagination._visit(this, visitor);
             },
         };
@@ -106,10 +106,10 @@ export const Pagination = {
                 return visitor.offset(value);
             case "custom":
                 return visitor.custom(value);
-            case "nextUri":
-                return visitor.nextUri(value);
-            case "nextPath":
-                return visitor.nextPath(value);
+            case "uri":
+                return visitor.uri(value);
+            case "path":
+                return visitor.path(value);
             default:
                 return visitor._other(value);
         }

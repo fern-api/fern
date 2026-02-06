@@ -84,8 +84,8 @@ function convertPagination(pagination: IrVersions.V64.Pagination): IrVersions.V6
             return IrVersions.V63.http.Pagination.offset(pagination);
         case "custom":
             return IrVersions.V63.http.Pagination.custom(pagination);
-        case "nextUri":
-        case "nextPath":
+        case "uri":
+        case "path":
             throw new Error(
                 `CursorPagination with '${pagination.type}' locator cannot be migrated to IR v63. ` +
                     `Only 'property' locators are supported in v63.`

@@ -8,7 +8,7 @@ import type * as FernIr from "../../../index.js";
  * The next is a property on the response that contains the next URI, and
  * the results are resolved from properties defined on the response.
  */
-export interface NextUriPagination {
+export interface UriPagination {
     nextUri: FernIr.ResponseProperty;
     results: FernIr.ResponseProperty;
 }
