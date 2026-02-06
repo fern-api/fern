@@ -489,10 +489,7 @@ name: api
 exports[`validate namespaced API > namespaced 1`] = `
 [
   {
-    "contents": "imports:
-  streamRoot: stream/__package__.yml
-types:
-  MarketData: streamRoot.Market
+    "contents": "types:
   OauthScope:
     enum:
       - docs: Read access
@@ -736,6 +733,7 @@ service:
     union:
       - Heartbeat
       - Update
+  MarketData: Market
   Update:
     extends:
       - Default
@@ -2733,7 +2731,7 @@ exports[`validate namespaced API with multiple namespaces > namespaced-asyncapi 
       tag: optional<string>
     source:
       openapi: alpha_one.yml
-  Pets: list<Pet>
+  Pets: list<unknown>
 ",
         "name": "__package__.yml",
         "type": "file",
