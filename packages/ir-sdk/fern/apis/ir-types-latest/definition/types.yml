@@ -256,7 +256,6 @@ types:
     properties:
       keyType: TypeReference
       valueType: TypeReference
-      validation: optional<MapValidationRules>
 
   PrimitiveType:
     properties:
