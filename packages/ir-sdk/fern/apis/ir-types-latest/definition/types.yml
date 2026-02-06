@@ -207,13 +207,12 @@ types:
     discriminant:
       value: _type
       name: type
+    base-properties:
+      validation: optional<ContainerTypeValidation>
     union:
       list:
         type: TypeReference
         key: list
-        validation:
-          minItems: optional<integer>
-          maxItems: optional<integer>
       map: MapType
       nullable:
         type: TypeReference
@@ -224,17 +223,40 @@ types:
       set:
         type: TypeReference
         key: set
-        validation:
-          minProperties: optional<integer>
-          maxProperties: optional<integer>
       literal:
         type: Literal
         key: literal
+  
+  ContainerTypeValidation:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      list: ListValidationRules
+      map: MapValidationRules
+      set: SetValidationRules
+  
+  ListValidationRules:
+    properties:
+      minItems: optional<integer>
+      maxItems: optional<integer>
+      uniqueItems: optional<boolean>
+  
+  MapValidationRules:
+    properties:
+      minItems: optional<integer>
+      maxItems: optional<integer>
+  
+  SetValidationRules:
+    properties:
+      minItems: optional<integer>
+      maxItems: optional<integer>
 
   MapType:
     properties:
       keyType: TypeReference
       valueType: TypeReference
+      validation: optional<MapValidationRules>
 
   PrimitiveType:
     properties:
