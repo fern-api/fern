@@ -3,3 +3,5 @@
 exports[`breaking 1`] = `"{"bump":"major","nextVersion":"2.0.0"}"`;
 
 exports[`non-breaking 1`] = `"{"bump":"minor","nextVersion":"1.2.0"}"`;
+
+exports[`non-breaking 2`] = `"{"bump":"minor","nextVersion":"1.2.0"}"`;
