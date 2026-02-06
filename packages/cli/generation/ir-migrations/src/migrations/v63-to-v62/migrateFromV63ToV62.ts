@@ -284,21 +284,14 @@ function convertTypeReference(typeReference: IrVersions.V63.TypeReference): IrVe
     }
 }
 
-function convertNamedType(
-    named: IrVersions.V63.NamedType
-): IrVersions.V62.types.NamedType {
+function convertNamedType(named: IrVersions.V63.NamedType): IrVersions.V62.types.NamedType {
     return {
         ...named,
-        default:
-            named.default != null
-                ? convertNamedTypeDefault(named.default)
-                : undefined
+        default: named.default != null ? convertNamedTypeDefault(named.default) : undefined
     };
 }
 
-function convertNamedTypeDefault(
-    defaultValue: IrVersions.V63.NamedTypeDefault
-): IrVersions.V62.types.NamedTypeDefault {
+function convertNamedTypeDefault(defaultValue: IrVersions.V63.NamedTypeDefault): IrVersions.V62.types.NamedTypeDefault {
     switch (defaultValue.type) {
         case "enum":
             return IrVersions.V62.types.NamedTypeDefault.enum({
