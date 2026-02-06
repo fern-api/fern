@@ -192,15 +192,14 @@ export class GraphQLConverter {
 
     private convertNamespaceOperations(
         namespaceType: GraphQLObjectType,
-        parentName: string,
+        _parentName: string,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>
     ): void {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const qualifiedName = `${parentName}_${fieldName}`;
-            const operationId = FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${qualifiedName}`);
-            operations[operationId] = this.convertField(field, qualifiedName, operationType);
+            const operationId = FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${fieldName}`);
+            operations[operationId] = this.convertField(field, fieldName, operationType);
         }
     }
 
