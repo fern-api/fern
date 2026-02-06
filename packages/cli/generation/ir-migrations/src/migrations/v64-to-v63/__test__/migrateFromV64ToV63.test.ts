@@ -73,7 +73,7 @@ describe("migrateFromV64ToV63", () => {
 
         expect(() => {
             V64_TO_V63_MIGRATION.migrateBackwards(v64IR, mockContext);
-        }).toThrow("CursorPagination with 'nextUri' locator cannot be migrated to IR v63");
+        }).toThrow("CursorPagination with 'uri' locator cannot be migrated to IR v63");
     });
 
     it("throws error for nextPath pagination", () => {
@@ -86,7 +86,7 @@ describe("migrateFromV64ToV63", () => {
 
         expect(() => {
             V64_TO_V63_MIGRATION.migrateBackwards(v64IR, mockContext);
-        }).toThrow("CursorPagination with 'nextPath' locator cannot be migrated to IR v63");
+        }).toThrow("CursorPagination with 'path' locator cannot be migrated to IR v63");
     });
 
     it("passes through offset pagination unchanged", () => {
