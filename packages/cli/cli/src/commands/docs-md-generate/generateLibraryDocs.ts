@@ -1,3 +1,4 @@
+import { docsYml } from "@fern-api/configuration";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 
@@ -6,6 +7,12 @@ export interface GenerateLibraryDocsOptions {
     cliContext: CliContext;
     /** If specified, only generate docs for this library */
     library: string | undefined;
+}
+
+function isGitLibraryInput(
+    input: docsYml.RawSchemas.LibraryInputConfiguration
+): input is docsYml.RawSchemas.GitLibraryInputSchema {
+    return "git" in input;
 }
 
 /**
@@ -20,8 +27,8 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
         return;
     }
 
-    const parsedConfig = docsWorkspace.config;
-    const libraries = parsedConfig.libraries;
+    const rawConfig = docsWorkspace.config;
+    const libraries = rawConfig.libraries;
 
     if (libraries == null || Object.keys(libraries).length === 0) {
         cliContext.failAndThrow(
@@ -44,6 +51,12 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
     for (const [name, config] of Object.entries(librariesToGenerate)) {
         if (config == null) {
             continue;
+        }
+        if (!isGitLibraryInput(config.input)) {
+            cliContext.failAndThrow(
+                `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`
+            );
+            return;
         }
         const subpathInfo = config.input.subpath != null ? ` (subpath: ${config.input.subpath})` : "";
         cliContext.logger.info(

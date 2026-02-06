@@ -1216,6 +1216,13 @@ types:
 
   LibraryInputConfiguration:
     docs: Configuration for the library source location.
+    discriminated: false
+    union:
+      - GitLibraryInputSchema
+      - PathLibraryInputSchema
+
+  GitLibraryInputSchema:
+    docs: Configuration for fetching library source from a Git repository.
     properties:
       git:
         type: string
@@ -1227,6 +1234,15 @@ types:
         docs: |
           Optional path within the repository to the library source.
           Example: django/core
+
+  PathLibraryInputSchema:
+    docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
+    properties:
+      path:
+        type: string
+        docs: |
+          Local filesystem path to the library source.
+          Example: ./src/my-library
 
   LibraryOutputConfiguration:
     docs: Configuration for the library documentation output.

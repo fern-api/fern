@@ -527,7 +527,7 @@
       ],
       "additionalProperties": false
     },
-    "docs.LibraryInputConfiguration": {
+    "docs.GitLibraryInputSchema": {
       "type": "object",
       "properties": {
         "git": {
@@ -548,6 +548,28 @@
         "git"
       ],
       "additionalProperties": false
+    },
+    "docs.PathLibraryInputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "docs.LibraryInputConfiguration": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.GitLibraryInputSchema"
+        },
+        {
+          "$ref": "#/definitions/docs.PathLibraryInputSchema"
+        }
+      ]
     },
     "docs.LibraryOutputConfiguration": {
       "type": "object",

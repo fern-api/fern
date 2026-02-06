@@ -3,18 +3,14 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { GitLibraryInputSchema } from "./GitLibraryInputSchema.js";
+import { PathLibraryInputSchema } from "./PathLibraryInputSchema.js";
 
-export const LibraryInputConfiguration: core.serialization.ObjectSchema<
+export const LibraryInputConfiguration: core.serialization.Schema<
     serializers.LibraryInputConfiguration.Raw,
     FernDocsConfig.LibraryInputConfiguration
-> = core.serialization.object({
-    git: core.serialization.string(),
-    subpath: core.serialization.string().optional(),
-});
+> = core.serialization.undiscriminatedUnion([GitLibraryInputSchema, PathLibraryInputSchema]);
 
 export declare namespace LibraryInputConfiguration {
-    export interface Raw {
-        git: string;
-        subpath?: string | null;
-    }
+    export type Raw = GitLibraryInputSchema.Raw | PathLibraryInputSchema.Raw;
 }

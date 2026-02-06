@@ -1361,6 +1361,12 @@ function isRawLibraryReferenceConfig(item: unknown): item is docsYml.RawSchemas.
     return isPlainObject(item) && typeof item.library === "string";
 }
 
+function isGitLibraryInput(
+    input: docsYml.RawSchemas.LibraryInputConfiguration
+): input is docsYml.RawSchemas.GitLibraryInputSchema {
+    return "git" in input;
+}
+
 function parseLibrariesConfiguration(
     libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> | undefined
 ): Record<string, docsYml.ParsedLibraryConfiguration> | undefined {
@@ -1369,6 +1375,9 @@ function parseLibrariesConfiguration(
     }
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
+        if (!isGitLibraryInput(config.input)) {
+            throw new Error(`Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`);
+        }
         result[name] = {
             input: {
                 git: config.input.git,
