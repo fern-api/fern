@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.65.0
+  changelogEntry:
+    - summary: |
+        Add `--generator` option to `fern generate` to run a specific generator by name. Filters within the resolved group (from `--group` or `default-group`) to only run the specified generator.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
 - version: 3.64.6
   changelogEntry:
     - summary: |
