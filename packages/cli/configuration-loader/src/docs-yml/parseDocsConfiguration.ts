@@ -10,7 +10,7 @@ import path from "path";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages, loadAllPages } from "./getAllPages";
-import { buildNavigationForDirectory, nameToSlug, nameToTitle } from "./navigationUtils";
+import { buildNavigationForDirectory, getFrontmatterTitle, nameToSlug, nameToTitle } from "./navigationUtils";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -968,7 +968,10 @@ async function expandFolderConfiguration({
         context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
     }
 
-    const contents = await buildNavigationForDirectory({ directoryPath: folderPath });
+    const contents = await buildNavigationForDirectory({
+        directoryPath: folderPath,
+        titleSource: rawConfig.titleSource
+    });
 
     const indexPage = contents.find(
         (item) =>
@@ -981,7 +984,11 @@ async function expandFolderConfiguration({
     const filteredContents = indexPage ? contents.filter((item) => item !== indexPage) : contents;
 
     const folderName = path.basename(folderPath);
-    const title = rawConfig.title ?? nameToTitle({ name: folderName });
+    const indexFrontmatterTitle =
+        rawConfig.titleSource === "frontmatter" && indexPage?.type === "page"
+            ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath })
+            : undefined;
+    const title = rawConfig.title ?? indexFrontmatterTitle ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
 
     return {
