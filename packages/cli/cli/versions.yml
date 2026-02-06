@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.69.0
+- version: 3.70.0
   changelogEntry:
     - summary: |
         Add support for new availability statuses in the `x-fern-availability` OpenAPI extension:
@@ -10,6 +10,15 @@
   createdAt: "2026-02-06"
   irVersion: 63
 
+- version: 3.69.0
+  changelogEntry:
+    - summary: |
+        [Beta] Add `fern docs md generate` command for generating MDX documentation from library
+        source code. This feature requires a `libraries` configuration in docs.yml. The command
+        is in beta and may change in future releases.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
 - version: 3.68.1
   changelogEntry:
     - summary: |

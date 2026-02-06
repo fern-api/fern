@@ -151,6 +151,23 @@ types:
       title:
         type: optional<string>
         docs: A string that is used as the tab bar title.
+      libraries:
+        type: optional<map<LibraryName, LibraryConfiguration>>
+        docs: |
+          Configuration for library documentation generation. Each library entry defines
+          a source repository and output location for generated MDX documentation.
+
+          Example:
+          ```yaml
+          libraries:
+            my-sdk:
+              input:
+                git: https://github.com/acme/sdk-python
+                subpath: src/sdk
+              output:
+                path: ./static/sdk-docs
+              lang: python
+          ```
       analytics:
         type: optional<AnalyticsConfig>
         docs: |
@@ -563,6 +580,7 @@ types:
       - SectionConfiguration
       - ApiReferenceConfiguration
       - PythonDocsConfiguration
+      - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
       - FolderConfiguration
@@ -1167,12 +1185,13 @@ types:
     docs: |
       Configuration for generating Python library documentation from source code.
       The docs are generated from a GitHub repository and merged into the navigation.
+    availability: deprecated
     properties:
       python-docs:
         type: string
         docs: |
           GitHub URL to the repository containing the Python library source code.
-          Example: https://github.com/NVIDIA/NeMo-RL
+          Example: https://github.com/django/django
       title:
         type: optional<string>
         docs: |
@@ -1183,6 +1202,90 @@ types:
         docs: |
           URL slug for the Python docs pages.
           @default: "python-docs"
+
+  # Library Documentation Types
+  LibraryName:
+    type: string
+    docs: The name identifier for a library. Used to reference the library in navigation.
+
+  LibraryLanguage:
+    enum:
+      - python
+      - cpp
+    docs: The programming language of the library source code.
+
+  LibraryInputConfiguration:
+    docs: Configuration for the library source location.
+    discriminated: false
+    union:
+      - GitLibraryInputSchema
+      - PathLibraryInputSchema
+
+  GitLibraryInputSchema:
+    docs: Configuration for fetching library source from a Git repository.
+    properties:
+      git:
+        type: string
+        docs: |
+          GitHub URL to the repository containing the library source code.
+          Example: https://github.com/django/django
+      subpath:
+        type: optional<string>
+        docs: |
+          Optional path within the repository to the library source.
+          Example: django/core
+
+  PathLibraryInputSchema:
+    docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
+    properties:
+      path:
+        type: string
+        docs: |
+          Local filesystem path to the library source.
+          Example: ./src/my-library
+
+  LibraryOutputConfiguration:
+    docs: Configuration for the library documentation output.
+    properties:
+      path:
+        type: string
+        docs: |
+          The output directory where MDX files will be generated.
+          Example: ./static/sdk-docs
+
+  LibraryConfiguration:
+    docs: |
+      Configuration for a library documentation source.
+      Used by `fern docs md generate` to generate MDX files from library source code.
+    properties:
+      input:
+        type: LibraryInputConfiguration
+        docs: Configuration for the library source location.
+      output:
+        type: LibraryOutputConfiguration
+        docs: Configuration for the library documentation output.
+      lang:
+        type: LibraryLanguage
+        docs: The programming language of the library source code.
+
+  LibraryReferenceConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    docs: |
+      References a library defined in the `libraries` section.
+      The library's generated navigation will be injected at this point.
+    properties:
+      library:
+        type: LibraryName
+        docs: |
+          The name of the library to reference (must match a key in the `libraries` section).
+      title:
+        type: optional<string>
+        docs: |
+          Override the display title for this library reference.
+      slug:
+        type: optional<string>
+        docs: |
+          Override the URL slug for this library reference.
 
   ApiReferenceLayoutItem:
     docs: |

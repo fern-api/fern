@@ -17,6 +17,19 @@
         }
       ]
     },
+    "libraries": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/docs.LibraryConfiguration"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "analytics": {
       "oneOf": [
         {
@@ -511,6 +524,89 @@
       },
       "required": [
         "url"
+      ],
+      "additionalProperties": false
+    },
+    "docs.GitLibraryInputSchema": {
+      "type": "object",
+      "properties": {
+        "git": {
+          "type": "string"
+        },
+        "subpath": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "git"
+      ],
+      "additionalProperties": false
+    },
+    "docs.PathLibraryInputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "docs.LibraryInputConfiguration": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.GitLibraryInputSchema"
+        },
+        {
+          "$ref": "#/definitions/docs.PathLibraryInputSchema"
+        }
+      ]
+    },
+    "docs.LibraryOutputConfiguration": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "docs.LibraryLanguage": {
+      "type": "string",
+      "enum": [
+        "python",
+        "cpp"
+      ]
+    },
+    "docs.LibraryConfiguration": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/docs.LibraryInputConfiguration"
+        },
+        "output": {
+          "$ref": "#/definitions/docs.LibraryOutputConfiguration"
+        },
+        "lang": {
+          "$ref": "#/definitions/docs.LibraryLanguage"
+        }
+      },
+      "required": [
+        "input",
+        "output",
+        "lang"
       ],
       "additionalProperties": false
     },
@@ -2367,6 +2463,71 @@
       ],
       "additionalProperties": false
     },
+    "docs.LibraryName": {
+      "type": "string"
+    },
+    "docs.LibraryReferenceConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "library": {
+          "$ref": "#/definitions/docs.LibraryName"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "library"
+      ],
+      "additionalProperties": false
+    },
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
@@ -2591,6 +2752,9 @@
         },
         {
           "$ref": "#/definitions/docs.PythonDocsConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"

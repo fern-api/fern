@@ -9,6 +9,7 @@ import {
     DocsInstance,
     ExperimentalConfig,
     Language,
+    LibraryLanguage,
     PlaygroundSettings,
     Target,
     ThemeConfig,
@@ -46,6 +47,9 @@ export interface ParsedDocsConfiguration {
 
     /* RBAC declaration */
     roles: string[] | undefined;
+
+    /* library documentation */
+    libraries: Record<string, ParsedLibraryConfiguration> | undefined;
 
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
@@ -295,6 +299,7 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Section
     | DocsNavigationItem.ApiSection
     | DocsNavigationItem.PythonDocsSection
+    | DocsNavigationItem.LibrarySection
     | DocsNavigationItem.Link
     | DocsNavigationItem.Changelog;
 
@@ -382,6 +387,18 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
     }
 
+    export interface LibrarySection
+        extends CjsFdrSdk.navigation.v1.WithPermissions,
+            CjsFdrSdk.navigation.latest.WithFeatureFlags {
+        type: "librarySection";
+        /** The name of the library (must match a key in the `libraries` section) */
+        libraryName: string;
+        /** Override display title for this library reference */
+        title: string | undefined;
+        /** Override URL slug for this library reference */
+        slug: string | undefined;
+    }
+
     export interface VersionedSnippetLanguageConfiguration {
         package: string;
         version: string;
@@ -457,3 +474,24 @@ export type ParsedApiReferenceLayoutItem =
     | ParsedApiReferenceLayoutItem.Endpoint
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;
+
+/**
+ * Parsed configuration for a library documentation source.
+ * Used by `fern docs md generate` to generate MDX files from library source code.
+ */
+export interface ParsedLibraryConfiguration {
+    /** Configuration for the library source location */
+    input: {
+        /** GitHub URL to the repository containing the library source code */
+        git: string;
+        /** Optional path within the repository to the library source */
+        subpath: string | undefined;
+    };
+    /** Configuration for the library documentation output */
+    output: {
+        /** The output directory where MDX files will be generated */
+        path: string;
+    };
+    /** The programming language of the library source code */
+    lang: LibraryLanguage;
+}

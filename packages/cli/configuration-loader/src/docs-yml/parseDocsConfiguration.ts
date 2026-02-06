@@ -144,6 +144,9 @@ export async function parseDocsConfiguration({
         instances,
         roles: rawDocsConfiguration.roles,
 
+        /* library documentation */
+        libraries: parseLibrariesConfiguration(rawDocsConfiguration.libraries),
+
         /* filepath of page to contents */
         pages,
 
@@ -1163,6 +1166,17 @@ async function convertNavigationItem({
             slug: rawConfig.slug ?? undefined
         };
     }
+    if (isRawLibraryReferenceConfig(rawConfig)) {
+        return {
+            type: "librarySection",
+            libraryName: rawConfig.library,
+            title: rawConfig.title ?? undefined,
+            slug: rawConfig.slug ?? undefined,
+            viewers: parseRoles(rawConfig.viewers),
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+        };
+    }
     assertNever(rawConfig);
 }
 
@@ -1341,6 +1355,41 @@ function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConf
 
 function isRawPythonDocsSectionConfig(item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration {
     return isPlainObject(item) && typeof item.pythonDocs === "string";
+}
+
+function isRawLibraryReferenceConfig(item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration {
+    return isPlainObject(item) && typeof item.library === "string";
+}
+
+function isGitLibraryInput(
+    input: docsYml.RawSchemas.LibraryInputConfiguration
+): input is docsYml.RawSchemas.GitLibraryInputSchema {
+    return "git" in input;
+}
+
+function parseLibrariesConfiguration(
+    libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration> | undefined
+): Record<string, docsYml.ParsedLibraryConfiguration> | undefined {
+    if (libraries == null) {
+        return undefined;
+    }
+    const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
+    for (const [name, config] of Object.entries(libraries)) {
+        if (!isGitLibraryInput(config.input)) {
+            throw new Error(`Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`);
+        }
+        result[name] = {
+            input: {
+                git: config.input.git,
+                subpath: config.input.subpath
+            },
+            output: {
+                path: config.output.path
+            },
+            lang: config.lang
+        };
+    }
+    return result;
 }
 
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {

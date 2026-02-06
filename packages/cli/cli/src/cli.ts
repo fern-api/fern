@@ -30,6 +30,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { docsDiff } from "./commands/docs-diff/docsDiff";
+import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
 import { downgrade } from "./commands/downgrade/downgrade";
@@ -1542,8 +1543,46 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsBrokenLinksCommand(yargs, cliContext);
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
+        addDocsMdCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    // Hidden command - pass false as description to hide from help output
+    // This command is in beta and not yet ready for general use
+    cli.command("md", false, (yargs) => {
+        addDocsMdGenerateCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "generate",
+        "[Beta] Generate MDX documentation from library source code. Requires 'libraries' config in docs.yml.",
+        (yargs) =>
+            yargs.option("library", {
+                type: "string",
+                description: "Name of a specific library defined in docs.yml to generate docs for"
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs md generate"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            await generateLibraryDocs({
+                project,
+                cliContext,
+                library: argv.library
+            });
+        }
+    );
 }
 
 function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
