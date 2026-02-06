@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.65.1
+  changelogEntry:
+    - summary: Regenerate older IR types with new TypeScript SDK generator.
+      type: internal
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.65.0
   changelogEntry:
     - summary: |
@@ -180,7 +187,7 @@
     - summary: |
         Support GraphQL API References. You can now add a `graphql` spec to `generators.yml` to render an auto-generated reference in the docs.
       type: fix
-  createdAt: "2026-02-2"
+  createdAt: "2026-02-02"
   irVersion: 63
 
 - version: 3.55.7
