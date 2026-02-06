@@ -19,6 +19,8 @@ import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { JsConfig } from "./JsConfig.js";
 import { Language } from "./Language.js";
 import { LayoutConfig } from "./LayoutConfig.js";
+import { LibraryConfiguration } from "./LibraryConfiguration.js";
+import { LibraryName } from "./LibraryName.js";
 import { LogoConfiguration } from "./LogoConfiguration.js";
 import { MetadataConfig } from "./MetadataConfig.js";
 import { NavbarLink } from "./NavbarLink.js";
@@ -40,6 +42,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
 > = core.serialization.object({
     instances: core.serialization.list(DocsInstance),
     title: core.serialization.string().optional(),
+    libraries: core.serialization.record(LibraryName, LibraryConfiguration).optional(),
     analytics: AnalyticsConfig.optional(),
     announcement: AnnouncementConfig.optional(),
     roles: core.serialization.list(RoleId).optional(),
@@ -78,6 +81,7 @@ export declare namespace DocsConfiguration {
     export interface Raw {
         instances: DocsInstance.Raw[];
         title?: string | null;
+        libraries?: Record<LibraryName.Raw, LibraryConfiguration.Raw> | null;
         analytics?: AnalyticsConfig.Raw | null;
         announcement?: AnnouncementConfig.Raw | null;
         roles?: RoleId.Raw[] | null;
