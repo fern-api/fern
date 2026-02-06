@@ -637,23 +637,24 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
             const hasTemplateData = Object.keys(multiUrlTemplates).length > 0 || Object.keys(multiVariables).length > 0;
 
-            const multiUrlSchema: Record<string, unknown> = {
+            const multiUrlSchema: RawSchemas.MultipleBaseUrlsEnvironmentSchema = {
                 urls: {
                     ...{ [DEFAULT_URL_NAME]: topLevelServerUrl ?? "" },
                     ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
                     ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
-                }
+                },
+                ...(hasTemplateData
+                    ? {
+                          "url-templates": multiUrlTemplates,
+                          "default-urls": multiDefaultUrls,
+                          variables: multiVariables
+                      }
+                    : {})
             };
-
-            if (hasTemplateData) {
-                multiUrlSchema["url-templates"] = multiUrlTemplates;
-                multiUrlSchema["default-urls"] = multiDefaultUrls;
-                multiUrlSchema["variables"] = multiVariables;
-            }
 
             context.builder.addEnvironment({
                 name: environmentName,
-                schema: multiUrlSchema as unknown as RawSchemas.MultipleBaseUrlsEnvironmentSchema
+                schema: multiUrlSchema
             });
             context.builder.setDefaultEnvironment(environmentName);
             context.builder.setDefaultUrl(DEFAULT_URL_NAME);

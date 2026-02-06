@@ -6,4 +6,7 @@ export interface MultipleBaseUrlsEnvironmentSchema
     extends GeneratorsYml.fernDefinition.WithAudiences,
         GeneratorsYml.fernDefinition.WithDocsSchema {
     urls: Record<string, string>;
+    "url-templates"?: Record<string, string>;
+    "default-urls"?: Record<string, string>;
+    variables?: Record<string, GeneratorsYml.fernDefinition.ServerVariableSchema[]>;
 }

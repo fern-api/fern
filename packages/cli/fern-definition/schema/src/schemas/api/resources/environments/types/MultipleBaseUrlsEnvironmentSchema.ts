@@ -4,4 +4,7 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface MultipleBaseUrlsEnvironmentSchema extends FernDefinition.WithAudiences, FernDefinition.WithDocsSchema {
     urls: Record<string, string>;
+    "url-templates"?: Record<string, string>;
+    "default-urls"?: Record<string, string>;
+    variables?: Record<string, FernDefinition.ServerVariableSchema[]>;
 }

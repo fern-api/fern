@@ -115,12 +115,9 @@ function convertMultipleBaseUrlEnvironments({
             ([environmentName, rawEnvironment]): MultipleBaseUrlsEnvironment =>
                 visitRawEnvironmentDeclaration<MultipleBaseUrlsEnvironment>(rawEnvironment, {
                     multipleBaseUrls: (multipleBaseUrlsEnvironment): MultipleBaseUrlsEnvironment => {
-                        const extra = multipleBaseUrlsEnvironment as unknown as Record<string, unknown>;
-                        const rawUrlTemplates = extra["url-templates"] as Record<string, string> | undefined;
-                        const rawDefaultUrls = extra["default-urls"] as Record<string, string> | undefined;
-                        const rawVariables = extra["variables"] as
-                            | Record<string, Array<{ id: string; default?: string; values?: string[] }>>
-                            | undefined;
+                        const rawUrlTemplates = multipleBaseUrlsEnvironment["url-templates"];
+                        const rawDefaultUrls = multipleBaseUrlsEnvironment["default-urls"];
+                        const rawVariables = multipleBaseUrlsEnvironment.variables;
 
                         const urlTemplates =
                             rawUrlTemplates && Object.keys(rawUrlTemplates).length > 0 ? rawUrlTemplates : undefined;
