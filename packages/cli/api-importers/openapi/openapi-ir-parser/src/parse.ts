@@ -16,6 +16,7 @@ import { AsyncAPIV2 } from "./asyncapi/v2";
 import { AsyncAPIV3 } from "./asyncapi/v3";
 import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
 import { getParseOptions, ParseOpenAPIOptions } from "./options";
+import { createSchemaCollisionTracker } from "./utils/schemaCollision";
 
 export type Document = OpenAPIDocument | AsyncAPIDocument;
 
@@ -117,7 +118,7 @@ export function parse({
                         };
                     }
                     if (parsedAsyncAPI.groupedSchemas != null) {
-                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
+                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas, options);
                     }
                     if (parsedAsyncAPI.basePath != null) {
                         ir.basePath = parsedAsyncAPI.basePath;
@@ -383,7 +384,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -543,7 +544,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -594,7 +595,7 @@ function merge(
             ...ir1.channels,
             ...ir2.channels
         },
-        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
         variables: {
             ...ir1.variables,
             ...ir2.variables
@@ -615,12 +616,26 @@ function merge(
     };
 }
 
-function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
-    schemas1.rootSchemas = { ...schemas1.rootSchemas, ...schemas2.rootSchemas };
+function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial<ParseOpenAPIOptions>): Schemas {
+    const collisionTracker = createSchemaCollisionTracker();
+    const shouldWarn = options?.resolveSchemaCollisions ?? false;
 
+    // Merge root schemas with collision detection
+    const mergedRootSchemas = { ...schemas1.rootSchemas };
+    for (const [key, schema] of Object.entries(schemas2.rootSchemas)) {
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
+        mergedRootSchemas[uniqueKey] = schema;
+    }
+    schemas1.rootSchemas = mergedRootSchemas;
+
+    // Merge namespaced schemas with collision detection
     for (const [namespace, namespaceSchemas] of Object.entries(schemas2.namespacedSchemas)) {
         if (schemas1.namespacedSchemas[namespace] != null) {
-            schemas1.namespacedSchemas[namespace] = { ...schemas1.namespacedSchemas[namespace], ...namespaceSchemas };
+            const existingSchemas = schemas1.namespacedSchemas[namespace];
+            for (const [key, schema] of Object.entries(namespaceSchemas)) {
+                const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
+                existingSchemas[uniqueKey] = schema;
+            }
         } else {
             schemas1.namespacedSchemas[namespace] = namespaceSchemas;
         }

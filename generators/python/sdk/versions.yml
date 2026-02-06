@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL templating. Server variables defined in OpenAPI specs are
+        now exposed as optional constructor parameters (e.g., `region`, `city`) with runtime
+        URL template interpolation. When `x-fern-default-url` is present, the generated SDK
+        uses that as the environment default. Works for both single and multiple base URL
+        environments.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
 - version: 4.54.4
   changelogEntry:
     - summary: |
@@ -8,7 +20,6 @@
       type: fix
   createdAt: "2026-02-05"
   irVersion: 62
-
 - version: 4.54.3
   changelogEntry:
     - summary: |

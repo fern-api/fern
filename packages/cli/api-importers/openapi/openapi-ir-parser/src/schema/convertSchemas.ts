@@ -23,6 +23,7 @@ import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
 import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
 import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension";
 import { getValueIfBoolean } from "../utils/getValue";
+import { createSchemaCollisionTracker } from "../utils/schemaCollision";
 import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
 import { convertArray } from "./convertArray";
 import { convertAvailability } from "./convertAvailability";
@@ -46,6 +47,44 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
+
+// Module-level collision tracker for title-based name overrides
+const globalTitleCollisionTracker = createSchemaCollisionTracker();
+
+// Reset the global collision tracker (called at the start of document processing)
+export function resetTitleCollisionTracker(): void {
+    globalTitleCollisionTracker.reset();
+}
+
+function getDisambiguatedNameOverride(
+    schema: OpenAPIV3.SchemaObject,
+    context: SchemaParserContext,
+    originalName: string
+): string | undefined {
+    const explicitFernExtension = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const titleBasedName = context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined;
+    const baseOverride = explicitFernExtension ?? titleBasedName;
+
+    if (!baseOverride) {
+        return undefined;
+    }
+
+    // Only apply collision detection to component schemas (from #/components/schemas/) for clarity
+    const breadcrumbs = originalName.split(".");
+    const isComponentSchema =
+        explicitFernExtension != null || // Explicit extension = intentional naming
+        breadcrumbs.length === 1; // Single breadcrumb = component schema
+
+    if (!isComponentSchema) {
+        return baseOverride;
+    }
+    return globalTitleCollisionTracker.getUniqueTitleName(
+        baseOverride,
+        originalName,
+        context.logger,
+        context.options.resolveSchemaCollisions
+    );
+}
 
 function isInlinable(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
@@ -324,9 +363,7 @@ export function convertSchemaObject(
     if (typeof schema === "string") {
         schema = { type: schema } as OpenAPIV3.SchemaObject;
     }
-    const nameOverride =
-        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
-        (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined);
+    const nameOverride = getDisambiguatedNameOverride(schema, context, breadcrumbs.join("."));
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];

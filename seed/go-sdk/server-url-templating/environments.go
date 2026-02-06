@@ -16,7 +16,7 @@ var Environments = struct {
 	RegionalApiServer Environment
 }{
 	RegionalApiServer: Environment{
-		Auth: "https://auth.us-east-1.example.com",
-		Base: "https://api.us-east-1.prod.example.com/v1",
+		Auth: "https://auth.example.com",
+		Base: "https://api.example.com/v1",
 	},
 }

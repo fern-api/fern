@@ -1549,7 +1549,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 }
 
 function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("md", "Commands for managing markdown documentation", (yargs) => {
+    cli.command("md", "[Beta] Commands for generating markdown documentation from library source code", (yargs) => {
         addDocsMdGenerateCommand(yargs, cliContext);
         return yargs;
     });
@@ -1558,11 +1558,11 @@ function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "generate",
-        "Generate MDX documentation from library source code",
+        "[Beta] Generate MDX documentation from library source code. Requires 'libraries' config in docs.yml.",
         (yargs) =>
             yargs.option("library", {
                 type: "string",
-                description: "Generate docs for a specific library defined in docs.yml"
+                description: "Name of a specific library defined in docs.yml to generate docs for"
             }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
