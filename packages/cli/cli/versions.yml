@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.65.2
+  changelogEntry:
+    - summary: |
+        Fix GraphQL converter to properly handle nullable/optional types, flatten nested mutation namespace types into operations, and avoid treating non-root Subscription object types as subscription roots.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.65.1
   changelogEntry:
     - summary: |
