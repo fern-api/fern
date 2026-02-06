@@ -80,10 +80,15 @@ types:
       message: optional<string>
   AvailabilityStatus:
     enum:
+      - ALPHA
       - IN_DEVELOPMENT
       - PRE_RELEASE
+      - BETA
+      - PREVIEW
       - GENERAL_AVAILABILITY
+      - STABLE
       - DEPRECATED
+      - LEGACY
 
   # references
 

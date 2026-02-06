@@ -457,14 +457,24 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
         return undefined;
     }
     switch (availability.status) {
-        case "DEPRECATED":
-            return FdrCjsSdk.Availability.Deprecated;
+        case "ALPHA":
+            return FdrCjsSdk.Availability.InDevelopment;
+        case "IN_DEVELOPMENT":
+            return FdrCjsSdk.Availability.InDevelopment;
         case "PRE_RELEASE":
+            return FdrCjsSdk.Availability.PreRelease;
+        case "BETA":
+            return FdrCjsSdk.Availability.Beta;
+        case "PREVIEW":
             return FdrCjsSdk.Availability.Beta;
         case "GENERAL_AVAILABILITY":
             return FdrCjsSdk.Availability.GenerallyAvailable;
-        case "IN_DEVELOPMENT":
-            return FdrCjsSdk.Availability.Beta;
+        case "STABLE":
+            return FdrCjsSdk.Availability.Stable;
+        case "DEPRECATED":
+            return FdrCjsSdk.Availability.Deprecated;
+        case "LEGACY":
+            return FdrCjsSdk.Availability.Deprecated;
         default:
             assertNever(availability.status);
     }

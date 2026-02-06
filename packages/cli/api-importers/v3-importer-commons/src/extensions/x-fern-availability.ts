@@ -29,16 +29,25 @@ export class FernAvailabilityExtension extends AbstractExtension<AvailabilitySta
 
         const normalizedValue = extensionValue.toUpperCase().replace(/[-_\s]/g, "_");
         switch (normalizedValue) {
+            case "ALPHA":
+                return AvailabilityStatus.Alpha;
             case "IN_DEVELOPMENT":
                 return AvailabilityStatus.InDevelopment;
             case "PRE_RELEASE":
-            case "BETA":
                 return AvailabilityStatus.PreRelease;
+            case "BETA":
+                return AvailabilityStatus.Beta;
+            case "PREVIEW":
+                return AvailabilityStatus.Preview;
             case "GENERAL_AVAILABILITY":
             case "GA":
                 return AvailabilityStatus.GeneralAvailability;
+            case "STABLE":
+                return AvailabilityStatus.Stable;
             case "DEPRECATED":
                 return AvailabilityStatus.Deprecated;
+            case "LEGACY":
+                return AvailabilityStatus.Legacy;
             default:
                 return undefined;
         }

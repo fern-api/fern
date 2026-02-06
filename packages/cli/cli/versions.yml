@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.69.0
+  changelogEntry:
+    - summary: |
+        Add support for new availability statuses in the `x-fern-availability` OpenAPI extension:
+        `alpha`, `beta`, `preview`, `stable`, and `legacy`. These join the existing `in-development`,
+        `pre-release`, `generally-available`, and `deprecated` statuses. The new statuses are supported
+        in the v3 OpenAPI importer and rendered in docs via the IR-to-FDR converter.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.68.1
   changelogEntry:
     - summary: |
