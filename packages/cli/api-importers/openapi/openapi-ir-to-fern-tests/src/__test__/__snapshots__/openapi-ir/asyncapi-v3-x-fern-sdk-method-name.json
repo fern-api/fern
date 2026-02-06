@@ -78,7 +78,42 @@
         {
           "queryParameters": [],
           "headers": [],
-          "messages": []
+          "messages": [
+            {
+              "messageType": "userMessage",
+              "payload": {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "serverNotification",
+              "payload": {
+                "properties": {
+                  "message": {
+                    "value": {
+                      "value": "message",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": {
+                    "value": "info",
+                    "type": "enum"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       ],
       "source": {

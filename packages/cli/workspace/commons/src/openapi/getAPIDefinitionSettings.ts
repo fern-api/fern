@@ -59,7 +59,8 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     coerceOptionalSchemasToNullable: "coerceOptionalSchemasToNullable",
     removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas",
     defaultIntegerFormat: "defaultIntegerFormat",
-    pathParameterOrder: "pathParameterOrder"
+    pathParameterOrder: "pathParameterOrder",
+    resolveSchemaCollisions: "resolveSchemaCollisions"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

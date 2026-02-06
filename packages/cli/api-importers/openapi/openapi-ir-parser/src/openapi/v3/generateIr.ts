@@ -25,13 +25,14 @@ import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension";
 import { ParseOpenAPIOptions } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
+import { createSchemaCollisionTracker } from "../../utils/schemaCollision";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
@@ -65,6 +66,9 @@ export function generateIr({
     namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
+
+    // Reset title collision tracker for this document processing
+    resetTitleCollisionTracker();
 
     // Create a temporary context for reference resolution during security scheme processing
     const tempContext = new OpenAPIV3ParserContext({
@@ -199,13 +203,16 @@ export function generateIr({
     const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context, source);
     // Add them back when declared as union metadata, as that means we're treating discriminated unions as undiscriminated unions.
     const schemasWithDiscriminants = maybeAddBackDiscriminantsFromSchemas(schemasWithoutDiscriminants, context);
+    const collisionTracker = createSchemaCollisionTracker();
     const schemas: Record<string, Schema> = {};
     for (const [key, schemaWithExample] of Object.entries(schemasWithDiscriminants)) {
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (context.isSchemaExcluded(key)) {
             continue;
         }
-        schemas[key] = schema;
+        // Use collision tracker for unique key generation
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key, context.logger, options.resolveSchemaCollisions);
+        schemas[uniqueKey] = schema;
     }
 
     const exampleTypeFactory = new ExampleTypeFactory(

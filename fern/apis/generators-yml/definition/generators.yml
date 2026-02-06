@@ -387,6 +387,13 @@ types:
           - `spec-order`: Use the order path parameters are defined in the spec
           Defaults to `url-order`.
         default: url-order
+      resolve-schema-collisions:
+        type: optional<boolean>
+        docs: |
+          If true, resolve schema name collisions by appending numbers (e.g., Schema2, Schema3) and emit warnings.
+          If false, throw hard errors when schema collisions are detected.
+          Defaults to false.
+        default: false
 
   OpenAPISettingsSchema:
     extends:

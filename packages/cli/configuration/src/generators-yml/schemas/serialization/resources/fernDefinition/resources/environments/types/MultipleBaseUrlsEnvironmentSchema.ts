@@ -5,6 +5,7 @@ import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 import { WithAudiences } from "../../commons/types/WithAudiences.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
+import { ServerVariableSchema } from "./ServerVariableSchema.js";
 
 export const MultipleBaseUrlsEnvironmentSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.MultipleBaseUrlsEnvironmentSchema.Raw,
@@ -12,6 +13,11 @@ export const MultipleBaseUrlsEnvironmentSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         urls: core.serialization.record(core.serialization.string(), core.serialization.string()),
+        "url-templates": core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
+        "default-urls": core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
+        variables: core.serialization
+            .record(core.serialization.string(), core.serialization.list(ServerVariableSchema))
+            .optional(),
     })
     .extend(WithAudiences)
     .extend(WithDocsSchema);
@@ -19,5 +25,8 @@ export const MultipleBaseUrlsEnvironmentSchema: core.serialization.ObjectSchema<
 export declare namespace MultipleBaseUrlsEnvironmentSchema {
     export interface Raw extends WithAudiences.Raw, WithDocsSchema.Raw {
         urls: Record<string, string>;
+        "url-templates"?: Record<string, string> | null;
+        "default-urls"?: Record<string, string> | null;
+        variables?: Record<string, ServerVariableSchema.Raw[]> | null;
     }
 }
