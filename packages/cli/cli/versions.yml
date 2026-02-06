@@ -2,7 +2,7 @@
 - version: 3.65.0
   changelogEntry:
     - summary: |
-        Add `--generator` option to `fern generate` to run a specific generator by name. Works with `--group` to filter within a group, or without `--group` to find and run the generator across all groups.
+        Add `--generator` option to `fern generate` to run a specific generator by name. Filters within the resolved group (from `--group` or `default-group`) to only run the specified generator.
       type: feat
   createdAt: "2026-02-05"
   irVersion: 63
