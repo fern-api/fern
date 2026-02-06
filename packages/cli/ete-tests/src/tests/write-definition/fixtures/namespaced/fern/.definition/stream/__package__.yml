@@ -96,7 +96,6 @@ types:
     union:
       - Heartbeat
       - Update
-  MarketData: Market
   Update:
     extends:
       - Default

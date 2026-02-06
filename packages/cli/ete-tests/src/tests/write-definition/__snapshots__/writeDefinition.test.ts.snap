@@ -263,10 +263,7 @@ name: api
 exports[`validate multi no endpoint asyncapi > multiple-no-endpoint-async 1`] = `
 [
   {
-    "contents": "types:
-  TestChannel2SendMessage: string
-  TestChannelSendMessage: string
-service:
+    "contents": "service:
   auth: false
   base-path: ''
   endpoints:
@@ -399,10 +396,7 @@ name: api
 exports[`validate multi with endpoint async > multiple-with-endpoint-async 1`] = `
 [
   {
-    "contents": "types:
-  TestChannel2SendMessage: string
-  TestChannelSendMessage: string
-service:
+    "contents": "service:
   auth: false
   base-path: ''
   endpoints:
@@ -733,7 +727,6 @@ service:
     union:
       - Heartbeat
       - Update
-  MarketData: Market
   Update:
     extends:
       - Default
@@ -2826,14 +2819,6 @@ name: api
   {
     "contents": [
       {
-        "contents": "types:
-  TestChannel2SendMessage: string
-  TestChannelSendMessage: string
-",
-        "name": "__package__.yml",
-        "type": "file",
-      },
-      {
         "contents": "channel:
   auth: false
   examples:
@@ -2917,10 +2902,7 @@ name: api
 exports[`validate single no endpoint async > single-no-endpoint-async 1`] = `
 [
   {
-    "contents": "types:
-  TestChannel2SendMessage: string
-  TestChannelSendMessage: string
-service:
+    "contents": "service:
   auth: false
   base-path: ''
   endpoints:
@@ -3044,10 +3026,7 @@ name: api
 exports[`validate single with endpoint async > single-with-endpoint-async 1`] = `
 [
   {
-    "contents": "types:
-  TestChannel2SendMessage: string
-  TestChannelSendMessage: string
-service:
+    "contents": "service:
   auth: false
   base-path: ''
   endpoints:
