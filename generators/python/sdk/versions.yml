@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.2
+  changelogEntry:
+    - summary: |
+        Add empty response handling for HTTP responses without body content (e.g., 204 No Content).
+      type: fix
+    - summary: |
+        Improve wiremock container name sanitization in wire tests (fixes testing on seed-generated SDKs).
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 4.55.1
   changelogEntry:
     - summary: |
