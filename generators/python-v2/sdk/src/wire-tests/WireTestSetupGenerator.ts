@@ -233,6 +233,7 @@ by pytest's normal test collection rules.
 """
 
 import os
+import re
 import subprocess
 
 import pytest
@@ -254,11 +255,10 @@ def _project_name() -> str:
     """Returns a unique project name for this test fixture to avoid container name conflicts."""
     tests_dir = os.path.dirname(__file__)
     project_root = os.path.abspath(os.path.join(tests_dir, ".."))
-    # Use the last two directory names to create a unique project name
-    # e.g., "python-streaming-parameter-openapi-with-wire-tests"
     parent = os.path.basename(os.path.dirname(project_root))
     current = os.path.basename(project_root)
-    return f"{parent}-{current}".replace("_", "-").lower()
+    name = re.sub(r"[^a-z0-9_-]", "", f"{parent}-{current}".replace("_", "-").lower()).lstrip("-_")
+    return name or "wiremock-tests"
 
 
 def _get_wiremock_port() -> str:

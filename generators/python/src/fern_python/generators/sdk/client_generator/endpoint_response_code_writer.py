@@ -325,6 +325,28 @@ class EndpointResponseCodeWriter:
     def _handle_success_json(
         self, *, writer: AST.NodeWriter, json_response: ir_types.JsonResponse, use_response_json: bool
     ) -> None:
+        # Guard against empty response bodies (e.g. 204 No Content)
+        writer.write_line(f"if not {RESPONSE_VARIABLE}.text:")
+        with writer.indent():
+            if self._pagination is not None:
+                empty_pager_expr = self._context.core_utilities.instantiate_paginator(
+                    is_async=self._is_async,
+                    has_next=AST.Expression("False"),
+                    items=AST.Expression("[]"),
+                    get_next=AST.Expression("None"),
+                    response=AST.Expression("None"),
+                )
+                writer.write("return ")
+                writer.write_node(empty_pager_expr)
+                writer.write_newline_if_last_line_not()
+            elif self._is_raw_client:
+                writer.write("return ")
+                writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
+                writer.write("  # type: ignore")
+                writer.write_newline_if_last_line_not()
+            else:
+                writer.write_line("return")
+
         pydantic_parse_expression = self._context.core_utilities.get_construct(
             self._get_json_response_body_type(json_response),
             AST.Expression(
