@@ -177,6 +177,9 @@ interface SingleServerInput {
     name: string | undefined;
     audiences: string[] | undefined;
     "x-fern-server-name"?: string;
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariableConfig[];
 }
 
 /**
@@ -341,8 +344,7 @@ function detectMultipleBaseUrls(servers1: AnyServerInput[], servers2: AnyServerI
 }
 
 function getPreferredUrlForNameExtraction(server: SingleServerInput): string {
-    const defaultUrl = (server as unknown as Record<string, unknown>)["defaultUrl"];
-    return typeof defaultUrl === "string" ? defaultUrl : server.url;
+    return server.defaultUrl ?? server.url;
 }
 
 function extractApiNameFromServers(servers: AnyServerInput[]): string {
@@ -457,21 +459,12 @@ function merge(
                 }
                 const envUrls = environmentMap.get(envName);
                 if (envUrls) {
-                    const serverRecord = server as unknown as Record<string, unknown>;
                     envUrls[api1Name] = {
                         url: server.url,
                         audiences: server.audiences,
-                        defaultUrl:
-                            typeof serverRecord["defaultUrl"] === "string"
-                                ? (serverRecord["defaultUrl"] as string)
-                                : undefined,
-                        urlTemplate:
-                            typeof serverRecord["urlTemplate"] === "string"
-                                ? (serverRecord["urlTemplate"] as string)
-                                : undefined,
-                        variables: Array.isArray(serverRecord["variables"])
-                            ? (serverRecord["variables"] as ServerVariableConfig[])
-                            : undefined
+                        defaultUrl: server.defaultUrl,
+                        urlTemplate: server.urlTemplate,
+                        variables: server.variables
                     };
                 }
             }
@@ -485,21 +478,12 @@ function merge(
             }
             const envUrls = environmentMap.get(envName);
             if (envUrls) {
-                const serverRecord2 = server as unknown as Record<string, unknown>;
                 envUrls[api2Name] = {
                     url: server.url,
                     audiences: server.audiences,
-                    defaultUrl:
-                        typeof serverRecord2["defaultUrl"] === "string"
-                            ? (serverRecord2["defaultUrl"] as string)
-                            : undefined,
-                    urlTemplate:
-                        typeof serverRecord2["urlTemplate"] === "string"
-                            ? (serverRecord2["urlTemplate"] as string)
-                            : undefined,
-                    variables: Array.isArray(serverRecord2["variables"])
-                        ? (serverRecord2["variables"] as ServerVariableConfig[])
-                        : undefined
+                    defaultUrl: server.defaultUrl,
+                    urlTemplate: server.urlTemplate,
+                    variables: server.variables
                 };
             }
         }
