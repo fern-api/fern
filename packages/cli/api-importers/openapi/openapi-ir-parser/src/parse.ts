@@ -340,6 +340,11 @@ function detectMultipleBaseUrls(servers1: AnyServerInput[], servers2: AnyServerI
     return allMatch && allDifferent;
 }
 
+function getPreferredUrlForNameExtraction(server: SingleServerInput): string {
+    const defaultUrl = (server as unknown as Record<string, unknown>)["defaultUrl"];
+    return typeof defaultUrl === "string" ? defaultUrl : server.url;
+}
+
 function extractApiNameFromServers(servers: AnyServerInput[]): string {
     if (servers.length === 0 || !servers[0]) {
         return "api";
@@ -352,7 +357,7 @@ function extractApiNameFromServers(servers: AnyServerInput[]): string {
         return firstUrlName ?? "api";
     }
 
-    return extractApiNameFromUrl(firstServer.url);
+    return extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer));
 }
 
 function hasGroupedServers(servers: AnyServerInput[]): boolean {
@@ -445,7 +450,7 @@ function merge(
                 }
             } else {
                 // Handle single server (first merge case)
-                const api1Name = extractApiNameFromUrl(server.url);
+                const api1Name = extractApiNameFromUrl(getPreferredUrlForNameExtraction(server));
                 const envName = getEnvironmentName(server);
                 if (!environmentMap.has(envName)) {
                     environmentMap.set(envName, {});
@@ -525,7 +530,9 @@ function merge(
             // First merge - derive API name from the first server
             const firstServer = ir1.servers[0] as AnyServerInput | undefined;
             const api1Name =
-                firstServer != null && firstServer.type !== "grouped" ? extractApiNameFromUrl(firstServer.url) : "api";
+                firstServer != null && firstServer.type !== "grouped"
+                    ? extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer))
+                    : "api";
             return {
                 ...endpoint,
                 type: "multi-api" as const,
