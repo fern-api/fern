@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.65.2
+  changelogEntry:
+    - summary: |
+        Fix auth scheme `docs` field not being read from auth-scheme declarations. When specifying `docs` on an auth-scheme in generators.yml or api.yml, the description is now correctly passed through to the IR and rendered in documentation.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.65.1
   changelogEntry:
     - summary: |
