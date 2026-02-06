@@ -124,6 +124,11 @@ describe("normalizeGeneratorName", () => {
         expect(normalizeGeneratorName("fern-java-sdk")).toBe(GeneratorName.JAVA_SDK);
         expect(normalizeGeneratorName("fernapi/fern-java-sdk")).toBe(GeneratorName.JAVA_SDK);
     });
+
+    it("resolves legacy alias java-model to fern-java-model", () => {
+        expect(normalizeGeneratorName("java-model")).toBe(GeneratorName.JAVA_MODEL);
+        expect(normalizeGeneratorName("fernapi/java-model")).toBe(GeneratorName.JAVA_MODEL);
+    });
 });
 
 describe("getGeneratorNameOrThrow", () => {

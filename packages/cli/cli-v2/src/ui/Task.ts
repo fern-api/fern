@@ -1,4 +1,5 @@
 import type { TaskLog } from "./TaskLog";
+import type { TaskStage } from "./TaskStage";
 import type { TaskStatus } from "./TaskStatus";
 
 export interface Task {
@@ -22,4 +23,6 @@ export interface Task {
     endTime?: number;
     /** Logs collected during task execution */
     logs?: TaskLog[];
+    /** Structured stages for progress tracking */
+    stages?: TaskStage[];
 }

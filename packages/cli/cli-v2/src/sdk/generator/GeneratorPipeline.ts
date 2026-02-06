@@ -32,7 +32,7 @@ export namespace GeneratorPipeline {
         cliVersion: string;
     }
     export interface RunArgs {
-        /** Task for log display */
+        /** The current task */
         task: Task;
 
         /** The target to generate */
@@ -127,6 +127,7 @@ export class GeneratorPipeline {
             cliVersion: this.cliVersion
         });
         const result = await generationRunner.run({
+            task: args.task,
             target: args.target,
             apiDefinition: args.apiDefinition,
             organization: args.organization,
@@ -136,7 +137,6 @@ export class GeneratorPipeline {
             keepContainer: args.keepContainer,
             preview: args.preview,
             outputPath: args.outputPath,
-            task: args.task,
             containerEngine: args.containerEngine
         });
         if (!result.success) {
@@ -166,14 +166,14 @@ export class GeneratorPipeline {
             apiDefinition: args.apiDefinition,
             organization: args.organization,
             token: args.token,
+            task: args.task,
             ai: args.ai,
             audiences: args.audiences,
             version: args.version,
             shouldLogS3Url: args.shouldLogS3Url,
             preview: args.preview,
             outputPath: args.outputPath,
-            fernignorePath: args.fernignorePath,
-            task: args.task
+            fernignorePath: args.fernignorePath
         });
         if (!result.success) {
             return {

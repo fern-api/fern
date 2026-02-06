@@ -1,14 +1,17 @@
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { resolve } from "@fern-api/fs-utils";
 import type { Argv } from "yargs";
+import { GitOutputModeSchema } from "../../../../../config/lib/schemas";
 import { ApiChecker } from "../../../api/checker/ApiChecker";
 import type { Context } from "../../../context/Context";
 import type { GlobalArgs } from "../../../context/GlobalArgs";
 import { CliError } from "../../../errors/CliError";
 import type { Target } from "../../../sdk/config/Target";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline";
-import { TaskGroup } from "../../../ui/TaskGroup";
+import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup";
+import type { TaskStageLabels } from "../../../ui/TaskStageLabels";
 import type { Workspace } from "../../../workspace/Workspace";
 import { command } from "../../_internal/command";
 
@@ -85,62 +88,58 @@ export class GenerateCommand {
         const token = args.local ? undefined : await context.getTokenOrPrompt();
         const runtime = args.local ? "local" : "remote";
 
-        const taskGroup = new TaskGroup({ context });
+        const taskGroup = new SdkTaskGroup({ context });
+        for (const target of targets) {
+            const stageOverrides: SdkStageOverrides | undefined =
+                target.output.git != null
+                    ? {
+                          output: this.getGitOutputStageLabels(target.output.git.mode ?? "pr")
+                      }
+                    : undefined;
 
-        const skippedTargets = targets.filter((t) => checkResult.invalidApis.has(t.api));
-        for (const target of skippedTargets) {
             taskGroup.addTask({
                 id: target.name,
                 name: target.name,
-                status: "skipped",
-                skipReason: `API '${target.api}' has errors`
+                stageOverrides
             });
         }
 
-        for (const target of validTargets) {
-            taskGroup.addTask({
-                id: target.name,
-                name: target.name
-            });
-        }
+        const sdkInitialism = this.maybePluralSdks(targets);
 
         await taskGroup.start({
-            title: "Generating SDKs",
+            title: `Generating ${sdkInitialism}`,
             subtitle: `org: ${workspace.sdks.org}`
         });
 
         await Promise.all(
-            validTargets.map(async (target) => {
-                const apiDefinition = workspace.apis[target.api];
-                if (apiDefinition == null) {
-                    const message = `API '${target.api}' not found in workspace`;
-                    taskGroup.updateTask({
-                        id: target.name,
-                        update: { status: "error", error: message }
-                    });
-                    return;
-                }
-
+            targets.map(async (target) => {
                 const task = taskGroup.getTask(target.name);
                 if (task == null) {
                     // This should be unreachable.
                     throw new Error(`Internal error; task '${target.name}' not found`);
                 }
 
-                taskGroup.updateTask({
-                    id: target.name,
-                    update: {
-                        status: "running",
-                        currentStep: `${target.image}:${target.version}`
-                    }
-                });
+                task.start();
 
+                task.stage.validation.start();
+                const apiDefinition = workspace.apis[target.api];
+                if (apiDefinition == null) {
+                    task.stage.validation.fail(`API not found in workspace`);
+                    return;
+                }
+                if (checkResult.invalidApis.has(target.api)) {
+                    task.stage.validation.fail(`API is invalid`);
+                    return;
+                }
+                task.stage.validation.complete();
+
+                task.stage.generator.start();
                 const pipelineResult = await pipeline.run({
                     organization: workspace.org,
                     ai: workspace.ai,
-                    task,
                     target,
                     apiDefinition,
+                    task: task.getTask(),
                     audiences: this.parseAudiences(args.audience),
                     runtime,
                     containerEngine: args["container-engine"] ?? "docker",
@@ -151,32 +150,37 @@ export class GenerateCommand {
                     version: args.version
                 });
                 if (!pipelineResult.success) {
-                    taskGroup.updateTask({
-                        id: target.name,
-                        update: {
-                            status: "error",
-                            error: pipelineResult.error
-                        }
-                    });
+                    task.stage.generator.fail(pipelineResult.error);
                     return;
                 }
-                taskGroup.updateTask({
-                    id: target.name,
-                    update: {
-                        status: "success",
-                        output: pipelineResult.output
-                    }
-                });
+                task.stage.generator.complete();
+                task.stage.output.complete();
+                task.complete(pipelineResult.output);
             })
         );
 
-        const summary = taskGroup.complete({
-            successMessage: `Successfully generated ${this.maybePluralSdks(validTargets)}`,
-            errorMessage: `Failed to generate ${this.maybePluralSdks(validTargets)}`
+        const summary = taskGroup.finish({
+            successMessage: `Successfully generated ${sdkInitialism}`,
+            errorMessage: `Failed to generate ${sdkInitialism}`
         });
 
         if (summary.failedCount > 0) {
             throw CliError.exit();
+        }
+    }
+
+    private validateArgs(args: GenerateCommand.Args): void {
+        if (args.output != null && !args.preview) {
+            throw new Error("The --output flag can only be used with --preview");
+        }
+        if (args["container-engine"] != null && !args.local) {
+            throw new Error("The --container-engine flag can only be used with --local");
+        }
+        if (args.group != null && args.target != null) {
+            throw new Error("The --group and --target flags cannot be used together");
+        }
+        if (args.group == null && args.target == null) {
+            throw new Error("A --target or --group must be specified");
         }
     }
 
@@ -206,9 +210,6 @@ export class GenerateCommand {
         return targets;
     }
 
-    /**
-     * Filter targets by group name. If no group is specified, returns all targets.
-     */
     private filterTargetsByGroup(targets: Target[], groupName: string | undefined): Target[] {
         if (groupName == null) {
             return targets;
@@ -226,23 +227,33 @@ export class GenerateCommand {
         };
     }
 
-    private validateArgs(args: GenerateCommand.Args): void {
-        if (args.output != null && !args.preview) {
-            throw new Error("The --output flag can only be used with --preview");
-        }
-        if (args["container-engine"] != null && !args.local) {
-            throw new Error("The --container-engine flag can only be used with --local");
-        }
-        if (args.group != null && args.target != null) {
-            throw new Error("The --group and --target flags cannot be used together");
-        }
-        if (args.group == null && args.target == null) {
-            throw new Error("A --target or --group must be specified");
-        }
-    }
-
     private maybePluralSdks(targets: Target[]): string {
         return targets.length === 1 ? "SDK" : "SDKs";
+    }
+
+    private getGitOutputStageLabels(mode: GitOutputModeSchema): Partial<TaskStageLabels> {
+        switch (mode) {
+            case "push":
+                return {
+                    pending: "Push to repository",
+                    running: "Pushing to repository...",
+                    success: "Pushed to repository"
+                };
+            case "release":
+                return {
+                    pending: "Create release",
+                    running: "Creating release...",
+                    success: "Created release"
+                };
+            case "pr":
+                return {
+                    pending: "Create pull request",
+                    running: "Creating pull request...",
+                    success: "Created pull request"
+                };
+            default:
+                assertNever(mode);
+        }
     }
 }
 

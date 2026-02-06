@@ -23,6 +23,7 @@ export async function generateWorkspace({
     projectConfig,
     context,
     groupName,
+    generatorName,
     version,
     shouldLogS3Url,
     token,
@@ -42,6 +43,7 @@ export async function generateWorkspace({
     context: TaskContext;
     version: string | undefined;
     groupName: string | undefined;
+    generatorName: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken | undefined;
     useLocalDocker: boolean;
@@ -101,6 +103,19 @@ export async function generateWorkspace({
             );
             if (group == null) {
                 return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
+            }
+
+            // Filter to specific generator if --generator is specified
+            if (generatorName != null) {
+                const filteredGenerators = group.generators.filter((gen) => gen.name === generatorName);
+                if (filteredGenerators.length === 0) {
+                    const availableGenerators = group.generators.map((gen) => gen.name);
+                    return context.failAndThrow(
+                        `Generator '${generatorName}' not found in group '${resolvedGroupName}'. ` +
+                            `Available generators: ${availableGenerators.join(", ")}`
+                    );
+                }
+                group = { ...group, generators: filteredGenerators };
             }
 
             // Apply lfs-override if specified

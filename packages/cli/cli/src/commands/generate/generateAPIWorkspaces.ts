@@ -21,6 +21,7 @@ export async function generateAPIWorkspaces({
     cliContext,
     version,
     groupName,
+    generatorName,
     shouldLogS3Url,
     keepDocker,
     useLocalDocker,
@@ -38,6 +39,7 @@ export async function generateAPIWorkspaces({
     cliContext: CliContext;
     version: string | undefined;
     groupName: string | undefined;
+    generatorName: string | undefined;
     shouldLogS3Url: boolean;
     useLocalDocker: boolean;
     keepDocker: boolean;
@@ -73,7 +75,8 @@ export async function generateAPIWorkspaces({
         const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
         for (const generator of workspace.generatorsConfiguration?.groups
             .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
-            .flatMap((group) => group.generators) ?? []) {
+            .flatMap((group) => group.generators)
+            .filter((generator) => generatorName == null || generator.name === generatorName) ?? []) {
             const { shouldProceed } = await checkOutputDirectory(
                 generator.absolutePathToLocalOutput,
                 cliContext,
@@ -97,14 +100,16 @@ export async function generateAPIWorkspaces({
                     generators: workspace.generatorsConfiguration?.groups
                         .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
                         .map((group) => {
-                            return group.generators.map((generator) => {
-                                return {
-                                    name: generator.name,
-                                    version: generator.version,
-                                    outputMode: generator.outputMode.type,
-                                    config: generator.config
-                                };
-                            });
+                            return group.generators
+                                .filter((generator) => generatorName == null || generator.name === generatorName)
+                                .map((generator) => {
+                                    return {
+                                        name: generator.name,
+                                        version: generator.version,
+                                        outputMode: generator.outputMode.type,
+                                        config: generator.config
+                                    };
+                                });
                         })
                 };
             })
@@ -131,6 +136,7 @@ export async function generateAPIWorkspaces({
                     context,
                     version,
                     groupName,
+                    generatorName,
                     shouldLogS3Url,
                     token,
                     useLocalDocker,

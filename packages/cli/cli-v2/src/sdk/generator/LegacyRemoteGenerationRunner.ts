@@ -3,6 +3,7 @@ import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
 import type { AiConfig } from "../../ai/config/AiConfig";
@@ -26,7 +27,7 @@ export namespace LegacyRemoteGenerationRunner {
         cliVersion: string;
     }
     export interface RunArgs {
-        /** Task for log display */
+        /** The current task */
         task: Task;
 
         /** The target to generate */
@@ -75,6 +76,13 @@ export namespace LegacyRemoteGenerationRunner {
     }
 }
 
+interface GitOutput {
+    pullRequestUrl?: string;
+    commitHash?: string;
+    branchUrl?: string;
+    releaseUrl?: string;
+}
+
 export class LegacyRemoteGenerationRunner {
     private readonly context: Context;
     private readonly cliVersion: string;
@@ -87,7 +95,11 @@ export class LegacyRemoteGenerationRunner {
     }
 
     public async run(args: LegacyRemoteGenerationRunner.RunArgs): Promise<LegacyRemoteGenerationRunner.Result> {
-        const taskContext = new TaskContextAdapter({ task: args.task, context: this.context });
+        const taskContext = new TaskContextAdapter({
+            context: this.context,
+            task: args.task,
+            logLevel: LogLevel.Info // Capture INFO logs to parse git output URLs
+        });
         try {
             const generatorInvocation = await this.invocationAdapter.adapt(args.target);
             const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -127,12 +139,10 @@ export class LegacyRemoteGenerationRunner {
                 };
             }
 
+            const gitOutput = this.extractGitOutputFromTaskLogs(args.task);
             return {
                 success: true,
-                output:
-                    absolutePathToPreview != null
-                        ? [absolutePathToPreview.toString()]
-                        : this.context.resolveTargetOutputs(args.target)
+                output: this.resolveOutput(args, gitOutput)
             };
         } catch (error) {
             return {
@@ -175,5 +185,66 @@ export class LegacyRemoteGenerationRunner {
             }
         }
         return undefined;
+    }
+
+    /**
+     * Extract git output URLs from task logs.
+     *
+     * The remote generation service logs messages like:
+     *  - "Created pull request: https://github.com/owner/repo/pull/123"
+     *  - "Created commit abc123"
+     *  - "Pushed branch: https://github.com/owner/repo/tree/branch-name"
+     *  - "Release tagged. View here: https://github.com/owner/repo/releases/tag/v1.0.0"
+     */
+    private extractGitOutputFromTaskLogs(task: Task): GitOutput | undefined {
+        const gitOutput: GitOutput = {};
+        for (const log of task.logs ?? []) {
+            const prMatch = log.message.match(/Created pull request: (.+)/);
+            if (prMatch != null) {
+                gitOutput.pullRequestUrl = prMatch[1];
+            }
+
+            const commitMatch = log.message.match(/Created commit (\w+)/);
+            if (commitMatch != null) {
+                gitOutput.commitHash = commitMatch[1];
+            }
+
+            const branchMatch = log.message.match(/Pushed branch: (.+)/);
+            if (branchMatch != null) {
+                gitOutput.branchUrl = branchMatch[1];
+            }
+
+            const releaseMatch = log.message.match(/Release tagged\. View here: (.+)/);
+            if (releaseMatch != null) {
+                gitOutput.releaseUrl = releaseMatch[1];
+            }
+        }
+        return Object.keys(gitOutput).length > 0 ? gitOutput : undefined;
+    }
+
+    /**
+     * Resolve output URLs/paths for display.
+     */
+    private resolveOutput(
+        args: LegacyRemoteGenerationRunner.RunArgs,
+        gitOutput: GitOutput | undefined
+    ): string[] | undefined {
+        const absolutePathToPreview = this.getAbsolutePathToPreview(args);
+        if (absolutePathToPreview != null) {
+            return [absolutePathToPreview.toString()];
+        }
+        if (gitOutput != null) {
+            if (gitOutput.pullRequestUrl != null) {
+                return [gitOutput.pullRequestUrl];
+            }
+            if (gitOutput.releaseUrl != null) {
+                return [gitOutput.releaseUrl];
+            }
+            if (gitOutput.branchUrl != null) {
+                return [gitOutput.branchUrl];
+            }
+        }
+        // Fall back to target config (repo URL or local path).
+        return this.context.resolveTargetOutputs(args.target);
     }
 }

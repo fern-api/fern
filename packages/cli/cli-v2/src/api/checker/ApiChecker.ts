@@ -5,6 +5,7 @@ import { AbsoluteFilePath, join, RelativeFilePath, relativize } from "@fern-api/
 import chalk from "chalk";
 import type { Context } from "../../context/Context";
 import { Colors, formatMessage, Icons } from "../../ui/format";
+import { Task } from "../../ui/Task";
 import type { Workspace } from "../../workspace/Workspace";
 import { ApiDefinitionValidator } from "../validator/ApiDefinitionValidator";
 
@@ -39,6 +40,9 @@ export declare namespace ApiChecker {
 
         /** Output stream for writing results (defaults to process.stderr) */
         stream?: NodeJS.WriteStream;
+
+        /** The current task, if any */
+        task?: Task;
     }
 
     export interface Result {
@@ -63,11 +67,13 @@ export class ApiChecker {
     private readonly context: Context;
     private readonly cliVersion: string;
     private readonly stream: NodeJS.WriteStream;
+    private readonly task: Task | undefined;
 
     constructor(config: ApiChecker.Config) {
         this.context = config.context;
         this.cliVersion = config.cliVersion;
         this.stream = config.stream ?? process.stderr;
+        this.task = config.task;
     }
 
     /**
@@ -102,7 +108,8 @@ export class ApiChecker {
 
         const validator = new ApiDefinitionValidator({
             context: this.context,
-            cliVersion: this.cliVersion
+            cliVersion: this.cliVersion,
+            task: this.task
         });
 
         const allViolations: ApiChecker.ResolvedViolation[] = [];
@@ -157,7 +164,7 @@ export class ApiChecker {
 
     private writeHeader(): void {
         this.stream.write("\n");
-        this.stream.write(`${Icons.info} ${chalk.bold("Validating API definitions")}\n`);
+        this.stream.write(`${Icons.info} ${chalk.bold(`Validate APIs`)}\n`);
         this.stream.write("\n");
     }
 
@@ -382,5 +389,9 @@ export class ApiChecker {
             return `${Math.round(ms)}ms`;
         }
         return `${(ms / 1000).toFixed(1)}s`;
+    }
+
+    private maybePluralApis(apis: string[]): string {
+        return apis.length === 1 ? "API" : "APIs";
     }
 }

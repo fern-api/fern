@@ -5,6 +5,7 @@ import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
 import type { Context } from "../../context/Context";
+import { Task } from "../../ui/Task";
 import { LegacyApiSpecAdapter } from "../adapter/LegacyApiSpecAdapter";
 import type { ApiDefinition } from "../config/ApiDefinition";
 import type { ApiSpec } from "../config/ApiSpec";
@@ -26,6 +27,9 @@ export namespace ApiDefinitionValidator {
 
         /** CLI version for workspace metadata */
         cliVersion: string;
+
+        /** The current task, if any */
+        task?: Task;
     }
 
     export interface Result {
@@ -50,7 +54,7 @@ export class ApiDefinitionValidator {
 
     constructor(config: ApiDefinitionValidator.Config) {
         this.context = config.context;
-        this.taskContext = new TaskContextAdapter({ context: this.context });
+        this.taskContext = new TaskContextAdapter({ context: this.context, task: config.task });
         this.cliVersion = config.cliVersion;
     }
 

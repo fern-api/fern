@@ -21,7 +21,7 @@ export namespace LegacyFernWorkspaceAdapter {
         /** CLI version for workspace metadata */
         cliVersion: string;
 
-        /** Task for log display */
+        /** The current task */
         task: Task;
     }
 }
