@@ -90,6 +90,8 @@ export async function parseDocsConfiguration({
 
     const landingPage = parsePageConfig(rawDocsConfiguration.landingPage, absoluteFilepathToDocsConfig);
 
+    const folderTitleSource = rawDocsConfiguration.settings?.folderTitleSource;
+
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
         products,
@@ -97,7 +99,8 @@ export async function parseDocsConfiguration({
         navigation: rawNavigation,
         absolutePathToFernFolder,
         absolutePathToConfig: absoluteFilepathToDocsConfig,
-        context
+        context,
+        folderTitleSource
     });
 
     const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
@@ -495,12 +498,14 @@ function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.co
 async function getVersionedNavigationConfiguration({
     versions,
     absolutePathToFernFolder,
-    context
+    context,
+    folderTitleSource
 }: {
     versions: docsYml.RawSchemas.VersionConfig[];
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     parentSlug?: string;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.VersionedDocsNavigation> {
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
@@ -522,7 +527,8 @@ async function getVersionedNavigationConfiguration({
             rawNavigationConfig: versionResult.navigation,
             absolutePathToFernFolder,
             absolutePathToConfig: absoluteFilepathToVersionFile,
-            context
+            context,
+            folderTitleSource
         });
         versionedNavbars.push({
             landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
@@ -550,7 +556,8 @@ async function getNavigationConfiguration({
     navigation,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context
+    context,
+    folderTitleSource
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     products?: docsYml.RawSchemas.ProductConfig[];
@@ -559,6 +566,7 @@ async function getNavigationConfiguration({
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
@@ -566,7 +574,8 @@ async function getNavigationConfiguration({
             rawNavigationConfig: navigation,
             absolutePathToFernFolder,
             absolutePathToConfig,
-            context
+            context,
+            folderTitleSource
         });
     } else if (products != null) {
         const productNavbars: docsYml.ProductInfo[] = [];
@@ -596,7 +605,8 @@ async function getNavigationConfiguration({
                     navigation = await getVersionedNavigationConfiguration({
                         versions: product.versions,
                         absolutePathToFernFolder,
-                        context
+                        context,
+                        folderTitleSource
                     });
                 } else {
                     // Process as a regular navigation if no versions
@@ -605,7 +615,8 @@ async function getNavigationConfiguration({
                         rawNavigationConfig: result.navigation,
                         absolutePathToFernFolder,
                         absolutePathToConfig: absoluteFilepathToProductFile,
-                        context
+                        context,
+                        folderTitleSource
                     });
                 }
 
@@ -648,7 +659,12 @@ async function getNavigationConfiguration({
             products: productNavbars
         };
     } else if (versions != null) {
-        return await getVersionedNavigationConfiguration({ versions, absolutePathToFernFolder, context });
+        return await getVersionedNavigationConfiguration({
+            versions,
+            absolutePathToFernFolder,
+            context,
+            folderTitleSource
+        });
     }
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
 }
@@ -794,13 +810,15 @@ async function convertNavigationTabConfiguration({
     item,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context
+    context,
+    folderTitleSource
 }: {
     tabs: Record<string, docsYml.RawSchemas.TabConfig>;
     item: docsYml.RawSchemas.TabbedNavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.TabbedNavigation> {
     const tab = tabs[item.tab];
     if (tab == null) {
@@ -816,7 +834,8 @@ async function convertNavigationTabConfiguration({
                             rawConfig: layoutItem,
                             absolutePathToFernFolder,
                             absolutePathToConfig,
-                            context
+                            context,
+                            folderTitleSource
                         })
                     )
                 );
@@ -854,7 +873,13 @@ async function convertNavigationTabConfiguration({
     if (tabbedNavigationItemHasLayout(item)) {
         const layout = await Promise.all(
             item.layout.map((item) =>
-                convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
+                convertNavigationItem({
+                    rawConfig: item,
+                    absolutePathToFernFolder,
+                    absolutePathToConfig,
+                    context,
+                    folderTitleSource
+                })
             )
         );
         return {
@@ -916,13 +941,15 @@ async function convertNavigationConfiguration({
     rawNavigationConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context
+    context,
+    folderTitleSource
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     rawNavigationConfig: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.UntabbedDocsNavigation | docsYml.TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
@@ -932,7 +959,8 @@ async function convertNavigationConfiguration({
                     item,
                     absolutePathToFernFolder,
                     absolutePathToConfig,
-                    context
+                    context,
+                    folderTitleSource
                 })
             )
         );
@@ -945,7 +973,13 @@ async function convertNavigationConfiguration({
             type: "untabbed",
             items: await Promise.all(
                 rawNavigationConfig.map((item) =>
-                    convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
+                    convertNavigationItem({
+                        rawConfig: item,
+                        absolutePathToFernFolder,
+                        absolutePathToConfig,
+                        context,
+                        folderTitleSource
+                    })
                 )
             )
         };
@@ -958,12 +992,14 @@ async function expandFolderConfiguration({
     rawConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context
+    context,
+    folderTitleSource
 }: {
     rawConfig: docsYml.RawSchemas.FolderConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationItem> {
     const folderPath = resolveFilepath(rawConfig.folder, absolutePathToConfig);
 
@@ -971,9 +1007,11 @@ async function expandFolderConfiguration({
         context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
     }
 
+    const effectiveTitleSource = rawConfig.titleSource ?? folderTitleSource;
+
     const contents = await buildNavigationForDirectory({
         directoryPath: folderPath,
-        titleSource: rawConfig.titleSource
+        titleSource: effectiveTitleSource
     });
 
     const indexPage = contents.find(
@@ -988,7 +1026,7 @@ async function expandFolderConfiguration({
 
     const folderName = path.basename(folderPath);
     const indexFrontmatterTitle =
-        rawConfig.titleSource === "frontmatter" && indexPage?.type === "page"
+        effectiveTitleSource === "frontmatter" && indexPage?.type === "page"
             ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath })
             : undefined;
     const title = rawConfig.title ?? indexFrontmatterTitle ?? nameToTitle({ name: folderName });
@@ -1015,12 +1053,14 @@ async function convertNavigationItem({
     rawConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context
+    context,
+    folderTitleSource
 }: {
     rawConfig: docsYml.RawSchemas.NavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
+    folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
         return parsePageConfig(rawConfig, absolutePathToConfig);
@@ -1032,7 +1072,13 @@ async function convertNavigationItem({
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
-                    convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
+                    convertNavigationItem({
+                        rawConfig: item,
+                        absolutePathToFernFolder,
+                        absolutePathToConfig,
+                        context,
+                        folderTitleSource
+                    })
                 )
             ),
             slug: rawConfig.slug ?? undefined,
@@ -1108,7 +1154,8 @@ async function convertNavigationItem({
             rawConfig,
             absolutePathToFernFolder,
             absolutePathToConfig,
-            context
+            context,
+            folderTitleSource
         });
     }
     if (isRawPythonDocsSectionConfig(rawConfig)) {
