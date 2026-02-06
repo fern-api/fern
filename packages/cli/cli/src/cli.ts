@@ -1549,7 +1549,9 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 }
 
 function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("md", "[Beta] Commands for generating markdown documentation from library source code", (yargs) => {
+    // Hidden command - pass false as description to hide from help output
+    // This command is in beta and not yet ready for general use
+    cli.command("md", false, (yargs) => {
         addDocsMdGenerateCommand(yargs, cliContext);
         return yargs;
     });
