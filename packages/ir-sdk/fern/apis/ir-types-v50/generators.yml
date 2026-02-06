@@ -2,14 +2,15 @@ groups:
   node:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.8.13
+        version: 3.46.3
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: '@fern-fern/ir-v50-sdk'
+          package-name: "@fern-fern/ir-v50-sdk"
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+          noSerdeLayer: false
         smart-casing: false
   java:
     generators:
