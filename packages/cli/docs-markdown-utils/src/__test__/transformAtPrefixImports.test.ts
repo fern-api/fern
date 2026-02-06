@@ -96,14 +96,14 @@ import styles from '@/styles/page.module.css'`;
         });
 
         expect(result).toBe(`import { Banner } from '../components/Banner'
-import { Card } from '../components/Card.js'
-import styles from '../styles/page.module.css.js'`);
+import { Card } from '../components/Card'
+import styles from '../styles/page.module.css'`);
     });
 
     it("should not transform imports without @/ prefix", () => {
         const markdown = `import { Banner } from './components/Banner'
 import React from 'react'
-import { something } from '../utils.js'`;
+import { something } from '../utils'`;
         const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
 
         const result = transformAtPrefixImports({
@@ -142,7 +142,7 @@ import { Card } from '@/components/Card'`;
 
         expect(result).toBe(`import { Banner } from '../components/Banner'
 import React from 'react'
-import { Card } from '../components/Card.js'`);
+import { Card } from '../components/Card'`);
     });
 
     it("should handle imports with file extensions", () => {
@@ -189,7 +189,7 @@ Some content here.
 
         expect(result).toBe(`# My Page
 
-import { Banner } from '../components/Banner.js'
+import { Banner } from '../components/Banner'
 
 Some content here.
 
