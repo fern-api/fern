@@ -59,7 +59,8 @@
                     "literal": {
                         "type": "string",
                         "string": "02-02-2024"
-                    }
+                    },
+                    "validation": null
                 }
             },
             "env": null,
@@ -100,7 +101,8 @@
                     "literal": {
                         "type": "boolean",
                         "boolean": true
-                    }
+                    },
+                    "validation": null
                 }
             },
             "env": null,
@@ -262,7 +264,8 @@
                                 "literal": {
                                     "type": "boolean",
                                     "boolean": true
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -366,7 +369,8 @@
                         "literal": {
                             "type": "string",
                             "string": "You're super wise"
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -376,7 +380,8 @@
                         "literal": {
                             "type": "string",
                             "string": "You're super wise"
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -684,7 +689,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "How super cool"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -923,7 +929,8 @@
                                     "literal": {
                                         "type": "string",
                                         "string": "Bob"
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -1047,7 +1054,8 @@
                                     "literal": {
                                         "type": "boolean",
                                         "boolean": true
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -1162,7 +1170,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "$ending"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1175,7 +1184,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1188,7 +1198,8 @@
                                 "literal": {
                                     "type": "boolean",
                                     "boolean": true
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1201,7 +1212,8 @@
                                 "literal": {
                                     "type": "boolean",
                                     "boolean": false
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1310,7 +1322,8 @@
                         "literal": {
                             "type": "string",
                             "string": "You are a helpful assistant"
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -1320,7 +1333,8 @@
                         "literal": {
                             "type": "string",
                             "string": "You are a helpful assistant"
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -1413,7 +1427,8 @@
                         "literal": {
                             "type": "boolean",
                             "boolean": false
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -1423,7 +1438,8 @@
                         "literal": {
                             "type": "boolean",
                             "boolean": false
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -1541,7 +1557,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "You are a helpful assistant"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1624,7 +1641,8 @@
                                 "literal": {
                                     "type": "boolean",
                                     "boolean": false
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1665,7 +1683,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "$ending"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1871,7 +1890,8 @@
                                     "typeId": "type_reference:SomeLiteral",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2169,7 +2189,8 @@
                                     "typeId": "type_reference:NestedObjectWithLiterals",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2300,7 +2321,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "literal1"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2341,7 +2363,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "literal2"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2487,7 +2510,8 @@
                         "literal": {
                             "type": "string",
                             "string": "You're super wise"
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -2497,7 +2521,8 @@
                         "literal": {
                             "type": "string",
                             "string": "You're super wise"
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -2649,7 +2674,8 @@
                                     "literal": {
                                         "type": "string",
                                         "string": "02-12-2024"
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "env": null,
@@ -2690,7 +2716,8 @@
                                     "literal": {
                                         "type": "boolean",
                                         "boolean": true
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "env": null,
@@ -3823,7 +3850,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "You are a helpful assistant"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -3868,9 +3896,11 @@
                                                 "literal": {
                                                     "type": "string",
                                                     "string": "You're super wise"
-                                                }
+                                                },
+                                                "validation": null
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -3960,7 +3990,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4001,7 +4032,8 @@
                                         "literal": {
                                             "type": "boolean",
                                             "boolean": false
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4207,7 +4239,8 @@
                                             "typeId": "type_inlined:SomeAliasedLiteral",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4597,7 +4630,8 @@
                                                                 "literal": {
                                                                     "type": "string",
                                                                     "string": "You're super wise"
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         }
                                                     }
@@ -5642,7 +5676,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a01a0180",
+                                "id": "bcf2063",
                                 "url": "/inlined",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -5731,7 +5765,8 @@
                                                                 "literal": {
                                                                     "type": "string",
                                                                     "string": "You're super wise"
-                                                                }
+                                                                },
+                                                                "validation": null
                                                             }
                                                         }
                                                     }
@@ -6873,7 +6908,8 @@
                                     "literal": {
                                         "type": "string",
                                         "string": "123"
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "location": "ENDPOINT",
@@ -6914,7 +6950,8 @@
                                     "literal": {
                                         "type": "string",
                                         "string": "123"
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "location": "ENDPOINT",
@@ -7721,7 +7758,8 @@
                                     "literal": {
                                         "type": "string",
                                         "string": "You are a helpful assistant"
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -7767,9 +7805,11 @@
                                             "literal": {
                                                 "type": "string",
                                                 "string": "You are a helpful assistant"
-                                            }
+                                            },
+                                            "validation": null
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -7977,7 +8017,8 @@
                                         "typeId": "type_query:AliasToPrompt",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -8062,7 +8103,8 @@
                                     "literal": {
                                         "type": "boolean",
                                         "boolean": false
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -8108,9 +8150,11 @@
                                             "literal": {
                                                 "type": "boolean",
                                                 "boolean": false
-                                            }
+                                            },
+                                            "validation": null
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -8318,7 +8362,8 @@
                                         "typeId": "type_query:AliasToStream",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -8549,7 +8594,8 @@
                                                             "literal": {
                                                                 "type": "string",
                                                                 "string": "You are a helpful assistant"
-                                                            }
+                                                            },
+                                                            "validation": null
                                                         }
                                                     }
                                                 }
@@ -8960,7 +9006,8 @@
                                                             "literal": {
                                                                 "type": "boolean",
                                                                 "boolean": false
-                                                            }
+                                                            },
+                                                            "validation": null
                                                         }
                                                     }
                                                 }

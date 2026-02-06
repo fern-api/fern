@@ -527,7 +527,8 @@
                                     "typeId": "type_service:DocumentItem",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -708,7 +709,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,

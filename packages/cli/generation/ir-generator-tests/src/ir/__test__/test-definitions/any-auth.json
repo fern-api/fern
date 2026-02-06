@@ -234,7 +234,8 @@
                                                 "literal": {
                                                     "type": "string",
                                                     "string": "https://api.example.com"
-                                                }
+                                                },
+                                                "validation": null
                                             }
                                         },
                                         "propertyAccess": null,
@@ -279,7 +280,8 @@
                                                 "literal": {
                                                     "type": "string",
                                                     "string": "client_credentials"
-                                                }
+                                                },
+                                                "validation": null
                                             }
                                         },
                                         "propertyAccess": null,
@@ -746,7 +748,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1188,7 +1191,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "https://api.example.com"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1229,7 +1233,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "client_credentials"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2208,7 +2213,8 @@
                                             "typeId": "type_user:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,
@@ -3046,7 +3052,8 @@
                                             "typeId": "type_user:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,

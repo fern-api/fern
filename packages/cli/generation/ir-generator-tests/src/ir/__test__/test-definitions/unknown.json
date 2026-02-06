@@ -542,7 +542,8 @@
                                         "_type": "list",
                                         "list": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,
@@ -872,7 +873,8 @@
                                         "_type": "list",
                                         "list": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,

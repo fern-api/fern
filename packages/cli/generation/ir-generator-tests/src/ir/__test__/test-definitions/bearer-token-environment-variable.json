@@ -85,7 +85,8 @@
                     "literal": {
                         "type": "string",
                         "string": "1.0.0"
-                    }
+                    },
+                    "validation": null
                 }
             },
             "env": null,

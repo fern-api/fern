@@ -239,7 +239,8 @@
                                     "typeId": "type_:MyUnion",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -488,7 +489,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "A"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -621,7 +623,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "B"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -754,7 +757,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "C"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1488,7 +1492,8 @@
                                                 "typeId": "type_:MyUnion",
                                                 "default": null,
                                                 "inline": null
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "propertyAccess": null,

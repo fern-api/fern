@@ -198,7 +198,8 @@
                                     "typeId": "type_union:MetadataUnion",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -396,7 +397,8 @@
                                     "typeId": "type_union:MyUnion",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -525,7 +527,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -559,7 +562,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -583,9 +587,11 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -605,7 +611,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -723,7 +730,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -743,7 +751,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -862,7 +871,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -882,7 +892,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1075,7 +1086,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1269,7 +1281,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1303,7 +1316,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1708,7 +1722,8 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1826,9 +1841,11 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "validation": null
                             }
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -1852,9 +1869,11 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "validation": null
                             }
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -2023,7 +2042,8 @@
                                     "validation": null
                                 }
                             }
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -2109,7 +2129,8 @@
                                     "validation": null
                                 }
                             }
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -2866,7 +2887,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "default"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -3906,7 +3928,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "type"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -3919,7 +3942,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "value"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -6655,7 +6679,8 @@
                                                                             },
                                                                             "valueType": {
                                                                                 "_type": "unknown"
-                                                                            }
+                                                                            },
+                                                                            "validation": null
                                                                         }
                                                                     }
                                                                 }
@@ -6706,7 +6731,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "54217059",
+                                "id": "7b4ac72e",
                                 "url": "/metadata",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -6750,7 +6775,8 @@
                                                                             },
                                                                             "valueType": {
                                                                                 "_type": "unknown"
-                                                                            }
+                                                                            },
+                                                                            "validation": null
                                                                         }
                                                                     }
                                                                 }
@@ -7499,7 +7525,8 @@
                                                                                                             },
                                                                                                             "valueType": {
                                                                                                                 "_type": "unknown"
-                                                                                                            }
+                                                                                                            },
+                                                                                                            "validation": null
                                                                                                         }
                                                                                                     }
                                                                                                 }

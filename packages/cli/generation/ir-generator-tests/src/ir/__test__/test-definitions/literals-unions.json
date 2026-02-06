@@ -108,7 +108,8 @@
                         "literal": {
                             "type": "string",
                             "string": "literally"
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -118,7 +119,8 @@
                         "literal": {
                             "type": "string",
                             "string": "literally"
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },

@@ -238,7 +238,8 @@
                                         "v1": "DATE_TIME",
                                         "v2": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -12303,7 +12304,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "base"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -12370,7 +12372,8 @@
                                     "literal": {
                                         "type": "string",
                                         "string": "fern"
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -14090,7 +14093,8 @@
                                             "v1": "DATE",
                                             "v2": null
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -14155,7 +14159,8 @@
                                             "v1": "DATE_TIME",
                                             "v2": null
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -22256,7 +22261,8 @@
                                     "typeId": "type_bigunion:BigUnion",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null,
@@ -22341,7 +22347,8 @@
                                             "typeId": "type_bigunion:BigUnion",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,
@@ -22399,7 +22406,8 @@
                                                     "default": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,

@@ -189,7 +189,8 @@
                             "typeId": "type_:StringResponse",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -226,7 +227,8 @@
                             "typeId": "type_:StringResponse",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -326,7 +328,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -625,7 +628,8 @@
                             "typeId": "type_service:WithDocs",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -700,7 +704,8 @@
                             "typeId": "type_service:WithDocs",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -1208,7 +1213,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -3956,7 +3962,8 @@
                                                         "validation": null
                                                     }
                                                 }
-                                            }
+                                            },
+                                            "validation": null
                                         }
                                     },
                                     "propertyAccess": null,
@@ -4922,7 +4929,8 @@
                                             "typeId": "type_service:Response",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "responseProperty": {

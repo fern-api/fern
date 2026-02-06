@@ -242,7 +242,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -290,7 +291,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -459,7 +461,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -1038,7 +1041,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "propertyAccess": null,

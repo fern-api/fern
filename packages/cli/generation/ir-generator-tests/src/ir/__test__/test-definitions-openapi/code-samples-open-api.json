@@ -124,7 +124,8 @@
                                         "v1": "FLOAT",
                                         "v2": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -172,7 +173,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -240,7 +242,8 @@
                                     "typeId": "type_:TelemetryData",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -336,7 +339,8 @@
                                         "v1": "FLOAT",
                                         "v2": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -380,7 +384,8 @@
                                         "v1": "FLOAT",
                                         "v2": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -424,7 +429,8 @@
                                         "v1": "FLOAT",
                                         "v2": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -554,7 +560,8 @@
                                                 "default": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,

@@ -326,7 +326,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "https://api.example.com"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -367,7 +368,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "client_credentials"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -415,7 +417,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -670,7 +673,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "https://api.example.com"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -711,7 +715,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "refresh_token"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -759,7 +764,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -979,7 +985,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,

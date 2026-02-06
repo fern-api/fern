@@ -369,7 +369,8 @@
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -3357,7 +3358,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -3515,7 +3517,8 @@
                                             "typeId": "type_user:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,
@@ -4687,7 +4690,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -4884,7 +4888,8 @@
                                             "typeId": "type_user/events:Event",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,

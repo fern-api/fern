@@ -287,7 +287,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -680,7 +681,8 @@
                             "typeId": "type_service:MyObject",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -755,7 +757,8 @@
                             "typeId": "type_service:MyObject",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -1248,7 +1251,8 @@
                         "literal": {
                             "type": "string",
                             "string": "model_v1"
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -1258,7 +1262,8 @@
                         "literal": {
                             "type": "string",
                             "string": "model_v1"
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -1605,7 +1610,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1825,7 +1831,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1880,9 +1887,11 @@
                                                             "validation": null
                                                         }
                                                     }
-                                                }
+                                                },
+                                                "validation": null
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1991,7 +2000,8 @@
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2034,7 +2044,8 @@
                                         "_type": "optional",
                                         "optional": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2143,7 +2154,8 @@
                                             "typeId": "type_service:ObjectType",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2252,7 +2264,8 @@
                                             "typeId": "type_service:Id",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2464,7 +2477,8 @@
                                             "typeId": "type_service:MyAliasObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2963,7 +2977,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -3055,7 +3070,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -3147,7 +3163,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": true,
@@ -3383,7 +3400,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -3432,7 +3450,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -3930,7 +3949,8 @@
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4470,7 +4490,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4690,7 +4711,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4745,9 +4767,11 @@
                                                             "validation": null
                                                         }
                                                     }
-                                                }
+                                                },
+                                                "validation": null
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4856,7 +4880,8 @@
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4899,7 +4924,8 @@
                                         "_type": "optional",
                                         "optional": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -5008,7 +5034,8 @@
                                             "typeId": "type_service:ObjectType",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -5117,7 +5144,8 @@
                                             "typeId": "type_service:Id",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -5226,7 +5254,8 @@
                                             "typeId": "type_service:MyObjectWithOptional",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -5438,7 +5467,8 @@
                                             "typeId": "type_service:MyAliasObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -5770,7 +5800,8 @@
                                         "_type": "optional",
                                         "optional": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -6518,7 +6549,8 @@
                                             "typeId": "type_service:ModelType",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -6627,7 +6659,8 @@
                                             "typeId": "type_service:OpenEnumType",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -6678,7 +6711,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {

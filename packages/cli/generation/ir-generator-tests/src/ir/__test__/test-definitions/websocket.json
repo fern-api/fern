@@ -1443,7 +1443,8 @@
                                         "validation": null
                                     }
                                 }
-                            }
+                            },
+                            "validation": null
                         }
                     },
                     "allowMultiple": false,
@@ -1492,7 +1493,8 @@
                                         "validation": null
                                     }
                                 }
-                            }
+                            },
+                            "validation": null
                         }
                     },
                     "allowMultiple": false,
@@ -1541,7 +1543,8 @@
                                         "validation": null
                                     }
                                 }
-                            }
+                            },
+                            "validation": null
                         }
                     },
                     "allowMultiple": false,

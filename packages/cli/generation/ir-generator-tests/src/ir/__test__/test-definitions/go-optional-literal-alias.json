@@ -70,7 +70,8 @@
                         "literal": {
                             "type": "string",
                             "string": "DEFAULT"
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -80,7 +81,8 @@
                         "literal": {
                             "type": "string",
                             "string": "DEFAULT"
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -187,7 +189,8 @@
                                     "typeId": "type_:SortField",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,

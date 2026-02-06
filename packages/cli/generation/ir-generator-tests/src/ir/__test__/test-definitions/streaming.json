@@ -182,7 +182,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -368,7 +369,8 @@
                                         "literal": {
                                             "type": "boolean",
                                             "boolean": true
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1099,7 +1101,8 @@
                                         "literal": {
                                             "type": "boolean",
                                             "boolean": false
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {

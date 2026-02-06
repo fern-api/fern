@@ -142,7 +142,8 @@
                     "literal": {
                         "type": "string",
                         "string": "01-01-2000"
-                    }
+                    },
+                    "validation": null
                 }
             },
             "env": "VERSION",

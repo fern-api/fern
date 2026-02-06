@@ -2148,7 +2148,8 @@
                                         "typeId": "type_:Operand",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "env": null,
@@ -2278,7 +2279,8 @@
                                         "typeId": "type_:ColorOrOperand",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "env": null,
@@ -2854,7 +2856,8 @@
                                             "typeId": "type_:Operand",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -2984,7 +2987,8 @@
                                             "typeId": "type_:ColorOrOperand",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -3948,7 +3952,8 @@
                                             "typeId": "type_:Color",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4019,7 +4024,8 @@
                                             "typeId": "type_:Color",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4094,9 +4100,11 @@
                                                     "typeId": "type_:Color",
                                                     "default": null,
                                                     "inline": null
-                                                }
+                                                },
+                                                "validation": null
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -5260,7 +5268,8 @@
                                         "typeId": "type_:Operand",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -5392,7 +5401,8 @@
                                         "typeId": "type_:ColorOrOperand",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -6123,7 +6133,8 @@
                                         "typeId": "type_:Operand",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": true,
@@ -6255,7 +6266,8 @@
                                         "typeId": "type_:ColorOrOperand",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": true,

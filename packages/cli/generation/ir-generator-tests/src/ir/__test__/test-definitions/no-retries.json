@@ -389,7 +389,8 @@
                                             "typeId": "type_retries:User",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,

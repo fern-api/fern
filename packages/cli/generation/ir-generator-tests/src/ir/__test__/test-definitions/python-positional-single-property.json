@@ -229,7 +229,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "ISIN"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -362,7 +363,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "QUANTITY"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -636,7 +638,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -769,7 +772,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "TYPE_A"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -810,7 +814,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "v1"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,

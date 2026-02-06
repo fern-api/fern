@@ -95,7 +95,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "failure"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -611,7 +612,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "CreateUserRequest"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -652,7 +654,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "v1"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {

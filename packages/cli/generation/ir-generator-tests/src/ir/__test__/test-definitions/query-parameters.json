@@ -182,7 +182,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -941,7 +942,8 @@
                                         "typeId": "type_user:User",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -986,7 +988,8 @@
                                             "v1": "DATE_TIME",
                                             "v2": null
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -1046,7 +1049,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -1095,7 +1099,8 @@
                                                 "validation": null
                                             }
                                         }
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,
@@ -1303,7 +1308,8 @@
                                         "typeId": "type_user:User",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             },
                             "allowMultiple": false,

@@ -108,7 +108,8 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -156,7 +157,8 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -240,7 +242,8 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -277,7 +280,8 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -361,7 +365,8 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -398,7 +403,8 @@
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -848,7 +854,8 @@
                                     "typeId": "type_:RootType1FooMapValue",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -916,7 +923,8 @@
                                     "typeId": "type_:RootType1FooListItem",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -984,7 +992,8 @@
                                     "typeId": "type_:RootType1FooSetItem",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -3043,7 +3052,8 @@
                                     "typeId": "type_:UndiscriminatedUnion1InlineListItem1",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": "lorem ipsum"
@@ -3083,7 +3093,8 @@
                                     "typeId": "type_:UndiscriminatedUnion1InlineSetItem1",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": "lorem ipsum"
@@ -3134,7 +3145,8 @@
                                     "typeId": "type_:UndiscriminatedUnion1InlineMapItem1",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": "lorem ipsum"

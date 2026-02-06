@@ -160,7 +160,8 @@
                                     "typeId": "type_a:A",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1724,7 +1725,8 @@
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -1851,7 +1853,8 @@
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -2247,7 +2250,8 @@
                                     "typeId": "type_ast:JsonLike",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2336,7 +2340,8 @@
                                     "typeId": "type_ast:JsonLike",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2550,11 +2555,14 @@
                                                     "typeId": "type_ast:JsonLikeWithNullAndUndefined",
                                                     "default": null,
                                                     "inline": null
-                                                }
+                                                },
+                                                "validation": null
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2651,11 +2659,14 @@
                                                     "typeId": "type_ast:JsonLikeWithNullAndUndefined",
                                                     "default": null,
                                                     "inline": null
-                                                }
+                                                },
+                                                "validation": null
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2679,9 +2690,11 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2705,9 +2718,11 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2730,9 +2745,11 @@
                                                     "default": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null

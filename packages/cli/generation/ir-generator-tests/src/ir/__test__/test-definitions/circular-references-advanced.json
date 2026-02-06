@@ -160,7 +160,8 @@
                                     "typeId": "type_a:A",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2364,7 +2365,8 @@
                                     "typeId": "type_ast:Node",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2653,9 +2655,11 @@
                                             "typeId": "type_ast:Node",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2900,7 +2904,8 @@
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },
@@ -3027,7 +3032,8 @@
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
-                                    }
+                                    },
+                                    "validation": null
                                 }
                             }
                         },

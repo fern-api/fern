@@ -368,7 +368,8 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": "getFooResponse",
@@ -946,7 +947,8 @@
                                 },
                                 "valueType": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null,
@@ -976,7 +978,8 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": null,
@@ -1027,7 +1030,8 @@
                                         },
                                         "valueType": {
                                             "_type": "unknown"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "docs": "Foo created.",

@@ -228,7 +228,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -276,7 +277,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -374,7 +376,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -442,7 +445,8 @@
                                     "typeId": "type_:PostRootRequestBarInnerBar",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -542,7 +546,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -590,7 +595,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -688,7 +694,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -756,7 +763,8 @@
                                     "typeId": "type_:PostRootResponseBarInnerBar",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -856,7 +864,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -924,7 +933,8 @@
                                     "typeId": "type_:PostRootResponseBar",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1002,7 +1012,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1041,7 +1052,8 @@
                                 "_type": "list",
                                 "list": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -1131,7 +1143,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1179,7 +1192,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1262,9 +1276,11 @@
                                             "typeId": "type_:Schema1InlineUnionMapValue",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1490,7 +1506,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1588,7 +1605,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1804,7 +1822,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1902,7 +1921,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2118,7 +2138,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2166,7 +2187,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2234,7 +2256,8 @@
                                     "typeId": "type_:Schema2TestEnum",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2302,7 +2325,8 @@
                                     "typeId": "type_:Schema2TestDiscriminatedUnion",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2370,7 +2394,8 @@
                                     "typeId": "type_:Schema2TestUnion",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -2453,7 +2478,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2492,7 +2518,8 @@
                                 "_type": "list",
                                 "list": {
                                     "_type": "unknown"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "docs": null
@@ -2588,7 +2615,8 @@
                             "typeId": "type_:RootUnionMapValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -2636,7 +2664,8 @@
                             "typeId": "type_:RootUnionMapValue",
                             "default": null,
                             "inline": null
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -3236,7 +3265,8 @@
                                                                                                 "typeId": "type_:Schema1InlineUnionMapValue",
                                                                                                 "default": null,
                                                                                                 "inline": null
-                                                                                            }
+                                                                                            },
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
@@ -3307,7 +3337,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "3ffb6b4e",
+                                "id": "ebdf116b",
                                 "url": "/example",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -3741,7 +3771,8 @@
                                                                                                 "typeId": "type_:Schema1InlineUnionMapValue",
                                                                                                 "default": null,
                                                                                                 "inline": null
-                                                                                            }
+                                                                                            },
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
@@ -3948,7 +3979,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -4016,7 +4048,8 @@
                                             "typeId": "type_:PostRootRequestBar",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {

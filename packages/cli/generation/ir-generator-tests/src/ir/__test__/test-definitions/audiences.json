@@ -381,7 +381,8 @@
                                     "typeId": "type_folder-b/common:Foo",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -656,7 +657,8 @@
                                     "typeId": "type_folder-c/common:FolderCFoo",
                                     "default": null,
                                     "inline": null
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -1293,7 +1295,8 @@
                                     "validation": null
                                 }
                             }
-                        }
+                        },
+                        "validation": null
                     }
                 },
                 "resolvedType": {
@@ -1310,7 +1313,8 @@
                                     "validation": null
                                 }
                             }
-                        }
+                        },
+                        "validation": null
                     }
                 }
             },
@@ -1435,7 +1439,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -3882,7 +3887,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -3930,7 +3936,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {

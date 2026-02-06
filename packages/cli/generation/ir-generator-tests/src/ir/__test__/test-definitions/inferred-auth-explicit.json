@@ -333,7 +333,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -646,7 +647,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "https://api.example.com"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -687,7 +689,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "client_credentials"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -735,7 +738,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1857,7 +1861,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "https://api.example.com"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1898,7 +1903,8 @@
                                         "literal": {
                                             "type": "string",
                                             "string": "refresh_token"
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {
@@ -1946,7 +1952,8 @@
                                                     "validation": null
                                                 }
                                             }
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {

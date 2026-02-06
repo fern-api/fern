@@ -300,7 +300,8 @@
                                             "validation": null
                                         }
                                     }
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
@@ -467,7 +468,8 @@
                                 "literal": {
                                     "type": "string",
                                     "string": "USA"
-                                }
+                                },
+                                "validation": null
                             }
                         },
                         "propertyAccess": null,
