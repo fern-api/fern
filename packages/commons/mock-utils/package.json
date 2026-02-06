@@ -32,15 +32,11 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@fern-api/base-generator": "workspace:*",
-    "@fern-api/ir-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.7.0",
-    "uuid": "^9.0.0"
+    "@fern-fern/ir-sdk": "^61.7.0"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
-    "@types/uuid": "^9.0.0",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"

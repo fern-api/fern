@@ -7960,18 +7960,9 @@ importers:
 
   packages/commons/mock-utils:
     dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../../generators/base
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../ir-utils
       '@fern-fern/ir-sdk':
         specifier: ^61.7.0
         version: 61.7.0
-      uuid:
-        specifier: ^9.0.0
-        version: 9.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -7979,9 +7970,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/uuid':
-        specifier: ^9.0.0
-        version: 9.0.8
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
