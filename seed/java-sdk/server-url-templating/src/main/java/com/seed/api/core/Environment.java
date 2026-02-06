@@ -5,7 +5,7 @@ package com.seed.api.core;
 
 public final class Environment {
     public static final Environment REGIONAL_API_SERVER =
-            new Environment("https://api.us-east-1.prod.example.com/v1", "https://auth.us-east-1.example.com");
+            new Environment("https://api.example.com/v1", "https://auth.example.com");
 
     private final String base;
 
