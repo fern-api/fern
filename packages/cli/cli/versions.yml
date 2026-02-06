@@ -2,7 +2,7 @@
 - version: 3.65.1
   changelogEntry:
     - summary: |
-        Fix `fern check --strict-broken-links` was not validating markdown files referenced by sections with paths.
+        fix `fern check --strict-broken-links` was not validating markdown files referenced by sections with paths.
       type: feat
   createdAt: "2026-02-06"
   irVersion: 63
