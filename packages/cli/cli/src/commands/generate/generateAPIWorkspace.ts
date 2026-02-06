@@ -66,37 +66,20 @@ export async function generateWorkspace({
         return;
     }
 
-    // When --generator is specified without --group, find which groups contain the generator
-    let resolvedGroupNames: string[];
-    if (generatorName != null && groupName == null) {
-        const allGroups = workspace.generatorsConfiguration.groups;
-        const matchingGroups = allGroups.filter((group) => group.generators.some((gen) => gen.name === generatorName));
-        if (matchingGroups.length === 0) {
-            const allGeneratorNames = [
-                ...new Set(allGroups.flatMap((group) => group.generators.map((gen) => gen.name)))
-            ];
-            return context.failAndThrow(
-                `Generator '${generatorName}' not found in any group. ` +
-                    `Available generators: ${allGeneratorNames.join(", ")}`
-            );
-        }
-        resolvedGroupNames = matchingGroups.map((group) => group.groupName);
-    } else {
-        const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
-        if (groupNameOrDefault == null) {
-            return context.failAndThrow(
-                `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
-            );
-        }
-
-        // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
-        resolvedGroupNames = resolveGroupAlias(
-            groupNameOrDefault,
-            workspace.generatorsConfiguration.groupAliases,
-            workspace.generatorsConfiguration.groups.map((g) => g.groupName),
-            context
+    const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
+    if (groupNameOrDefault == null) {
+        return context.failAndThrow(
+            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
         );
     }
+
+    // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
+    const resolvedGroupNames = resolveGroupAlias(
+        groupNameOrDefault,
+        workspace.generatorsConfiguration.groupAliases,
+        workspace.generatorsConfiguration.groups.map((g) => g.groupName),
+        context
+    );
 
     const { ai } = workspace.generatorsConfiguration;
 
