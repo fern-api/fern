@@ -152,6 +152,105 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotDeprecatedSettings"
       x-fern-availability: "beta"
+  /alpha-endpoint:
+    get:
+      x-fern-availability: "alpha"
+      operationId: getAlpha
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /preview-endpoint:
+    get:
+      x-fern-availability: "preview"
+      operationId: getPreview
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /stable-endpoint:
+    get:
+      x-fern-availability: "stable"
+      operationId: getStable
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /legacy-endpoint:
+    get:
+      x-fern-availability: "legacy"
+      operationId: getLegacy
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /in-development-endpoint:
+    get:
+      x-fern-availability: "in-development"
+      operationId: getInDevelopment
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /pre-release-endpoint:
+    get:
+      x-fern-availability: "pre-release"
+      operationId: getPreRelease
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /generally-available-endpoint:
+    get:
+      x-fern-availability: "generally-available"
+      operationId: getGenerallyAvailable
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /deprecated-endpoint:
+    get:
+      x-fern-availability: "deprecated"
+      operationId: getDeprecated
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
+  /beta-endpoint:
+    get:
+      x-fern-availability: "beta"
+      operationId: getBeta
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotDeprecatedSettings"
 components:
   schemas:
     DeprecatedParam:

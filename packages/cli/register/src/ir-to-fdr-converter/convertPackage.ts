@@ -458,7 +458,7 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
     }
     switch (availability.status) {
         case "ALPHA":
-            return FdrCjsSdk.Availability.InDevelopment;
+            return FdrCjsSdk.Availability.Alpha;
         case "IN_DEVELOPMENT":
             return FdrCjsSdk.Availability.InDevelopment;
         case "PRE_RELEASE":
@@ -466,7 +466,7 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
         case "BETA":
             return FdrCjsSdk.Availability.Beta;
         case "PREVIEW":
-            return FdrCjsSdk.Availability.Beta;
+            return FdrCjsSdk.Availability.Preview;
         case "GENERAL_AVAILABILITY":
             return FdrCjsSdk.Availability.GenerallyAvailable;
         case "STABLE":
@@ -474,7 +474,7 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
         case "DEPRECATED":
             return FdrCjsSdk.Availability.Deprecated;
         case "LEGACY":
-            return FdrCjsSdk.Availability.Deprecated;
+            return FdrCjsSdk.Availability.Legacy;
         default:
             assertNever(availability.status);
     }
