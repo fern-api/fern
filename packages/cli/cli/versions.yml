@@ -9,6 +9,19 @@
   createdAt: "2026-02-06"
   irVersion: 63
 
+- version: 3.68.1
+  changelogEntry:
+    - summary: |
+        Fix grouped multi-API environment server handling to preserve `defaultUrl`, `urlTemplate`,
+        and `variables` metadata when merging multiple OpenAPI specs with
+        `group-multi-api-environments: true`. Previously, server URL templating metadata was silently
+        dropped during the merge, causing generated SDKs to use malformed template-substituted URLs
+        as defaults. Also fixes API name extraction for grouped base URL keys to use the clean
+        `x-fern-default-url` value instead of the variable-substituted URL.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.68.0
   changelogEntry:
     - summary: |
@@ -19,7 +32,6 @@
       type: feat
   createdAt: "2026-02-06"
   irVersion: 63
-
 - version: 3.67.1
   changelogEntry:
     - summary: |
@@ -31,7 +43,6 @@
       type: fix
   createdAt: "2026-02-06"
   irVersion: 63
-
 - version: 3.67.0
   changelogEntry:
     - summary: |

@@ -153,9 +153,18 @@ function getParseAsyncOptions({
     };
 }
 
+interface ServerVariableConfig {
+    id: string;
+    default?: string;
+    values?: string[];
+}
+
 interface ApiServerConfig {
     url: string;
     audiences: string[] | undefined;
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariableConfig[];
 }
 
 /**
@@ -168,6 +177,9 @@ interface SingleServerInput {
     name: string | undefined;
     audiences: string[] | undefined;
     "x-fern-server-name"?: string;
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariableConfig[];
 }
 
 /**
@@ -331,6 +343,10 @@ function detectMultipleBaseUrls(servers1: AnyServerInput[], servers2: AnyServerI
     return allMatch && allDifferent;
 }
 
+function getPreferredUrlForNameExtraction(server: SingleServerInput): string {
+    return server.defaultUrl ?? server.url;
+}
+
 function extractApiNameFromServers(servers: AnyServerInput[]): string {
     if (servers.length === 0 || !servers[0]) {
         return "api";
@@ -343,7 +359,7 @@ function extractApiNameFromServers(servers: AnyServerInput[]): string {
         return firstUrlName ?? "api";
     }
 
-    return extractApiNameFromUrl(firstServer.url);
+    return extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer));
 }
 
 function hasGroupedServers(servers: AnyServerInput[]): boolean {
@@ -436,7 +452,7 @@ function merge(
                 }
             } else {
                 // Handle single server (first merge case)
-                const api1Name = extractApiNameFromUrl(server.url);
+                const api1Name = extractApiNameFromUrl(getPreferredUrlForNameExtraction(server));
                 const envName = getEnvironmentName(server);
                 if (!environmentMap.has(envName)) {
                     environmentMap.set(envName, {});
@@ -445,7 +461,10 @@ function merge(
                 if (envUrls) {
                     envUrls[api1Name] = {
                         url: server.url,
-                        audiences: server.audiences
+                        audiences: server.audiences,
+                        defaultUrl: server.defaultUrl,
+                        urlTemplate: server.urlTemplate,
+                        variables: server.variables
                     };
                 }
             }
@@ -461,7 +480,10 @@ function merge(
             if (envUrls) {
                 envUrls[api2Name] = {
                     url: server.url,
-                    audiences: server.audiences
+                    audiences: server.audiences,
+                    defaultUrl: server.defaultUrl,
+                    urlTemplate: server.urlTemplate,
+                    variables: server.variables
                 };
             }
         }
@@ -492,7 +514,9 @@ function merge(
             // First merge - derive API name from the first server
             const firstServer = ir1.servers[0] as AnyServerInput | undefined;
             const api1Name =
-                firstServer != null && firstServer.type !== "grouped" ? extractApiNameFromUrl(firstServer.url) : "api";
+                firstServer != null && firstServer.type !== "grouped"
+                    ? extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer))
+                    : "api";
             return {
                 ...endpoint,
                 type: "multi-api" as const,
