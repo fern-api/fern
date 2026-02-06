@@ -5,4 +5,5 @@ import type * as FernIr from "../../../index.js";
 export interface MapType {
     keyType: FernIr.TypeReference;
     valueType: FernIr.TypeReference;
+    validation: FernIr.MapValidationRules | undefined;
 }

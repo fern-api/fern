@@ -3,27 +3,41 @@
 import * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
+import { ContainerTypeValidation } from "./ContainerTypeValidation.js";
 import { Literal } from "./Literal.js";
 
+const _Base = core.serialization.object({
+    validation: ContainerTypeValidation.optional(),
+});
 export const ContainerType: core.serialization.Schema<serializers.ContainerType.Raw, FernIr.ContainerType> =
     core.serialization
         .union(core.serialization.discriminant("type", "_type"), {
-            list: core.serialization.object({
-                list: core.serialization.lazy(() => serializers.TypeReference),
-            }),
-            map: core.serialization.lazyObject(() => serializers.MapType),
-            nullable: core.serialization.object({
-                nullable: core.serialization.lazy(() => serializers.TypeReference),
-            }),
-            optional: core.serialization.object({
-                optional: core.serialization.lazy(() => serializers.TypeReference),
-            }),
-            set: core.serialization.object({
-                set: core.serialization.lazy(() => serializers.TypeReference),
-            }),
-            literal: core.serialization.object({
-                literal: Literal,
-            }),
+            list: core.serialization
+                .object({
+                    list: core.serialization.lazy(() => serializers.TypeReference),
+                })
+                .extend(_Base),
+            map: core.serialization.lazyObject(() => serializers.MapType).extend(_Base),
+            nullable: core.serialization
+                .object({
+                    nullable: core.serialization.lazy(() => serializers.TypeReference),
+                })
+                .extend(_Base),
+            optional: core.serialization
+                .object({
+                    optional: core.serialization.lazy(() => serializers.TypeReference),
+                })
+                .extend(_Base),
+            set: core.serialization
+                .object({
+                    set: core.serialization.lazy(() => serializers.TypeReference),
+                })
+                .extend(_Base),
+            literal: core.serialization
+                .object({
+                    literal: Literal,
+                })
+                .extend(_Base),
         })
         .transform<FernIr.ContainerType>({
             transform: (value) => {
@@ -56,32 +70,36 @@ export declare namespace ContainerType {
         | ContainerType.Set
         | ContainerType.Literal;
 
-    export interface List {
+    export interface List extends _Base {
         _type: "list";
         list: serializers.TypeReference.Raw;
     }
 
-    export interface Map extends serializers.MapType.Raw {
+    export interface Map extends _Base, serializers.MapType.Raw {
         _type: "map";
     }
 
-    export interface Nullable {
+    export interface Nullable extends _Base {
         _type: "nullable";
         nullable: serializers.TypeReference.Raw;
     }
 
-    export interface Optional {
+    export interface Optional extends _Base {
         _type: "optional";
         optional: serializers.TypeReference.Raw;
     }
 
-    export interface Set {
+    export interface Set extends _Base {
         _type: "set";
         set: serializers.TypeReference.Raw;
     }
 
-    export interface Literal {
+    export interface Literal extends _Base {
         _type: "literal";
         literal: Literal.Raw;
+    }
+
+    export interface _Base {
+        validation?: ContainerTypeValidation.Raw | null;
     }
 }

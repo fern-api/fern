@@ -43,7 +43,8 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
-                    valueType: TypeReference.unknown()
+                    valueType: TypeReference.unknown(),
+                    validation: undefined
                 })
             );
             return {
@@ -74,7 +75,8 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
-                    valueType: convertedAdditionalProperties.type
+                    valueType: convertedAdditionalProperties.type,
+                    validation: undefined
                 })
             );
             const referencedTypes = new Set<string>();

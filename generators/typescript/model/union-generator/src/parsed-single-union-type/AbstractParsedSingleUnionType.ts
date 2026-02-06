@@ -79,6 +79,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                             this.includeUtilsOnUnionMembers
                                 ? [
                                       ...this.getNonVisitProperties({ context, generatedUnion }),
+                                      ...generatedUnion.getBasePropertyAssignmentsForBuilder(),
                                       ts.factory.createPropertyAssignment(
                                           ts.factory.createStringLiteral(GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME),
                                           ts.factory.createFunctionExpression(
@@ -133,7 +134,10 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                                           )
                                       )
                                   ]
-                                : this.getNonVisitProperties({ context, generatedUnion }),
+                                : [
+                                      ...this.getNonVisitProperties({ context, generatedUnion }),
+                                      ...generatedUnion.getBasePropertyAssignmentsForBuilder()
+                                  ],
                             true
                         )
                     )

@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.67.2
+  changelogEntry:
+    - summary: |
+        Add validation fields to ContainerType and MapType in the IR. ContainerType now has an optional
+        ContainerTypeValidation base property supporting list (minItems, maxItems, uniqueItems), map
+        (minItems, maxItems), and set (minItems, maxItems) validation rules. MapType also includes an
+        optional MapValidationRules field. All validation fields default to undefined and flow through
+        OpenAPI converters, IR generators, and FDR converters.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.67.1
   changelogEntry:
     - summary: |

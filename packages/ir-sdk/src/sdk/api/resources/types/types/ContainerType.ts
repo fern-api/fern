@@ -11,31 +11,31 @@ export type ContainerType =
     | FernIr.ContainerType.Literal;
 
 export namespace ContainerType {
-    export interface List extends _Utils {
+    export interface List extends _Base, _Utils {
         type: "list";
         list: FernIr.TypeReference;
     }
 
-    export interface Map extends FernIr.MapType, _Utils {
+    export interface Map extends FernIr.MapType, _Base, _Utils {
         type: "map";
     }
 
-    export interface Nullable extends _Utils {
+    export interface Nullable extends _Base, _Utils {
         type: "nullable";
         nullable: FernIr.TypeReference;
     }
 
-    export interface Optional extends _Utils {
+    export interface Optional extends _Base, _Utils {
         type: "optional";
         optional: FernIr.TypeReference;
     }
 
-    export interface Set extends _Utils {
+    export interface Set extends _Base, _Utils {
         type: "set";
         set: FernIr.TypeReference;
     }
 
-    export interface Literal extends _Utils {
+    export interface Literal extends _Base, _Utils {
         type: "literal";
         literal: FernIr.Literal;
     }
@@ -53,6 +53,10 @@ export namespace ContainerType {
         literal: (value: FernIr.Literal) => _Result;
         _other: (value: { type: string }) => _Result;
     }
+
+    export interface _Base {
+        validation: FernIr.ContainerTypeValidation | undefined;
+    }
 }
 
 export const ContainerType = {
@@ -60,6 +64,7 @@ export const ContainerType = {
         return {
             list: value,
             type: "list",
+            validation: undefined,
             _visit: function <_Result>(
                 this: FernIr.ContainerType.List,
                 visitor: FernIr.ContainerType._Visitor<_Result>,
@@ -73,6 +78,7 @@ export const ContainerType = {
         return {
             ...value,
             type: "map",
+            validation: undefined,
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Map,
                 visitor: FernIr.ContainerType._Visitor<_Result>,
@@ -86,6 +92,7 @@ export const ContainerType = {
         return {
             nullable: value,
             type: "nullable",
+            validation: undefined,
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Nullable,
                 visitor: FernIr.ContainerType._Visitor<_Result>,
@@ -99,6 +106,7 @@ export const ContainerType = {
         return {
             optional: value,
             type: "optional",
+            validation: undefined,
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Optional,
                 visitor: FernIr.ContainerType._Visitor<_Result>,
@@ -112,6 +120,7 @@ export const ContainerType = {
         return {
             set: value,
             type: "set",
+            validation: undefined,
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Set,
                 visitor: FernIr.ContainerType._Visitor<_Result>,
@@ -125,6 +134,7 @@ export const ContainerType = {
         return {
             literal: value,
             type: "literal",
+            validation: undefined,
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Literal,
                 visitor: FernIr.ContainerType._Visitor<_Result>,

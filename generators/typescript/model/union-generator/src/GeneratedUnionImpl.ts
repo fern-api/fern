@@ -711,11 +711,16 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         };
     }
 
-    private addBuilderProperties(context: Context, writer: ObjectWriter) {
-        if (this.hasBaseInterface()) {
-            throw new Error("Cannot create builders because union has base properties");
-        }
+    public getBasePropertyAssignmentsForBuilder(): ts.ObjectLiteralElementLike[] {
+        return this.baseProperties.map((baseProperty) =>
+            ts.factory.createPropertyAssignment(
+                getPropertyKey(this._getBasePropertyKey(baseProperty)),
+                ts.factory.createIdentifier("undefined")
+            )
+        );
+    }
 
+    private addBuilderProperties(context: Context, writer: ObjectWriter) {
         const singleUnionTypes = this.includeOtherInUnionTypes
             ? this.getAllSingleUnionTypesIncludingUnknown()
             : this.parsedSingleUnionTypes;

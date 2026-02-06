@@ -3,16 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
+import { MapValidationRules } from "./MapValidationRules.js";
 
 export const MapType: core.serialization.ObjectSchema<serializers.MapType.Raw, FernIr.MapType> =
     core.serialization.objectWithoutOptionalProperties({
         keyType: core.serialization.lazy(() => serializers.TypeReference),
         valueType: core.serialization.lazy(() => serializers.TypeReference),
+        validation: MapValidationRules.optional(),
     });
 
 export declare namespace MapType {
     export interface Raw {
         keyType: serializers.TypeReference.Raw;
         valueType: serializers.TypeReference.Raw;
+        validation?: MapValidationRules.Raw | null;
     }
 }
