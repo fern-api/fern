@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.67.1
+  changelogEntry:
+    - summary: |
+        Fix `title-source: frontmatter` in folder navigation to correctly pass the setting through
+        to `buildNavigationForDirectory`. Previously, the `title-source` option was ignored when
+        expanding folder configurations, so page titles and sidebar titles always derived from file
+        names. Now, when `title-source: frontmatter` is set, page titles and the folder section title
+        use the frontmatter `title` field.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
 - version: 3.67.0
   changelogEntry:
     - summary: |
