@@ -4926,6 +4926,16 @@
             }
           ]
         },
+        "folder-title-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TitleSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "substitute-env-vars": {
           "oneOf": [
             {
