@@ -1,5 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { ObjectProperty, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export function generateFields({
@@ -7,8 +7,8 @@ export function generateFields({
     properties,
     context
 }: {
-    typeDeclaration?: TypeDeclaration;
-    properties: ObjectProperty[];
+    typeDeclaration?: FernIr.TypeDeclaration;
+    properties: FernIr.ObjectProperty[];
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {

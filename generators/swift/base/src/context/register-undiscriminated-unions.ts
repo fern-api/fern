@@ -1,5 +1,5 @@
 import { BaseSwiftCustomConfigSchema, NameRegistry, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import type { AbstractSwiftGeneratorContext } from "./index.js";
 
 export function registerUndiscriminatedUnionVariants({
@@ -10,7 +10,7 @@ export function registerUndiscriminatedUnionVariants({
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
-    typeDeclaration: TypeDeclaration;
+    typeDeclaration: FernIr.TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
 }) {
     if (typeDeclaration.shape.type === "undiscriminatedUnion") {

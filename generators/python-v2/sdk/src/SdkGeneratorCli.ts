@@ -2,8 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPythonGeneratorCli } from "@fern-api/python-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
@@ -15,7 +14,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

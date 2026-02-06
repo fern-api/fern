@@ -1,7 +1,7 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
@@ -15,7 +15,7 @@ export async function createSampleGeneratorContext(pathToDefinition: string): Pr
         _visit: (visitor) => visitor.local()
     });
     return new ModelGeneratorContext(
-        ir as IntermediateRepresentation,
+        ir as FernIr.IntermediateRepresentation,
         generatorConfig,
         customConfig,
         notificationService

@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
-import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { generateFields } from "./generateFields.js";
@@ -11,13 +11,13 @@ export interface GeneratorContextLike {
 }
 
 export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly objectDeclaration: ObjectTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly objectDeclaration: FernIr.ObjectTypeDeclaration;
 
     public constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        objectDeclaration: ObjectTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        objectDeclaration: FernIr.ObjectTypeDeclaration
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;

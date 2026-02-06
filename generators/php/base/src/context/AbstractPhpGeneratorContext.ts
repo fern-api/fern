@@ -2,19 +2,7 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, getSafeClassName, php, SELF } from "@fern-api/php-codegen";
-import {
-    FernFilepath,
-    IntermediateRepresentation,
-    Literal,
-    Name,
-    ObjectTypeDeclaration,
-    PrimitiveTypeV1,
-    Subpackage,
-    SubpackageId,
-    TypeDeclaration,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { AsIsFiles } from "../AsIs.js";
 import { TRAITS_DIRECTORY } from "../constants.js";
@@ -36,7 +24,7 @@ export abstract class AbstractPhpGeneratorContext<
     public readonly project: PhpProject;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -58,10 +46,10 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.config.organization}/${this.config.organization}`;
     }
 
-    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
+    public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error(`Subpackage with id ${subpackageId} not found`);
+            throw new Error(`FernIr.Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
     }
@@ -80,7 +68,7 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
-    public getClassName(name: Name): string {
+    public getClassName(name: FernIr.Name): string {
         return getSafeClassName(name.pascalCase.safeName);
     }
 
@@ -140,27 +128,27 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getCoreTestsNamespace()}\\Types`;
     }
 
-    public getParameterName(name: Name): string {
+    public getParameterName(name: FernIr.Name): string {
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
-    public getFieldName(name: Name): string {
+    public getFieldName(name: FernIr.Name): string {
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
-    public getPropertyName(name: Name): string {
+    public getPropertyName(name: FernIr.Name): string {
         return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
-    public getVariableName(name: Name): string {
+    public getVariableName(name: FernIr.Name): string {
         return "$" + this.getPropertyName(name);
     }
 
-    public getPropertyGetterName(name: Name): string {
+    public getPropertyGetterName(name: FernIr.Name): string {
         return `get${name.pascalCase.unsafeName}`;
     }
 
-    public getPropertySetterName(name: Name): string {
+    public getPropertySetterName(name: FernIr.Name): string {
         return `set${name.pascalCase.unsafeName}`;
     }
 
@@ -192,7 +180,7 @@ export abstract class AbstractPhpGeneratorContext<
         return input;
     }
 
-    public getLiteralAsString(literal: Literal): string {
+    public getLiteralAsString(literal: FernIr.Literal): string {
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
 
@@ -287,7 +275,7 @@ export abstract class AbstractPhpGeneratorContext<
         );
     }
 
-    public isOptional(typeReference: TypeReference): boolean {
+    public isOptional(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 switch (typeReference.container.type) {
@@ -312,7 +300,7 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public isNullable(typeReference: TypeReference): boolean {
+    public isNullable(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 switch (typeReference.container.type) {
@@ -337,7 +325,7 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public dereferenceOptional(typeReference: TypeReference): TypeReference {
+    public dereferenceOptional(typeReference: FernIr.TypeReference): FernIr.TypeReference {
         switch (typeReference.type) {
             case "container":
                 if (typeReference.container.type === "optional") {
@@ -362,7 +350,7 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public dereferenceCollection(typeReference: TypeReference): TypeReference {
+    public dereferenceCollection(typeReference: FernIr.TypeReference): FernIr.TypeReference {
         switch (typeReference.type) {
             case "container": {
                 if (typeReference.container.type === "list") {
@@ -387,7 +375,7 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public isCollection(typeReference: TypeReference): boolean {
+    public isCollection(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 return typeReference.container.type === "list" || typeReference.container.type === "set";
@@ -406,7 +394,7 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public isJsonEncodable(typeReference: TypeReference): boolean {
+    public isJsonEncodable(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 return typeReference.container.type === "map";
@@ -426,11 +414,11 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public hasToJsonMethod(typeReference: TypeReference): boolean {
+    public hasToJsonMethod(typeReference: FernIr.TypeReference): boolean {
         return typeReference.type === "named" && !this.isPrimitive(typeReference) && !this.isEnum(typeReference);
     }
 
-    public isEnum(typeReference: TypeReference): boolean {
+    public isEnum(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 if (typeReference.container.type === "optional") {
@@ -452,14 +440,14 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public typeDeclarationIsEnum(declaration: TypeDeclaration): boolean {
+    public typeDeclarationIsEnum(declaration: FernIr.TypeDeclaration): boolean {
         if (declaration.shape.type === "alias") {
             return this.isEnum(declaration.shape.aliasOf);
         }
         return declaration.shape.type === "enum";
     }
 
-    public isPrimitive(typeReference: TypeReference): boolean {
+    public isPrimitive(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "primitive": {
                 return true;
@@ -481,8 +469,8 @@ export abstract class AbstractPhpGeneratorContext<
         typeReference,
         primitive
     }: {
-        typeReference: TypeReference;
-        primitive?: PrimitiveTypeV1;
+        typeReference: FernIr.TypeReference;
+        primitive?: FernIr.PrimitiveTypeV1;
     }): boolean {
         switch (typeReference.type) {
             case "container":
@@ -519,15 +507,15 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public isDate(typeReference: TypeReference): boolean {
-        return this.isEquivalentToPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+    public isDate(typeReference: FernIr.TypeReference): boolean {
+        return this.isEquivalentToPrimitive({ typeReference, primitive: FernIr.PrimitiveTypeV1.Date });
     }
 
-    public isDateTime(typeReference: TypeReference): boolean {
-        return this.isEquivalentToPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
+    public isDateTime(typeReference: FernIr.TypeReference): boolean {
+        return this.isEquivalentToPrimitive({ typeReference, primitive: FernIr.PrimitiveTypeV1.DateTime });
     }
 
-    public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration {
+    public getUnderlyingObjectTypeDeclaration(typeReference: FernIr.TypeReference): FernIr.ObjectTypeDeclaration {
         switch (typeReference.type) {
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
@@ -546,7 +534,9 @@ export abstract class AbstractPhpGeneratorContext<
         throw new Error("Type is not an object type");
     }
 
-    public getUnderlyingObjectTypeDeclarationOrThrow(typeDeclaration: TypeDeclaration): ObjectTypeDeclaration {
+    public getUnderlyingObjectTypeDeclarationOrThrow(
+        typeDeclaration: FernIr.TypeDeclaration
+    ): FernIr.ObjectTypeDeclaration {
         if (typeDeclaration.shape.type === "alias") {
             return this.getUnderlyingObjectTypeDeclaration(typeDeclaration.shape.aliasOf);
         }
@@ -556,14 +546,14 @@ export abstract class AbstractPhpGeneratorContext<
         throw new Error("Type is not an object type");
     }
 
-    public maybeLiteral(typeReference: TypeReference): Literal | undefined {
+    public maybeLiteral(typeReference: FernIr.TypeReference): FernIr.Literal | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             return typeReference.container.literal;
         }
         return undefined;
     }
 
-    public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
+    public getTypeDeclarationOrThrow(typeId: FernIr.TypeId): FernIr.TypeDeclaration {
         const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
@@ -571,7 +561,7 @@ export abstract class AbstractPhpGeneratorContext<
         return typeDeclaration;
     }
 
-    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
+    public getTypeDeclaration(typeId: FernIr.TypeId): FernIr.TypeDeclaration | undefined {
         return this.ir.types[typeId];
     }
 
@@ -585,7 +575,7 @@ export abstract class AbstractPhpGeneratorContext<
         return propertyAccess === php.Access.Protected || propertyAccess === php.Access.Private;
     }
 
-    public getGetterMethod({ name, field }: { name: Name; field: php.Field }): php.Method {
+    public getGetterMethod({ name, field }: { name: FernIr.Name; field: php.Field }): php.Method {
         return php.method({
             name: this.getPropertyGetterName(name),
             access: php.Access.Public,
@@ -597,7 +587,7 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
-    public getSetterMethod({ name, field }: { name: Name; field: php.Field }): php.Method {
+    public getSetterMethod({ name, field }: { name: FernIr.Name; field: php.Field }): php.Method {
         const propertyName = this.getPropertyName(name);
         return php.method({
             name: this.getPropertySetterName(name),
@@ -674,14 +664,14 @@ export abstract class AbstractPhpGeneratorContext<
         ];
     }
 
-    public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
+    public abstract getLocationForTypeId(typeId: FernIr.TypeId): FileLocation;
 
-    public getTraitLocationForTypeId(typeId: TypeId): FileLocation {
+    public getTraitLocationForTypeId(typeId: FernIr.TypeId): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return this.getFileLocation(typeDeclaration.name.fernFilepath, TRAITS_DIRECTORY);
     }
 
-    protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+    protected getFileLocation(filepath: FernIr.FernFilepath, suffix?: string): FileLocation {
         let parts = filepath.allParts.map((path) => path.pascalCase.safeName);
         parts = suffix != null ? [...parts, suffix] : parts;
         return {

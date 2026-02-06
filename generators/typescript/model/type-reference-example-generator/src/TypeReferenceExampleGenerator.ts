@@ -1,4 +1,4 @@
-import { ExampleTypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 
 import { GeneratedTypeReferenceExampleImpl } from "./GeneratedTypeReferenceExampleImpl.js";
@@ -19,7 +19,7 @@ export class TypeReferenceExampleGenerator {
         this.includeSerdeLayer = includeSerdeLayer;
     }
 
-    public generateExample(example: ExampleTypeReference): GeneratedTypeReferenceExample {
+    public generateExample(example: FernIr.ExampleTypeReference): GeneratedTypeReferenceExample {
         return new GeneratedTypeReferenceExampleImpl({
             example,
             useBigInt: this.useBigInt,

@@ -44,16 +44,16 @@
  *        }
  *    - Structure as nested objects (NOT flat strings):
  *      AuthScheme: {
- *          Bearer: (value: unknown): value is AuthScheme.Bearer =>
+ *          Bearer: (value: unknown): value is FernIr.AuthScheme.Bearer =>
  *              is.BearerAuthScheme(value) && "type" in value && value.type === "bearer",
- *          Basic: (value: unknown): value is AuthScheme.Basic =>
+ *          Basic: (value: unknown): value is FernIr.AuthScheme.Basic =>
  *              is.BasicAuthScheme(value) && "type" in value && value.type === "basic"
  *      }
  *
  * 6. PARENT INTERFACE VALIDATION:
  *    - For union variants, ALWAYS check the parent interface first
  *    - DO NOT check interfaces ending in "_Utils" - these only contain visitor patterns
- *    - Example: AuthScheme.Bearer extends BearerAuthScheme, so check is.BearerAuthScheme(value)
+ *    - Example: FernIr.AuthScheme.Bearer extends BearerAuthScheme, so check is.BearerAuthScheme(value)
  *
  * 7. OPTIMIZATION RULES:
  *    - For union variants: Use parent interface check (e.g., is.BearerAuthScheme(value))
@@ -81,8 +81,7 @@
  *
  * 10. IMPORTS:
  *     - Import ALL types used in typeguards at the top
- *     - Use format: import { TypeName } from "@fern-fern/ir-sdk/api"
- *     - Keep imports alphabetically sorted for maintainability
+ *     - Use format:  *     - Keep imports alphabetically sorted for maintainability
  *
  * 11. VERIFICATION:
  *     - After updating, run linter to check for errors
@@ -91,7 +90,7 @@
  *     - Check that union variants properly extend their parent interfaces
  *
  * 12. COMMON PITFALLS TO AVOID:
- *     - DON'T use flat string keys for union variants (e.g., "AuthScheme.Bearer")
+ *     - DON'T use flat string keys for union variants (e.g., "FernIr.AuthScheme.Bearer")
  *     - DON'T validate _Utils interfaces - they're not real data structures
  *     - DON'T include isObject() after a parent interface check in unions
  *     - DON'T mix up property presence checks and type checks - keep them separate
@@ -1642,7 +1641,7 @@ export const is = {
             isObject(value) && "type" in value && value.type === "bigInteger"
     },
 
-    // ExampleSingleUnionTypeProperties
+    // FernIr.ExampleSingleUnionTypeProperties
     ExampleSingleUnionTypeProperties: {
         SamePropertiesAsObject: (
             value: unknown

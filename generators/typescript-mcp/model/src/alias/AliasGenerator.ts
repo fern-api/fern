@@ -1,8 +1,7 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
-
-import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
@@ -11,8 +10,8 @@ export class AliasGenerator extends FileGenerator<TypescriptFile, TypescriptCust
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly aliasDeclaration: AliasTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly aliasDeclaration: FernIr.AliasTypeDeclaration
     ) {
         super(context);
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(

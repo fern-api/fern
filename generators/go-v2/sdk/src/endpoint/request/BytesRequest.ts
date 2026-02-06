@@ -1,6 +1,5 @@
 import { go } from "@fern-api/go-ast";
-
-import { HttpEndpoint, HttpService, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { EndpointRequest } from "./EndpointRequest.js";
@@ -9,9 +8,9 @@ export class BytesRequest extends EndpointRequest {
     // biome-ignore lint/complexity/noUselessConstructor: allow
     public constructor(
         context: SdkGeneratorContext,
-        sdkRequest: SdkRequest,
-        service: HttpService,
-        endpoint: HttpEndpoint
+        sdkRequest: FernIr.SdkRequest,
+        service: FernIr.HttpService,
+        endpoint: FernIr.HttpEndpoint
     ) {
         super(context, sdkRequest, service, endpoint);
     }

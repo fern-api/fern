@@ -1,5 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator.js";
 import { RawClient } from "./http/RawClient.js";
@@ -17,8 +17,8 @@ export class EndpointGenerator {
         rawClientReference,
         rawClient
     }: {
-        serviceId: ServiceId;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        endpoint: FernIr.HttpEndpoint;
         rawClientReference: string;
         rawClient: RawClient;
     }): ruby.Method[] {

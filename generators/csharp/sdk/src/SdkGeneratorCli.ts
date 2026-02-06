@@ -9,7 +9,7 @@ import {
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator.js";
@@ -44,7 +44,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: CsharpConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -86,7 +86,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         await this.generate(context);
     }
 
-    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+    private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 const wrappedRequestGenerator = new WrappedRequestGenerator({

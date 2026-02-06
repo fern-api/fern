@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId, Reference } from "@fern-typescript/commons";
 
 import { GeneratedExpressInlinedRequestBodySchema } from "./GeneratedExpressInlinedRequestBodySchema.js";
@@ -6,7 +6,7 @@ import { GeneratedExpressInlinedRequestBodySchema } from "./GeneratedExpressInli
 export interface ExpressInlinedRequestBodySchemaContext {
     getGeneratedInlinedRequestBodySchema: (
         packageId: PackageId,
-        endpointName: Name
+        endpointName: FernIr.Name
     ) => GeneratedExpressInlinedRequestBodySchema;
-    getReferenceToInlinedRequestBody: (packageId: PackageId, endpointName: Name) => Reference;
+    getReferenceToInlinedRequestBody: (packageId: PackageId, endpointName: FernIr.Name) => Reference;
 }

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
 
@@ -16,8 +16,8 @@ import {
 
 export declare namespace AuthProvidersGenerator {
     export interface Init {
-        ir: IntermediateRepresentation;
-        authScheme: AuthScheme | { type: "any" } | { type: "routing" };
+        ir: FernIr.IntermediateRepresentation;
+        authScheme: FernIr.AuthScheme | { type: "any" } | { type: "routing" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
         shouldUseWrapper: boolean;

@@ -1,11 +1,4 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    HeaderAuthScheme,
-    HttpEndpoint,
-    HttpHeader,
-    HttpService,
-    IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -29,12 +22,12 @@ export function generateHeaders({
     headersToMergeAfterClientOptionsHeaders = []
 }: {
     context: SdkContext;
-    intermediateRepresentation: IntermediateRepresentation;
+    intermediateRepresentation: FernIr.IntermediateRepresentation;
     generatedSdkClientClass: GeneratedSdkClientClassImpl;
     requestParameter: RequestParameter | undefined;
-    service: HttpService;
-    endpoint: HttpEndpoint;
-    idempotencyHeaders: HttpHeader[];
+    service: FernIr.HttpService;
+    endpoint: FernIr.HttpEndpoint;
+    idempotencyHeaders: FernIr.HttpHeader[];
     additionalHeaders?: GeneratedHeader[];
     additionalSpreadHeaders?: ts.Expression[];
     headersToMergeAfterClientOptionsHeaders?: ts.Expression[];
@@ -187,7 +180,7 @@ function getValueExpressionForHeader({
     context,
     requestParameter
 }: {
-    header: HttpHeader;
+    header: FernIr.HttpHeader;
     context: SdkContext;
     requestParameter: RequestParameter | undefined;
 }): ts.Expression {
@@ -213,7 +206,7 @@ function getValueExpressionForIdempotencyHeader({
     header,
     context
 }: {
-    header: HttpHeader;
+    header: FernIr.HttpHeader;
     context: SdkContext;
 }): ts.Expression {
     const literalValue = getLiteralValueForHeader(header, context);
@@ -335,11 +328,11 @@ function getOverridableRootHeaders({
     return headers;
 }
 
-function isAuthorizationHeader(header: HttpHeader | HeaderAuthScheme): boolean {
+function isAuthorizationHeader(header: FernIr.HttpHeader | FernIr.HeaderAuthScheme): boolean {
     return header.name.wireValue.toLowerCase() === "authorization";
 }
 
-function getOptionKeyForHeader(header: HttpHeader): string {
+function getOptionKeyForHeader(header: FernIr.HttpHeader): string {
     return header.name.name.camelCase.unsafeName;
 }
 

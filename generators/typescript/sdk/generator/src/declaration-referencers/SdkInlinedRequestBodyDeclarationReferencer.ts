@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
@@ -8,7 +8,7 @@ import { DeclarationReferencer } from "./DeclarationReferencer.js";
 export declare namespace SdkInlinedRequestBodyDeclarationReferencer {
     export interface Name {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 

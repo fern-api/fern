@@ -9,8 +9,8 @@ import {
     ExampleWebSocketMessage,
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
+    FernIr,
     Name,
-    PathParameterLocation,
     WebSocketChannel,
     WebSocketMessage,
     WebSocketMessageBody
@@ -82,7 +82,7 @@ export function convertChannel({
             channel["path-parameters"] != null
                 ? convertPathParameters({
                       pathParameters: channel["path-parameters"],
-                      location: PathParameterLocation.Endpoint,
+                      location: FernIr.PathParameterLocation.Endpoint,
                       file,
                       variableResolver
                   })

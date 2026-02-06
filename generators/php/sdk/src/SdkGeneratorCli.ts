@@ -6,7 +6,7 @@ import { generateModels, generateTraits } from "@fern-api/php-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator.js";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator.js";
@@ -29,7 +29,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -123,7 +123,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         }
     }
 
-    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+    private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         for (const endpoint of service.endpoints) {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 if (context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {

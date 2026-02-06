@@ -512,7 +512,10 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.writeNode(this.context.getDefaultValueForPrimitive({ primitive }));
             });
         }
-        if (wrapperType === WrapperType.List && this.context.isReadOnlyMemoryType(TypeReference.primitive(primitive))) {
+        if (
+            wrapperType === WrapperType.List &&
+            this.context.isReadOnlyMemoryType(FernIr.TypeReference.primitive(primitive))
+        ) {
             return this.csharp.codeblock((writer) => {
                 writer.writeNode(
                     this.csharp.invokeMethod({
@@ -916,7 +919,7 @@ class FromProtoPropertyMapper extends WithGeneration {
                 writer.write(" ?? new ");
                 writer.writeNode(
                     this.context.csharpTypeMapper.convert({
-                        reference: TypeReference.container(ContainerType.map(map))
+                        reference: FernIr.TypeReference.container(FernIr.ContainerType.map(map))
                     })
                 );
                 writer.write("()");

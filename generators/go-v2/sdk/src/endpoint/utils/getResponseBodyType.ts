@@ -1,7 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
-
-import { HttpResponseBody, JsonResponse } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
@@ -10,7 +9,7 @@ export function getResponseBodyType({
     body
 }: {
     context: SdkGeneratorContext;
-    body: HttpResponseBody;
+    body: FernIr.HttpResponseBody;
 }): go.Type {
     switch (body.type) {
         case "bytes":
@@ -37,7 +36,7 @@ function getEndpointReturnTypeJson({
     responseBody
 }: {
     context: SdkGeneratorContext;
-    responseBody: JsonResponse;
+    responseBody: FernIr.JsonResponse;
 }): go.Type {
     switch (responseBody.type) {
         case "response":

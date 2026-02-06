@@ -1,6 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
@@ -60,7 +60,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         customConfig: ExpressCustomConfig;
         npmPackage: NpmPackage;
         generatorContext: GeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
         const expressGenerator = new ExpressGenerator({
             namespaceExport: `${upperFirst(camelCase(config.organization))}${upperFirst(

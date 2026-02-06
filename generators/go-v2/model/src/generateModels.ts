@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractModelGenerator } from "./AbstractModelGenerator.js";
 import { AliasGenerator } from "./alias/AliasGenerator.js";
 import { EnumGenerator } from "./enum/EnumGenerator.js";
@@ -20,7 +20,7 @@ function buildModelGenerator({
     typeDeclaration
 }: {
     context: ModelGeneratorContext;
-    typeDeclaration: TypeDeclaration;
+    typeDeclaration: FernIr.TypeDeclaration;
 }): AbstractModelGenerator {
     switch (typeDeclaration.shape.type) {
         case "alias":

@@ -1,9 +1,6 @@
 import { fail } from "node:assert";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
-const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
-
 import { type Generation } from "../../context/generation-info.js";
 import { hash, uniqueId } from "../../utils/text.js";
 import { Literal } from "../code/Literal.js";
@@ -891,26 +888,26 @@ export namespace Collection {
  * @returns Array of PrimitiveTypeV1 enum values
  * @throws Error if an unknown type name is encountered (should be unreachable if validated earlier)
  */
-export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): PrimitiveTypeV1[] {
-    return readOnlyMemoryTypeNames.map<PrimitiveTypeV1>((typeName) => {
+export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): FernIr.PrimitiveTypeV1[] {
+    return readOnlyMemoryTypeNames.map<FernIr.PrimitiveTypeV1>((typeName) => {
         switch (typeName) {
             case "int":
-                return PrimitiveTypeV1.Integer;
+                return FernIr.PrimitiveTypeV1.Integer;
             case "long":
-                return PrimitiveTypeV1.Long;
+                return FernIr.PrimitiveTypeV1.Long;
             case "uint":
-                return PrimitiveTypeV1.Uint;
+                return FernIr.PrimitiveTypeV1.Uint;
             case "ulong":
-                return PrimitiveTypeV1.Uint64;
+                return FernIr.PrimitiveTypeV1.Uint64;
             case "string":
-                return PrimitiveTypeV1.String;
+                return FernIr.PrimitiveTypeV1.String;
             case "bool":
             case "boolean":
-                return PrimitiveTypeV1.Boolean;
+                return FernIr.PrimitiveTypeV1.Boolean;
             case "float":
-                return PrimitiveTypeV1.Float;
+                return FernIr.PrimitiveTypeV1.Float;
             case "double":
-                return PrimitiveTypeV1.Double;
+                return FernIr.PrimitiveTypeV1.Double;
             default:
                 // This should be unreachable; the ReadOnlyMemory types should have already
                 // been validated at this point.

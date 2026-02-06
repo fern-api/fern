@@ -1,7 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CoreUtilities,
     CoreUtilitiesManager,
@@ -81,15 +81,15 @@ export declare namespace SdkContextImpl {
     export interface Init {
         logger: Logger;
         version: string | undefined;
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         exportsManager: ExportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
-        fernConstants: Constants;
-        intermediateRepresentation: IntermediateRepresentation;
+        fernConstants: FernIr.Constants;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         versionGenerator: VersionGenerator;
         versionDeclarationReferencer: VersionDeclarationReferencer;
         jsonDeclarationReferencer: JsonDeclarationReferencer;
@@ -154,13 +154,13 @@ export declare namespace SdkContextImpl {
 
 export class SdkContextImpl implements SdkContext {
     public readonly logger: Logger;
-    public readonly ir: IntermediateRepresentation;
+    public readonly ir: FernIr.IntermediateRepresentation;
     public readonly config: FernGeneratorExec.GeneratorConfig;
     public readonly generatorNotificationService: GeneratorNotificationService;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
-    public readonly fernConstants: Constants;
+    public readonly fernConstants: FernIr.Constants;
 
     public readonly npmPackage: NpmPackage | undefined;
     public readonly type: TypeContextImpl;

@@ -1,4 +1,4 @@
-import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
@@ -10,9 +10,9 @@ import {
 
 export declare namespace ParsedSingleUnionTypeForError {
     export interface Init {
-        error: ResponseError;
+        error: FernIr.ResponseError;
         errorResolver: ErrorResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         includeUtilsOnUnionMembers: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
@@ -22,9 +22,9 @@ export declare namespace ParsedSingleUnionTypeForError {
 }
 
 export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<SdkContext> {
-    private errorDeclaration: ErrorDeclaration;
-    private responseError: ResponseError;
-    private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private errorDeclaration: FernIr.ErrorDeclaration;
+    private responseError: FernIr.ResponseError;
+    private errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     private retainOriginalCasing: boolean;
 
     constructor({
@@ -66,11 +66,11 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     }
 
     public getDiscriminantValue(): string | number {
-        return ErrorDiscriminationStrategy._visit<string | number>(this.errorDiscriminationStrategy, {
+        return FernIr.ErrorDiscriminationStrategy._visit<string | number>(this.errorDiscriminationStrategy, {
             property: () => this.errorDeclaration.discriminantValue.wireValue,
             statusCode: () => this.errorDeclaration.statusCode,
             _other: () => {
-                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+                throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             }
         });
     }
@@ -106,8 +106,8 @@ function getSingleUnionTypeGenerator({
     getTypeName,
     generateReadWriteOnlyTypes
 }: {
-    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
-    errorDeclaration: ErrorDeclaration;
+    errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
+    errorDeclaration: FernIr.ErrorDeclaration;
     noOptionalProperties: boolean;
     retainOriginalCasing: boolean;
     enableInlineTypes: boolean;
@@ -119,12 +119,12 @@ function getSingleUnionTypeGenerator({
     }
     const { type } = errorDeclaration;
 
-    const propertyName = ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+    const propertyName = FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         property: ({ contentProperty }) =>
             retainOriginalCasing ? contentProperty.name.originalName : contentProperty.name.camelCase.unsafeName,
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
         _other: () => {
-            throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
+            throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
         }
     });
 

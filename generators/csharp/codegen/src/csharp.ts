@@ -648,7 +648,7 @@ export class CSharp {
          * @param fields - Array of constructor fields to initialize
          * @returns A Literal object representing the class initialization
          */
-        class_: ({ reference, fields }: { reference: ClassReference; fields: ConstructorField[] }) => {
+        class_: ({ reference, fields }: { reference: ClassReference; fields: ConstructorField[] }): Literal => {
             return new Literal.Class_(reference, fields, this.generation);
         },
 
@@ -668,7 +668,7 @@ export class CSharp {
             keyType: Type;
             valueType: Type;
             entries: DictionaryEntry[];
-        }) => {
+        }): Literal => {
             return new Literal.Dictionary(keyType, valueType, entries, this.generation);
         },
 
@@ -679,7 +679,7 @@ export class CSharp {
          * @param values - Array of literal values
          * @returns A Literal object representing the list initialization
          */
-        list: ({ valueType, values }: { valueType: Type; values: Literal[] }) => {
+        list: ({ valueType, values }: { valueType: Type; values: Literal[] }): Literal => {
             return new Literal.List(valueType, values, this.generation);
         },
 
@@ -690,7 +690,7 @@ export class CSharp {
          * @param values - Array of literal values
          * @returns A Literal object representing the set initialization
          */
-        set: ({ valueType, values }: { valueType: Type; values: Literal[] }) => {
+        set: ({ valueType, values }: { valueType: Type; values: Literal[] }): Literal => {
             return new Literal.Set(valueType, values, this.generation);
         },
 
@@ -700,7 +700,7 @@ export class CSharp {
          * @param value - The boolean value
          * @returns A Literal object representing the boolean literal
          */
-        boolean: (value: boolean) => {
+        boolean: (value: boolean): Literal => {
             return new Literal.Boolean(value, this.generation);
         },
 
@@ -710,7 +710,7 @@ export class CSharp {
          * @param value - The float value
          * @returns A Literal object representing the float literal
          */
-        float: (value: number) => {
+        float: (value: number): Literal => {
             return new Literal.Float(value, this.generation);
         },
 
@@ -720,7 +720,7 @@ export class CSharp {
          * @param value - The date value as a string
          * @returns A Literal object representing the date literal
          */
-        date: (value: string) => {
+        date: (value: string): Literal => {
             return new Literal.Date(value, this.generation);
         },
 
@@ -730,7 +730,7 @@ export class CSharp {
          * @param value - The DateTime value as a string
          * @returns A Literal object representing the DateTime literal
          */
-        datetime: (value: string) => {
+        datetime: (value: string): Literal => {
             return new Literal.DateTime(value, this.generation);
         },
 
@@ -740,7 +740,7 @@ export class CSharp {
          * @param value - The decimal value
          * @returns A Literal object representing the decimal literal
          */
-        decimal: (value: number) => {
+        decimal: (value: number): Literal => {
             return new Literal.Decimal(value, this.generation);
         },
 
@@ -750,7 +750,7 @@ export class CSharp {
          * @param value - The double value
          * @returns A Literal object representing the double literal
          */
-        double: (value: number) => {
+        double: (value: number): Literal => {
             return new Literal.Double(value, this.generation);
         },
 
@@ -760,7 +760,7 @@ export class CSharp {
          * @param value - The integer value
          * @returns A Literal object representing the integer literal
          */
-        integer: (value: number) => {
+        integer: (value: number): Literal => {
             return new Literal.Integer(value, this.generation);
         },
 
@@ -770,7 +770,7 @@ export class CSharp {
          * @param value - The long value
          * @returns A Literal object representing the long literal
          */
-        long: (value: number) => {
+        long: (value: number): Literal => {
             return new Literal.Long(value, this.generation);
         },
 
@@ -780,7 +780,7 @@ export class CSharp {
          * @param value - The unsigned integer value
          * @returns A Literal object representing the uint literal
          */
-        uint: (value: number) => {
+        uint: (value: number): Literal => {
             return new Literal.Uint(value, this.generation);
         },
 
@@ -790,7 +790,7 @@ export class CSharp {
          * @param value - The unsigned long value
          * @returns A Literal object representing the ulong literal
          */
-        ulong: (value: number) => {
+        ulong: (value: number): Literal => {
             return new Literal.Ulong(value, this.generation);
         },
 
@@ -800,7 +800,7 @@ export class CSharp {
          * @param value - The AST node reference
          * @returns A Literal object representing the reference literal
          */
-        reference: (value: AstNode) => {
+        reference: (value: AstNode): Literal => {
             return new Literal.Reference(value, this.generation);
         },
 
@@ -810,7 +810,7 @@ export class CSharp {
          * @param value - The string value
          * @returns A Literal object representing the string literal
          */
-        string: (value: string) => {
+        string: (value: string): Literal => {
             return new Literal.String(value, this.generation);
         },
 
@@ -819,7 +819,7 @@ export class CSharp {
          *
          * @returns A Literal object representing the null literal
          */
-        null: () => {
+        null: (): Literal => {
             return new Literal.Null(this.generation);
         },
 
@@ -828,7 +828,7 @@ export class CSharp {
          *
          * @returns A Literal object representing a no-operation literal
          */
-        nop: () => {
+        nop: (): Literal => {
             return new Literal.Nop(this.generation);
         },
 
@@ -838,7 +838,7 @@ export class CSharp {
          * @param value - The unknown value
          * @returns A Literal object representing the unknown literal
          */
-        unknown: (value: unknown) => {
+        unknown: (value: unknown): Literal => {
             return new Literal.Unknown(value, this.generation);
         }
     };

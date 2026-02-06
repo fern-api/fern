@@ -1,4 +1,4 @@
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -7,7 +7,7 @@ import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionIm
 
 export declare namespace EndpointErrorUnionGenerator {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -19,13 +19,13 @@ export declare namespace EndpointErrorUnionGenerator {
     export namespace generateEndpointErrorUnion {
         export interface Args {
             packageId: PackageId;
-            endpoint: HttpEndpoint;
+            endpoint: FernIr.HttpEndpoint;
         }
     }
 }
 
 export class EndpointErrorUnionGenerator {
-    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly errorResolver: ErrorResolver;
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;

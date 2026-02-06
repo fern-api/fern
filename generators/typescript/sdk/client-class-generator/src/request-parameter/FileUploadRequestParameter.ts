@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -35,14 +35,14 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
         const requestWrapperExample = this.getGeneratedRequestWrapper(context).generateExample(example);
         return requestWrapperExample?.build(context, opts);
     }
 
-    public getAllQueryParameters(context: SdkContext): QueryParameter[] {
+    public getAllQueryParameters(context: SdkContext): FernIr.QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
@@ -51,7 +51,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
     }
 
     public withQueryParameter(
-        queryParameter: QueryParameter,
+        queryParameter: FernIr.QueryParameter,
         context: SdkContext,
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
@@ -94,13 +94,13 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: FernIr.HttpHeader, context: SdkContext): ts.Expression {
         return this.getReferenceToProperty(
             this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header).propertyName
         );
     }
 
-    public getReferenceToBodyProperty(property: InlinedRequestBodyProperty, context: SdkContext): ts.Expression {
+    public getReferenceToBodyProperty(property: FernIr.InlinedRequestBodyProperty, context: SdkContext): ts.Expression {
         return this.getReferenceToProperty(
             this.getGeneratedRequestWrapper(context).getInlinedRequestBodyPropertyKey(property).propertyName
         );

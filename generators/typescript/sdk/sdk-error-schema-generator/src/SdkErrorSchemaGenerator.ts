@@ -1,4 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedSdkErrorSchema } from "@fern-typescript/contexts";
 
 import { GeneratedSdkErrorSchemaImpl } from "./GeneratedSdkErrorSchemaImpl.js";
@@ -12,7 +12,7 @@ export declare namespace SdkErrorSchemaGenerator {
     export namespace generateError {
         export interface Args {
             errorName: string;
-            errorDeclaration: ErrorDeclaration;
+            errorDeclaration: FernIr.ErrorDeclaration;
         }
     }
 }

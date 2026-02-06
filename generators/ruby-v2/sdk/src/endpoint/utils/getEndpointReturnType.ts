@@ -1,5 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export function getEndpointReturnType({
@@ -7,7 +7,7 @@ export function getEndpointReturnType({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): ruby.Type | undefined {
     return endpoint.response?.body?._visit({
         streaming: () => undefined,

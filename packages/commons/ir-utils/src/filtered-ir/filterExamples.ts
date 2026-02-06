@@ -16,7 +16,8 @@ import {
     ExampleType,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
-    ExampleTypeShape
+    ExampleTypeShape,
+    FernIr
 } from "@fern-api/ir-sdk";
 
 import { FilteredIr } from "./FilteredIr.js";
@@ -26,8 +27,8 @@ function filterExampleSingleUnionTypeProperties({
     singleUnionTypeProperties
 }: {
     filteredIr: FilteredIr;
-    singleUnionTypeProperties: ExampleSingleUnionTypeProperties;
-}): ExampleSingleUnionTypeProperties | undefined {
+    singleUnionTypeProperties: FernIr.ExampleSingleUnionTypeProperties;
+}): FernIr.ExampleSingleUnionTypeProperties | undefined {
     return singleUnionTypeProperties._visit<ExampleSingleUnionTypeProperties | undefined>({
         samePropertiesAsObject: (s) => {
             const filteredObject = filteredIr.hasTypeId(s.typeId)
@@ -46,13 +47,13 @@ function filterExampleSingleUnionTypeProperties({
                   }
                 : undefined;
             return filteredObject !== undefined
-                ? ExampleSingleUnionTypeProperties.samePropertiesAsObject(filteredObject)
+                ? FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject(filteredObject)
                 : undefined;
         },
         singleProperty: (s) => {
             const filteredProperty = filterExampleTypeReference({ filteredIr, exampleTypeReference: s });
             return filteredProperty !== undefined
-                ? ExampleSingleUnionTypeProperties.singleProperty(filteredProperty)
+                ? FernIr.ExampleSingleUnionTypeProperties.singleProperty(filteredProperty)
                 : undefined;
         },
         noProperties: () => singleUnionTypeProperties,

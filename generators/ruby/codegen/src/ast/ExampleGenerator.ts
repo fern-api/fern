@@ -1,13 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    ExampleContainer,
-    ExamplePrimitive,
-    ExampleTypeReference,
-    ExampleTypeReferenceShape,
-    ExampleTypeShape,
-    HttpEndpoint
-} from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import path from "path";
 import urlJoin from "url-join";
 
@@ -76,7 +69,7 @@ export class ExampleGenerator {
     }
 
     // TODO(dsinghvi): HACKHACK Move this to IR
-    private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
+    private getFullPathForEndpoint(endpoint: FernIr.HttpEndpoint): string {
         let url = "";
         if (endpoint.fullPath.head.length > 0) {
             url = urlJoin(url, endpoint.fullPath.head);
@@ -90,7 +83,7 @@ export class ExampleGenerator {
         return url.startsWith("/") ? url : `/${url}`;
     }
 
-    public registerSnippet(func: Function_, endpoint: HttpEndpoint): void {
+    public registerSnippet(func: Function_, endpoint: FernIr.HttpEndpoint): void {
         const nodes: (AstNode | string)[] = [this.generateClientSnippet()];
         const funcExample = this.generateEndpointSnippet(func);
         if (funcExample != null) {
@@ -122,11 +115,11 @@ export class ExampleGenerator {
         return new GeneratedFile(filename, AbsoluteFilePath.of(directory), JSON.stringify(snippets, undefined, 4));
     }
 
-    public convertExampleTypeReference(example?: ExampleTypeReference): ParsedExample | undefined {
+    public convertExampleTypeReference(example?: FernIr.ExampleTypeReference): ParsedExample | undefined {
         return example != null
-            ? ExampleTypeReferenceShape._visit<ParsedExample | undefined>(example.shape, {
+            ? FernIr.ExampleTypeReferenceShape._visit<ParsedExample | undefined>(example.shape, {
                   primitive: (primitiveExample) =>
-                      ExamplePrimitive._visit<ParsedExample>(primitiveExample, {
+                      FernIr.ExamplePrimitive._visit<ParsedExample>(primitiveExample, {
                           string: (stringExample) => `"${stringExample.original}"`,
                           integer: (integerExample) => integerExample.toString(),
                           double: (doubleExample) => doubleExample.toString(),
@@ -151,8 +144,8 @@ export class ExampleGenerator {
                               throw new Error("Unknown primitive example: " + primitiveExample.type);
                           }
                       }),
-                  container: (ec: ExampleContainer) => {
-                      return ExampleContainer._visit<ParsedExample | undefined>(ec, {
+                  container: (ec: FernIr.ExampleContainer) => {
+                      return FernIr.ExampleContainer._visit<ParsedExample | undefined>(ec, {
                           list: (exampleItems) => {
                               return new ArrayInstance({
                                   contents: exampleItems
@@ -186,7 +179,7 @@ export class ExampleGenerator {
                   },
                   named: ({ shape: es, typeName }) => {
                       const cr = this.crf.fromDeclaredTypeName(typeName);
-                      return ExampleTypeShape._visit<ParsedExample | undefined>(es, {
+                      return FernIr.ExampleTypeShape._visit<ParsedExample | undefined>(es, {
                           object: (objectExample) =>
                               new HashInstance({
                                   contents: new Map(

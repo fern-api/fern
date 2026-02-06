@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressInlinedRequestBodyContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
@@ -52,7 +52,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
 
     public getGeneratedInlinedRequestBody(
         packageId: PackageId,
-        endpointName: Name
+        endpointName: FernIr.Name
     ): GeneratedExpressInlinedRequestBody {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -75,7 +75,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         });
     }
 
-    public getReferenceToInlinedRequestBodyType(packageId: PackageId, endpointName: Name): Reference {
+    public getReferenceToInlinedRequestBodyType(packageId: PackageId, endpointName: FernIr.Name): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName

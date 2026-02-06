@@ -15,11 +15,11 @@ import {
     ExampleObjectProperty,
     ExamplePrimitive,
     ExampleSingleUnionType,
-    ExampleSingleUnionTypeProperties,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
     ExampleUnionBaseProperty,
+    FernIr,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
@@ -836,7 +836,7 @@ function convertSingleUnionType({
     if (rawValueType == null) {
         return {
             wireDiscriminantValue,
-            shape: ExampleSingleUnionTypeProperties.noProperties()
+            shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
         };
     }
 
@@ -855,7 +855,7 @@ function convertSingleUnionType({
             }
             return {
                 wireDiscriminantValue,
-                shape: ExampleSingleUnionTypeProperties.singleProperty(
+                shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty(
                     convertTypeReferenceExample({
                         example: example[parsedSingleUnionTypeProperties.name.wireValue],
                         rawTypeBeingExemplified: rawValueType,
@@ -897,7 +897,7 @@ function convertSingleUnionType({
             };
             return {
                 wireDiscriminantValue,
-                shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
+                shape: FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                     typeId: IdGenerator.generateTypeId(typeName),
                     object: convertObject({
                         rawObject: rawDeclaration.declaration,

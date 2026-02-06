@@ -1,6 +1,5 @@
 import { CSharpFile } from "@fern-api/csharp-base";
-
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { BaseMockServerTestGenerator } from "./test-generation/mock-server/BaseMockServerTestGenerator.js";
@@ -29,7 +28,7 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
                 (example) => example.example
             );
             // TODO: support other response body types
-            const useableExamples = allExamples.filter((example): example is ExampleEndpointCall => {
+            const useableExamples = allExamples.filter((example): example is FernIr.ExampleEndpointCall => {
                 const response = example?.response;
                 return response?.type === "ok" && response.value.type === "body";
             });
@@ -50,7 +49,7 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
     return files;
 }
 
-function shouldSkipMockServerTestForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+function shouldSkipMockServerTestForEndpoint({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
     const responseBodyType = endpoint.response?.body?.type;
     if (responseBodyType === "fileDownload" || responseBodyType === "streamParameter") {
         return true;

@@ -1,8 +1,7 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { ArrayLiteralNode, ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
-
-import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
@@ -11,8 +10,8 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly unionDeclaration: UnionTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly unionDeclaration: FernIr.UnionTypeDeclaration
     ) {
         super(context);
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(

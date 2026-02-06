@@ -342,7 +342,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         // Check properties
         for (const prop of typeDeclaration.shape.properties) {
-            if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+            if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 return true;
             }
         }
@@ -350,7 +350,7 @@ export class MockEndpointGenerator extends WithGeneration {
         // Check extended properties
         if (typeDeclaration.shape.extendedProperties) {
             for (const prop of typeDeclaration.shape.extendedProperties) {
-                if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                     return true;
                 }
             }
@@ -602,14 +602,14 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         for (const prop of shape.properties) {
-            if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+            if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 readOnlyNames.add(prop.name.wireValue);
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
-                if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                     readOnlyNames.add(prop.name.wireValue);
                 }
             }
@@ -636,14 +636,14 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         for (const prop of shape.properties) {
-            if (prop.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+            if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
                 writeOnlyNames.add(prop.name.wireValue);
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
-                if (prop.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+                if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
                     writeOnlyNames.add(prop.name.wireValue);
                 }
             }

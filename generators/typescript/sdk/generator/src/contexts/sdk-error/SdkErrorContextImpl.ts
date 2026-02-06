@@ -1,4 +1,4 @@
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkError, SdkErrorContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -42,7 +42,7 @@ export class SdkErrorContextImpl implements SdkErrorContext {
         this.errorResolver = errorResolver;
     }
 
-    public getReferenceToError(errorName: DeclaredErrorName): Reference {
+    public getReferenceToError(errorName: FernIr.DeclaredErrorName): Reference {
         return this.errorDeclarationReferencer.getReferenceToError({
             name: errorName,
             importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
@@ -52,14 +52,14 @@ export class SdkErrorContextImpl implements SdkErrorContext {
         });
     }
 
-    public getGeneratedSdkError(errorName: DeclaredErrorName): GeneratedSdkError | undefined {
+    public getGeneratedSdkError(errorName: FernIr.DeclaredErrorName): GeneratedSdkError | undefined {
         return this.sdkErrorGenerator.generateError({
             errorName: this.errorDeclarationReferencer.getExportedName(errorName),
             errorDeclaration: this.getErrorDeclaration(errorName)
         });
     }
 
-    public getErrorDeclaration(errorName: DeclaredErrorName): ErrorDeclaration {
+    public getErrorDeclaration(errorName: FernIr.DeclaredErrorName): FernIr.ErrorDeclaration {
         return this.errorResolver.getErrorDeclarationFromName(errorName);
     }
 }

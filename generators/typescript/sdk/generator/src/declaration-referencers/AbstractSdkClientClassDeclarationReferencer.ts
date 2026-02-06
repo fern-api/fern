@@ -1,6 +1,6 @@
 import { entries } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportDeclaration,
     ExportedDirectory,
@@ -53,7 +53,7 @@ export abstract class AbstractSdkClientClassDeclarationReferencer<Name> extends 
         ];
     }
 
-    private getFernFilepathFromName(name: Name): FernFilepath {
+    private getFernFilepathFromName(name: Name): FernIr.FernFilepath {
         return this.packageResolver.resolvePackage(this.getPackageIdFromName(name)).fernFilepath;
     }
 

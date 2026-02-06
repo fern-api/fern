@@ -1,20 +1,19 @@
 import { swift } from "@fern-api/swift-codegen";
-
-import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
         enumName: string;
-        environments: SingleBaseUrlEnvironments;
+        environments: FernIr.SingleBaseUrlEnvironments;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SingleUrlEnvironmentGenerator {
     private readonly enumName: string;
-    private readonly environments: SingleBaseUrlEnvironments;
+    private readonly environments: FernIr.SingleBaseUrlEnvironments;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
     public constructor({ enumName, environments, sdkGeneratorContext }: SingleUrlEnvironmentGenerator.Args) {

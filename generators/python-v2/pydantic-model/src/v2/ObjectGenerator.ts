@@ -1,17 +1,16 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
-
-import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class ObjectGenerator {
     constructor(
-        private readonly typeId: TypeId,
+        private readonly typeId: FernIr.TypeId,
         private readonly context: PydanticModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly objectDeclaration: ObjectTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly objectDeclaration: FernIr.ObjectTypeDeclaration
     ) {}
 
     public doGenerate(): WriteablePythonFile {
@@ -109,7 +108,7 @@ export class ObjectGenerator {
         objectProperty
     }: {
         className: string;
-        objectProperty: NameAndWireValue;
+        objectProperty: FernIr.NameAndWireValue;
     }): string {
         return this.context.getSnakeCaseSafeName(objectProperty.name);
     }

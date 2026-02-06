@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-
-import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { BytesRequest } from "../request/BytesRequest.js";
@@ -15,9 +14,9 @@ export function getEndpointRequest({
     service
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
-    serviceId: ServiceId;
-    service: HttpService;
+    endpoint: FernIr.HttpEndpoint;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
 }): EndpointRequest | undefined {
     if (endpoint.sdkRequest == null) {
         return undefined;
@@ -39,10 +38,10 @@ function createEndpointRequest({
     serviceId
 }: {
     context: SdkGeneratorContext;
-    sdkRequest: SdkRequest;
-    endpoint: HttpEndpoint;
-    service: HttpService;
-    serviceId: ServiceId;
+    sdkRequest: FernIr.SdkRequest;
+    endpoint: FernIr.HttpEndpoint;
+    service: FernIr.HttpService;
+    serviceId: FernIr.ServiceId;
 }): EndpointRequest | undefined {
     switch (sdkRequest.shape.type) {
         case "wrapper":

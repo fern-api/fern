@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
@@ -8,12 +8,12 @@ import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpoint
 
 export declare namespace GeneratedEndpointTypeSchemaImpl {
     export interface Init extends AbstractGeneratedEndpointTypeSchema.Init {
-        type: TypeReference;
+        type: FernIr.TypeReference;
     }
 }
 
 export class GeneratedEndpointTypeSchemaImpl extends AbstractGeneratedEndpointTypeSchema {
-    private type: TypeReference;
+    private type: FernIr.TypeReference;
 
     constructor({ type, ...superInit }: GeneratedEndpointTypeSchemaImpl.Init) {
         super(superInit);

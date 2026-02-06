@@ -3,7 +3,7 @@ import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
@@ -19,7 +19,7 @@ export class RubyGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
     }) {
         super({ logger, config, selfHosted: ir.selfHosted });
         this.readmeConfigBuilder = readmeConfigBuilder;

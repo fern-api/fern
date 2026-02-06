@@ -1,6 +1,5 @@
 import { go } from "@fern-api/go-ast";
-
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { getResponseBodyType } from "./getResponseBodyType.js";
@@ -10,7 +9,7 @@ export function getEndpointReturnType({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): go.Type | undefined {
     const response = endpoint.response;
     if (response?.body == null) {

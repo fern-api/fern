@@ -1,5 +1,5 @@
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { LiteralEnumGenerator } from "../../literal/index.js";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
 import { AdditionalPropertiesMetadata, computeAdditionalPropertiesMetadata } from "./additional-properties.js";
@@ -8,7 +8,7 @@ export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
         unsafeName: string;
         rawName: string;
-        type: swift.TypeReference | TypeReference;
+        type: swift.TypeReference | FernIr.TypeReference;
         value: swift.Expression;
         docsContent?: string;
     }
@@ -16,7 +16,7 @@ export declare namespace StructGenerator {
     interface DataPropertyDefinition {
         unsafeName: string;
         rawName: string;
-        type: TypeReference;
+        type: FernIr.TypeReference;
         indirect?: boolean;
         docsContent?: string;
     }

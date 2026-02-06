@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { Constants } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CoreUtilities,
     CoreUtilitiesManager,
@@ -57,7 +57,7 @@ export declare namespace ExpressContextImpl {
         exportsManager: ExportsManager;
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
-        fernConstants: Constants;
+        fernConstants: FernIr.Constants;
 
         typeResolver: TypeResolver;
         typeGenerator: TypeGenerator;
@@ -101,7 +101,7 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
-    public readonly fernConstants: Constants;
+    public readonly fernConstants: FernIr.Constants;
     public readonly includeSerdeLayer: boolean;
 
     public readonly type: TypeContextImpl;

@@ -1,7 +1,7 @@
 import { GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorCli } from "@fern-api/php-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels.js";
 import { generateTraits } from "./generateTraits.js";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
@@ -14,7 +14,7 @@ export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfig
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: ModelCustomConfigSchema;
         generatorConfig: GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

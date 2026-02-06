@@ -2,20 +2,6 @@ import { fail } from "node:assert";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-type DeclaredErrorName = FernIr.DeclaredErrorName;
-type DeclaredTypeName = FernIr.DeclaredTypeName;
-type ExampleEnumType = FernIr.ExampleEnumType;
-type ExampleNamedType = FernIr.ExampleNamedType;
-type IntermediateRepresentation = FernIr.IntermediateRepresentation;
-type Name = FernIr.Name;
-type NameAndWireValue = FernIr.NameAndWireValue;
-type NamedType = FernIr.NamedType;
-type ProtobufService = FernIr.ProtobufService;
-type Type = FernIr.Type;
-const Type = FernIr.Type;
-type TypeDeclaration = FernIr.TypeDeclaration;
-type WebSocketChannel = FernIr.WebSocketChannel;
-
 import { type TypesOf } from "../utils/type-extractor.js";
 import { is } from "../utils/type-guards.js";
 import { type Generation } from "./generation-info.js";
@@ -61,15 +47,15 @@ export interface Provenance {
  * ensures that undefined is never considered a valid IR node.
  */
 export type IrNode = Exclude<
-    | TypesOf<IntermediateRepresentation>
+    | TypesOf<FernIr.IntermediateRepresentation>
     | TypesOf<DynamicFernIr.dynamic.DynamicIntermediateRepresentation>
-    | TypeDeclaration
-    | ProtobufService
-    | WebSocketChannel
+    | FernIr.TypeDeclaration
+    | FernIr.ProtobufService
+    | FernIr.WebSocketChannel
     | DynamicFernIr.dynamic.NamedType
     | DynamicFernIr.dynamic.Declaration
-    | DeclaredErrorName
-    | DeclaredTypeName, // hack hack hack! Why did it not work without that?
+    | FernIr.DeclaredErrorName
+    | FernIr.DeclaredTypeName, // hack hack hack! Why did it not work without that?
     undefined
 >;
 
@@ -139,7 +125,7 @@ export class ModelNavigator {
     readonly root: Provenance;
 
     /** The Intermediate Representation being navigated */
-    readonly ir: IntermediateRepresentation | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
+    readonly ir: FernIr.IntermediateRepresentation | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Provides access to C# code generation utilities.
@@ -171,7 +157,9 @@ export class ModelNavigator {
         private readonly generation: Generation
     ) {
         this.root = this.createIndex(instance);
-        this.ir = instance as IntermediateRepresentation | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
+        this.ir = instance as
+            | FernIr.IntermediateRepresentation
+            | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
     }
 
     /**
@@ -384,7 +372,7 @@ export class ModelNavigator {
      * @returns The property name to use in generated C# code
      * @throws Error if the enum value name cannot be found in the enum definition
      */
-    getEnumValueName(typeEnum: FernIr.Type.Enum, valueName: NameAndWireValue | ExampleEnumType): string {
+    getEnumValueName(typeEnum: FernIr.Type.Enum, valueName: FernIr.NameAndWireValue | FernIr.ExampleEnumType): string {
         // get the name of the enum value
         const name = is.IR.ExampleEnumType(valueName) ? valueName.value.name : valueName.name;
         // match the name given to the name in the actual type
@@ -494,7 +482,7 @@ export class ModelNavigator {
      * @param name2 - The second Name object to compare
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
-    nameEquals(name1: Name, name2: Name): boolean {
+    nameEquals(name1: FernIr.Name, name2: FernIr.Name): boolean {
         return name1.camelCase.safeName === name2.camelCase.safeName;
     }
 
@@ -518,9 +506,16 @@ export class ModelNavigator {
      * @returns An object containing the typeId and the resolved TypeDeclaration
      * @throws Error if the typeId cannot be resolved to a TypeDeclaration
      */
-    dereferenceType(typeIdOrDeclaration: TypeDeclaration | NamedType | DeclaredTypeName | ExampleNamedType | string): {
+    dereferenceType(
+        typeIdOrDeclaration:
+            | FernIr.TypeDeclaration
+            | FernIr.NamedType
+            | FernIr.DeclaredTypeName
+            | FernIr.ExampleNamedType
+            | string
+    ): {
         typeId: string;
-        typeDeclaration: TypeDeclaration;
+        typeDeclaration: FernIr.TypeDeclaration;
     };
     /**
      * Dereferences a type reference to get its full type declaration (dynamic IR variant).
@@ -535,10 +530,14 @@ export class ModelNavigator {
      * @throws Error if the typeId cannot be resolved to a type declaration
      */
     dereferenceType(
-        typeIdOrDeclaration: TypeDeclaration | NamedType | DeclaredTypeName /* | FernIr.dynamic.NamedType */ | string
+        typeIdOrDeclaration:
+            | FernIr.TypeDeclaration
+            | FernIr.NamedType
+            | FernIr.DeclaredTypeName /* | FernIr.dynamic.NamedType */
+            | string
     ): {
         typeId: string;
-        typeDeclaration: TypeDeclaration | DynamicFernIr.dynamic.NamedType;
+        typeDeclaration: FernIr.TypeDeclaration | DynamicFernIr.dynamic.NamedType;
     } {
         // get the typeId and name
         const typeId = is.string(typeIdOrDeclaration)

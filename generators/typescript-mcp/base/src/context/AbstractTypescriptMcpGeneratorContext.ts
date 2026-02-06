@@ -1,8 +1,7 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
-
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { TypescriptMcpProject } from "../project/TypescriptMcpProject.js";
 import { ZodTypeMapper } from "./ZodTypeMapper.js";
@@ -20,7 +19,7 @@ export abstract class AbstractTypescriptMcpGeneratorContext<
     public publishConfig?: FernGeneratorExec.NpmGithubPublishInfo;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService

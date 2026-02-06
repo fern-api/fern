@@ -1,8 +1,7 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
-
-import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -10,12 +9,12 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        singleUrlEnvironments: SingleBaseUrlEnvironments;
+        singleUrlEnvironments: FernIr.SingleBaseUrlEnvironments;
     }
 }
 
 export class SingleUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private singleUrlEnvironments: SingleBaseUrlEnvironments;
+    private singleUrlEnvironments: FernIr.SingleBaseUrlEnvironments;
 
     constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
         super(context);

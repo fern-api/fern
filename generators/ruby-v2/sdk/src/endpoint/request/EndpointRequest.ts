@@ -1,5 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
 
@@ -21,8 +21,8 @@ export interface RequestBodyCodeBlock {
 export abstract class EndpointRequest {
     public constructor(
         protected readonly context: SdkGeneratorContext,
-        protected readonly sdkRequest: SdkRequest,
-        protected readonly endpoint: HttpEndpoint
+        protected readonly sdkRequest: FernIr.SdkRequest,
+        protected readonly endpoint: FernIr.HttpEndpoint
     ) {}
 
     public getParameterName(): string {

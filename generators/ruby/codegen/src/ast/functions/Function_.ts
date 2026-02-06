@@ -1,5 +1,4 @@
-import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
-
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { BLOCK_END } from "../../utils/RubyConstants.js";
 import { Argument } from "../Argument.js";
 import { Class_ } from "../classes/Class_.js";
@@ -22,7 +21,7 @@ export declare namespace Function_ {
         isAsync?: boolean;
         isStatic?: boolean;
         returnValue?: ClassReference | ClassReference[];
-        flattenedProperties?: Map<TypeId, ObjectProperty[]>;
+        flattenedProperties?: Map<FernIr.TypeId, FernIr.ObjectProperty[]>;
         crf?: ClassReferenceFactory;
         eg?: ExampleGenerator;
         invocationName?: string;

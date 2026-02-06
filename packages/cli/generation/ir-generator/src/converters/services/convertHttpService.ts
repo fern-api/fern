@@ -6,12 +6,12 @@ import {
     ApiAuth,
     AuthSchemesRequirement,
     Encoding,
+    FernIr,
     HttpEndpoint,
     HttpHeader,
     HttpMethod,
     HttpService,
     PathParameter,
-    PathParameterLocation,
     ResponseErrors,
     Transport,
     TypeReference
@@ -73,7 +73,7 @@ export function convertHttpService({
 }): HttpService {
     const servicePathParametersRaw = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
-        location: PathParameterLocation.Service,
+        location: FernIr.PathParameterLocation.Service,
         file,
         variableResolver
     });
@@ -124,7 +124,7 @@ export function convertHttpService({
 
             const endpointPathParametersRaw = convertPathParameters({
                 pathParameters: getEndpointPathParameters(endpoint),
-                location: PathParameterLocation.Endpoint,
+                location: FernIr.PathParameterLocation.Endpoint,
                 file,
                 variableResolver
             });
@@ -290,7 +290,7 @@ export function convertPathParameters({
     variableResolver
 }: {
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
-    location: PathParameterLocation;
+    location: FernIr.PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
 }): PathParameter[] {
@@ -317,7 +317,7 @@ function convertPathParameter({
 }: {
     parameterName: string;
     parameter: RawSchemas.HttpPathParameterSchema;
-    location: PathParameterLocation;
+    location: FernIr.PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
 }): PathParameter {

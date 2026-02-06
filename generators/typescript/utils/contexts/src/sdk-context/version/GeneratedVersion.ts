@@ -1,5 +1,4 @@
-import { HttpHeader } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedFile } from "../../commons/GeneratedFile.js";
 import { SdkContext } from "../SdkContext.js";
 
@@ -8,5 +7,5 @@ export interface GeneratedVersion extends GeneratedFile<SdkContext> {
     getFirstEnumValue: () => string;
     hasDefaultVersion: () => boolean;
     getDefaultVersion: () => string | undefined;
-    getHeader: () => HttpHeader;
+    getHeader: () => FernIr.HttpHeader;
 }

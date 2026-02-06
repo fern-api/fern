@@ -1,7 +1,7 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters/index.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
@@ -12,13 +12,13 @@ import {
 } from "../utils/primitiveTypeUtils.js";
 
 export class AliasGenerator {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly aliasTypeDeclaration: AliasTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly aliasTypeDeclaration: FernIr.AliasTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
     public constructor(
-        typeDeclaration: TypeDeclaration,
-        aliasTypeDeclaration: AliasTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration,
+        aliasTypeDeclaration: FernIr.AliasTypeDeclaration,
         context: ModelGeneratorContext
     ) {
         this.typeDeclaration = typeDeclaration;

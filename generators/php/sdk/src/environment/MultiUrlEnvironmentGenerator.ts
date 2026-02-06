@@ -1,8 +1,7 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
-
-import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -10,12 +9,12 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 export declare namespace MultiUrlEnvironmentGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        multiUrlEnvironments: MultipleBaseUrlsEnvironments;
+        multiUrlEnvironments: FernIr.MultipleBaseUrlsEnvironments;
     }
 }
 
 export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private multiUrlEnvironments: MultipleBaseUrlsEnvironments;
+    private multiUrlEnvironments: FernIr.MultipleBaseUrlsEnvironments;
 
     constructor({ context, multiUrlEnvironments }: MultiUrlEnvironmentGenerator.Args) {
         super(context);

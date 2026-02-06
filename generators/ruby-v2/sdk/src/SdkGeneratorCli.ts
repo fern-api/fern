@@ -6,7 +6,7 @@ import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
 import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator.js";
@@ -27,7 +27,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -154,7 +154,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         });
     }
 
-    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+    private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 const wrappedRequestGenerator = new WrappedRequestGenerator({

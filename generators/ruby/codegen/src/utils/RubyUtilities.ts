@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
 import { ExternalDependency } from "../ast/ExternalDependency.js";
@@ -22,7 +22,7 @@ export function getClientName(organization: string, apiName: string, clientClass
 }
 
 export function getBreadcrumbsFromFilepath(
-    fernFilepath: FernFilepath,
+    fernFilepath: FernIr.FernFilepath,
     clientName: string,
     includeFullPath?: boolean
 ): string[] {

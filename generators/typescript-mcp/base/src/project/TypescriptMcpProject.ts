@@ -3,7 +3,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { capitalize, kebabCase } from "lodash-es";
 import path from "path";
@@ -178,24 +178,24 @@ class TypescriptMcpProjectBuilder {
         return `${capitalize(organization)}${capitalize(workspaceName)}Client`;
     }
 
-    public getSdkMethodPath(name: Name, fernFilepath?: FernFilepath): string {
+    public getSdkMethodPath(name: FernIr.Name, fernFilepath?: FernIr.FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.camelCase.unsafeName);
         return parts.join(".");
     }
 
-    public getSchemaVariableName(name: Name, fernFilepath?: FernFilepath): string {
+    public getSchemaVariableName(name: FernIr.Name, fernFilepath?: FernIr.FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.pascalCase.safeName);
         return parts.join("");
     }
 
-    public getToolVariableName(name: Name, fernFilepath?: FernFilepath): string {
+    public getToolVariableName(name: FernIr.Name, fernFilepath?: FernIr.FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part, index) =>
             index === 0 ? part.camelCase.safeName : part.pascalCase.safeName
         );
         return parts.join("");
     }
 
-    public getToolName(name: Name, fernFilepath?: FernFilepath): string {
+    public getToolName(name: FernIr.Name, fernFilepath?: FernIr.FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.snakeCase.safeName);
         return parts.join("_");
     }

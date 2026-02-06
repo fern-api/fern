@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -18,7 +18,7 @@ import {
 export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         response: GeneratedEndpointResponse;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
@@ -36,7 +36,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
     public static readonly DATA_PARAMETER_NAME = "data";
 
-    public readonly endpoint: HttpEndpoint;
+    public readonly endpoint: FernIr.HttpEndpoint;
 
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -84,7 +84,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getExample(args: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }): EndpointSampleCode | undefined {

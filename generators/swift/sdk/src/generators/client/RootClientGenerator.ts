@@ -1,6 +1,6 @@
 import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { Package } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { EndpointMethodGenerator } from "./EndpointMethodGenerator.js";
@@ -8,7 +8,7 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator.js";
 export declare namespace RootClientGenerator {
     interface Args {
         symbol: swift.Symbol;
-        package_: Package;
+        package_: FernIr.Package;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
@@ -17,7 +17,7 @@ type BearerTokenParamType = "string" | "async-provider";
 
 export class RootClientGenerator {
     private readonly symbol: swift.Symbol;
-    private readonly package_: Package;
+    private readonly package_: FernIr.Package;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly referencer: Referencer;

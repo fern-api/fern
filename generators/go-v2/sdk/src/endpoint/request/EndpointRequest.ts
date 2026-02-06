@@ -1,15 +1,14 @@
 import { go } from "@fern-api/go-ast";
-
-import { HttpEndpoint, HttpService, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export abstract class EndpointRequest {
     public constructor(
         protected readonly context: SdkGeneratorContext,
-        protected readonly sdkRequest: SdkRequest,
-        protected readonly service: HttpService,
-        protected readonly endpoint: HttpEndpoint
+        protected readonly sdkRequest: FernIr.SdkRequest,
+        protected readonly service: FernIr.HttpService,
+        protected readonly endpoint: FernIr.HttpEndpoint
     ) {}
 
     public abstract getRequestParameterType(): go.Type;

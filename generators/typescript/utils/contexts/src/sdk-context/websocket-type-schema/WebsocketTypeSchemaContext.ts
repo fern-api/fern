@@ -1,4 +1,4 @@
-import { Name, WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId, Reference } from "@fern-typescript/commons";
 
 import { GeneratedWebsocketTypeSchema } from "./GeneratedWebsocketTypeSchema.js";
@@ -6,8 +6,8 @@ import { GeneratedWebsocketTypeSchema } from "./GeneratedWebsocketTypeSchema.js"
 export interface WebsocketTypeSchemaContext {
     getGeneratedWebsocketResponseTypeSchema: (
         packageId: PackageId,
-        channel: WebSocketChannel,
-        receiveMessages: WebSocketMessageBodyReference[]
+        channel: FernIr.WebSocketChannel,
+        receiveMessages: FernIr.WebSocketMessageBodyReference[]
     ) => GeneratedWebsocketTypeSchema;
-    getReferenceToWebsocketResponseType: (packageId: PackageId, channelName: Name) => Reference;
+    getReferenceToWebsocketResponseType: (packageId: PackageId, channelName: FernIr.Name) => Reference;
 }

@@ -1,4 +1,4 @@
-import { ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { GeneratedModule } from "../../commons/GeneratedModule.js";
@@ -11,5 +11,5 @@ export interface BaseGeneratedType<Context>
         GeneratedStatements<Context>,
         GeneratedModule<Context>,
         GeneratedUnionInlineMemberNode<Context> {
-    buildExample: (example: ExampleTypeShape, context: Context, opts: GetReferenceOpts) => ts.Expression;
+    buildExample: (example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts) => ts.Expression;
 }

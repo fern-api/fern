@@ -8,7 +8,7 @@ import {
     ContainerType,
     DeclaredTypeName,
     FernFilepath,
-    ObjectPropertyAccess,
+    FernIr,
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -548,7 +548,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public getPropertyAccess(
         schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
-    ): ObjectPropertyAccess | undefined {
+    ): FernIr.ObjectPropertyAccess | undefined {
         let schema = schemaOrReference;
 
         while (this.isReferenceObject(schema)) {
@@ -567,11 +567,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         if (readOnly) {
-            return ObjectPropertyAccess.ReadOnly;
+            return FernIr.ObjectPropertyAccess.ReadOnly;
         }
 
         if (writeOnly) {
-            return ObjectPropertyAccess.WriteOnly;
+            return FernIr.ObjectPropertyAccess.WriteOnly;
         }
 
         return undefined;

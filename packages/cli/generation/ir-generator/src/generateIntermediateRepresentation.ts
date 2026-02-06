@@ -8,7 +8,6 @@ import {
     FernIr,
     HttpEndpoint,
     IntermediateRepresentation,
-    PathParameterLocation,
     ResponseErrors,
     SdkConfig,
     ServiceId,
@@ -177,7 +176,7 @@ export function generateIntermediateRepresentation({
         pathParameters: convertPathParameters({
             pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
-            location: PathParameterLocation.Root,
+            location: FernIr.PathParameterLocation.Root,
             variableResolver
         }),
         variables:

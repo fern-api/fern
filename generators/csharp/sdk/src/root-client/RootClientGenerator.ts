@@ -642,8 +642,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             prefix: "Bearer"
                         },
                         typeReference: FernIr.TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -664,8 +664,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
                         isOptional,
                         typeReference: FernIr.TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -679,8 +679,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
                         isOptional,
                         typeReference: FernIr.TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -699,8 +699,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         docs: "The clientId to use for authentication.",
                         isOptional,
                         typeReference: FernIr.TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -714,8 +714,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         docs: "The clientSecret to use for authentication.",
                         isOptional,
                         typeReference: FernIr.TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })

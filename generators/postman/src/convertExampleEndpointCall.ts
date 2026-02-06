@@ -1,11 +1,4 @@
-import {
-    ErrorDeclaration,
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
 import { isEqual, startCase } from "lodash";
 
@@ -20,13 +13,13 @@ export function convertExampleEndpointCall({
     allErrors,
     allTypes
 }: {
-    ir: IntermediateRepresentation;
+    ir: FernIr.IntermediateRepresentation;
     authHeaders: PostmanHeader[];
-    httpEndpoint: HttpEndpoint;
-    httpService: HttpService;
-    example: ExampleEndpointCall;
-    allErrors: ErrorDeclaration[];
-    allTypes: TypeDeclaration[];
+    httpEndpoint: FernIr.HttpEndpoint;
+    httpService: FernIr.HttpService;
+    example: FernIr.ExampleEndpointCall;
+    allErrors: FernIr.ErrorDeclaration[];
+    allTypes: FernIr.TypeDeclaration[];
 }): PostmanExampleResponse {
     const generatedRequest = new GeneratedExampleRequest({
         ir,
@@ -78,8 +71,8 @@ function getNameAndStatus({
     example,
     allErrors
 }: {
-    example: ExampleEndpointCall;
-    allErrors: ErrorDeclaration[];
+    example: FernIr.ExampleEndpointCall;
+    allErrors: FernIr.ErrorDeclaration[];
 }): Pick<PostmanExampleResponse, "name" | "status" | "code"> {
     if (example.response.type === "ok") {
         return {

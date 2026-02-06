@@ -1,5 +1,5 @@
 import { java, Writer } from "@fern-api/java-ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { SnippetExtractor } from "../extractors/SnippetExtractor.js";
 import { WireTestExample } from "../extractors/TestDataExtractor.js";
@@ -47,7 +47,7 @@ export class TestMethodBuilder {
      * Creates a test method for an endpoint with mock setup and validation.
      */
     public createTestMethod(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         snippet: string,
         testExample: WireTestExample
     ): (writer: Writer) => void {
@@ -251,7 +251,7 @@ export class TestMethodBuilder {
     /**
      * Checks if the endpoint uses application/x-www-form-urlencoded content type.
      */
-    private isFormUrlEncodedEndpoint(endpoint: HttpEndpoint): boolean {
+    private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         const requestBody = endpoint.requestBody;
         if (!requestBody) {
             return false;
@@ -285,7 +285,7 @@ export class TestMethodBuilder {
     /**
      * Generates a mock response body for endpoints without example data.
      */
-    private generateMockResponseForEndpoint(endpoint: HttpEndpoint): string {
+    private generateMockResponseForEndpoint(endpoint: FernIr.HttpEndpoint): string {
         const responseBody = endpoint.response?.body;
 
         if (!responseBody || responseBody.type !== "json") {
@@ -301,7 +301,7 @@ export class TestMethodBuilder {
         });
     }
 
-    private getEndpointReturnType(endpoint: HttpEndpoint): string {
+    private getEndpointReturnType(endpoint: FernIr.HttpEndpoint): string {
         try {
             const javaType = this.context.getReturnTypeForEndpoint(endpoint);
 
@@ -328,7 +328,7 @@ export class TestMethodBuilder {
     /**
      * Gets the return type for an endpoint and collects its imports.
      */
-    public getEndpointReturnTypeWithImports(endpoint: HttpEndpoint): { typeName: string; imports: Set<string> } {
+    public getEndpointReturnTypeWithImports(endpoint: FernIr.HttpEndpoint): { typeName: string; imports: Set<string> } {
         try {
             const imports = new Set<string>();
 

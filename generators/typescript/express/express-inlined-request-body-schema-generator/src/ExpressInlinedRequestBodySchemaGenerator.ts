@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedExpressInlinedRequestBodySchema } from "@fern-typescript/contexts";
 
@@ -13,7 +13,7 @@ export declare namespace ExpressInlinedRequestBodySchemaGenerator {
     export namespace generateInlinedRequestBodySchema {
         export interface Args {
             packageId: PackageId;
-            endpoint: HttpEndpoint;
+            endpoint: FernIr.HttpEndpoint;
             typeName: string;
         }
     }

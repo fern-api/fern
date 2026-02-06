@@ -1,7 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
@@ -26,7 +26,7 @@ import { WebsocketTypeSchemaContext } from "./websocket-type-schema/index.js";
 export interface SdkContext extends BaseContext {
     logger: Logger;
     version: string | undefined;
-    ir: IntermediateRepresentation;
+    ir: FernIr.IntermediateRepresentation;
     config: FernGeneratorExec.GeneratorConfig;
     generatorNotificationService: GeneratorNotificationService;
     npmPackage: NpmPackage | undefined;

@@ -6,7 +6,7 @@ import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ClientGenerator } from "./client/ClientGenerator.js";
 import { InternalFilesGenerator } from "./internal/InternalFilesGenerator.js";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator.js";
@@ -24,7 +24,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

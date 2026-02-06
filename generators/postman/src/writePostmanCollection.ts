@@ -7,7 +7,7 @@ import {
     parseIR
 } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
 import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
@@ -214,8 +214,8 @@ async function publishCollection({
     }
 }
 
-async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    return await parseIR<IntermediateRepresentation>({
+async function loadIntermediateRepresentation(pathToFile: string): Promise<FernIr.IntermediateRepresentation> {
+    return await parseIR<FernIr.IntermediateRepresentation>({
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
     });

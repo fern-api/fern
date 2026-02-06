@@ -1,8 +1,7 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { ExportNode, FileGenerator, ObjectLiteralNode, TypescriptFile } from "@fern-api/typescript-mcp-base";
-
-import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
@@ -15,8 +14,8 @@ export class ObjectGenerator extends FileGenerator<
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly objectDeclaration: ObjectTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly objectDeclaration: FernIr.ObjectTypeDeclaration
     ) {
         super(context);
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(

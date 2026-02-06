@@ -1,4 +1,4 @@
-import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
 
 import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl.js";
@@ -8,7 +8,7 @@ import { GeneratedSingleUrlEnvironmentsImpl } from "./GeneratedSingleUrlEnvironm
 export declare namespace EnvironmentsGenerator {
     export namespace generateEnvironments {
         export interface Args {
-            environmentsConfig: EnvironmentsConfig | undefined;
+            environmentsConfig: FernIr.EnvironmentsConfig | undefined;
             environmentEnumName: string;
             environmentUrlsTypeName: string;
         }
@@ -38,7 +38,7 @@ export class EnvironmentsGenerator {
         ) {
             return new EmptyGeneratedEnvironmentsImpl();
         }
-        return Environments._visit<GeneratedEnvironments>(environmentsConfig.environments, {
+        return FernIr.Environments._visit<GeneratedEnvironments>(environmentsConfig.environments, {
             singleBaseUrl: (singleBaseUrlEnvironments) =>
                 new GeneratedSingleUrlEnvironmentsImpl({
                     environments: singleBaseUrlEnvironments,

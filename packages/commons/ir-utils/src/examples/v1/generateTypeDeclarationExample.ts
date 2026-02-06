@@ -1,9 +1,9 @@
 import {
     ExampleObjectProperty,
     ExampleObjectType,
-    ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
     ExampleUnionBaseProperty,
+    FernIr,
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId,
@@ -311,7 +311,7 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.noProperties()
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
                                 },
                                 baseProperties,
                                 extendProperties
@@ -354,7 +354,7 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                                         typeId: typeDeclaration.name.typeId,
                                         object:
                                             example.type === "object"
@@ -391,7 +391,7 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.singleProperty(example)
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty(example)
                                 },
                                 baseProperties,
                                 extendProperties

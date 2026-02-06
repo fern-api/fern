@@ -1,4 +1,4 @@
-import { WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 
 import { GeneratedWebsocketSocketClass } from "./GeneratedWebsocketSocketClass.js";
@@ -6,8 +6,8 @@ import { GeneratedWebsocketSocketClass } from "./GeneratedWebsocketSocketClass.j
 export interface WebsocketClassContext {
     getGeneratedWebsocketSocketClass: (
         packageId: PackageId,
-        channelId: WebSocketChannelId,
-        channel: WebSocketChannel
+        channelId: FernIr.WebSocketChannelId,
+        channel: FernIr.WebSocketChannel
     ) => GeneratedWebsocketSocketClass;
     getReferenceToWebsocketSocketClass: (
         packageId: PackageId,

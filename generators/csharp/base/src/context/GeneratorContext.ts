@@ -360,7 +360,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
 
-    public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): ast.Annotation {
+    public createJsonAccessAttribute(propertyAccess: FernIr.ObjectPropertyAccess): ast.Annotation {
         let argument: string;
         switch (propertyAccess) {
             case "READ_ONLY":
@@ -585,7 +585,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): ast.CodeBlock {
-        return PrimitiveTypeV1._visit<ast.CodeBlock>(primitive.v1, {
+        return FernIr.PrimitiveTypeV1._visit<ast.CodeBlock>(primitive.v1, {
             integer: () => this.csharp.codeblock("0"),
             long: () => this.csharp.codeblock("0"),
             uint: () => this.csharp.codeblock("0"),
