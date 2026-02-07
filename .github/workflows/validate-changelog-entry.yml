@@ -1,0 +1,53 @@
+name: Validate Changelog Entry
+
+on:
+  pull_request:
+    paths:
+      - "packages/cli/**"
+
+jobs:
+  validate-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changelog entry
+        run: |
+          # Get all changed files in the PR
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+
+          # Check if any files in packages/cli/cli/ were changed (excluding changes/ directory itself)
+          CLI_CHANGES=$(echo "$CHANGED_FILES" | grep '^packages/cli/cli/' | grep -v '^packages/cli/cli/changes/' || true)
+
+          if [ -z "$CLI_CHANGES" ]; then
+            echo "✅ No CLI changes detected"
+            exit 0
+          fi
+
+          echo "📝 CLI changes detected:"
+          echo "$CLI_CHANGES"
+          echo ""
+
+          # Check if any files in packages/cli/cli/changes/unreleased/ were added or modified
+          CHANGELOG_CHANGES=$(echo "$CHANGED_FILES" | grep '^packages/cli/cli/changes/unreleased/.*\.ya?ml$' || true)
+
+          if [ -z "$CHANGELOG_CHANGES" ]; then
+            echo "❌ Error: CLI files were modified but no changelog entry was added to packages/cli/cli/changes/unreleased/"
+            echo ""
+            echo "Please create a changelog entry file in packages/cli/cli/changes/unreleased/ following this format:"
+            echo ""
+            echo "# yaml-language-server: \$schema=../../../../../fern-changes-yml.schema.json"
+            echo ""
+            echo "- summary: |"
+            echo "    Your change description here"
+            echo "  type: feat|fix|chore|internal|break"
+            echo "  severity: major|minor|patch"
+            echo ""
+            exit 1
+          fi
+
+          echo "✅ Changelog entry found:"
+          echo "$CHANGELOG_CHANGES"

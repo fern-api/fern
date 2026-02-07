@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/ChangelogEntry"
+    },
+    "definitions": {
+        "ChangelogEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "summary": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChangelogType"
+                },
+                "severity": {
+                    "$ref": "#/definitions/Severity"
+                }
+            },
+            "required": [
+                "summary",
+                "type",
+                "severity"
+            ],
+            "title": "Changelog"
+        },
+        "ChangelogType": {
+            "type": "string",
+            "enum": [
+                "fix",
+                "chore",
+                "feat",
+                "internal",
+                "break"
+            ],
+            "title": "Changelog Type"
+        },
+        "Severity": {
+            "type": "string",
+            "enum": [
+                "major",
+                "minor",
+                "patch"
+            ],
+            "title": "Severity"
+        }
+    }
+}
