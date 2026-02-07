@@ -1,0 +1,45 @@
+name: Enforce versions.yml Protection
+
+on:
+  pull_request:
+    paths:
+      - "packages/cli/cli/versions.yml"
+
+jobs:
+  check-versions-yml:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from release branch
+        id: check_branch
+        run: |
+          if [[ "${{ github.head_ref }}" == release/* ]]; then
+            echo "is_release_branch=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_release_branch=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Fail if versions.yml was modified
+        if: steps.check_branch.outputs.is_release_branch == 'false'
+        run: |
+          echo "❌ Error: Direct modifications to packages/cli/cli/versions.yml are not allowed"
+          echo ""
+          echo "The versions.yml file is managed automatically by the release workflow."
+          echo ""
+          echo "To add a changelog entry:"
+          echo "  1. Create a file in packages/cli/cli/changes/unreleased/ (e.g., my-feature.yml)"
+          echo "  2. Follow the format specified in fern-changes-yml.schema.json"
+          echo ""
+          echo "Example:"
+          echo "  # packages/cli/cli/changes/unreleased/my-feature.yml"
+          echo "  # yaml-language-server: \$schema=../../../../../fern-changes-yml.schema.json"
+          echo ""
+          echo "  - summary: |"
+          echo "      Your change description"
+          echo "    type: feat|fix|chore|internal|break"
+          echo "    severity: major|minor|patch"
+          echo ""
+          echo "To trigger a release:"
+          echo "  - Include !autorelease in your PR title"
+          echo "  - This will create an automated release PR when merged"
+          echo ""
+          exit 1
