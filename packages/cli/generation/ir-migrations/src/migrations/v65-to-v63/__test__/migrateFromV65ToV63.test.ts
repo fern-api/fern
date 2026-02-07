@@ -13,34 +13,34 @@ describe("migrateFromV65ToV63", () => {
     };
 
     const createEndpointWithPagination = (
-        pagination: IrVersions.V63.Pagination | undefined
-    ): IrVersions.V63.HttpEndpoint => {
+        pagination: IrVersions.V65.Pagination | undefined
+    ): IrVersions.V65.HttpEndpoint => {
         return {
             pagination
-        } as IrVersions.V63.HttpEndpoint;
+        } as IrVersions.V65.HttpEndpoint;
     };
 
-    const createIRWithEndpoint = (endpoint: IrVersions.V63.HttpEndpoint): IrVersions.V63.IntermediateRepresentation => {
+    const createIRWithEndpoint = (endpoint: IrVersions.V65.HttpEndpoint): IrVersions.V65.IntermediateRepresentation => {
         return {
             services: {
                 service_test: {
                     endpoints: [endpoint]
-                } as unknown as IrVersions.V63.HttpService
+                } as unknown as IrVersions.V65.HttpService
             }
-        } as unknown as IrVersions.V63.IntermediateRepresentation;
+        } as unknown as IrVersions.V65.IntermediateRepresentation;
     };
 
-    const mockResponseProperty: IrVersions.V63.ResponseProperty = {
-        property: {} as IrVersions.V63.ObjectProperty,
+    const mockResponseProperty: IrVersions.V65.ResponseProperty = {
+        property: {} as IrVersions.V65.ObjectProperty,
         propertyPath: []
     };
 
     it("passes through cursor pagination", () => {
-        const cursorPagination = IrVersions.V63.Pagination.cursor({
+        const cursorPagination = IrVersions.V65.Pagination.cursor({
             page: {
-                property: IrVersions.V63.RequestPropertyValue.query({
-                    name: { name: { originalName: "cursor" } as IrVersions.V63.Name, wireValue: "cursor" },
-                    valueType: IrVersions.V63.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                property: IrVersions.V65.RequestPropertyValue.query({
+                    name: { name: { originalName: "cursor" } as IrVersions.V65.Name, wireValue: "cursor" },
+                    valueType: IrVersions.V65.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                     allowMultiple: false,
                     v2Examples: undefined,
                     explode: undefined,
@@ -53,8 +53,8 @@ describe("migrateFromV65ToV63", () => {
             results: mockResponseProperty
         });
 
-        const v63IR = createIRWithEndpoint(createEndpointWithPagination(cursorPagination));
-        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v63IR, mockContext);
+        const v65IR = createIRWithEndpoint(createEndpointWithPagination(cursorPagination));
+        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
 
         const migratedEndpoint = migratedIR.services["service_test"]?.endpoints[0];
         expect(migratedEndpoint?.pagination?.type).toBe("cursor");
@@ -64,37 +64,37 @@ describe("migrateFromV65ToV63", () => {
     });
 
     it("throws error for nextUri pagination", () => {
-        const nextUriPagination = IrVersions.V63.Pagination.uri({
+        const nextUriPagination = IrVersions.V65.Pagination.uri({
             nextUri: mockResponseProperty,
             results: mockResponseProperty
         });
 
-        const v63IR = createIRWithEndpoint(createEndpointWithPagination(nextUriPagination));
+        const v65IR = createIRWithEndpoint(createEndpointWithPagination(nextUriPagination));
 
         expect(() => {
-            V65_TO_V63_MIGRATION.migrateBackwards(v63IR, mockContext);
+            V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
         }).toThrow("CursorPagination with 'uri' locator cannot be migrated to IR v63");
     });
 
     it("throws error for nextPath pagination", () => {
-        const nextPathPagination = IrVersions.V63.Pagination.path({
+        const nextPathPagination = IrVersions.V65.Pagination.path({
             nextPath: mockResponseProperty,
             results: mockResponseProperty
         });
 
-        const v63IR = createIRWithEndpoint(createEndpointWithPagination(nextPathPagination));
+        const v65IR = createIRWithEndpoint(createEndpointWithPagination(nextPathPagination));
 
         expect(() => {
-            V65_TO_V63_MIGRATION.migrateBackwards(v63IR, mockContext);
+            V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
         }).toThrow("CursorPagination with 'path' locator cannot be migrated to IR v63");
     });
 
     it("passes through offset pagination unchanged", () => {
-        const offsetPagination = IrVersions.V63.Pagination.offset({
+        const offsetPagination = IrVersions.V65.Pagination.offset({
             page: {
-                property: IrVersions.V63.RequestPropertyValue.query({
-                    name: { name: { originalName: "page" } as IrVersions.V63.Name, wireValue: "page" },
-                    valueType: IrVersions.V63.TypeReference.primitive({ v1: "INTEGER", v2: undefined }),
+                property: IrVersions.V65.RequestPropertyValue.query({
+                    name: { name: { originalName: "page" } as IrVersions.V65.Name, wireValue: "page" },
+                    valueType: IrVersions.V65.TypeReference.primitive({ v1: "INTEGER", v2: undefined }),
                     allowMultiple: false,
                     v2Examples: undefined,
                     explode: undefined,
@@ -108,16 +108,16 @@ describe("migrateFromV65ToV63", () => {
             hasNextPage: undefined
         });
 
-        const v63IR = createIRWithEndpoint(createEndpointWithPagination(offsetPagination));
-        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v63IR, mockContext);
+        const v65IR = createIRWithEndpoint(createEndpointWithPagination(offsetPagination));
+        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
 
         const migratedEndpoint = migratedIR.services["service_test"]?.endpoints[0];
         expect(migratedEndpoint?.pagination?.type).toBe("offset");
     });
 
     it("handles endpoint without pagination", () => {
-        const v63IR = createIRWithEndpoint(createEndpointWithPagination(undefined));
-        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v63IR, mockContext);
+        const v65IR = createIRWithEndpoint(createEndpointWithPagination(undefined));
+        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
 
         const migratedEndpoint = migratedIR.services["service_test"]?.endpoints[0];
         expect(migratedEndpoint?.pagination).toBeUndefined();
