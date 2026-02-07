@@ -46,6 +46,14 @@ jobs:
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Create release branch
+        if: steps.check_unreleased.outputs.has_changes == 'true'
+        id: create_branch
+        run: |
+          BRANCH_NAME="release/cli-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b "$BRANCH_NAME"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
       - name: Prepare release
         if: steps.check_unreleased.outputs.has_changes == 'true'
         id: prepare_release
@@ -57,16 +65,47 @@ jobs:
           VERSION=$(grep -m 1 'version:' packages/cli/cli/versions.yml | awk '{print $2}')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Commit and push to main
+      - name: Commit and push branch
         if: steps.check_unreleased.outputs.has_changes == 'true'
         run: |
           git add packages/cli/cli/versions.yml
           git add packages/cli/cli/changes/
           git commit -m "chore(cli): release ${{ steps.prepare_release.outputs.version }}"
-          git push origin main
+          git push origin "${{ steps.create_branch.outputs.branch_name }}"
+
+      - name: Create release PR
+        if: steps.check_unreleased.outputs.has_changes == 'true'
+        id: create_pr
+        env:
+          GH_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+        run: |
+          PR_URL=$(gh pr create \
+            --title "chore(cli): release ${{ steps.prepare_release.outputs.version }}" \
+            --body "## Automated CLI Release
+
+          **Version:** ${{ steps.prepare_release.outputs.version }}
+
+          This PR was automatically created by the auto-release workflow.
+
+          ### Changes
+          - Updated \`versions.yml\` with new version and changelog entries
+          - Moved unreleased change files to \`changes/${{ steps.prepare_release.outputs.version }}/\`
+
+          **Merging this PR will trigger \`publish-cli.yml\`** to publish version ${{ steps.prepare_release.outputs.version }} to npm.
+
+          🤖 [View workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" \
+            --base main \
+            --head "${{ steps.create_branch.outputs.branch_name }}")
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+          echo "$PR_URL"
 
       - name: Summary
         if: steps.check_unreleased.outputs.has_changes == 'true'
         run: |
-          echo "✅ Release ${{ steps.prepare_release.outputs.version }} pushed to main"
-          echo "🚀 This will trigger the publish-cli.yml workflow to publish the new CLI version"
+          echo "## 🎉 Release PR Created!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ steps.prepare_release.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**PR:** ${{ steps.create_pr.outputs.pr_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Review and merge the PR to publish this version to npm." >> $GITHUB_STEP_SUMMARY
