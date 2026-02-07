@@ -3,15 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "."
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../ir-utils"
-    },
-    {
-      "path": "../../../generators/base"
-    }
-  ]
+  "include": ["./**/*"],
+  "exclude": ["node_modules", "lib", "dist", "test"]
 }

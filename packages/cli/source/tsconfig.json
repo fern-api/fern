@@ -8,9 +8,6 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../commons/core-utils"
-    },
-    {
       "path": "../../commons/path-utils"
     }
   ]
