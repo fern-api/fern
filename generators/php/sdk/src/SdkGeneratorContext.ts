@@ -189,7 +189,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getHttpMethodClassReference(): php.ClassReference {
-        return this.getCoreClientClassReference("FernIr.HttpMethod");
+        return this.getCoreClientClassReference("HttpMethod");
     }
 
     public getPagerClassReference(itemType: php.Type): php.ClassReference {
