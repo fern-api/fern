@@ -27,6 +27,7 @@ groups:
           token: ${NPM_TOKEN}
         config:
           noOptionalProperties: false
+          noSerdeLayer: true
         smart-casing: false
   node:
     generators:
@@ -35,7 +36,7 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: "@fern-fern/ir-sdk"
+          package-name: "@fern-fern/ir-v63-sdk"
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
@@ -48,7 +49,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV64
+          coordinate: com.fern.fern:irV63
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
@@ -60,7 +61,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v64
+          package-name: fern_fern_ir_v63
         config:
           include_union_utils: true
           frozen: true
