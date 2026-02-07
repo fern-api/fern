@@ -39,7 +39,7 @@ jobs:
       - name: Check for unreleased changes
         id: check_unreleased
         run: |
-          if [ -z "$(ls -A packages/cli/cli/changes/unreleased/*.yml 2>/dev/null)" ]; then
+          if [ -z "$(ls -A packages/cli/cli/changes/unreleased/*.{yml,yaml} 2>/dev/null)" ]; then
             echo "No unreleased changes found. Skipping release preparation."
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
