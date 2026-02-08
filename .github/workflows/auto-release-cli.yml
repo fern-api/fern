@@ -53,8 +53,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Check if any open PRs exist with release/cli-* branch pattern
-          OPEN_RELEASE_PRS=$(gh pr list --state open --head "release/cli-" --json number,headRefName --jq length)
+          # Get all open PRs and filter for release/cli-* pattern
+          OPEN_RELEASE_PRS=$(gh pr list \
+            --state open \
+            --json number,headRefName \
+            --jq '[.[] | select(.headRefName | startswith("release/cli-"))] | length')
 
           if [ "$OPEN_RELEASE_PRS" -gt 0 ]; then
             echo "has_release_pr=true" >> $GITHUB_OUTPUT
