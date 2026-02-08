@@ -1,0 +1,9 @@
+# Template for changelog entries
+# Copy this file and rename it to describe your change (e.g., add-auth-feature.yml)
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Brief description of your change.
+    You can use multiple lines for longer descriptions.
+  type: feat  # Options: feat, fix, chore, internal, break
+  severity: minor  # Options: major (breaking), minor (new feature), patch (bug fix)

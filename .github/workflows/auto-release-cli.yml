@@ -38,7 +38,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # Uses GITHUB_TOKEN by default (automatically provided)
 
       - name: Configure git
         run: |
@@ -88,7 +88,8 @@ jobs:
         if: steps.check_release_pr.outputs.has_release_pr == 'false'
         id: check_unreleased
         run: |
-          if [ -z "$(ls -A packages/cli/cli/changes/unreleased/*.{yml,yaml} 2>/dev/null)" ]; then
+          # Check for both .yml and .yaml files, excluding hidden files (starting with .)
+          if [ -z "$(find packages/cli/cli/changes/unreleased -maxdepth 1 -type f \( -name "*.yml" -o -name "*.yaml" \) ! -name ".*" 2>/dev/null)" ]; then
             echo "No unreleased changes found. Skipping release preparation."
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else

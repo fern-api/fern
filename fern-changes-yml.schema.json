@@ -1,5 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "CLI Changelog Entry",
+    "description": "Schema for CLI changelog entries in the unreleased directory",
     "type": "array",
     "items": {
         "$ref": "#/definitions/ChangelogEntry"
@@ -10,13 +12,16 @@
             "additionalProperties": false,
             "properties": {
                 "summary": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the change. Use multi-line format for longer descriptions."
                 },
                 "type": {
-                    "$ref": "#/definitions/ChangelogType"
+                    "$ref": "#/definitions/ChangelogType",
+                    "description": "Type of change: feat (new feature), fix (bug fix), chore (maintenance), internal (internal change), break (breaking change)"
                 },
                 "severity": {
-                    "$ref": "#/definitions/Severity"
+                    "$ref": "#/definitions/Severity",
+                    "description": "Semantic version impact: major (breaking), minor (new feature), patch (bug fix/chore)"
                 }
             },
             "required": [
@@ -35,7 +40,8 @@
                 "internal",
                 "break"
             ],
-            "title": "Changelog Type"
+            "title": "Changelog Type",
+            "description": "The type of change being made"
         },
         "Severity": {
             "type": "string",
@@ -44,7 +50,8 @@
                 "minor",
                 "patch"
             ],
-            "title": "Severity"
+            "title": "Severity",
+            "description": "The semantic version impact of this change"
         }
     }
 }

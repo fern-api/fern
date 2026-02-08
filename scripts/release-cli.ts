@@ -23,14 +23,18 @@ interface UnreleasedChange {
 
 function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     if (!existsSync(unreleasedDir)) {
-        console.error(`Error: Unreleased changes directory not found: ${unreleasedDir}`);
+        console.error(`❌ Error: Unreleased changes directory not found: ${unreleasedDir}`);
         process.exit(1);
     }
 
-    const files = readdirSync(unreleasedDir).filter((file) => file.endsWith(".yml") || file.endsWith(".yaml"));
+    const files = readdirSync(unreleasedDir).filter(
+        (file) =>
+            (file.endsWith(".yml") || file.endsWith(".yaml")) &&
+            !file.startsWith(".") // Exclude hidden files like .template.yml and .gitkeep
+    );
 
     if (files.length === 0) {
-        console.log("No unreleased changes found. Nothing to release.");
+        console.log("ℹ️  No unreleased changes found. Nothing to release.");
         process.exit(0);
     }
 
@@ -67,6 +71,11 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
 
     const [major, minor, patch] = currentVersion.split(".").map(Number);
 
+    if (major === undefined || minor === undefined || patch === undefined) {
+        console.error("Error: currentVersion is invalid");
+        process.exit(1);
+    }
+
     switch (highestSeverity) {
         case "major":
             return `${major + 1}.0.0`;
@@ -86,6 +95,11 @@ function getCurrentVersion(versionsFile: string): string {
         process.exit(1);
     }
 
+    if (!versions[0] || versions[0].version === undefined) {
+        console.error("Error: versions.yml does not contain a valid version entry");
+        process.exit(1);
+    }
+
     return versions[0].version;
 }
 
@@ -95,6 +109,11 @@ function getCurrentIrVersion(versionsFile: string): number {
 
     if (!Array.isArray(versions) || versions.length === 0) {
         console.error("Error: versions.yml is empty or invalid");
+        process.exit(1);
+    }
+
+    if (!versions[0] || versions[0].irVersion === undefined) {
+        console.error("Error: versions.yml does not contain a valid irVersion entry");
         process.exit(1);
     }
 

@@ -1,6 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Refactored CLI versioning to use a merge-conflict-free approach with separate folders for each version.
-  type: feat
-  severity: minor
