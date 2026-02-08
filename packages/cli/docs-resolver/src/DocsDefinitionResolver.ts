@@ -1552,21 +1552,12 @@ export class DocsDefinitionResolver {
                         }
                     }
                 } catch (error) {
-                    console.error(`[DEBUG] Failed to process GraphQL spec ${spec.absoluteFilepath}:`, error);
                     this.taskContext.logger.error(
                         `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
                         String(error)
                     );
                 }
             }
-        }
-
-        const finalOpsCount = Object.keys(graphqlOperations).length;
-        const finalTypesCount = Object.keys(graphqlTypes).length;
-
-        if (finalOpsCount > 0) {
-        }
-        if (finalTypesCount > 0) {
         }
 
         return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
