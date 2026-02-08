@@ -1528,36 +1528,155 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
-        // Get pre-processed GraphQL data from workspaces and build namespace mapping
+        // Process GraphQL specs directly (not relying on workspace pre-processing)
         for (const ossWorkspace of this.ossWorkspaces) {
-            // Merge processed GraphQL data from workspace
-            Object.assign(graphqlOperations, ossWorkspace.getGraphqlOperations());
-            Object.assign(graphqlTypes, ossWorkspace.getGraphqlTypes());
-
-            // Build namespace mapping by processing individual specs
             const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
-            for (const spec of graphqlSpecs) {
-                if (spec.namespace != null) {
-                    try {
-                        // Process each spec individually to map operations to namespaces
-                        const converter = new GraphQLConverter({
-                            context: this.taskContext,
-                            filePath: spec.absoluteFilepath
-                        });
-                        const graphqlResult = await converter.convert();
 
-                        // Map operations from this spec to its namespace
-                        for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
-                            namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
-                        }
-                    } catch (error) {
-                        this.taskContext.logger.error(
-                            `Failed to process GraphQL spec for namespace mapping ${spec.absoluteFilepath}:`,
-                            String(error)
-                        );
+            for (const spec of graphqlSpecs) {
+                try {
+                    const converter = new GraphQLConverter({
+                        context: this.taskContext,
+                        filePath: spec.absoluteFilepath
+                    });
+                    const graphqlResult = await converter.convert();
+
+                    const specOpsCount = Object.keys(graphqlResult.graphqlOperations).length;
+                    const specTypesCount = Object.keys(graphqlResult.types).length;
+
+                    if (specTypesCount > 0) {
                     }
+
+                    // If spec has a namespace, prefix operation IDs and type names to avoid conflicts
+                    if (spec.namespace != null) {
+                        // Create mapping of old type names to namespaced type names
+                        const typeNameMapping = new Map<string, string>();
+                        const namespacedTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+
+                        // First, create namespaced types and build mapping
+                        for (const [typeId, typeDefinition] of Object.entries(graphqlResult.types)) {
+                            const namespacedTypeId = FdrAPI.TypeId(`${spec.namespace}_${typeId}`);
+                            typeNameMapping.set(typeId, namespacedTypeId);
+                            namespacedTypes[namespacedTypeId] = {
+                                ...typeDefinition,
+                                name: `${spec.namespace}_${typeDefinition.name}`
+                            };
+                        }
+
+                        const mappingEntries = Array.from(typeNameMapping.entries()).slice(0, 10);
+                        mappingEntries.forEach(([oldId, newId]) => {});
+                        if (typeNameMapping.size > 10) {
+                        }
+
+                        // Helper function to update type references in objects recursively
+                        const updateTypeReferences = (obj: any, depth = 0): any => {
+                            const indent = "  ".repeat(depth);
+                            if (!obj || typeof obj !== "object") {
+                                return obj;
+                            }
+
+                            if (Array.isArray(obj)) {
+                                return obj.map((item) => updateTypeReferences(item, depth + 1));
+                            }
+
+                            const updatedObj = { ...obj };
+                            let foundTypeRef = false;
+
+                            // Log any object that might contain type references
+                            if (typeof obj === "object" && obj !== null) {
+                                const objKeys = Object.keys(obj);
+                                if (
+                                    objKeys.some((key) =>
+                                        ["type", "value", "id", "name", "typeId", "reference", "ref"].includes(key)
+                                    ) ||
+                                    Object.values(obj).some(
+                                        (val) => typeof val === "string" && typeNameMapping.has(val)
+                                    )
+                                ) {
+                                }
+                            }
+
+                            for (const [key, value] of Object.entries(updatedObj)) {
+                                // Check for various type reference patterns
+                                if (typeof value === "string") {
+                                    // Direct type name reference
+                                    if (typeNameMapping.has(value)) {
+                                        const namespacedTypeId = typeNameMapping.get(value);
+                                        updatedObj[key] = namespacedTypeId;
+                                        foundTypeRef = true;
+                                    }
+                                    // Type ID patterns
+                                    else if (
+                                        key === "value" &&
+                                        updatedObj.type === "id" &&
+                                        typeNameMapping.has(value)
+                                    ) {
+                                        const namespacedTypeId = typeNameMapping.get(value);
+                                        updatedObj[key] = namespacedTypeId;
+                                        foundTypeRef = true;
+                                    }
+                                    // Other potential patterns
+                                    else if (
+                                        ["typeId", "id", "name", "reference", "ref"].includes(key) &&
+                                        typeNameMapping.has(value)
+                                    ) {
+                                        const namespacedTypeId = typeNameMapping.get(value);
+                                        updatedObj[key] = namespacedTypeId;
+                                        foundTypeRef = true;
+                                    }
+                                } else if (typeof value === "object") {
+                                    updatedObj[key] = updateTypeReferences(value, depth + 1);
+                                }
+                            }
+
+                            if (foundTypeRef) {
+                            }
+
+                            return updatedObj;
+                        };
+
+                        // Update type references within the namespaced types themselves
+                        for (const [typeId, typeDefinition] of Object.entries(namespacedTypes)) {
+                            namespacedTypes[FdrAPI.TypeId(typeId)] = updateTypeReferences(typeDefinition, 0);
+                        }
+
+                        // Create new operations with namespaced IDs and updated type references
+                        const namespacedOperations: Record<
+                            FdrAPI.GraphQlOperationId,
+                            FdrAPI.api.v1.register.GraphQlOperation
+                        > = {};
+                        for (const [operationId, operation] of Object.entries(graphqlResult.graphqlOperations)) {
+                            const namespacedId = FdrAPI.GraphQlOperationId(`${spec.namespace}_${operationId}`);
+                            namespacedOperations[namespacedId] = {
+                                ...updateTypeReferences(operation, 0),
+                                id: namespacedId
+                            };
+                            namespacesByOperationId.set(namespacedId, spec.namespace);
+                        }
+
+                        Object.assign(graphqlOperations, namespacedOperations);
+                        Object.assign(graphqlTypes, namespacedTypes);
+
+                    } else {
+                        // No namespace, use operations and types as-is
+                        Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
+                        Object.assign(graphqlTypes, graphqlResult.types);
+                    }
+                } catch (error) {
+                    console.error(`[DEBUG] Failed to process GraphQL spec ${spec.absoluteFilepath}:`, error);
+                    this.taskContext.logger.error(
+                        `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                        String(error)
+                    );
                 }
             }
+        }
+
+        const finalOpsCount = Object.keys(graphqlOperations).length;
+        const finalTypesCount = Object.keys(graphqlTypes).length;
+
+        if (finalOpsCount > 0) {
+        }
+        if (finalTypesCount > 0) {
         }
 
         return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
