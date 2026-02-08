@@ -164,7 +164,7 @@ export function convertUnion({
                 required: [unionTypeDeclaration.discriminant.wireValue]
             }),
             _other: () => {
-                throw new Error("Unknown FernIr.SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
+                throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
             }
         });
     });

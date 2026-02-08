@@ -97,7 +97,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                         },
                         unknown: () => this.jsonStringifyIfNotStringNoRecompute(mapExpression),
                         _other: () => {
-                            throw new Error("Unknown FernIr.ResolvedTypeReference: " + resolvedType.type);
+                            throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
                         }
                     });
                 return getStringify(resolvedType);
@@ -114,7 +114,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     map: (mapType) => this.map(mapType, params),
                     literal: (literal) => this.literal(literal, params),
                     _other: () => {
-                        throw new Error("Unknown FernIr.ContainerType: " + containerType.type);
+                        throw new Error("Unknown ContainerType: " + containerType.type);
                     }
                 }),
             primitive: (type) => this.primitive(type, params),
@@ -129,7 +129,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             },
             unknown: this.unknown.bind(this),
             _other: () => {
-                throw new Error("Unknown FernIr.ResolvedTypeReference: " + resolvedType.type);
+                throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
             }
         });
     }

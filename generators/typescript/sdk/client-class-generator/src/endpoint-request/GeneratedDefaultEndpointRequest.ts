@@ -89,7 +89,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                       },
                       wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
                       _other: () => {
-                          throw new Error("Unknown FernIr.SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
+                          throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
                       }
                   })
                 : undefined;

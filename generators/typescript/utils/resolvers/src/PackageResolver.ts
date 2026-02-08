@@ -27,7 +27,7 @@ export class PackageResolver {
     public resolveSubpackage(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.intermediateRepresentation.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error("FernIr.Subpackage does not exist: " + subpackageId);
+            throw new Error("Subpackage does not exist: " + subpackageId);
         }
         return subpackage;
     }
@@ -44,7 +44,7 @@ export class PackageResolver {
         const service = this.getServiceDeclaration(packageId);
         if (service == null) {
             throw new Error(
-                "FernIr.Package does not have a service: " +
+                "Package does not have a service: " +
                     (packageId.isRoot ? "<Root package>" : packageId.subpackageId)
             );
         }

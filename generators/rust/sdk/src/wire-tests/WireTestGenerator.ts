@@ -32,7 +32,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw new Error("Cannot generate wire tests without dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({

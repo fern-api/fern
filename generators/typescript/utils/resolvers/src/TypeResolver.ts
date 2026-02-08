@@ -15,7 +15,7 @@ export class TypeResolver {
     public getTypeDeclarationFromId(typeId: FernIr.TypeId): FernIr.TypeDeclaration {
         const type = this.allTypes[typeId];
         if (type == null) {
-            throw new Error("FernIr.Type not found: " + typeId);
+            throw new Error("Type not found: " + typeId);
         }
         return type;
     }
@@ -23,7 +23,7 @@ export class TypeResolver {
     public getTypeDeclarationFromName(typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration {
         const type = this.allTypes[typeName.typeId];
         if (type == null) {
-            throw new Error("FernIr.Type not found: " + typeName.typeId);
+            throw new Error("Type not found: " + typeName.typeId);
         }
         return type;
     }

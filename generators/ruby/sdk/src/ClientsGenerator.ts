@@ -348,7 +348,7 @@ export class ClientsGenerator {
                         .map((subpackageId) => {
                             const subpackage = subpackages.get(subpackageId);
                             if (subpackage === undefined) {
-                                throw new Error(`FernIr.Subpackage ${subpackageId} was not defined within in the IR`);
+                                throw new Error(`Subpackage ${subpackageId} was not defined within in the IR`);
                             }
 
                             const classPair = subpackageClassReferences.get(subpackageId);

@@ -172,7 +172,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error(`FernIr.Subpackage with id ${subpackageId} not found`);
+            throw new Error(`Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
     }

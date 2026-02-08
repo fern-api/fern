@@ -266,7 +266,7 @@ function isMaybeIterable(typeReference: FernIr.TypeReference, context: SdkContex
                 nullable: (itemType) => isMaybeIterable(itemType, context),
                 optional: (itemType) => isMaybeIterable(itemType, context),
                 _other: () => {
-                    throw new Error("Unknown FernIr.ContainerType: " + container.type);
+                    throw new Error("Unknown ContainerType: " + container.type);
                 }
             }),
         named: (typeName) => {
@@ -278,14 +278,14 @@ function isMaybeIterable(typeReference: FernIr.TypeReference, context: SdkContex
                 alias: ({ aliasOf }) => isMaybeIterable(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeIterable(member.type, context)),
                 _other: () => {
-                    throw new Error("Unknown FernIr.Type: " + typeDeclaration.shape.type);
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 }
             });
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
-            throw new Error("Unknown FernIr.TypeReference: " + typeReference.type);
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         }
     });
 }
@@ -309,7 +309,7 @@ function stringifyIterableItemType(
                 nullable: (itemType) => stringifyIterableItemType(value, itemType, context),
                 optional: (itemType) => stringifyIterableItemType(value, itemType, context),
                 _other: () => {
-                    throw new Error("Unknown FernIr.ContainerType: " + container.type);
+                    throw new Error("Unknown ContainerType: " + container.type);
                 }
             }),
         named: (typeName) => {
@@ -340,7 +340,7 @@ function stringifyIterableItemType(
         unknown: () =>
             context.type.stringify(value, FernIr.TypeReference.unknown(), { includeNullCheckIfOptional: false }),
         _other: () => {
-            throw new Error("Unknown FernIr.TypeReference: " + iterable.type);
+            throw new Error("Unknown TypeReference: " + iterable.type);
         }
     });
 }
@@ -356,7 +356,7 @@ function isDefinitelyIterable(typeReference: FernIr.TypeReference, context: SdkC
                 nullable: () => false,
                 optional: (itemType) => isDefinitelyIterable(itemType, context),
                 _other: () => {
-                    throw new Error("Unknown FernIr.ContainerType: " + container.type);
+                    throw new Error("Unknown ContainerType: " + container.type);
                 }
             }),
         named: (typeName) => {
@@ -369,14 +369,14 @@ function isDefinitelyIterable(typeReference: FernIr.TypeReference, context: SdkC
                 undiscriminatedUnion: ({ members }) =>
                     members.every((member) => isDefinitelyIterable(member.type, context)),
                 _other: () => {
-                    throw new Error("Unknown FernIr.Type: " + typeDeclaration.shape.type);
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 }
             });
         },
         primitive: () => false,
         unknown: () => false,
         _other: () => {
-            throw new Error("Unknown FernIr.TypeReference: " + typeReference.type);
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         }
     });
 }
@@ -392,7 +392,7 @@ function isMaybeList(typeReference: FernIr.TypeReference, context: SdkContext): 
                 nullable: () => false,
                 optional: (itemType) => isMaybeList(itemType, context),
                 _other: () => {
-                    throw new Error("Unknown FernIr.ContainerType: " + container.type);
+                    throw new Error("Unknown ContainerType: " + container.type);
                 }
             }),
         named: (typeName) => {
@@ -404,14 +404,14 @@ function isMaybeList(typeReference: FernIr.TypeReference, context: SdkContext): 
                 alias: ({ aliasOf }) => isMaybeList(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeList(member.type, context)),
                 _other: () => {
-                    throw new Error("Unknown FernIr.Type: " + typeDeclaration.shape.type);
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 }
             });
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
-            throw new Error("Unknown FernIr.TypeReference: " + typeReference.type);
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         }
     });
 }
@@ -427,7 +427,7 @@ function isMaybeSet(typeReference: FernIr.TypeReference, context: SdkContext): b
                 nullable: () => false,
                 optional: (itemType) => isMaybeSet(itemType, context),
                 _other: () => {
-                    throw new Error("Unknown FernIr.ContainerType: " + container.type);
+                    throw new Error("Unknown ContainerType: " + container.type);
                 }
             }),
         named: (typeName) => {
@@ -439,14 +439,14 @@ function isMaybeSet(typeReference: FernIr.TypeReference, context: SdkContext): b
                 alias: ({ aliasOf }) => isMaybeSet(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeSet(member.type, context)),
                 _other: () => {
-                    throw new Error("Unknown FernIr.Type: " + typeDeclaration.shape.type);
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 }
             });
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
-            throw new Error("Unknown FernIr.TypeReference: " + typeReference.type);
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         }
     });
 }

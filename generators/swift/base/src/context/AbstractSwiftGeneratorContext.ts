@@ -237,7 +237,7 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
-        assertDefined(subpackage, `FernIr.Subpackage with the id '${subpackageId}' not found`);
+        assertDefined(subpackage, `Subpackage with the id '${subpackageId}' not found`);
         return subpackage;
     }
 

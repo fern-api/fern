@@ -70,7 +70,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
             property: () => this.errorDeclaration.discriminantValue.wireValue,
             statusCode: () => this.errorDeclaration.statusCode,
             _other: () => {
-                throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             }
         });
     }
@@ -124,7 +124,7 @@ function getSingleUnionTypeGenerator({
             retainOriginalCasing ? contentProperty.name.originalName : contentProperty.name.camelCase.unsafeName,
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
         _other: () => {
-            throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
+            throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
         }
     });
 

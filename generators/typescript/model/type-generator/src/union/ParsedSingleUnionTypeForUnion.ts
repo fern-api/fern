@@ -62,7 +62,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                         }),
                     _other: () => {
                         throw new Error(
-                            "Unknown FernIr.SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType
+                            "Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType
                         );
                     }
                 }

@@ -47,7 +47,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             named: () => false,
             unknown: () => this.unknown().isOptional,
             _other: () => {
-                throw new Error("Unexpected FernIr.ResolvedTypeReference type: " + resolvedType.type);
+                throw new Error("Unexpected ResolvedTypeReference type: " + resolvedType.type);
             }
         });
 

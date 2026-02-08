@@ -36,7 +36,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw new Error("Cannot generate wire tests without dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
@@ -60,7 +60,7 @@ export class WireTestGenerator {
         const endpointsByService = this.groupEndpointsByService();
 
         this.context.logger.debug(
-            `Wire tests: ${endpointsByService.size} services, ${Object.keys(this.dynamicIr.endpoints).length} FernIr.dynamic endpoints`
+            `Wire tests: ${endpointsByService.size} services, ${Object.keys(this.dynamicIr.endpoints).length} dynamic endpoints`
         );
 
         let totalEndpointsWithExamples = 0;

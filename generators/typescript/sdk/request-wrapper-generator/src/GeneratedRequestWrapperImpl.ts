@@ -633,7 +633,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             bodyProperty: ({ valueType }) => !this.isTypeOptional(valueType, context),
                             _other: () => {
                                 throw new Error(
-                                    "Unknown FernIr.FileUploadRequestProperty: " + this.endpoint.requestBody?.type
+                                    "Unknown FileUploadRequestProperty: " + this.endpoint.requestBody?.type
                                 );
                             }
                         });
@@ -647,7 +647,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     throw new Error("bytes is not supported");
                 },
                 _other: () => {
-                    throw new Error("Unknown FernIr.HttpRequestBody: " + this.endpoint.requestBody?.type);
+                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
                 }
             });
             if (!areBodyPropertiesOptional) {
@@ -757,7 +757,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 },
                 bodyProperty: noop,
                 _other: () => {
-                    throw new Error(`Unknown FernIr.FileUploadRequestProperty: ${property.type}`);
+                    throw new Error(`Unknown FileUploadRequestProperty: ${property.type}`);
                 }
             });
         }
