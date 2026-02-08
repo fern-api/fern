@@ -1,9 +1,9 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor";
-import { createDocsVisitor } from "./utils/createDocsVisitor";
-import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
+import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor.js";
+import { createDocsVisitor } from "./utils/createDocsVisitor.js";
+import { createTypeReferenceVisitor } from "./utils/visitTypeReference.js";
 
 export function visitWebhooks({
     webhook,

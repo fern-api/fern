@@ -1,17 +1,16 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, ReExportAsNamedNode, TypescriptFile } from "@fern-api/typescript-mcp-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class IndexGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableNames: string[];
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclarations: TypeDeclaration[]
+        private readonly typeDeclarations: FernIr.TypeDeclaration[]
     ) {
         super(context);
         this.schemaVariableNames = this.typeDeclarations.map((typeDeclaration) =>

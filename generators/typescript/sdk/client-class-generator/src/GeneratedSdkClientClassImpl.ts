@@ -1,19 +1,5 @@
 import { assertNever, SetRequired } from "@fern-api/core-utils";
-import {
-    AuthScheme,
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpHeader,
-    HttpRequestBody,
-    HttpResponseBody,
-    HttpService,
-    IntermediateRepresentation,
-    Package,
-    PathParameter,
-    SubpackageId,
-    VariableDeclaration,
-    VariableId
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportsManager,
     getParameterNameForRootPathParameter,
@@ -52,25 +38,25 @@ import {
     InferredAuthProviderInstance,
     OAuthAuthProviderInstance,
     RoutingAuthProviderInstance
-} from "./auth-provider";
-import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
-import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
-import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
-import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
-import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
-import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
-import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
-import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
-import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
-import { GeneratedWrappedService } from "./GeneratedWrappedService";
-import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
+} from "./auth-provider/index.js";
+import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest.js";
+import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest.js";
+import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest.js";
+import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse.js";
+import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse.js";
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation.js";
+import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation.js";
+import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation.js";
+import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
+import { GeneratedWrappedService } from "./GeneratedWrappedService.js";
+import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation.js";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
         isRoot: boolean;
         importsManager: ImportsManager;
         exportsManager: ExportsManager;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         packageId: PackageId;
         serviceClassName: string;
         errorResolver: ErrorResolver;
@@ -114,9 +100,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly LOGGING_FIELD_NAME = "logging";
 
     private readonly isRoot: boolean;
-    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly serviceClassName: string;
-    private readonly package_: Package;
+    private readonly package_: FernIr.Package;
     private readonly generatedEndpointImplementations: GeneratedEndpointImplementation[];
     private readonly generatedWebsocketImplementation: GeneratedWebsocketImplementation | undefined;
     private readonly generatedWrappedServices: GeneratedWrappedService[];
@@ -197,7 +183,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (service == null) {
             this.generatedEndpointImplementations = [];
         } else {
-            this.generatedEndpointImplementations = service.endpoints.map((endpoint: HttpEndpoint) => {
+            this.generatedEndpointImplementations = service.endpoints.map((endpoint: FernIr.HttpEndpoint) => {
                 const requestBody = endpoint.requestBody ?? undefined;
 
                 const getGeneratedEndpointRequest = () => {
@@ -213,11 +199,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     response
                 }: {
                     response:
-                        | HttpResponseBody.Json
-                        | HttpResponseBody.FileDownload
-                        | HttpResponseBody.Text
-                        | HttpResponseBody.Streaming
-                        | HttpResponseBody.Bytes
+                        | FernIr.HttpResponseBody.Json
+                        | FernIr.HttpResponseBody.FileDownload
+                        | FernIr.HttpResponseBody.Text
+                        | FernIr.HttpResponseBody.Streaming
+                        | FernIr.HttpResponseBody.Bytes
                         | undefined;
                 }) => {
                     if (neverThrowErrors) {
@@ -250,7 +236,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getDefaultEndpointImplementation = ({
                     response
                 }: {
-                    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Text | undefined;
+                    response:
+                        | FernIr.HttpResponseBody.Json
+                        | FernIr.HttpResponseBody.FileDownload
+                        | FernIr.HttpResponseBody.Text
+                        | undefined;
                 }) => {
                     return new GeneratedDefaultEndpointImplementation({
                         endpoint,
@@ -271,7 +261,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     return getDefaultEndpointImplementation({ response: undefined });
                 }
 
-                return HttpResponseBody._visit<GeneratedEndpointImplementation>(endpoint.response.body, {
+                return FernIr.HttpResponseBody._visit<GeneratedEndpointImplementation>(endpoint.response.body, {
                     fileDownload: (fileDownload) =>
                         new GeneratedFileDownloadEndpointImplementation({
                             endpoint,
@@ -280,7 +270,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
-                                response: HttpResponseBody.fileDownload(fileDownload)
+                                response: FernIr.HttpResponseBody.fileDownload(fileDownload)
                             }),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -292,7 +282,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
-                            response: HttpResponseBody.json(jsonResponse)
+                            response: FernIr.HttpResponseBody.json(jsonResponse)
                         }),
                     streaming: (streamingResponse) =>
                         new GeneratedStreamingEndpointImplementation({
@@ -301,7 +291,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
                             response: getGeneratedEndpointResponse({
-                                response: HttpResponseBody.streaming(streamingResponse)
+                                response: FernIr.HttpResponseBody.streaming(streamingResponse)
                             }),
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
@@ -321,7 +311,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
                             response: getGeneratedEndpointResponse({
-                                response: HttpResponseBody.streaming(streamParameter.streamResponse)
+                                response: FernIr.HttpResponseBody.streaming(streamParameter.streamResponse)
                             }),
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
@@ -334,7 +324,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         }),
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
-                            response: HttpResponseBody.text(textResponse)
+                            response: FernIr.HttpResponseBody.text(textResponse)
                         });
                     },
                     bytes: (bytesResponse) => {
@@ -345,7 +335,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
-                                response: HttpResponseBody.bytes(bytesResponse)
+                                response: FernIr.HttpResponseBody.bytes(bytesResponse)
                             }),
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
@@ -382,7 +372,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
-            (acc: GeneratedWrappedService[], wrappedSubpackageId: SubpackageId) => {
+            (acc: GeneratedWrappedService[], wrappedSubpackageId: FernIr.SubpackageId) => {
                 const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
                 if (
                     subpackage.hasEndpointsInTree ||
@@ -402,11 +392,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
 
         // Convert any global "authorization" headers into HeaderAuthScheme objects
-        const authSchemes: AuthScheme[] = [...intermediateRepresentation.auth.schemes];
+        const authSchemes: FernIr.AuthScheme[] = [...intermediateRepresentation.auth.schemes];
         for (const header of intermediateRepresentation.headers) {
             if (header.name.wireValue.toLowerCase() === "authorization") {
                 authSchemes.push(
-                    AuthScheme.header({
+                    FernIr.AuthScheme.header({
                         key: "_GlobalAuthorizationHeader",
                         name: header.name,
                         prefix: undefined,
@@ -422,8 +412,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const anyAuthProviders: AuthProviderInstance[] = [];
         const routingAuthProviders: Map<string, AuthProviderInstance> = new Map();
 
-        const getAuthProvider = (authScheme: AuthScheme): AuthProviderInstance =>
-            AuthScheme._visit<AuthProviderInstance>(authScheme, {
+        const getAuthProvider = (authScheme: FernIr.AuthScheme): AuthProviderInstance =>
+            FernIr.AuthScheme._visit<AuthProviderInstance>(authScheme, {
                 basic: (scheme) => new BasicAuthProviderInstance(scheme),
                 bearer: (scheme) => new BearerAuthProviderInstance(scheme),
                 header: (scheme) => new HeaderAuthProviderInstance(scheme),
@@ -471,10 +461,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         packageId,
         service
     }: {
-        endpoint: HttpEndpoint;
-        requestBody: HttpRequestBody | undefined;
+        endpoint: FernIr.HttpEndpoint;
+        requestBody: FernIr.HttpRequestBody | undefined;
         packageId: PackageId;
-        service: HttpService;
+        service: FernIr.HttpService;
     }): GeneratedBytesEndpointRequest | GeneratedDefaultEndpointRequest | GeneratedFileUploadEndpointRequest {
         if (requestBody?.type === "bytes") {
             return new GeneratedBytesEndpointRequest({
@@ -530,7 +520,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public invokeEndpoint(args: {
         context: SdkContext;
         endpointId: string;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         clientReference: ts.Identifier;
     }): EndpointSampleCode | undefined {
         const generatedEndpoint = this.getGeneratedEndpointImplementation(args.endpointId);
@@ -546,7 +536,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public maybeLeverageInvocation(args: {
         context: SdkContext;
         endpointId: string;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         clientReference: ts.Identifier;
     }): ts.Node[] | undefined {
         const generatedEndpoint = this.getGeneratedEndpointImplementation(args.endpointId);
@@ -865,7 +855,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return code`this._options = normalizeClientOptionsWithAuth(options);`;
     }
 
-    public getBaseUrl(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
+    public getBaseUrl(endpoint: FernIr.HttpEndpoint, context: SdkContext): ts.Expression {
         const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
 
         const environment = this.getEnvironment(endpoint, context);
@@ -877,7 +867,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getEnvironment(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
+    public getEnvironment(endpoint: FernIr.HttpEndpoint, context: SdkContext): ts.Expression {
         let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
@@ -1028,7 +1018,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getReferenceToRequestOptions(endpoint: HttpEndpoint): ts.TypeReferenceNode {
+    public getReferenceToRequestOptions(endpoint: FernIr.HttpEndpoint): ts.TypeReferenceNode {
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 ts.factory.createIdentifier(this.serviceClassName),
@@ -1170,7 +1160,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
     }
 
-    private getOptionKeyForHeader(header: HttpHeader): string {
+    private getOptionKeyForHeader(header: FernIr.HttpHeader): string {
         return header.name.name.camelCase.unsafeName;
     }
 
@@ -1178,7 +1168,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createIdentifier(GeneratedSdkClientClassImpl.METADATA_FOR_TOKEN_SUPPLIER_VAR);
     }
 
-    public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {
+    public getReferenceToRootPathParameter(pathParameter: FernIr.PathParameter): ts.Expression {
         return this.getReferenceToOption(
             getParameterNameForRootPathParameter({
                 pathParameter,
@@ -1188,7 +1178,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getReferenceToVariable(variableId: VariableId): ts.Expression {
+    public getReferenceToVariable(variableId: FernIr.VariableId): ts.Expression {
         const variable = this.intermediateRepresentation.variables.find((v) => v.id === variableId);
         if (variable == null) {
             throw new Error("Variable does not exist: " + variableId);
@@ -1196,7 +1186,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return this.getReferenceToOption(this.getOptionNameForVariable(variable));
     }
 
-    private getOptionNameForVariable(variable: VariableDeclaration): string {
+    private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
         return variable.name.camelCase.unsafeName;
     }
 

@@ -1,9 +1,9 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Pagination } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { CursorPaginationPropertyComponents } from "./convertPaginationUtils";
+import { FernFileContext } from "../../FernFileContext.js";
+import { PropertyResolver } from "../../resolvers/PropertyResolver.js";
+import { CursorPaginationPropertyComponents } from "./convertPaginationUtils.js";
 
 export function convertCursorPagination({
     propertyResolver,

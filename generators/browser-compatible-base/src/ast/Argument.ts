@@ -1,4 +1,4 @@
-import { AbstractAstNode } from "./AbstractAstNode";
+import { AbstractAstNode } from "./AbstractAstNode.js";
 
 export type Argument = NamedArgument | UnnamedArgument;
 

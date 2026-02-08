@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AiProviderSchema } from "./AiProviderSchema";
+import { AiProviderSchema } from "./AiProviderSchema.js";
 
 export const AiConfigSchema = z.object({
     provider: AiProviderSchema,

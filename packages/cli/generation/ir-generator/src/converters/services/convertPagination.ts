@@ -2,12 +2,12 @@ import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Pagination } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { convertCursorPagination } from "./convertCursorPagination";
-import { convertCustomPagination } from "./convertCustomPagination";
-import { convertOffsetPagination } from "./convertOffsetPagination";
-import { getPaginationPropertyComponents } from "./convertPaginationUtils";
+import { FernFileContext } from "../../FernFileContext.js";
+import { PropertyResolver } from "../../resolvers/PropertyResolver.js";
+import { convertCursorPagination } from "./convertCursorPagination.js";
+import { convertCustomPagination } from "./convertCustomPagination.js";
+import { convertOffsetPagination } from "./convertOffsetPagination.js";
+import { getPaginationPropertyComponents } from "./convertPaginationUtils.js";
 
 export function convertPagination({
     propertyResolver,

@@ -4,8 +4,8 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { ValidationError } from "../errors/ValidationError";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { ValidationError } from "../errors/ValidationError.js";
 
 const SAMPLE_FERN_YML = `edition: 2026-01-01
 org: acme

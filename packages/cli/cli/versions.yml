@@ -1,12 +1,55 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.67.1
+- version: 3.69.1
+  changelogEntry:
+    - summary: Regenerate older IR types with new TypeScript SDK generator.
+      type: internal
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.69.0
   changelogEntry:
     - summary: |
-        Fix GraphQL converter to properly handle nullable/optional types, flatten nested mutation namespace types into operations, and avoid treating non-root Subscription object types as subscription roots.
+        [Beta] Add `fern docs md generate` command for generating MDX documentation from library
+        source code. This feature requires a `libraries` configuration in docs.yml. The command
+        is in beta and may change in future releases.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.68.1
+  changelogEntry:
+    - summary: |
+        Fix grouped multi-API environment server handling to preserve `defaultUrl`, `urlTemplate`,
+        and `variables` metadata when merging multiple OpenAPI specs with
+        `group-multi-api-environments: true`. Previously, server URL templating metadata was silently
+        dropped during the merge, causing generated SDKs to use malformed template-substituted URLs
+        as defaults. Also fixes API name extraction for grouped base URL keys to use the clean
+        `x-fern-default-url` value instead of the variable-substituted URL.
       type: fix
   createdAt: "2026-02-06"
   irVersion: 63
 
+- version: 3.68.0
+  changelogEntry:
+    - summary: |
+        Add `folder-title-source` global setting in `docs.yml` under `settings`. When set,
+        this value is used as the default `title-source` for all folder navigations that do not
+        explicitly specify their own `title-source`. This allows configuring `frontmatter` or
+        `filename` as the default title derivation strategy for all folders in one place.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+- version: 3.67.1
+  changelogEntry:
+    - summary: |
+        Fix `title-source: frontmatter` in folder navigation to correctly pass the setting through
+        to `buildNavigationForDirectory`. Previously, the `title-source` option was ignored when
+        expanding folder configurations, so page titles and sidebar titles always derived from file
+        names. Now, when `title-source: frontmatter` is set, page titles and the folder section title
+        use the frontmatter `title` field.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
 - version: 3.67.0
   changelogEntry:
     - summary: |
@@ -234,7 +277,7 @@
     - summary: |
         Support GraphQL API References. You can now add a `graphql` spec to `generators.yml` to render an auto-generated reference in the docs.
       type: fix
-  createdAt: "2026-02-2"
+  createdAt: "2026-02-02"
   irVersion: 63
 
 - version: 3.55.7

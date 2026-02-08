@@ -1,10 +1,10 @@
 import { GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { generateModels } from "./generateModels.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export class ModelGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     TypescriptCustomConfigSchema,
@@ -16,7 +16,7 @@ export class ModelGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: TypescriptCustomConfigSchema;
         generatorConfig: GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

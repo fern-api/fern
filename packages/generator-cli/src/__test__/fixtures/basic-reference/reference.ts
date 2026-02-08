@@ -1,4 +1,4 @@
-import { FernGeneratorCli } from "../../../configuration/sdk";
+import { FernGeneratorCli } from "../../../configuration/sdk/index.js";
 
 const CONFIG: FernGeneratorCli.ReferenceConfig = {
     language: FernGeneratorCli.Language.Python,

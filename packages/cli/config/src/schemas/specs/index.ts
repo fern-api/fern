@@ -1,6 +1,6 @@
-export { AsyncApiSpecSchema } from "./AsyncApiSpecSchema";
-export { ConjureSettingsSchema, ConjureSpecSchema } from "./ConjureSpecSchema";
-export { FernSettingsSchema, FernSpecSchema } from "./FernSpecSchema";
-export { OpenApiSpecSchema } from "./OpenApiSpecSchema";
-export { OpenRpcSettingsSchema, OpenRpcSpecSchema } from "./OpenRpcSpecSchema";
-export { ProtobufDefinitionSchema, ProtobufSettingsSchema, ProtobufSpecSchema } from "./ProtobufSpecSchema";
+export { AsyncApiSpecSchema } from "./AsyncApiSpecSchema.js";
+export { ConjureSettingsSchema, ConjureSpecSchema } from "./ConjureSpecSchema.js";
+export { FernSettingsSchema, FernSpecSchema } from "./FernSpecSchema.js";
+export { OpenApiSpecSchema } from "./OpenApiSpecSchema.js";
+export { OpenRpcSettingsSchema, OpenRpcSpecSchema } from "./OpenRpcSpecSchema.js";
+export { ProtobufDefinitionSchema, ProtobufSettingsSchema, ProtobufSpecSchema } from "./ProtobufSpecSchema.js";

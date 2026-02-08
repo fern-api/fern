@@ -1,11 +1,11 @@
 import { RubyFile } from "@fern-api/ruby-base";
 
-import { AliasGenerator } from "./alias/AliasGenerator";
-import { EnumGenerator } from "./enum/EnumGenerator";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { ObjectGenerator } from "./object/ObjectGenerator";
-import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGenerator";
-import { UnionGenerator } from "./union/UnionGenerator";
+import { AliasGenerator } from "./alias/AliasGenerator.js";
+import { EnumGenerator } from "./enum/EnumGenerator.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { ObjectGenerator } from "./object/ObjectGenerator.js";
+import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGenerator.js";
+import { UnionGenerator } from "./union/UnionGenerator.js";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RubyFile[] {
     const files: RubyFile[] = [];

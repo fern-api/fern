@@ -3,7 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 
-import { ParsedFrontmatter } from "../types/parsedFrontmatter";
+import { ParsedFrontmatter } from "../types/parsedFrontmatter.js";
 
 export declare namespace convertMarkdown {
     interface Args {

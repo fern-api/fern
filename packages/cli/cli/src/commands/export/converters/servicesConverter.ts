@@ -27,9 +27,9 @@ import {
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
-import { getDeclaredTypeNameKey, getErrorTypeNameKey, Mode } from "../convertIrToOpenApi";
-import { convertObject } from "./convertObject";
-import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
+import { getDeclaredTypeNameKey, getErrorTypeNameKey, Mode } from "../convertIrToOpenApi.js";
+import { convertObject } from "./convertObject.js";
+import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
 
 export function convertServices({
     ir,

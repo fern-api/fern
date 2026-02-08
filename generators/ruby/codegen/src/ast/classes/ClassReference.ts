@@ -1,33 +1,16 @@
-import {
-    AliasTypeDeclaration,
-    ContainerType,
-    DeclaredTypeName,
-    EnumTypeDeclaration,
-    EnumValue,
-    Literal,
-    MapType,
-    ObjectTypeDeclaration,
-    PrimitiveType,
-    ResolvedNamedType,
-    SingleUnionTypeProperties,
-    SingleUnionTypeProperty,
-    TypeDeclaration,
-    TypeId,
-    TypeReference,
-    UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { format } from "util";
 
-import { LocationGenerator } from "../../utils/LocationGenerator";
-import { Argument } from "../Argument";
-import { ConditionalStatement } from "../abstractions/ConditionalStatement";
-import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
-import { Function_ } from "../functions/Function_";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
-import { Import } from "../Import";
-import { Property } from "../Property";
-import { Variable } from "../Variable";
+import { LocationGenerator } from "../../utils/LocationGenerator.js";
+import { Argument } from "../Argument.js";
+import { ConditionalStatement } from "../abstractions/ConditionalStatement.js";
+import { AstNode } from "../core/AstNode.js";
+import { Expression } from "../expressions/Expression.js";
+import { Function_ } from "../functions/Function_.js";
+import { FunctionInvocation } from "../functions/FunctionInvocation.js";
+import { Import } from "../Import.js";
+import { Property } from "../Property.js";
+import { Variable } from "../Variable.js";
 
 enum RubyClass {
     INTEGER = "Integer",
@@ -54,7 +37,7 @@ export declare namespace ClassReference {
     export interface Init extends AstNode.Init {
         name: string;
         typeHint?: string;
-        resolvedTypeId?: TypeId;
+        resolvedTypeId?: FernIr.TypeId;
         import_?: Import;
         moduleBreadcrumbs?: string[];
     }
@@ -63,7 +46,7 @@ export declare namespace ClassReference {
 export class ClassReference extends AstNode {
     public name: string;
     public typeHint: string;
-    public resolvedTypeId: TypeId | undefined;
+    public resolvedTypeId: FernIr.TypeId | undefined;
     public qualifiedName: string;
     public import_: Import | undefined;
 
@@ -147,7 +130,7 @@ export class LiteralClassReference extends ClassReference {
     innerType: ClassReference;
     value: string;
 
-    constructor(innerType: ClassReference, lit: Literal) {
+    constructor(innerType: ClassReference, lit: FernIr.Literal) {
         super({ ...innerType });
         this.innerType = innerType;
         this.value = lit._visit<string>({
@@ -167,11 +150,11 @@ export class LiteralClassReference extends ClassReference {
 // Extended class references
 export declare namespace SerializableObjectReference {
     export interface InitReference extends ClassReference.Init {
-        properties: Map<string, TypeReference>;
+        properties: Map<string, FernIr.TypeReference>;
     }
 }
 export class SerializableObjectReference extends ClassReference {
-    properties: Map<string, TypeReference>;
+    properties: Map<string, FernIr.TypeReference>;
 
     constructor({ properties, ...rest }: SerializableObjectReference.InitReference) {
         super({ ...rest });
@@ -210,9 +193,9 @@ export class SerializableObjectReference extends ClassReference {
     }
 
     static fromDeclaredTypeName(
-        declaredTypeName: DeclaredTypeName,
+        declaredTypeName: FernIr.DeclaredTypeName,
         locationGenerator: LocationGenerator,
-        properties: Map<string, TypeReference>
+        properties: Map<string, FernIr.TypeReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({
@@ -239,9 +222,9 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
     }
 
     static fromDeclaredTypeName(
-        declaredTypeName: DeclaredTypeName,
+        declaredTypeName: FernIr.DeclaredTypeName,
         locationGenerator: LocationGenerator,
-        properties: Map<string, TypeReference>
+        properties: Map<string, FernIr.TypeReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({
@@ -280,7 +263,7 @@ export class AliasReference extends ClassReference {
     }
 
     static fromDeclaredTypeName(
-        declaredTypeName: DeclaredTypeName,
+        declaredTypeName: FernIr.DeclaredTypeName,
         aliasOf: ClassReference,
         resolvedTypeId: string | undefined,
         locationGenerator: LocationGenerator
@@ -515,21 +498,21 @@ export class HashInstance extends AstNode {
 
 export declare namespace EnumReference {
     export interface Init extends ClassReference.Init {
-        values: EnumValue[];
+        values: FernIr.EnumValue[];
     }
 }
 
 export class EnumReference extends ClassReference {
-    public values: EnumValue[];
+    public values: FernIr.EnumValue[];
     constructor({ values, ...rest }: EnumReference.Init) {
         super({ ...rest });
         this.values = values;
     }
 
     static fromDeclaredTypeName(
-        declaredTypeName: DeclaredTypeName,
+        declaredTypeName: FernIr.DeclaredTypeName,
         locationGenerator: LocationGenerator,
-        enumValues: EnumValue[]
+        enumValues: FernIr.EnumValue[]
     ): EnumReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = locationGenerator.getModuleBreadcrumbs({
@@ -637,14 +620,14 @@ export class DateReference extends ClassReference {
 
 export class ClassReferenceFactory {
     private locationGenerator: LocationGenerator;
-    private typeDeclarations: Map<TypeId, TypeDeclaration>;
-    private typeReferenceToClass: Map<TypeReference, ClassReference>;
+    private typeDeclarations: Map<FernIr.TypeId, FernIr.TypeDeclaration>;
+    private typeReferenceToClass: Map<FernIr.TypeReference, ClassReference>;
 
-    public generatedReferences: Map<TypeId, ClassReference>;
+    public generatedReferences: Map<FernIr.TypeId, ClassReference>;
 
-    public resolvedReferences: Map<TypeId, ClassReference[]>;
+    public resolvedReferences: Map<FernIr.TypeId, ClassReference[]>;
 
-    constructor(typeDeclarations: Map<TypeId, TypeDeclaration>, locationGenerator: LocationGenerator) {
+    constructor(typeDeclarations: Map<FernIr.TypeId, FernIr.TypeDeclaration>, locationGenerator: LocationGenerator) {
         this.locationGenerator = locationGenerator;
         this.typeDeclarations = typeDeclarations;
         this.generatedReferences = new Map();
@@ -655,16 +638,16 @@ export class ClassReferenceFactory {
         }
     }
 
-    public fromTypeDeclaration(type: TypeDeclaration): ClassReference {
+    public fromTypeDeclaration(type: FernIr.TypeDeclaration): ClassReference {
         const typeId = type.name.typeId;
         let cr = this.generatedReferences.get(typeId);
         if (cr === undefined) {
             cr = type.shape._visit<ClassReference>({
-                alias: (atd: AliasTypeDeclaration) => {
+                alias: (atd: FernIr.AliasTypeDeclaration) => {
                     const aliasOfCr = this.fromTypeReference(atd.aliasOf);
                     let preferredClassReference = undefined;
-                    const resolvedTypeId = atd.resolvedType._visit<TypeId | undefined>({
-                        named: (rnt: ResolvedNamedType) => rnt.name.typeId,
+                    const resolvedTypeId = atd.resolvedType._visit<FernIr.TypeId | undefined>({
+                        named: (rnt: FernIr.ResolvedNamedType) => rnt.name.typeId,
                         container: (ct) => this.forContainerType(ct).resolvedTypeId,
                         primitive: (pt) => {
                             preferredClassReference = this.forPrimitiveType(pt);
@@ -682,9 +665,9 @@ export class ClassReferenceFactory {
                               this.locationGenerator
                           );
                 },
-                enum: (etd: EnumTypeDeclaration) =>
+                enum: (etd: FernIr.EnumTypeDeclaration) =>
                     EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator, etd.values),
-                object: (otd: ObjectTypeDeclaration) => {
+                object: (otd: FernIr.ObjectTypeDeclaration) => {
                     const properties = new Map(
                         otd.properties.map((prop) => [Property.getNameFromIr(prop.name.name), prop.valueType])
                     );
@@ -697,7 +680,7 @@ export class ClassReferenceFactory {
                 // TODO: improve discriminated union codegen
                 union: () =>
                     DiscriminatedUnionClassReference.fromDeclaredTypeName(type.name, this.locationGenerator, new Map()),
-                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) => {
+                undiscriminatedUnion: (uutd: FernIr.UndiscriminatedUnionTypeDeclaration) => {
                     this.resolvedReferences.set(
                         typeId,
                         uutd.members.map((member) => this.fromTypeReference(member.type))
@@ -722,7 +705,7 @@ export class ClassReferenceFactory {
         return cr;
     }
 
-    public fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
+    public fromDeclaredTypeName(declaredTypeName: FernIr.DeclaredTypeName): ClassReference {
         let cr = this.generatedReferences.get(declaredTypeName.typeId);
         // Likely you care attempting to generate an alias and the aliased class has not yet been created.
         // Create it now!
@@ -738,7 +721,7 @@ export class ClassReferenceFactory {
         return cr;
     }
 
-    public fromTypeReference(typeReference: TypeReference): ClassReference {
+    public fromTypeReference(typeReference: FernIr.TypeReference): ClassReference {
         let cr = this.typeReferenceToClass.get(typeReference);
         if (cr != null) {
             return cr;
@@ -754,8 +737,8 @@ export class ClassReferenceFactory {
         return cr;
     }
 
-    private forPrimitiveType(primitive: PrimitiveType): ClassReference {
-        return PrimitiveType._visit<ClassReference>(primitive, {
+    private forPrimitiveType(primitive: FernIr.PrimitiveType): ClassReference {
+        return FernIr.PrimitiveType._visit<ClassReference>(primitive, {
             integer: () => new ClassReference({ name: RubyClass.INTEGER }),
             double: () => new ClassReference({ name: RubyClass.DOUBLE }),
             string: () => StringClassReference,
@@ -771,20 +754,20 @@ export class ClassReferenceFactory {
         });
     }
 
-    private forContainerType(containerType: ContainerType): ClassReference {
+    private forContainerType(containerType: FernIr.ContainerType): ClassReference {
         return containerType._visit<ClassReference>({
-            list: (tr: TypeReference) => new ArrayReference({ innerType: this.fromTypeReference(tr) }),
-            map: (mt: MapType) =>
+            list: (tr: FernIr.TypeReference) => new ArrayReference({ innerType: this.fromTypeReference(tr) }),
+            map: (mt: FernIr.MapType) =>
                 new HashReference({
                     keyType: this.fromTypeReference(mt.keyType),
                     valueType: this.fromTypeReference(mt.valueType)
                 }),
             // Optional types in Ruby look the same except they're defaulted to nil in signatures.
-            optional: (tr: TypeReference) => this.fromTypeReference(tr),
-            set: (tr: TypeReference) => new SetReference({ innerType: this.fromTypeReference(tr) }),
-            literal: (lit: Literal) =>
+            optional: (tr: FernIr.TypeReference) => this.fromTypeReference(tr),
+            set: (tr: FernIr.TypeReference) => new SetReference({ innerType: this.fromTypeReference(tr) }),
+            literal: (lit: FernIr.Literal) =>
                 new LiteralClassReference(
-                    Literal._visit<ClassReference>(lit, {
+                    FernIr.Literal._visit<ClassReference>(lit, {
                         string: () => StringClassReference,
                         boolean: () => BooleanClassReference,
                         _other: (value: { type: string }) => new ClassReference({ name: value.type })
@@ -798,11 +781,11 @@ export class ClassReferenceFactory {
     }
 
     public classReferenceFromUnionType(
-        singleUnionTypeProperties: SingleUnionTypeProperties
+        singleUnionTypeProperties: FernIr.SingleUnionTypeProperties
     ): ClassReference | undefined {
         return singleUnionTypeProperties._visit<ClassReference | undefined>({
             samePropertiesAsObject: (dtn) => this.fromDeclaredTypeName(dtn),
-            singleProperty: (sutp: SingleUnionTypeProperty) => this.fromTypeReference(sutp.type),
+            singleProperty: (sutp: FernIr.SingleUnionTypeProperty) => this.fromTypeReference(sutp.type),
             noProperties: () => undefined,
             _other: () => {
                 throw new Error();

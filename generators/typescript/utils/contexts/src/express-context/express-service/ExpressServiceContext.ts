@@ -1,6 +1,6 @@
 import { PackageId, Reference } from "@fern-typescript/commons";
 
-import { GeneratedExpressService } from "./GeneratedExpressService";
+import { GeneratedExpressService } from "./GeneratedExpressService.js";
 
 export interface ExpressServiceContext {
     getGeneratedExpressService: (packageId: PackageId) => GeneratedExpressService;

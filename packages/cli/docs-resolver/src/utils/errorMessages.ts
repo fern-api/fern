@@ -1,4 +1,4 @@
-import { getLexicallyNearestNeighbors } from "./getLexicallyNearestNeighbors";
+import { getLexicallyNearestNeighbors } from "./getLexicallyNearestNeighbors.js";
 
 const NUM_MATCH_CANDIDATES = 3;
 const LEVENSHTEIN_THRESHOLD = 5;

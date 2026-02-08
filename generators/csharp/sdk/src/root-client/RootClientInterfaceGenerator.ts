@@ -2,8 +2,11 @@ import { fail } from "node:assert";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private serviceId: ServiceId | undefined;

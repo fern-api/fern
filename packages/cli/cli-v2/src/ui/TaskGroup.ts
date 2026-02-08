@@ -1,12 +1,12 @@
 import { TtyAwareLogger } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
-import { Context } from "../context/Context";
-import { formatMultilineText } from "./format";
-import type { Task } from "./Task";
-import type { TaskLog } from "./TaskLog";
-import type { TaskStage, TaskStageDefinition } from "./TaskStage";
-import type { TaskStatus } from "./TaskStatus";
+import { Context } from "../context/Context.js";
+import { formatMultilineText } from "./format.js";
+import type { Task } from "./Task.js";
+import type { TaskLog } from "./TaskLog.js";
+import type { TaskStage, TaskStageDefinition } from "./TaskStage.js";
+import type { TaskStatus } from "./TaskStatus.js";
 
 export declare namespace TaskGroup {
     export interface Config {

@@ -1,5 +1,5 @@
-import { IrVersions } from "../../ir-versions";
-import { convertHeader } from "./convertHeader";
+import { IrVersions } from "../../ir-versions/index.js";
+import { convertHeader } from "./convertHeader.js";
 
 export function convertAuth(auth: IrVersions.V5.auth.ApiAuth): IrVersions.V4.auth.ApiAuth {
     return {

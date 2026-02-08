@@ -2,14 +2,14 @@ import type { FernToken } from "@fern-api/auth";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { AiConfig } from "../../ai/config/AiConfig";
-import type { ApiDefinition } from "../../api/config/ApiDefinition";
-import type { Context } from "../../context/Context";
-import { CliError } from "../../errors/CliError";
-import type { Task } from "../../ui/Task";
-import type { Target } from "../config/Target";
-import { LegacyGenerationRunner } from "./LegacyGenerationRunner";
-import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner";
+import type { AiConfig } from "../../ai/config/AiConfig.js";
+import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
+import type { Context } from "../../context/Context.js";
+import { CliError } from "../../errors/CliError.js";
+import type { Task } from "../../ui/Task.js";
+import type { Target } from "../config/Target.js";
+import { LegacyGenerationRunner } from "./LegacyGenerationRunner.js";
+import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner.js";
 
 /**
  * Orchestrates SDK generation for a single target.

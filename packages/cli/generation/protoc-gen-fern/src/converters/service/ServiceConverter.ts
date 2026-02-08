@@ -2,9 +2,9 @@ import { ServiceDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers";
-import { MethodConverter } from "./MethodConverter";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers.js";
+import { MethodConverter } from "./MethodConverter.js";
 
 export declare namespace ServiceConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

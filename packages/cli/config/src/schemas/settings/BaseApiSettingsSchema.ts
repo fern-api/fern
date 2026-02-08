@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { PathParameterOrderSchema } from "./PathParameterOrderSchema";
-import { RemoveDiscriminantsFromSchemasSchema } from "./RemoveDiscriminantsFromSchemasSchema";
+import { PathParameterOrderSchema } from "./PathParameterOrderSchema.js";
+import { RemoveDiscriminantsFromSchemasSchema } from "./RemoveDiscriminantsFromSchemasSchema.js";
 
 /**
  * Base API settings that are common across OpenAPI, AsyncAPI, and other API specs.

@@ -20,7 +20,7 @@ $ pnpm add @boundaryml/baml
 
 import { FieldType } from '@boundaryml/baml/native'
 import { TypeBuilder as _TypeBuilder, EnumBuilder, EnumViewer, ClassBuilder, ClassViewer } from '@boundaryml/baml/type_builder'
-import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals"
+import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals.js"
 
 export { FieldType, EnumBuilder, ClassBuilder }
 

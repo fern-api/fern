@@ -1,13 +1,13 @@
-import { Access } from "./Access";
-import { ClassReference } from "./ClassReference";
-import { CodeBlock } from "./CodeBlock";
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Field } from "./Field";
-import { Method } from "./Method";
-import { Parameter } from "./Parameter";
-import { orderByAccess } from "./utils/orderByAccess";
+import { Access } from "./Access.js";
+import { ClassReference } from "./ClassReference.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Field } from "./Field.js";
+import { Method } from "./Method.js";
+import { Parameter } from "./Parameter.js";
+import { orderByAccess } from "./utils/orderByAccess.js";
 
 export declare namespace Class {
     interface Args {

@@ -1,12 +1,12 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Module, UseStatement } from "@fern-api/rust-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
-import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "../utils";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest, convertIr } from "../utils/index.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
  * Generates WireMock-based integration tests for Rust SDK.
@@ -14,21 +14,21 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
  * Architecture:
  * - Uses AST builders (Module, UseStatement) for file structure
  * - Uses CodeBlock with raw strings for helper functions (reset, verify)
- * - Parses dynamic snippets (strings) for test content
+ * - Parses FernIr.dynamic snippets (strings) for test content
  * - Generates test functions with structured approach
  *
  * This hybrid approach balances:
  * - Type safety and maintainability (AST for structure)
  * - Practicality (strings for complex Rust expressions)
- * - Compatibility (dynamic snippets produce strings)
+ * - Compatibility (FernIr.dynamic snippets produce strings)
  */
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
-    private dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
@@ -71,8 +71,8 @@ export class WireTestGenerator {
     // FILE GENERATION
     // =============================================================================
 
-    private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<RustFile> {
-        const endpointTestCases = new Map<string, { snippet: string; endpoint: HttpEndpoint }>();
+    private async generateServiceTestFile(serviceName: string, endpoints: FernIr.HttpEndpoint[]): Promise<RustFile> {
+        const endpointTestCases = new Map<string, { snippet: string; endpoint: FernIr.HttpEndpoint }>();
 
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
@@ -112,7 +112,7 @@ export class WireTestGenerator {
 
     private buildTestModule(
         serviceName: string,
-        endpointTestCases: Map<string, { snippet: string; endpoint: HttpEndpoint }>,
+        endpointTestCases: Map<string, { snippet: string; endpoint: FernIr.HttpEndpoint }>,
         needsBase64Import: boolean,
         needsBigIntImport: boolean
     ): Module {
@@ -160,7 +160,7 @@ export class WireTestGenerator {
     // TEST FUNCTION GENERATION (Structured Approach)
     // =============================================================================
 
-    private generateEndpointTestFunction(endpoint: HttpEndpoint, snippet: string, serviceName: string): string | null {
+    private generateEndpointTestFunction(endpoint: FernIr.HttpEndpoint, snippet: string, serviceName: string): string | null {
         try {
             const testName = this.getTestFunctionName(endpoint, serviceName);
             const clientSetup = this.parseClientConstructor(snippet);
@@ -314,7 +314,7 @@ export class WireTestGenerator {
     }
 
     /**
-     * Parses client constructor from dynamic snippet.
+     * Parses client constructor from FernIr.dynamic snippet.
      *
      * Extracts the config and client instantiation code.
      */
@@ -351,7 +351,7 @@ export class WireTestGenerator {
     }
 
     /**
-     * Parses client method call from dynamic snippet.
+     * Parses client method call from FernIr.dynamic snippet.
      *
      * Extracts the complete method call chain including .await.
      */
@@ -399,9 +399,9 @@ export class WireTestGenerator {
      *
      * Strategy:
      * 1. Try wiremock mapping pathParameters first (preferred)
-     * 2. Fall back to dynamic endpoint example pathParameters
+     * 2. Fall back to FernIr.dynamic endpoint example pathParameters
      */
-    private buildBasePath(endpoint: HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
         let basePath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
@@ -427,7 +427,7 @@ export class WireTestGenerator {
                 basePath = basePath.replace(`{${paramName}}`, pathParam.equalTo);
             });
         } else {
-            // Fallback: Get path parameters from dynamic endpoint example
+            // Fallback: Get path parameters from FernIr.dynamic endpoint example
             const dynamicExample = this.getDynamicEndpointExample(endpoint);
             if (dynamicExample?.pathParameters) {
                 Object.entries(dynamicExample.pathParameters).forEach(([paramName, paramValue]) => {
@@ -446,7 +446,7 @@ export class WireTestGenerator {
      *
      * Returns "None" if no query params, otherwise Some(HashMap::from([...]))
      */
-    private buildQueryParamsMap(endpoint: HttpEndpoint): string {
+    private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
 
         if (!dynamicEndpointExample?.queryParameters) {
@@ -473,14 +473,14 @@ export class WireTestGenerator {
     // UTILITY METHODS
     // =============================================================================
 
-    private getTestFunctionName(endpoint: HttpEndpoint, serviceName: string): string {
+    private getTestFunctionName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
         const endpointName = endpoint.name.snakeCase.safeName;
         // Normalize service name to avoid double underscores (e.g., endpoints_union_ -> endpoints_union)
         const normalizedServiceName = serviceName.replace(/_+$/, "");
         return `test_${normalizedServiceName}_${endpointName}_with_wiremock`;
     }
 
-    private getDynamicEndpointExample(endpoint: HttpEndpoint): dynamic.EndpointExample | null {
+    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
         const example = this.dynamicIr.endpoints[endpoint.id];
         if (!example) {
             return null;
@@ -488,7 +488,7 @@ export class WireTestGenerator {
         return example.examples?.[0] ?? null;
     }
 
-    private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
+    private async generateSnippetForExample(example: FernIr.dynamic.EndpointExample): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest);
         if (!response.snippet) {
@@ -497,8 +497,8 @@ export class WireTestGenerator {
         return response.snippet;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName = this.getFormattedServiceName(service);
@@ -508,7 +508,7 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private getFormattedServiceName(service: HttpService): string {
+    private getFormattedServiceName(service: FernIr.HttpService): string {
         return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
     }
 

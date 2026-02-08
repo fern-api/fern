@@ -12,23 +12,22 @@ import {
 } from "@fern-api/openapi-ir";
 import { camelCase, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-
-import { FernOpenAPIExtension } from "../..";
-import { getExtension } from "../../getExtension";
-import { convertAvailability } from "../../schema/convertAvailability";
-import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas";
-import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
-import { getSchemas } from "../../utils/getSchemas";
-import { createSchemaCollisionTracker } from "../../utils/schemaCollision";
-import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
-import { FernAsyncAPIExtension } from "../fernExtensions";
-import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples";
-import { ParseAsyncAPIOptions } from "../options";
-import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { ChannelId, ServerContext } from "../sharedTypes";
-import { constructServerUrl, transformToValidPath } from "../sharedUtils";
-import { AsyncAPIV3 } from "../v3";
-import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
+import { getExtension } from "../../getExtension.js";
+import { FernOpenAPIExtension } from "../../index.js";
+import { convertAvailability } from "../../schema/convertAvailability.js";
+import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { getSchemas } from "../../utils/getSchemas.js";
+import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory.js";
+import { FernAsyncAPIExtension } from "../fernExtensions.js";
+import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples.js";
+import { ParseAsyncAPIOptions } from "../options.js";
+import { AsyncAPIIntermediateRepresentation } from "../parse.js";
+import { ChannelId, ServerContext } from "../sharedTypes.js";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils.js";
+import { AsyncAPIV3 } from "../v3/index.js";
+import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext.js";
 
 interface MessageWithMethodName {
     ref: OpenAPIV3.ReferenceObject;

@@ -3,15 +3,15 @@ import type { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, relativize } from "@fern-api/fs-utils";
 import { ConjureWorkspace, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
-import type { Context } from "../../context/Context";
-import type { Task } from "../../ui/Task";
-import type { ApiDefinition } from "../config/ApiDefinition";
-import type { ConjureSpec } from "../config/ConjureSpec";
-import { isConjureSpec } from "../config/ConjureSpec";
-import type { FernSpec } from "../config/FernSpec";
-import { isFernSpec } from "../config/FernSpec";
-import { LegacyApiSpecAdapter } from "./LegacyApiSpecAdapter";
+import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
+import type { Context } from "../../context/Context.js";
+import type { Task } from "../../ui/Task.js";
+import type { ApiDefinition } from "../config/ApiDefinition.js";
+import type { ConjureSpec } from "../config/ConjureSpec.js";
+import { isConjureSpec } from "../config/ConjureSpec.js";
+import type { FernSpec } from "../config/FernSpec.js";
+import { isFernSpec } from "../config/FernSpec.js";
+import { LegacyApiSpecAdapter } from "./LegacyApiSpecAdapter.js";
 
 export namespace LegacyFernWorkspaceAdapter {
     export interface Config {

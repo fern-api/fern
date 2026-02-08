@@ -2,15 +2,15 @@ import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { TestClassBuilder } from "./builders/TestClassBuilder";
-import { TestMethodBuilder } from "./builders/TestMethodBuilder";
-import { SnippetExtractor } from "./extractors/SnippetExtractor";
-import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor";
-import { TestResourceWriter } from "./resources/TestResourceWriter";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { TestClassBuilder } from "./builders/TestClassBuilder.js";
+import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
+import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
+import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
+import { TestResourceWriter } from "./resources/TestResourceWriter.js";
 
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
@@ -45,7 +45,7 @@ export class SdkWireTestGenerator {
 
         const dynamicIr = this.context.ir.dynamic;
         if (!dynamicIr) {
-            this.context.logger.warn("Cannot generate wire tests without dynamic IR");
+            this.context.logger.warn("Cannot generate wire tests without FernIr.dynamic IR");
             return;
         }
 
@@ -61,7 +61,7 @@ export class SdkWireTestGenerator {
     }
 
     private async generateTestFiles(
-        dynamicIr: dynamic.DynamicIntermediateRepresentation,
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
         dynamicSnippetsGenerator: DynamicSnippetsGenerator
     ): Promise<void> {
         const endpointsByService = this.groupEndpointsByService();
@@ -149,8 +149,8 @@ export class SdkWireTestGenerator {
 
     private async generateTestClass(
         serviceName: string,
-        endpoints: HttpEndpoint[],
-        dynamicIr: dynamic.DynamicIntermediateRepresentation,
+        endpoints: FernIr.HttpEndpoint[],
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
         dynamicSnippetsGenerator: DynamicSnippetsGenerator
     ): Promise<{ testClass: string; successCount: number }> {
         const className = `${this.toJavaClassName(serviceName)}WireTest`;
@@ -179,7 +179,7 @@ export class SdkWireTestGenerator {
                 if (firstDynamicExample) {
                     try {
                         this.context.logger.debug(
-                            `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
+                            `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with FernIr.dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
                         );
 
                         const expectedServiceName = serviceName.toLowerCase();
@@ -248,9 +248,9 @@ export class SdkWireTestGenerator {
                     }
                 }
             } else {
-                // No dynamic examples, but we have test examples from static IR
+                // No FernIr.dynamic examples, but we have test examples from static IR
                 this.context.logger.debug(
-                    `No dynamic examples for endpoint ${endpoint.id}, creating default snippet for service ${serviceName}`
+                    `No FernIr.dynamic examples for endpoint ${endpoint.id}, creating default snippet for service ${serviceName}`
                 );
 
                 const firstTestExample = testExamples[0];
@@ -335,7 +335,7 @@ export class SdkWireTestGenerator {
     }
 
     private async generateSnippetForExample(
-        example: dynamic.EndpointExample,
+        example: FernIr.dynamic.EndpointExample,
         dynamicSnippetsGenerator: DynamicSnippetsGenerator,
         endpointId: string
     ): Promise<string> {
@@ -349,7 +349,11 @@ export class SdkWireTestGenerator {
         return response.snippet;
     }
 
-    private generateDefaultSnippet(endpoint: HttpEndpoint, serviceName: string, testExample: WireTestExample): string {
+    private generateDefaultSnippet(
+        endpoint: FernIr.HttpEndpoint,
+        serviceName: string,
+        testExample: WireTestExample
+    ): string {
         const serviceNameLower = serviceName.toLowerCase();
         const methodName = endpoint.name.camelCase.safeName;
 
@@ -374,8 +378,8 @@ export class SdkWireTestGenerator {
         ${methodCall};`;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName =
@@ -388,24 +392,24 @@ export class SdkWireTestGenerator {
     }
 
     private async generateSnippetWithServiceCorrection(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         expectedServiceName: string,
         dynamicServiceName: string,
-        firstDynamicExample: dynamic.EndpointExample,
-        dynamicIr: dynamic.DynamicIntermediateRepresentation,
+        firstDynamicExample: FernIr.dynamic.EndpointExample,
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
         dynamicSnippetsGenerator: DynamicSnippetsGenerator,
         serviceName: string
     ): Promise<string> {
         if (expectedServiceName !== dynamicServiceName) {
             this.context.logger.debug(
-                `Service mismatch for endpoint ${endpoint.id}: expected service '${expectedServiceName}' but dynamic endpoint has service '${dynamicServiceName}'. ` +
+                `Service mismatch for endpoint ${endpoint.id}: expected service '${expectedServiceName}' but FernIr.dynamic endpoint has service '${dynamicServiceName}'. ` +
                     `Attempting service correction...`
             );
 
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (!dynamicEndpoint) {
                 throw new Error(
-                    `Dynamic endpoint not found for ${endpoint.id}. This is likely due to a service mapping issue in the dynamic IR.`
+                    `Dynamic endpoint not found for ${endpoint.id}. This is likely due to a service mapping issue in the FernIr.dynamic IR.`
                 );
             }
 
@@ -461,7 +465,7 @@ export class SdkWireTestGenerator {
                 throw new Error(
                     `Service mismatch (expected: '${expectedServiceName}', got: '${dynamicServiceName}'). ` +
                         `Correction attempt failed: ${errorMessage}. ` +
-                        `This typically occurs with V1 ungrouped endpoints or incorrect dynamic IR service mapping.`
+                        `This typically occurs with V1 ungrouped endpoints or incorrect FernIr.dynamic IR service mapping.`
                 );
             } finally {
                 if (originalDynamicEndpoint) {
@@ -478,7 +482,7 @@ export class SdkWireTestGenerator {
     private applyAllSnippetTransformations(
         snippet: string,
         serviceName: string,
-        endpoint: HttpEndpoint
+        endpoint: FernIr.HttpEndpoint
     ): { snippet: string; imports: string[] } {
         const imports: string[] = [];
         let transformedSnippet = this.applyServiceNameCorrections(snippet, serviceName);
@@ -495,10 +499,10 @@ export class SdkWireTestGenerator {
     }
 
     private applyServiceNameCorrections(snippet: string, serviceName: string): string {
-        // TODO (Tanmay): Remove this hardcoded service name correction once dynamic IR service mapping is fixed
+        // TODO (Tanmay): Remove this hardcoded service name correction once FernIr.dynamic IR service mapping is fixed
         // This is a temporary workaround for union/bigunion service confusion in snippet generation
         // Root cause: Dynamic IR endpoints may reference wrong service names for similar endpoint patterns
-        // Proper fix: Ensure dynamic IR generation correctly maps endpoints to their intended services
+        // Proper fix: Ensure FernIr.dynamic IR generation correctly maps endpoints to their intended services
         if (serviceName === "Union" && snippet.includes("client.bigunion()")) {
             return snippet.replace(/client\.bigunion\(\)/g, "client.union()");
         } else if (serviceName === "Bigunion" && snippet.includes("client.union()")) {
@@ -509,7 +513,7 @@ export class SdkWireTestGenerator {
 
     private applyEndpointSpecificTransformations(
         snippet: string,
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         serviceName: string,
         imports: string[]
     ): string {
@@ -574,7 +578,7 @@ export class SdkWireTestGenerator {
         return transformedSnippet;
     }
 
-    private shouldBuildTest(endpoint: HttpEndpoint): boolean {
+    private shouldBuildTest(endpoint: FernIr.HttpEndpoint): boolean {
         // Skip OAuth token endpoints in OAuth APIs - they conflict with the auto-token-fetch mechanism
         // The OAuth client automatically fetches tokens using these same endpoints, causing mock response conflicts
         if (this.isOAuthTokenEndpoint(endpoint.id)) {

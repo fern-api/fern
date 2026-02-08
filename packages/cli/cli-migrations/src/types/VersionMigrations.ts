@@ -1,4 +1,4 @@
-import { Migration } from "./Migration";
+import { Migration } from "./Migration.js";
 
 export interface VersionMigrations {
     version: string;

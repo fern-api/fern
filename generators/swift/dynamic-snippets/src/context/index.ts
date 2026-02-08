@@ -1,2 +1,2 @@
-export * from "./DynamicSnippetsGeneratorContext";
-export * from "./FilePropertyMapper";
+export * from "./DynamicSnippetsGeneratorContext.js";
+export * from "./FilePropertyMapper.js";

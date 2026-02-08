@@ -15,8 +15,8 @@ import path from "path";
 import semver from "semver";
 import YAML from "yaml";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { loadAndRunMigrations } from "./migrations";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { loadAndRunMigrations } from "./migrations/index.js";
 
 interface SkippedMajorUpgrade {
     generatorName: string;

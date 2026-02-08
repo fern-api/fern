@@ -1,8 +1,8 @@
 import { readFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 // Ensure that the generators list command works and the format doesn't change, since fern-bot consumes this
 describe("fern generator get", () => {

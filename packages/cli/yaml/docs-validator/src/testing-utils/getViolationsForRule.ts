@@ -4,9 +4,9 @@ import { loadProjectFromDirectory } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 import stripAnsi from "strip-ansi";
 
-import { Rule } from "../Rule";
-import { ValidationViolation } from "../ValidationViolation";
-import { runRulesOnDocsWorkspace } from "../validateDocsWorkspace";
+import { Rule } from "../Rule.js";
+import { ValidationViolation } from "../ValidationViolation.js";
+import { runRulesOnDocsWorkspace } from "../validateDocsWorkspace.js";
 
 export declare namespace getViolationsForRule {
     export interface Args {

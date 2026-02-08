@@ -2,14 +2,14 @@ import { schemas } from "@fern-api/config";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
-import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader";
-import type { DockerImageReference } from "../DockerImageReference";
-import { LANGUAGES, type Language } from "../Language";
-import type { SdkConfig } from "../SdkConfig";
-import type { Target } from "../Target";
-import { getImageReferenceFromLanguage } from "./getImageReferenceFromLanguage";
-import { getLanguageFromImage } from "./getLanguageFromImage";
+import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter.js";
+import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
+import type { DockerImageReference } from "../DockerImageReference.js";
+import { LANGUAGES, type Language } from "../Language.js";
+import type { SdkConfig } from "../SdkConfig.js";
+import type { Target } from "../Target.js";
+import { getImageReferenceFromLanguage } from "./getImageReferenceFromLanguage.js";
+import { getLanguageFromImage } from "./getLanguageFromImage.js";
 
 export namespace SdkConfigConverter {
     export interface GeneratorInfo {

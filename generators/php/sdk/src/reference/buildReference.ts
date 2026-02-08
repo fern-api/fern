@@ -2,10 +2,9 @@ import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
@@ -30,8 +29,8 @@ function getEndpointReferencesForService({
     service
 }: {
     context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
@@ -62,9 +61,9 @@ function getEndpointReference({
     singleEndpointSnippet
 }: {
     context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
-    endpoint: HttpEndpoint;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
+    endpoint: FernIr.HttpEndpoint;
     singleEndpointSnippet: SingleEndpointSnippet | undefined;
 }): FernGeneratorCli.EndpointReference {
     const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
@@ -99,7 +98,13 @@ function getEndpointReference({
     };
 }
 
-function getAccessFromRootClient({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
+function getAccessFromRootClient({
+    context,
+    service
+}: {
+    context: SdkGeneratorContext;
+    service: FernIr.HttpService;
+}): string {
     const clientVariableName = context.getClientVariableName();
     const servicePath = service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName);
     return servicePath.length > 0 ? `${clientVariableName}->${servicePath.join("->")}` : clientVariableName;
@@ -110,7 +115,7 @@ function getEndpointMethodName({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): string {
     return context.getEndpointMethodName(endpoint);
 }
@@ -121,7 +126,7 @@ function getReferenceEndpointInvocationParameters({
     endpointSignatureInfo
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
     endpointSignatureInfo: ReturnType<typeof context.endpointGenerator.getEndpointSignatureInfo>;
 }): string {
     const parameters: string[] = [];
@@ -146,7 +151,7 @@ function getReturnValue({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): { text: string } | undefined {
     const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
         serviceId: getServiceIdForEndpoint({ context, endpoint }),
@@ -195,7 +200,7 @@ function getEndpointParameters({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): FernGeneratorCli.ParameterReference[] {
     const parameters: FernGeneratorCli.ParameterReference[] = [];
 
@@ -252,7 +257,7 @@ function getPhpTypeStringFromTypeReference({
     typeReference
 }: {
     context: SdkGeneratorContext;
-    typeReference: TypeReference;
+    typeReference: FernIr.TypeReference;
 }): string {
     try {
         const phpType = context.phpTypeMapper.convert({ reference: typeReference });
@@ -270,9 +275,9 @@ function getEndpointSnippet({
     endpointSignatureInfo
 }: {
     context: SdkGeneratorContext;
-    serviceId: ServiceId;
-    service: HttpService;
-    endpoint: HttpEndpoint;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
+    endpoint: FernIr.HttpEndpoint;
     endpointSignatureInfo: ReturnType<typeof context.endpointGenerator.getEndpointSignatureInfo>;
 }): string {
     const methodName = context.getEndpointMethodName(endpoint);
@@ -309,8 +314,8 @@ function getServiceIdForEndpoint({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
-}): ServiceId {
+    endpoint: FernIr.HttpEndpoint;
+}): FernIr.ServiceId {
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
         if (service.endpoints.some((e) => e.id === endpoint.id)) {
             return serviceId;
@@ -324,16 +329,22 @@ function getServiceForEndpoint({
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
-}): HttpService {
+    endpoint: FernIr.HttpEndpoint;
+}): FernIr.HttpService {
     const serviceId = getServiceIdForEndpoint({ context, endpoint });
     return context.getHttpServiceOrThrow(serviceId);
 }
 
-function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {
+function isRootServiceId({
+    context,
+    serviceId
+}: {
+    context: SdkGeneratorContext;
+    serviceId: FernIr.ServiceId;
+}): boolean {
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: HttpService }): string {
+function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
     return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
 }

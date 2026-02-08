@@ -1,13 +1,12 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
-
-import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 export declare namespace StringEnumGenerator {
     type Source =
         | {
               type: "ir";
-              enumTypeDeclaration: EnumTypeDeclaration;
+              enumTypeDeclaration: FernIr.EnumTypeDeclaration;
           }
         | {
               type: "custom";

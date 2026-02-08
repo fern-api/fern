@@ -11,7 +11,7 @@ import {
 import { generateEndpointV1Example as generateEndpointExample } from "@fern-api/ir-utils";
 import { noop, startCase } from "lodash-es";
 
-import { convertTypeReference } from "./convertTypeShape";
+import { convertTypeReference } from "./convertTypeShape.js";
 
 export function convertPackage(
     irPackage: Ir.ir.Package,

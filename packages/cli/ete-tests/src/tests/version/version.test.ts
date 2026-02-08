@@ -1,6 +1,6 @@
 import tmp from "tmp-promise";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli } from "../../utils/runFernCli.js";
 
 const DEFAULT_VERSION = "0.0.0";
 

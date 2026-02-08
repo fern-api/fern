@@ -3,7 +3,7 @@ import { createFdrService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
 import chalk from "chalk";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 interface PreviewDeployment {
     url: string;

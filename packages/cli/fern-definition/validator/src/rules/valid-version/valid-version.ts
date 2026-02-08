@@ -1,7 +1,7 @@
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ValidVersionRule: Rule = {
     name: "valid-version",

@@ -1,3 +1,3 @@
-export * from "./ast";
-export * from "./custom-config";
-export * as rust from "./rust";
+export * from "./ast/index.js";
+export * from "./custom-config/index.js";
+export * as rust from "./rust.js";

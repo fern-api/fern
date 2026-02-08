@@ -1,8 +1,8 @@
-import { type Generation } from "../../context/generation-info";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { type ClassReference } from "../types/ClassReference";
-import { type Annotation } from "./Annotation";
+import { type Generation } from "../../context/generation-info.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { type ClassReference } from "../types/ClassReference.js";
+import { type Annotation } from "./Annotation.js";
 
 export declare namespace AnnotationGroup {
     interface Args {

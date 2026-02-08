@@ -2,9 +2,9 @@ import { Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
-import { convertSecurityScheme } from "../openapi/v3/converters/convertSecurityScheme";
-import { OpenAPIV3ParserContext } from "../openapi/v3/OpenAPIV3ParserContext";
-import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../options";
+import { convertSecurityScheme } from "../openapi/v3/converters/convertSecurityScheme.js";
+import { OpenAPIV3ParserContext } from "../openapi/v3/OpenAPIV3ParserContext.js";
+import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../options.js";
 
 describe("convertSecurityScheme", () => {
     const mockTaskContext = {

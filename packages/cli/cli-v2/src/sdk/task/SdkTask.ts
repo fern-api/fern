@@ -1,6 +1,6 @@
-import type { Task } from "../../ui/Task";
-import type { TaskGroup } from "../../ui/TaskGroup";
-import { TaskStageController } from "../../ui/TaskStageController";
+import type { Task } from "../../ui/Task.js";
+import type { TaskGroup } from "../../ui/TaskGroup.js";
+import { TaskStageController } from "../../ui/TaskStageController.js";
 
 /**
  * Represents a single SDK generation task with type-safe stage controls.

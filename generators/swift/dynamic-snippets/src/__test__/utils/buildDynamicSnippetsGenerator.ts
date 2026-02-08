@@ -2,7 +2,7 @@ import { FernGeneratorExec, Style } from "@fern-api/browser-compatible-base-gene
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { readFileSync } from "fs";
 
-import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator";
+import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator.js";
 
 export function buildDynamicSnippetsGenerator({
     irFilepath,

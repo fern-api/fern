@@ -21,8 +21,8 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
-import { isAutoVersion } from "./VersionUtils";
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
+import { isAutoVersion } from "./VersionUtils.js";
 
 export async function runLocalGenerationForWorkspace({
     token,

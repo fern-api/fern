@@ -1,4 +1,4 @@
-import { validateInstanceUrl } from "../rules/valid-instance-url/valid-instance-url";
+import { validateInstanceUrl } from "../rules/valid-instance-url/valid-instance-url.js";
 
 describe("validateInstanceUrl", () => {
     describe("valid URLs", () => {

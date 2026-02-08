@@ -8,7 +8,7 @@ import { dirname } from "path";
 import { PostHog } from "posthog-node";
 import { v4 as uuidv4 } from "uuid";
 
-import { PosthogManager } from "./PosthogManager";
+import { PosthogManager } from "./PosthogManager.js";
 
 const DISTINCT_ID_FILENAME = "id";
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";

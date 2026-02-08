@@ -3,17 +3,11 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
-import {
-    dynamic,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
  * Generates WireMock-based integration tests for PHP SDK.
@@ -25,15 +19,15 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
  */
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
-    private dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
     private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    constructor({ context, ir }: { context: SdkGeneratorContext; ir: IntermediateRepresentation }) {
+    constructor({ context, ir }: { context: SdkGeneratorContext; ir: FernIr.IntermediateRepresentation }) {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
@@ -70,12 +64,12 @@ export class WireTestGenerator {
 
     private async generateServiceTestFile(
         serviceName: string,
-        endpoints: HttpEndpoint[]
+        endpoints: FernIr.HttpEndpoint[]
     ): Promise<{ filename: string; directory: RelativeFilePath; contents: string } | undefined> {
         const endpointTestCases: Array<{
-            endpoint: HttpEndpoint;
-            example: dynamic.EndpointExample;
-            service: HttpService;
+            endpoint: FernIr.HttpEndpoint;
+            example: FernIr.dynamic.EndpointExample;
+            service: FernIr.HttpService;
             exampleIndex: number;
         }> = [];
 
@@ -215,9 +209,9 @@ export class WireTestGenerator {
     private async buildTestFileContent(
         testClassName: string,
         testCases: Array<{
-            endpoint: HttpEndpoint;
-            example: dynamic.EndpointExample;
-            service: HttpService;
+            endpoint: FernIr.HttpEndpoint;
+            example: FernIr.dynamic.EndpointExample;
+            service: FernIr.HttpService;
             exampleIndex: number;
         }>
     ): Promise<php.Class> {
@@ -267,9 +261,9 @@ export class WireTestGenerator {
         service,
         exampleIndex
     }: {
-        endpoint: HttpEndpoint;
-        example: dynamic.EndpointExample;
-        service: HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.dynamic.EndpointExample;
+        service: FernIr.HttpService;
         exampleIndex: number;
     }): Promise<php.Method | undefined> {
         try {
@@ -278,7 +272,7 @@ export class WireTestGenerator {
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
             const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
-            // Generate the API call using dynamic snippets generator
+            // Generate the API call using FernIr.dynamic snippets generator
             // Skip client instantiation since we instantiate it once in setUp()
             const snippetRequest = convertDynamicEndpointSnippetRequest({
                 ...example,
@@ -301,7 +295,7 @@ export class WireTestGenerator {
                     // $testId = '...';
                     writer.writeStatement(`$testId = '${testId}'`);
 
-                    // API call from dynamic snippet AST
+                    // API call from FernIr.dynamic snippet AST
                     writer.writeNode(snippetAst as php.AstNode);
 
                     // $this->verifyRequestCount(...);
@@ -320,13 +314,17 @@ export class WireTestGenerator {
         }
     }
 
-    private getTestMethodName(endpoint: HttpEndpoint): string {
+    private getTestMethodName(endpoint: FernIr.HttpEndpoint): string {
         // Convert endpoint name to camelCase test method name
         const endpointName = endpoint.name.camelCase.safeName;
         return `test${endpointName.charAt(0).toUpperCase()}${endpointName.slice(1)}`;
     }
 
-    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
+    private buildDeterministicTestId(
+        service: FernIr.HttpService,
+        endpoint: FernIr.HttpEndpoint,
+        exampleIndex: number
+    ): string {
         const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         const endpointName = endpoint.name.snakeCase.safeName;
 
@@ -375,7 +373,7 @@ export class WireTestGenerator {
         return JSON.stringify(value);
     }
 
-    private buildQueryParamsCode(endpoint: HttpEndpoint): string {
+    private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
         if (!dynamicEndpoint?.examples?.[0]?.queryParameters) {
             return "null";
@@ -411,7 +409,7 @@ export class WireTestGenerator {
         return out;
     }
 
-    private buildBasePath(endpoint: HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
         let basePath = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts || []) {
             basePath += `{${part.pathParameter}}${part.tail}`;
@@ -433,8 +431,8 @@ export class WireTestGenerator {
         return basePath;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName = this.getFormattedServiceName(service);
@@ -448,7 +446,7 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private getFormattedServiceName(service: HttpService): string {
+    private getFormattedServiceName(service: FernIr.HttpService): string {
         return service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("_");
     }
 
@@ -511,7 +509,7 @@ export class WireTestGenerator {
         return authParams.map((param) => `${param},\n    `).join("");
     }
 
-    private addInferredAuthParams(scheme: InferredAuthScheme, authParams: string[]): void {
+    private addInferredAuthParams(scheme: FernIr.InferredAuthScheme, authParams: string[]): void {
         // Extract parameters from the token endpoint's request body and headers
         // This mirrors the logic in RootClientGenerator.getParametersForInferredAuth()
         const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
