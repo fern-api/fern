@@ -2,7 +2,7 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI script requires console output for user feedback
 import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, writeFileSync } from "fs";
 import { join } from "path";
-import { parse as parseYaml } from "yaml";
+import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 
 interface ChangelogEntry {
     summary: string;
@@ -127,39 +127,38 @@ function updateVersionsFile(
 ): void {
     const existingContent = readFileSync(versionsFile, "utf-8");
 
-    // Build changelog entries
-    const changelogEntries: string[] = [];
+    // Build changelog entries from all changes
+    const changelogEntry: Array<{ summary: string; type: string }> = [];
     for (const change of changes) {
         for (const entry of change.entries) {
-            const summaryLines = entry.summary
-                .trim()
-                .split("\n")
-                .map((line) => `        ${line}`)
-                .join("\n");
-            changelogEntries.push(`    - summary: |\n` + summaryLines + "\n" + `      type: ${entry.type}`);
+            changelogEntry.push({
+                summary: entry.summary,
+                type: entry.type
+            });
         }
     }
 
-    // Build new version entry
-    const newEntry =
-        `- version: ${newVersion}\n` +
-        `  changelogEntry:\n` +
-        changelogEntries.join("\n") +
-        "\n" +
-        `  createdAt: "${new Date().toISOString().split("T")[0]}"\n` +
-        `  irVersion: ${irVersion}\n\n`;
+    // Create new version entry object
+    const newVersionEntry: VersionEntry = {
+        version: newVersion,
+        changelogEntry,
+        createdAt: new Date().toISOString().split("T")[0],
+        irVersion
+    };
+
+    // Use yaml.stringify() for the new entry
+    // Note: We wrap in array to get the "- version:" format, then add extra newline
+    const newEntryYaml = stringifyYaml([newVersionEntry]);
 
     // Find where to insert (after the yaml-language-server comment if present)
     const lines = existingContent.split("\n");
-    let insertIndex = 0;
     if (lines.length > 0 && lines[0] && lines[0].startsWith("# yaml-language-server")) {
-        insertIndex = 1;
         // Prepend new entry after comment line
-        const newContent = lines[0] + "\n" + newEntry + lines.slice(1).join("\n");
+        const newContent = lines[0] + "\n" + newEntryYaml + lines.slice(1).join("\n");
         writeFileSync(versionsFile, newContent);
     } else {
         // Prepend new entry at the beginning
-        writeFileSync(versionsFile, newEntry + existingContent);
+        writeFileSync(versionsFile, newEntryYaml + existingContent);
     }
 }
 
