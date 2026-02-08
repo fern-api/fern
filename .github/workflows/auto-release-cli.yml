@@ -3,6 +3,14 @@ name: Auto Release CLI
 on:
   pull_request:
     types: [closed]
+  workflow_run:
+    workflows: ["Publish Fern CLI"]
+    types:
+      - completed
+
+concurrency:
+  group: cli-release-queue
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -14,11 +22,15 @@ env:
 
 jobs:
   prepare-release:
-    # Only run if the PR was merged and has "!autorelease" in the title
+    # Run if: PR merged with !autorelease OR publish workflow completed successfully
     if: |
-      github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.title, '!autorelease') &&
-      github.repository == 'fern-api/fern'
+      github.repository == 'fern-api/fern' && (
+        (github.event_name == 'pull_request' &&
+         github.event.pull_request.merged == true &&
+         contains(github.event.pull_request.title, '!autorelease')) ||
+        (github.event_name == 'workflow_run' &&
+         github.event.workflow_run.conclusion == 'success')
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -36,7 +48,44 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Check for existing release PR
+        id: check_release_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if any open PRs exist with release/cli-* branch pattern
+          OPEN_RELEASE_PRS=$(gh pr list --state open --head "release/cli-" --json number,headRefName --jq length)
+
+          if [ "$OPEN_RELEASE_PRS" -gt 0 ]; then
+            echo "has_release_pr=true" >> $GITHUB_OUTPUT
+            echo "ℹ️ Found $OPEN_RELEASE_PRS existing release PR(s)"
+
+            # List the existing PRs for visibility
+            echo "Existing release PRs:"
+            gh pr list --state open --head "release/cli-" --json number,title,url --jq '.[] | "  #\(.number): \(.title) - \(.url)"'
+          else
+            echo "has_release_pr=false" >> $GITHUB_OUTPUT
+            echo "✅ No existing release PRs found"
+          fi
+
+      - name: Skip if release PR exists
+        if: steps.check_release_pr.outputs.has_release_pr == 'true'
+        run: |
+          echo "## ⏸️ Release Queued" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "A release PR is already open. Your changes have been queued and will be included in the next release." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**What happens next:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. The current release PR gets merged" >> $GITHUB_STEP_SUMMARY
+          echo "2. CLI publishes to npm" >> $GITHUB_STEP_SUMMARY
+          echo "3. This workflow runs again automatically" >> $GITHUB_STEP_SUMMARY
+          echo "4. A new release PR is created with your queued changes" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📋 View existing release PRs:" >> $GITHUB_STEP_SUMMARY
+          gh pr list --state open --head "release/cli-" --json number,title,url --jq '.[] | "- [#\(.number): \(.title)](\(.url))"' >> $GITHUB_STEP_SUMMARY
+
       - name: Check for unreleased changes
+        if: steps.check_release_pr.outputs.has_release_pr == 'false'
         id: check_unreleased
         run: |
           if [ -z "$(ls -A packages/cli/cli/changes/unreleased/*.{yml,yaml} 2>/dev/null)" ]; then
@@ -47,7 +96,7 @@ jobs:
           fi
 
       - name: Create release branch
-        if: steps.check_unreleased.outputs.has_changes == 'true'
+        if: steps.check_release_pr.outputs.has_release_pr == 'false' && steps.check_unreleased.outputs.has_changes == 'true'
         id: create_branch
         run: |
           BRANCH_NAME="release/cli-$(date +%Y%m%d-%H%M%S)"
@@ -55,7 +104,7 @@ jobs:
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
       - name: Prepare release
-        if: steps.check_unreleased.outputs.has_changes == 'true'
+        if: steps.check_release_pr.outputs.has_release_pr == 'false' && steps.check_unreleased.outputs.has_changes == 'true'
         id: prepare_release
         run: |
           # Run the prepare-release script
@@ -66,7 +115,7 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Commit and push branch
-        if: steps.check_unreleased.outputs.has_changes == 'true'
+        if: steps.check_release_pr.outputs.has_release_pr == 'false' && steps.check_unreleased.outputs.has_changes == 'true'
         run: |
           git add packages/cli/cli/versions.yml
           git add packages/cli/cli/changes/
@@ -74,10 +123,10 @@ jobs:
           git push origin "${{ steps.create_branch.outputs.branch_name }}"
 
       - name: Create release PR
-        if: steps.check_unreleased.outputs.has_changes == 'true'
+        if: steps.check_release_pr.outputs.has_release_pr == 'false' && steps.check_unreleased.outputs.has_changes == 'true'
         id: create_pr
         env:
-          GH_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_URL=$(gh pr create \
             --title "chore(cli): release ${{ steps.prepare_release.outputs.version }}" \
@@ -100,7 +149,7 @@ jobs:
           echo "$PR_URL"
 
       - name: Summary
-        if: steps.check_unreleased.outputs.has_changes == 'true'
+        if: steps.check_release_pr.outputs.has_release_pr == 'false' && steps.check_unreleased.outputs.has_changes == 'true'
         run: |
           echo "## 🎉 Release PR Created!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
