@@ -1,7 +1,8 @@
 #!/usr/bin/env tsx
-import { readFileSync, writeFileSync, readdirSync, mkdirSync, renameSync, existsSync } from "fs";
+// biome-ignore-all lint/suspicious/noConsole: CLI script requires console output for user feedback
+import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, writeFileSync } from "fs";
 import { join } from "path";
-import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
+import { parse as parseYaml } from "yaml";
 
 interface ChangelogEntry {
     summary: string;
@@ -28,9 +29,7 @@ function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     }
 
     const files = readdirSync(unreleasedDir).filter(
-        (file) =>
-            (file.endsWith(".yml") || file.endsWith(".yaml")) &&
-            !file.startsWith(".") // Exclude hidden files like .template.yml and .gitkeep
+        (file) => (file.endsWith(".yml") || file.endsWith(".yaml")) && !file.startsWith(".") // Exclude hidden files like .template.yml and .gitkeep
     );
 
     if (files.length === 0) {
@@ -132,12 +131,12 @@ function updateVersionsFile(
     const changelogEntries: string[] = [];
     for (const change of changes) {
         for (const entry of change.entries) {
-            const summaryLines = entry.summary.trim().split('\n').map(line => `        ${line}`).join('\n');
-            changelogEntries.push(
-                `    - summary: |\n` +
-                summaryLines + '\n' +
-                `      type: ${entry.type}`
-            );
+            const summaryLines = entry.summary
+                .trim()
+                .split("\n")
+                .map((line) => `        ${line}`)
+                .join("\n");
+            changelogEntries.push(`    - summary: |\n` + summaryLines + "\n" + `      type: ${entry.type}`);
         }
     }
 
@@ -145,17 +144,18 @@ function updateVersionsFile(
     const newEntry =
         `- version: ${newVersion}\n` +
         `  changelogEntry:\n` +
-        changelogEntries.join('\n') + '\n' +
+        changelogEntries.join("\n") +
+        "\n" +
         `  createdAt: "${new Date().toISOString().split("T")[0]}"\n` +
         `  irVersion: ${irVersion}\n\n`;
 
     // Find where to insert (after the yaml-language-server comment if present)
-    const lines = existingContent.split('\n');
+    const lines = existingContent.split("\n");
     let insertIndex = 0;
-    if (lines[0].startsWith('# yaml-language-server')) {
+    if (lines.length > 0 && lines[0] && lines[0].startsWith("# yaml-language-server")) {
         insertIndex = 1;
         // Prepend new entry after comment line
-        const newContent = lines[0] + '\n' + newEntry + lines.slice(1).join('\n');
+        const newContent = lines[0] + "\n" + newEntry + lines.slice(1).join("\n");
         writeFileSync(versionsFile, newContent);
     } else {
         // Prepend new entry at the beginning
