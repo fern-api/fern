@@ -65,7 +65,10 @@ jobs:
 
             # List the existing PRs for visibility
             echo "Existing release PRs:"
-            gh pr list --state open --head "release/cli-" --json number,title,url --jq '.[] | "  #\(.number): \(.title) - \(.url)"'
+            gh pr list \
+              --state open \
+              --json number,title,url,headRefName \
+              --jq '.[] | select(.headRefName | startswith("release/cli-")) | "  #\(.number): \(.title) - \(.url)"'
           else
             echo "has_release_pr=false" >> $GITHUB_OUTPUT
             echo "✅ No existing release PRs found"
@@ -85,7 +88,7 @@ jobs:
           echo "4. A new release PR is created with your queued changes" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📋 View existing release PRs:" >> $GITHUB_STEP_SUMMARY
-          gh pr list --state open --head "release/cli-" --json number,title,url --jq '.[] | "- [#\(.number): \(.title)](\(.url))"' >> $GITHUB_STEP_SUMMARY
+          gh pr list --state open --json number,title,url,headRefName --jq '.[] | select(.headRefName | startswith("release/cli-")) | "- [#\(.number): \(.title)](\(.url))"' >> $GITHUB_STEP_SUMMARY
 
       - name: Check for unreleased changes
         if: steps.check_release_pr.outputs.has_release_pr == 'false'
