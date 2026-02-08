@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createSampleIr } from "@fern-api/test-utils";
 import { IntermediateRepresentation } from "@fern-fern/ir-v59-sdk/api";
-import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift";
+import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift.js";
 
 const pathToTestDefinitions = resolve(__dirname, "../../../../../../../../test-definitions/fern/apis");
 const testDefinitionNames = readdirSync(pathToTestDefinitions, { withFileTypes: true })

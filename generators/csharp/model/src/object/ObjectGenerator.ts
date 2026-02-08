@@ -1,18 +1,17 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ExampleObjectType,
-    NameAndWireValue,
-    ObjectProperty,
-    ObjectTypeDeclaration,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import { generateFields } from "../generateFields";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExampleGenerator } from "../snippets/ExampleGenerator";
+
+type ExampleObjectType = FernIr.ExampleObjectType;
+type NameAndWireValue = FernIr.NameAndWireValue;
+type ObjectProperty = FernIr.ObjectProperty;
+type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
+type TypeDeclaration = FernIr.TypeDeclaration;
+
+import { generateFields } from "../generateFields.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;

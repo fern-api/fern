@@ -1,13 +1,12 @@
-import { AliasTypeDeclaration, ShapeType } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedAliasTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
-
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
 export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
-    extends AbstractGeneratedTypeSchema<AliasTypeDeclaration, Context>
+    extends AbstractGeneratedTypeSchema<FernIr.AliasTypeDeclaration, Context>
     implements GeneratedAliasTypeSchema<Context>
 {
     public readonly type = "alias";
@@ -62,7 +61,7 @@ export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
         rawShape: ts.TypeNode;
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
-        if (this.shape.resolvedType.type === "named" && this.shape.resolvedType.shape === ShapeType.Object) {
+        if (this.shape.resolvedType.type === "named" && this.shape.resolvedType.shape === FernIr.ShapeType.Object) {
             return context.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
         } else {
             return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });

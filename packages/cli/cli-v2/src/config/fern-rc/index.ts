@@ -1,3 +1,3 @@
-export { FernRcAccountManager } from "./FernRcAccountManager";
-export { FernRcSchemaLoader } from "./FernRcSchemaLoader";
-export { LegacyTokenMigrator } from "./LegacyTokenMigrator";
+export { FernRcAccountManager } from "./FernRcAccountManager.js";
+export { FernRcSchemaLoader } from "./FernRcSchemaLoader.js";
+export { LegacyTokenMigrator } from "./LegacyTokenMigrator.js";

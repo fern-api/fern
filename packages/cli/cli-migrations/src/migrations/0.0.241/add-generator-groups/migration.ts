@@ -3,10 +3,10 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { Migration } from "../../../types/Migration";
-import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles";
-import * as NewSchemas from "./new-generators-configuration";
-import * as OldSchemas from "./old-generators-configuration";
+import { Migration } from "../../../types/Migration.js";
+import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles.js";
+import * as NewSchemas from "./new-generators-configuration/index.js";
+import * as OldSchemas from "./old-generators-configuration/index.js";
 
 export const migration: Migration = {
     name: "add-generator-groups",

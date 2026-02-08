@@ -1,8 +1,8 @@
 import type { Element } from "hast";
 import { CONTINUE, visit } from "unist-util-visit";
 
-import { assertIsDefined, assertIsNumber } from "../assert";
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
+import { assertIsDefined, assertIsNumber } from "../assert.js";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes.js";
 
 export function scrapeEmbed(node: HastNode, index: HastNodeIndex, parent: HastNodeParent): Element | undefined {
     if (

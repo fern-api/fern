@@ -2,7 +2,7 @@ import { AuthScheme } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1.js";
 
 interface SecuritySchemeNames {
     name?: string;

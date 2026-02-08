@@ -1,7 +1,7 @@
 import { CONSOLE_LOGGER, Logger } from "@fern-api/logger";
 
-import { FernCliError } from "./FernCliError";
-import { TaskContext, TaskResult } from "./TaskContext";
+import { FernCliError } from "./FernCliError.js";
+import { TaskContext, TaskResult } from "./TaskContext.js";
 
 export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Logger } = {}): TaskContext {
     const context = {

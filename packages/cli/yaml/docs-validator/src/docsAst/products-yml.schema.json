@@ -1389,6 +1389,71 @@
       ],
       "additionalProperties": false
     },
+    "docs.LibraryName": {
+      "type": "string"
+    },
+    "docs.LibraryReferenceConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "library": {
+          "$ref": "#/definitions/docs.LibraryName"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "library"
+      ],
+      "additionalProperties": false
+    },
     "docs.ChangelogConfiguration": {
       "type": "object",
       "properties": {
@@ -1613,6 +1678,9 @@
         },
         {
           "$ref": "#/definitions/docs.PythonDocsConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"

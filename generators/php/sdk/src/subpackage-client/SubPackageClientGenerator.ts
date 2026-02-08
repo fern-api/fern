@@ -1,26 +1,25 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace SubClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        subpackage: Subpackage;
-        serviceId?: ServiceId;
-        service?: HttpService;
+        subpackage: FernIr.Subpackage;
+        serviceId?: FernIr.ServiceId;
+        service?: FernIr.HttpService;
     }
 }
 
 export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private classReference: php.ClassReference;
-    private subpackage: Subpackage;
-    private serviceId: ServiceId | undefined;
-    private service: HttpService | undefined;
+    private subpackage: FernIr.Subpackage;
+    private serviceId: FernIr.ServiceId | undefined;
+    private service: FernIr.HttpService | undefined;
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
@@ -82,7 +81,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         });
     }
 
-    private getConstructorMethod({ subpackages }: { subpackages: Subpackage[] }): php.Class.Constructor {
+    private getConstructorMethod({ subpackages }: { subpackages: FernIr.Subpackage[] }): php.Class.Constructor {
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
 
         const parameters: php.Parameter[] = [
@@ -155,7 +154,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         };
     }
 
-    private getSubpackages(): Subpackage[] {
+    private getSubpackages(): FernIr.Subpackage[] {
         return this.subpackage.subpackages
             .map((subpackageId) => {
                 return this.context.getSubpackageOrThrow(subpackageId);

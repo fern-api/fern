@@ -1,12 +1,4 @@
-import {
-    HttpEndpoint,
-    HttpMethod,
-    HttpRequestBody,
-    HttpResponseBody,
-    HttpService,
-    Package,
-    PathParameter
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     convertHttpPathToExpressRoute,
     getPropertyKey,
@@ -20,8 +12,8 @@ import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 export declare namespace GeneratedExpressServiceImpl {
     export interface Init {
         packageId: PackageId;
-        package: Package;
-        service: HttpService;
+        package: FernIr.Package;
+        service: FernIr.HttpService;
         serviceClassName: string;
         doNotHandleUnrecognizedErrors: boolean;
         includeSerdeLayer: boolean;
@@ -44,9 +36,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
 
     private doNotHandleUnrecognizedErrors: boolean;
     private serviceClassName: string;
-    private service: HttpService;
+    private service: FernIr.HttpService;
     private packageId: PackageId;
-    private package_: Package;
+    private package_: FernIr.Package;
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
     private skipResponseValidation: boolean;
@@ -172,7 +164,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         methodsInterface,
         context
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         methodsInterface: InterfaceDeclaration;
         context: ExpressContext;
     }) {
@@ -358,14 +350,14 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         });
     }
 
-    private getEndpointMethodName(endpoint: HttpEndpoint): string {
+    private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 
-    private addRouteToRouter(endpoint: HttpEndpoint, context: ExpressContext): ts.Statement {
+    private addRouteToRouter(endpoint: FernIr.HttpEndpoint, context: ExpressContext): ts.Statement {
         return context.externalDependencies.express.Router._addRoute({
             referenceToRouter: this.getReferenceToRouter(),
-            method: HttpMethod._visit<"get" | "post" | "put" | "patch" | "delete" | "head">(endpoint.method, {
+            method: FernIr.HttpMethod._visit<"get" | "post" | "put" | "patch" | "delete" | "head">(endpoint.method, {
                 get: () => "get",
                 post: () => "post",
                 put: () => "put",
@@ -416,8 +408,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
         next: ts.Expression;
-        endpoint: HttpEndpoint;
-        requestBody: HttpRequestBody;
+        endpoint: FernIr.HttpEndpoint;
+        requestBody: FernIr.HttpRequestBody;
         context: ExpressContext;
     }): ts.Statement[] {
         const DESERIALIZED_REQUEST_VARIABLE_NAME = "request";
@@ -576,7 +568,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
         next: ts.Expression;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         context: ExpressContext;
     }): ts.TryStatement {
         return ts.factory.createTryStatement(
@@ -599,7 +591,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
         next: ts.Expression;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         context: ExpressContext;
     }): ts.Statement[] {
         const statements: ts.Statement[] = [];
@@ -716,7 +708,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         expressResponse: ts.Expression;
         next: ts.Expression;
         context: ExpressContext;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }): ts.CatchClause {
         const ERROR_NAME = "error";
 
@@ -769,7 +761,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         );
     }
 
-    private generateWarnForUnexpectedError(endpoint: HttpEndpoint, context: ExpressContext): ts.Statement {
+    private generateWarnForUnexpectedError(endpoint: FernIr.HttpEndpoint, context: ExpressContext): ts.Statement {
         const warnStatement = ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
@@ -854,7 +846,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         );
     }
 
-    private getPathParameterName(pathParameter: PathParameter): string {
+    private getPathParameterName(pathParameter: FernIr.PathParameter): string {
         return pathParameter.name.originalName;
     }
 
@@ -863,11 +855,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         requestBody,
         context
     }: {
-        endpoint: HttpEndpoint;
-        requestBody: HttpRequestBody;
+        endpoint: FernIr.HttpEndpoint;
+        requestBody: FernIr.HttpRequestBody;
         context: ExpressContext;
     }): ts.TypeNode {
-        return HttpRequestBody._visit(requestBody, {
+        return FernIr.HttpRequestBody._visit(requestBody, {
             inlinedRequestBody: () =>
                 context.expressInlinedRequestBody
                     .getReferenceToInlinedRequestBodyType(this.packageId, endpoint.name)
@@ -880,7 +872,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 throw new Error("bytes is not supported");
             },
             _other: () => {
-                throw new Error("Unknown HttpRequestBody: " + requestBody.type);
+                throw new Error("Unknown FernIr.HttpRequestBody: " + requestBody.type);
             }
         });
     }
@@ -891,12 +883,12 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         referenceToBody,
         context
     }: {
-        endpoint: HttpEndpoint;
-        requestBodyType: HttpRequestBody;
+        endpoint: FernIr.HttpEndpoint;
+        requestBodyType: FernIr.HttpRequestBody;
         referenceToBody: ts.Expression;
         context: ExpressContext;
     }): ts.Expression {
-        return HttpRequestBody._visit(requestBodyType, {
+        return FernIr.HttpRequestBody._visit(requestBodyType, {
             inlinedRequestBody: () => {
                 if (this.skipRequestValidation) {
                     return context.expressInlinedRequestBodySchema
@@ -924,7 +916,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 throw new Error("bytes is not supported");
             },
             _other: () => {
-                throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);
+                throw new Error("Unknown FernIr.HttpRequestBody: " + requestBodyType.type);
             }
         });
     }
@@ -933,8 +925,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         return `${this.serviceClassName}Methods`;
     }
 
-    private getResponseBodyType(response: HttpResponseBody, context: ExpressContext): ts.TypeNode {
-        return HttpResponseBody._visit<ts.TypeNode>(response, {
+    private getResponseBodyType(response: FernIr.HttpResponseBody, context: ExpressContext): ts.TypeNode {
+        return FernIr.HttpResponseBody._visit<ts.TypeNode>(response, {
             json: (jsonResponse) => context.type.getReferenceToType(jsonResponse.responseBodyType).typeNode,
             bytes: () => {
                 throw new Error("bytes is not supported");
@@ -952,7 +944,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 throw new Error("Text response is not supported");
             },
             _other: () => {
-                throw new Error("Unknown HttpResponseBody: " + response.type);
+                throw new Error("Unknown FernIr.HttpResponseBody: " + response.type);
             }
         });
     }

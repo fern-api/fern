@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { GitOutputModeSchema } from "./GitOutputModeSchema";
-import { LicenseSchema } from "./LicenseSchema";
-import { ReviewersSchema } from "./ReviewersSchema";
+import { GitOutputModeSchema } from "./GitOutputModeSchema.js";
+import { LicenseSchema } from "./LicenseSchema.js";
+import { ReviewersSchema } from "./ReviewersSchema.js";
 
 export const GitOutputSchema = z.object({
     repository: z.string(),

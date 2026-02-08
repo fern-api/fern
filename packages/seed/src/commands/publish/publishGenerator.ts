@@ -5,10 +5,10 @@ import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources
 import path from "path";
 import semver from "semver";
 
-import { PublishDockerConfiguration } from "../../config/api";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { runCommands, subVersion } from "../../utils/publishUtilities";
+import { PublishDockerConfiguration } from "../../config/api/index.js";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases.js";
+import { runCommands, subVersion } from "../../utils/publishUtilities.js";
 
 interface VersionFilePair {
     latestChangelogPath: string;
@@ -25,7 +25,7 @@ export async function publishGenerator({
     context: TaskContext;
 }): Promise<void> {
     const generatorId = generator.workspaceName;
-    context.logger.info(`Publishing generator ${generatorId}@${version}...`);
+    context.logger.info(`Publishing generator ${generatorId}@${typeof version === "string" ? version : "latest"}...`);
 
     let publishVersion: string;
     if (typeof version !== "string") {

@@ -1,1 +1,1 @@
-export { EnvironmentGenerator } from "./EnvironmentGenerator";
+export { EnvironmentGenerator } from "./EnvironmentGenerator.js";

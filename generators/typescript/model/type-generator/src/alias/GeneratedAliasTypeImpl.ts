@@ -1,4 +1,4 @@
-import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     GetReferenceOpts,
     generateInlineAliasModule,
@@ -15,10 +15,10 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 export class GeneratedAliasTypeImpl<Context extends BaseContext>
-    extends AbstractGeneratedType<TypeReference, Context>
+    extends AbstractGeneratedType<FernIr.TypeReference, Context>
     implements NotBrandedGeneratedAliasType<Context>
 {
     public readonly type = "alias";
@@ -73,7 +73,7 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
         });
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "alias") {
             throw new Error("Example is not for an alias");
         }

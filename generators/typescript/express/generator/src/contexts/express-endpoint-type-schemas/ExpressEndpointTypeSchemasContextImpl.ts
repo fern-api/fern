@@ -1,12 +1,12 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace ExpressEndpointTypeSchemasContextImpl {
     export interface Init {
@@ -45,7 +45,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
 
     public getGeneratedEndpointTypeSchemas(
         packageId: PackageId,
-        endpointName: Name
+        endpointName: FernIr.Name
     ): GeneratedExpressEndpointTypeSchemas {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
@@ -63,7 +63,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
 
     public getReferenceToEndpointTypeSchemaExport(
         packageId: PackageId,
-        endpointName: Name,
+        endpointName: FernIr.Name,
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);

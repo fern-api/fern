@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
-import { createSampleIr } from "../../createSampleIr";
+import { createSampleIr } from "../../createSampleIr.js";
 
 const base = AbsoluteFilePath.of(resolve(__dirname, "stable/base"));
 const addedEndpoint = AbsoluteFilePath.of(resolve(__dirname, "stable/addedEndpoint"));

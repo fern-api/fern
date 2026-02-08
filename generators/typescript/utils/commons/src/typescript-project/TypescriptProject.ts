@@ -7,9 +7,9 @@ import { Volume } from "memfs/lib/volume";
 import path from "path";
 import tmp from "tmp-promise";
 import { Project } from "ts-morph";
-import { PackageDependencies } from "../dependency-manager/DependencyManager";
-import { JSR } from "./JSR";
-import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
+import { PackageDependencies } from "../dependency-manager/DependencyManager.js";
+import { JSR } from "./JSR.js";
+import { PersistedTypescriptProject } from "./PersistedTypescriptProject.js";
 
 export declare namespace TypescriptProject {
     export interface Init {

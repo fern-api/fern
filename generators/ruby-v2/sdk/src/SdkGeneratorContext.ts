@@ -1,30 +1,15 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
-import { ruby } from "@fern-api/ruby-ast";
-import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
+import { ClassReference, ruby } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    IntermediateRepresentation,
-    Name,
-    ServiceId,
-    StreamingResponse,
-    Subpackage,
-    SubpackageId,
-    TypeDeclaration,
-    TypeId
-} from "@fern-fern/ir-sdk/api";
-import { EndpointGenerator } from "./endpoint/EndpointGenerator";
-import { RubyGeneratorAgent } from "./RubyGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
+import { RubyGeneratorAgent } from "./RubyGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 const ROOT_TYPES_FOLDER = "types";
 
@@ -35,7 +20,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public readonly generatorAgent: RubyGeneratorAgent;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -56,7 +41,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return RelativeFilePath.of(["lib", this.getRootFolderName()].join("/"));
     }
 
-    public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
+    public getLocationForTypeId(typeId: FernIr.TypeId): RelativeFilePath {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return join(
             RelativeFilePath.of("lib"),
@@ -66,7 +51,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         );
     }
 
-    public getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference {
+    public getClassReferenceForTypeId(typeId: FernIr.TypeId): ruby.ClassReference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             modules: this.getModuleNamesForTypeId(typeId),
@@ -74,26 +59,26 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
-    public getFileNameForTypeId(typeId: TypeId): string {
+    public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return typeDeclaration.name.name.snakeCase.safeName + ".rb";
     }
 
-    public getAllTypeDeclarations(): TypeDeclaration[] {
+    public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
         return Object.values(this.ir.types);
     }
 
-    public getModuleNamesForTypeId(typeId: TypeId): string[] {
+    public getModuleNamesForTypeId(typeId: FernIr.TypeId): string[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return [this.getRootModuleName(), ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
     }
 
-    public getModulesForTypeId(typeId: TypeId): ruby.Module_[] {
+    public getModulesForTypeId(typeId: FernIr.TypeId): ruby.Module_[] {
         const modules = this.getModuleNamesForTypeId(typeId);
         return modules.map((name) => ruby.module({ name }));
     }
 
-    public getLocationForSubpackageId(subpackageId: SubpackageId): RelativeFilePath {
+    public getLocationForSubpackageId(subpackageId: FernIr.SubpackageId): RelativeFilePath {
         const subpackage = this.getSubpackageOrThrow(subpackageId);
         return RelativeFilePath.of(
             [
@@ -104,11 +89,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         );
     }
 
-    public maybeGetExampleEndpointCall(endpoint: HttpEndpoint): ExampleEndpointCall | null {
+    public maybeGetExampleEndpointCall(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | null {
         // Collect all examples (user-specified first, then auto-generated)
-        const allExamples: ExampleEndpointCall[] = [
-            ...endpoint.userSpecifiedExamples.map((e) => e.example).filter((e): e is ExampleEndpointCall => e != null),
-            ...endpoint.autogeneratedExamples.map((e) => e.example).filter((e): e is ExampleEndpointCall => e != null)
+        const allExamples: FernIr.ExampleEndpointCall[] = [
+            ...endpoint.userSpecifiedExamples
+                .map((e) => e.example)
+                .filter((e): e is FernIr.ExampleEndpointCall => e != null),
+            ...endpoint.autogeneratedExamples
+                .map((e) => e.example)
+                .filter((e): e is FernIr.ExampleEndpointCall => e != null)
         ];
 
         // Prefer examples that have a non-empty request body (jsonExample)
@@ -118,7 +107,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return exampleWithRequestBody ?? allExamples[0] ?? null;
     }
 
-    public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): ruby.Type {
+    public getReturnTypeForEndpoint(httpEndpoint: FernIr.HttpEndpoint): ruby.Type {
         const responseBody = httpEndpoint.response?.body;
 
         if (responseBody == null) {
@@ -148,7 +137,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         }
     }
 
-    public getStreamingResponse(endpoint: HttpEndpoint): StreamingResponse | undefined {
+    public getStreamingResponse(endpoint: FernIr.HttpEndpoint): FernIr.StreamingResponse | undefined {
         const responseBody = endpoint.response?.body;
         if (responseBody == null) {
             return undefined;
@@ -168,7 +157,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         }
     }
 
-    public getStreamPayload(streamingResponse: StreamingResponse): ruby.Type {
+    public getStreamPayload(streamingResponse: FernIr.StreamingResponse): ruby.Type {
         switch (streamingResponse.type) {
             case "json":
             case "sse":
@@ -180,7 +169,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         }
     }
 
-    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
+    public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
             throw new Error(`Subpackage with id ${subpackageId} not found`);
@@ -188,7 +177,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return subpackage;
     }
 
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+    public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
             throw new Error(`Service with id ${serviceId} not found`);
@@ -196,7 +185,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return service;
     }
 
-    public getSubpackageForServiceId(serviceId: ServiceId): Subpackage {
+    public getSubpackageForServiceId(serviceId: FernIr.ServiceId): FernIr.Subpackage {
         for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
             if (subpackage.service === serviceId) {
                 return subpackage;
@@ -218,7 +207,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
      *
      * There may be other cases that this method does not handle (GRPC, etc?)
      */
-    public subPackageHasEndpoints(subpackage: Subpackage): boolean {
+    public subPackageHasEndpoints(subpackage: FernIr.Subpackage): boolean {
         return (
             subpackage.hasEndpointsInTree ||
             subpackage.subpackages.some((pkg) => this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)))
@@ -280,7 +269,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
-    public getReferenceToTypeId(typeId: TypeId): ruby.ClassReference {
+    public getReferenceToTypeId(typeId: FernIr.TypeId): ruby.ClassReference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             name: typeDeclaration.name.name.pascalCase.safeName,
@@ -292,7 +281,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
-    public getModuleNamesForServiceId(serviceId: ServiceId): string[] {
+    public getModuleNamesForServiceId(serviceId: FernIr.ServiceId): string[] {
         return [
             this.getRootModuleName(),
             ...this.getSubpackageForServiceId(serviceId).fernFilepath.allParts.map((part) => part.pascalCase.safeName),
@@ -300,11 +289,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         ];
     }
 
-    public getModulesForServiceId(serviceId: ServiceId): ruby.Module_[] {
+    public getModulesForServiceId(serviceId: FernIr.ServiceId): ruby.Module_[] {
         return this.getModuleNamesForServiceId(serviceId).map((part) => ruby.module({ name: part }));
     }
 
-    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): ruby.ClassReference {
+    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): ruby.ClassReference {
         return ruby.classReference({
             name: requestName.pascalCase.safeName,
             modules: this.getModuleNamesForServiceId(serviceId)
@@ -375,7 +364,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return files;
     }
 
-    public getInferredAuth(): InferredAuthScheme | undefined {
+    public getInferredAuth(): FernIr.InferredAuthScheme | undefined {
         for (const scheme of this.ir.auth.schemes) {
             if (scheme.type === "inferred") {
                 return scheme;

@@ -1,6 +1,6 @@
 import { Octokit } from "octokit";
 
-import { parseRepository } from "./parseRepository";
+import { parseRepository } from "./parseRepository.js";
 
 /**
  * Returns the latest tag on a github repository

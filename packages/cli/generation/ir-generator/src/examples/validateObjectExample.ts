@@ -3,13 +3,13 @@ import { isPlainObject } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { keyBy } from "lodash-es";
 
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
-import { ExampleViolation } from "./exampleViolation";
-import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
-import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
+import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
+import { ExampleResolver } from "../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject.js";
+import { ExampleViolation } from "./exampleViolation.js";
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample.js";
+import { validateTypeReferenceExample } from "./validateTypeReferenceExample.js";
 
 export function validateObjectExample({
     typeName,

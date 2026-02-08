@@ -1,7 +1,7 @@
 import { ContainerRunner } from "@fern-api/core-utils";
-import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment";
-import { GenerationRunner } from "./GenerationRunner";
-import { NativeExecutionEnvironment } from "./NativeExecutionEnvironment";
+import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
+import { GenerationRunner } from "./GenerationRunner.js";
+import { NativeExecutionEnvironment } from "./NativeExecutionEnvironment.js";
 
 export async function runContainerizedGenerationForSeed(
     args: GenerationRunner.RunArgs & {

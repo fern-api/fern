@@ -1,5 +1,4 @@
-import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 /**
  * Detects illegal recursive type cycles in the IR that cannot be represented in Rust.
  *
@@ -19,7 +18,7 @@ import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } fr
  * ```
  */
 export class RustCycleDetector {
-    public constructor(private readonly ir: IntermediateRepresentation) {}
+    public constructor(private readonly ir: FernIr.IntermediateRepresentation) {}
 
     /**
      * Detects illegal cycles and throws an error if any are found.
@@ -27,9 +26,9 @@ export class RustCycleDetector {
      */
     public detectIllegalCycles(): void {
         const dependencyGraph = this.buildRequiredDependencyGraph();
-        const visited = new Set<TypeId>();
-        const visiting = new Set<TypeId>();
-        const stack: TypeId[] = [];
+        const visited = new Set<FernIr.TypeId>();
+        const visiting = new Set<FernIr.TypeId>();
+        const stack: FernIr.TypeId[] = [];
 
         const typeIds = Object.keys(this.ir.types);
 
@@ -60,8 +59,8 @@ export class RustCycleDetector {
      *
      * This makes such cycles representable in Rust and valid.
      */
-    private buildRequiredDependencyGraph(): Map<TypeId, TypeId[]> {
-        const graph = new Map<TypeId, TypeId[]>();
+    private buildRequiredDependencyGraph(): Map<FernIr.TypeId, FernIr.TypeId[]> {
+        const graph = new Map<FernIr.TypeId, FernIr.TypeId[]>();
 
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
             const deps = this.getRequiredDependenciesForType(typeDeclaration);
@@ -74,8 +73,8 @@ export class RustCycleDetector {
     /**
      * Gets the set of types that this type MUST contain (i.e., no finite base case).
      */
-    private getRequiredDependenciesForType(typeDeclaration: TypeDeclaration): TypeId[] {
-        const dependencies = new Set<TypeId>();
+    private getRequiredDependenciesForType(typeDeclaration: FernIr.TypeDeclaration): FernIr.TypeId[] {
+        const dependencies = new Set<FernIr.TypeId>();
 
         typeDeclaration.shape._visit({
             alias: (aliasShape) => {
@@ -140,7 +139,7 @@ export class RustCycleDetector {
      * - It's NOT wrapped in Option or Nullable
      * - It's NOT inside a container (Vec, HashMap, HashSet)
      */
-    private getRequiredNamedDependencyForType(typeReference: TypeReference): TypeId | null {
+    private getRequiredNamedDependencyForType(typeReference: FernIr.TypeReference): FernIr.TypeId | null {
         const unaliased = this.resolveAlias(typeReference);
 
         // Only named types can create dependencies
@@ -150,7 +149,7 @@ export class RustCycleDetector {
 
         // Container types provide finite base cases, so they don't create required dependencies
         if (unaliased.type === "container") {
-            return unaliased.container._visit<TypeId | null>({
+            return unaliased.container._visit<FernIr.TypeId | null>({
                 // Option and Nullable provide finite base cases (None, null)
                 optional: () => null,
                 nullable: () => null,
@@ -170,10 +169,10 @@ export class RustCycleDetector {
      * Resolves type aliases to their underlying type.
      * Handles alias chains: A -> B -> C resolves to C.
      */
-    private resolveAlias(typeReference: TypeReference): TypeReference {
-        const visitedAliases = new Set<TypeId>();
+    private resolveAlias(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        const visitedAliases = new Set<FernIr.TypeId>();
 
-        const unwrapAlias = (ref: TypeReference): TypeReference => {
+        const unwrapAlias = (ref: FernIr.TypeReference): FernIr.TypeReference => {
             if (ref.type === "named") {
                 const typeDeclaration = this.ir.types[ref.typeId];
                 if (
@@ -196,12 +195,12 @@ export class RustCycleDetector {
      * Uses the "visiting" set to detect back-edges (cycles).
      */
     private dfsFindCycle(
-        typeId: TypeId,
-        graph: Map<TypeId, TypeId[]>,
-        visited: Set<TypeId>,
-        visiting: Set<TypeId>,
-        stack: TypeId[]
-    ): TypeId[] | undefined {
+        typeId: FernIr.TypeId,
+        graph: Map<FernIr.TypeId, FernIr.TypeId[]>,
+        visited: Set<FernIr.TypeId>,
+        visiting: Set<FernIr.TypeId>,
+        stack: FernIr.TypeId[]
+    ): FernIr.TypeId[] | undefined {
         visiting.add(typeId);
         stack.push(typeId);
 
@@ -233,7 +232,7 @@ export class RustCycleDetector {
     /**
      * Formats a user-friendly error message showing the cycle path.
      */
-    private formatCycleError(cycle: TypeId[]): string {
+    private formatCycleError(cycle: FernIr.TypeId[]): string {
         const prettyPath = cycle
             .map((typeId) => {
                 const typeDeclaration = this.ir.types[typeId];

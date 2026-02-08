@@ -2,8 +2,8 @@ import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition
 import { Transport } from "@fern-api/ir-sdk";
 import { SourceResolver } from "@fern-api/source-resolver";
 
-import { FernFileContext } from "../../FernFileContext";
-import { convertProtobufService } from "./convertProtobufService";
+import { FernFileContext } from "../../FernFileContext.js";
+import { convertProtobufService } from "./convertProtobufService.js";
 
 export function getTransportForService({
     file,

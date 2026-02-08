@@ -1,16 +1,16 @@
 import { fail } from "assert";
-import { type Generation } from "../../context/generation-info";
-import { type Provenance } from "../../context/model-navigator";
-import { is } from "../../utils/type-guards";
-import { Literal } from "../code/Literal";
-import { Node } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { Access } from "../language/Access";
-import { type ClassReference } from "./ClassReference";
-import { Field, FieldArgsWithName, FieldArgsWithOrigin } from "./Field";
-import { type Type } from "./IType";
-import { Method } from "./Method";
-import { Nullable, Optional } from "./Type";
+import { type Generation } from "../../context/generation-info.js";
+import { type Provenance } from "../../context/model-navigator.js";
+import { is } from "../../utils/type-guards.js";
+import { Literal } from "../code/Literal.js";
+import { Node } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { Access } from "../language/Access.js";
+import { type ClassReference } from "./ClassReference.js";
+import { Field, FieldArgsWithName, FieldArgsWithOrigin } from "./Field.js";
+import { type Type } from "./IType.js";
+import { Method } from "./Method.js";
+import { Nullable, Optional } from "./Type.js";
 
 export declare namespace DefinedType {
     interface Args extends Node.Args {

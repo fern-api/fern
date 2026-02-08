@@ -2,8 +2,9 @@
 
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
+import type * as serializers from "../../../index.js";
 
-export const TitleSource: core.serialization.Schema<TitleSource.Raw, FernDocsConfig.TitleSource> =
+export const TitleSource: core.serialization.Schema<serializers.TitleSource.Raw, FernDocsConfig.TitleSource> =
     core.serialization.enum_(["frontmatter", "filename"]);
 
 export declare namespace TitleSource {

@@ -1,4 +1,4 @@
-import { rust } from "../../..";
+import { rust } from "../../../index.js";
 
 describe("DocComment", () => {
     describe("write", () => {

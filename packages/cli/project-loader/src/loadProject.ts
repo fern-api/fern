@@ -18,7 +18,7 @@ import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace 
 import chalk from "chalk";
 import { readdir } from "fs/promises";
 
-import { Project } from "./Project";
+import { Project } from "./Project.js";
 
 export declare namespace loadProject {
     export interface Args {

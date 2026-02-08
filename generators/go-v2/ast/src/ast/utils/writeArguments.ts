@@ -1,6 +1,6 @@
 import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
-import { Writer } from "../core/Writer";
-import { TypeInstantiation } from "../TypeInstantiation";
+import { Writer } from "../core/Writer.js";
+import { TypeInstantiation } from "../TypeInstantiation.js";
 
 export function writeArguments({
     writer,

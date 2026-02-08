@@ -8,7 +8,7 @@ import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMeta
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName";
+import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName.js";
 
 /**
  * Union type representing any spec-level settings schema.

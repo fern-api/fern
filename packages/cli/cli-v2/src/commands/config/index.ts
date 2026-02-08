@@ -1,1 +1,1 @@
-export { addConfigCommand } from "./command";
+export { addConfigCommand } from "./command.js";

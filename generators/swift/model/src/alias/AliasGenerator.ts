@@ -1,12 +1,11 @@
 import { swift } from "@fern-api/swift-codegen";
-import { AliasTypeDeclaration } from "@fern-fern/ir-sdk/api";
-
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace AliasGenerator {
     interface Args {
         name: string;
-        typeDeclaration: AliasTypeDeclaration;
+        typeDeclaration: FernIr.AliasTypeDeclaration;
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -14,7 +13,7 @@ export declare namespace AliasGenerator {
 
 export class AliasGenerator {
     private readonly name: string;
-    private readonly typeDeclaration: AliasTypeDeclaration;
+    private readonly typeDeclaration: FernIr.AliasTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 

@@ -1,5 +1,5 @@
-import { Argument } from "../Argument";
-import { Class_ } from "../classes/Class_";
+import { Argument } from "../Argument.js";
+import { Class_ } from "../classes/Class_.js";
 import {
     AliasReference,
     ArrayReference,
@@ -13,15 +13,15 @@ import {
     OpenStructClassReference,
     StringClassReference,
     VoidClassReference
-} from "../classes/ClassReference";
-import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
-import { Function_ } from "../functions/Function_";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
-import { Parameter } from "../Parameter";
-import { Property } from "../Property";
-import { Variable, VariableType } from "../Variable";
-import { ConditionalStatement } from "./ConditionalStatement";
+} from "../classes/ClassReference.js";
+import { AstNode } from "../core/AstNode.js";
+import { Expression } from "../expressions/Expression.js";
+import { Function_ } from "../functions/Function_.js";
+import { FunctionInvocation } from "../functions/FunctionInvocation.js";
+import { Parameter } from "../Parameter.js";
+import { Property } from "../Property.js";
+import { Variable, VariableType } from "../Variable.js";
+import { ConditionalStatement } from "./ConditionalStatement.js";
 
 export const AdditionalPropertiesProperty = new Property({
     name: "additional_properties",

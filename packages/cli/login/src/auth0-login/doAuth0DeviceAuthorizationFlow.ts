@@ -5,7 +5,7 @@ import boxen from "boxen";
 import open from "open";
 import qs from "qs";
 
-import type { Auth0TokenResponse } from "./doAuth0LoginFlow";
+import type { Auth0TokenResponse } from "./doAuth0LoginFlow.js";
 
 interface DeviceCodeResponse {
     device_code: string;

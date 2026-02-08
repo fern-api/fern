@@ -2,10 +2,10 @@ import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { Availability, Type, TypeId, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-import { getAvailability, ProtoAvailabilityOptions } from "../../commons/availability";
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { EnumOrMessageConverter } from "./EnumOrMessageConverter";
-import { FieldConverter } from "./FieldConverter";
+import { getAvailability, ProtoAvailabilityOptions } from "../../commons/availability.js";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { EnumOrMessageConverter } from "./EnumOrMessageConverter.js";
+import { FieldConverter } from "./FieldConverter.js";
 
 export declare namespace OneOfFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

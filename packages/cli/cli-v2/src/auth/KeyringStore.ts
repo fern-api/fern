@@ -1,5 +1,5 @@
 import type * as keytar from "keytar";
-import { KeyringUnavailableError } from "./errors/KeyringUnavailableError";
+import { KeyringUnavailableError } from "./errors/KeyringUnavailableError.js";
 
 /**
  * Service name used for storing Fern tokens in the system keyring.

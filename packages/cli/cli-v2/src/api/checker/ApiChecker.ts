@@ -3,11 +3,11 @@ import type { NodePath } from "@fern-api/fern-definition-schema";
 import type { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { AbsoluteFilePath, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import chalk from "chalk";
-import type { Context } from "../../context/Context";
-import { Colors, formatMessage, Icons } from "../../ui/format";
-import { Task } from "../../ui/Task";
-import type { Workspace } from "../../workspace/Workspace";
-import { ApiDefinitionValidator } from "../validator/ApiDefinitionValidator";
+import type { Context } from "../../context/Context.js";
+import { Colors, formatMessage, Icons } from "../../ui/format.js";
+import { Task } from "../../ui/Task.js";
+import type { Workspace } from "../../workspace/Workspace.js";
+import { ApiDefinitionValidator } from "../validator/ApiDefinitionValidator.js";
 
 const INDENT = {
     /** Base indent for file paths */

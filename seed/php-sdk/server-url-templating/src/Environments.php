@@ -37,8 +37,8 @@ class Environments
     public static function RegionalApiServer(): Environments
     {
         return new self(
-            base: 'https://api.us-east-1.prod.example.com/v1',
-            auth: 'https://auth.us-east-1.example.com'
+            base: 'https://api.example.com/v1',
+            auth: 'https://auth.example.com'
         );
     }
 

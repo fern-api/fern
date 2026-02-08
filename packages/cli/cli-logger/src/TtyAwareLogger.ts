@@ -5,7 +5,7 @@ import chalk from "chalk";
 import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 
-import { Log } from "./Log";
+import { Log } from "./Log.js";
 
 interface Task {
     printInteractiveTasks: ({ spinner }: { spinner: string }) => string;

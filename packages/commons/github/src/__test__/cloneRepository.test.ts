@@ -1,4 +1,4 @@
-import { cloneRepository } from "../cloneRepository";
+import { cloneRepository } from "../cloneRepository.js";
 
 describe("cloneRepository", () => {
     it("fern-api/docs-starter-openapi", async () => {

@@ -1,37 +1,13 @@
 import { isNonNullish } from "@fern-api/core-utils";
-import {
-    ContainerType,
-    EnvironmentsConfig,
-    ErrorDeclaration,
-    ErrorDiscriminationByPropertyStrategy,
-    ErrorDiscriminationStrategy,
-    ExampleEndpointCall,
-    ExampleInlinedRequestBodyProperty,
-    FileUploadRequestProperty,
-    HttpEndpoint,
-    HttpHeader,
-    HttpMethod,
-    HttpPath,
-    HttpRequestBody,
-    HttpResponse,
-    HttpService,
-    IntermediateRepresentation,
-    PathParameter,
-    QueryParameter,
-    ResponseError,
-    ResponseErrors,
-    Type,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
 
-import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
-import { Mode } from "../writeOpenApi";
-import { convertObject } from "./convertObject";
-import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
+import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi.js";
+import { Mode } from "../writeOpenApi.js";
+import { convertObject } from "./convertObject.js";
+import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
 
 export function convertServices({
     ir,
@@ -43,13 +19,13 @@ export function convertServices({
     environments,
     mode
 }: {
-    ir: IntermediateRepresentation;
-    httpServices: HttpService[];
-    typesByName: Record<string, TypeDeclaration>;
-    errorsByName: Record<string, ErrorDeclaration>;
-    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    ir: FernIr.IntermediateRepresentation;
+    httpServices: FernIr.HttpService[];
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
+    errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
-    environments: EnvironmentsConfig | undefined;
+    environments: FernIr.EnvironmentsConfig | undefined;
     mode: Mode;
 }): OpenAPIV3.PathsObject {
     const paths: OpenAPIV3.PathsObject = {};
@@ -93,14 +69,14 @@ function convertHttpEndpoint({
     mode,
     ir
 }: {
-    ir: IntermediateRepresentation;
-    httpEndpoint: HttpEndpoint;
-    httpService: HttpService;
-    typesByName: Record<string, TypeDeclaration>;
-    errorsByName: Record<string, ErrorDeclaration>;
-    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    ir: FernIr.IntermediateRepresentation;
+    httpEndpoint: FernIr.HttpEndpoint;
+    httpService: FernIr.HttpService;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
+    errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
-    environments: EnvironmentsConfig | undefined;
+    environments: FernIr.EnvironmentsConfig | undefined;
     mode: Mode;
 }): ConvertedHttpEndpoint {
     let fullPath = urlJoin(
@@ -209,8 +185,8 @@ function convertHttpEndpoint({
     };
 }
 
-function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
-    return HttpMethod._visit<OpenAPIV3.HttpMethods>(httpMethod, {
+function convertHttpMethod(httpMethod: FernIr.HttpMethod): OpenAPIV3.HttpMethods {
+    return FernIr.HttpMethod._visit<OpenAPIV3.HttpMethods>(httpMethod, {
         get: () => {
             return OpenAPIV3.HttpMethods.GET;
         },
@@ -237,9 +213,9 @@ function convertRequestBody({
     typesByName,
     examples
 }: {
-    httpRequest: HttpRequestBody;
-    typesByName: Record<string, TypeDeclaration>;
-    examples: ExampleEndpointCall[];
+    httpRequest: FernIr.HttpRequestBody;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.RequestBodyObject {
     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
     for (const example of examples) {
@@ -256,13 +232,13 @@ function convertRequestBody({
         }
     }
 
-    return HttpRequestBody._visit<OpenAPIV3.RequestBodyObject>(httpRequest, {
+    return FernIr.HttpRequestBody._visit<OpenAPIV3.RequestBodyObject>(httpRequest, {
         inlinedRequestBody: (inlinedRequestBody) => {
             const convertedRequest: OpenAPIV3.MediaTypeObject = {
                 schema: convertObject({
                     docs: undefined,
                     properties: inlinedRequestBody.properties.map((property) => {
-                        let exampleProperty: ExampleInlinedRequestBodyProperty | undefined = undefined;
+                        let exampleProperty: FernIr.ExampleInlinedRequestBodyProperty | undefined = undefined;
                         if (examples.length > 0 && examples[0]?.request?.type === "inlinedRequestBody") {
                             exampleProperty = examples[0]?.request.properties.find((example) => {
                                 return example.name.wireValue === property.name.wireValue;
@@ -315,7 +291,7 @@ function convertRequestBody({
                             properties: fileUploadRequest.properties.reduce<
                                 Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
                             >((acc, property) => {
-                                FileUploadRequestProperty._visit(property, {
+                                FernIr.FileUploadRequestProperty._visit(property, {
                                     file: (fileProperty) => {
                                         acc[fileProperty.key.wireValue] = {
                                             type: "string",
@@ -329,7 +305,7 @@ function convertRequestBody({
                                         };
                                     },
                                     _other: () => {
-                                        throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                                        throw new Error("Unknown FernIr.FileUploadRequestProperty: " + property.type);
                                     }
                                 });
                                 return {
@@ -345,7 +321,7 @@ function convertRequestBody({
             throw new Error("bytes is not supported");
         },
         _other: () => {
-            throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
+            throw new Error("Unknown FernIr.HttpRequestBody type: " + httpRequest.type);
         }
     });
 }
@@ -357,11 +333,11 @@ function convertResponse({
     errorDiscriminationStrategy,
     examples
 }: {
-    httpResponse: HttpResponse | null | undefined;
-    responseErrors: ResponseErrors;
-    errorsByName: Record<string, ErrorDeclaration>;
-    errorDiscriminationStrategy: ErrorDiscriminationStrategy;
-    examples: ExampleEndpointCall[];
+    httpResponse: FernIr.HttpResponse | null | undefined;
+    responseErrors: FernIr.ResponseErrors;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
+    errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
+    examples: FernIr.ExampleEndpointCall[];
 }): Record<string, OpenAPIV3.ResponseObject> {
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
     if (httpResponse?.body?.type === "json") {
@@ -403,7 +379,7 @@ function convertResponse({
         };
     }
 
-    ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+    FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         statusCode: () => {
             for (const responseError of responseErrors) {
                 const errorDeclaration = errorsByName[getErrorTypeNameKey(responseError.error)];
@@ -507,7 +483,13 @@ function convertResponse({
     return responseByStatusCode;
 }
 
-function typeIsObject({ type, typesByName }: { type: Type; typesByName: Record<string, TypeDeclaration> }): boolean {
+function typeIsObject({
+    type,
+    typesByName
+}: {
+    type: FernIr.Type;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+}): boolean {
     if (type.type === "object") {
         return true;
     } else if (type.type === "alias") {
@@ -516,7 +498,10 @@ function typeIsObject({ type, typesByName }: { type: Type; typesByName: Record<s
     return false;
 }
 
-function typeReferenceIsObject(typeReference: TypeReference, typesByName: Record<string, TypeDeclaration>): boolean {
+function typeReferenceIsObject(
+    typeReference: FernIr.TypeReference,
+    typesByName: Record<string, FernIr.TypeDeclaration>
+): boolean {
     if (typeReference.type === "named") {
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
@@ -533,7 +518,7 @@ function getDiscriminatedErrorInfoOpenApiSchema({
     property
 }: {
     errorInfo: ErrorInfo;
-    property: ErrorDiscriminationByPropertyStrategy;
+    property: FernIr.ErrorDiscriminationByPropertyStrategy;
 }): OpenAPIV3.SchemaObject {
     const discriminantValue = errorInfo.errorDeclaration.discriminantValue.wireValue;
     const description = errorInfo.responseError.docs ?? undefined;
@@ -557,16 +542,16 @@ function getDiscriminatedErrorInfoOpenApiSchema({
 }
 
 interface ErrorInfo {
-    responseError: ResponseError;
-    errorDeclaration: ErrorDeclaration;
+    responseError: FernIr.ResponseError;
+    errorDeclaration: FernIr.ErrorDeclaration;
 }
 
 function getErrorInfoByStatusCode({
     responseErrors,
     errorsByName
 }: {
-    responseErrors: ResponseErrors;
-    errorsByName: Record<string, ErrorDeclaration>;
+    responseErrors: FernIr.ResponseErrors;
+    errorsByName: Record<string, FernIr.ErrorDeclaration>;
 }): Record<string, ErrorInfo[]> {
     const errorInfoByStatusCode: Record<string, ErrorInfo[]> = {};
     for (const responseError of responseErrors) {
@@ -589,8 +574,8 @@ function convertPathParameter({
     pathParameter,
     examples
 }: {
-    pathParameter: PathParameter;
-    examples: ExampleEndpointCall[];
+    pathParameter: FernIr.PathParameter;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
         name: pathParameter.name.originalName,
@@ -635,9 +620,9 @@ function convertQueryParameter({
     typesByName,
     examples
 }: {
-    queryParameter: QueryParameter;
-    typesByName: Record<string, TypeDeclaration>;
-    examples: ExampleEndpointCall[];
+    queryParameter: FernIr.QueryParameter;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
         name: queryParameter.name.wireValue,
@@ -645,7 +630,7 @@ function convertQueryParameter({
         description: queryParameter.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
         schema: queryParameter.allowMultiple
-            ? convertTypeReference(TypeReference.container(ContainerType.list(queryParameter.valueType)))
+            ? convertTypeReference(FernIr.TypeReference.container(FernIr.ContainerType.list(queryParameter.valueType)))
             : convertTypeReference(queryParameter.valueType)
     };
 
@@ -682,9 +667,9 @@ function convertHeader({
     typesByName,
     examples
 }: {
-    httpHeader: HttpHeader;
-    typesByName: Record<string, TypeDeclaration>;
-    examples: ExampleEndpointCall[];
+    httpHeader: FernIr.HttpHeader;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
+    examples: FernIr.ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
         name: httpHeader.name.wireValue,
@@ -722,7 +707,7 @@ function convertHeader({
     return convertedParameter;
 }
 
-function convertHttpPathToString(httpPath: HttpPath): string {
+function convertHttpPathToString(httpPath: FernIr.HttpPath): string {
     let endpointPath = httpPath.head;
     for (const httpPathPart of httpPath.parts) {
         endpointPath += `{${httpPathPart.pathParameter}}${httpPathPart.tail}`;
@@ -734,8 +719,8 @@ function isTypeReferenceRequired({
     typeReference,
     typesByName
 }: {
-    typeReference: TypeReference;
-    typesByName: Record<string, TypeDeclaration>;
+    typeReference: FernIr.TypeReference;
+    typesByName: Record<string, FernIr.TypeDeclaration>;
 }): boolean {
     if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return false;

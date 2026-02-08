@@ -1,6 +1,6 @@
 import { ExportedFilePath } from "@fern-typescript/commons";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
 
 export class ExpressRegisterDeclarationReferencer extends AbstractDeclarationReferencer {
     public getExportedFilepath(): ExportedFilePath {

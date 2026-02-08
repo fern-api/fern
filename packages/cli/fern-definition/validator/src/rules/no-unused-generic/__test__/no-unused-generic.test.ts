@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoUnusedGenericRule } from "../no-unused-generic";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoUnusedGenericRule } from "../no-unused-generic.js";
 
 describe("no-unused-generic", () => {
     it("simple", async () => {

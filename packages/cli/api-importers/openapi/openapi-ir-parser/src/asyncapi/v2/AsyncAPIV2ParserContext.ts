@@ -1,8 +1,8 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext";
-import { WebsocketSessionExampleMessage } from "../getFernExamples";
-import { AsyncAPIV2 } from "../v2";
+import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext.js";
+import { WebsocketSessionExampleMessage } from "../getFernExamples.js";
+import { AsyncAPIV2 } from "../v2/index.js";
 
 export class AsyncAPIV2ParserContext extends AbstractAsyncAPIParserContext<AsyncAPIV2.DocumentV2> {
     public getExampleMessageReference(message: WebsocketSessionExampleMessage): string {

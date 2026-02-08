@@ -1,4 +1,4 @@
-import type { Target } from "./Target";
+import type { Target } from "./Target.js";
 
 /**
  * SDK generation configuration derived from fern.yml.

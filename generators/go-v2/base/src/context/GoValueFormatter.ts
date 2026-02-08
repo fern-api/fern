@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
-import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
-import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 
 export declare namespace GoValueFormatter {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
         value: go.AstNode;
     }
 
@@ -65,7 +65,7 @@ export class GoValueFormatter {
         const primitive = this.context.maybePrimitive(reference);
         if (primitive != null) {
             switch (primitive) {
-                case PrimitiveTypeV1.DateTime:
+                case FernIr.PrimitiveTypeV1.DateTime:
                     prefix = undefined;
                     suffix = go.codeblock((writer) => {
                         writer.write(".Format(");
@@ -78,11 +78,11 @@ export class GoValueFormatter {
                         writer.write(")");
                     });
                     break;
-                case PrimitiveTypeV1.Date:
+                case FernIr.PrimitiveTypeV1.Date:
                     prefix = undefined;
                     suffix = go.codeblock('.Format("2006-01-02")');
                     break;
-                case PrimitiveTypeV1.Base64:
+                case FernIr.PrimitiveTypeV1.Base64:
                     prefix = go.codeblock((writer) => {
                         writer.writeNode(
                             go.typeReference({
@@ -94,15 +94,15 @@ export class GoValueFormatter {
                     });
                     suffix = go.codeblock(")");
                     break;
-                case PrimitiveTypeV1.Uuid:
-                case PrimitiveTypeV1.BigInteger:
-                case PrimitiveTypeV1.Integer:
-                case PrimitiveTypeV1.Long:
-                case PrimitiveTypeV1.Uint:
-                case PrimitiveTypeV1.Uint64:
-                case PrimitiveTypeV1.Float:
-                case PrimitiveTypeV1.Double:
-                case PrimitiveTypeV1.Boolean:
+                case FernIr.PrimitiveTypeV1.Uuid:
+                case FernIr.PrimitiveTypeV1.BigInteger:
+                case FernIr.PrimitiveTypeV1.Integer:
+                case FernIr.PrimitiveTypeV1.Long:
+                case FernIr.PrimitiveTypeV1.Uint:
+                case FernIr.PrimitiveTypeV1.Uint64:
+                case FernIr.PrimitiveTypeV1.Float:
+                case FernIr.PrimitiveTypeV1.Double:
+                case FernIr.PrimitiveTypeV1.Boolean:
                     prefix = go.codeblock((writer) => {
                         writer.writeNode(
                             go.typeReference({
@@ -114,7 +114,7 @@ export class GoValueFormatter {
                     });
                     suffix = go.codeblock(")");
                     break;
-                case PrimitiveTypeV1.String:
+                case FernIr.PrimitiveTypeV1.String:
                     break;
                 default:
                     assertNever(primitive);

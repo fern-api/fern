@@ -6,14 +6,14 @@ import { join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
-import type { AiConfig } from "../../ai/config/AiConfig";
-import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter";
-import type { ApiDefinition } from "../../api/config/ApiDefinition";
-import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
-import type { Context } from "../../context/Context";
-import type { Task } from "../../ui/Task";
-import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter";
-import type { Target } from "../config/Target";
+import type { AiConfig } from "../../ai/config/AiConfig.js";
+import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter.js";
+import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
+import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
+import type { Context } from "../../context/Context.js";
+import type { Task } from "../../ui/Task.js";
+import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
+import type { Target } from "../config/Target.js";
 
 /**
  * Runs remote generation using the legacy remote-generation infrastructure.
