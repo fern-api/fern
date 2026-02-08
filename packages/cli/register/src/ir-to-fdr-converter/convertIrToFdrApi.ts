@@ -25,7 +25,7 @@ export function convertIrToFdrApi({
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
-        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations),
+        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes),
         apiName: apiNameOverride ?? ir.apiName.originalName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
