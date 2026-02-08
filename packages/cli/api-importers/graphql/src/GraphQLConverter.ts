@@ -28,16 +28,36 @@ export class GraphQLConverter {
     private schema: GraphQLSchema | undefined;
     private context: TaskContext;
     private filePath: AbsoluteFilePath;
+    private namespace: string | undefined;
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
-    constructor({ context, filePath }: { context: TaskContext; filePath: AbsoluteFilePath }) {
+    constructor({
+        context,
+        filePath,
+        namespace
+    }: { context: TaskContext; filePath: AbsoluteFilePath; namespace?: string }) {
         this.context = context;
         this.filePath = filePath;
+        this.namespace = namespace;
     }
 
     private isBuiltInScalar(typeName: string): boolean {
         return ["String", "Int", "Float", "Boolean", "ID"].includes(typeName);
+    }
+
+    private getNamespacedTypeId(originalName: string): FdrAPI.TypeId {
+        const namespacedName = this.namespace ? `${this.namespace}_${originalName}` : originalName;
+        return FdrAPI.TypeId(namespacedName);
+    }
+
+    private getNamespacedOperationId(originalName: string): FdrAPI.GraphQlOperationId {
+        const namespacedName = this.namespace ? `${this.namespace}_${originalName}` : originalName;
+        return FdrAPI.GraphQlOperationId(namespacedName);
+    }
+
+    private getNamespacedTypeName(originalName: string): string {
+        return this.namespace ? `${this.namespace}_${originalName}` : originalName;
     }
 
     private isActualSubscriptionRootType(type: GraphQLObjectType): boolean {
@@ -109,13 +129,13 @@ export class GraphQLConverter {
                 continue;
             }
 
-            const typeId = FdrAPI.TypeId(typeName);
+            const typeId = this.getNamespacedTypeId(typeName);
 
             if (type instanceof GraphQLEnumType) {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: typeName,
+                        name: this.getNamespacedTypeName(typeName),
                         shape: this.convertEnumTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -128,7 +148,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: typeName,
+                        name: this.getNamespacedTypeName(typeName),
                         shape: this.convertObjectTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -141,7 +161,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: typeName,
+                        name: this.getNamespacedTypeName(typeName),
                         shape: this.convertInputObjectTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -154,7 +174,7 @@ export class GraphQLConverter {
                 this.processingTypes.add(typeName);
                 try {
                     this.types[typeId] = {
-                        name: typeName,
+                        name: this.getNamespacedTypeName(typeName),
                         shape: this.convertUnionTypeDefinition(type),
                         displayName: undefined,
                         description: type.description ?? undefined,
@@ -184,7 +204,7 @@ export class GraphQLConverter {
             ) {
                 this.convertNamespaceOperations(returnRawType, fieldName, operationType, operations);
             } else {
-                const operationId = FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${fieldName}`);
+                const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldName}`);
                 operations[operationId] = this.convertField(field, fieldName, operationType);
             }
         }
@@ -198,7 +218,7 @@ export class GraphQLConverter {
     ): void {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const operationId = FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${fieldName}`);
+            const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldName}`);
             operations[operationId] = this.convertField(field, fieldName, operationType);
         }
     }
@@ -218,7 +238,7 @@ export class GraphQLConverter {
         const args = field.args.map((arg) => this.convertArgument(arg));
 
         return {
-            id: FdrAPI.GraphQlOperationId(`${operationType.toLowerCase()}_${name}`),
+            id: this.getNamespacedOperationId(`${operationType.toLowerCase()}_${name}`),
             operationType,
             name,
             displayName: undefined,
@@ -269,7 +289,7 @@ export class GraphQLConverter {
         if (type instanceof GraphQLEnumType) {
             return {
                 type: "id",
-                value: FdrAPI.TypeId(type.name),
+                value: this.getNamespacedTypeId(type.name),
                 default: undefined
             };
         }
@@ -277,7 +297,7 @@ export class GraphQLConverter {
         if (type instanceof GraphQLObjectType || type instanceof GraphQLInterfaceType) {
             return {
                 type: "id",
-                value: FdrAPI.TypeId(type.name),
+                value: this.getNamespacedTypeId(type.name),
                 default: undefined
             };
         }
@@ -285,7 +305,7 @@ export class GraphQLConverter {
         if (type instanceof GraphQLUnionType) {
             return {
                 type: "id",
-                value: FdrAPI.TypeId(type.name),
+                value: this.getNamespacedTypeId(type.name),
                 default: undefined
             };
         }
@@ -323,7 +343,7 @@ export class GraphQLConverter {
         if (type instanceof GraphQLEnumType) {
             return {
                 type: "id",
-                value: FdrAPI.TypeId(type.name),
+                value: this.getNamespacedTypeId(type.name),
                 default: undefined
             };
         }
@@ -331,7 +351,7 @@ export class GraphQLConverter {
         if (type instanceof GraphQLInputObjectType) {
             return {
                 type: "id",
-                value: FdrAPI.TypeId(type.name),
+                value: this.getNamespacedTypeId(type.name),
                 default: undefined
             };
         }
@@ -487,7 +507,7 @@ export class GraphQLConverter {
                 displayName: t.name,
                 type: {
                     type: "id",
-                    value: FdrAPI.TypeId(t.name),
+                    value: this.getNamespacedTypeId(t.name),
                     default: undefined
                 },
                 description: t.description ?? undefined,
