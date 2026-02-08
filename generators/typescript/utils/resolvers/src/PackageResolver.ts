@@ -44,8 +44,7 @@ export class PackageResolver {
         const service = this.getServiceDeclaration(packageId);
         if (service == null) {
             throw new Error(
-                "Package does not have a service: " +
-                    (packageId.isRoot ? "<Root package>" : packageId.subpackageId)
+                "Package does not have a service: " + (packageId.isRoot ? "<Root package>" : packageId.subpackageId)
             );
         }
         return service;

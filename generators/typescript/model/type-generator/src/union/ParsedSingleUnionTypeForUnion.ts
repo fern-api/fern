@@ -61,9 +61,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                             generateReadWriteOnlyTypes
                         }),
                     _other: () => {
-                        throw new Error(
-                            "Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType
-                        );
+                        throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
                     }
                 }
             ),
