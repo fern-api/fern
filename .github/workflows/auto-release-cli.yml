@@ -76,6 +76,8 @@ jobs:
 
       - name: Skip if release PR exists
         if: steps.check_release_pr.outputs.has_release_pr == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "## ⏸️ Release Queued" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
