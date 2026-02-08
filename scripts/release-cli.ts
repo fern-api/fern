@@ -70,7 +70,8 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
 
     const [major, minor, patch] = currentVersion.split(".").map(Number);
 
-    if (major === undefined || minor === undefined || patch === undefined) {
+    if (major === undefined || minor === undefined || patch === undefined ||
+        isNaN(major) || isNaN(minor) || isNaN(patch)) {
         console.error("Error: currentVersion is invalid");
         process.exit(1);
     }
