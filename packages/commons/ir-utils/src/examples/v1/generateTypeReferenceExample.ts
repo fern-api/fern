@@ -47,7 +47,7 @@ export function generateTypeReferenceExample({
             }
             const visited = visitedTypes ?? new Map<string, number>();
             const count = visited.get(typeReference.typeId) ?? 0;
-            if (count >= 3) {
+            if (count >= 2) {
                 return { type: "failure", message: `Detected recursive type ${typeReference.typeId}` };
             }
             visited.set(typeReference.typeId, count + 1);

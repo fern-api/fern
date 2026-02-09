@@ -96,7 +96,7 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
         });
         const elapsed = Date.now() - start;
 
-        expect(elapsed).toBeLessThan(2000);
+        expect(elapsed).toBeLessThan(1000);
         expect(result.type).toBe("success");
         if (result.type === "success") {
             const json = result.jsonExample as Record<string, unknown>;
@@ -105,11 +105,6 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
                 const nested = json[field] as Record<string, unknown>;
                 expect(nested).toBeDefined();
                 expect(nested.name).toBe("name");
-                for (const innerField of selfRefFields) {
-                    const deep = nested[innerField] as Record<string, unknown>;
-                    expect(deep).toBeDefined();
-                    expect(deep.name).toBe("name");
-                }
             }
         }
     });
@@ -222,6 +217,6 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
         const lastTime = times[times.length - 1] ?? 0;
         const firstTime = times[0] ?? 1;
         const ratio = lastTime / Math.max(firstTime, 1);
-        expect(ratio).toBeLessThan(500);
+        expect(ratio).toBeLessThan(100);
     });
 });
