@@ -8,5 +8,6 @@
 "/"
 "/optional-args"
 "/inline-type"
+"/with-json-property"
 "/snippet"
 "/with-literal-enum"
