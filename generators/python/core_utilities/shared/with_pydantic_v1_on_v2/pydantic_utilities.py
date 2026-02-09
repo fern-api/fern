@@ -16,8 +16,8 @@ from .serialization import convert_and_respect_annotation_metadata
 if TYPE_CHECKING:
     from .http_sse._models import ServerSentEvent
 
-_datetime_adapter = pydantic.TypeAdapter(dt.datetime)
-_date_adapter = pydantic.TypeAdapter(dt.date)
+_datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
+_date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
 
 
 def parse_datetime(value: Any) -> dt.datetime:
