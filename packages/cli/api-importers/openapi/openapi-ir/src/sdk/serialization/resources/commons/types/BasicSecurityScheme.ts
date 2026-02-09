@@ -8,6 +8,7 @@ export const BasicSecurityScheme: core.serialization.ObjectSchema<
     serializers.BasicSecurityScheme.Raw,
     FernOpenapiIr.BasicSecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
+    description: core.serialization.string().optional(),
     usernameVariableName: core.serialization.string().optional(),
     usernameEnvVar: core.serialization.string().optional(),
     passwordVariableName: core.serialization.string().optional(),
@@ -16,6 +17,7 @@ export const BasicSecurityScheme: core.serialization.ObjectSchema<
 
 export declare namespace BasicSecurityScheme {
     export interface Raw {
+        description?: string | null;
         usernameVariableName?: string | null;
         usernameEnvVar?: string | null;
         passwordVariableName?: string | null;

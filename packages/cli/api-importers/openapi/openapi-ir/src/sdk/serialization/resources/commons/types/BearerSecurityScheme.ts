@@ -8,12 +8,14 @@ export const BearerSecurityScheme: core.serialization.ObjectSchema<
     serializers.BearerSecurityScheme.Raw,
     FernOpenapiIr.BearerSecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
+    description: core.serialization.string().optional(),
     tokenVariableName: core.serialization.string().optional(),
     tokenEnvVar: core.serialization.string().optional(),
 });
 
 export declare namespace BearerSecurityScheme {
     export interface Raw {
+        description?: string | null;
         tokenVariableName?: string | null;
         tokenEnvVar?: string | null;
     }

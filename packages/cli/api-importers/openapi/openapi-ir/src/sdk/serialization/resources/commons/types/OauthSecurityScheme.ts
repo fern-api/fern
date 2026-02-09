@@ -9,11 +9,13 @@ export const OauthSecurityScheme: core.serialization.ObjectSchema<
     serializers.OauthSecurityScheme.Raw,
     FernOpenapiIr.OauthSecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
+    description: core.serialization.string().optional(),
     scopesEnum: EnumSchema.optional(),
 });
 
 export declare namespace OauthSecurityScheme {
     export interface Raw {
+        description?: string | null;
         scopesEnum?: EnumSchema.Raw | null;
     }
 }

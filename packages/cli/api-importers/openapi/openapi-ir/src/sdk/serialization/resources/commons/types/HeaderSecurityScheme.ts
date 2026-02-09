@@ -8,6 +8,7 @@ export const HeaderSecurityScheme: core.serialization.ObjectSchema<
     serializers.HeaderSecurityScheme.Raw,
     FernOpenapiIr.HeaderSecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
+    description: core.serialization.string().optional(),
     headerName: core.serialization.string(),
     prefix: core.serialization.string().optional(),
     headerVariableName: core.serialization.string().optional(),
@@ -16,6 +17,7 @@ export const HeaderSecurityScheme: core.serialization.ObjectSchema<
 
 export declare namespace HeaderSecurityScheme {
     export interface Raw {
+        description?: string | null;
         headerName: string;
         prefix?: string | null;
         headerVariableName?: string | null;
