@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.2
+  changelogEntry:
+    - summary: |
+        Rename `resource` to `service-name` in the GraphQL spec schema for generators.yml configuration.
+      type: chore
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.70.1
   changelogEntry:
     - summary: |
