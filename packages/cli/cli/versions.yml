@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.1
+  changelogEntry:
+    - summary: |
+        Fix OOM crash during IR generation for OpenAPI specs with self-referencing schemas (e.g. JSON Schema's `JsonschemaSchema` with 14 recursive fields). Added cycle detection to v1 example generation to prevent exponential memory growth when generating examples for recursive types.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.70.0
   changelogEntry:
     - summary: |
