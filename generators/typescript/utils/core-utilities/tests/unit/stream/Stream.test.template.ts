@@ -175,8 +175,8 @@ describe("Stream", () => {
             }
 
             expect(messages).toEqual([
-                { event: "message", data: { content: "hello" }, id: "1" },
-                { event: "message", data: { content: "world" }, id: "2" },
+                { event: "message", content: "hello", id: "1" },
+                { event: "message", content: "world", id: "2" },
             ]);
         });
 
@@ -197,7 +197,7 @@ describe("Stream", () => {
 
             expect(messages).toEqual([
                 { event: "STATUS_UPDATE", data: "processing", id: "1" },
-                { event: "ERROR", data: { code: "FAILED", message: "something went wrong" }, id: "2" },
+                { event: "ERROR", code: "FAILED", message: "something went wrong", id: "2" },
             ]);
         });
 
@@ -216,7 +216,7 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ event: "message", data: { value: 1 } }]);
+            expect(messages).toEqual([{ event: "message", value: 1 }]);
         });
 
         it("should handle events without event field", async () => {
@@ -234,7 +234,7 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ data: { value: 1 }, id: "1" }]);
+            expect(messages).toEqual([{ value: 1, id: "1" }]);
         });
 
         it("should stop at stream terminator in discriminated mode", async () => {
@@ -252,7 +252,7 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ event: "message", data: { value: 1 } }]);
+            expect(messages).toEqual([{ event: "message", value: 1 }]);
         });
 
         it("should handle string data that is not JSON", async () => {
@@ -290,7 +290,7 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ event: "message", data: { value: 1 } }]);
+            expect(messages).toEqual([{ event: "message", value: 1 }]);
         });
 
         it("should handle events split across chunks", async () => {
@@ -310,7 +310,7 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ event: "message", data: { value: 1 } }]);
+            expect(messages).toEqual([{ event: "message", value: 1 }]);
         });
     });
 
