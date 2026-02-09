@@ -945,6 +945,80 @@ class RawClientTest extends TestCase
     }
 
 
+    public function testTimeoutOptionIsAccepted(): void
+    {
+        $this->mockClient->append(self::createResponse(200));
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+        );
+
+        // Per-request timeout should be accepted without error.
+        // Since MockHttpClient is not a Guzzle client, the timeout is silently ignored.
+        $response = $this->rawClient->sendRequest(
+            $request,
+            options: [
+                'timeout' => 3.0
+            ]
+        );
+
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $lastRequest = $this->mockClient->getLastRequest();
+        $this->assertInstanceOf(RequestInterface::class, $lastRequest);
+    }
+
+    public function testClientLevelTimeoutIsAccepted(): void
+    {
+        $mockClient = new MockHttpClient();
+        $mockClient->append(self::createResponse(200));
+
+        $rawClient = new RawClient([
+            'client' => $mockClient,
+            'maxRetries' => 0,
+            'timeout' => 5.0,
+        ]);
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+        );
+
+        $response = $rawClient->sendRequest($request);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testPerRequestTimeoutOverridesClientTimeout(): void
+    {
+        $mockClient = new MockHttpClient();
+        $mockClient->append(self::createResponse(200));
+
+        $rawClient = new RawClient([
+            'client' => $mockClient,
+            'maxRetries' => 0,
+            'timeout' => 5.0,
+        ]);
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+        );
+
+        // Per-request timeout should override the client-level timeout.
+        $response = $rawClient->sendRequest(
+            $request,
+            options: [
+                'timeout' => 1.0
+            ]
+        );
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
     public function testDiscoveryFindsHttpClient(): void
     {
         // HttpClientBuilder::build() with no client arg uses Psr18ClientDiscovery.

@@ -112,21 +112,17 @@ $response = ${this.getMethodCall(retryEndpoint)}(
     }
 
     private buildTimeoutSnippets(): string[] {
-        return [
+        const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
+        return timeoutEndpoints.map((timeoutEndpoint) =>
             this.writeCode(`
-use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
-
-// Configure timeouts via the underlying PSR-18 HTTP client.
-// For example, using Guzzle:
-$customClient = new \\GuzzleHttp\\Client([
-    'timeout' => 3.0,
-]);
-
-${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
-    '${this.context.getHttpClientOptionName()}' => $customClient
-]);
+$response = ${this.getMethodCall(timeoutEndpoint)}(
+    ...,
+    options: [
+        '${this.context.getTimeoutOptionName()}' => 3.0 // Override timeout at the request level
+    ]
+);
 `)
-        ];
+        );
     }
 
     private buildCustomClientSnippets(): string[] {

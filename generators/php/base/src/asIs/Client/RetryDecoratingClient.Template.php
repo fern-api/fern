@@ -45,17 +45,39 @@ class RetryDecoratingClient implements ClientInterface
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
+        return $this->send($request);
+    }
+
+    /**
+     * Sends a request with optional per-request timeout and retry overrides.
+     *
+     * When a Guzzle or Symfony PSR-18 client is detected, the timeout is
+     * forwarded via the client's native API. For other PSR-18 clients the
+     * timeout value is silently ignored.
+     *
+     * @param RequestInterface $request
+     * @param ?float $timeout Timeout in seconds, or null to use the client default.
+     * @param ?int $maxRetries Maximum retry attempts, or null to use the client default.
+     * @return ResponseInterface
+     * @throws ClientExceptionInterface
+     */
+    public function send(
+        RequestInterface $request,
+        ?float $timeout = null,
+        ?int $maxRetries = null,
+    ): ResponseInterface {
+        $maxRetries = $maxRetries ?? $this->maxRetries;
         $retryAttempt = 0;
         $lastResponse = null;
 
         while (true) {
             try {
-                $lastResponse = $this->client->sendRequest($request);
-                if (!$this->shouldRetry($retryAttempt, $lastResponse)) {
+                $lastResponse = $this->doSend($request, $timeout);
+                if (!$this->shouldRetry($retryAttempt, $maxRetries, $lastResponse)) {
                     return $lastResponse;
                 }
             } catch (ClientExceptionInterface $e) {
-                if ($retryAttempt >= $this->maxRetries) {
+                if ($retryAttempt >= $maxRetries) {
                     throw $e;
                 }
             }
@@ -70,15 +92,43 @@ class RetryDecoratingClient implements ClientInterface
     }
 
     /**
+     * Dispatches the request to the underlying client, forwarding the timeout
+     * option to Guzzle or Symfony when available.
+     *
+     * @param RequestInterface $request
+     * @param ?float $timeout
+     * @return ResponseInterface
+     * @throws ClientExceptionInterface
+     */
+    private function doSend(RequestInterface $request, ?float $timeout): ResponseInterface
+    {
+        if ($timeout !== null) {
+            if (class_exists('GuzzleHttp\ClientInterface')
+                && $this->client instanceof \GuzzleHttp\ClientInterface
+            ) {
+                return $this->client->send($request, ['timeout' => $timeout]);
+            }
+            if (class_exists('Symfony\Component\HttpClient\Psr18Client')
+                && $this->client instanceof \Symfony\Component\HttpClient\Psr18Client
+            ) {
+                return $this->client->withOptions(['timeout' => $timeout])->sendRequest($request);
+            }
+        }
+        return $this->client->sendRequest($request);
+    }
+
+    /**
      * @param int $retryAttempt
+     * @param int $maxRetries
      * @param ?ResponseInterface $response
      * @return bool
      */
     private function shouldRetry(
         int $retryAttempt,
+        int $maxRetries,
         ?ResponseInterface $response = null,
     ): bool {
-        if ($retryAttempt >= $this->maxRetries) {
+        if ($retryAttempt >= $maxRetries) {
             return false;
         }
 
