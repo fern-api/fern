@@ -102,18 +102,33 @@ class RetryDecoratingClient implements ClientInterface
      */
     private function doSend(RequestInterface $request, ?float $timeout): ResponseInterface
     {
-        if ($timeout !== null) {
-            if (class_exists('GuzzleHttp\ClientInterface')
-                && $this->client instanceof \GuzzleHttp\ClientInterface
-            ) {
-                return $this->client->send($request, ['timeout' => $timeout]);
-            }
-            if (class_exists('Symfony\Component\HttpClient\Psr18Client')
-                && $this->client instanceof \Symfony\Component\HttpClient\Psr18Client
-            ) {
-                return $this->client->withOptions(['timeout' => $timeout])->sendRequest($request);
-            }
+        static $warned = false;
+
+        if ($timeout === null) {
+            return $this->client->sendRequest($request);
         }
+
+        if (class_exists('GuzzleHttp\ClientInterface')
+            && $this->client instanceof \GuzzleHttp\ClientInterface
+        ) {
+            return $this->client->send($request, ['timeout' => $timeout]);
+        }
+        if (class_exists('Symfony\Component\HttpClient\Psr18Client')
+            && $this->client instanceof \Symfony\Component\HttpClient\Psr18Client
+        ) {
+            return $this->client->withOptions(['timeout' => $timeout])->sendRequest($request);
+        }
+
+        if ($warned) {
+            return $this->client->sendRequest($request);
+        }
+        $warned = true;
+        trigger_error(
+            'Timeout option is not supported for the current PSR-18 client ('
+            . get_class($this->client)
+            . '). Use Guzzle or Symfony HttpClient for timeout support.',
+            E_USER_WARNING,
+        );
         return $this->client->sendRequest($request);
     }
 

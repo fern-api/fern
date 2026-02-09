@@ -955,19 +955,27 @@ class RawClientTest extends TestCase
             HttpMethod::GET,
         );
 
-        // Per-request timeout should be accepted without error.
-        // Since MockHttpClient is not a Guzzle client, the timeout is silently ignored.
-        $response = $this->rawClient->sendRequest(
-            $request,
-            options: [
-                'timeout' => 3.0
-            ]
-        );
+        // MockHttpClient is not Guzzle/Symfony, so a warning is triggered once.
+        set_error_handler(static function (int $errno, string $errstr): bool {
+            return $errno === E_USER_WARNING
+                && str_contains($errstr, 'Timeout option is not supported');
+        });
 
-        $this->assertEquals(200, $response->getStatusCode());
+        try {
+            $response = $this->rawClient->sendRequest(
+                $request,
+                options: [
+                    'timeout' => 3.0
+                ]
+            );
 
-        $lastRequest = $this->mockClient->getLastRequest();
-        $this->assertInstanceOf(RequestInterface::class, $lastRequest);
+            $this->assertEquals(200, $response->getStatusCode());
+
+            $lastRequest = $this->mockClient->getLastRequest();
+            $this->assertInstanceOf(RequestInterface::class, $lastRequest);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testClientLevelTimeoutIsAccepted(): void
@@ -987,8 +995,17 @@ class RawClientTest extends TestCase
             HttpMethod::GET,
         );
 
-        $response = $rawClient->sendRequest($request);
-        $this->assertEquals(200, $response->getStatusCode());
+        set_error_handler(static function (int $errno, string $errstr): bool {
+            return $errno === E_USER_WARNING
+                && str_contains($errstr, 'Timeout option is not supported');
+        });
+
+        try {
+            $response = $rawClient->sendRequest($request);
+            $this->assertEquals(200, $response->getStatusCode());
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testPerRequestTimeoutOverridesClientTimeout(): void
@@ -1008,15 +1025,23 @@ class RawClientTest extends TestCase
             HttpMethod::GET,
         );
 
-        // Per-request timeout should override the client-level timeout.
-        $response = $rawClient->sendRequest(
-            $request,
-            options: [
-                'timeout' => 1.0
-            ]
-        );
+        set_error_handler(static function (int $errno, string $errstr): bool {
+            return $errno === E_USER_WARNING
+                && str_contains($errstr, 'Timeout option is not supported');
+        });
 
-        $this->assertEquals(200, $response->getStatusCode());
+        try {
+            $response = $rawClient->sendRequest(
+                $request,
+                options: [
+                    'timeout' => 1.0
+                ]
+            );
+
+            $this->assertEquals(200, $response->getStatusCode());
+        } finally {
+            restore_error_handler();
+        }
     }
 
     public function testDiscoveryFindsHttpClient(): void
