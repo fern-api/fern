@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "statusUpdate",
+        "completion",
+        "heartbeat"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event": {
+          "const": "statusUpdate"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "event",
+        "status"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "completion"
+        },
+        "delta": {
+          "type": "string"
+        },
+        "tokens": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event",
+        "delta"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "heartbeat"
+        },
+        "timestamp": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "event",
+        "timestamp"
+      ]
+    }
+  ],
+  "definitions": {}
+}
