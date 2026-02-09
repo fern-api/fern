@@ -42,6 +42,7 @@
           "description": undefined,
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.plantstore.dev/v3",
               "id": "Demo server",
             },
