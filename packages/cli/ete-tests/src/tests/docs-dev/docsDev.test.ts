@@ -1,6 +1,5 @@
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import fetch from "node-fetch";
 
 import { captureFernCli, runFernCli } from "../../utils/runFernCli.js";
 
