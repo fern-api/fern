@@ -3,6 +3,7 @@
 namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
+use <%= coreNamespace%>\Json\JsonEncoder;
 use <%= coreNamespace%>\Json\JsonProperty;
 use <%= coreNamespace%>\Json\JsonSerializableType;
 use <%= coreNamespace%>\Types\Union;
@@ -31,11 +32,10 @@ class UnionPropertyTest extends TestCase
 {
     public function testWithMapOfIntToInt(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'complexUnion' => [1 => 100, 2 => 200]
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = UnionProperty::fromJson($expectedJson);
@@ -48,7 +48,7 @@ class UnionPropertyTest extends TestCase
 
     public function testWithNestedUnionPropertyType(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'complexUnion' => new UnionProperty(
                     [
@@ -56,7 +56,6 @@ class UnionPropertyTest extends TestCase
                     ]
                 )
                     ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = UnionProperty::fromJson($expectedJson);
@@ -69,9 +68,8 @@ class UnionPropertyTest extends TestCase
 
     public function testWithNull(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [],
-            JSON_THROW_ON_ERROR
         );
 
         $object = UnionProperty::fromJson($expectedJson);
@@ -83,11 +81,10 @@ class UnionPropertyTest extends TestCase
 
     public function testWithInteger(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'complexUnion' => 42
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = UnionProperty::fromJson($expectedJson);
@@ -100,11 +97,10 @@ class UnionPropertyTest extends TestCase
 
     public function testWithString(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'complexUnion' => 'Some String'
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = UnionProperty::fromJson($expectedJson);

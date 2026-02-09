@@ -7,7 +7,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants.js";
 import { RawClient } from "./core/RawClient.js";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
-import { GuzzleClient } from "./external/GuzzleClient.js";
+import { PsrHttpClient } from "./external/PsrHttpClient.js";
 import { PhpGeneratorAgent } from "./PhpGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
@@ -15,7 +15,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator;
-    public guzzleClient: GuzzleClient;
+    public psrHttpClient: PsrHttpClient;
     public rawClient: RawClient;
     public generatorAgent: PhpGeneratorAgent;
     public snippetGenerator: EndpointSnippetsGenerator;
@@ -28,7 +28,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.endpointGenerator = new EndpointGenerator(this);
-        this.guzzleClient = new GuzzleClient(this);
+        this.psrHttpClient = new PsrHttpClient(this);
         this.rawClient = new RawClient(this);
         this.generatorAgent = new PhpGeneratorAgent({
             logger: this.logger,
@@ -260,7 +260,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "maxRetries";
     }
 
-    public getGuzzleClientOptionName(): string {
+    public getHttpClientOptionName(): string {
         return "client";
     }
 
@@ -274,10 +274,6 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getQueryParametersOptionName(): string {
         return "queryParameters";
-    }
-
-    public getTimeoutOptionName(): string {
-        return "timeout";
     }
 
     public getClientOptionsName(): string {
@@ -296,18 +292,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         const options = [
             {
-                key: this.getGuzzleClientOptionName(),
-                valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                key: this.getHttpClientOptionName(),
+                valueType: php.Type.reference(this.psrHttpClient.getClientInterfaceClassReference()),
                 optional: true
             },
             {
                 key: this.getMaxRetriesOptionName(),
                 valueType: php.Type.int(),
-                optional: true
-            },
-            {
-                key: this.getTimeoutOptionName(),
-                valueType: php.Type.float(),
                 optional: true
             },
             {
@@ -336,11 +327,6 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             {
                 key: this.getMaxRetriesOptionName(),
                 valueType: php.Type.int(),
-                optional: true
-            },
-            {
-                key: this.getTimeoutOptionName(),
-                valueType: php.Type.float(),
                 optional: true
             },
             {
@@ -554,7 +540,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
             AsIsFiles.RawClient,
-            AsIsFiles.RetryMiddleware,
+            AsIsFiles.RetryDecoratingClient,
+            AsIsFiles.HttpClientBuilder,
+            AsIsFiles.MockHttpClient,
             AsIsFiles.MultipartApiRequest,
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,
