@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.1
+  changelogEntry:
+    - summary: |
+        Lazy-load command handler imports to improve CLI startup time. Previously, all command handlers (IR generators, docs preview, format, etc.) were eagerly imported at startup, causing the entire 38MB bundle to be parsed even for simple operations like `fern --help`. Now command modules are only loaded when their command is actually invoked.
+      type: chore
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.70.0
   changelogEntry:
     - summary: |
