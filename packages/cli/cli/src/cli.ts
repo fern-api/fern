@@ -1,8 +1,5 @@
 #!/usr/bin/env node
 import type { ReadStream, WriteStream } from "node:tty";
-import { fromBinary, toBinary } from "@bufbuild/protobuf";
-import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
-import { runCliV2 } from "@fern-api/cli-v2";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
@@ -10,62 +7,16 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
+import type { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import {
-    initializeAPI,
-    initializeDocs,
-    initializeWithMintlify,
-    initializeWithReadme,
-    LoadOpenAPIStatus,
-    loadOpenAPIFromUrl
-} from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin, login, logout } from "@fern-api/login";
-import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
-import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { CliContext } from "./cli-context/CliContext.js";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli.js";
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
-import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
-import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
-import { diff } from "./commands/diff/diff.js";
-import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
-import { docsDiff } from "./commands/docs-diff/docsDiff.js";
-import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
-import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
-import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
-import { downgrade } from "./commands/downgrade/downgrade.js";
-import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
-import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
-import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
-import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
-import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
-import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
-import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces.js";
-import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces.js";
-import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
-import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
-import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
-import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
-import { mockServer } from "./commands/mock/mockServer.js";
-import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
-import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
-import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
-import { selfUpdate } from "./commands/self-update/selfUpdate.js";
-import { testOutput } from "./commands/test/testOutput.js";
-import { generateToken } from "./commands/token/token.js";
-import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
-import { upgrade } from "./commands/upgrade/upgrade.js";
-import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
-import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
-import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
-import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
-import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
+import type { GlobalCliOptions } from "./cliCommons.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { RUNTIME } from "./runtime.js";
@@ -228,6 +179,7 @@ async function tryRunCli(cliContext: CliContext) {
     addBetaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
+    const { addGetOrganizationCommand, addGeneratorCommands } = await import("./cliV2.js");
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
 
@@ -301,6 +253,14 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Migrate docs from Readme provided a URL to a Readme generated docs site"
                 }),
         async (argv) => {
+            const {
+                initializeAPI,
+                initializeDocs,
+                initializeWithMintlify,
+                initializeWithReadme,
+                LoadOpenAPIStatus,
+                loadOpenAPIFromUrl
+            } = await import("@fern-api/init");
             if (argv.organization == null) {
                 const projectConfig = await getOrganization(cliContext);
                 if (projectConfig != null) {
@@ -408,7 +368,8 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     alias: "q",
                     description: "Whether to suppress output written to stderr"
                 })
-                .middleware((argv) => {
+                .middleware(async (argv) => {
+                    const { haveSameNullishness } = await import("@fern-api/core-utils");
                     if (!haveSameNullishness(argv.fromGeneratorVersion, argv.toGeneratorVersion)) {
                         throw new Error(
                             "Both --from-generator-version and --to-generator-version must be provided together, or neither should be provided"
@@ -416,6 +377,8 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }
                 }),
         async (argv) => {
+            const { undefinedIfNullish, undefinedIfSomeNullish } = await import("@fern-api/core-utils");
+            const { diff } = await import("./commands/diff/diff.js");
             const fromVersion = undefinedIfNullish(argv.fromVersion);
             const generatorVersions = undefinedIfSomeNullish({
                 from: argv.fromGeneratorVersion,
@@ -470,6 +433,8 @@ function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 command: "fern sdk-diff"
             });
 
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { sdkDiffCommand } = await import("./commands/sdk-diff/sdkDiffCommand.js");
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineApiWorkspace: undefined,
                 defaultToAllApiWorkspaces: true
@@ -505,6 +470,8 @@ function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 description: "The organization to create a token for. Defaults to the one in `fern.config.json`"
             }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateToken } = await import("./commands/token/token.js");
             await cliContext.runTask(async (context) => {
                 await generateToken({
                     orgId:
@@ -541,6 +508,8 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Add the generator to the specified group"
                 }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { addGeneratorToWorkspaces } = await import("./commands/add-generator/addGeneratorToWorkspaces.js");
             await addGeneratorToWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -586,7 +555,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "The name of a specific generator to run"
                 })
                 .option("mode", {
-                    choices: Object.values(GenerationMode),
+                    choices: ["pull-request"] as const,
                     description: "Defaults to the mode specified in generators.yml"
                 })
                 .option("version", {
@@ -705,6 +674,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateAPIWorkspaces } = await import("./commands/generate/generateAPIWorkspaces.js");
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -739,6 +710,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
                 }
+                const { generateDocsWorkspace } = await import("./commands/generate/generateDocsWorkspace.js");
                 return await generateDocsWorkspace({
                     project: await loadProjectAndRegisterWorkspacesWithContext(
                         cliContext,
@@ -829,6 +801,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: false
                 }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateIrForWorkspaces } = await import("./commands/generate-ir/generateIrForWorkspaces.js");
             await generateIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -870,6 +844,10 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     description: "Only run the command on the provided API"
                 }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateOpenAPIIrForWorkspaces } = await import(
+                "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js"
+            );
             await generateOpenAPIIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -922,6 +900,10 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                     description: "Whether to suppress examples from being included in the IR"
                 }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateDynamicIrForWorkspaces } = await import(
+                "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js"
+            );
             await generateDynamicIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -972,7 +954,11 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: false
                 }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
             if (argv.v2) {
+                const { generateOpenApiToFdrApiDefinitionForWorkspaces } = await import(
+                    "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces.js"
+                );
                 await generateOpenApiToFdrApiDefinitionForWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -984,6 +970,9 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
             } else if (argv.fromOpenapi) {
+                const { generateOpenApiToFdrApiDefinitionForWorkspaces } = await import(
+                    "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces.js"
+                );
                 await generateOpenApiToFdrApiDefinitionForWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -995,6 +984,9 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
             } else {
+                const { generateFdrApiDefinitionForWorkspaces } = await import(
+                    "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js"
+                );
                 await generateFdrApiDefinitionForWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -1024,6 +1016,9 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Only run the command on the provided API"
                 }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { askToLogin } = await import("@fern-api/login");
+            const { registerWorkspacesV1 } = await import("./commands/register/registerWorkspacesV1.js");
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineApiWorkspace: argv.api,
                 defaultToAllApiWorkspaces: false
@@ -1052,6 +1047,9 @@ function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 description: "Only run the command on the provided API"
             }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { askToLogin } = await import("@fern-api/login");
+            const { registerWorkspacesV2 } = await import("./commands/register/registerWorkspacesV2.js");
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineApiWorkspace: argv.api,
                 defaultToAllApiWorkspaces: false
@@ -1106,6 +1104,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { validateWorkspaces } = await import("./commands/validate/validateWorkspaces.js");
             await validateWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -1164,6 +1164,7 @@ function addUpgradeCommand({
                     description: "Automatically answer yes to migration prompts."
                 }),
         async (argv) => {
+            const { upgrade } = await import("./commands/upgrade/upgrade.js");
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
@@ -1188,6 +1189,7 @@ function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 demandOption: true
             }),
         async (argv) => {
+            const { downgrade } = await import("./commands/downgrade/downgrade.js");
             await downgrade({
                 cliContext,
                 targetVersion: argv.version
@@ -1216,6 +1218,8 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             await cliContext.instrumentPostHogEvent({
                 command: "fern api update"
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { updateApiSpec } = await import("./commands/upgrade/updateApiSpec.js");
             await updateApiSpec({
                 cliContext,
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -1247,6 +1251,7 @@ function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             await cliContext.instrumentPostHogEvent({
                 command: "fern self-update"
             });
+            const { selfUpdate } = await import("./commands/self-update/selfUpdate.js");
             await selfUpdate({
                 cliContext,
                 version: argv.version,
@@ -1271,6 +1276,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
+                const { login } = await import("@fern-api/login");
                 await login(context, { useDeviceCodeFlow: argv.deviceCode });
             });
         }
@@ -1287,6 +1293,7 @@ function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await cliContext.instrumentPostHogEvent({
                     command: "fern logout"
                 });
+                const { logout } = await import("@fern-api/login");
                 await logout(context);
             });
         }
@@ -1312,6 +1319,8 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await cliContext.instrumentPostHogEvent({
                 command: "fern format"
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { formatWorkspaces } = await import("./commands/format/formatWorkspaces.js");
             await formatWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -1346,6 +1355,8 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await cliContext.instrumentPostHogEvent({
                 command: "fern test"
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { testOutput } = await import("./commands/test/testOutput.js");
             await testOutput({
                 cliContext,
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -1379,6 +1390,8 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await cliContext.instrumentPostHogEvent({
                 command: "fern mock"
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { mockServer } = await import("./commands/mock/mockServer.js");
             await mockServer({
                 cliContext,
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -1427,6 +1440,7 @@ function addOverridesCompareCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
             const originalPath = resolve(cwd(), argv.original as string);
             const modifiedPath = resolve(cwd(), argv.modified as string);
             const outputPath = argv.output != null ? resolve(cwd(), argv.output) : undefined;
+            const { compareOpenAPISpecs } = await import("./commands/generate-overrides/compareOpenAPISpecs.js");
             await compareOpenAPISpecs({
                 originalPath: AbsoluteFilePath.of(originalPath),
                 modifiedPath: AbsoluteFilePath.of(modifiedPath),
@@ -1457,6 +1471,10 @@ function addOverridesWriteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             await cliContext.instrumentPostHogEvent({
                 command: "fern overrides write"
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { writeOverridesForWorkspaces } = await import(
+                "./commands/generate-overrides/writeOverridesForWorkspaces.js"
+            );
             await writeOverridesForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api as string,
@@ -1493,6 +1511,10 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             await cliContext.instrumentPostHogEvent({
                 command: "fern write-overrides"
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { writeOverridesForWorkspaces } = await import(
+                "./commands/generate-overrides/writeOverridesForWorkspaces.js"
+            );
             await writeOverridesForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api as string,
@@ -1528,6 +1550,10 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
             await cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { writeDefinitionForWorkspaces } = await import(
+                "./commands/write-definition/writeDefinitionForWorkspaces.js"
+            );
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -1577,6 +1603,8 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 command: "fern docs md generate"
             });
 
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateLibraryDocs } = await import("./commands/docs-md-generate/generateLibraryDocs.js");
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineApiWorkspace: undefined,
                 defaultToAllApiWorkspaces: true
@@ -1618,6 +1646,8 @@ function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 command: "fern docs diff"
             });
 
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { docsDiff } = await import("./commands/docs-diff/docsDiff.js");
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineApiWorkspace: undefined,
                 defaultToAllApiWorkspaces: true
@@ -1662,6 +1692,7 @@ function addDocsPreviewListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
             await cliContext.instrumentPostHogEvent({
                 command: "fern docs preview list"
             });
+            const { listDocsPreview } = await import("./commands/docs-preview/listDocsPreview.js");
             await listDocsPreview({
                 cliContext,
                 limit: argv.limit,
@@ -1686,6 +1717,7 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
             await cliContext.instrumentPostHogEvent({
                 command: "fern docs preview delete"
             });
+            const { deleteDocsPreview } = await import("./commands/docs-preview/deleteDocsPreview.js");
             await deleteDocsPreview({
                 cliContext,
                 previewUrl: argv.url
@@ -1740,6 +1772,9 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 );
             }
 
+            const getPort = (await import("get-port")).default;
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { previewDocsWorkspace } = await import("./commands/docs-dev/devDocsWorkspace.js");
             let port: number;
             if (argv.port != null) {
                 port = argv.port;
@@ -1781,6 +1816,8 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         (yargs) =>
             yargs.option("strict", { boolean: true, default: false, description: "Fail with non-zero exit status" }),
         async (argv) => {
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { validateDocsBrokenLinks } = await import("./commands/validate/validateDocsBrokenLinks.js");
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineApiWorkspace: undefined,
                 defaultToAllApiWorkspaces: true
@@ -1821,6 +1858,10 @@ function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                     output: argv.output
                 }
             });
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateJsonschemaForWorkspaces } = await import(
+                "./commands/jsonschema/generateJsonschemaForWorkspace.js"
+            );
             await generateJsonschemaForWorkspaces({
                 typeLocator: argv.type,
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -1852,6 +1893,10 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                 }
             });
 
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { writeDocsDefinitionForProject } = await import(
+                "./commands/write-docs-definition/writeDocsDefinitionForProject.js"
+            );
             await writeDocsDefinitionForProject({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     defaultToAllApiWorkspaces: true,
@@ -1880,6 +1925,10 @@ function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                 command: "fern write-translation"
             });
 
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { writeTranslationForProject } = await import(
+                "./commands/write-translation/writeTranslationForProject.js"
+            );
             await writeTranslationForProject({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     defaultToAllApiWorkspaces: true,
@@ -1920,6 +1969,8 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }
             });
 
+            const { loadProjectAndRegisterWorkspacesWithContext } = await import("./cliCommons.js");
+            const { generateOpenAPIForWorkspaces } = await import("./commands/export/generateOpenAPIForWorkspaces.js");
             await generateOpenAPIForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -1945,6 +1996,7 @@ function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             try {
                 // Pass through all arguments after "v2" to the v2 CLI
                 const v2Args = argv._.slice(1).map(String);
+                const { runCliV2 } = await import("@fern-api/cli-v2");
                 await runCliV2(v2Args);
             } catch (error) {
                 cliContext.logger.error("CLI v2 failed:", String(error));
@@ -1961,6 +2013,9 @@ function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         (yargs) => {},
         async () => {
+            const { protocGenFern } = await import("@fern-api/protoc-gen-fern");
+            const { fromBinary, toBinary } = await import("@bufbuild/protobuf");
+            const { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } = await import("@bufbuild/protobuf/wkt");
             const plugin = protocGenFern;
             const data = await readBytes(process.stdin);
             const req = fromBinary(CodeGeneratorRequestSchema, data);
