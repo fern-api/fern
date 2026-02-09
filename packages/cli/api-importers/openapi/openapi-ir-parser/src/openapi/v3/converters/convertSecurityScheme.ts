@@ -46,6 +46,7 @@ function convertSecuritySchemeHelper(
                 FernOpenAPIExtension.FERN_HEADER_AUTH
             );
             return SecurityScheme.header({
+                description: securityScheme.description,
                 headerName: securityScheme.name,
                 prefix: bearerFormat != null ? "Bearer" : headerNames?.prefix,
                 headerVariableName:
@@ -60,6 +61,7 @@ function convertSecuritySchemeHelper(
                 FernOpenAPIExtension.FERN_BEARER_TOKEN
             );
             return SecurityScheme.bearer({
+                description: securityScheme.description,
                 tokenVariableName:
                     bearerNames?.name ??
                     getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
@@ -70,6 +72,7 @@ function convertSecuritySchemeHelper(
             const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
             const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
             return SecurityScheme.basic({
+                description: securityScheme.description,
                 usernameVariableName:
                     basicSecuritySchemeNamingAndEnvvar?.username?.name ?? basicSecuritySchemeNaming.usernameVariable,
                 usernameEnvVar: basicSecuritySchemeNamingAndEnvvar?.username?.env,
@@ -79,11 +82,13 @@ function convertSecuritySchemeHelper(
             });
         } else if (securityScheme.type === "openIdConnect") {
             return SecurityScheme.bearer({
+                description: securityScheme.description,
                 tokenVariableName: undefined,
                 tokenEnvVar: undefined
             });
         } else if (securityScheme.type === "oauth2") {
             return SecurityScheme.oauth({
+                description: securityScheme.description,
                 scopesEnum: getScopes(securityScheme, source)
             });
         }

@@ -2,7 +2,7 @@
 - version: 3.65.2
   changelogEntry:
     - summary: |
-        Fix auth scheme `docs` field not being read from auth-scheme declarations. When specifying `docs` on an auth-scheme in generators.yml or api.yml, the description is now correctly passed through to the IR and rendered in documentation.
+        Fix auth scheme documentation precedence. Auth scheme `docs` from generators.yml now takes priority, falling back to the OpenAPI spec `description`, then to the default value. Previously, specifying `auth-schemes` in generators.yml would silently discard both the `docs` field and the OpenAPI description.
       type: fix
   createdAt: "2026-02-06"
   irVersion: 63

@@ -3,5 +3,6 @@
 import type * as FernOpenapiIr from "../../../index.js";
 
 export interface OauthSecurityScheme {
+    description: string | undefined;
     scopesEnum: FernOpenapiIr.EnumSchema | undefined;
 }
