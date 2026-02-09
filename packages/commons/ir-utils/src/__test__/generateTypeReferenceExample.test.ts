@@ -33,7 +33,7 @@ function makeObjectTypeDeclaration(
                 docs: undefined,
                 availability: undefined,
                 name: { wireValue: name, name: makeName(name) },
-                valueType: propertyTypeRefs[i]!,
+                valueType: propertyTypeRefs[i] ?? stringRef(),
                 propertyAccess: undefined,
                 v2Examples: undefined
             })),
@@ -68,7 +68,10 @@ function optionalNamedRef(typeId: string): TypeReference {
 }
 
 function stringRef(): TypeReference {
-    return TypeReference.primitive({ v1: "STRING", v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined }) });
+    return TypeReference.primitive({
+        v1: "STRING",
+        v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+    });
 }
 
 describe("v1 cycle detection in generateTypeReferenceExample", () => {
@@ -200,7 +203,9 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             times.push(Date.now() - start);
         }
 
-        const ratio = times[times.length - 1]! / Math.max(times[0]!, 1);
+        const lastTime = times[times.length - 1] ?? 0;
+        const firstTime = times[0] ?? 1;
+        const ratio = lastTime / Math.max(firstTime, 1);
         expect(ratio).toBeLessThan(100);
     });
 });
