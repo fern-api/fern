@@ -1057,7 +1057,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
     }
 
-    private isEventLevelDiscrimination(payload: TypeReference, context: SdkContext): boolean {
+    private isEventLevelDiscrimination(payload: FernIr.TypeReference, context: SdkContext): boolean {
         if (payload.type !== "named") {
             return false;
         }
