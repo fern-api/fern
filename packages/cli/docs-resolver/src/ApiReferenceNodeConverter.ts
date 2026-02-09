@@ -732,22 +732,86 @@ export class ApiReferenceNodeConverter {
             return;
         }
 
-        // Find the GraphQL operation
-        const graphqlOperation = this.#holder.api.rootPackage.graphqlOperations?.find((op) => {
-            // First try exact match on name or id
-            if (op.name === operationName || op.id === operationName) {
-                return op.operationType === operationType;
+        // First, find all matching operations by type and name/id
+        const allOperations = this.#holder.api.rootPackage.graphqlOperations ?? [];
+        const matchingOperations = allOperations.filter((op) => {
+            if (op.operationType !== operationType) {
+                return false;
             }
 
-            // For namespaced operations (e.g., "namespace.createUser"), try partial matching
+            // For namespaced operations (e.g., "admin.getSystemInfo")
             if (operationName.includes(".")) {
+                // Try exact match on full ID first
+                if (op.id === operationName) {
+                    return true;
+                }
+
+                // Try exact match on full name
+                if (op.name === operationName) {
+                    return true;
+                }
+
+                // For legacy support, check if the namespace from the operation name matches
                 const namespacedParts = operationName.split(".");
                 const opName = namespacedParts[namespacedParts.length - 1];
-                return (op.name === opName || op.id === opName) && op.operationType === operationType;
+                const namespace = namespacedParts.slice(0, -1).join(".");
+
+                // Check if operation name matches and is in the expected namespace context
+                if (op.name === opName || op.id === opName) {
+                    // Check if the operation's ID contains the namespace
+                    return (
+                        op.id.startsWith(namespace + ".") ||
+                        this.#graphqlNamespacesByOperationId.get(FdrAPI.GraphQlOperationId(op.id)) === namespace
+                    );
+                }
+            } else {
+                // For non-namespaced operations, exact match on name or id
+                return op.name === operationName || op.id === operationName;
             }
 
             return false;
         });
+
+        // Check for ambiguity - multiple operations with same name/type
+        if (!operationName.includes(".")) {
+            // Only check for ambiguity on non-namespaced operations
+            const sameNameOperations = allOperations.filter(
+                (op) => op.operationType === operationType && (op.name === operationName || op.id === operationName)
+            );
+
+            if (sameNameOperations.length > 1) {
+                const suggestions = sameNameOperations
+                    .map((op) => {
+                        // Try to get the clean namespace from the GraphQL namespaces map
+                        const namespace = this.#graphqlNamespacesByOperationId.get(FdrAPI.GraphQlOperationId(op.id));
+                        if (namespace) {
+                            return `"${operationType} ${namespace}.${operationName}"`;
+                        }
+
+                        // Fallback: try to extract namespace from operation ID
+                        // If ID is like "accounts_query_node", extract "accounts"
+                        const idParts = op.id.split("_");
+                        if (idParts.length >= 3) {
+                            const extractedNamespace = idParts[0];
+                            return `"${operationType} ${extractedNamespace}.${operationName}"`;
+                        }
+
+                        // Last fallback: use the full ID
+                        return `"${operationType} ${op.id}"`;
+                    })
+                    .join(", ");
+
+                this.taskContext.logger.warn(
+                    `Ambiguous operation reference: "${operationItem.operation}". ` +
+                        `Found ${sameNameOperations.length} operations with name "${operationName}". ` +
+                        `Using first match: "${suggestions.split(", ")[0]}". ` +
+                        `Please use the full namespaced format for clarity. Available options: ${suggestions}`
+                );
+                // Continue with first match instead of returning
+            }
+        }
+
+        const graphqlOperation = matchingOperations[0];
 
         if (graphqlOperation == null) {
             this.taskContext.logger.error(
