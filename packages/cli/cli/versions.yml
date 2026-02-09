@@ -1,11 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-<<<<<<< HEAD
-- version: 3.56.0
+- version: 3.70.1
   changelogEntry:
     - summary: |
         Add support for multiple override files in OpenAPI spec configuration. The `overrides` field now accepts either a single path or an array of paths. When multiple paths are provided, overrides are applied sequentially in order, allowing for layered customization of OpenAPI specs.
       type: feat
-=======
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.70.0
   changelogEntry:
     - summary: |
@@ -323,7 +324,6 @@
     - summary: |
         Fix default value for `switcher-placement` in docs.yml layout configuration.
       type: fix
->>>>>>> main
   createdAt: "2026-01-30"
   irVersion: 63
 
