@@ -26,6 +26,8 @@ def parse_datetime(value: Any) -> dt.datetime:
 
 
 def parse_date(value: Any) -> dt.date:
+    if isinstance(value, dt.datetime):
+        return value.date()
     if isinstance(value, dt.date):
         return value
     return _date_adapter.validate_python(value)

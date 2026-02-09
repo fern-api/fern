@@ -29,6 +29,8 @@ if IS_PYDANTIC_V2:
         return _datetime_adapter.validate_python(value)
 
     def parse_date(value: Any) -> dt.date:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value.date()
         if isinstance(value, dt.date):
             return value
         return _date_adapter.validate_python(value)
