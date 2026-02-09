@@ -45,7 +45,7 @@ function getTargets() {
         const arch = process.arch === "arm64" ? "arm64" : "x64";
         const localTarget = TARGETS.find((t) => t.bunTarget === `bun-${platform}-${arch}`);
         if (localTarget == null) {
-            console.error(`No target found for local platform: ${platform}-${arch}`);
+            process.stderr.write(`No target found for local platform: ${platform}-${arch}\n`);
             process.exit(1);
         }
         return [localTarget];
@@ -53,8 +53,8 @@ function getTargets() {
 
     const filtered = TARGETS.filter((t) => t.bunTarget.includes(value));
     if (filtered.length === 0) {
-        console.error(`No targets match: ${value}`);
-        console.error(`Available: ${TARGETS.map((t) => t.bunTarget).join(", ")}`);
+        process.stderr.write(`No targets match: ${value}\n`);
+        process.stderr.write(`Available: ${TARGETS.map((t) => t.bunTarget).join(", ")}\n`);
         process.exit(1);
     }
     return filtered;
@@ -65,8 +65,8 @@ function main() {
     const outDir = path.join(__dirname, "dist", "bin");
 
     if (!existsSync(inputFile)) {
-        console.error(`Input file not found: ${inputFile}`);
-        console.error("Run 'pnpm dist:cli:dev' first to build the tsup bundle.");
+        process.stderr.write(`Input file not found: ${inputFile}\n`);
+        process.stderr.write("Run 'pnpm dist:cli:dev' first to build the tsup bundle.\n");
         process.exit(1);
     }
 
@@ -74,11 +74,11 @@ function main() {
 
     const targets = getTargets();
 
-    console.log(`Compiling ${targets.length} target(s)...\n`);
+    process.stdout.write(`Compiling ${targets.length} target(s)...\n\n`);
 
     for (const { bunTarget, output } of targets) {
         const outFile = path.join(outDir, output);
-        console.log(`  ${bunTarget} → ${output}`);
+        process.stdout.write(`  ${bunTarget} → ${output}\n`);
 
         try {
             execFileSync(
@@ -88,19 +88,19 @@ function main() {
             );
 
             const size = statSync(outFile).size;
-            console.log(`  ✓ ${output} (${formatSize(size)})\n`);
+            process.stdout.write(`  ✓ ${output} (${formatSize(size)})\n\n`);
         } catch (error) {
-            console.error(`  ✗ Failed to compile ${bunTarget}`);
+            process.stderr.write(`  ✗ Failed to compile ${bunTarget}\n`);
             if (error?.code === "ENOENT") {
-                console.error("  Bun is not installed. Install it with: curl -fsSL https://bun.sh/install | bash");
+                process.stderr.write("  Bun is not installed. Install it with: curl -fsSL https://bun.sh/install | bash\n");
             } else if (error?.stderr) {
-                console.error(error.stderr.toString());
+                process.stderr.write(error.stderr.toString() + "\n");
             }
             process.exit(1);
         }
     }
 
-    console.log("Done.");
+    process.stdout.write("Done.\n");
 }
 
 main();
