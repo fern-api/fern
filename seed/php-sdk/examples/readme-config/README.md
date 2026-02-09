@@ -113,8 +113,8 @@ try {
 
 ### Custom Client
 
-This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
-By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
+This SDK is built to work with any HTTP client that implements the [PSR-18](https://www.php-fig.org/psr/psr-18/) `ClientInterface`.
+By default, if no client is provided, the SDK will use `php-http/discovery` to find an installed HTTP client.
 However, you can pass your own client that adheres to `ClientInterface`:
 
 ```php
@@ -167,17 +167,21 @@ $response = $client->service->createMovie(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-use Seed\SeedClient;
+$response = $client->service->getMovie(
+    ...,
+    options: [
+        'timeout' => 3.0 // Override timeout at the request level
+    ]
+);
+```
 
-// Configure timeouts via the underlying PSR-18 HTTP client.
-// For example, using Guzzle:
-$customClient = new \GuzzleHttp\Client([
-    'timeout' => 3.0,
-]);
-
-$client = new SeedClient(options: [
-    'client' => $customClient
-]);
+```php
+$response = $client->service->createMovie(
+    ...,
+    options: [
+        'timeout' => 3.0 // Override timeout at the request level
+    ]
+);
 ```
 
 ## Contributing

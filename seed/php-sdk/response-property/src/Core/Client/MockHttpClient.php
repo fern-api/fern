@@ -7,7 +7,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
-class MockHttpClient implements ClientInterface
+class MockHttpClient implements ClientInterface, \Countable
 {
     /**
      * @var array<ResponseInterface>

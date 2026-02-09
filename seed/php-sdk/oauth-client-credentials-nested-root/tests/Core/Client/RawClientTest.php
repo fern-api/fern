@@ -355,7 +355,8 @@ class RawClientTest extends TestCase
         $retryClient = new RetryDecoratingClient(
             $mockClient,
             maxRetries: 2,
-            sleepFunction: function (int $_microseconds): void {},
+            sleepFunction: function (int $_microseconds): void {
+            },
         );
 
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
@@ -375,7 +376,8 @@ class RawClientTest extends TestCase
         $retryClient = new RetryDecoratingClient(
             $mockClient,
             maxRetries: 2,
-            sleepFunction: function (int $_microseconds): void {},
+            sleepFunction: function (int $_microseconds): void {
+            },
         );
 
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
@@ -410,7 +412,8 @@ class RawClientTest extends TestCase
         $retryClient = new RetryDecoratingClient(
             $mockClient,
             maxRetries: $countOfErrorRequests,
-            sleepFunction: function (int $_microseconds): void {},
+            sleepFunction: function (int $_microseconds): void {
+            },
         );
 
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
@@ -430,7 +433,8 @@ class RawClientTest extends TestCase
         $retryClient = new RetryDecoratingClient(
             $mockClient,
             maxRetries: 2,
-            sleepFunction: function (int $_microseconds): void {},
+            sleepFunction: function (int $_microseconds): void {
+            },
         );
 
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
@@ -945,6 +949,105 @@ class RawClientTest extends TestCase
         return $response;
     }
 
+
+    public function testTimeoutOptionIsAccepted(): void
+    {
+        $this->mockClient->append(self::createResponse(200));
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+        );
+
+        // MockHttpClient is not Guzzle/Symfony, so a warning is triggered once.
+        set_error_handler(static function (int $errno, string $errstr): bool {
+            return $errno === E_USER_WARNING
+                && str_contains($errstr, 'Timeout option is not supported');
+        });
+
+        try {
+            $response = $this->rawClient->sendRequest(
+                $request,
+                options: [
+                    'timeout' => 3.0
+                ]
+            );
+
+            $this->assertEquals(200, $response->getStatusCode());
+
+            $lastRequest = $this->mockClient->getLastRequest();
+            $this->assertInstanceOf(RequestInterface::class, $lastRequest);
+        } finally {
+            restore_error_handler();
+        }
+    }
+
+    public function testClientLevelTimeoutIsAccepted(): void
+    {
+        $mockClient = new MockHttpClient();
+        $mockClient->append(self::createResponse(200));
+
+        $rawClient = new RawClient([
+            'client' => $mockClient,
+            'maxRetries' => 0,
+            'timeout' => 5.0,
+        ]);
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+        );
+
+        set_error_handler(static function (int $errno, string $errstr): bool {
+            return $errno === E_USER_WARNING
+                && str_contains($errstr, 'Timeout option is not supported');
+        });
+
+        try {
+            $response = $rawClient->sendRequest($request);
+            $this->assertEquals(200, $response->getStatusCode());
+        } finally {
+            restore_error_handler();
+        }
+    }
+
+    public function testPerRequestTimeoutOverridesClientTimeout(): void
+    {
+        $mockClient = new MockHttpClient();
+        $mockClient->append(self::createResponse(200));
+
+        $rawClient = new RawClient([
+            'client' => $mockClient,
+            'maxRetries' => 0,
+            'timeout' => 5.0,
+        ]);
+
+        $request = new JsonApiRequest(
+            $this->baseUrl,
+            '/test',
+            HttpMethod::GET,
+        );
+
+        set_error_handler(static function (int $errno, string $errstr): bool {
+            return $errno === E_USER_WARNING
+                && str_contains($errstr, 'Timeout option is not supported');
+        });
+
+        try {
+            $response = $rawClient->sendRequest(
+                $request,
+                options: [
+                    'timeout' => 1.0
+                ]
+            );
+
+            $this->assertEquals(200, $response->getStatusCode());
+        } finally {
+            restore_error_handler();
+        }
+    }
 
     public function testDiscoveryFindsHttpClient(): void
     {

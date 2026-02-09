@@ -11,18 +11,15 @@ use Psr\Http\Message\StreamFactoryInterface;
 class HttpClientBuilder
 {
     /**
-     * Builds an HTTP client, optionally wrapping it with retry logic.
+     * Builds an HTTP client wrapped with retry and timeout support.
      *
      * @param ?ClientInterface $client
      * @param int $maxRetries
-     * @return ClientInterface
+     * @return RetryDecoratingClient
      */
-    public static function build(?ClientInterface $client = null, int $maxRetries = 2): ClientInterface
+    public static function build(?ClientInterface $client = null, int $maxRetries = 2): RetryDecoratingClient
     {
         $client = self::baseClient($client);
-        if ($maxRetries <= 0) {
-            return $client;
-        }
         return new RetryDecoratingClient($client, $maxRetries);
     }
 

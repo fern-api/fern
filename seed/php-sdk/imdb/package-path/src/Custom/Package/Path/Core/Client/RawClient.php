@@ -19,14 +19,9 @@ use Custom\Package\Path\Core\Multipart\MultipartApiRequest;
 class RawClient
 {
     /**
-     * @var ClientInterface $baseClient
+     * @var RetryDecoratingClient $client
      */
-    private ClientInterface $baseClient;
-
-    /**
-     * @var ClientInterface $client
-     */
-    private ClientInterface $client;
+    private RetryDecoratingClient $client;
 
     /**
      * @var RequestFactoryInterface $requestFactory
@@ -53,6 +48,7 @@ class RawClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
+     *   timeout?: float,
      *   headers?: array<string, string>,
      *   getAuthHeaders?: callable(): array<string, string>,
      * } $options
@@ -60,9 +56,8 @@ class RawClient
     public function __construct(
         private readonly ?array $options = null,
     ) {
-        $this->baseClient = HttpClientBuilder::baseClient($this->options['client'] ?? null);
         $this->client = HttpClientBuilder::build(
-            $this->baseClient,
+            $this->options['client'] ?? null,
             $this->options['maxRetries'] ?? 2,
         );
         $this->requestFactory = HttpClientBuilder::requestFactory();
@@ -75,6 +70,7 @@ class RawClient
      * @param BaseApiRequest $request
      * @param ?array{
      *     maxRetries?: int,
+     *     timeout?: float,
      *     headers?: array<string, string>,
      *     queryParameters?: array<string, mixed>,
      *     bodyProperties?: array<string, mixed>,
@@ -89,15 +85,10 @@ class RawClient
         $opts = $options ?? [];
         $httpRequest = $this->buildRequest($request, $opts);
 
-        $client = $this->client;
-        if (isset($opts['maxRetries'])) {
-            $client = HttpClientBuilder::build(
-                $this->baseClient,
-                $opts['maxRetries'],
-            );
-        }
+        $timeout = $opts['timeout'] ?? $this->options['timeout'] ?? null;
+        $maxRetries = $opts['maxRetries'] ?? null;
 
-        return $client->sendRequest($httpRequest);
+        return $this->client->send($httpRequest, $timeout, $maxRetries);
     }
 
     /**
@@ -196,7 +187,11 @@ class RawClient
             );
         }
 
-        return null;
+        if ($request instanceof MultipartApiRequest) {
+            return null;
+        }
+
+        throw new InvalidArgumentException('Unsupported request type: ' . get_class($request));
     }
 
     /**
