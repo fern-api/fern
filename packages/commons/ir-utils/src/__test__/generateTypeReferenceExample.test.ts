@@ -102,7 +102,9 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             const json = result.jsonExample as Record<string, unknown>;
             expect(json).toHaveProperty("name");
             for (const field of selfRefFields) {
-                expect(json[field]).toBeUndefined();
+                const nested = json[field] as Record<string, unknown>;
+                expect(nested).toBeDefined();
+                expect(nested.name).toBe("name");
             }
         }
     });
@@ -150,7 +152,16 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             expect(toB).toHaveProperty("toC");
             const toC = toB.toC as Record<string, unknown>;
             expect(toC).toHaveProperty("value");
-            expect(toC.toA).toBeUndefined();
+            expect(toC).toHaveProperty("toA");
+            const toA = toC.toA as Record<string, unknown>;
+            expect(toA).toHaveProperty("value");
+            expect(toA).toHaveProperty("toB");
+            const toB2 = toA.toB as Record<string, unknown>;
+            expect(toB2).toHaveProperty("value");
+            expect(toB2).toHaveProperty("toC");
+            const toC2 = toB2.toC as Record<string, unknown>;
+            expect(toC2).toHaveProperty("value");
+            expect(toC2.toA).toBeUndefined();
         }
     });
 

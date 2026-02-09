@@ -23,7 +23,7 @@ export declare namespace generateTypeReferenceExample {
 
         skipOptionalProperties: boolean;
 
-        visitedTypes?: Set<string>;
+        visitedTypes?: Map<string, number>;
     }
 }
 
@@ -45,11 +45,12 @@ export function generateTypeReferenceExample({
             if (typeDeclaration == null) {
                 return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` };
             }
-            const visited = visitedTypes ?? new Set<string>();
-            if (visited.has(typeReference.typeId)) {
+            const visited = visitedTypes ?? new Map<string, number>();
+            const count = visited.get(typeReference.typeId) ?? 0;
+            if (count >= 2) {
                 return { type: "failure", message: `Detected recursive type ${typeReference.typeId}` };
             }
-            visited.add(typeReference.typeId);
+            visited.set(typeReference.typeId, count + 1);
             const generatedExample = generateTypeDeclarationExample({
                 fieldName,
                 typeDeclaration,
@@ -59,7 +60,12 @@ export function generateTypeReferenceExample({
                 skipOptionalProperties,
                 visitedTypes: visited
             });
-            visited.delete(typeReference.typeId);
+            const newCount = (visited.get(typeReference.typeId) ?? 1) - 1;
+            if (newCount <= 0) {
+                visited.delete(typeReference.typeId);
+            } else {
+                visited.set(typeReference.typeId, newCount);
+            }
             if (generatedExample == null) {
                 return { type: "failure", message: "Failed to generate example for type declaration" };
             }

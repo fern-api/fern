@@ -53,7 +53,7 @@ export declare namespace generateTypeDeclarationExample {
 
         skipOptionalProperties: boolean;
 
-        visitedTypes?: Set<string>;
+        visitedTypes?: Map<string, number>;
     }
 }
 
@@ -447,7 +447,7 @@ function generateObjectDeclarationExample({
     maxDepth: number;
     currentDepth: number;
     skipOptionalProperties: boolean;
-    visitedTypes?: Set<string>;
+    visitedTypes?: Map<string, number>;
 }): ExampleGenerationResult<ExampleObjectType> {
     const jsonExample: Record<string, unknown> = {};
     const properties: ExampleObjectProperty[] = [];
