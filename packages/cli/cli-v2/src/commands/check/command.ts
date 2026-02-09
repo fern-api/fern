@@ -1,12 +1,12 @@
+import chalk from "chalk";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../api/checker/ApiChecker.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { CliError } from "../../errors/CliError.js";
+import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { command } from "../_internal/command.js";
-import { Icons } from "../../ui/format.js";
-import chalk from "chalk";
 
 export declare namespace CheckCommand {
     export interface Args extends GlobalArgs {

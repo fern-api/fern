@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -7,9 +8,8 @@ import { addConfigCommand } from "./commands/config/index.js";
 import { addInitCommand } from "./commands/init/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
-import { Version } from "./version.js";
 import { Icons } from "./ui/format.js";
-import chalk from "chalk";
+import { Version } from "./version.js";
 
 const TIMEOUT_MINUTES = 10;
 const TIMEOUT_MS = TIMEOUT_MINUTES * 60 * 1000;
