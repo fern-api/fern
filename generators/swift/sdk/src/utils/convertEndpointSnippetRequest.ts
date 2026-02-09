@@ -1,6 +1,5 @@
-import { dynamic } from "@fern-fern/ir-sdk/api";
-
-export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
+import { FernIr } from "@fern-fern/ir-sdk";
+export type EndpointSnippetRequest = Omit<FernIr.dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined;
 };
 
@@ -9,7 +8,7 @@ export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseU
  * convention doesn't match.
  */
 export function convertDynamicEndpointSnippetRequest(
-    request: dynamic.EndpointSnippetRequest,
+    request: FernIr.dynamic.EndpointSnippetRequest,
     { baseUrlFallback }: { baseUrlFallback?: string } = {}
 ): EndpointSnippetRequest {
     return {

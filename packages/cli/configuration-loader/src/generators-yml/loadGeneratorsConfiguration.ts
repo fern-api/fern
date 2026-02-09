@@ -9,7 +9,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
-import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
+import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration.js";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,

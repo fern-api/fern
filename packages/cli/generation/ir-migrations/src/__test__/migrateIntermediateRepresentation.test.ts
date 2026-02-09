@@ -4,15 +4,15 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
-import { IrVersions } from "../ir-versions";
-import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator";
+import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator.js";
+import { IrVersions } from "../ir-versions/index.js";
+import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator.js";
 import {
     GeneratorVersion,
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet
-} from "../types/IrMigration";
-import { getIrForApi } from "./utils/getIrForApi";
+} from "../types/IrMigration.js";
+import { getIrForApi } from "./utils/getIrForApi.js";
 
 describe("migrateIntermediateRepresentation", () => {
     describe("migrations are in order", () => {

@@ -7,8 +7,8 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
 
 const PROJECT_FILE_CONTENT = `
 <Project Sdk="Microsoft.NET.Sdk">

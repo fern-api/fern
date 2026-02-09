@@ -2,7 +2,7 @@ import { AbsoluteFilePath, doesPathExist, getDirectoryContentsForSnapshot } from
 import { rm } from "fs/promises";
 import path from "path";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli } from "../../utils/runFernCli.js";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 

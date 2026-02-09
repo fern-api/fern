@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -41,10 +41,7 @@ public class SubmitFormDataTest : BaseMockServerTest
         var response = await Client.SubmitFormDataAsync(
             new PostSubmitRequest { Username = "username", Email = "email" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PostSubmitResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -81,9 +78,6 @@ public class SubmitFormDataTest : BaseMockServerTest
         var response = await Client.SubmitFormDataAsync(
             new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PostSubmitResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

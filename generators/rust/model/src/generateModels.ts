@@ -1,13 +1,13 @@
 import { RustFile } from "@fern-api/rust-base";
-import { AliasGenerator } from "./alias";
-import { EnumGenerator } from "./enum";
-import { FileUploadRequestBodyGenerator } from "./file-upload-request-body";
-import { InlinedRequestBodyGenerator } from "./inlined-request-body";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { StructGenerator } from "./object";
-import { QueryParameterRequestGenerator } from "./query-request";
-import { ReferencedRequestWithQueryGenerator } from "./referenced-request-with-query";
-import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union";
+import { AliasGenerator } from "./alias/index.js";
+import { EnumGenerator } from "./enum/index.js";
+import { FileUploadRequestBodyGenerator } from "./file-upload-request-body/index.js";
+import { InlinedRequestBodyGenerator } from "./inlined-request-body/index.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { StructGenerator } from "./object/index.js";
+import { QueryParameterRequestGenerator } from "./query-request/index.js";
+import { ReferencedRequestWithQueryGenerator } from "./referenced-request-with-query/index.js";
+import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union/index.js";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedClientSideParams;
-using SeedClientSideParams.Core;
+using SeedClientSideParams.Test.Utils;
 
 namespace SeedClientSideParams.Test.Unit.MockServer;
 
@@ -44,9 +44,6 @@ public class GetResourceTest : BaseMockServerTest
             "resourceId",
             new GetResourceRequest { IncludeMetadata = true, Format = "json" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Resource>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

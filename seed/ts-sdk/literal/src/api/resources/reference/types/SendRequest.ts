@@ -8,6 +8,6 @@ export interface SendRequest {
     stream: false;
     ending: "$ending";
     context: SeedLiteral.SomeLiteral;
-    maybeContext?: SeedLiteral.SomeLiteral;
+    maybeContext?: SeedLiteral.SomeLiteral | undefined;
     containerObject: SeedLiteral.ContainerObject;
 }

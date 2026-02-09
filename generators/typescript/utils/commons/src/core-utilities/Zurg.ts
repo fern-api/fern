@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { Reference } from "../referencing";
-import { CoreUtility } from "./CoreUtility";
+import { Reference } from "../referencing/index.js";
+import { CoreUtility } from "./CoreUtility.js";
 
 export interface SchemaOptions {
     unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";

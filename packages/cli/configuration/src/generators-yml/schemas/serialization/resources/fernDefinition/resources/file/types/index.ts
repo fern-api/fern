@@ -1,1 +1,1 @@
-export * from "./WithHeadersSchema";
+export * from "./WithHeadersSchema.js";

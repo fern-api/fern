@@ -1,5 +1,5 @@
 import { Audiences, generatorsYml, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
-import { ContainerRunner } from "@fern-api/core-utils/src/types";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -10,7 +10,7 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment";
+import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
@@ -21,11 +21,11 @@ import {
     CONTAINER_SOURCES_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
     IR_FILENAME
-} from "./constants";
-import { ExecutionEnvironment } from "./ExecutionEnvironment";
-import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig";
-import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
-import { LocalTaskHandler } from "./LocalTaskHandler";
+} from "./constants.js";
+import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
+import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
+import { LocalTaskHandler } from "./LocalTaskHandler.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;

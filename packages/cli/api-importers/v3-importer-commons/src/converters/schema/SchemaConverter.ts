@@ -2,15 +2,15 @@ import * as FernIr from "@fern-api/ir-sdk";
 import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, Extensions } from "../..";
-import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
-import { ExampleConverter } from "../ExampleConverter";
-import { ArraySchemaConverter } from "./ArraySchemaConverter";
-import { EnumSchemaConverter } from "./EnumSchemaConverter";
-import { MapSchemaConverter } from "./MapSchemaConverter";
-import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
-import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
-import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
+import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
+import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
+import { ExampleConverter } from "../ExampleConverter.js";
+import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
+import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
+import { MapSchemaConverter } from "./MapSchemaConverter.js";
+import { ObjectSchemaConverter } from "./ObjectSchemaConverter.js";
+import { OneOfSchemaConverter } from "./OneOfSchemaConverter.js";
+import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter.js";
 
 const TYPE_INVARIANT_KEYS = [
     "description",
@@ -562,21 +562,23 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         for (const [index, example] of examples.entries()) {
             const resolvedExample = this.context.resolveExample(example);
+            const exampleName = `${this.id}_example_${index}`;
             const convertedExample = this.generateOrValidateExample({
-                example: resolvedExample
+                example: resolvedExample,
+                exampleName
             });
-            userSpecifiedExamples[`${this.id}_example_${index}`] = convertedExample;
+            userSpecifiedExamples[exampleName] = convertedExample;
         }
 
         return userSpecifiedExamples;
     }
 
     private generateOrValidateExample({
-        example,
-        ignoreErrors
+        example
     }: {
         example: unknown;
         ignoreErrors?: boolean;
+        exampleName?: string;
     }): unknown {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
@@ -584,15 +586,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             schema: this.schema,
             example
         });
-        const { validExample: convertedExample, errors } = exampleConverter.convert();
-        if (!ignoreErrors) {
-            errors.forEach((error) => {
-                this.context.errorCollector.collect({
-                    message: error.message,
-                    path: error.path
-                });
-            });
-        }
+        const { validExample: convertedExample } = exampleConverter.convert();
+        // Note: Example validation errors are intentionally not collected as warnings
+        // because they are too verbose and not actionable for users
         return convertedExample;
     }
 }

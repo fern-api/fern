@@ -1,8 +1,8 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
-import { HttpEndpoint, HttpService, OAuthScheme, RequestProperty, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Information about the OAuth service structure extracted from the IR.
@@ -25,9 +25,9 @@ interface OAuthServiceInfo {
     /** The service ID for the OAuth token endpoint */
     serviceId: string;
     /** The token endpoint */
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
     /** The service containing the token endpoint */
-    service: HttpService;
+    service: FernIr.HttpService;
 }
 
 /**
@@ -83,7 +83,7 @@ export class OAuthWireTestGenerator {
     /**
      * Extracts OAuth service information from the IR scheme.
      */
-    private extractOAuthServiceInfo(oauthScheme: OAuthScheme): OAuthServiceInfo | undefined {
+    private extractOAuthServiceInfo(oauthScheme: FernIr.OAuthScheme): OAuthServiceInfo | undefined {
         if (oauthScheme.configuration?.type !== "clientCredentials") {
             return undefined;
         }
@@ -144,7 +144,7 @@ export class OAuthWireTestGenerator {
     /**
      * Gets the client accessor path for a service (e.g., "OAuth2" from fernFilepath).
      */
-    private getClientAccessPath(service: HttpService): string {
+    private getClientAccessPath(service: FernIr.HttpService): string {
         const parts = service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
         return parts.join(".");
     }
@@ -153,7 +153,7 @@ export class OAuthWireTestGenerator {
      * Gets the field name for a request property using the context helper.
      * This matches the pattern used in ClientGenerator.getRequestPropertyFieldName.
      */
-    private getRequestPropertyFieldName(requestProperty: RequestProperty): string {
+    private getRequestPropertyFieldName(requestProperty: FernIr.RequestProperty): string {
         // The property can be either "query" or "body" type
         // Both have a name field that contains the Name object
         if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
@@ -170,14 +170,14 @@ export class OAuthWireTestGenerator {
      * Checks if a request property is optional (pointer type).
      * This matches the pattern used in ClientGenerator.isRequestPropertyOptional.
      */
-    private isRequestPropertyOptional(requestProperty: RequestProperty): boolean {
+    private isRequestPropertyOptional(requestProperty: FernIr.RequestProperty): boolean {
         return this.isTypeReferenceOptional(this.getRequestPropertyValueType(requestProperty));
     }
 
     /**
      * Gets the value type from a request property.
      */
-    private getRequestPropertyValueType(requestProperty: RequestProperty): TypeReference | undefined {
+    private getRequestPropertyValueType(requestProperty: FernIr.RequestProperty): FernIr.TypeReference | undefined {
         if (requestProperty.property.type === "body") {
             return requestProperty.property.valueType;
         }
@@ -190,7 +190,7 @@ export class OAuthWireTestGenerator {
     /**
      * Checks if a type reference is optional.
      */
-    private isTypeReferenceOptional(typeRef: TypeReference | undefined): boolean {
+    private isTypeReferenceOptional(typeRef: FernIr.TypeReference | undefined): boolean {
         if (typeRef == null) {
             return false;
         }
@@ -320,7 +320,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine("\ttransport := &requestCapturingTransport{}");
         writer.writeLine("\thttpClient := &http.Client{Transport: transport}");
         writer.newLine();
-        writer.writeLine("\tc := client.NewClient(");
+        writer.writeLine(`\tc := client.${this.context.getClientConstructorName()}(`);
         writer.writeLine('\t\toption.WithBaseURL("http://localhost:8080"),');
         writer.writeLine("\t\toption.WithHTTPClient(httpClient),");
         writer.writeLine('\t\toption.WithClientCredentials("test_client_id", "test_client_secret"),');
@@ -391,7 +391,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine('\tcustomHeaders.Set("X-Custom-Header", "custom-value")');
         writer.writeLine('\tcustomHeaders.Set("X-Sandbox-Auth", "sandbox-token-123")');
         writer.newLine();
-        writer.writeLine("\tc := client.NewClient(");
+        writer.writeLine(`\tc := client.${this.context.getClientConstructorName()}(`);
         writer.writeLine('\t\toption.WithBaseURL("http://localhost:8080"),');
         writer.writeLine("\t\toption.WithHTTPClient(httpClient),");
         writer.writeLine('\t\toption.WithClientCredentials("test_client_id", "test_client_secret"),');
@@ -435,7 +435,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine("}");
     }
 
-    private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {
+    private getOAuthClientCredentialsScheme(): FernIr.OAuthScheme | undefined {
         if (this.context.ir.auth == null) {
             return undefined;
         }

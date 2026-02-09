@@ -2,9 +2,9 @@ import { cp, mkdir, readdir, readFile } from "fs/promises";
 import { join } from "path";
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { CliContext } from "../../../cli-context/CliContext";
-import { writeTranslationForProject } from "../writeTranslationForProject";
-import { setupTestProjectFromFixture } from "./test-utils";
+import { CliContext } from "../../../cli-context/CliContext.js";
+import { writeTranslationForProject } from "../writeTranslationForProject.js";
+import { setupTestProjectFromFixture } from "./test-utils.js";
 
 describe("writeTranslationForProject - Integration Tests", () => {
     let outputBaseDir: string;

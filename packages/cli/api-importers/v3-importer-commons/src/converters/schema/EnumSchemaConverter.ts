@@ -1,7 +1,7 @@
 import { Type } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../..";
+import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../../index.js";
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {

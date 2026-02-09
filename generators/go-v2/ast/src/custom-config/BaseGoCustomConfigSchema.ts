@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
-import { moduleConfigSchema } from "./ModuleConfigSchema";
-import { relativePathSchema } from "./RelativePathSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
+import { moduleConfigSchema } from "./ModuleConfigSchema.js";
+import { relativePathSchema } from "./RelativePathSchema.js";
 
 export const baseGoCustomConfigSchema = z.object({
     module: moduleConfigSchema.optional(),

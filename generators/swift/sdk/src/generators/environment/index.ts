@@ -1,1 +1,1 @@
-export * from "./SingleUrlEnvironmentGenerator";
+export * from "./SingleUrlEnvironmentGenerator.js";

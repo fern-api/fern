@@ -1,26 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    FilePropertyArray,
-    FilePropertySingle,
-    FileUploadRequestProperty,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpService,
-    PathParameter,
-    SdkRequest,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
-import { EndpointRequest } from "./request/EndpointRequest";
-import { getEndpointPageReturnType } from "./utils/getEndpointPageReturnType";
-import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
-import { getEndpointReturnZeroValue } from "./utils/getEndpointReturnZeroValue";
-import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { EndpointRequest } from "./request/EndpointRequest.js";
+import { getEndpointPageReturnType } from "./utils/getEndpointPageReturnType.js";
+import { getEndpointRequest } from "./utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
+import { getEndpointReturnZeroValue } from "./utils/getEndpointReturnZeroValue.js";
+import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference.js";
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext;
@@ -34,9 +23,9 @@ export abstract class AbstractEndpointGenerator {
         service,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
     }): EndpointSignatureInfo {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
@@ -74,8 +63,8 @@ export abstract class AbstractEndpointGenerator {
         serviceId,
         endpoint
     }: {
-        serviceId: ServiceId;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        endpoint: FernIr.HttpEndpoint;
     }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
         const service = this.context.getHttpServiceOrThrow(serviceId);
         const includePathParametersInSignature = this.includePathParametersInEndpointSignature({ endpoint });
@@ -108,7 +97,7 @@ export abstract class AbstractEndpointGenerator {
         };
     }
 
-    private getEndpointFileParameters({ endpoint }: { endpoint: HttpEndpoint }): go.Parameter[] {
+    private getEndpointFileParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }): go.Parameter[] {
         const requestBody = endpoint.requestBody;
         if (requestBody == null || this.context.customConfig.inlineFileProperties) {
             return [];
@@ -116,7 +105,7 @@ export abstract class AbstractEndpointGenerator {
         return this.getFileParametersFromRequestBody({ requestBody });
     }
 
-    private getFileParametersFromRequestBody({ requestBody }: { requestBody: HttpRequestBody }): go.Parameter[] {
+    private getFileParametersFromRequestBody({ requestBody }: { requestBody: FernIr.HttpRequestBody }): go.Parameter[] {
         switch (requestBody.type) {
             case "fileUpload":
                 return this.getFileParametersFromFileUpload({ properties: requestBody.properties });
@@ -132,7 +121,7 @@ export abstract class AbstractEndpointGenerator {
     private getFileParametersFromFileUpload({
         properties
     }: {
-        properties: FileUploadRequestProperty[];
+        properties: FernIr.FileUploadRequestProperty[];
     }): go.Parameter[] {
         const fileParameters: go.Parameter[] = [];
         for (const property of properties) {
@@ -150,7 +139,11 @@ export abstract class AbstractEndpointGenerator {
         return fileParameters;
     }
 
-    private getFileParameterFromProperty({ property }: { property: FileUploadRequestProperty.File_ }): go.Parameter {
+    private getFileParameterFromProperty({
+        property
+    }: {
+        property: FernIr.FileUploadRequestProperty.File_;
+    }): go.Parameter {
         const filePropertyType = property.value.type;
         switch (filePropertyType) {
             case "file":
@@ -162,7 +155,7 @@ export abstract class AbstractEndpointGenerator {
         }
     }
 
-    private getSingleFileParameter({ fileProperty }: { fileProperty: FilePropertySingle }): go.Parameter {
+    private getSingleFileParameter({ fileProperty }: { fileProperty: FernIr.FilePropertySingle }): go.Parameter {
         return go.parameter({
             docs: fileProperty.docs,
             type: go.Type.reference(this.context.getIoReaderTypeReference()),
@@ -170,7 +163,7 @@ export abstract class AbstractEndpointGenerator {
         });
     }
 
-    private getFileArrayParameter({ fileProperty }: { fileProperty: FilePropertyArray }): go.Parameter {
+    private getFileArrayParameter({ fileProperty }: { fileProperty: FernIr.FilePropertyArray }): go.Parameter {
         return go.parameter({
             docs: fileProperty.docs,
             type: go.Type.slice(go.Type.reference(this.context.getIoReaderTypeReference())),
@@ -182,7 +175,7 @@ export abstract class AbstractEndpointGenerator {
         endpoint,
         request
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         request: EndpointRequest | undefined;
     }): go.Parameter | undefined {
         if (request == null) {
@@ -199,7 +192,7 @@ export abstract class AbstractEndpointGenerator {
         });
     }
 
-    private includePathParametersInEndpointSignature({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+    private includePathParametersInEndpointSignature({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
         const shape = endpoint.sdkRequest?.shape;
         if (shape == null) {
             return true;
@@ -222,8 +215,8 @@ export abstract class AbstractEndpointGenerator {
         pathParameter,
         includePathParametersInEndpointSignature
     }: {
-        sdkRequest: SdkRequest | undefined;
-        pathParameter: PathParameter;
+        sdkRequest: FernIr.SdkRequest | undefined;
+        pathParameter: FernIr.PathParameter;
         includePathParametersInEndpointSignature: boolean;
     }): string {
         if (sdkRequest == null || includePathParametersInEndpointSignature) {

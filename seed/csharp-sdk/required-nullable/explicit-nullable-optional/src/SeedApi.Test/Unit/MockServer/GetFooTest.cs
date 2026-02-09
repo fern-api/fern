@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -46,7 +46,7 @@ public class GetFooTest : BaseMockServerTest
                 RequiredNullableBaz = "required_nullable_baz",
             }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<Foo>(mockResponse)).UsingDefaults());
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -84,6 +84,6 @@ public class GetFooTest : BaseMockServerTest
                 RequiredNullableBaz = "required_nullable_baz",
             }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<Foo>(mockResponse)).UsingDefaults());
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

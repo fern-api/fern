@@ -27,13 +27,13 @@ import {
     buildReferenceTypeReference,
     buildTypeReference,
     buildUnknownTypeReference
-} from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference";
+} from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { State } from "./State.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema.js";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
+import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference.js";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;

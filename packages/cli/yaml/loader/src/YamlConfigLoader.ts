@@ -1,11 +1,11 @@
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import type { Sourced } from "@fern-api/source";
 import { z } from "zod";
-import { ReferenceResolver } from "./ReferenceResolver";
-import { ValidationIssue } from "./ValidationIssue";
-import type { YamlDocument } from "./YamlDocument";
-import { YamlParser } from "./YamlParser";
-import { YamlSourceResolver } from "./YamlSourceResolver";
+import { ReferenceResolver } from "./ReferenceResolver.js";
+import { ValidationIssue } from "./ValidationIssue.js";
+import type { YamlDocument } from "./YamlDocument.js";
+import { YamlParser } from "./YamlParser.js";
+import { YamlSourceResolver } from "./YamlSourceResolver.js";
 
 export namespace YamlConfigLoader {
     export type Result<T> = Success<T> | Failure;

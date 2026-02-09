@@ -8,7 +8,7 @@ import {
     StringValidationRules
 } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationSuccess } from "./ExampleGenerationResult";
+import { ExampleGenerationSuccess } from "./ExampleGenerationResult.js";
 
 export declare namespace generatePrimitiveExample {
     interface Args {

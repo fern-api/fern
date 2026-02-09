@@ -2,8 +2,8 @@ import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 describe("fern downgrade", () => {
     it("downgrades CLI version in fern.config.json", async () => {

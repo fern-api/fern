@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedOauthClientCredentialsMandatoryAuth;
-using SeedOauthClientCredentialsMandatoryAuth.Core;
+using SeedOauthClientCredentialsMandatoryAuth.Test.Utils;
 
 namespace SeedOauthClientCredentialsMandatoryAuth.Test.Unit.MockServer;
 
@@ -53,10 +53,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 Scope = "scope",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -105,9 +102,6 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 Scope = "read:users",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

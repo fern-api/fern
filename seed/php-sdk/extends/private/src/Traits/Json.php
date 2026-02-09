@@ -31,6 +31,7 @@ trait Json
     public function setRaw(string $value): self
     {
         $this->raw = $value;
+        $this->_setField('raw');
         return $this;
     }
 }

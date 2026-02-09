@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 
@@ -37,6 +37,6 @@ public class ModifyWithInlinePathTest : BaseMockServerTest
         var response = await Client.Endpoints.Params.ModifyWithInlinePathAsync(
             new ModifyResourceAtInlinedPath { Param = "param", Body = "string" }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

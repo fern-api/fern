@@ -1,10 +1,15 @@
 import { GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
-import { ExampleEndpointCall, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { EndpointRequest } from "../request/EndpointRequest";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
 
 export declare namespace GrpcEndpointGenerator {
     export interface Args {

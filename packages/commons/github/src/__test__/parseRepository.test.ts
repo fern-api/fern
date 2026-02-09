@@ -1,4 +1,4 @@
-import { parseRepository } from "../parseRepository";
+import { parseRepository } from "../parseRepository.js";
 
 describe("getLatestTag", () => {
     it("fern-api/fern", async () => {

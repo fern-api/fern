@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedExtraProperties;
-using SeedExtraProperties.Core;
+using SeedExtraProperties.Test.Utils;
 
 namespace SeedExtraProperties.Test.Unit.MockServer;
 
@@ -47,10 +47,7 @@ public class CreateUserTest : BaseMockServerTest
                 Name = "name",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -100,9 +97,6 @@ public class CreateUserTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

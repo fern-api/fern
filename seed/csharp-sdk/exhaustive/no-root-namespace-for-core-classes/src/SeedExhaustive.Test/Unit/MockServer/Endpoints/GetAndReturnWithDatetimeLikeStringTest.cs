@@ -1,7 +1,7 @@
 using System.Globalization;
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
@@ -52,11 +52,7 @@ public class GetAndReturnWithDatetimeLikeStringTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithDatetimeLikeString>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -102,10 +98,6 @@ public class GetAndReturnWithDatetimeLikeStringTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithDatetimeLikeString>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

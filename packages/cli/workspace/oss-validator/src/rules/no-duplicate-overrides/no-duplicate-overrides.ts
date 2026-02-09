@@ -3,8 +3,8 @@ import { relative } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { readFile } from "fs/promises";
 
-import { Rule } from "../../Rule";
-import { ValidationViolation } from "../../ValidationViolation";
+import { Rule } from "../../Rule.js";
+import { ValidationViolation } from "../../ValidationViolation.js";
 
 export const NoDuplicateOverridesRule: Rule = {
     name: "no-duplicate-overrides",

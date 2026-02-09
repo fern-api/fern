@@ -338,7 +338,7 @@ public class UnionWithDuplicateTypes
             );
         }
 
-        public override UnionWithDuplicateTypes? ReadAsPropertyName(
+        public override UnionWithDuplicateTypes ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

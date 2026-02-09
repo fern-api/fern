@@ -1,13 +1,13 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { mapValues } from "lodash-es";
 
-import { IrMigrationContext } from "../../IrMigrationContext";
-import { IrVersions } from "../../ir-versions";
+import { IrMigrationContext } from "../../IrMigrationContext.js";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
+} from "../../types/IrMigration.js";
 
 export const V20_TO_V19_MIGRATION: IrMigration<
     IrVersions.V20.ir.IntermediateRepresentation,

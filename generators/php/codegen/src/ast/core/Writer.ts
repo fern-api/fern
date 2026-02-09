@@ -1,8 +1,8 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
-import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
-import { ClassReference } from "../ClassReference";
-import { GLOBAL_NAMESPACE } from "./Constant";
+import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema.js";
+import { ClassReference } from "../ClassReference.js";
+import { GLOBAL_NAMESPACE } from "./Constant.js";
 
 /* A fully qualified type name _without_ the initial backslash */
 type FullyQualifiedName = string;

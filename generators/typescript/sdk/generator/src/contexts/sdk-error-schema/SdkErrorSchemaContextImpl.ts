@@ -1,12 +1,12 @@
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { CoreUtilities, ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace SdkErrorSchemaContextImpl {
     export interface Init {
@@ -47,7 +47,7 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
         this.errorResolver = errorResolver;
     }
 
-    public getSchemaOfError(errorName: DeclaredErrorName): Zurg.Schema {
+    public getSchemaOfError(errorName: FernIr.DeclaredErrorName): Zurg.Schema {
         const referenceToSchema = this.sdkErrorSchemaDeclarationReferencer
             .getReferenceToError({
                 name: errorName,
@@ -65,14 +65,14 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
         return this.coreUtilities.zurg.lazy(this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema));
     }
 
-    public getGeneratedSdkErrorSchema(errorName: DeclaredErrorName): GeneratedSdkErrorSchema | undefined {
+    public getGeneratedSdkErrorSchema(errorName: FernIr.DeclaredErrorName): GeneratedSdkErrorSchema | undefined {
         return this.sdkErrorSchemaGenerator.generateSdkErrorSchema({
             errorDeclaration: this.errorResolver.getErrorDeclarationFromName(errorName),
             errorName: this.sdkErrorSchemaDeclarationReferencer.getExportedName(errorName)
         });
     }
 
-    public getReferenceToSdkErrorSchema(errorName: DeclaredErrorName): Reference {
+    public getReferenceToSdkErrorSchema(errorName: FernIr.DeclaredErrorName): Reference {
         return this.sdkErrorSchemaDeclarationReferencer.getReferenceToError({
             name: errorName,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),

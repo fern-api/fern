@@ -5,8 +5,8 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { DynamicSnippetsTestGenerator } from "./DynamicSnippetsTestGenerator";
-import { generateDynamicSnippetsTestSuite } from "./generateDynamicSnippetsTestSuite";
+import { DynamicSnippetsTestGenerator } from "./DynamicSnippetsTestGenerator.js";
+import { generateDynamicSnippetsTestSuite } from "./generateDynamicSnippetsTestSuite.js";
 
 export async function generateDynamicSnippetTests({
     context,

@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.Test.Unit.MockServer;
+using SeedMixedFileDirectory.Test.Utils;
 using SeedMixedFileDirectory.User_.Events;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User.Events;
@@ -38,9 +38,6 @@ public class GetMetadataTest : BaseMockServerTest
         var response = await Client.User.Events.Metadata.GetMetadataAsync(
             new GetEventMetadataRequest { Id = "id" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

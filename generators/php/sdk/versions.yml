@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.26.0
+  changelogEntry:
+    - summary: |
+        Add support for explicit nulls in PHP SDKs. Setter methods now mark properties as explicitly set, ensuring that null values are included in JSON serialization when intentionally set via setters. This distinguishes between omitting an optional property and explicitly setting it to null.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 62
+
 - version: 1.25.4
   changelogEntry:
     - summary: |

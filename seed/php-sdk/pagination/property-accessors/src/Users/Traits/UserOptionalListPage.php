@@ -37,6 +37,7 @@ trait UserOptionalListPage
     public function setData(UserOptionalListContainer $value): self
     {
         $this->data = $value;
+        $this->_setField('data');
         return $this;
     }
 
@@ -54,6 +55,7 @@ trait UserOptionalListPage
     public function setNext(?string $value = null): self
     {
         $this->next = $value;
+        $this->_setField('next');
         return $this;
     }
 }

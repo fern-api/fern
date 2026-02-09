@@ -54,6 +54,7 @@ class Movie extends JsonSerializableType
     public function setId(string $value): self
     {
         $this->id = $value;
+        $this->_setField('id');
         return $this;
     }
 
@@ -71,6 +72,7 @@ class Movie extends JsonSerializableType
     public function setTitle(string $value): self
     {
         $this->title = $value;
+        $this->_setField('title');
         return $this;
     }
 
@@ -88,6 +90,7 @@ class Movie extends JsonSerializableType
     public function setRating(float $value): self
     {
         $this->rating = $value;
+        $this->_setField('rating');
         return $this;
     }
 

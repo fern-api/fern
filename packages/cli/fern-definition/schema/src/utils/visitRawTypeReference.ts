@@ -1,8 +1,15 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
-import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas";
-import { RawPrimitiveType } from "./RawPrimitiveType";
+import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas/index.js";
+import { RawPrimitiveType } from "./RawPrimitiveType.js";
 
-export const FernContainerRegex = {
+export const FernContainerRegex: {
+    readonly MAP: RegExp;
+    readonly LIST: RegExp;
+    readonly SET: RegExp;
+    readonly OPTIONAL: RegExp;
+    readonly NULLABLE: RegExp;
+    readonly LITERAL: RegExp;
+} = {
     MAP: /^map<\s*([^,]*)\s*,\s*(.*)\s*>$/,
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,

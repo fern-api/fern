@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { SymbolRegistry } from "../SymbolRegistry";
+import { SymbolRegistry } from "../SymbolRegistry.js";
 
 describe("SymbolRegistry", () => {
     describe("basic functionality", () => {

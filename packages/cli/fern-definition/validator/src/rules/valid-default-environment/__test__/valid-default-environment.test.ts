@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidDefaultEnvironmentRule } from "../valid-default-environment";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidDefaultEnvironmentRule } from "../valid-default-environment.js";
 
 describe("valid-default-environment", () => {
     it("default-env-missing", async () => {

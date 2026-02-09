@@ -1,18 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    CursorPagination,
-    HttpEndpoint,
-    Name,
-    Pagination,
-    RequestProperty,
-    ResponseProperty
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { PaginationInfo } from "../PaginationInfo";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { PaginationInfo } from "../PaginationInfo.js";
 
 const PAGE_REQUEST_VARIABLE_NAME = "pageRequest";
 const PAGE_REQUEST_CURSOR_NAME = `${PAGE_REQUEST_VARIABLE_NAME}.Cursor`;
@@ -27,9 +19,9 @@ export function getPaginationInfo({
     errorDecoder
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     signature: EndpointSignatureInfo;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
     callerReference: go.AstNode;
     errorDecoder: go.CodeBlock | undefined;
 }): PaginationInfo {
@@ -75,12 +67,12 @@ function getPrepareCall({
     errorDecoder
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     signature: EndpointSignatureInfo;
     pageType: go.Type;
     pageRequestType: go.Type;
     pagePropertyFormat: go.AstNode;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
     errorDecoder: go.CodeBlock | undefined;
 }): go.AstNode {
     const pagePropertySetter = getPagePropertySetter({ pagination, pageType, pagePropertyFormat });
@@ -130,7 +122,7 @@ function getReadPageResponse({
     requestPagePropertyFormat
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     signature: EndpointSignatureInfo;
     pageType: go.Type;
     nextPageType: go.Type | undefined;
@@ -185,7 +177,7 @@ function getInitializePager({
     callerReference
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     callerReference: go.AstNode;
 }): go.AstNode {
     return go.codeblock((writer) => {
@@ -201,7 +193,7 @@ function instantiatePager({
     callerReference
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     callerReference: go.AstNode;
 }): go.AstNode {
     const arguments_: go.AstNode[] = [callerReference, go.codeblock("prepareCall"), go.codeblock("readPageResponse")];
@@ -234,7 +226,7 @@ function getCallGetPage({
     pageType,
     requestPagePropertyReference
 }: {
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
 }): go.AstNode {
@@ -250,7 +242,7 @@ function invokeGetPage({
     pageType,
     requestPagePropertyReference
 }: {
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
 }): go.AstNode {
@@ -284,7 +276,7 @@ function getReadPageResponseBody({
     responseType
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     nextPageType: go.Type | undefined;
     responseType: go.Type;
@@ -322,8 +314,8 @@ function getReadPageResponseBodyForCursor({
     responseType
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
-    cursor: CursorPagination;
+    pagination: FernIr.Pagination;
+    cursor: FernIr.CursorPagination;
     pageType: go.Type;
     nextPageType: go.Type | undefined;
     responseType: go.Type;
@@ -368,7 +360,7 @@ function getReadPageResponseBodyForOffset({
     responseType
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     responseType: go.Type;
 }): go.AstNode {
@@ -404,8 +396,8 @@ function getNextCursorSetter({
     cursor
 }: {
     context: SdkGeneratorContext;
-    page: RequestProperty;
-    cursor: ResponseProperty;
+    page: FernIr.RequestProperty;
+    cursor: FernIr.ResponseProperty;
 }): go.AstNode {
     return getResponsePropertySetter({
         context,
@@ -420,7 +412,7 @@ function getNextResultsSetter({
     results
 }: {
     context: SdkGeneratorContext;
-    results: ResponseProperty;
+    results: FernIr.ResponseProperty;
 }): go.AstNode {
     return getResponsePropertySetter({
         context,
@@ -436,7 +428,7 @@ function getResponsePropertySetter({
     dereference
 }: {
     context: SdkGeneratorContext;
-    responseProperty: ResponseProperty;
+    responseProperty: FernIr.ResponseProperty;
     variableName: string;
     dereference?: boolean;
 }): go.AstNode {
@@ -487,7 +479,7 @@ function getPagePropertySetter({
     pageType,
     pagePropertyFormat
 }: {
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     pagePropertyFormat: go.AstNode;
 }): go.AstNode {
@@ -530,7 +522,7 @@ function getPagePropertyInitializer({
     requestPagePropertyReference,
     requestPagePropertyFormat
 }: {
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     requestPagePropertyReference: go.AstNode;
     requestPagePropertyFormat: go.AstNode;
@@ -701,7 +693,7 @@ export function getPageType({
     pagination
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
 }): go.Type {
     switch (pagination.type) {
         case "cursor":
@@ -719,7 +711,7 @@ function getNextPageType({
     pagination
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
 }): go.Type | undefined {
     switch (pagination.type) {
         case "cursor":
@@ -753,7 +745,7 @@ function getPageResponseType({
     responseType
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     responseType: go.Type;
 }): go.Type {
@@ -769,7 +761,7 @@ function getPageResponseTypeReference({
     responseType
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     pageType: go.Type;
     responseType: go.Type;
 }): go.TypeReference {
@@ -785,7 +777,7 @@ function getPageValueFormat({
     pagination
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
 }): go.AstNode {
     switch (pagination.type) {
         case "cursor":
@@ -808,7 +800,7 @@ function getResponseElementType({
     pagination
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
 }): go.Type {
     const converted = context.goTypeMapper.convert({ reference: pagination.results.property.valueType });
     const iterableElement = converted.underlying().iterableElement();
@@ -824,7 +816,7 @@ function getPagePropertyReference({
     withGetter
 }: {
     variableName: string;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     withGetter?: boolean;
 }): go.AstNode {
     switch (pagination.type) {
@@ -848,7 +840,7 @@ function getResponsePropertyReference({
     results,
     withGetter
 }: {
-    results: ResponseProperty;
+    results: FernIr.ResponseProperty;
     withGetter?: boolean;
 }): go.AstNode {
     return getPropertyReference({
@@ -867,8 +859,8 @@ function getPropertyReference({
     dereference
 }: {
     variableName: string;
-    propertyPath: Name[] | undefined;
-    name: Name;
+    propertyPath: FernIr.Name[] | undefined;
+    name: FernIr.Name;
     withGetter?: boolean;
     dereference?: boolean;
 }): go.AstNode {
@@ -886,7 +878,7 @@ function getPropertyNilCheckCondition({
     propertyPath
 }: {
     variableName: string;
-    propertyPath: Name[];
+    propertyPath: FernIr.Name[];
 }): go.AstNode {
     const checks = propertyPath.map((_, index) => {
         const pathSegment = propertyPath
@@ -935,7 +927,7 @@ function encodeQuery({ writer }: { writer: go.Writer }): void {
     writer.writeLine("}");
 }
 
-function getPropertyAccessor({ name, withGetter }: { name: Name; withGetter?: boolean }): string {
+function getPropertyAccessor({ name, withGetter }: { name: FernIr.Name; withGetter?: boolean }): string {
     if (withGetter) {
         return `Get${name.pascalCase.unsafeName}()`;
     }

@@ -1,28 +1,28 @@
 import {
-    AllOfPropertyConflict,
-    Availability,
-    Encoding,
-    NamedFullExample,
-    ObjectPropertyConflictInfo,
-    ObjectPropertyWithExample,
-    ReferencedSchema,
-    SchemaId,
+    type AllOfPropertyConflict,
+    type Availability,
+    type Encoding,
+    type NamedFullExample,
+    type ObjectPropertyConflictInfo,
+    type ObjectPropertyWithExample,
+    type ReferencedSchema,
+    type SchemaId,
     SchemaWithExample,
-    SdkGroupName,
-    Source
+    type SdkGroupName,
+    type Source
 } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+import type { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../getExtension";
-import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
-import { convertAvailability } from "./convertAvailability";
-import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
-import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
-import { getGeneratedPropertyName } from "./utils/getSchemaName";
-import { isReferenceObject } from "./utils/isReferenceObject";
-import { isSchemaWithExampleEqual } from "./utils/isSchemaWithExampleEqual";
+import { getExtension } from "../getExtension.js";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
+import { isAdditionalPropertiesAny } from "./convertAdditionalProperties.js";
+import { convertAvailability } from "./convertAvailability.js";
+import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas.js";
+import type { SchemaParserContext } from "./SchemaParserContext.js";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
+import { getGeneratedPropertyName } from "./utils/getSchemaName.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
+import { isSchemaWithExampleEqual } from "./utils/isSchemaWithExampleEqual.js";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;
@@ -144,7 +144,8 @@ export function convertObject({
                     allOfElement,
                     [schemaId],
                     source,
-                    context.options.preserveSchemaIds
+                    context.options.preserveSchemaIds,
+                    context
                 ),
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });

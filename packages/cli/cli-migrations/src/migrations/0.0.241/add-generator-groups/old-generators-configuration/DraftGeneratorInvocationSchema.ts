@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { BaseGeneratorInvocationSchema } from "./BaseGeneratorInvocationSchema";
+import { BaseGeneratorInvocationSchema } from "./BaseGeneratorInvocationSchema.js";
 
 export const DraftGeneratorInvocationSchema = BaseGeneratorInvocationSchema.extend({
     mode: z.union([z.literal("publish"), z.literal("download-files")]),

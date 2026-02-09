@@ -1,25 +1,14 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    EndpointReference,
-    HttpEndpoint,
-    HttpService,
-    NameAndWireValue,
-    OAuthScheme,
-    ObjectProperty,
-    PropertyPathItem,
-    RequestProperty,
-    ResponseProperty
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
-        scheme: OAuthScheme;
+        scheme: FernIr.OAuthScheme;
         context: SdkGeneratorContext;
     }
 }
@@ -28,10 +17,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     private static readonly CLASS_NAME = "OAuthTokenProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
 
-    private scheme: OAuthScheme;
-    private tokenEndpointHttpService: HttpService;
-    private tokenEndpointReference: EndpointReference;
-    private tokenEndpoint: HttpEndpoint;
+    private scheme: FernIr.OAuthScheme;
+    private tokenEndpointHttpService: FernIr.HttpService;
+    private tokenEndpointReference: FernIr.EndpointReference;
+    private tokenEndpoint: FernIr.HttpEndpoint;
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
@@ -286,7 +275,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         return undefined;
     }
 
-    private getRequestPropertyName(requestProperty: RequestProperty): string {
+    private getRequestPropertyName(requestProperty: FernIr.RequestProperty): string {
         return requestProperty.property.name.name.camelCase.unsafeName;
     }
 
@@ -340,11 +329,11 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         return this.context.getEndpointMethodName(this.tokenEndpoint);
     }
 
-    private getPropertyName(name: NameAndWireValue): string {
+    private getPropertyName(name: FernIr.NameAndWireValue): string {
         return name.name.camelCase.unsafeName;
     }
 
-    private getResponsePropertyAccess(responseProperty: ResponseProperty): string {
+    private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
         const propertyPath = responseProperty.propertyPath ?? [];
         const parts = [
             ...propertyPath.map((p) => this.getPropertyPathItemAccess(p)),
@@ -353,11 +342,11 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         return parts.join("");
     }
 
-    private getPropertyPathItemAccess(pathItem: PropertyPathItem): string {
+    private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
         return `->${pathItem.name.camelCase.safeName}`;
     }
 
-    private getObjectPropertyAccess(property: ObjectProperty): string {
+    private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
         return `->${property.name.name.camelCase.safeName}`;
     }
 }

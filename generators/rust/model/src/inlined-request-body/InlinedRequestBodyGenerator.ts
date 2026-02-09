@@ -1,21 +1,12 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 
-import {
-    ContainerType,
-    HttpEndpoint,
-    HttpRequestBody,
-    IntermediateRepresentation,
-    ObjectProperty,
-    QueryParameter,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { RequestGenerator } from "./RequestGenerator";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { RequestGenerator } from "./RequestGenerator.js";
 
 export class InlinedRequestBodyGenerator {
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly context: ModelGeneratorContext;
 
     public constructor(context: ModelGeneratorContext) {
@@ -42,14 +33,14 @@ export class InlinedRequestBodyGenerator {
     }
 
     private isInlinedRequestBody(
-        requestBody: HttpRequestBody | undefined
-    ): requestBody is HttpRequestBody.InlinedRequestBody {
+        requestBody: FernIr.HttpRequestBody | undefined
+    ): requestBody is FernIr.HttpRequestBody.InlinedRequestBody {
         return requestBody?.type === "inlinedRequestBody";
     }
 
     private generateInlinedRequestBodyFile(
-        requestBody: HttpRequestBody.InlinedRequestBody,
-        endpoint: HttpEndpoint
+        requestBody: FernIr.HttpRequestBody.InlinedRequestBody,
+        endpoint: FernIr.HttpEndpoint
     ): RustFile | null {
         try {
             const filename = this.context.getFilenameForInlinedRequestBody(endpoint.id);
@@ -90,12 +81,12 @@ export class InlinedRequestBodyGenerator {
     }
 
     // Helper method to convert query parameters to object properties
-    private convertQueryParametersToProperties(queryParams: QueryParameter[]): ObjectProperty[] {
+    private convertQueryParametersToProperties(queryParams: FernIr.QueryParameter[]): FernIr.ObjectProperty[] {
         return queryParams.map((queryParam) => {
             // For allow-multiple query params, wrap the type in a list using proper IR constructors
             let valueType = queryParam.valueType;
             if (queryParam.allowMultiple) {
-                valueType = TypeReference.container(ContainerType.list(queryParam.valueType));
+                valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
             }
 
             return {

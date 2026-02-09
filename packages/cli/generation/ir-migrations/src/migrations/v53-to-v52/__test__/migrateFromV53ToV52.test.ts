@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
-import { V53_TO_V52_MIGRATION } from "../migrateFromV53ToV52";
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester.js";
+import { V53_TO_V52_MIGRATION } from "../migrateFromV53ToV52.js";
 
 const runMigration = createMigrationTester(V53_TO_V52_MIGRATION);
 

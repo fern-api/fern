@@ -6,7 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_paymentSessions",
@@ -36,7 +36,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "documents",
       "pointsTo": undefined,
       "subpackageId": "subpackage_documents",
@@ -44,6 +44,7 @@
       "types": [],
       "webhooks": [
         {
+          "availability": "Beta",
           "description": "Webhook triggered when a document is uploaded via multipart form",
           "examples": [
             {
@@ -216,7 +217,7 @@
       "description": undefined,
       "displayName": undefined,
       "endpoints": [],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "paymentSessions",
       "pointsTo": undefined,
       "subpackageId": "subpackage_paymentSessions",
@@ -224,6 +225,7 @@
       "types": [],
       "webhooks": [
         {
+          "availability": "Deprecated",
           "description": "Webhook triggered when a payment session is completed",
           "examples": [
             {

@@ -8,14 +8,14 @@ import type * as SeedNullableOptional from "../../../index.js";
 export interface DeserializationTestRequest {
     requiredString: string;
     nullableString: string | null;
-    optionalString?: string;
-    optionalNullableString?: string | null;
+    optionalString?: string | undefined;
+    optionalNullableString?: (string | null) | undefined;
     nullableEnum: SeedNullableOptional.UserRole | null;
-    optionalEnum?: SeedNullableOptional.UserStatus;
+    optionalEnum?: SeedNullableOptional.UserStatus | undefined;
     nullableUnion: SeedNullableOptional.NotificationMethod | null;
-    optionalUnion?: SeedNullableOptional.SearchResult;
+    optionalUnion?: SeedNullableOptional.SearchResult | undefined;
     nullableList: string[] | null;
     nullableMap: Record<string, number> | null;
     nullableObject: SeedNullableOptional.Address | null;
-    optionalObject?: SeedNullableOptional.Organization;
+    optionalObject?: SeedNullableOptional.Organization | undefined;
 }

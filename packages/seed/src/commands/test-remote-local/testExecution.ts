@@ -2,7 +2,7 @@ import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { cp, mkdir, rm, stat, writeFile } from "fs/promises";
 import path from "path";
-import { getGithubConfig, getPackageOutputConfig, loadCustomConfig, writeGeneratorsYml } from "./configuration";
+import { getGithubConfig, getPackageOutputConfig, loadCustomConfig, writeGeneratorsYml } from "./configuration.js";
 import {
     DEFINITION_DIRECTORY_NAME,
     DIFF_COMMAND,
@@ -20,9 +20,9 @@ import {
     MSG_OUTPUTS_DIFFER,
     MSG_OUTPUTS_MATCH,
     TEST_DEFINITIONS_RELATIVE_PATH
-} from "./constants";
-import { runGeneration } from "./generation";
-import type { GenerationResult, GenerationResultSuccess, RemoteVsLocalTestCase, TestCaseResult } from "./types";
+} from "./constants.js";
+import { runGeneration } from "./generation.js";
+import type { GenerationResult, GenerationResultSuccess, RemoteVsLocalTestCase, TestCaseResult } from "./types.js";
 
 export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<TestCaseResult> {
     const { generator, fixture, outputMode, localGeneratorVersions, remoteGeneratorVersions, context } = testCase;

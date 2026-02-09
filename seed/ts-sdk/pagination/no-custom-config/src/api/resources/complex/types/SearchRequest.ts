@@ -3,7 +3,7 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface SearchRequest {
-    pagination?: SeedPagination.StartingAfterPaging;
+    pagination?: SeedPagination.StartingAfterPaging | undefined;
     query: SearchRequest.Query;
 }
 

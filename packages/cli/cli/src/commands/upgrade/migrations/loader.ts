@@ -6,7 +6,7 @@ import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
 
-import { Migration, MigrationModule, MigratorResult } from "./types";
+import { Migration, MigrationModule, MigratorResult } from "./types.js";
 
 /**
  * The unified migration package name.
