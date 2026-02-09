@@ -345,9 +345,9 @@ describe("generate()", () => {
                                             basePath: "pkg.types.Config"
                                         },
                                         default: undefined,
-                                        docstring: undefined,
-                                        isRequired: true
-                                    } as FdrAPI.libraryDocs.ParameterIr
+                                        description: undefined,
+                                        kind: "POSITIONAL" as const
+                                    } satisfies FdrAPI.libraryDocs.PythonParameterIr
                                 ]
                             })
                         ]
