@@ -5036,6 +5036,9 @@
                     "audiences": [
                         "external"
                     ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -5064,6 +5067,9 @@
                         "internal",
                         "development"
                     ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": "This staging environment is helpful for testing!"
                 }
             ]

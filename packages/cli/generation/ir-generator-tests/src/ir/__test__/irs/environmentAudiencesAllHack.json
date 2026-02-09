@@ -3877,6 +3877,9 @@
                     },
                     "url": "https://www.yoursite.com",
                     "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -3902,6 +3905,9 @@
                     },
                     "url": "https://www.staging.yoursite.com",
                     "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

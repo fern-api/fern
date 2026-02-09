@@ -4548,6 +4548,9 @@
                     "audiences": [
                         "public"
                     ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -4575,6 +4578,9 @@
                     "audiences": [
                         "private"
                     ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

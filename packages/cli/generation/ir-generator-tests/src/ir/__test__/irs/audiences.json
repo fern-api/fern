@@ -1271,6 +1271,9 @@
                     "audiences": [
                         "external"
                     ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]
