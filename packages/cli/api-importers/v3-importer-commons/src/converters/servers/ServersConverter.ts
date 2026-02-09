@@ -7,9 +7,8 @@ import {
     SingleBaseUrlEnvironment
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { ServerNameExtension } from "../../extensions/x-fern-server-name";
+import { ServerNameExtension } from "../../extensions/x-fern-server-name.js";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 
 const DEFAULT_BASE_URL_ID = "Base";
 const X_FERN_DEFAULT_URL = "x-fern-default-url";

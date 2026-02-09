@@ -1,4 +1,4 @@
-import { SourcedNullish } from "./Sourced";
+import { SourcedNullish } from "./Sourced.js";
 
 /**
  * Type guard that checks if a sourced value is nullish (null, undefined, or SourcedNullish).

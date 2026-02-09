@@ -1,20 +1,20 @@
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
-import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { EndpointMethodGenerator } from "./EndpointMethodGenerator.js";
 
 export declare namespace SubClientGenerator {
     interface Args {
         symbol: swift.Symbol;
-        subpackage: Subpackage;
+        subpackage: FernIr.Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SubClientGenerator {
     private readonly symbol: swift.Symbol;
-    private readonly subpackage: Subpackage;
+    private readonly subpackage: FernIr.Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly referencer: Referencer;

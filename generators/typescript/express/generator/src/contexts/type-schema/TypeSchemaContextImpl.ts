@@ -1,4 +1,4 @@
-import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     CoreUtilities,
     ExportsManager,
@@ -16,8 +16,8 @@ import {
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { SourceFile, ts } from "ts-morph";
 
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace TypeSchemaContextImpl {
     export interface Init {
@@ -112,7 +112,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         this.retainOriginalCasing = retainOriginalCasing;
     }
 
-    public getGeneratedTypeSchema(typeName: DeclaredTypeName): GeneratedTypeSchema {
+    public getGeneratedTypeSchema(typeName: FernIr.DeclaredTypeName): GeneratedTypeSchema {
         const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         const examples = typeDeclaration.userProvidedExamples;
         if (examples.length === 0) {
@@ -158,11 +158,11 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
     }
 
-    public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
+    public getReferenceToRawType(typeReference: FernIr.TypeReference): TypeReferenceNode {
         return this.typeReferenceToRawTypeNodeConverter.convert({ typeReference });
     }
 
-    public getReferenceToRawNamedType(typeName: DeclaredTypeName): Reference {
+    public getReferenceToRawNamedType(typeName: FernIr.DeclaredTypeName): Reference {
         return this.typeSchemaDeclarationReferencer.getReferenceToType({
             name: typeName,
             importStrategy: getSchemaImportStrategy({
@@ -177,7 +177,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
     }
 
-    private generateForInlineUnion(typeName: DeclaredTypeName): {
+    private generateForInlineUnion(typeName: FernIr.DeclaredTypeName): {
         typeNode: ts.TypeNode;
         requestTypeNode: ts.TypeNode | undefined;
         responseTypeNode: ts.TypeNode | undefined;
@@ -185,12 +185,12 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         throw new Error("Inline unions are not supported in Express Schemas");
     }
 
-    public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
+    public getSchemaOfTypeReference(typeReference: FernIr.TypeReference): Zurg.Schema {
         return this.typeReferenceToSchemaConverter.convert({ typeReference });
     }
 
     public getSchemaOfNamedType(
-        typeName: DeclaredTypeName,
+        typeName: FernIr.DeclaredTypeName,
         { isGeneratingSchema }: { isGeneratingSchema: boolean }
     ): Zurg.Schema {
         const referenceToSchema = this.typeSchemaDeclarationReferencer
@@ -215,9 +215,9 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         return schema;
     }
 
-    private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: DeclaredTypeName): Zurg.Schema {
+    private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: FernIr.DeclaredTypeName): Zurg.Schema {
         const resolvedType = this.context.type.resolveTypeName(typeName);
-        return resolvedType.type === "named" && resolvedType.shape === ShapeType.Object
+        return resolvedType.type === "named" && resolvedType.shape === FernIr.ShapeType.Object
             ? this.coreUtilities.zurg.lazyObject(schema)
             : this.coreUtilities.zurg.lazy(schema);
     }

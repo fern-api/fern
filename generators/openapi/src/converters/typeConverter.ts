@@ -1,27 +1,8 @@
-import {
-    AliasTypeDeclaration,
-    ContainerType,
-    DeclaredTypeName,
-    EnumTypeDeclaration,
-    ExampleEndpointSuccessResponse,
-    ExampleObjectProperty,
-    ExampleRequestBody,
-    ExampleType,
-    IntermediateRepresentation,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    PrimitiveTypeV2,
-    SingleUnionTypeProperties,
-    Type,
-    TypeDeclaration,
-    TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 
-import { convertObject } from "./convertObject";
+import { convertObject } from "./convertObject.js";
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema;
@@ -30,10 +11,13 @@ export interface ConvertedType {
 
 export type OpenApiComponentSchema = OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
 
-export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRepresentation): ConvertedType {
+export function convertType(
+    typeDeclaration: FernIr.TypeDeclaration,
+    ir: FernIr.IntermediateRepresentation
+): ConvertedType {
     const shape = typeDeclaration.shape;
     const docs = typeDeclaration.docs ?? undefined;
-    const openApiSchema = Type._visit<OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>(shape, {
+    const openApiSchema = FernIr.Type._visit<OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>(shape, {
         alias: (aliasTypeDeclaration) => {
             return convertAlias({ aliasTypeDeclaration, docs });
         },
@@ -41,7 +25,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
             return convertEnum({ enumTypeDeclaration, docs });
         },
         object: (objectTypeDeclaration) => {
-            const exampleType: ExampleType | undefined = typeDeclaration.userProvidedExamples[0];
+            const exampleType: FernIr.ExampleType | undefined = typeDeclaration.userProvidedExamples[0];
             const exampleTypeFromEndpointRequest =
                 exampleType == null ? getExampleFromEndpointRequest(ir, typeDeclaration.name) : undefined;
             const exampleTypeFromEndpointResponse =
@@ -51,7 +35,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
 
             return convertObject({
                 properties: objectTypeDeclaration.properties.map((property) => {
-                    let exampleProperty: ExampleObjectProperty | undefined = undefined;
+                    let exampleProperty: FernIr.ExampleObjectProperty | undefined = undefined;
                     if (exampleType != null && exampleType.shape.type === "object") {
                         exampleProperty = exampleType.shape.properties.find((example) => {
                             return example.name.wireValue === property.name.wireValue;
@@ -112,7 +96,7 @@ export function convertAlias({
     aliasTypeDeclaration,
     docs
 }: {
-    aliasTypeDeclaration: AliasTypeDeclaration;
+    aliasTypeDeclaration: FernIr.AliasTypeDeclaration;
     docs: string | undefined;
 }): OpenApiComponentSchema {
     const convertedAliasOf = convertTypeReference(aliasTypeDeclaration.aliasOf);
@@ -126,7 +110,7 @@ export function convertEnum({
     enumTypeDeclaration,
     docs
 }: {
-    enumTypeDeclaration: EnumTypeDeclaration;
+    enumTypeDeclaration: FernIr.EnumTypeDeclaration;
     docs: string | undefined;
 }): OpenAPIV3.SchemaObject {
     return {
@@ -142,7 +126,7 @@ export function convertUnion({
     unionTypeDeclaration,
     docs
 }: {
-    unionTypeDeclaration: UnionTypeDeclaration;
+    unionTypeDeclaration: FernIr.UnionTypeDeclaration;
     docs: string | undefined;
 }): OpenAPIV3.SchemaObject {
     const oneOfTypes: OpenAPIV3.SchemaObject[] = unionTypeDeclaration.types.map((singleUnionType) => {
@@ -152,7 +136,7 @@ export function convertUnion({
                 enum: [singleUnionType.discriminantValue.wireValue]
             }
         };
-        return SingleUnionTypeProperties._visit<OpenAPIV3.SchemaObject>(singleUnionType.shape, {
+        return FernIr.SingleUnionTypeProperties._visit<OpenAPIV3.SchemaObject>(singleUnionType.shape, {
             noProperties: () => ({
                 type: "object",
                 properties: discriminantProperty,
@@ -212,7 +196,7 @@ export function convertUndiscriminatedUnion({
     undiscriminatedUnionDeclaration,
     docs
 }: {
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
+    undiscriminatedUnionDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration;
     docs: string | undefined;
 }): OpenAPIV3.SchemaObject {
     return {
@@ -224,8 +208,8 @@ export function convertUndiscriminatedUnion({
     };
 }
 
-export function convertTypeReference(typeReference: TypeReference): OpenApiComponentSchema {
-    return TypeReference._visit(typeReference, {
+export function convertTypeReference(typeReference: FernIr.TypeReference): OpenApiComponentSchema {
+    return FernIr.TypeReference._visit(typeReference, {
         container: (containerType) => {
             return convertContainerType(containerType);
         },
@@ -246,10 +230,10 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
     });
 }
 
-function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArraySchemaObject {
+function convertPrimitiveType(primitiveType: FernIr.PrimitiveType): OpenAPIV3.NonArraySchemaObject {
     if (primitiveType.v2 == null) {
         return (
-            PrimitiveTypeV1._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v1, {
+            FernIr.PrimitiveTypeV1._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v1, {
                 boolean: () => {
                     return { type: "boolean" };
                 },
@@ -327,7 +311,7 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
             }) ?? {}
         );
     }
-    return PrimitiveTypeV2._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v2, {
+    return FernIr.PrimitiveTypeV2._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v2, {
         boolean: () => {
             return { type: "boolean" };
         },
@@ -412,8 +396,8 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
     });
 }
 
-function convertContainerType(containerType: ContainerType): OpenApiComponentSchema {
-    return ContainerType._visit<OpenApiComponentSchema>(containerType, {
+function convertContainerType(containerType: FernIr.ContainerType): OpenApiComponentSchema {
+    return FernIr.ContainerType._visit<OpenApiComponentSchema>(containerType, {
         list: (listType) => {
             return {
                 type: "array",
@@ -471,11 +455,11 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
     });
 }
 
-export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
+export function getReferenceFromDeclaredTypeName(declaredTypeName: FernIr.DeclaredTypeName): string {
     return `#/components/schemas/${getNameFromDeclaredTypeName(declaredTypeName)}`;
 }
 
-export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
+export function getNameFromDeclaredTypeName(declaredTypeName: FernIr.DeclaredTypeName): string {
     return [
         ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
         declaredTypeName.name.originalName
@@ -483,9 +467,9 @@ export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName):
 }
 
 function getExampleFromEndpointRequest(
-    ir: IntermediateRepresentation,
-    declaredTypeName: DeclaredTypeName
-): ExampleRequestBody | undefined {
+    ir: FernIr.IntermediateRepresentation,
+    declaredTypeName: FernIr.DeclaredTypeName
+): FernIr.ExampleRequestBody | undefined {
     for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
             if (endpoint.userSpecifiedExamples.length <= 0) {
@@ -504,9 +488,9 @@ function getExampleFromEndpointRequest(
 }
 
 function getExampleFromEndpointResponse(
-    ir: IntermediateRepresentation,
-    declaredTypeName: DeclaredTypeName
-): ExampleEndpointSuccessResponse | undefined {
+    ir: FernIr.IntermediateRepresentation,
+    declaredTypeName: FernIr.DeclaredTypeName
+): FernIr.ExampleEndpointSuccessResponse | undefined {
     for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
             if (endpoint.userSpecifiedExamples.length <= 0 || endpoint.response?.body?.type !== "json") {
@@ -528,6 +512,6 @@ function getExampleFromEndpointResponse(
     return undefined;
 }
 
-function areDeclaredTypeNamesEqual(one: DeclaredTypeName, two: DeclaredTypeName): boolean {
+function areDeclaredTypeNamesEqual(one: FernIr.DeclaredTypeName, two: FernIr.DeclaredTypeName): boolean {
     return isEqual(one.fernFilepath, two.fernFilepath) && isEqual(one.name, two.name);
 }

@@ -2,8 +2,8 @@ import { LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { runCommands } from "../../utils/publishUtilities";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { runCommands } from "../../utils/publishUtilities.js";
 
 export async function buildGeneratorImage({
     generator,

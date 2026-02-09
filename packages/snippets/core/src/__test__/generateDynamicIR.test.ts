@@ -1,6 +1,6 @@
 import { OpenAPI } from "openapi-types";
 
-import { generateDynamicIR } from "../generateDynamicIR";
+import { generateDynamicIR } from "../generateDynamicIR.js";
 
 describe("generateDynamicIR", () => {
     it("go", async () => {

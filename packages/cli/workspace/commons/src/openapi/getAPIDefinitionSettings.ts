@@ -2,7 +2,7 @@ import { generatorsYml } from "@fern-api/configuration";
 import { type ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { type ConvertOpenAPIOptions } from "@fern-api/openapi-ir-to-fern";
 
-import { getOpenAPISettings, type OpenAPISettings } from "./OpenAPISettings";
+import { getOpenAPISettings, type OpenAPISettings } from "./OpenAPISettings.js";
 
 /**
  * Combined settings for OpenAPI/AsyncAPI parsing and conversion.
@@ -59,7 +59,8 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     coerceOptionalSchemasToNullable: "coerceOptionalSchemasToNullable",
     removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas",
     defaultIntegerFormat: "defaultIntegerFormat",
-    pathParameterOrder: "pathParameterOrder"
+    pathParameterOrder: "pathParameterOrder",
+    resolveSchemaCollisions: "resolveSchemaCollisions"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

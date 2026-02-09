@@ -1,8 +1,8 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Decorator } from "./Decorator";
-import { Field } from "./Field";
-import { Reference } from "./Reference";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Decorator } from "./Decorator.js";
+import { Field } from "./Field.js";
+import { Reference } from "./Reference.js";
 
 export declare namespace Class {
     interface Args {

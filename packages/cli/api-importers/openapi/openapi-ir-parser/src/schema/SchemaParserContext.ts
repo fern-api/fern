@@ -2,7 +2,7 @@ import type { Logger } from "@fern-api/logger";
 import type { SchemaId, SdkGroupName } from "@fern-api/openapi-ir";
 import type { OpenAPIV3 } from "openapi-types";
 
-import type { ParseOpenAPIOptions } from "../options";
+import type { ParseOpenAPIOptions } from "../options.js";
 
 export interface SchemaParserContext {
     logger: Logger;

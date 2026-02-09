@@ -8,8 +8,8 @@ import {
 } from "@fern-api/ir-sdk";
 import { mapValues, pickBy } from "lodash-es";
 
-import { FilteredIr } from "./FilteredIr";
-import { filterEndpointExample, filterExampleType } from "./filterExamples";
+import { FilteredIr } from "./FilteredIr.js";
+import { filterEndpointExample, filterExampleType } from "./filterExamples.js";
 
 export function filterIntermediateRepresentationForAudiences(
     intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">,

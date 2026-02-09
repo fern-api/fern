@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { RuleContext } from "../../../Rule";
-import { NoNonComponentRefsRule } from "../no-non-component-refs";
+import type { RuleContext } from "../../../Rule.js";
+import { NoNonComponentRefsRule } from "../no-non-component-refs.js";
 
 describe("NoNonComponentRefsRule", () => {
     it("should be defined and have correct name", () => {

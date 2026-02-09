@@ -4,7 +4,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
 import { rust } from "@fern-api/rust-codegen";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 
 const CLIENT_VAR_NAME = "client";
 

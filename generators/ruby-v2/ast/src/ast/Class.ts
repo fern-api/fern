@@ -1,10 +1,10 @@
-import { ClassReference } from "./ClassReference";
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Method, MethodKind } from "./Method";
-import { Module_ } from "./Module";
-import { Type } from "./Type";
+import { ClassReference } from "./ClassReference.js";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Method, MethodKind } from "./Method.js";
+import { Module_ } from "./Module.js";
+import { Type } from "./Type.js";
 
 export declare namespace Class_ {
     export interface Args extends Module_.Args {

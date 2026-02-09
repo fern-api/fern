@@ -1,10 +1,10 @@
 import type { Argv } from "yargs";
-import { ApiChecker } from "../../api/checker/ApiChecker";
-import type { Context } from "../../context/Context";
-import type { GlobalArgs } from "../../context/GlobalArgs";
-import { CliError } from "../../errors/CliError";
-import type { Workspace } from "../../workspace/Workspace";
-import { command } from "../_internal/command";
+import { ApiChecker } from "../../api/checker/ApiChecker.js";
+import type { Context } from "../../context/Context.js";
+import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { CliError } from "../../errors/CliError.js";
+import type { Workspace } from "../../workspace/Workspace.js";
+import { command } from "../_internal/command.js";
 
 export declare namespace CheckCommand {
     export interface Args extends GlobalArgs {

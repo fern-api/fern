@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { swift } from "../../..";
+import { swift } from "../../../index.js";
 
 describe("Statement.switch", () => {
     describe("write", () => {

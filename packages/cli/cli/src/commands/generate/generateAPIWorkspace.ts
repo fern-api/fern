@@ -7,15 +7,16 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
-import { GROUP_CLI_OPTION } from "../../constants";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
-import { GenerationMode } from "./generateAPIWorkspaces";
+import { GROUP_CLI_OPTION } from "../../constants.js";
+import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues.js";
+import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
     organization,
@@ -92,7 +93,8 @@ export async function generateWorkspace({
     await validateAPIWorkspaceAndLogIssues({
         workspace: await workspace.toFernWorkspace({ context }),
         context,
-        logWarnings: false
+        logWarnings: false,
+        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
     });
 
     // Run generation for all resolved groups in parallel

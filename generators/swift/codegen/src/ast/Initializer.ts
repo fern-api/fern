@@ -1,8 +1,8 @@
-import { AccessLevel } from "./AccessLevel";
-import { CodeBlock } from "./CodeBlock";
-import { AstNode, Writer } from "./core";
-import { DocComment } from "./DocComment";
-import { FunctionParameter } from "./FunctionParameter";
+import { AccessLevel } from "./AccessLevel.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { AstNode, Writer } from "./core/index.js";
+import { DocComment } from "./DocComment.js";
+import { FunctionParameter } from "./FunctionParameter.js";
 
 export declare namespace Initializer {
     interface Args {

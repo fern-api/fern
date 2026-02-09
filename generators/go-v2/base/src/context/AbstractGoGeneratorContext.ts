@@ -6,28 +6,12 @@ import {
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
-import {
-    EnumTypeDeclaration,
-    ErrorDeclaration,
-    ErrorId,
-    FernFilepath,
-    HttpService,
-    IntermediateRepresentation,
-    Literal,
-    Name,
-    PrimitiveTypeV1,
-    ServiceId,
-    Subpackage,
-    SubpackageId,
-    TypeDeclaration,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { GoProject } from "../project/GoProject";
-import { GoFieldMapper } from "./GoFieldMapper";
-import { GoTypeMapper } from "./GoTypeMapper";
-import { GoValueFormatter } from "./GoValueFormatter";
-import { GoZeroValueMapper } from "./GoZeroValueMapper";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { GoProject } from "../project/GoProject.js";
+import { GoFieldMapper } from "./GoFieldMapper.js";
+import { GoTypeMapper } from "./GoTypeMapper.js";
+import { GoValueFormatter } from "./GoValueFormatter.js";
+import { GoZeroValueMapper } from "./GoZeroValueMapper.js";
 
 export interface FileLocation {
     importPath: string;
@@ -45,7 +29,7 @@ export abstract class AbstractGoGeneratorContext<
     public readonly goZeroValueMapper: GoZeroValueMapper;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -62,7 +46,7 @@ export abstract class AbstractGoGeneratorContext<
         });
     }
 
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+    public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
             throw new Error(`Service with id ${serviceId} not found`);
@@ -70,15 +54,15 @@ export abstract class AbstractGoGeneratorContext<
         return service;
     }
 
-    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
+    public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error(`Subpackage with id ${subpackageId} not found`);
+            throw new Error(`FernIr.Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
     }
 
-    public getErrorDeclarationOrThrow(errorId: ErrorId): ErrorDeclaration {
+    public getErrorDeclarationOrThrow(errorId: FernIr.ErrorId): FernIr.ErrorDeclaration {
         const errorDeclaration = this.ir.errors[errorId];
         if (errorDeclaration == null) {
             throw new Error(`Error declaration with id ${errorId} not found`);
@@ -86,19 +70,19 @@ export abstract class AbstractGoGeneratorContext<
         return errorDeclaration;
     }
 
-    public getClassName(name: Name): string {
+    public getClassName(name: FernIr.Name): string {
         return name.pascalCase.unsafeName;
     }
 
-    public getPackageName(name: Name): string {
+    public getPackageName(name: FernIr.Name): string {
         return name.snakeCase.unsafeName.toLowerCase();
     }
 
-    public getFilename(name: Name): string {
+    public getFilename(name: FernIr.Name): string {
         return name.snakeCase.unsafeName;
     }
 
-    public getReceiverName(name: Name): string {
+    public getReceiverName(name: FernIr.Name): string {
         return name.camelCase.unsafeName.charAt(0).toLowerCase();
     }
 
@@ -125,15 +109,15 @@ export abstract class AbstractGoGeneratorContext<
         return `${this.rootImportPath}/option`;
     }
 
-    public getFieldName(name: Name): string {
+    public getFieldName(name: FernIr.Name): string {
         return goExportedFieldName(name.pascalCase.unsafeName);
     }
 
-    public getLiteralFieldName(name: Name): string {
+    public getLiteralFieldName(name: FernIr.Name): string {
         return name.camelCase.safeName;
     }
 
-    public getParameterName(name: Name): string {
+    public getParameterName(name: FernIr.Name): string {
         return name.camelCase.safeName;
     }
 
@@ -269,7 +253,7 @@ export abstract class AbstractGoGeneratorContext<
         });
     }
 
-    public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
+    public maybeUnwrapIterable(typeReference: FernIr.TypeReference): FernIr.TypeReference | undefined {
         switch (typeReference.type) {
             case "container": {
                 const container = typeReference.container;
@@ -313,7 +297,7 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
-    public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
+    public maybeUnwrapOptionalOrNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference | undefined {
         switch (typeReference.type) {
             case "container": {
                 const container = typeReference.container;
@@ -348,7 +332,7 @@ export abstract class AbstractGoGeneratorContext<
      * Container types like lists, maps, and sets are already nil-able, so they
      * don't require a dereference prefix.
      */
-    public needsOptionalDereference(typeReference: TypeReference): boolean {
+    public needsOptionalDereference(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
@@ -393,11 +377,11 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
-    public getLiteralAsString(literal: Literal): string {
+    public getLiteralAsString(literal: FernIr.Literal): string {
         return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
     }
 
-    public getLiteralValue(literal: Literal): go.AstNode {
+    public getLiteralValue(literal: FernIr.Literal): go.AstNode {
         return literal.type === "string"
             ? go.TypeInstantiation.string(literal.string)
             : go.TypeInstantiation.bool(literal.boolean);
@@ -443,7 +427,7 @@ export abstract class AbstractGoGeneratorContext<
         return go.IoReaderTypeReference;
     }
 
-    public isOptional(typeReference: TypeReference): boolean {
+    public isOptional(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 switch (typeReference.container.type) {
@@ -468,7 +452,7 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
-    public isNullable(typeReference: TypeReference): boolean {
+    public isNullable(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 switch (typeReference.container.type) {
@@ -493,7 +477,7 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
-    public isEnum(typeReference: TypeReference): boolean {
+    public isEnum(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
                 switch (typeReference.container.type) {
@@ -515,32 +499,32 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
-    public typeDeclarationIsEnum(declaration: TypeDeclaration): boolean {
+    public typeDeclarationIsEnum(declaration: FernIr.TypeDeclaration): boolean {
         if (declaration.shape.type === "alias") {
             return this.isEnum(declaration.shape.aliasOf);
         }
         return declaration.shape.type === "enum";
     }
 
-    public isDate(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+    public isDate(typeReference: FernIr.TypeReference): boolean {
+        return this.isPrimitive({ typeReference, primitive: FernIr.PrimitiveTypeV1.Date });
     }
 
-    public isDateTime(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
+    public isDateTime(typeReference: FernIr.TypeReference): boolean {
+        return this.isPrimitive({ typeReference, primitive: FernIr.PrimitiveTypeV1.DateTime });
     }
 
     public isPrimitive({
         typeReference,
         primitive
     }: {
-        typeReference: TypeReference;
-        primitive: PrimitiveTypeV1;
+        typeReference: FernIr.TypeReference;
+        primitive: FernIr.PrimitiveTypeV1;
     }): boolean {
         return this.maybePrimitive(typeReference) === primitive;
     }
 
-    public maybeEnum(typeReference: TypeReference): EnumTypeDeclaration | undefined {
+    public maybeEnum(typeReference: FernIr.TypeReference): FernIr.EnumTypeDeclaration | undefined {
         switch (typeReference.type) {
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
@@ -583,7 +567,7 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
-    public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
+    public maybePrimitive(typeReference: FernIr.TypeReference): FernIr.PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
             case "container": {
                 const container = typeReference.container;
@@ -620,14 +604,14 @@ export abstract class AbstractGoGeneratorContext<
         }
     }
 
-    public maybeLiteral(typeReference: TypeReference): Literal | undefined {
+    public maybeLiteral(typeReference: FernIr.TypeReference): FernIr.Literal | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             return typeReference.container.literal;
         }
         return undefined;
     }
 
-    public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
+    public getTypeDeclarationOrThrow(typeId: FernIr.TypeId): FernIr.TypeDeclaration {
         const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
@@ -635,29 +619,29 @@ export abstract class AbstractGoGeneratorContext<
         return typeDeclaration;
     }
 
-    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
+    public getTypeDeclaration(typeId: FernIr.TypeId): FernIr.TypeDeclaration | undefined {
         return this.ir.types[typeId];
     }
 
-    public getLocationForTypeId(typeId: TypeId): FileLocation {
+    public getLocationForTypeId(typeId: FernIr.TypeId): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return this.getPackageLocation(typeDeclaration.name.fernFilepath);
     }
 
-    public getLocationForErrorId(errorId: ErrorId): FileLocation {
+    public getLocationForErrorId(errorId: FernIr.ErrorId): FileLocation {
         const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
         return this.getPackageLocation(errorDeclaration.name.fernFilepath);
     }
 
-    public getPackageLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+    public getPackageLocation(filepath: FernIr.FernFilepath, suffix?: string): FileLocation {
         return this.getLocation(filepath.packagePath, suffix);
     }
 
-    protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+    protected getFileLocation(filepath: FernIr.FernFilepath, suffix?: string): FileLocation {
         return this.getLocation(filepath.allParts, suffix);
     }
 
-    private getLocation(names: Name[], suffix?: string): FileLocation {
+    private getLocation(names: FernIr.Name[], suffix?: string): FileLocation {
         let parts = names.map((name) => name.camelCase.safeName.toLowerCase());
         parts = suffix != null ? [...parts, suffix] : parts;
         return {

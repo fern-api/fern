@@ -1,8 +1,8 @@
 import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 
-import { Rule, RuleViolation } from "../../Rule";
-import { validateEnumNames } from "./validateEnumNames";
-import { validateUnionNames } from "./validateUnionNames";
+import { Rule, RuleViolation } from "../../Rule.js";
+import { validateEnumNames } from "./validateEnumNames.js";
+import { validateUnionNames } from "./validateUnionNames.js";
 
 export const ValidFieldNamesRule: Rule = {
     name: "valid-field-names",

@@ -1,19 +1,18 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly typeDeclaration: TypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly classReference: php.ClassReference;
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly objectDeclaration: ObjectTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly objectDeclaration: FernIr.ObjectTypeDeclaration
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;

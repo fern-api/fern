@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 
-import { FERNIGNORE_FILENAME } from "./constants";
+import { FERNIGNORE_FILENAME } from "./constants.js";
 
 const NEW_LINE_REGEX = /\r?\n/;
 

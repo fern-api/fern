@@ -1,15 +1,14 @@
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
-
-import { AsyncAPIV2 } from "./2.x";
-import { ChannelConverter2_X } from "./2.x/channel/ChannelConverter2_X";
-import { ServersConverter2_X } from "./2.x/servers/ServersConverter2_X";
-import { AsyncAPIV3 } from "./3.0";
-import { ChannelConverter3_0 } from "./3.0/channel/ChannelConverter3_0";
-import { ServersConverter3_0 } from "./3.0/servers/ServersConverter3_0";
-import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext";
-import { AbstractChannelConverter } from "./converters/AbstractChannelConverter";
+import { ChannelConverter2_X } from "./2.x/channel/ChannelConverter2_X.js";
+import { AsyncAPIV2 } from "./2.x/index.js";
+import { ServersConverter2_X } from "./2.x/servers/ServersConverter2_X.js";
+import { ChannelConverter3_0 } from "./3.0/channel/ChannelConverter3_0.js";
+import { AsyncAPIV3 } from "./3.0/index.js";
+import { ServersConverter3_0 } from "./3.0/servers/ServersConverter3_0.js";
+import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext.js";
+import { AbstractChannelConverter } from "./converters/AbstractChannelConverter.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 

@@ -1,8 +1,8 @@
 import * as yaml from "js-yaml";
 import { kebabCase } from "lodash-es";
-import { CliContext } from "../../cli-context/CliContext";
-import { shouldTranslateValue } from "./translatable-keys";
-import { translateText } from "./translation-service";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { shouldTranslateValue } from "./translatable-keys.js";
+import { translateText } from "./translation-service.js";
 
 /**
  * Converts a string to a slug format (lowercase, hyphenated)

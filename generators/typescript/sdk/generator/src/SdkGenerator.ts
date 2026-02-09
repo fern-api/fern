@@ -5,16 +5,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation,
-    Subpackage,
-    TypeDeclaration,
-    TypeId,
-    WebSocketChannel
-} from "@fern-fern/ir-sdk/api";
-import {
     AsIsManager,
     BundledTypescriptProject,
     CoreUtilitiesManager,
@@ -53,30 +43,30 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
 import { Directory, ModuleDeclaration, Project, SourceFile, SyntaxKind, ts } from "ts-morph";
-import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl";
-import { SdkContextImpl } from "./contexts/SdkContextImpl";
-import { ContributingGenerator } from "./contributing/ContributingGenerator";
-import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer";
-import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
-import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
-import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
-import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
-import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
-import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
-import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
-import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
-import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
-import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
-import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
-import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
-import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
-import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
-import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
-import { TestGenerator } from "./test-generator/TestGenerator";
-import { VersionFileGenerator } from "./version/VersionFileGenerator";
-import { VersionGenerator } from "./version/VersionGenerator";
+import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl.js";
+import { SdkContextImpl } from "./contexts/SdkContextImpl.js";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
+import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer.js";
+import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer.js";
+import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer.js";
+import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer.js";
+import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer.js";
+import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer.js";
+import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer.js";
+import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer.js";
+import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer.js";
+import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer.js";
+import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer.js";
+import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer.js";
+import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer.js";
+import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
+import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
+import { TestGenerator } from "./test-generator/TestGenerator.js";
+import { VersionFileGenerator } from "./version/VersionFileGenerator.js";
+import { VersionGenerator } from "./version/VersionGenerator.js";
 
 const FILE_HEADER = `// This file was auto-generated by Fern from our API Definition.
 `;
@@ -87,7 +77,7 @@ const WHITELABEL_FILE_HEADER = `//  This file was auto-generated from our API De
 export declare namespace SdkGenerator {
     export interface Init {
         namespaceExport: string;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
         generateJestTests: boolean;
@@ -166,7 +156,7 @@ export declare namespace SdkGenerator {
 export class SdkGenerator {
     private namespaceExport: string;
     private context: GeneratorContext;
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private rawConfig: FernGeneratorExec.GeneratorConfig;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
@@ -741,7 +731,7 @@ export class SdkGenerator {
         await this.asIsManager.addToTsProject({ project: this.project });
     }
 
-    private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
+    private getTypesToGenerate(): Record<FernIr.TypeId, FernIr.TypeDeclaration> {
         if (this.config.enableInlineTypes) {
             return Object.fromEntries(
                 Object.entries(this.intermediateRepresentation.types).filter(
@@ -785,7 +775,7 @@ export class SdkGenerator {
     }
 
     private generateConsolidatedTypeDeclarations() {
-        const typesByFile = new Map<string, TypeDeclaration[]>();
+        const typesByFile = new Map<string, FernIr.TypeDeclaration[]>();
 
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             const filepath = this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name);
@@ -956,7 +946,7 @@ export class SdkGenerator {
     }
 
     private generateAggregatedRequestWrappers() {
-        const requestWrappers: Array<{ packageId: PackageId; endpoint: HttpEndpoint }> = [];
+        const requestWrappers: Array<{ packageId: PackageId; endpoint: FernIr.HttpEndpoint }> = [];
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
@@ -1166,8 +1156,8 @@ export class SdkGenerator {
         importsManager: ImportsManager;
         rootPackage: PackageId;
         packageId: PackageId;
-        endpoint: HttpEndpoint;
-        example: ExampleEndpointCall;
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
         includeImports: boolean;
     }): ts.Node[] | undefined {
         const context = this.generateSdkContext({ sourceFile, importsManager }, { isForSnippet: true });
@@ -1235,7 +1225,7 @@ export class SdkGenerator {
             const serviceFilepath = this.exportsManager.convertExportedFilePathToFilePath(exportedFilepath);
 
             for (const endpoint of service.endpoints) {
-                let examplesForEndpoint: ExampleEndpointCall[] = [];
+                let examplesForEndpoint: FernIr.ExampleEndpointCall[] = [];
                 for (const userDefinedExample of endpoint.userSpecifiedExamples) {
                     if (userDefinedExample.example != null) {
                         examplesForEndpoint.push(userDefinedExample.example);
@@ -1371,7 +1361,7 @@ export class SdkGenerator {
         });
     }
 
-    private getEndpointFunctionName(endpoint: HttpEndpoint): string {
+    private getEndpointFunctionName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 
@@ -1726,7 +1716,7 @@ export class SdkGenerator {
         ];
     }
 
-    private forPackageChannel(run: (channel: WebSocketChannel, packageId: PackageId) => void): void {
+    private forPackageChannel(run: (channel: FernIr.WebSocketChannel, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
             const channel = this.packageResolver.getChannelDeclaration(packageId);
             if (channel != null) {
@@ -1734,7 +1724,7 @@ export class SdkGenerator {
             }
         }
     }
-    private forEachService(run: (service: HttpService, packageId: PackageId) => void): void {
+    private forEachService(run: (service: FernIr.HttpService, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
             const service = this.packageResolver.getServiceDeclaration(packageId);
             if (service != null) {
@@ -1873,7 +1863,7 @@ export class SdkGenerator {
             }
 
             const segments = package_.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
-            const subpackage = package_ as Subpackage;
+            const subpackage = package_ as FernIr.Subpackage;
             if (subpackage.name != null) {
                 const packageName = subpackage.name.camelCase.safeName;
                 if (segments.length === 0 || segments[segments.length - 1] !== packageName) {

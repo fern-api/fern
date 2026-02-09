@@ -1,5 +1,5 @@
-import { AbstractAstNode } from "./AbstractAstNode";
-import { AbstractWriter } from "./AbstractWriter";
+import { AbstractAstNode } from "./AbstractAstNode.js";
+import { AbstractWriter } from "./AbstractWriter.js";
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */

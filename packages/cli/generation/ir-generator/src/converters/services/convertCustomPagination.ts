@@ -1,8 +1,8 @@
 import { Pagination } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { CustomPaginationPropertyComponents } from "./convertPaginationUtils";
+import { FernFileContext } from "../../FernFileContext.js";
+import { PropertyResolver } from "../../resolvers/PropertyResolver.js";
+import { CustomPaginationPropertyComponents } from "./convertPaginationUtils.js";
 
 export function convertCustomPagination({
     propertyResolver,

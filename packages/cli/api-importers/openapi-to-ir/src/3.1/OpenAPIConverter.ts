@@ -2,13 +2,13 @@ import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-import { FernBasePathExtension } from "../extensions/x-fern-base-path";
-import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
-import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
-import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
-import { WebhookConverter } from "./paths/operations/WebhookConverter";
-import { PathConverter } from "./paths/PathConverter";
-import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter";
+import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
+import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
+import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension.js";
+import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1.js";
+import { WebhookConverter } from "./paths/operations/WebhookConverter.js";
+import { PathConverter } from "./paths/PathConverter.js";
+import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 

@@ -1,15 +1,14 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint;
-    fernFilepath: FernFilepath;
+    endpoint: FernIr.HttpEndpoint;
+    fernFilepath: FernIr.FernFilepath;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -18,9 +17,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
-    private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {};
-    private readonly defaultEndpointId: EndpointId;
+    private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
+    private readonly prerenderedSnippetsByEndpointId: Record<FernIr.EndpointId, string> = {};
+    private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly rootPackageName: string;
     private readonly rootPackageClientName: string;
     private readonly rootClientClassName: string;
@@ -327,8 +326,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         `);
     }
 
-    private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
+    private buildEndpointsById(): Record<FernIr.EndpointId, EndpointWithFilepath> {
+        const endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
@@ -342,8 +341,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildPrerenderedSnippetsByEndpointId(
         endpointSnippets: FernGeneratorExec.Endpoint[]
-    ): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {};
+    ): Record<FernIr.EndpointId, string> {
+        const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
@@ -359,7 +358,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippets;
     }
 
-    private getSnippetForEndpointId(endpointId: EndpointId): string {
+    private getSnippetForEndpointId(endpointId: FernIr.EndpointId): string {
         const snippet = this.prerenderedSnippetsByEndpointId[endpointId];
         if (snippet == null) {
             throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
@@ -367,16 +366,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return snippet;
     }
 
-    private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
+    private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
         const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
         return endpointIds.map(this.lookupEndpointById.bind(this));
     }
 
-    private getConfiguredEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
+    private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
         return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
-    private lookupEndpointById(endpointId: EndpointId): EndpointWithFilepath {
+    private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
             throw new Error(`Internal error; missing endpoint ${endpointId}`);
@@ -394,14 +393,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         )}`;
     }
 
-    private getAccessFromRootClient(fernFilepath: FernFilepath): string {
+    private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
         const clientAccessParts = fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
-    private getEndpointMethodName(endpoint: HttpEndpoint): string {
+    private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.snakeCase.safeName;
     }
 

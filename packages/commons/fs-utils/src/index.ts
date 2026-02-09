@@ -1,34 +1,34 @@
-export { AbsoluteFilePath } from "./AbsoluteFilePath";
-export { cwd } from "./cwd";
-export { dirname } from "./dirname";
-export { doesPathExist, doesPathExistSync, isPathEmpty } from "./doesPathExist";
-export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
-export { getAllFilesInDirectoryRelative } from "./getAllFilesInDirectoryRelative";
+export { AbsoluteFilePath } from "./AbsoluteFilePath.js";
+export { cwd } from "./cwd.js";
+export { dirname } from "./dirname.js";
+export { doesPathExist, doesPathExistSync, isPathEmpty } from "./doesPathExist.js";
+export { getAllFilesInDirectory } from "./getAllFilesInDirectory.js";
+export { getAllFilesInDirectoryRelative } from "./getAllFilesInDirectoryRelative.js";
 export {
     type Directory,
     type File,
     type FileOrDirectory,
     getDirectoryContents,
     getDirectoryContentsForSnapshot
-} from "./getDirectoryContents";
-export { getFilename } from "./getFilename";
-export { isCI } from "./isCI";
-export { isURL } from "./isUrl";
-export { join } from "./join";
-export { listFiles } from "./listFiles";
-export { moveFile } from "./moveFile";
-export { moveFolder } from "./moveFolder";
+} from "./getDirectoryContents.js";
+export { getFilename } from "./getFilename.js";
+export { isCI } from "./isCI.js";
+export { isURL } from "./isUrl.js";
+export { join } from "./join.js";
+export { listFiles } from "./listFiles.js";
+export { moveFile } from "./moveFile.js";
+export { moveFolder } from "./moveFolder.js";
 export {
     convertToFernHostAbsoluteFilePath,
     convertToFernHostRelativeFilePath,
     convertToOsPath
-} from "./osPathConverter";
-export { RelativeFilePath } from "./RelativeFilePath";
-export { relative } from "./relative";
-export { relativize } from "./relativize";
-export { resolve } from "./resolve";
-export { splitPath } from "./splitPath";
-export { streamObjectFromFile } from "./streamObjectFromFile";
-export { streamObjectToFile } from "./streamObjectToFile";
-export { stringifyLargeObject } from "./stringifyLargeObject";
-export { waitUntilPathExists } from "./waitUntilPathExists";
+} from "./osPathConverter.js";
+export { RelativeFilePath } from "./RelativeFilePath.js";
+export { relative } from "./relative.js";
+export { relativize } from "./relativize.js";
+export { resolve } from "./resolve.js";
+export { splitPath } from "./splitPath.js";
+export { streamObjectFromFile } from "./streamObjectFromFile.js";
+export { streamObjectToFile } from "./streamObjectToFile.js";
+export { stringifyLargeObject } from "./stringifyLargeObject.js";
+export { waitUntilPathExists } from "./waitUntilPathExists.js";

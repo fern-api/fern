@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { HeaderConfigSchema } from "./HeaderConfigSchema";
+import { HeaderConfigSchema } from "./HeaderConfigSchema.js";
 
 export const HeaderSchema = z.union([z.string(), HeaderConfigSchema]);
 

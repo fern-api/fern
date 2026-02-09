@@ -2,24 +2,16 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
 import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    FernFilepath,
-    HttpService,
-    IntermediateRepresentation,
-    Package,
-    ServiceId,
-    Subpackage,
-    SubpackageId
-} from "@fern-fern/ir-sdk/api";
-import { RustGeneratorAgent } from "./RustGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { RustGeneratorAgent } from "./RustGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/index.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: RustGeneratorAgent;
 
     constructor(
-        ir: IntermediateRepresentation,
+        ir: FernIr.IntermediateRepresentation,
         generatorConfig: FernGeneratorExec.GeneratorConfig,
         customConfig: SdkCustomConfigSchema,
         generatorNotificationService: GeneratorNotificationService
@@ -57,15 +49,15 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return files;
     }
 
-    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
+    public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error(`Subpackage with id ${subpackageId} not found`);
+            throw new Error(`FernIr.Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
     }
 
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+    public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
             throw new Error(`Service with id ${serviceId} not found`);
@@ -73,13 +65,13 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return service;
     }
 
-    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): [string, Subpackage][] {
+    public getSubpackagesOrThrow(packageOrSubpackage: FernIr.Package | FernIr.Subpackage): [string, FernIr.Subpackage][] {
         return packageOrSubpackage.subpackages.map((subpackageId) => {
             return [subpackageId, this.getSubpackageOrThrow(subpackageId)];
         });
     }
 
-    public getDirectoryForFernFilepath(fernFilepath: FernFilepath): string {
+    public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
         return fernFilepath.allParts.map((path) => path.snakeCase.safeName).join("/");
     }
 

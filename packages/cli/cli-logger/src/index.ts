@@ -1,4 +1,4 @@
-export { formatLog } from "./formatLog";
-export { type Log } from "./Log";
-export { logErrorMessage } from "./logErrorMessage";
-export { TtyAwareLogger } from "./TtyAwareLogger";
+export { formatLog } from "./formatLog.js";
+export { type Log } from "./Log.js";
+export { logErrorMessage } from "./logErrorMessage.js";
+export { TtyAwareLogger } from "./TtyAwareLogger.js";

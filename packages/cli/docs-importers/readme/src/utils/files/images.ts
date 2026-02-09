@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import type { Result } from "../../types/result";
-import { fetchImage } from "../network";
-import { write } from "./file";
+import type { Result } from "../../types/result.js";
+import { fetchImage } from "../network.js";
+import { write } from "./file.js";
 
 export const SUPPORTED_MEDIA_EXTENSIONS = [
     "png",

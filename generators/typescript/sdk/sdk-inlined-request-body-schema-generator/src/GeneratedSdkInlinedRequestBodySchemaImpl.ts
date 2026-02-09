@@ -1,4 +1,4 @@
-import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import {
     getPropertyKey,
@@ -14,8 +14,8 @@ import { ModuleDeclaration, ts } from "ts-morph";
 export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
-        inlinedRequestBody: InlinedRequestBody;
+        endpoint: FernIr.HttpEndpoint;
+        inlinedRequestBody: FernIr.InlinedRequestBody;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
@@ -27,8 +27,8 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     implements GeneratedSdkInlinedRequestBodySchema
 {
     private packageId: PackageId;
-    private endpoint: HttpEndpoint;
-    private inlinedRequestBody: InlinedRequestBody;
+    private endpoint: FernIr.HttpEndpoint;
+    private inlinedRequestBody: FernIr.InlinedRequestBody;
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
@@ -146,8 +146,8 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         inlinedRequestBody
     }: {
         context: SdkContext;
-        inlinedRequestBody: InlinedRequestBody;
-    }): InlinedRequestBodyProperty[] {
+        inlinedRequestBody: FernIr.InlinedRequestBody;
+    }): FernIr.InlinedRequestBodyProperty[] {
         return inlinedRequestBody.properties.filter((property) => {
             const resolvedType = context.type.resolveTypeReference(property.valueType);
             const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";

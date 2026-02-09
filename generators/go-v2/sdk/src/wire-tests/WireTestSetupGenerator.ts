@@ -1,8 +1,8 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock } from "@fern-api/mock-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -10,9 +10,9 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
  */
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
     }
@@ -25,7 +25,7 @@ export class WireTestSetupGenerator {
         this.generateDockerComposeFile();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
         return new WireMock().convertToWireMock(ir);
     }
 

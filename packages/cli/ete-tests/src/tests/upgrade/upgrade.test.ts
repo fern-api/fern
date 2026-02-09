@@ -3,8 +3,8 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
     groups: {

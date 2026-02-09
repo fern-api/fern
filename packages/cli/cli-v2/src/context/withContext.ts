@@ -1,11 +1,11 @@
 import { LogLevel } from "@fern-api/logger";
 import chalk from "chalk";
-import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError";
-import { CliError } from "../errors/CliError";
-import { ValidationError } from "../errors/ValidationError";
-import { Icons } from "../ui/format";
-import { Context } from "./Context";
-import type { GlobalArgs } from "./GlobalArgs";
+import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
+import { CliError } from "../errors/CliError.js";
+import { ValidationError } from "../errors/ValidationError.js";
+import { Icons } from "../ui/format.js";
+import { Context } from "./Context.js";
+import type { GlobalArgs } from "./GlobalArgs.js";
 
 /**
  * Wraps a command handler with context creation and error handling.

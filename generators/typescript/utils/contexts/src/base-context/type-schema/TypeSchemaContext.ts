@@ -1,12 +1,12 @@
-import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
 
-import { GeneratedTypeSchema } from "./GeneratedTypeSchema";
+import { GeneratedTypeSchema } from "./GeneratedTypeSchema.js";
 
 export interface TypeSchemaContext {
-    getGeneratedTypeSchema: (typeName: DeclaredTypeName) => GeneratedTypeSchema;
-    getReferenceToRawType: (typeReference: TypeReference) => TypeReferenceNode;
-    getReferenceToRawNamedType: (typeName: DeclaredTypeName) => Reference;
-    getSchemaOfTypeReference: (typeReference: TypeReference) => Zurg.Schema;
-    getSchemaOfNamedType: (typeName: DeclaredTypeName, opts: { isGeneratingSchema: boolean }) => Zurg.Schema;
+    getGeneratedTypeSchema: (typeName: FernIr.DeclaredTypeName) => GeneratedTypeSchema;
+    getReferenceToRawType: (typeReference: FernIr.TypeReference) => TypeReferenceNode;
+    getReferenceToRawNamedType: (typeName: FernIr.DeclaredTypeName) => Reference;
+    getSchemaOfTypeReference: (typeReference: FernIr.TypeReference) => Zurg.Schema;
+    getSchemaOfNamedType: (typeName: FernIr.DeclaredTypeName, opts: { isGeneratingSchema: boolean }) => Zurg.Schema;
 }

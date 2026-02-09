@@ -2,10 +2,10 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 
-import { PublishCommand } from "../../config/api";
-import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { runCommands, subVersion } from "../../utils/publishUtilities";
-import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities";
+import { PublishCommand } from "../../config/api/index.js";
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { runCommands, subVersion } from "../../utils/publishUtilities.js";
+import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities.js";
 
 export interface PublishCliResult {
     published: boolean;

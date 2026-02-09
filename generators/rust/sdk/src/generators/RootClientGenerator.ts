@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import {
@@ -14,15 +15,13 @@ import {
     UseStatement
 } from "@fern-api/rust-codegen";
 
-import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
-import { SubClientGenerator } from "./SubClientGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { SubClientGenerator } from "./SubClientGenerator.js";
 
 export class RootClientGenerator {
     private readonly context: SdkGeneratorContext;
-    private readonly package: Package;
+    private readonly package: FernIr.Package;
     private readonly projectName: string;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
@@ -101,7 +100,7 @@ export class RootClientGenerator {
     // FILE STRUCTURE GENERATION
     // =============================================================================
 
-    private buildRawDeclarations(subpackages: Subpackage[]): string[] {
+    private buildRawDeclarations(subpackages: FernIr.Subpackage[]): string[] {
         const rawDeclarations: string[] = [];
 
         // Add module declarations for sub-clients
@@ -123,11 +122,11 @@ export class RootClientGenerator {
         return rawDeclarations;
     }
 
-    private generateModuleDeclarations(subpackages: Subpackage[]): string {
+    private generateModuleDeclarations(subpackages: FernIr.Subpackage[]): string {
         return subpackages.map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`).join("\n");
     }
 
-    private generateReExports(subpackages: Subpackage[]): string {
+    private generateReExports(subpackages: FernIr.Subpackage[]): string {
         return subpackages
             .map((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
@@ -149,7 +148,7 @@ export class RootClientGenerator {
     // ROOT CLIENT GENERATION
     // =============================================================================
 
-    private generateRootClient(subpackages: Subpackage[]): string {
+    private generateRootClient(subpackages: FernIr.Subpackage[]): string {
         const clientName = this.getRootClientName();
         const rustRootClient = rust.client({
             name: clientName,
@@ -159,7 +158,7 @@ export class RootClientGenerator {
         return rustRootClient.toString();
     }
 
-    private generateFields(subpackages: Subpackage[]): rust.Client.Field[] {
+    private generateFields(subpackages: FernIr.Subpackage[]): rust.Client.Field[] {
         return [
             {
                 name: "config",
@@ -174,7 +173,7 @@ export class RootClientGenerator {
         ];
     }
 
-    private generateConstructor(subpackages: Subpackage[]): rust.Client.SimpleMethod {
+    private generateConstructor(subpackages: FernIr.Subpackage[]): rust.Client.SimpleMethod {
         const subClientInits = this.clientGeneratorContext.subClients
             .map(({ fieldName, clientName }) => `${fieldName}: ${clientName}::new(config.clone())?`)
             .join(",\n            ");
@@ -203,7 +202,7 @@ export class RootClientGenerator {
         - Module detection across nested structures requires this scanning
         - Rust's module system demands both declarations and re-exports
     */
-    private generateNestedModFiles(subpackages: Subpackage[]): RustFile[] {
+    private generateNestedModFiles(subpackages: FernIr.Subpackage[]): RustFile[] {
         const files: RustFile[] = [];
         const directoriesCreated = new Set<string>();
 
@@ -258,7 +257,7 @@ export class RootClientGenerator {
     }
 
     private generateSelectiveReExportsForDirectory(
-        subpackages: Subpackage[],
+        subpackages: FernIr.Subpackage[],
         currentPath: string,
         moduleNames: string[]
     ): string[] {
@@ -290,7 +289,7 @@ export class RootClientGenerator {
         return reExports;
     }
 
-    private getModuleNamesForDirectory(subpackages: Subpackage[], targetPath: string): string[] {
+    private getModuleNamesForDirectory(subpackages: FernIr.Subpackage[], targetPath: string): string[] {
         // Use ALL subpackages (including those without services) for module detection
         const allSubpackages = this.getAllSubpackagesForModuleDetection();
         const moduleNames = new Set<string>();
@@ -329,13 +328,13 @@ export class RootClientGenerator {
     // UTILITY METHODS
     // =============================================================================
 
-    private getSubpackages(): Subpackage[] {
+    private getSubpackages(): FernIr.Subpackage[] {
         return this.package.subpackages.map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId));
     }
 
-    private getAllSubpackagesForModuleDetection(): Subpackage[] {
+    private getAllSubpackagesForModuleDetection(): FernIr.Subpackage[] {
         // Get ALL subpackages from the entire IR to detect nested directory structures
-        const allSubpackages: Subpackage[] = Object.values(this.context.ir.subpackages);
+        const allSubpackages: FernIr.Subpackage[] = Object.values(this.context.ir.subpackages);
         return allSubpackages;
     }
 
@@ -343,11 +342,11 @@ export class RootClientGenerator {
         return this.context.getClientName();
     }
 
-    private getSubClientName(subpackage: Subpackage): string {
+    private getSubClientName(subpackage: FernIr.Subpackage): string {
         return this.context.getUniqueClientNameForSubpackage(subpackage);
     }
 
-    private generateUnifiedModFileIfNeeded(subpackages: Subpackage[], currentPath: string): RustFile | null {
+    private generateUnifiedModFileIfNeeded(subpackages: FernIr.Subpackage[], currentPath: string): RustFile | null {
         // Find the subpackage that corresponds to this directory path
         const targetSubpackage = subpackages.find((subpackage) => {
             const fernFilepathDir = this.context.getDirectoryForFernFilepath(subpackage.fernFilepath);
@@ -372,8 +371,8 @@ export class RootClientGenerator {
     }
 
     private generateUnifiedModFileContent(
-        subpackage: Subpackage,
-        subClientSubpackages: Array<[string, Subpackage]>,
+        subpackage: FernIr.Subpackage,
+        subClientSubpackages: Array<[string, FernIr.Subpackage]>,
         currentPath: string
     ): RustFile {
         const subClientGenerator = new SubClientGenerator(this.context, subpackage);
@@ -392,9 +391,9 @@ export class RootClientGenerator {
 
     private createUnifiedModFileFromSubClient(
         subClientGenerator: SubClientGenerator,
-        subClientSubpackages: Array<[string, Subpackage]>,
+        subClientSubpackages: Array<[string, FernIr.Subpackage]>,
         currentPath: string,
-        subpackage: Subpackage
+        subpackage: FernIr.Subpackage
     ): RustFile {
         // Generate submodule declarations and re-exports
         const subModuleDeclarations: string[] = [];

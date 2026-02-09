@@ -1,4 +1,4 @@
-import { ts } from "../..";
+import { ts } from "../../index.js";
 
 describe("Invocation", () => {
     describe("invokeFunction", () => {

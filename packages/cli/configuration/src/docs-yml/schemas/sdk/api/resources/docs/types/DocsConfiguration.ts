@@ -7,6 +7,23 @@ export interface DocsConfiguration {
     /** A string that is used as the tab bar title. */
     title?: string;
     /**
+     * Configuration for library documentation generation. Each library entry defines
+     * a source repository and output location for generated MDX documentation.
+     *
+     * Example:
+     * ```yaml
+     * libraries:
+     *   my-sdk:
+     *     input:
+     *       git: https://github.com/acme/sdk-python
+     *       subpath: src/sdk
+     *     output:
+     *       path: ./static/sdk-docs
+     *     lang: python
+     * ```
+     */
+    libraries?: Record<FernDocsConfig.LibraryName, FernDocsConfig.LibraryConfiguration>;
+    /**
      * The `analytics` object allows you to configure analytics for your docs site.
      * Currently, only Segment is supported.
      */

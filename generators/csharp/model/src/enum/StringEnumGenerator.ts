@@ -1,8 +1,12 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
+type TypeDeclaration = FernIr.TypeDeclaration;
+
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly classReference: ast.ClassReference;

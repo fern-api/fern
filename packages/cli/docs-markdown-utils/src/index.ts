@@ -1,19 +1,19 @@
-export { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals";
-export { getMarkdownFormat } from "./getMarkdownFormat";
-export { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element";
+export { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals.js";
+export { getMarkdownFormat } from "./getMarkdownFormat.js";
+export { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element.js";
 export {
     getReplacedHref,
     isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
     trimAnchor
-} from "./parseImagePaths";
-export { parseMarkdownToTree } from "./parseMarkdownToTree";
-export { replaceReferencedCode } from "./replaceReferencedCode";
+} from "./parseImagePaths.js";
+export { parseMarkdownToTree } from "./parseMarkdownToTree.js";
+export { replaceReferencedCode } from "./replaceReferencedCode.js";
 export {
     type ReferencedMarkdownFile,
     type ReplaceReferencedMarkdownResult,
     replaceReferencedMarkdown
-} from "./replaceReferencedMarkdown";
-export { transformAtPrefixImports } from "./transformAtPrefixImports";
-export { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
+} from "./replaceReferencedMarkdown.js";
+export { transformAtPrefixImports } from "./transformAtPrefixImports.js";
+export { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes.js";

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { RuleContext } from "../../../Rule";
-import { ValidOpenApiExamples } from "../valid-openapi-examples";
+import type { RuleContext } from "../../../Rule.js";
+import { ValidOpenApiExamples } from "../valid-openapi-examples.js";
 
 describe("ValidOpenApiExamples", () => {
     it("should be defined and have correct name", () => {

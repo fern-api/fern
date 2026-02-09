@@ -1,11 +1,11 @@
-export { AbstractConverter } from "./AbstractConverter";
-export { AbstractConverterContext, type DisplayNameOverrideSource, type Spec } from "./AbstractConverterContext";
-export { AbstractExtension } from "./AbstractExtension";
-export { AbstractSpecConverter } from "./AbstractSpecConverter";
-export * from "./converters";
-export * as Converters from "./converters";
-export { SchemaOrReferenceConverter } from "./converters/schema";
-export { type APIError, APIErrorLevel, ErrorCollector } from "./ErrorCollector";
+export { AbstractConverter } from "./AbstractConverter.js";
+export { AbstractConverterContext, type DisplayNameOverrideSource, type Spec } from "./AbstractConverterContext.js";
+export { AbstractExtension } from "./AbstractExtension.js";
+export { AbstractSpecConverter } from "./AbstractSpecConverter.js";
+export * from "./converters/index.js";
+export * as Converters from "./converters/index.js";
+export { SchemaOrReferenceConverter } from "./converters/schema/index.js";
+export { type APIError, APIErrorLevel, ErrorCollector } from "./ErrorCollector.js";
 export {
     type AiExampleOverride,
     type EndpointExampleValidationResult,
@@ -14,8 +14,8 @@ export {
     type ExampleValidationResult,
     ExampleValidator,
     type SpecExampleValidationResult
-} from "./ExampleValidator";
-export * as Extensions from "./extensions";
-export type { FernEnumConfig } from "./types/FernEnumConfig";
-export { convertNumberToSnakeCase } from "./utils/ConvertNumberToSnakeCase";
-export { ERROR_NAMES, ERROR_NAMES_BY_STATUS_CODE } from "./utils/ErrorNames";
+} from "./ExampleValidator.js";
+export * as Extensions from "./extensions/index.js";
+export type { FernEnumConfig } from "./types/FernEnumConfig.js";
+export { convertNumberToSnakeCase } from "./utils/ConvertNumberToSnakeCase.js";
+export { ERROR_NAMES, ERROR_NAMES_BY_STATUS_CODE } from "./utils/ErrorNames.js";

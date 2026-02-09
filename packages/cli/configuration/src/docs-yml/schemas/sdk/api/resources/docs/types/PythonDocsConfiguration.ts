@@ -7,7 +7,7 @@
 export interface PythonDocsConfiguration {
     /**
      * GitHub URL to the repository containing the Python library source code.
-     * Example: https://github.com/NVIDIA/NeMo-RL
+     * Example: https://github.com/django/django
      */
     pythonDocs: string;
     /**

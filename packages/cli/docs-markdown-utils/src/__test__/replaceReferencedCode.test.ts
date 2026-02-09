@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { vi } from "vitest";
 
-import { replaceReferencedCode } from "../replaceReferencedCode";
+import { replaceReferencedCode } from "../replaceReferencedCode.js";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
 const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");

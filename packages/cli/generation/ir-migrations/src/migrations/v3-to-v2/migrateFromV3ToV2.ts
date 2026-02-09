@@ -1,12 +1,12 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
-import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest";
+} from "../../types/IrMigration.js";
+import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest.js";
 
 export const V3_TO_V2_MIGRATION: IrMigration<
     IrVersions.V3.ir.IntermediateRepresentation,

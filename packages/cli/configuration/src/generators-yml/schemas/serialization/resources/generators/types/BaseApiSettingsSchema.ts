@@ -20,6 +20,7 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "group-environments-by-host": core.serialization.boolean().optional(),
     "remove-discriminants-from-schemas": RemoveDiscriminantsFromSchemas.optional(),
     "path-parameter-order": PathParameterOrder.optional(),
+    "resolve-schema-collisions": core.serialization.boolean().optional(),
 });
 
 export declare namespace BaseApiSettingsSchema {
@@ -34,5 +35,6 @@ export declare namespace BaseApiSettingsSchema {
         "group-environments-by-host"?: boolean | null;
         "remove-discriminants-from-schemas"?: RemoveDiscriminantsFromSchemas.Raw | null;
         "path-parameter-order"?: PathParameterOrder.Raw | null;
+        "resolve-schema-collisions"?: boolean | null;
     }
 }

@@ -2,8 +2,8 @@ import { CsharpConfigSchema } from "@fern-api/csharp-codegen";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
 export class ReadmeConfigBuilder {
     public build({

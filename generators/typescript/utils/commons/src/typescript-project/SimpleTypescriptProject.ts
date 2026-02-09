@@ -3,9 +3,9 @@ import { produce, WritableDraft } from "immer";
 import { IPackageJson, IPeerDependenciesMeta } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
-import { DependencyType } from "../dependency-manager/DependencyManager";
-import { mergeExtraConfigs } from "./mergeExtraConfigs";
-import { TypescriptProject } from "./TypescriptProject";
+import { DependencyType } from "../dependency-manager/DependencyManager.js";
+import { mergeExtraConfigs } from "./mergeExtraConfigs.js";
+import { TypescriptProject } from "./TypescriptProject.js";
 
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {

@@ -3,10 +3,13 @@ import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpMethod = FernIr.HttpMethod;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
+import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody.js";
 
 export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes" | "multipartform" | "urlencoded";
