@@ -12,7 +12,7 @@ use Seed\Endpoints\Primitive\PrimitiveClient;
 use Seed\Endpoints\Put\PutClient;
 use Seed\Endpoints\Union\UnionClient;
 use Seed\Endpoints\Urls\UrlsClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class EndpointsClient
@@ -72,7 +72,6 @@ class EndpointsClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -89,7 +88,6 @@ class EndpointsClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
