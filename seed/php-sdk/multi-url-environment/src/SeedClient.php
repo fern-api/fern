@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Ec2\Ec2Client;
 use Seed\S3\S3Client;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
@@ -23,7 +23,6 @@ class SeedClient
      * @var array{
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -45,7 +44,6 @@ class SeedClient
      * @param ?array{
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */

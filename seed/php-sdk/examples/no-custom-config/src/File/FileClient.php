@@ -4,7 +4,7 @@ namespace Seed\File;
 
 use Seed\File\Notification\NotificationClient;
 use Seed\File\Service\ServiceClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class FileClient
@@ -24,7 +24,6 @@ class FileClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -41,7 +40,6 @@ class FileClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */

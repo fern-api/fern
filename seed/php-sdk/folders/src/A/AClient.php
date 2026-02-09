@@ -4,7 +4,7 @@ namespace Seed\A;
 
 use Seed\A\B\BClient;
 use Seed\A\C\CClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class AClient
@@ -24,7 +24,6 @@ class AClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -41,7 +40,6 @@ class AClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */

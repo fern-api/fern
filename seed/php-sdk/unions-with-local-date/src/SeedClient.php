@@ -5,7 +5,7 @@ namespace Seed;
 use Seed\Bigunion\BigunionClient;
 use Seed\Types\TypesClient;
 use Seed\Union\UnionClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
@@ -30,7 +30,6 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -46,7 +45,6 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */

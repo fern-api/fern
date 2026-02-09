@@ -3,7 +3,7 @@
 namespace Seed\Nested;
 
 use Seed\Nested\Api\ApiClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class NestedClient
@@ -18,7 +18,6 @@ class NestedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -35,7 +34,6 @@ class NestedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */

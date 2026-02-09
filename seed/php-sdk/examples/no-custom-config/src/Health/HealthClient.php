@@ -3,7 +3,7 @@
 namespace Seed\Health;
 
 use Seed\Health\Service\ServiceClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class HealthClient
@@ -18,7 +18,6 @@ class HealthClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -35,7 +34,6 @@ class HealthClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */

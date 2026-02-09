@@ -6,7 +6,7 @@ use Seed\Auth\AuthClient;
 use Seed\NestedNoAuth\NestedNoAuthClient;
 use Seed\Nested\NestedClient;
 use Seed\Simple\SimpleClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Core\InferredAuthProvider;
 
@@ -37,7 +37,6 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
@@ -58,7 +57,6 @@ class SeedClient
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      * } $options
      */
