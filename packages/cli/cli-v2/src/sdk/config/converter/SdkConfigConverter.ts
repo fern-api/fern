@@ -4,7 +4,6 @@ import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter.js";
 import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
-import type { DockerImageReference } from "../DockerImageReference.js";
 import { LANGUAGES, type Language } from "../Language.js";
 import type { SdkConfig } from "../SdkConfig.js";
 import type { Target } from "../Target.js";

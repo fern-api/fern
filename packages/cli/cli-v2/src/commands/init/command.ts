@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
@@ -11,7 +12,6 @@ import { PETSTORE_OPENAPI_YML } from "../../init/templates/openapi.yml";
 import { Wizard } from "../../init/Wizard";
 import { Icons } from "../../ui/format";
 import { command } from "../_internal/command";
-import { assertNever } from "@fern-api/core-utils";
 
 export declare namespace InitCommand {
     export interface Args extends GlobalArgs {
@@ -52,8 +52,6 @@ export class InitCommand {
     }): Promise<void> {
         const apiPath = this.resolveApiPath(result.apiSource);
         const specFormat = result.apiSource.type === "sample" ? "openapi" : result.apiSource.format;
-
-        console.log("organization", result.organization);
 
         const writer = new FernYmlBuilder();
         const fernYmlContent = writer.build({
