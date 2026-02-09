@@ -75,7 +75,7 @@ class JsonDeserializer
             return self::deserializeArray((array)$data, $type);
         }
 
-        if (gettype($type) != "string") {
+        if (gettype($type) !== "string") {
             throw new JsonException("Unexpected non-string type.");
         }
 

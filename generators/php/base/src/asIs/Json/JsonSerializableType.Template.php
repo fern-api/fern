@@ -50,7 +50,7 @@ abstract class JsonSerializableType implements \JsonSerializable
         $reflectionClass = new \ReflectionClass($this);
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property);
-            if ($jsonKey == null) {
+            if ($jsonKey === null) {
                 continue;
             }
             $value = $property->getValue($this);

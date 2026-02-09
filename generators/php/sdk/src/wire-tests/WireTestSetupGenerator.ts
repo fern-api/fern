@@ -94,12 +94,15 @@ export class WireTestSetupGenerator {
      */
     private buildWireMockTestCaseContent(): string {
         const namespace = this.context.getTestsNamespace();
+        const coreNamespace = this.context.getCoreNamespace();
         return `<?php
 
 namespace ${namespace}\\Wire;
 
-use GuzzleHttp\\Client as HttpClient;
+use Http\\Discovery\\Psr17FactoryDiscovery;
+use Http\\Discovery\\Psr18ClientDiscovery;
 use PHPUnit\\Framework\\TestCase;
+use ${coreNamespace}\\Json\\JsonEncoder;
 
 /**
  * Base test case for WireMock-based wire tests.
@@ -125,7 +128,10 @@ abstract class WireMockTestCase extends TestCase
         ?array $queryParams,
         int $expected
     ): void {
-        $client = new HttpClient();
+        $client = Psr18ClientDiscovery::find();
+        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+
         $body = [
             'method' => $method,
             'urlPath' => $urlPath,
@@ -140,9 +146,10 @@ abstract class WireMockTestCase extends TestCase
             }
         }
 
-        $response = $client->post('http://localhost:8080/__admin/requests/find', [
-            'json' => $body,
-        ]);
+        $request = $requestFactory->createRequest('POST', 'http://localhost:8080/__admin/requests/find')
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($streamFactory->createStream(JsonEncoder::encode($body)));
+        $response = $client->sendRequest($request);
 
         $this->assertSame(200, $response->getStatusCode(), 'Failed to query WireMock requests');
 
