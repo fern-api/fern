@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, ExampleServerSideEvent, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { EndpointSampleCode } from "../../commons/EndpointSampleCode";
@@ -23,6 +23,10 @@ export interface GeneratedEndpointImplementation {
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }) => EndpointSampleCode | undefined;
-    maybeLeverageInvocation: (args: { invocation: ts.Expression; context: SdkContext }) => ts.Node[] | undefined;
+    maybeLeverageInvocation: (args: {
+        invocation: ts.Expression;
+        context: SdkContext;
+        sseEvents?: ExampleServerSideEvent[];
+    }) => ts.Node[] | undefined;
     isPaginated: (context: SdkContext) => boolean;
 }

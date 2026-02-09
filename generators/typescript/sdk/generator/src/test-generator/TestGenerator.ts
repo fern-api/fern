@@ -1547,13 +1547,13 @@ describe("${serviceName}", () => {
                         return createRawJsonExample({ example: value, isForRequest: false, isForResponse: true });
                     },
                     stream: () => {
-                        throw new Error("Stream not supported in wire tests");
+                        return undefined;
                     },
                     sse: () => {
-                        throw new Error("SSE not supported in wire tests");
+                        return undefined;
                     },
                     _other: () => {
-                        throw new Error("Unsupported response type");
+                        return undefined;
                     }
                 });
             },
@@ -1565,7 +1565,7 @@ describe("${serviceName}", () => {
                 return createRawJsonExample({ example: value.body, isForRequest: false, isForResponse: true });
             },
             _other: () => {
-                throw new Error("Unsupported response type");
+                return undefined;
             }
         });
         if (responseExample === undefined) {
@@ -1913,13 +1913,13 @@ function getExpectedResponse({
                     return code`${getTextOfTsNode(example)}`;
                 },
                 stream: () => {
-                    throw new Error("Stream not supported in wire tests");
+                    return code`undefined`;
                 },
                 sse: () => {
-                    throw new Error("SSE not supported in wire tests");
+                    return code`undefined`;
                 },
                 _other: () => {
-                    throw new Error("Unsupported response type");
+                    return code`undefined`;
                 }
             });
             if (neverThrowErrors) {

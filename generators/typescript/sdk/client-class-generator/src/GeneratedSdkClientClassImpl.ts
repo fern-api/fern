@@ -557,7 +557,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         return generatedEndpoint.maybeLeverageInvocation({
             context: args.context,
-            invocation: invocation.endpointInvocation
+            invocation: invocation.endpointInvocation,
+            sseEvents: invocation.sseEvents
         });
     }
 

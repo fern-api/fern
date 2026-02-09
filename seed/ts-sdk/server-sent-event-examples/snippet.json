@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-event-examples\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.stream({\n    query: \"foo\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+                "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-event-examples\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\n// Expected SSE Events:\n// event: \"discriminant-1\"\n// data: {\"delta\":\"foo\",\"tokens\":1}\n//\n// event: \"discriminant-2\"\n// data: {\"delta\":\"bar\",\"tokens\":2}\n//\nconst response = await client.completions.stream({\n    query: \"foo\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             },
             "example_identifier": "Stream completions"
         }

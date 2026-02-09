@@ -42,6 +42,13 @@ Instantiate and use the client with the following:
 import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
 
 const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
+// Expected SSE Events:
+// event: "discriminant-1"
+// data: {"delta":"foo","tokens":1}
+//
+// event: "discriminant-2"
+// data: {"delta":"bar","tokens":2}
+//
 const response = await client.completions.stream({
     query: "foo"
 });
@@ -92,6 +99,13 @@ The SDK uses async iterators, so you can consume the responses using a `for awai
 import { SeedServerSentEventsClient } from "@fern/server-sent-event-examples";
 
 const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
+// Expected SSE Events:
+// event: "discriminant-1"
+// data: {"delta":"foo","tokens":1}
+//
+// event: "discriminant-2"
+// data: {"delta":"bar","tokens":2}
+//
 const response = await client.completions.stream({
     query: "foo"
 });

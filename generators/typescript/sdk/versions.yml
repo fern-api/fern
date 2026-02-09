@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.46.2
+  changelogEntry:
+    - summary: |
+        Add SSE example support to generated code snippets. When an SSE endpoint has examples with
+        event and data fields, the generated snippets now include comments showing the expected SSE
+        events (e.g., event name and data payload) above the streaming response code.
+      type: feat
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.46.1
   changelogEntry:
     - summary: |

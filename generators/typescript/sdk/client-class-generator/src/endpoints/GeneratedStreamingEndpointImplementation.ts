@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, ExampleServerSideEvent, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -114,34 +114,72 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     undefined,
                     exampleParameters
                 )
-            )
+            ),
+            sseEvents: this.getSseEvents(args.example)
         };
+    }
+
+    private getSseEvents(example: ExampleEndpointCall): ExampleServerSideEvent[] | undefined {
+        if (example.response.type !== "ok") {
+            return undefined;
+        }
+        const successResponse = example.response;
+        if (successResponse.type !== "ok") {
+            return undefined;
+        }
+        if (successResponse.value.type !== "sse") {
+            return undefined;
+        }
+        return successResponse.value.value;
     }
 
     public maybeLeverageInvocation({
         invocation,
-        context
+        context,
+        sseEvents
     }: {
         invocation: ts.Expression;
         context: SdkContext;
+        sseEvents?: ExampleServerSideEvent[];
     }): ts.Node[] {
         const responseVariableName = "response";
         const itemVariableName = "item";
+
+        const responseStatement = ts.factory.createVariableStatement(
+            undefined,
+            ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        ts.factory.createIdentifier(responseVariableName),
+                        undefined,
+                        undefined,
+                        invocation
+                    )
+                ],
+                ts.NodeFlags.Const
+            )
+        );
+
+        if (sseEvents != null && sseEvents.length > 0) {
+            const commentLines: string[] = [];
+            for (const event of sseEvents) {
+                commentLines.push(` event: ${JSON.stringify(event.event)}`);
+                commentLines.push(` data: ${JSON.stringify(event.data.jsonExample)}`);
+                commentLines.push("");
+            }
+            ts.addSyntheticLeadingComment(
+                responseStatement,
+                ts.SyntaxKind.SingleLineCommentTrivia,
+                " Expected SSE Events:",
+                true
+            );
+            for (const line of commentLines) {
+                ts.addSyntheticLeadingComment(responseStatement, ts.SyntaxKind.SingleLineCommentTrivia, line, true);
+            }
+        }
+
         return [
-            ts.factory.createVariableStatement(
-                undefined,
-                ts.factory.createVariableDeclarationList(
-                    [
-                        ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier(responseVariableName),
-                            undefined,
-                            undefined,
-                            invocation
-                        )
-                    ],
-                    ts.NodeFlags.Const
-                )
-            ),
+            responseStatement,
             ts.factory.createForOfStatement(
                 ts.factory.createToken(ts.SyntaxKind.AwaitKeyword),
                 ts.factory.createVariableDeclarationList(
