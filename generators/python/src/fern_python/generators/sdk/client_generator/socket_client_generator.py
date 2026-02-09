@@ -175,7 +175,9 @@ class SocketClientGenerator:
                     writer.write("yield ")
                     if self._context.custom_config.pydantic_config.skip_validation:
                         writer.write_reference(self._context.core_utilities.get_construct_type())
-                        writer.write(f"(type_={self._get_response_type_name()}, object_=json.loads(message))  # type: ignore")
+                        writer.write(
+                            f"(type_={self._get_response_type_name()}, object_=json.loads(message))  # type: ignore"
+                        )
                     else:
                         writer.write_reference(self._context.core_utilities.get_parse_obj_as())
                         writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
