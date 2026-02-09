@@ -1,15 +1,15 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { ResolvedType } from "../../resolvers/ResolvedType";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getAvailability } from "../../utils/getAvailability";
-import { getDisplayName } from "../../utils/getDisplayName";
-import { getDocs } from "../../utils/getDocs";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { convertDeclaration } from "../convertDeclaration";
-import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ResolvedType } from "../../resolvers/ResolvedType.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { getAvailability } from "../../utils/getAvailability.js";
+import { getDisplayName } from "../../utils/getDisplayName.js";
+import { getDocs } from "../../utils/getDocs.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
+import { convertDeclaration } from "../convertDeclaration.js";
+import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration.js";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 

@@ -6,41 +6,56 @@ import { writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { cleanOrphanedSeedFolders } from "./commands/clean";
-import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
-import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
-import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
-import { getLatestCli } from "./commands/latest/getLatestCli";
-import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
-import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
-import { publishCli } from "./commands/publish/publishCli";
-import { publishGenerator } from "./commands/publish/publishGenerator";
-import { registerCliRelease } from "./commands/register/registerCliRelease";
-import { registerGenerator } from "./commands/register/registerGenerator";
-import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
-import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
-import { TaskContextFactory } from "./commands/test/TaskContextFactory";
-import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
-import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
-import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local";
-import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils";
-import { validateCliRelease } from "./commands/validate/validateCliChangelog";
-import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
-import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
-import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
-import { Semaphore } from "./Semaphore";
+import { cleanOrphanedSeedFolders } from "./commands/clean/index.js";
+import { generateCliChangelog } from "./commands/generate/generateCliChangelog.js";
+import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog.js";
+import { buildGeneratorImage } from "./commands/img/buildGeneratorImage.js";
+import { getLatestCli } from "./commands/latest/getLatestCli.js";
+import { getLatestGenerator } from "./commands/latest/getLatestGenerator.js";
+import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml.js";
+import { getAvailableFixtures, splitFixturesIntoGroups } from "./commands/list-test-fixtures/index.js";
+import { publishCli } from "./commands/publish/publishCli.js";
+import { publishGenerator } from "./commands/publish/publishGenerator.js";
+import { registerCliRelease } from "./commands/register/registerCliRelease.js";
+import { registerGenerator } from "./commands/register/registerGenerator.js";
+import { runWithCustomFixture } from "./commands/run/runWithCustomFixture.js";
+import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test/index.js";
+import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
+import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner/index.js";
+import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures.js";
+import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local/index.js";
+import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils.js";
+import { validateCliRelease } from "./commands/validate/validateCliChangelog.js";
+import { validateGenerator } from "./commands/validate/validateGeneratorChangelog.js";
+import { validateVersionsYml } from "./commands/validate/validateVersionsYml.js";
+import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces.js";
+import { Semaphore } from "./Semaphore.js";
 
-void tryRunCli();
+tryRunCli()
+    .then(() => {
+        process.exit(0);
+    })
+    .catch((error) => {
+        console.error("Unhandled error:", error);
+        process.exit(1);
+    });
 
 export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv))
         .strict()
+        .exitProcess(false)
         .fail((message, error: unknown, argv) => {
             // if error is null, it's a yargs validation error
             if (error == null) {
                 argv.showHelp();
                 // biome-ignore lint: ignore next line
                 console.error(message);
+            } else {
+                // Log the actual error for debugging
+                console.error("Error:", error);
+                if (error instanceof Error) {
+                    console.error("Stack:", error.stack);
+                }
             }
         });
 
@@ -49,6 +64,7 @@ export async function tryRunCli(): Promise<void> {
     addRunCommand(cli);
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
+    addListTestFixturesCommand(cli);
     addCleanCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
@@ -148,15 +164,15 @@ function addTestCommand(cli: Argv) {
 
                 // If no fixtures passed in, use all available fixtures (without output folders)
                 if (argv.fixture == null) {
-                    argv.fixture = await getAvailableFixtures(generator, false);
+                    argv.fixture = getAvailableFixtures(generator, false);
                 } else {
-                    const availableFixturesForGlobbing = await getAvailableFixtures(generator, false);
+                    const availableFixturesForGlobbing = getAvailableFixtures(generator, false);
                     argv.fixture = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
                 }
 
                 // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
-                const availableFixtures = await getAvailableFixtures(generator, false);
-                const availableFixturesWithOutputFolders = await getAvailableFixtures(generator, true);
+                const availableFixtures = getAvailableFixtures(generator, false);
+                const availableFixturesWithOutputFolders = getAvailableFixtures(generator, true);
 
                 for (const fixture of argv.fixture) {
                     if (!availableFixtures.includes(fixture) && !availableFixturesWithOutputFolders.includes(fixture)) {
@@ -564,10 +580,75 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                 );
             }
 
-            const availableFixtures = await getAvailableFixtures(generator, argv["include-output-folders"]);
+            const availableFixtures = getAvailableFixtures(generator, argv["include-output-folders"]);
 
             // Note: HAVE to log the output for CI to pick it up
             console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));
+        }
+    );
+}
+
+function addListTestFixturesCommand(cli: Argv) {
+    cli.command(
+        "list-test-fixtures",
+        "List all test fixtures for all generators or a specific generator, with output folders, in JSON format for CI consumption",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to list fixtures for (lists all if not provided)"
+                })
+                .option("groups", {
+                    type: "string",
+                    demandOption: false,
+                    description:
+                        "Split fixtures into groups for parallel execution. Use 'auto' to automatically calculate based on fixture count, or a number for a specific group count."
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            if (argv.generator != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
+
+            const targetGenerators =
+                argv.generator != null
+                    ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
+                    : generators;
+
+            // Determine number of groups
+            const groupsArg = argv.groups;
+            const numGroups = groupsArg === "auto" ? -1 : groupsArg != null ? parseInt(groupsArg, 10) : undefined;
+
+            // If groups is specified, output grouped fixtures
+            if (numGroups !== undefined) {
+                // For grouped output, we expect a single generator
+                if (targetGenerators.length !== 1) {
+                    throw new Error("When using --groups, you must specify exactly one generator with --generator");
+                }
+
+                const generator = targetGenerators[0];
+                if (generator == null) {
+                    throw new Error("Generator not found");
+                }
+                const fixtures = getAvailableFixtures(generator, true);
+                const groups = splitFixturesIntoGroups(fixtures, numGroups);
+                console.log(JSON.stringify(groups));
+                return;
+            }
+
+            // Output flat list of fixtures for each generator
+            const result: Record<string, string[]> = {};
+
+            for (const generator of targetGenerators) {
+                const fixtures = getAvailableFixtures(generator, true);
+                result[generator.workspaceName] = fixtures;
+            }
+
+            // Output JSON to stdout (can be piped or captured directly)
+            console.log(JSON.stringify({ generators: result }));
         }
     );
 }
@@ -609,37 +690,6 @@ function addCleanCommand(cli: Argv) {
             }
         }
     );
-}
-
-async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFolders: boolean) {
-    // Get all available fixtures
-    const availableFixtures = FIXTURES.filter((fixture) => {
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
-        return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
-    });
-
-    // Optionally, include output folders in format fixture:outputFolder (note: this will replace the fixture name without the output folder)
-    if (withOutputFolders) {
-        // Add fixtures that have subfolders with their subfolder version
-        const allOptions: string[] = [];
-        for (const fixture of availableFixtures) {
-            const config = generator.workspaceConfig.fixtures?.[fixture];
-            if (config != null && config.length > 0) {
-                // This fixture has subfolders, add to map as fixture:outputFolder
-                for (const outputFolder of config.map((c) => c.outputFolder)) {
-                    allOptions.push(`${fixture}:${outputFolder}`);
-                }
-            } else {
-                // This fixture has no subfolders, keep as is
-                allOptions.push(fixture);
-            }
-        }
-        // Return map with output folders
-        return allOptions;
-    }
-
-    // Don't include subfolders, return the original fixtures
-    return availableFixtures;
 }
 
 function expandFixtureGlobs(fixturePatterns: string[], availableFixtures: string[]): string[] {

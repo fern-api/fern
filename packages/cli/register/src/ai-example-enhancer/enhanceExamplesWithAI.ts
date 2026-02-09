@@ -8,16 +8,22 @@ import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
-import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers";
-import { LambdaExampleEnhancer } from "./lambdaClient";
-import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
-import { AIExampleEnhancerConfig, ConcurrencyStats, ProcessingResult, ProgressCallback, QueuedRequest } from "./types";
-import { removeInvalidAiExamples, validateAiExamplesFromFile } from "./validateAiExamples";
+import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers.js";
+import { LambdaExampleEnhancer } from "./lambdaClient.js";
+import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator.js";
+import {
+    AIExampleEnhancerConfig,
+    ConcurrencyStats,
+    ProcessingResult,
+    ProgressCallback,
+    QueuedRequest
+} from "./types.js";
+import { removeInvalidAiExamples, validateAiExamplesFromFile } from "./validateAiExamples.js";
 import {
     EnhancedExampleRecord,
     loadExistingOverrideCoverage,
     writeAiExamplesOverride
-} from "./writeAiExamplesOverride";
+} from "./writeAiExamplesOverride.js";
 
 // Circuit breaker for AI enhancement to prevent excessive failures
 class CircuitBreaker {

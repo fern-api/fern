@@ -1,8 +1,8 @@
 import { schemas } from "@fern-api/config";
 import jwt from "jsonwebtoken";
 
-import { FernRcAccountManager, FernRcSchemaLoader, LegacyTokenMigrator } from "../config/fern-rc";
-import { KeyringStore } from "./KeyringStore";
+import { FernRcAccountManager, FernRcSchemaLoader, LegacyTokenMigrator } from "../config/fern-rc/index.js";
+import { KeyringStore } from "./KeyringStore.js";
 
 export namespace TokenService {
     /**

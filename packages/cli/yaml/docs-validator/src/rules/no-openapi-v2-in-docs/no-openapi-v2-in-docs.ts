@@ -1,7 +1,7 @@
 import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const NoOpenApiV2InDocsRule: Rule = {
     name: "no-openapi-v2-in-docs",

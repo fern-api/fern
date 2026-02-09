@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { AstNode, Writer } from "./core";
-import { DeclarationType } from "./DeclarationType";
+import { AstNode, Writer } from "./core/index.js";
+import { DeclarationType } from "./DeclarationType.js";
 
 type EnumCaseValueBinding = {
     type: "enum-case-value-binding";

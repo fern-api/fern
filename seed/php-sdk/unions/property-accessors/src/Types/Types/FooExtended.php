@@ -43,6 +43,7 @@ class FooExtended extends JsonSerializableType
     public function setAge(int $value): self
     {
         $this->age = $value;
+        $this->_setField('age');
         return $this;
     }
 

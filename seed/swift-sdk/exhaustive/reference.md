@@ -3225,7 +3225,7 @@ try await main()
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.reqWithHeaders.<a href="/Sources/Resources/ReqWithHeaders/ReqWithHeadersClient.swift">getWithCustomHeader</a>(xTestEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.reqWithHeaders.<a href="/Sources/Resources/ReqWithHeaders/ReqWithHeadersClient.swift">getWithCustomHeader</a>(xTestServiceHeader: String, xTestEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -3258,6 +3258,14 @@ try await main()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**xTestServiceHeader:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

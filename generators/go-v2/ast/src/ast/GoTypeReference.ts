@@ -1,7 +1,7 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { writeGenerics } from "./utils/writeGenerics";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Type } from "./Type.js";
+import { writeGenerics } from "./utils/writeGenerics.js";
 
 export declare namespace GoTypeReference {
     interface Args {

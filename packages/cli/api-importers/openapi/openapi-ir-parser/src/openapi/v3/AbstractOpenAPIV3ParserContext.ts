@@ -3,13 +3,13 @@ import type { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-
 import type { TaskContext } from "@fern-api/task-context";
 import type { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../getExtension";
-import type { ParseOpenAPIOptions } from "../../options";
-import type { SchemaParserContext } from "../../schema/SchemaParserContext";
-import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
-import { isReferenceObject } from "../../schema/utils/isReferenceObject";
-import { FernOpenAPIExtension } from "./extensions/fernExtensions";
-import { OpenAPIFilter } from "./OpenAPIFilter";
+import { getExtension } from "../../getExtension.js";
+import type { ParseOpenAPIOptions } from "../../options.js";
+import type { SchemaParserContext } from "../../schema/SchemaParserContext.js";
+import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences.js";
+import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
+import { FernOpenAPIExtension } from "./extensions/fernExtensions.js";
+import { OpenAPIFilter } from "./OpenAPIFilter.js";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";

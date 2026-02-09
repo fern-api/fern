@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
-import { DefaultIntegerFormatSchema } from "./DefaultIntegerFormatSchema";
-import { FormParameterEncodingSchema } from "./FormParameterEncodingSchema";
-import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema";
-import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
-import { ResolveAliasesSchema } from "./ResolveAliasesSchema";
+import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema.js";
+import { DefaultIntegerFormatSchema } from "./DefaultIntegerFormatSchema.js";
+import { FormParameterEncodingSchema } from "./FormParameterEncodingSchema.js";
+import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema.js";
+import { OpenApiFilterSchema } from "./OpenApiFilterSchema.js";
+import { ResolveAliasesSchema } from "./ResolveAliasesSchema.js";
 
 /**
  * OpenAPI-specific settings that extend the base API settings.

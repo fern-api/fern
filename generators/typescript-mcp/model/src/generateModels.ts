@@ -1,9 +1,9 @@
-import { AliasGenerator } from "./alias/AliasGenerator";
-import { EnumGenerator } from "./enum/EnumGenerator";
-import { IndexGenerator } from "./index/IndexGenerator";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { ObjectGenerator } from "./object/ObjectGenerator";
-import { UnionGenerator } from "./union/UnionGenerator";
+import { AliasGenerator } from "./alias/AliasGenerator.js";
+import { EnumGenerator } from "./enum/EnumGenerator.js";
+import { IndexGenerator } from "./index/IndexGenerator.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { ObjectGenerator } from "./object/ObjectGenerator.js";
+import { UnionGenerator } from "./union/UnionGenerator.js";
 
 export function generateModels(context: ModelGeneratorContext): void {
     const typeDeclarations = Object.values(context.ir.types);

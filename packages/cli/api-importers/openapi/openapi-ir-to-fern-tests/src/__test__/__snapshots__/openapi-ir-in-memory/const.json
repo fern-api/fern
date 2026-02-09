@@ -117,6 +117,7 @@
     "coerceOptionalSchemasToNullable": false,
     "removeDiscriminantsFromSchemas": "always",
     "defaultIntegerFormat": "int32",
-    "pathParameterOrder": "url-order"
+    "pathParameterOrder": "url-order",
+    "resolveSchemaCollisions": false
   }
 }

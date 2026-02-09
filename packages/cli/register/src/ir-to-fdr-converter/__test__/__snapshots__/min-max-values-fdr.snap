@@ -14,6 +14,7 @@
         "description": "Creates a product with various min/max constrained fields",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -205,6 +206,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },

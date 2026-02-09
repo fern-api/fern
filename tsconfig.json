@@ -501,6 +501,21 @@
     },
     {
       "path": "./packages/migrations-base"
+    },
+    {
+      "path": "./packages/cli/api-importers/graphql"
+    },
+    {
+      "path": "./packages/cli/yaml/loader"
+    },
+    {
+      "path": "./packages/cli/cli-v2"
+    },
+    {
+      "path": "./packages/cli/config"
+    },
+    {
+      "path": "./packages/cli/source"
     }
   ]
 }

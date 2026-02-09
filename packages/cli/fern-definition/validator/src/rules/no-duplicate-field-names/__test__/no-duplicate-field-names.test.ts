@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoDuplicateFieldNamesRule } from "../no-duplicate-field-names";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoDuplicateFieldNamesRule } from "../no-duplicate-field-names.js";
 
 describe("no-duplicate-field-names", () => {
     it("simple", async () => {

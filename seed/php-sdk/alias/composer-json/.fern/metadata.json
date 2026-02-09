@@ -14,14 +14,6 @@
         "LGPL-2.1-only",
         "GPL-3.0-or-later"
       ],
-      "require": {
-        "guzzlehttp/guzzle": "7.9.2",
-        "guzzlehttp/promises": "2.0.4"
-      },
-      "require-dev": {
-        "phpunit/phpunit": "12.0.2",
-        "phpunit/php-timer": "8.0.0"
-      },
       "scripts": {
         "build": [
           "@php -l src",

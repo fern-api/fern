@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
 import path from "path";
 
-import { diff } from "./diff";
+import { diff } from "./diff.js";
 
 const BREAKING_FIXTURES_DIR = join(
     AbsoluteFilePath.of(__dirname),

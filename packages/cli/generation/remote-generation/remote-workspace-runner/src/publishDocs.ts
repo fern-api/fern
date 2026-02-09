@@ -13,6 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -24,10 +25,9 @@ import yaml from "js-yaml";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { detectAirGappedMode, OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
-import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { measureImageSizes } from "./measureImageSizes";
-import { asyncPool } from "./utils/asyncPool";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { measureImageSizes } from "./measureImageSizes.js";
+import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;

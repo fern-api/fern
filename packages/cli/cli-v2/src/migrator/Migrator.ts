@@ -4,13 +4,12 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import type { Logger } from "@fern-api/logger";
 import { readdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { convertMultiApi, convertSingleApi } from "./converters";
-import { FernConfigJsonMigrator } from "./fern-config-json";
-import { GeneratorsYmlMigrator } from "./generators-yml";
-import type { MigratorResult, MigratorWarning } from "./types";
+import { convertMultiApi, convertSingleApi } from "./converters/index.js";
+import { FernConfigJsonMigrator } from "./fern-config-json/index.js";
+import { GeneratorsYmlMigrator } from "./generators-yml/index.js";
+import type { MigratorResult, MigratorWarning } from "./types/index.js";
 
 const FERN_YML_FILENAME = "fern.yml";
-const EDITION = "2026-01-01";
 
 export interface MigratorConfig {
     cwd: AbsoluteFilePath;
@@ -166,7 +165,6 @@ export class Migrator {
         warnings.push(...apiResult.warnings);
 
         const fernYml: schemas.FernYmlSchema = {
-            edition: EDITION,
             org
         };
 
@@ -196,7 +194,7 @@ export class Migrator {
                 type: "conflict",
                 message: "No API directories found in fern/apis/"
             });
-            return { success: false, fernYml: { edition: EDITION, org } };
+            return { success: false, fernYml: { org } };
         }
 
         // Collect generators.yml API configs and SDK results for each API.
@@ -240,7 +238,6 @@ export class Migrator {
         warnings.push(...apisResult.warnings);
 
         const fernYml: schemas.FernYmlSchema = {
-            edition: EDITION,
             org,
             apis: apisResult.apis
         };

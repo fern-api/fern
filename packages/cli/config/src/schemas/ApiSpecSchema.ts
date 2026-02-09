@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { AsyncApiSpecSchema } from "./specs/AsyncApiSpecSchema";
-import { ConjureSpecSchema } from "./specs/ConjureSpecSchema";
-import { FernSpecSchema } from "./specs/FernSpecSchema";
-import { OpenApiSpecSchema } from "./specs/OpenApiSpecSchema";
-import { OpenRpcSpecSchema } from "./specs/OpenRpcSpecSchema";
-import { ProtobufSpecSchema } from "./specs/ProtobufSpecSchema";
+import { AsyncApiSpecSchema } from "./specs/AsyncApiSpecSchema.js";
+import { ConjureSpecSchema } from "./specs/ConjureSpecSchema.js";
+import { FernSpecSchema } from "./specs/FernSpecSchema.js";
+import { OpenApiSpecSchema } from "./specs/OpenApiSpecSchema.js";
+import { OpenRpcSpecSchema } from "./specs/OpenRpcSpecSchema.js";
+import { ProtobufSpecSchema } from "./specs/ProtobufSpecSchema.js";
 
 /**
  * An API spec schema is a discriminated union of all supported spec types.

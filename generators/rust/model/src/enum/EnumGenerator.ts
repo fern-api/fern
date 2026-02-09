@@ -1,17 +1,17 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly enumTypeDeclaration: EnumTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly enumTypeDeclaration: FernIr.EnumTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
     public constructor(
-        typeDeclaration: TypeDeclaration,
-        enumTypeDeclaration: EnumTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration,
+        enumTypeDeclaration: FernIr.EnumTypeDeclaration,
         context: ModelGeneratorContext
     ) {
         this.typeDeclaration = typeDeclaration;
@@ -79,7 +79,7 @@ export class EnumGenerator {
         return attributes;
     }
 
-    private generateEnumVariant(enumValue: EnumTypeDeclaration["values"][0]): rust.EnumVariant {
+    private generateEnumVariant(enumValue: FernIr.EnumTypeDeclaration["values"][0]): rust.EnumVariant {
         const variantAttributes: rust.Attribute[] = [];
 
         // Add serde rename if the variant name differs from wire value

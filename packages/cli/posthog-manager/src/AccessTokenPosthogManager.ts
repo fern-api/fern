@@ -1,8 +1,8 @@
 import { PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
-import { logPosthogError } from "./logPosthogError";
-import { PosthogManager } from "./PosthogManager";
+import { logPosthogError } from "./logPosthogError.js";
+import { PosthogManager } from "./PosthogManager.js";
 
 export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;

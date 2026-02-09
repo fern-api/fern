@@ -14,7 +14,7 @@ import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import YAML from "yaml";
 
-import { Migration } from "../../../types/Migration";
+import { Migration } from "../../../types/Migration.js";
 
 export const migration: Migration = {
     name: "generators-yml-use-api-specs",

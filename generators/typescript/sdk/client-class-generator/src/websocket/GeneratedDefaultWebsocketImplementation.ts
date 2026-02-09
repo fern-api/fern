@@ -1,12 +1,5 @@
 import type { SetRequired } from "@fern-api/core-utils";
-import type {
-    IntermediateRepresentation,
-    NameAndWireValue,
-    PathParameter,
-    QueryParameter,
-    WebSocketChannel,
-    WebSocketChannelId
-} from "@fern-fern/ir-sdk/api";
+import type { FernIr } from "@fern-fern/ir-sdk";
 import {
     getParameterNameForPropertyPathParameterName,
     getPropertyKey,
@@ -22,16 +15,16 @@ import {
     StructureKind,
     ts
 } from "ts-morph";
-import { buildUrl } from "../endpoints/utils/buildUrl";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { buildUrl } from "../endpoints/utils/buildUrl.js";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
-        channel: WebSocketChannel;
-        channelId: WebSocketChannelId;
+        channel: FernIr.WebSocketChannel;
+        channelId: FernIr.WebSocketChannelId;
         packageId: PackageId;
         serviceClassName: string;
         requireDefaultEnvironment: boolean;
@@ -54,9 +47,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
     private static readonly ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME = "queryParams";
 
-    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private readonly channelId: WebSocketChannelId;
+    private readonly channelId: FernIr.WebSocketChannelId;
     private readonly packageId: PackageId;
     private readonly serviceClassName: string;
     private readonly requireDefaultEnvironment: boolean;
@@ -64,7 +57,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
-    public readonly channel: WebSocketChannel;
+    public readonly channel: FernIr.WebSocketChannel;
 
     constructor({
         intermediateRepresentation,
@@ -545,7 +538,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         });
     }
 
-    private getEnvironment(channel: WebSocketChannel, context: SdkContext): ts.Expression {
+    private getEnvironment(channel: FernIr.WebSocketChannel, context: SdkContext): ts.Expression {
         let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
@@ -619,7 +612,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         );
     }
 
-    public getBaseUrl(channel: WebSocketChannel, context: SdkContext): ts.Expression {
+    public getBaseUrl(channel: FernIr.WebSocketChannel, context: SdkContext): ts.Expression {
         const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
 
         const environment = this.getEnvironment(channel, context);
@@ -669,14 +662,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         return ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName);
     }
 
-    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): {
+    public getPropertyNameOfQueryParameter(queryParameter: FernIr.QueryParameter): {
         safeName: string;
         propertyName: string;
     } {
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
-    public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): {
+    public getPropertyNameOfQueryParameterFromName(name: FernIr.NameAndWireValue): {
         safeName: string;
         propertyName: string;
     } {
@@ -687,7 +680,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         };
     }
 
-    public getPropertyNameOfPathParameter(pathParameter: PathParameter): {
+    public getPropertyNameOfPathParameter(pathParameter: FernIr.PathParameter): {
         safeName: string;
         propertyName: string;
     } {

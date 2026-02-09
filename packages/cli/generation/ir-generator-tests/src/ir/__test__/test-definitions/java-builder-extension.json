@@ -657,6 +657,7 @@
                         }
                     },
                     "url": "https://api.example.com",
+                    "audiences": null,
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,
@@ -684,6 +685,7 @@
                         }
                     },
                     "url": "https://api.${DEV_NAMESPACE}.example.com",
+                    "audiences": null,
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,
@@ -711,6 +713,7 @@
                         }
                     },
                     "url": "https://api.${STAGE_ENV}.example.com",
+                    "audiences": null,
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,

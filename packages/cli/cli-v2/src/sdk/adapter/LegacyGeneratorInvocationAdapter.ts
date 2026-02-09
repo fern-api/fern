@@ -5,8 +5,8 @@ import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { readFile } from "fs/promises";
-import type { Context } from "../../context/Context";
-import type { Target } from "../config/Target";
+import type { Context } from "../../context/Context.js";
+import type { Target } from "../config/Target.js";
 
 export namespace LegacyGeneratorInvocationAdapter {
     export interface Config {

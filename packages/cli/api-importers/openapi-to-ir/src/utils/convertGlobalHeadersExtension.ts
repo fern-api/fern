@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractConverterContext, ExampleConverter } from "@fern-api/v3-importer-commons";
 
-import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
+import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
 
 export function convertGlobalHeadersExtension({
     globalHeaders,

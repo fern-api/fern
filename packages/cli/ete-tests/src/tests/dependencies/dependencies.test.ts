@@ -1,8 +1,8 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import stripAnsi from "strip-ansi";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { generateIrAsString } from "../ir/generateIrAsString";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { generateIrAsString } from "../ir/generateIrAsString.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 

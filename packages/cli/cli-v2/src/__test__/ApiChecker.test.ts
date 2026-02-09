@@ -3,11 +3,11 @@ import { NOOP_LOGGER } from "@fern-api/logger";
 import { join } from "path";
 import { Writable } from "stream";
 import { describe, expect, it } from "vitest";
-import { ApiChecker } from "../api/checker/ApiChecker";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
-import { createTestContext } from "./utils/createTestContext";
-import { loadWorkspace } from "./utils/loadWorkspace";
+import { ApiChecker } from "../api/checker/ApiChecker.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
+import { createTestContext } from "./utils/createTestContext.js";
+import { loadWorkspace } from "./utils/loadWorkspace.js";
 
 const FIXTURES_DIR = AbsoluteFilePath.of(join(__dirname, "fixtures"));
 

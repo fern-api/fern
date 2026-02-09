@@ -1,6 +1,6 @@
 import type { Element, ElementContent } from "hast";
 
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes.js";
 
 export function scrapeAccordionGroup(
     node: HastNode,

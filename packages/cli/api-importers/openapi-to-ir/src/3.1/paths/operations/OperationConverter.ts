@@ -12,13 +12,13 @@ import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples";
-import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
-import { FernExplorerExtension } from "../../../extensions/x-fern-explorer";
-import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
-import { ResponseBodyConverter } from "../ResponseBodyConverter";
-import { ResponseErrorConverter } from "../ResponseErrorConverter";
-import { AbstractOperationConverter } from "./AbstractOperationConverter";
+import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples.js";
+import { FernExamplesExtension } from "../../../extensions/x-fern-examples.js";
+import { FernExplorerExtension } from "../../../extensions/x-fern-explorer.js";
+import { FernStreamingExtension } from "../../../extensions/x-fern-streaming.js";
+import { ResponseBodyConverter } from "../ResponseBodyConverter.js";
+import { ResponseErrorConverter } from "../ResponseErrorConverter.js";
+import { AbstractOperationConverter } from "./AbstractOperationConverter.js";
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {

@@ -1,7 +1,7 @@
-import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 
-import { GeneratedWebsocketResponseSchemaImpl } from "./GeneratedWebsocketResponseSchemaImpl";
+import { GeneratedWebsocketResponseSchemaImpl } from "./GeneratedWebsocketResponseSchemaImpl.js";
 
 export declare namespace WebsocketTypeSchemaGenerator {
     export interface Init {
@@ -13,8 +13,8 @@ export declare namespace WebsocketTypeSchemaGenerator {
     export namespace GeneratedWebsocketMessageBodySchema {
         export interface Args {
             packageId: PackageId;
-            channel: WebSocketChannel;
-            receiveMessages: WebSocketMessageBodyReference[];
+            channel: FernIr.WebSocketChannel;
+            receiveMessages: FernIr.WebSocketMessageBodyReference[];
             typeName: string;
         }
     }

@@ -1,10 +1,10 @@
 import { NamedFullExample } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../../getExtension";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { OpenAPIExtension } from "../../extensions/extensions";
+import { getExtension } from "../../../../getExtension.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { OpenAPIExtension } from "../../extensions/extensions.js";
 
 export interface TextEventStreamObject {
     contentType?: string;

@@ -1,14 +1,13 @@
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
-import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-
-import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace ObjectGenerator {
     interface Args {
         symbol: swift.Symbol;
-        properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-        extendedProperties?: ObjectProperty[];
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+        extendedProperties?: FernIr.ObjectProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -16,8 +15,8 @@ export declare namespace ObjectGenerator {
 
 export class ObjectGenerator {
     private readonly symbol: swift.Symbol;
-    private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-    private readonly extendedProperties: ObjectProperty[];
+    private readonly properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+    private readonly extendedProperties: FernIr.ObjectProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 

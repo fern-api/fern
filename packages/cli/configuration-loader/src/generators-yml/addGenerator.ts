@@ -1,14 +1,14 @@
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 
-import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
+import { GENERATOR_INVOCATIONS } from "./generatorInvocations.js";
 import {
     addDefaultDockerOrgIfNotPresent,
     getGeneratorNameOrThrow,
     removeDefaultDockerOrgIfPresent
-} from "./getGeneratorName";
-import { getLatestGeneratorVersion } from "./getGeneratorVersions";
-import { updateGeneratorGroup } from "./updateGeneratorGroup";
+} from "./getGeneratorName.js";
+import { getLatestGeneratorVersion } from "./getGeneratorVersions.js";
+import { updateGeneratorGroup } from "./updateGeneratorGroup.js";
 
 export async function addGenerator({
     generatorName,

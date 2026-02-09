@@ -5,9 +5,9 @@ import {
     GeneratorsYmlFileAstNodeTypes,
     GeneratorsYmlFileAstNodeVisitor,
     GeneratorsYmlFileAstVisitor
-} from "./ast/GeneratorsYmlAstVisitor";
-import { RuleVisitors } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+} from "./ast/GeneratorsYmlAstVisitor.js";
+import { RuleVisitors } from "./Rule.js";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export function createGeneratorsYmlAstVisitorForRules({
     relativeFilepath,

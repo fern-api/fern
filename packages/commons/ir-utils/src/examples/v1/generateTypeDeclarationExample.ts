@@ -1,18 +1,18 @@
 import {
     ExampleObjectProperty,
     ExampleObjectType,
-    ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
     ExampleUnionBaseProperty,
+    FernIr,
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
 /**
  * Checks if a union member is "simple" (primitive, literal, or enum).
@@ -311,7 +311,7 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.noProperties()
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
                                 },
                                 baseProperties,
                                 extendProperties
@@ -354,7 +354,7 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                                         typeId: typeDeclaration.name.typeId,
                                         object:
                                             example.type === "object"
@@ -391,7 +391,7 @@ export function generateTypeDeclarationExample({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
-                                    shape: ExampleSingleUnionTypeProperties.singleProperty(example)
+                                    shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty(example)
                                 },
                                 baseProperties,
                                 extendProperties

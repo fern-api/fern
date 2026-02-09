@@ -5,7 +5,7 @@ import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 
-import { runContainer } from "../runDocker";
+import { runContainer } from "../runDocker.js";
 
 const promisifiedExec = promisify(exec);
 

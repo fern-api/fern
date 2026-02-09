@@ -3,9 +3,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
-import { Config } from "./Config";
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { Config } from "./Config.js";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const SNIPPET_PACKAGE_NAME = "com.example.usage";
 const SNIPPET_CLASS_NAME = "Example";

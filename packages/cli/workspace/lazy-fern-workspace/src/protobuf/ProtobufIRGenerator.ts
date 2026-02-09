@@ -16,7 +16,7 @@ import {
     PROTOBUF_MODULE_PACKAGE_JSON,
     PROTOBUF_SHELL_PROXY,
     PROTOBUF_SHELL_PROXY_FILENAME
-} from "./utils";
+} from "./utils.js";
 
 export class ProtobufIRGenerator {
     private context: TaskContext;

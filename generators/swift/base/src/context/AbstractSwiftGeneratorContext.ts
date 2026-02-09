@@ -2,38 +2,24 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
-import {
-    FernFilepath,
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation,
-    ObjectProperty,
-    Package,
-    PrimitiveTypeV1,
-    ServiceId,
-    Subpackage,
-    SubpackageId,
-    TypeDeclaration,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
-import { SwiftProject } from "../project";
-import { CycleDetector } from "./cycle-detector";
-import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
-import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
-import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs.js";
+import { SwiftProject } from "../project/index.js";
+import { CycleDetector } from "./cycle-detector.js";
+import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions.js";
+import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
+import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: SwiftProject;
-    private readonly indirectPropertiesMapping: Map<TypeId, Set<string>>;
-    private readonly schemaTypeIdBySymbolId: Map<string, TypeId>;
-    private readonly recursiveTypeIdsForSwiftEnums: Set<TypeId>;
+    private readonly indirectPropertiesMapping: Map<FernIr.TypeId, Set<string>>;
+    private readonly schemaTypeIdBySymbolId: Map<string, FernIr.TypeId>;
+    private readonly recursiveTypeIdsForSwiftEnums: Set<FernIr.TypeId>;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -48,16 +34,16 @@ export abstract class AbstractSwiftGeneratorContext<
         this.registerProjectSymbols(this.project, ir);
     }
 
-    private registerProjectSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
+    private registerProjectSymbols(project: SwiftProject, ir: FernIr.IntermediateRepresentation) {
         this.registerSourceSymbols(project, ir);
         this.registerTestSymbols(project);
     }
 
-    public shouldGeneratePropertyAsIndirect(typeId: TypeId, propertyWireValue: string): boolean {
+    public shouldGeneratePropertyAsIndirect(typeId: FernIr.TypeId, propertyWireValue: string): boolean {
         return this.indirectPropertiesMapping.get(typeId)?.has(propertyWireValue) ?? false;
     }
 
-    public getTypeIdForSchemaSymbol(symbol: swift.Symbol): TypeId | undefined {
+    public getTypeIdForSchemaSymbol(symbol: swift.Symbol): FernIr.TypeId | undefined {
         return this.schemaTypeIdBySymbolId.get(symbol.id);
     }
 
@@ -66,7 +52,7 @@ export abstract class AbstractSwiftGeneratorContext<
         return typeId != null && this.recursiveTypeIdsForSwiftEnums.has(typeId);
     }
 
-    private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
+    private registerSourceSymbols(project: SwiftProject, ir: FernIr.IntermediateRepresentation) {
         const { nameRegistry } = project;
         const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
@@ -217,13 +203,13 @@ export abstract class AbstractSwiftGeneratorContext<
         return RelativeFilePath.of("Schemas");
     }
 
-    public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
+    public getTypeDeclarationOrThrow(typeId: FernIr.TypeId): FernIr.TypeDeclaration {
         const typeDeclaration = this.ir.types[typeId];
         assertDefined(typeDeclaration, `Type declaration with the id '${typeId}' not found`);
         return typeDeclaration;
     }
 
-    public getPropertiesOfDiscriminatedUnionVariant(typeId: TypeId): ObjectProperty[] {
+    public getPropertiesOfDiscriminatedUnionVariant(typeId: FernIr.TypeId): FernIr.ObjectProperty[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return typeDeclaration.shape._visit({
             alias: () => [],
@@ -235,25 +221,27 @@ export abstract class AbstractSwiftGeneratorContext<
         });
     }
 
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+    public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         assertDefined(service, `Service with the id '${serviceId}' not found`);
         return service;
     }
 
-    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): [string, Subpackage][] {
+    public getSubpackagesOrThrow(
+        packageOrSubpackage: FernIr.Package | FernIr.Subpackage
+    ): [string, FernIr.Subpackage][] {
         return packageOrSubpackage.subpackages.map((subpackageId) => {
             return [subpackageId, this.getSubpackageOrThrow(subpackageId)];
         });
     }
 
-    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
+    public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         assertDefined(subpackage, `Subpackage with the id '${subpackageId}' not found`);
         return subpackage;
     }
 
-    public getDirectoryForFernFilepath(fernFilepath: FernFilepath): string {
+    public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
         return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
     }
 
@@ -265,18 +253,18 @@ export abstract class AbstractSwiftGeneratorContext<
         return Object.values(TestAsIsFiles);
     }
 
-    public getSwiftTypeReferenceFromSourceModuleScope(typeReference: TypeReference): swift.TypeReference {
+    public getSwiftTypeReferenceFromSourceModuleScope(typeReference: FernIr.TypeReference): swift.TypeReference {
         const symbol = this.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
     }
 
-    public getSwiftTypeReferenceFromTestModuleScope(typeReference: TypeReference): swift.TypeReference {
+    public getSwiftTypeReferenceFromTestModuleScope(typeReference: FernIr.TypeReference): swift.TypeReference {
         const symbol = this.project.nameRegistry.getRegisteredTestModuleSymbolOrThrow();
         return this.getSwiftTypeReferenceFromScope(typeReference, symbol.id);
     }
 
     public getSwiftTypeReferenceFromScope(
-        typeReference: TypeReference,
+        typeReference: FernIr.TypeReference,
         fromSymbol: swift.Symbol | string
     ): swift.TypeReference {
         const referencer = this.createReferencer(fromSymbol);
@@ -311,7 +299,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     _other: () => referencer.referenceAsIsType("JSONValue")
                 });
             case "primitive":
-                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
+                return FernIr.PrimitiveTypeV1._visit(typeReference.primitive.v1, {
                     string: () => referencer.referenceSwiftType("String"),
                     boolean: () => referencer.referenceSwiftType("Bool"),
                     integer: () => referencer.referenceSwiftType("Int"),
@@ -347,7 +335,7 @@ export abstract class AbstractSwiftGeneratorContext<
         );
     }
 
-    public getEndpointMethodDetails(endpoint: HttpEndpoint) {
+    public getEndpointMethodDetails(endpoint: FernIr.HttpEndpoint) {
         const endpointContainer = this.getEndpointContainer(endpoint);
         if (endpointContainer.type === "none") {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
@@ -367,10 +355,10 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public getEndpointContainer(
-        endpoint: HttpEndpoint
+        endpoint: FernIr.HttpEndpoint
     ):
-        | { type: "root-package"; package: Package }
-        | { type: "subpackage"; subpackageId: SubpackageId; subpackage: Subpackage }
+        | { type: "root-package"; package: FernIr.Package }
+        | { type: "subpackage"; subpackageId: FernIr.SubpackageId; subpackage: FernIr.Subpackage }
         | { type: "none" } {
         const rootPackageServiceId = this.ir.rootPackage.service;
         if (rootPackageServiceId) {

@@ -1,4 +1,4 @@
-import { hashJSON } from "../hashJSON";
+import { hashJSON } from "../hashJSON.js";
 
 describe("hashJSON Function", () => {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any

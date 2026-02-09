@@ -6,8 +6,8 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { constructNpmPackage, getNamespaceExport } from "@fern-api/typescript-browser-compatible-base";
 
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;

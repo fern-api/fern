@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { createSampleIr } from "../../createSampleIr";
+import { createSampleIr } from "../../createSampleIr.js";
 
 describe("createSampleIr", () => {
     it("should create a sample IR", async () => {

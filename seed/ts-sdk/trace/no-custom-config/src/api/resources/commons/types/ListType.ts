@@ -5,5 +5,5 @@ import type * as SeedTrace from "../../../index.js";
 export interface ListType {
     valueType: SeedTrace.VariableType;
     /** Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false. */
-    isFixedLength?: boolean;
+    isFixedLength?: boolean | undefined;
 }

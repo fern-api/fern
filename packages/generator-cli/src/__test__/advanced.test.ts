@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/advanced/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/advanced/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("advanced", () => {
     testGenerateReadme({

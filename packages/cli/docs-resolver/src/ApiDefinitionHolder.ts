@@ -3,8 +3,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { camelCase } from "lodash-es";
 import urlJoin from "url-join";
 
-import { isSubpackage } from "./utils/isSubpackage";
-import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts";
+import { isSubpackage } from "./utils/isSubpackage.js";
+import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts.js";
 
 // unlike `FernNavigation.EndpointId`, which concatenates the subpackageId and endpointId with a dot,
 // SubpackageHolder is intended to help resolve the endpointId from within a subpackage.

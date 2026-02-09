@@ -1,8 +1,7 @@
 import { noop } from "@fern-api/core-utils";
 import { BaseSwiftCustomConfigSchema, NameRegistry, swift } from "@fern-api/swift-codegen";
-import { ObjectProperty, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { AbstractSwiftGeneratorContext } from "./AbstractSwiftGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractSwiftGeneratorContext } from "./AbstractSwiftGeneratorContext.js";
 
 export function registerLiteralEnums({
     parentSymbol,
@@ -12,7 +11,7 @@ export function registerLiteralEnums({
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
-    typeDeclaration: TypeDeclaration;
+    typeDeclaration: FernIr.TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
 }) {
     typeDeclaration.shape._visit({
@@ -77,7 +76,7 @@ export function registerLiteralEnumsForObjectProperties({
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
-    properties: ObjectProperty[];
+    properties: FernIr.ObjectProperty[];
 }) {
     properties.forEach((property) => {
         registerLiteralEnumsForTypeReference({
@@ -95,7 +94,7 @@ export function registerLiteralEnumsForTypeReference({
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
-    typeReference: TypeReference;
+    typeReference: FernIr.TypeReference;
 }) {
     typeReference._visit({
         container: (ct) => {

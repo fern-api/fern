@@ -3,7 +3,12 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "@bufbuild/protobuf/dist/cjs/wkt/gen/google/protobuf/descriptor_pb": [
+        "../../../../node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/descriptor_pb"
+      ]
+    }
   },
   "include": ["./src/**/*"],
   "references": [

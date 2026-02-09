@@ -2,7 +2,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import chalk from "chalk";
 
-import { RuleViolation } from "../../Rule";
+import { RuleViolation } from "../../Rule.js";
 import {
     getRequestPropertyComponents,
     getResponsePropertyComponents,
@@ -10,7 +10,7 @@ import {
     ResponsePropertyValidator,
     requestTypeHasProperty,
     resolvedTypeHasProperty
-} from "../../utils/propertyValidatorUtils";
+} from "../../utils/propertyValidatorUtils.js";
 
 export function validateResultsProperty({
     endpointId,

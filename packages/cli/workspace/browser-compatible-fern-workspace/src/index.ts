@@ -1,2 +1,2 @@
-export { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader";
-export { OpenAPIWorkspace } from "./OpenAPIWorkspace";
+export { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader.js";
+export { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";

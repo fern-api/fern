@@ -1,8 +1,8 @@
 import { constructFernFileContext, ExampleResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
 import chalk from "chalk";
 
-import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { Rule } from "../../Rule.js";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
 
 export const NoUndefinedExampleReferenceRule: Rule = {
     name: "no-undefined-example-reference",

@@ -1,5 +1,5 @@
-import { HttpRequestSchema } from "../schemas";
-import { parseRawBytesType } from "./parseRawBytesType";
+import { HttpRequestSchema } from "../schemas/index.js";
+import { parseRawBytesType } from "./parseRawBytesType.js";
 
 export interface BytesRequest {
     isOptional: boolean;
