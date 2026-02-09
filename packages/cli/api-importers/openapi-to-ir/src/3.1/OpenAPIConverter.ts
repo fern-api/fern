@@ -17,6 +17,8 @@ export declare namespace OpenAPIConverter {
 }
 
 export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
+    private originalSecuritySchemeDescriptions: Record<string, string> = {};
+
     constructor({ breadcrumbs, context, audiences }: AbstractSpecConverter.Args<OpenAPIConverterContext3_1>) {
         super({ breadcrumbs, context, audiences });
     }
@@ -94,8 +96,18 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private convertSecuritySchemes(): void {
         if (this.context.authOverrides) {
+            const mergedOverrides = { ...this.context.authOverrides };
+            if (mergedOverrides["auth-schemes"] != null) {
+                const schemes = { ...mergedOverrides["auth-schemes"] };
+                for (const [name, declaration] of Object.entries(schemes)) {
+                    if (declaration.docs == null && this.originalSecuritySchemeDescriptions[name] != null) {
+                        schemes[name] = { ...declaration, docs: this.originalSecuritySchemeDescriptions[name] };
+                    }
+                }
+                mergedOverrides["auth-schemes"] = schemes;
+            }
             const overrideAuth = convertApiAuth({
-                rawApiFileSchema: this.context.authOverrides,
+                rawApiFileSchema: mergedOverrides,
                 casingsGenerator: this.context.casingsGenerator
             });
 
@@ -320,6 +332,16 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     private overrideOpenApiAuthWithGeneratorsAuth(): void {
         if (!this.context.authOverrides?.["auth-schemes"]) {
             return;
+        }
+
+        for (const [id, scheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SecuritySchemeObject>({
+                schemaOrReference: scheme,
+                breadcrumbs: ["components", "securitySchemes", id]
+            });
+            if (resolved?.description != null) {
+                this.originalSecuritySchemeDescriptions[id] = resolved.description;
+            }
         }
 
         if (!this.context.spec.components) {
