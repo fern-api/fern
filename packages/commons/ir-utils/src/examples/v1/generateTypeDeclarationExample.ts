@@ -52,6 +52,8 @@ export declare namespace generateTypeDeclarationExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+
+        visitedTypes?: Map<string, number>;
     }
 }
 
@@ -61,7 +63,8 @@ export function generateTypeDeclarationExample({
     typeDeclaration,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    visitedTypes
 }: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> | undefined {
     switch (typeDeclaration.shape.type) {
         case "alias": {
@@ -71,7 +74,8 @@ export function generateTypeDeclarationExample({
                 typeReference: typeDeclaration.shape.aliasOf,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -121,7 +125,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        visitedTypes
                     });
                     if (extendedExample == null) {
                         continue;
@@ -139,7 +144,8 @@ export function generateTypeDeclarationExample({
                 typeDeclarations,
                 currentDepth,
                 maxDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes
             });
             if (objectExample.type === "failure") {
                 return objectExample;
@@ -192,7 +198,8 @@ export function generateTypeDeclarationExample({
                             typeDeclarations,
                             currentDepth: currentDepth + 1,
                             maxDepth,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            visitedTypes
                         });
                         if (variantExample.type === "success") {
                             const { example, jsonExample } = variantExample;
@@ -218,7 +225,8 @@ export function generateTypeDeclarationExample({
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    visitedTypes
                 });
                 if (variantExample.type === "failure") {
                     ++i;
@@ -247,7 +255,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        visitedTypes
                     });
                     if (basePropertyExample.type === "success") {
                         basePropertyExamples[baseProperty.name.wireValue] = basePropertyExample.jsonExample;
@@ -262,7 +271,8 @@ export function generateTypeDeclarationExample({
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    visitedTypes
                 });
                 if (propertyExample.type === "failure") {
                     throw new Error(`Failed to generate example for union base property ${property.name.wireValue}`);
@@ -287,7 +297,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        visitedTypes
                     });
                     if (extendedExample == null || extendedExample.type === "failure") {
                         throw new Error(
@@ -337,7 +348,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeDeclaration,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            visitedTypes
                         });
                         if (typeDeclarationExample == null) {
                             return { type: "failure", message: "Failed to generate example for type reference" };
@@ -379,7 +391,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeReference: value.type,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            visitedTypes
                         });
                         if (singlePropertyExample.type === "failure") {
                             return singlePropertyExample;
@@ -424,7 +437,8 @@ function generateObjectDeclarationExample({
     typeDeclarations,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    visitedTypes
 }: {
     fieldName?: string;
     typeDeclaration: TypeDeclaration;
@@ -433,6 +447,7 @@ function generateObjectDeclarationExample({
     maxDepth: number;
     currentDepth: number;
     skipOptionalProperties: boolean;
+    visitedTypes?: Map<string, number>;
 }): ExampleGenerationResult<ExampleObjectType> {
     const jsonExample: Record<string, unknown> = {};
     const properties: ExampleObjectProperty[] = [];
@@ -446,7 +461,8 @@ function generateObjectDeclarationExample({
             typeDeclarations,
             currentDepth: currentDepth + 1,
             maxDepth,
-            skipOptionalProperties
+            skipOptionalProperties,
+            visitedTypes
         });
         if (
             propertyExample.type === "failure" &&
