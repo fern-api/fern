@@ -1813,7 +1813,9 @@
                         }
                     },
                     "url": "https://api.example.com",
-                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

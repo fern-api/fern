@@ -1,14 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
-import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { InlineConsts, TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter.js";
 
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
-        getReferenceToNamedType: (typeName: DeclaredTypeName, params: ConvertTypeReferenceParams) => ts.EntityName;
-        generateForInlineUnion: (typeName: DeclaredTypeName) => {
+        getReferenceToNamedType: (
+            typeName: FernIr.DeclaredTypeName,
+            params: ConvertTypeReferenceParams
+        ) => ts.EntityName;
+        generateForInlineUnion: (typeName: FernIr.DeclaredTypeName) => {
             typeNode: ts.TypeNode;
             requestTypeNode: ts.TypeNode | undefined;
             responseTypeNode: ts.TypeNode | undefined;
@@ -17,10 +20,10 @@ export declare namespace AbstractTypeReferenceToTypeNodeConverter {
 }
 export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractTypeReferenceConverter<TypeReferenceNode> {
     protected getReferenceToNamedType: (
-        typeName: DeclaredTypeName,
+        typeName: FernIr.DeclaredTypeName,
         params: ConvertTypeReferenceParams
     ) => ts.EntityName;
-    protected generateForInlineUnion: (typeName: DeclaredTypeName) => {
+    protected generateForInlineUnion: (typeName: FernIr.DeclaredTypeName) => {
         typeNode: ts.TypeNode;
         requestTypeNode: ts.TypeNode | undefined;
         responseTypeNode: ts.TypeNode | undefined;
@@ -36,9 +39,9 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         this.generateForInlineUnion = generateForInlineUnion;
     }
 
-    protected override named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override named(typeName: FernIr.DeclaredTypeName, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const resolvedType = this.context.type.resolveTypeName(typeName);
-        const isOptional = ResolvedTypeReference._visit<boolean>(resolvedType, {
+        const isOptional = FernIr.ResolvedTypeReference._visit<boolean>(resolvedType, {
             container: (container) => this.container(container, params).isOptional,
             primitive: (primitive) => this.primitive(primitive, params).isOptional,
             named: () => false,
@@ -111,7 +114,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         }
     }
 
-    private createTypeReferenceForInlineNamedTypeForInlineUnion(typeName: DeclaredTypeName): {
+    private createTypeReferenceForInlineNamedTypeForInlineUnion(typeName: FernIr.DeclaredTypeName): {
         typeNode: ts.TypeNode;
         requestTypeNode: ts.TypeNode | undefined;
         responseTypeNode: ts.TypeNode | undefined;
@@ -120,7 +123,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     }
 
     private createTypeReferenceForInlineAliasNamedType(
-        typeName: DeclaredTypeName,
+        typeName: FernIr.DeclaredTypeName,
         params: ConvertTypeReferenceParams.InlineAliasTypeParams
     ): ts.TypeNode {
         let name: ts.EntityName = ts.factory.createIdentifier(params.aliasTypeName);
@@ -243,7 +246,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
     }
 
-    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override nullable(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode({
             typeNode: this.addNullToTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode),
             requestTypeNode: undefined,
@@ -251,7 +254,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
     }
 
-    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override optional(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
         const needsRequestResponseTypeVariant = this.context.type.needsRequestResponseTypeVariant(itemType);
         return {
@@ -310,7 +313,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         };
     }
 
-    protected override list(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override list(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const itemTypeNode = this.convert({ ...params, typeReference: itemType });
         return this.generateNonOptionalTypeReferenceNode({
             typeNode: ts.factory.createArrayTypeNode(itemTypeNode.typeNode),
@@ -323,8 +326,8 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
     }
 
-    protected override literal(literal: Literal): TypeReferenceNode {
-        return Literal._visit(literal, {
+    protected override literal(literal: FernIr.Literal): TypeReferenceNode {
+        return FernIr.Literal._visit(literal, {
             string: (value) => {
                 const typeNode = ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value));
                 return {
@@ -357,11 +360,11 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
     }
 
-    protected override mapWithEnumKeys(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override mapWithEnumKeys(map: FernIr.MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.mapWithOptionalValues(map, params);
     }
 
-    protected override mapWithNonEnumKeys(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override mapWithNonEnumKeys(map: FernIr.MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const keyTypeNode = this.convert({ ...params, typeReference: map.keyType });
         const valueTypeNode = this.convert({ ...params, typeReference: map.valueType });
         return this.generateNonOptionalTypeReferenceNode({
@@ -383,7 +386,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         });
     }
 
-    protected mapWithOptionalValues(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected mapWithOptionalValues(map: FernIr.MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const valueType = this.convert({ ...params, typeReference: map.valueType });
         const keyType = this.convert({ ...params, typeReference: map.keyType });
         const optionalValueTypeNode = valueType.isOptional ? valueType : this.optional(map.valueType, params);

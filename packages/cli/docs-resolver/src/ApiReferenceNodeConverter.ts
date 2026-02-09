@@ -8,18 +8,21 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 
-import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
-import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
-import { NodeIdGenerator } from "./NodeIdGenerator";
-import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
-import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
-import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages";
-import { isSubpackage } from "./utils/isSubpackage";
-import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
-import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
-import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
-import { toPageNode } from "./utils/toPageNode";
-import { toRelativeFilepath } from "./utils/toRelativeFilepath";
+import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
+import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings.js";
+import { enrichApiPackageChild } from "./utils/enrichApiPackageChild.js";
+import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages.js";
+import { isSubpackage } from "./utils/isSubpackage.js";
+import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
+import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
+import {
+    stringifyEndpointPathParts,
+    stringifyEndpointPathPartsWithMethod
+} from "./utils/stringifyEndpointPathParts.js";
+import { toPageNode } from "./utils/toPageNode.js";
+import { toRelativeFilepath } from "./utils/toRelativeFilepath.js";
 
 const NUM_NEAREST_SUBPACKAGES = 1;
 

@@ -1,6 +1,6 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
-import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas";
-import { RawPrimitiveType } from "./RawPrimitiveType";
+import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas/index.js";
+import { RawPrimitiveType } from "./RawPrimitiveType.js";
 
 export const FernContainerRegex: {
     readonly MAP: RegExp;

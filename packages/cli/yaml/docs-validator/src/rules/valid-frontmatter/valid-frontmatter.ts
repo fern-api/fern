@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const ValidFrontmatter: Rule = {
     name: "valid-frontmatter",

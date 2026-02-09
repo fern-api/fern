@@ -2,14 +2,14 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, SourceLocation } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
-import type { AiConfig } from "../ai/config/AiConfig";
-import type { ApiDefinition } from "../api/config/ApiDefinition";
-import { ApiDefinitionConverter } from "../api/config/converter/ApiDefinitionConverter";
-import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader";
-import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter";
-import { SdkConfig } from "../sdk/config/SdkConfig";
-import { Version } from "../version";
-import type { Workspace } from "./Workspace";
+import type { AiConfig } from "../ai/config/AiConfig.js";
+import type { ApiDefinition } from "../api/config/ApiDefinition.js";
+import { ApiDefinitionConverter } from "../api/config/converter/ApiDefinitionConverter.js";
+import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
+import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter.js";
+import { SdkConfig } from "../sdk/config/SdkConfig.js";
+import { Version } from "../version.js";
+import type { Workspace } from "./Workspace.js";
 
 export namespace WorkspaceLoader {
     export type Result = Success | Failure;

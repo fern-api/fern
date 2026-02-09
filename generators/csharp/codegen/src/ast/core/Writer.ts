@@ -1,6 +1,6 @@
 import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
-import { Generation } from "../../context/generation-info";
-import { type ClassReference } from "../types/ClassReference";
+import { Generation } from "../../context/generation-info.js";
+import { type ClassReference } from "../types/ClassReference.js";
 
 type Alias = string;
 type Namespace = string;

@@ -1,7 +1,7 @@
 import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator";
 
-import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema";
-import { Reference } from "../Reference";
+import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema.js";
+import { Reference } from "../Reference.js";
 
 type ModuleName = string;
 type Alias = string;

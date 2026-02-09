@@ -1,5 +1,13 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import {
+    isValidRelativeSlug,
+    parseImagePaths,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
+    transformAtPrefixImports
+} from "@fern-api/docs-markdown-utils";
+import {
     createPythonDocsSectionPlaceholder,
     DocsDefinitionResolver,
     filterOssWorkspaces
@@ -24,14 +32,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
-
-import {
-    isValidRelativeSlug,
-    parseImagePaths,
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown
-} from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
 const frontmatterSidebarTitleCache = new Map<string, string | undefined>();
@@ -189,11 +189,17 @@ export async function getPreviewDocsDefinition({
                 context
             });
 
-            const markdownReplacedMdAndCode = await replaceReferencedCode({
+            const markdownReplacedCode = await replaceReferencedCode({
                 markdown: markdownReplacedMd,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
+            });
+
+            const markdownReplacedMdAndCode = transformAtPrefixImports({
+                markdown: markdownReplacedCode,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath
             });
 
             const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {

@@ -1,4 +1,4 @@
-import { camelCase, hash, normalizeDates, uniqueId, upperFirst } from "../text";
+import { camelCase, hash, normalizeDates, uniqueId, upperFirst } from "../text.js";
 
 describe("text utilities", () => {
     describe("upperFirst", () => {

@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoResponsePropertyRule } from "../no-response-property";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoResponsePropertyRule } from "../no-response-property.js";
 
 describe("no-response-property", () => {
     it("simple", async () => {

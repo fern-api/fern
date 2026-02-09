@@ -1,4 +1,4 @@
-import { createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import type {
     CreateInteractiveTaskParams,
     Finishable,
@@ -8,30 +8,36 @@ import type {
     TaskContext
 } from "@fern-api/task-context";
 import { FernCliError, TaskResult } from "@fern-api/task-context";
-import type { Task } from "../../ui/Task";
-import type { Context } from "../Context";
-import { TaskContextLogger } from "./TaskContextLogger";
+import type { Task } from "../../ui/Task.js";
+import type { Context } from "../Context.js";
+import { TaskContextLogger } from "./TaskContextLogger.js";
 
 /**
  * Adapts the CLI context to the legacy TaskContext interface.
  *
- * When a task is provided, logs are written to the task's log display.
+ * When a task is provided, logs are written to the task's log display
+ * and to the log file via TaskContextLogger.
+ *
  * When no task is provided (e.g., during validation), logs are written
- * directly to stderr for warnings/errors only.
+ * directly to stderr, filtered by logLevel (defaults to Warn).
+ *
+ * @param context - The CLI context
+ * @param task - Optional task for log file writing
+ * @param logLevel - Minimum log level to display. Defaults to Warn (only warnings and errors).
+ *                   Pass LogLevel.Info to include info messages (e.g., for device code flow).
  */
 export class TaskContextAdapter implements TaskContext {
     private result: TaskResult = TaskResult.Success;
 
     public readonly logger: Logger;
 
-    constructor({ context, task }: { context: Context; task?: Task }) {
+    constructor({ context, task, logLevel = LogLevel.Warn }: { context: Context; task?: Task; logLevel?: LogLevel }) {
         if (task != null) {
-            this.logger = new TaskContextLogger({ context, task });
+            this.logger = new TaskContextLogger({ context, task, logLevel });
         } else {
-            // When no task is provided, use a simple logger that writes to stderr
+            // When no task is provided, write directly to stderr.
             this.logger = createLogger((level: LogLevel, ...args: string[]) => {
-                // Only log warnings and errors to keep output clean
-                if (level === LogLevel.Warn || level === LogLevel.Error) {
+                if (LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(logLevel)) {
                     context.stderr.log(level, ...args);
                 }
             });

@@ -3,12 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 
 
 class StuntDouble(UniversalBaseModel):
     name: str
-    actor_or_actress_id: str = pydantic.Field(alias="actorOrActressId")
+    actor_or_actress_id: typing_extensions.Annotated[
+        str, FieldMetadata(alias="actorOrActressId"), pydantic.Field(alias="actorOrActressId")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

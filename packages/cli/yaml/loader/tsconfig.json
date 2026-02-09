@@ -9,6 +9,12 @@
   "references": [
     {
       "path": "../../source"
+    },
+    {
+      "path": "../../../commons/path-utils"
+    },
+    {
+      "path": "../../../commons/fs-utils"
     }
   ]
 }

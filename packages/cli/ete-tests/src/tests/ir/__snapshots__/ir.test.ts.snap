@@ -9538,7 +9538,9 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                         "ServerA": "a.prod.com",
                         "ServerB": "b.prod.com"
                     },
-                    "audiences": null,
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -9566,7 +9568,9 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                         "ServerA": "a.staging.com",
                         "ServerB": "b.staging.com"
                     },
-                    "audiences": null,
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

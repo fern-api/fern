@@ -11,8 +11,8 @@ import { mkdir } from "fs/promises";
 import fs from "fs-extra";
 import path from "path";
 
-import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
-import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace";
+import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
+import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace.js";
 
 export async function initializeAPI({
     organization,

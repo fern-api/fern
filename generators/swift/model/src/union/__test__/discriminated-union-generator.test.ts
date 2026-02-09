@@ -1,8 +1,8 @@
 import { resolve } from "node:path";
 import { swift } from "@fern-api/swift-codegen";
-import { ModelGeneratorContext } from "../../ModelGeneratorContext";
-import { createSampleGeneratorContext } from "../../test-utils/createSampleGeneratorContext";
-import { DiscriminatedUnionGenerator } from "../DiscriminatedUnionGenerator";
+import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
+import { createSampleGeneratorContext } from "../../test-utils/createSampleGeneratorContext.js";
+import { DiscriminatedUnionGenerator } from "../DiscriminatedUnionGenerator.js";
 
 function getUnionTypeDeclarationOrThrow(context: ModelGeneratorContext, name: string) {
     for (const declaration of Object.values(context.ir.types)) {

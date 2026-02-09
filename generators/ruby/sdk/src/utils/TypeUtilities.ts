@@ -1,7 +1,6 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
-
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 // Should this be in the codegen package?
-export function isTypeOptional(typeReference: TypeReference): boolean {
+export function isTypeOptional(typeReference: FernIr.TypeReference): boolean {
     return typeReference._visit<boolean>({
         container: (ct) =>
             ct._visit({

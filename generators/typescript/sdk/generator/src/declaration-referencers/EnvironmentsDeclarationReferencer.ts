@@ -1,4 +1,4 @@
-import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportedFilePath,
     ExportsManager,
@@ -11,12 +11,12 @@ import {
 } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
 
 export declare namespace EnvironmentsDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
         npmPackage: NpmPackage | undefined;
-        environmentsConfig: EnvironmentsConfig | undefined;
+        environmentsConfig: FernIr.EnvironmentsConfig | undefined;
         relativePackagePath: string;
         relativeTestPath: string;
     }
@@ -24,7 +24,7 @@ export declare namespace EnvironmentsDeclarationReferencer {
 
 export class EnvironmentsDeclarationReferencer extends AbstractDeclarationReferencer {
     private npmPackage: NpmPackage | undefined;
-    private environmentsConfig: EnvironmentsConfig | undefined;
+    private environmentsConfig: FernIr.EnvironmentsConfig | undefined;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
 
@@ -198,7 +198,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         });
     }
 
-    private getFirstEnvironmentName(environmentsConfig: EnvironmentsConfig): string | undefined {
+    private getFirstEnvironmentName(environmentsConfig: FernIr.EnvironmentsConfig): string | undefined {
         switch (environmentsConfig.environments.type) {
             case "singleBaseUrl":
                 return this.getFirstEnvironmentNameFromSingleEnvironment(environmentsConfig.environments);
@@ -208,7 +208,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     }
 
     private getFirstEnvironmentNameFromSingleEnvironment(
-        singleBaseUrlEnvironments: SingleBaseUrlEnvironments
+        singleBaseUrlEnvironments: FernIr.SingleBaseUrlEnvironments
     ): string | undefined {
         for (const environment of singleBaseUrlEnvironments.environments) {
             return environment.name.pascalCase.unsafeName;
@@ -217,7 +217,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     }
 
     private getFirstEnvironmentNameFromMultiEnvironment(
-        multiBaseUrlsEnvironments: MultipleBaseUrlsEnvironments
+        multiBaseUrlsEnvironments: FernIr.MultipleBaseUrlsEnvironments
     ): string | undefined {
         for (const environment of multiBaseUrlsEnvironments.environments) {
             return environment.name.pascalCase.unsafeName;

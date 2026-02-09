@@ -2,7 +2,7 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite";
+import { DynamicSnippetsTestSuite } from "./DynamicSnippetsTestSuite.js";
 
 export async function generateDynamicSnippetsTestSuite({
     ir,

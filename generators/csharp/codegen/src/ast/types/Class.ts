@@ -1,20 +1,20 @@
-import { type Generation } from "../../context/generation-info";
-import { Block } from "../code/Block";
-import { type ClassInstantiation } from "../code/ClassInstantiation";
-import { MethodInvocation } from "../code/MethodInvocation";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { Access } from "../language/Access";
-import { Annotation } from "../language/Annotation";
-import { CodeBlock } from "../language/CodeBlock";
-import { Parameter } from "../language/Parameter";
-import { XmlDocBlock } from "../language/XmlDocBlock";
-import { ClassReference } from "./ClassReference";
-import { DefinedType } from "./DefinedType";
-import { Field } from "./Field";
-import { Interface } from "./Interface";
-import { Type } from "./IType";
-import { MethodType } from "./Method";
+import { type Generation } from "../../context/generation-info.js";
+import { Block } from "../code/Block.js";
+import { type ClassInstantiation } from "../code/ClassInstantiation.js";
+import { MethodInvocation } from "../code/MethodInvocation.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { Access } from "../language/Access.js";
+import { Annotation } from "../language/Annotation.js";
+import { CodeBlock } from "../language/CodeBlock.js";
+import { Parameter } from "../language/Parameter.js";
+import { XmlDocBlock } from "../language/XmlDocBlock.js";
+import { ClassReference } from "./ClassReference.js";
+import { DefinedType } from "./DefinedType.js";
+import { Field } from "./Field.js";
+import { Interface } from "./Interface.js";
+import { Type } from "./IType.js";
+import { MethodType } from "./Method.js";
 
 export class Class extends DefinedType {
     public static readonly ClassType = {

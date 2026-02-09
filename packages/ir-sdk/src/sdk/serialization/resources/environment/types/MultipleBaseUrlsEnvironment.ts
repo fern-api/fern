@@ -8,6 +8,7 @@ import { WithDocs } from "../../commons/types/WithDocs.js";
 import { EnvironmentBaseUrlId } from "./EnvironmentBaseUrlId.js";
 import { EnvironmentId } from "./EnvironmentId.js";
 import { EnvironmentUrl } from "./EnvironmentUrl.js";
+import { ServerVariable } from "./ServerVariable.js";
 
 export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
     serializers.MultipleBaseUrlsEnvironment.Raw,
@@ -18,6 +19,11 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
         name: Name,
         urls: core.serialization.record(EnvironmentBaseUrlId, EnvironmentUrl),
         audiences: core.serialization.list(core.serialization.string()).optional(),
+        defaultUrls: core.serialization.record(EnvironmentBaseUrlId, core.serialization.string()).optional(),
+        urlTemplates: core.serialization.record(EnvironmentBaseUrlId, core.serialization.string()).optional(),
+        urlVariables: core.serialization
+            .record(EnvironmentBaseUrlId, core.serialization.list(ServerVariable))
+            .optional(),
     })
     .extend(WithDocs);
 
@@ -27,5 +33,8 @@ export declare namespace MultipleBaseUrlsEnvironment {
         name: Name.Raw;
         urls: Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;
         audiences?: string[] | null;
+        defaultUrls?: Record<EnvironmentBaseUrlId.Raw, string> | null;
+        urlTemplates?: Record<EnvironmentBaseUrlId.Raw, string> | null;
+        urlVariables?: Record<EnvironmentBaseUrlId.Raw, ServerVariable.Raw[]> | null;
     }
 }

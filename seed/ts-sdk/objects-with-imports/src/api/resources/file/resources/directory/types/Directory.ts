@@ -23,6 +23,6 @@ import type * as SeedObjectsWithImports from "../../../../../index.js";
  */
 export interface Directory {
     name: string;
-    files?: SeedObjectsWithImports.File_[];
-    directories?: SeedObjectsWithImports.file.Directory[];
+    files?: SeedObjectsWithImports.File_[] | undefined;
+    directories?: SeedObjectsWithImports.file.Directory[] | undefined;
 }

@@ -45,6 +45,7 @@ class ListUsersExtendedResponse extends JsonSerializableType
     public function setTotalCount(int $value): self
     {
         $this->totalCount = $value;
+        $this->_setField('totalCount');
         return $this;
     }
 

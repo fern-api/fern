@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { swift } from "@fern-api/swift-codegen";
 
-import { DynamicSnippetsGeneratorContext, FilePropertyInfo } from "./context";
+import { DynamicSnippetsGeneratorContext, FilePropertyInfo } from "./context/index.js";
 
 const CLIENT_CONST_NAME = "client";
 

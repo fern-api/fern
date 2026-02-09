@@ -1,2 +1,2 @@
-export * from "./baml_client";
-export * from "./configureBamlClient";
+export * from "./baml_client/index.js";
+export * from "./configureBamlClient.js";

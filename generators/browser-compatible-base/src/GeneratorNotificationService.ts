@@ -7,8 +7,7 @@ import {
     LogLevel
 } from "@fern-fern/generator-exec-sdk/api";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-
-import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService";
+import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService.js";
 
 export { GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel, FernGeneratorExec };
 export type { GeneratorConfig, GithubOutputMode };

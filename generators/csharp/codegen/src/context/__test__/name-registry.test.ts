@@ -1,9 +1,12 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ClassReference } from "../../ast";
-import { CsharpConfigSchema } from "../../custom-config";
-import { MinimalGeneratorConfig } from "../common";
-import { Generation } from "../generation-info";
-import { NameRegistry } from "../name-registry";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { ClassReference } from "../../ast/index.js";
+import { CsharpConfigSchema } from "../../custom-config/index.js";
+import { MinimalGeneratorConfig } from "../common.js";
+import { Generation } from "../generation-info.js";
+import { NameRegistry } from "../name-registry.js";
 
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,

@@ -214,7 +214,7 @@
       "_visit": [Function],
       "environments": [
         {
-          "audiences": undefined,
+          "defaultUrl": undefined,
           "docs": undefined,
           "id": "https://api.example.com/v1",
           "name": {
@@ -237,6 +237,8 @@
             },
           },
           "url": "https://api.example.com/v1",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",

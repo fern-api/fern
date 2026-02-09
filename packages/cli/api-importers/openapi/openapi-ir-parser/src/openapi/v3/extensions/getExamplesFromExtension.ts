@@ -5,13 +5,13 @@ import { existsSync, readFileSync } from "fs";
 import { OpenAPIV3 } from "openapi-types";
 import { dirname, resolve as resolvePath } from "path";
 
-import { getExtension, getExtensionAndValidate } from "../../../getExtension";
-import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import { OperationContext } from "../converters/contexts";
-import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema";
-import { OpenAPIExtension } from "./extensions";
-import { FernOpenAPIExtension } from "./fernExtensions";
-import { getRawReadmeCodeSamples } from "./getReadmeCodeSamples";
+import { getExtension, getExtensionAndValidate } from "../../../getExtension.js";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext.js";
+import { OperationContext } from "../converters/contexts.js";
+import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema.js";
+import { OpenAPIExtension } from "./extensions.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
+import { getRawReadmeCodeSamples } from "./getReadmeCodeSamples.js";
 
 interface CodeReference {
     $ref: string;

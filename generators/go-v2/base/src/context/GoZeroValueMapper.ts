@@ -1,18 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
-import {
-    ContainerType,
-    Literal,
-    NamedType,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext.js";
 
 export declare namespace GoZeroValueMapper {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
     }
 }
 
@@ -40,7 +33,7 @@ export class GoZeroValueMapper {
         }
     }
 
-    private convertContainer({ container }: { container: ContainerType }): go.TypeInstantiation {
+    private convertContainer({ container }: { container: FernIr.ContainerType }): go.TypeInstantiation {
         switch (container.type) {
             case "list":
             case "map":
@@ -55,8 +48,8 @@ export class GoZeroValueMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): go.TypeInstantiation {
-        return PrimitiveTypeV1._visit<go.TypeInstantiation>(primitive.v1, {
+    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): go.TypeInstantiation {
+        return FernIr.PrimitiveTypeV1._visit<go.TypeInstantiation>(primitive.v1, {
             integer: () => go.TypeInstantiation.int(0),
             long: () => go.TypeInstantiation.int64(0),
             uint: () => go.TypeInstantiation.int(0),
@@ -74,7 +67,7 @@ export class GoZeroValueMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): go.TypeInstantiation {
+    private convertLiteral({ literal }: { literal: FernIr.Literal }): go.TypeInstantiation {
         switch (literal.type) {
             case "boolean":
                 return go.TypeInstantiation.bool(false);
@@ -85,7 +78,7 @@ export class GoZeroValueMapper {
         }
     }
 
-    private convertNamed({ named }: { named: NamedType }): go.TypeInstantiation {
+    private convertNamed({ named }: { named: FernIr.NamedType }): go.TypeInstantiation {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":

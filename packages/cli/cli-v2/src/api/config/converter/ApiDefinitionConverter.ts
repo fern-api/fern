@@ -2,15 +2,15 @@ import type { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
-import type { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader";
-import type { ApiDefinition } from "../ApiDefinition";
-import type { ApiSpec } from "../ApiSpec";
-import type { AsyncApiSpec } from "../AsyncApiSpec";
-import type { ConjureSpec } from "../ConjureSpec";
-import type { FernSpec } from "../FernSpec";
-import type { OpenApiSpec } from "../OpenApiSpec";
-import type { OpenRpcSpec } from "../OpenRpcSpec";
-import type { ProtobufDefinition, ProtobufSpec } from "../ProtobufSpec";
+import type { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
+import type { ApiDefinition } from "../ApiDefinition.js";
+import type { ApiSpec } from "../ApiSpec.js";
+import type { AsyncApiSpec } from "../AsyncApiSpec.js";
+import type { ConjureSpec } from "../ConjureSpec.js";
+import type { FernSpec } from "../FernSpec.js";
+import type { OpenApiSpec } from "../OpenApiSpec.js";
+import type { OpenRpcSpec } from "../OpenRpcSpec.js";
+import type { ProtobufDefinition, ProtobufSpec } from "../ProtobufSpec.js";
 
 /**
  * The key used for the single API definition when using the 'api' field.

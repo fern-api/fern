@@ -3,12 +3,11 @@ import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
-
-import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ClientGeneratorContext, EndpointMethodGenerator } from "../generators/index.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
@@ -47,13 +46,13 @@ export class ReferenceConfigAssembler {
         return builder;
     }
 
-    private getReferenceSectionTitle(service: HttpService): string {
+    private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
             service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
         );
     }
 
-    private getEndpointReferencesForService(service: HttpService): FernGeneratorCli.EndpointReference[] {
+    private getEndpointReferencesForService(service: FernIr.HttpService): FernGeneratorCli.EndpointReference[] {
         return service.endpoints
             .map((endpoint) => {
                 const endpointContainer = this.context.getEndpointContainer(endpoint);
@@ -95,7 +94,7 @@ export class ReferenceConfigAssembler {
         endpointMethod,
         endpointSnippet
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         endpointMethod: swift.Method;
         endpointSnippet: string;
     }): FernGeneratorCli.EndpointReference {
@@ -134,7 +133,7 @@ export class ReferenceConfigAssembler {
         return `(${paramsJoined})`;
     }
 
-    private getEndpointFilepath(endpoint: HttpEndpoint): string {
+    private getEndpointFilepath(endpoint: FernIr.HttpEndpoint): string {
         const endpointContainer = this.context.getEndpointContainer(endpoint);
         if (endpointContainer.type === "none") {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);

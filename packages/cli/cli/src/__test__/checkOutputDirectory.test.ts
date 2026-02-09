@@ -3,10 +3,10 @@ import { mkdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { afterEach, beforeEach, describe, expect, it, Mock, vi } from "vitest";
 
-import { CliContext } from "../cli-context/CliContext";
-import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
-import { getOutputDirectories } from "../persistence/output-directories/getOutputDirectories";
-import { storeOutputDirectories } from "../persistence/output-directories/storeOutputDirectories";
+import { CliContext } from "../cli-context/CliContext.js";
+import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory.js";
+import { getOutputDirectories } from "../persistence/output-directories/getOutputDirectories.js";
+import { storeOutputDirectories } from "../persistence/output-directories/storeOutputDirectories.js";
 
 vi.mock("../utils/isCI", () => ({
     isCI: vi.fn().mockReturnValue(false)

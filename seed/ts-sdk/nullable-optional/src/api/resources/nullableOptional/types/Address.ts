@@ -8,9 +8,9 @@ import type * as SeedNullableOptional from "../../../index.js";
 export interface Address {
     street: string;
     city: string | null;
-    state?: string;
+    state?: string | undefined;
     zipCode: string;
-    country?: string | null;
+    country?: (string | null) | undefined;
     buildingId: SeedNullableOptional.NullableUserId;
-    tenantId?: SeedNullableOptional.OptionalUserId;
+    tenantId?: SeedNullableOptional.OptionalUserId | undefined;
 }

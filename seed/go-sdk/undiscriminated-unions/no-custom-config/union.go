@@ -34,6 +34,27 @@ func (p *PaymentRequest) SetPaymentMethod(paymentMethod *PaymentMethodUnion) {
 	p.require(paymentRequestFieldPaymentMethod)
 }
 
+func (p *PaymentRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler PaymentRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PaymentRequest(body)
+	return nil
+}
+
+func (p *PaymentRequest) MarshalJSON() ([]byte, error) {
+	type embed PaymentRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	convertTokenFieldMethod  = big.NewInt(1 << 0)
 	convertTokenFieldTokenId = big.NewInt(1 << 1)

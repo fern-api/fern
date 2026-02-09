@@ -22,7 +22,7 @@ import {
 } from "@open-rpc/meta-schema";
 import { OpenAPIV3 } from "openapi-types";
 
-import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
+import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1.js";
 
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<OpenRPCConverterContext3_1> {

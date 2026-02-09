@@ -11,12 +11,13 @@ import {
 import { generateEndpointV1Example as generateEndpointExample } from "@fern-api/ir-utils";
 import { noop, startCase } from "lodash-es";
 
-import { convertTypeReference } from "./convertTypeShape";
+import { convertTypeReference } from "./convertTypeShape.js";
 
 export function convertPackage(
     irPackage: Ir.ir.Package,
     ir: Ir.ir.IntermediateRepresentation,
-    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>,
+    graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>
 ): FdrCjsSdk.api.v1.register.ApiDefinitionPackage {
     const service = irPackage.service != null ? ir.services[irPackage.service] : undefined;
     const webhooks = irPackage.webhooks != null ? ir.webhookGroups[irPackage.webhooks] : undefined;
@@ -32,7 +33,10 @@ export function convertPackage(
         endpoints: restEndpoints,
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
         websockets: websocket != null ? [convertWebSocketChannel(websocket, ir)] : [],
-        types: irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
+        types: [
+            ...irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
+            ...Object.keys(graphqlTypes ?? {}).map((typeId) => FdrCjsSdk.TypeId(typeId))
+        ],
         subpackages: irPackage.subpackages.map((subpackageId) => FdrCjsSdk.api.v1.SubpackageId(subpackageId)),
         pointsTo:
             irPackage.navigationConfig != null

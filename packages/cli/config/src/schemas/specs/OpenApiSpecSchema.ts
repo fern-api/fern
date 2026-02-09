@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { OpenApiSettingsSchema } from "../settings/OpenApiSettingsSchema";
+import { OpenApiSettingsSchema } from "../settings/OpenApiSettingsSchema.js";
 
 /**
  * Schema for OpenAPI spec definition in fern.yml.

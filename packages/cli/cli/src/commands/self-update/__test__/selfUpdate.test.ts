@@ -1,8 +1,8 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { realpath } from "fs/promises";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { CliContext } from "../../../cli-context/CliContext";
-import { selfUpdate } from "../selfUpdate";
+import { CliContext } from "../../../cli-context/CliContext.js";
+import { selfUpdate } from "../selfUpdate.js";
 
 vi.mock("@fern-api/logging-execa");
 vi.mock("fs/promises", () => ({

@@ -1,12 +1,13 @@
 import { fail } from "node:assert";
-import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
-import { type Generation } from "../../context/generation-info";
-import { hash, uniqueId } from "../../utils/text";
-import { Literal } from "../code/Literal";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { ClassReference } from "./ClassReference";
-import { type Type } from "./IType";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+import { type Generation } from "../../context/generation-info.js";
+import { hash, uniqueId } from "../../utils/text.js";
+import { Literal } from "../code/Literal.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { ClassReference } from "./ClassReference.js";
+import { type Type } from "./IType.js";
 
 /**
  * Base class for all C# type representations in the AST.
@@ -361,7 +362,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "int";
         public override defaultValue = this.csharp.Literal.integer(0);
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique number using the defualtWith string as the seed.
+            // make a unique number using the default With string as the seed.
             return this.csharp.Literal.integer(hash(input) & 0x7fffffff);
         }
     }
@@ -373,7 +374,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "long";
         public override defaultValue = this.csharp.Literal.long(0);
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique number using the defualtWith string as the seed.
+            // make a unique number using the defaultWith string as the seed.
             return this.csharp.Literal.long(hash(input) & 0x7ffffffffffff);
         }
     }
@@ -385,7 +386,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "uint";
         public override defaultValue = this.csharp.Literal.uint(0);
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique number using the defualtWith string as the seed.
+            // make a unique number using the defaultWith string as the seed.
             return this.csharp.Literal.uint(hash(input) & 0x7fffffff);
         }
     }
@@ -397,7 +398,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "ulong";
         public override defaultValue = this.csharp.Literal.ulong(0);
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique number using the defualtWith string as the seed.
+            // make a unique number using the defaultWith string as the seed.
             return this.csharp.Literal.ulong(hash(input) & 0x7ffffffffffff);
         }
     }
@@ -411,7 +412,7 @@ export namespace Primitive {
         public override defaultValue = this.csharp.Literal.string("");
         public override readonly isReferenceType: boolean | undefined = true;
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique string using the defualtWith string as the seed.
+            // make a unique string using the defaultWith string as the seed.
             return this.csharp.Literal.string(`<${input}>`);
         }
     }
@@ -423,7 +424,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "bool";
         public override defaultValue = this.csharp.Literal.boolean(false);
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique boolean using the defualtWith string as the seed.
+            // make a unique boolean using the defaultWith string as the seed.
             return this.csharp.Literal.boolean(hash(input) % 2 === 0);
         }
     }
@@ -435,7 +436,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "float";
         public override defaultValue = this.csharp.Literal.float(0);
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique float using the defualtWith string as the seed.
+            // make a unique float using the defaultWith string as the seed.
             return this.csharp.Literal.float((hash(input) & 0x7fffffff) / 100);
         }
     }
@@ -447,7 +448,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "double";
         public override defaultValue = this.csharp.Literal.double(0);
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique double using the defualtWith string as the seed.
+            // make a unique double using the defaultWith string as the seed.
             return this.csharp.Literal.double((hash(input) & 0x7ffffffffffff) / 100);
         }
     }
@@ -459,7 +460,7 @@ export namespace Primitive {
         public override fullyQualifiedName = "object";
     }
 
-    export class AribitraryType extends PrimitiveType {
+    export class ArbitraryType extends PrimitiveType {
         constructor(
             public override readonly fullyQualifiedName: string,
             generation: Generation
@@ -495,7 +496,7 @@ export namespace Value {
     export class DateOnly extends PrimitiveType {
         public override fullyQualifiedName = "DateOnly";
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique date using the defualtWith string as the seed.
+            // make a unique date using the defaultWith string as the seed.
             const date = new Date(hash(input) & 0x7ffffffffffff);
             return this.csharp.Literal.date(date.toISOString());
         }
@@ -507,7 +508,7 @@ export namespace Value {
     export class DateTime extends PrimitiveType {
         public override fullyQualifiedName = "DateTime";
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique date using the defualtWith string as the seed.
+            // make a unique date using the defaultWith string as the seed.
             const date = new Date(hash(input) & 0x7ffffffffffff);
             return this.csharp.Literal.datetime(date.toISOString());
         }
@@ -523,7 +524,7 @@ export namespace Value {
         // C# GUID is a value type, but we use string for UUID
         public override readonly isReferenceType: boolean | undefined = true;
         public override getDeterminsticDefault(input: string): Literal {
-            // make a unique UUID using the defualtWith string as the seed.
+            // make a unique UUID using the defaultWith string as the seed.
             return this.csharp.Literal.string(uniqueId(input));
         }
     }
@@ -887,26 +888,26 @@ export namespace Collection {
  * @returns Array of PrimitiveTypeV1 enum values
  * @throws Error if an unknown type name is encountered (should be unreachable if validated earlier)
  */
-export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): PrimitiveTypeV1[] {
-    return readOnlyMemoryTypeNames.map((typeName) => {
+export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): FernIr.PrimitiveTypeV1[] {
+    return readOnlyMemoryTypeNames.map<FernIr.PrimitiveTypeV1>((typeName) => {
         switch (typeName) {
             case "int":
-                return PrimitiveTypeV1.Integer;
+                return FernIr.PrimitiveTypeV1.Integer;
             case "long":
-                return PrimitiveTypeV1.Long;
+                return FernIr.PrimitiveTypeV1.Long;
             case "uint":
-                return PrimitiveTypeV1.Uint;
+                return FernIr.PrimitiveTypeV1.Uint;
             case "ulong":
-                return PrimitiveTypeV1.Uint64;
+                return FernIr.PrimitiveTypeV1.Uint64;
             case "string":
-                return PrimitiveTypeV1.String;
+                return FernIr.PrimitiveTypeV1.String;
             case "bool":
             case "boolean":
-                return PrimitiveTypeV1.Boolean;
+                return FernIr.PrimitiveTypeV1.Boolean;
             case "float":
-                return PrimitiveTypeV1.Float;
+                return FernIr.PrimitiveTypeV1.Float;
             case "double":
-                return PrimitiveTypeV1.Double;
+                return FernIr.PrimitiveTypeV1.Double;
             default:
                 // This should be unreachable; the ReadOnlyMemory types should have already
                 // been validated at this point.

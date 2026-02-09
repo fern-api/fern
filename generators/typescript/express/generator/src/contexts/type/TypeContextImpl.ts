@@ -1,11 +1,4 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    DeclaredTypeName,
-    ExampleTypeReference,
-    ResolvedTypeReference,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
@@ -16,7 +9,7 @@ import {
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
+import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer.js";
 
 export declare namespace TypeContextImpl {
     export interface Init {
@@ -106,12 +99,12 @@ export class TypeContextImpl implements TypeContext {
         });
     }
 
-    public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
+    public getReferenceToType(typeReference: FernIr.TypeReference): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({ typeReference });
     }
 
     public getReferenceToInlinePropertyType(
-        typeReference: TypeReference,
+        typeReference: FernIr.TypeReference,
         parentTypeName: string,
         propertyName: string
     ): TypeReferenceNode {
@@ -123,7 +116,10 @@ export class TypeContextImpl implements TypeContext {
         });
     }
 
-    public getReferenceToInlineAliasType(typeReference: TypeReference, aliasTypeName: string): TypeReferenceNode {
+    public getReferenceToInlineAliasType(
+        typeReference: FernIr.TypeReference,
+        aliasTypeName: string
+    ): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({
             typeReference,
             type: "inlineAliasParams",
@@ -131,7 +127,7 @@ export class TypeContextImpl implements TypeContext {
         });
     }
 
-    public generateForInlineUnion(typeName: DeclaredTypeName): {
+    public generateForInlineUnion(typeName: FernIr.DeclaredTypeName): {
         typeNode: ts.TypeNode;
         requestTypeNode: ts.TypeNode | undefined;
         responseTypeNode: ts.TypeNode | undefined;
@@ -140,8 +136,8 @@ export class TypeContextImpl implements TypeContext {
         return generatedType.generateForInlineUnion(this.context);
     }
 
-    public typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference {
-        return TypeReference.named({
+    public typeNameToTypeReference(typeName: FernIr.DeclaredTypeName): FernIr.TypeReference {
+        return FernIr.TypeReference.named({
             default: undefined,
             displayName: typeName.displayName,
             fernFilepath: typeName.fernFilepath,
@@ -151,18 +147,18 @@ export class TypeContextImpl implements TypeContext {
         });
     }
 
-    public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
+    public getReferenceToTypeForInlineUnion(typeReference: FernIr.TypeReference): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({
             typeReference,
             type: "forInlineUnionParams"
         });
     }
 
-    public getTypeDeclaration(typeName: DeclaredTypeName): TypeDeclaration {
+    public getTypeDeclaration(typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration {
         return this.typeResolver.getTypeDeclarationFromName(typeName);
     }
 
-    public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
+    public getReferenceToNamedType(typeName: FernIr.DeclaredTypeName): Reference {
         return this.typeDeclarationReferencer.getReferenceToType({
             name: typeName,
             importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
@@ -172,11 +168,11 @@ export class TypeContextImpl implements TypeContext {
         });
     }
 
-    public resolveTypeReference(typeReference: TypeReference): ResolvedTypeReference {
+    public resolveTypeReference(typeReference: FernIr.TypeReference): FernIr.ResolvedTypeReference {
         return this.typeResolver.resolveTypeReference(typeReference);
     }
 
-    public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
+    public resolveTypeName(typeName: FernIr.DeclaredTypeName): FernIr.ResolvedTypeReference {
         return this.typeResolver.resolveTypeName(typeName);
     }
 
@@ -185,7 +181,7 @@ export class TypeContextImpl implements TypeContext {
         return this.getGeneratedType(typeDeclaration.name);
     }
 
-    public getGeneratedType(typeName: DeclaredTypeName, typeNameOverride?: string): GeneratedType {
+    public getGeneratedType(typeName: FernIr.DeclaredTypeName, typeNameOverride?: string): GeneratedType {
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
         const examples = typeDeclaration.userProvidedExamples;
         if (examples.length === 0) {
@@ -207,7 +203,7 @@ export class TypeContextImpl implements TypeContext {
 
     public stringify(
         valueToStringify: ts.Expression,
-        valueType: TypeReference,
+        valueType: FernIr.TypeReference,
         { includeNullCheckIfOptional }: { includeNullCheckIfOptional: boolean }
     ): ts.Expression {
         if (includeNullCheckIfOptional) {
@@ -221,11 +217,11 @@ export class TypeContextImpl implements TypeContext {
         }
     }
 
-    public getGeneratedExample(example: ExampleTypeReference): GeneratedTypeReferenceExample {
+    public getGeneratedExample(example: FernIr.ExampleTypeReference): GeneratedTypeReferenceExample {
         return this.typeReferenceExampleGenerator.generateExample(example);
     }
 
-    public isOptional(typeReference: TypeReference): boolean {
+    public isOptional(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
@@ -250,7 +246,7 @@ export class TypeContextImpl implements TypeContext {
         }
     }
 
-    public isNullable(typeReference: TypeReference): boolean {
+    public isNullable(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId);
@@ -276,12 +272,12 @@ export class TypeContextImpl implements TypeContext {
         }
     }
 
-    public isLiteral(typeReference: TypeReference): boolean {
+    public isLiteral(typeReference: FernIr.TypeReference): boolean {
         const resolvedType = this.resolveTypeReference(typeReference);
         return resolvedType.type === "container" && resolvedType.container.type === "literal";
     }
 
-    public hasDefaultValue(typeReference: TypeReference): boolean {
+    public hasDefaultValue(typeReference: FernIr.TypeReference): boolean {
         switch (typeReference.type) {
             case "primitive":
                 return (

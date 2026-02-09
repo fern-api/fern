@@ -4,10 +4,10 @@ import {
     hasNamedArgument,
     isNamedArgument
 } from "@fern-api/browser-compatible-base-generator";
-import { type Generation } from "../../context/generation-info";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { type ClassReference } from "../types/ClassReference";
+import { type Generation } from "../../context/generation-info.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { type ClassReference } from "../types/ClassReference.js";
 
 export declare namespace ClassInstantiation {
     interface Args {

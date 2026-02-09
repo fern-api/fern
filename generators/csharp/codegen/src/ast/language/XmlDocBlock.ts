@@ -1,7 +1,7 @@
-import { type Generation } from "../../context/generation-info";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { XmlDocWriter } from "../core/XmlDocWriter";
+import { type Generation } from "../../context/generation-info.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { XmlDocWriter } from "../core/XmlDocWriter.js";
 export declare namespace XmlDocBlock {
     type Like = XmlDocBlock | XmlDocBlock.Arg;
     type XmlDocProps = {
