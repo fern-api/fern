@@ -2,6 +2,9 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
+/**
+ * Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)
+ */
 export interface ApiReferenceOperationConfiguration
     extends FernDocsConfig.WithPermissions,
         FernDocsConfig.WithFeatureFlags {
