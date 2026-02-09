@@ -31,7 +31,12 @@ export function escapeMdx(text: string): string {
  *
  * Only escapes characters OUTSIDE fenced code blocks. Code blocks are
  * preserved as-is since their content should render literally.
- * Handles both closed (```...```) and unclosed (```... to end) code blocks.
+ *
+ * Sanitization performed on code blocks:
+ * - Language tags containing JSX-unsafe chars are normalized to "python"
+ *   (e.g., ```{doctest} → ```python — the braces would break MDX parsing)
+ * - Unclosed code blocks get a closing fence appended
+ *   (prevents the block from swallowing all subsequent content)
  */
 export function escapeMdxPreservingCodeBlocks(text: string): string {
     const result: string[] = [];
@@ -46,8 +51,19 @@ export function escapeMdxPreservingCodeBlocks(text: string): string {
         if (match.index > lastIndex) {
             result.push(escapeJsxChars(text.slice(lastIndex, match.index)));
         }
-        // Preserve code block as-is
-        result.push(match[0]);
+
+        let codeBlock = match[0];
+
+        // Normalize language tags containing JSX-unsafe chars ({, }) to "python"
+        codeBlock = codeBlock.replace(/^```\{?\w*\}?\n/, "```python\n");
+
+        // Repair unclosed fence — if the regex matched via $ instead of \n```,
+        // the block has no closing fence and would swallow all subsequent content
+        if (!codeBlock.endsWith("```")) {
+            codeBlock += "\n```";
+        }
+
+        result.push(codeBlock);
         lastIndex = match.index + match[0].length;
     }
 

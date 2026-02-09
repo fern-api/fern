@@ -515,8 +515,9 @@ describe("renderDocstring (NeMo fixtures)", () => {
         const ds = NEMO_FIXTURES["eval_collate_fn"]!;
         const result = renderDocstring(ds);
 
-        // Code block in description should be preserved (not escaped)
-        expect(result).toContain("```{doctest}");
+        // Code block in description should be preserved (not escaped), with {doctest} normalized to python
+        expect(result).toContain("```python");
+        expect(result).not.toContain("{doctest}");
         expect(result).toContain(">>> import torch");
         // Curly braces inside code block should NOT be escaped
         expect(result).toContain("{'role': 'user'");
@@ -564,7 +565,8 @@ describe("renderSimpleDocstring (NeMo fixtures)", () => {
         const ds = NEMO_FIXTURES["eval_collate_fn"]!;
         const result = renderSimpleDocstring(ds);
 
-        expect(result).toContain("```{doctest}");
+        expect(result).toContain("```python");
+        expect(result).not.toContain("{doctest}");
         expect(result).toContain(">>> import torch");
     });
 });

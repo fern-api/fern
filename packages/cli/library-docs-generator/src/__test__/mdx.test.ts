@@ -62,16 +62,38 @@ describe("escapeMdxPreservingCodeBlocks", () => {
         expect(result).toContain("foo = {bar}");
     });
 
-    it("preserves code block language tag as-is", () => {
+    it("normalizes safe language tags to python", () => {
         const input = "```javascript\nconsole.log('hi')\n```";
         const result = escapeMdxPreservingCodeBlocks(input);
-        expect(result).toContain("```javascript\n");
+        expect(result).toContain("```python\n");
     });
 
-    it("handles unclosed code blocks", () => {
+    it("normalizes {doctest} language tag to python", () => {
+        const input = "```{doctest}\n>>> print('hi')\n```";
+        const result = escapeMdxPreservingCodeBlocks(input);
+        expect(result).toContain("```python\n");
+        expect(result).not.toContain("{doctest}");
+    });
+
+    it("repairs unclosed code blocks by adding closing fence", () => {
         const input = "```python\nx = 1";
         const result = escapeMdxPreservingCodeBlocks(input);
-        expect(result).toContain("```python\nx = 1");
+        expect(result).toBe("```python\nx = 1\n```");
+    });
+
+    it("does not double-close already closed code blocks", () => {
+        const input = "```python\nx = 1\n```";
+        const result = escapeMdxPreservingCodeBlocks(input);
+        expect(result).toBe("```python\nx = 1\n```");
+    });
+
+    it("repairs unclosed fence and escapes text after it", () => {
+        const input = "```python\nx = 1\nMore <stuff> after";
+        const result = escapeMdxPreservingCodeBlocks(input);
+        // The regex matches to end of string, so everything is inside the code block
+        // and gets a closing fence appended
+        expect(result).toContain("```python\n");
+        expect(result).toMatch(/\n```$/);
     });
 
     it("handles text with no code blocks", () => {
@@ -80,6 +102,14 @@ describe("escapeMdxPreservingCodeBlocks", () => {
 
     it("handles empty string", () => {
         expect(escapeMdxPreservingCodeBlocks("")).toBe("");
+    });
+
+    it("normalizes {doctest} and repairs fence in real docstring pattern", () => {
+        const input = "Examples:\n```{doctest}\n>>> import torch\n>>> x = torch.tensor([1])\n>>> x\ntensor([1])";
+        const result = escapeMdxPreservingCodeBlocks(input);
+        expect(result).toContain("```python\n");
+        expect(result).not.toContain("{doctest}");
+        expect(result).toMatch(/\n```$/);
     });
 });
 
