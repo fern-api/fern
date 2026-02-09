@@ -92,7 +92,9 @@ function main() {
         } catch (error) {
             process.stderr.write(`  ✗ Failed to compile ${bunTarget}\n`);
             if (error?.code === "ENOENT") {
-                process.stderr.write("  Bun is not installed. Install it with: curl -fsSL https://bun.sh/install | bash\n");
+                process.stderr.write(
+                    "  Bun is not installed. Install it with: curl -fsSL https://bun.sh/install | bash\n"
+                );
             } else if (error?.stderr) {
                 process.stderr.write(error.stderr.toString() + "\n");
             }
