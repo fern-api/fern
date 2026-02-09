@@ -155,7 +155,7 @@ export class SdkConfigConverter {
         if (lang == null) {
             return undefined;
         }
-        const resolvedDockerImage = this.resolveDockerImage({ name, lang, version: target.version });
+        const resolvedDockerImage = getImageReferenceFromLanguage({ lang, version: target.version });
         return {
             lang,
             image: resolvedDockerImage.image,
@@ -197,21 +197,5 @@ export class SdkConfigConverter {
             })
         );
         return undefined;
-    }
-
-    private resolveDockerImage({
-        name,
-        lang,
-        version
-    }: {
-        name: string;
-        lang: Language;
-        version: string | undefined;
-    }): DockerImageReference {
-        const dockerImage = getImageReferenceFromLanguage({ lang, version });
-        if (version == null) {
-            this.logger.debug(`Target "${name}" has no version specified, using ${dockerImage}`);
-        }
-        return dockerImage;
     }
 }

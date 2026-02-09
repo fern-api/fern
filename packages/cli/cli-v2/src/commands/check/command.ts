@@ -5,6 +5,8 @@ import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { CliError } from "../../errors/CliError.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { command } from "../_internal/command.js";
+import { Icons } from "../../ui/format.js";
+import chalk from "chalk";
 
 export declare namespace CheckCommand {
     export interface Args extends GlobalArgs {
@@ -39,6 +41,14 @@ export class CheckCommand {
         if (hasErrors || (args.strict && hasWarnings)) {
             throw CliError.exit();
         }
+
+        if (hasWarnings) {
+            process.stderr.write(`${Icons.warning} ${chalk.yellow(`Found ${checkResult.warningCount} warnings`)}\n`);
+            process.stderr.write(chalk.dim("  Run 'fern check --strict' to treat warnings as errors\n"));
+            return;
+        }
+
+        process.stderr.write(`${Icons.success} ${chalk.green("All checks passed")}\n`);
     }
 
     private validateArgs(args: CheckCommand.Args, workspace: Workspace): void {
