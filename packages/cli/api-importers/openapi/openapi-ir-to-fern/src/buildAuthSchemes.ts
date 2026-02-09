@@ -13,7 +13,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             const schema = { ...declaration };
             if (schema.docs == null) {
                 const irScheme = context.ir.securitySchemes[name];
-                if (irScheme?.description != null) {
+                if (irScheme != null && "description" in irScheme && irScheme.description != null) {
                     schema.docs = irScheme.description;
                 }
             }
