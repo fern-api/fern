@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.0
+  changelogEntry:
+    - summary: |
+        Add event-level SSE discrimination support. When an SSE streaming endpoint returns a discriminated
+        union with `event` as the discriminant, the Stream class now parses the full SSE envelope (event,
+        data, id fields) instead of just the data field. This enables SSE endpoints where the discriminator
+        is the SSE event type rather than a field inside the JSON data payload.
+      type: feat
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.46.1
   changelogEntry:
     - summary: |

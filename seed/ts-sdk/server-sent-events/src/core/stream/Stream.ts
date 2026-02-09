@@ -26,10 +26,13 @@ export declare namespace Stream {
     interface SseEvent {
         type: "sse";
         streamTerminator?: string;
+        discriminated?: boolean;
     }
 }
 
 const DATA_PREFIX = "data:";
+const EVENT_PREFIX = "event:";
+const ID_PREFIX = "id:";
 
 export class Stream<T> implements AsyncIterable<T> {
     private stream: ReadableStream;
@@ -42,16 +45,19 @@ export class Stream<T> implements AsyncIterable<T> {
     private prefix: string | undefined;
     private messageTerminator: string;
     private streamTerminator: string | undefined;
+    private discriminated: boolean;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
     constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
+        this.discriminated = false;
         if (eventShape.type === "sse") {
             this.prefix = DATA_PREFIX;
             this.messageTerminator = "\n";
             this.streamTerminator = eventShape.streamTerminator;
+            this.discriminated = eventShape.discriminated ?? false;
         } else {
             this.messageTerminator = eventShape.messageTerminator;
         }
@@ -64,6 +70,14 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     private async *iterMessages(): AsyncGenerator<T, void> {
+        if (this.discriminated) {
+            yield* this.iterDiscriminatedMessages();
+        } else {
+            yield* this.iterDataMessages();
+        }
+    }
+
+    private async *iterDataMessages(): AsyncGenerator<T, void> {
         this.controller.signal;
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
@@ -96,6 +110,81 @@ export class Stream<T> implements AsyncIterable<T> {
                 yield message;
                 prefixSeen = false;
             }
+        }
+    }
+
+    private async *iterDiscriminatedMessages(): AsyncGenerator<T, void> {
+        this.controller.signal;
+        const stream = readableStreamAsyncIterable<any>(this.stream);
+        let buf = "";
+        let eventType: string | undefined;
+        let dataValue: string | undefined;
+        let idValue: string | undefined;
+
+        for await (const chunk of stream) {
+            buf += this.decodeChunk(chunk);
+
+            let terminatorIndex: number;
+            while ((terminatorIndex = buf.indexOf("\n")) >= 0) {
+                const line = buf.slice(0, terminatorIndex);
+                buf = buf.slice(terminatorIndex + 1);
+
+                if (!line.trim()) {
+                    if (dataValue != null) {
+                        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                            return;
+                        }
+                        let parsedData: unknown = dataValue;
+                        try {
+                            parsedData = JSON.parse(dataValue);
+                        } catch (_e) {
+                            // data is not JSON, keep as string
+                        }
+                        const envelope: Record<string, unknown> = { data: parsedData };
+                        if (eventType != null) {
+                            envelope.event = eventType;
+                        }
+                        if (idValue != null) {
+                            envelope.id = idValue;
+                        }
+                        const message = await this.parse(envelope);
+                        yield message;
+                    }
+                    eventType = undefined;
+                    dataValue = undefined;
+                    idValue = undefined;
+                    continue;
+                }
+
+                if (line.startsWith(EVENT_PREFIX)) {
+                    eventType = line.slice(EVENT_PREFIX.length).trim();
+                } else if (line.startsWith(DATA_PREFIX)) {
+                    dataValue = line.slice(DATA_PREFIX.length).trim();
+                } else if (line.startsWith(ID_PREFIX)) {
+                    idValue = line.slice(ID_PREFIX.length).trim();
+                }
+            }
+        }
+
+        if (dataValue != null) {
+            if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                return;
+            }
+            let parsedData: unknown = dataValue;
+            try {
+                parsedData = JSON.parse(dataValue);
+            } catch (_e) {
+                // data is not JSON, keep as string
+            }
+            const envelope: Record<string, unknown> = { data: parsedData };
+            if (eventType != null) {
+                envelope.event = eventType;
+            }
+            if (idValue != null) {
+                envelope.id = idValue;
+            }
+            const message = await this.parse(envelope);
+            yield message;
         }
     }
 

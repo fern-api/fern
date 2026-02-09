@@ -4,6 +4,26 @@ types:
       delta: string
       tokens: optional<integer>
 
+  StreamedEvents:
+    discriminant: event
+    union:
+      statusUpdate: StatusUpdateEvent
+      completion: CompletionEvent
+      heartbeat: HeartbeatEvent
+
+  StatusUpdateEvent:
+    properties:
+      status: string
+
+  CompletionEvent:
+    properties:
+      delta: string
+      tokens: optional<integer>
+
+  HeartbeatEvent:
+    properties:
+      timestamp: long
+
 service:
   auth: false
   base-path: ""
@@ -18,5 +38,18 @@ service:
             query: string
       response-stream:
         type: StreamedCompletion
+        format: sse
+        terminator: "[[DONE]]"
+
+    streamEvents:
+      method: POST
+      path: /stream-events
+      request:
+        name: StreamEventRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamedEvents
         format: sse
         terminator: "[[DONE]]"

@@ -31,6 +31,7 @@ export declare namespace Stream {
     export interface SSEEventShape {
         type: "sse";
         streamTerminator?: ts.Expression;
+        discriminated?: boolean;
     }
 
     export interface MessageEventShape {
@@ -82,6 +83,14 @@ export class StreamImpl extends CoreUtility implements Stream {
                                 ts.factory.createPropertyAssignment(
                                     ts.factory.createIdentifier("streamTerminator"),
                                     eventShape.streamTerminator ?? ts.factory.createStringLiteral("\n")
+                                )
+                            );
+                        }
+                        if (eventShape.discriminated === true) {
+                            eventShapeProperties.push(
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("discriminated"),
+                                    ts.factory.createTrue()
                                 )
                             );
                         }
