@@ -530,18 +530,7 @@ $client->service->createBigEntity(
             'nodes' => [
                 new Node([
                     'name' => 'name',
-                    'nodes' => [
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                    ],
+                    'nodes' => [],
                     'trees' => [
                         new Tree([
                             'nodes' => [],
@@ -553,18 +542,7 @@ $client->service->createBigEntity(
                 ]),
                 new Node([
                     'name' => 'name',
-                    'nodes' => [
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                    ],
+                    'nodes' => [],
                     'trees' => [
                         new Tree([
                             'nodes' => [],
@@ -631,18 +609,7 @@ $client->service->createBigEntity(
                             'contents' => 'contents',
                         ]),
                     ],
-                    'directories' => [
-                        new Directory([
-                            'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
-                        ]),
-                        new Directory([
-                            'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
-                        ]),
-                    ],
+                    'directories' => [],
                 ]),
                 new Directory([
                     'name' => 'name',
@@ -656,18 +623,7 @@ $client->service->createBigEntity(
                             'contents' => 'contents',
                         ]),
                     ],
-                    'directories' => [
-                        new Directory([
-                            'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
-                        ]),
-                        new Directory([
-                            'name' => 'name',
-                            'files' => [],
-                            'directories' => [],
-                        ]),
-                    ],
+                    'directories' => [],
                 ]),
             ],
         ]),

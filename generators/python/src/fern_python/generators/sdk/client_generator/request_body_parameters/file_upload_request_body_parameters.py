@@ -10,6 +10,7 @@ from fern_python.external_dependencies.json import Json
 import fern.ir.resources as ir_types
 
 FILETYPE_DOCS = "See core.File for more documentation"
+JSON_MODULE_ALIAS = "_json"
 
 
 class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
@@ -22,6 +23,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         self._endpoint = endpoint
         self._request = request
         self._context = context
+        self._has_json_body_property = self._check_has_json_body_property()
 
     def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
@@ -118,6 +120,17 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_body_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
         return property.name.name.snake_case.safe_name
 
+    def _check_has_json_body_property(self) -> bool:
+        for property in self._request.properties:
+            property_as_union = property.get_as_union()
+            if property_as_union.type == "bodyProperty":
+                if self._get_body_property_name(property_as_union) == "json":
+                    return True
+        return False
+
+    def _get_json_dumps(self, obj: AST.Expression) -> AST.FunctionInvocation:
+        return Json.dumps(obj, alias=JSON_MODULE_ALIAS if self._has_json_body_property else None)
+
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_line("{")
@@ -128,16 +141,13 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         continue
                     elif property_as_union.type == "bodyProperty":
                         prop_name = self._get_body_property_name(property_as_union)
-                        # For multipart form data, httpx expects primitive types (str, int, etc.)
-                        # Object types need to be JSON serialized as strings
                         if self._is_primitive_type(property_as_union.value_type):
                             writer.write_line(f'"{property_as_union.name.wire_value}": {prop_name},')
                         else:
-                            # JSON serialize complex types for multipart form compatibility
                             writer.write(f'"{property_as_union.name.wire_value}": ')
                             writer.write_node(
                                 AST.Expression(
-                                    Json.dumps(
+                                    self._get_json_dumps(
                                         AST.Expression(
                                             self._context.core_utilities.jsonable_encoder(AST.Expression(prop_name))
                                         )
@@ -179,7 +189,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                 if property_as_union.content_type == "text/plain":
                                     writer.write_node(expression)
                                 else:
-                                    writer.write_node(AST.Expression(Json.dumps(expression)))
+                                    writer.write_node(AST.Expression(self._get_json_dumps(expression)))
                                 writer.write_line(f', "{property_as_union.content_type}")}}')
                                 writer.write_line(f"if {property_as_union.name.wire_value} is not OMIT ")
                                 writer.write_line("else {}")
@@ -188,7 +198,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                             writer.write(f'"{property_as_union.name.wire_value}": (None, ')
                             writer.write_node(
                                 AST.Expression(
-                                    Json.dumps(
+                                    self._get_json_dumps(
                                         AST.Expression(
                                             self._context.core_utilities.jsonable_encoder(
                                                 AST.Expression(property_as_union.name.wire_value)
