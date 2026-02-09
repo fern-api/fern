@@ -1,4 +1,6 @@
 export type { FernOrganizationToken, FernToken, FernUserToken } from "./FernToken.js";
+export type { OrganizationCheckResult } from "./orgs/checkOrganizationMembership.js";
+export { checkOrganizationMembership } from "./orgs/checkOrganizationMembership.js";
 export { createOrganizationIfDoesNotExist } from "./orgs/createOrganizationIfDoesNotExist.js";
 export { getOrganizationNameValidationError } from "./orgs/getOrganizationNameValidationError.js";
 export { getPathToTokenFile } from "./persistence/getPathToTokenFile.js";

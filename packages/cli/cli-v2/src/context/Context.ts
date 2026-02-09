@@ -40,7 +40,7 @@ export class Context {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.logFileWriter = new LogFileWriter({ cwd: this.cwd });
+        this.logFileWriter = new LogFileWriter();
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
 

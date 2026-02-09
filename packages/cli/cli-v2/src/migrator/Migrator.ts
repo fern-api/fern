@@ -10,7 +10,6 @@ import { GeneratorsYmlMigrator } from "./generators-yml/index.js";
 import type { MigratorResult, MigratorWarning } from "./types/index.js";
 
 const FERN_YML_FILENAME = "fern.yml";
-const EDITION = "2026-01-01";
 
 export interface MigratorConfig {
     cwd: AbsoluteFilePath;
@@ -166,7 +165,6 @@ export class Migrator {
         warnings.push(...apiResult.warnings);
 
         const fernYml: schemas.FernYmlSchema = {
-            edition: EDITION,
             org
         };
 
@@ -196,7 +194,7 @@ export class Migrator {
                 type: "conflict",
                 message: "No API directories found in fern/apis/"
             });
-            return { success: false, fernYml: { edition: EDITION, org } };
+            return { success: false, fernYml: { org } };
         }
 
         // Collect generators.yml API configs and SDK results for each API.
@@ -240,7 +238,6 @@ export class Migrator {
         warnings.push(...apisResult.warnings);
 
         const fernYml: schemas.FernYmlSchema = {
-            edition: EDITION,
             org,
             apis: apisResult.apis
         };
