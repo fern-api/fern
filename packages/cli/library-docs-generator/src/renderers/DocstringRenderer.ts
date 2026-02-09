@@ -9,6 +9,20 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { escapeMdx, escapeMdxPreservingCodeBlocks, formatTypeAnnotation } from "../utils/mdx.js";
 
 /**
+ * Sanitize description text and wrap its code blocks for MDX rendering.
+ *
+ * 1. Sanitizes: escapes JSX chars outside code blocks, normalizes language tags, repairs unclosed fences
+ * 2. Renders: wraps fenced code blocks in <CodeBlock showLineNumbers={false}> components
+ */
+function renderDescriptionText(text: string): string {
+    const sanitized = escapeMdxPreservingCodeBlocks(text);
+    return sanitized.replace(
+        /```(\w*)\n([\s\S]*?)\n```/g,
+        "<CodeBlock showLineNumbers={false}>\n\n```$1\n$2\n```\n\n</CodeBlock>",
+    );
+}
+
+/**
  * Render a full docstring to MDX, including all structured sections:
  * description, parameters, returns, raises, examples, notes, warnings.
  *
@@ -29,7 +43,7 @@ export function renderDocstring(
 
     // Description (full text — summary is only used for tables/tooltips)
     if (docstring.description) {
-        lines.push(escapeMdxPreservingCodeBlocks(docstring.description), "");
+        lines.push(renderDescriptionText(docstring.description), "");
     }
 
     // Parameters
@@ -58,7 +72,7 @@ export function renderDocstring(
         const typeStr = type ? ` \`${formatTypeAnnotation(type)}\`` : "";
         lines.push(`**Returns:**${typeStr}`, "");
         if (docstring.returns.description) {
-            lines.push(escapeMdxPreservingCodeBlocks(docstring.returns.description), "");
+            lines.push(renderDescriptionText(docstring.returns.description), "");
         }
     }
 
@@ -77,7 +91,7 @@ export function renderDocstring(
         lines.push("**Examples:**", "");
         for (const example of docstring.examples) {
             if (example.description) {
-                lines.push(escapeMdxPreservingCodeBlocks(example.description), "");
+                lines.push(renderDescriptionText(example.description), "");
             }
             lines.push("<CodeBlock showLineNumbers={false}>", "", "```python", example.code, "```", "", "</CodeBlock>", "");
         }
@@ -87,7 +101,7 @@ export function renderDocstring(
     if (docstring.notes.length > 0) {
         lines.push("<Note>", "");
         for (const note of docstring.notes) {
-            lines.push(escapeMdxPreservingCodeBlocks(note));
+            lines.push(renderDescriptionText(note));
         }
         lines.push("", "</Note>", "");
     }
@@ -96,7 +110,7 @@ export function renderDocstring(
     if (docstring.warnings.length > 0) {
         lines.push("<Warning>", "");
         for (const warning of docstring.warnings) {
-            lines.push(escapeMdxPreservingCodeBlocks(warning));
+            lines.push(renderDescriptionText(warning));
         }
         lines.push("", "</Warning>", "");
     }
@@ -112,5 +126,5 @@ export function renderSimpleDocstring(docstring: FdrAPI.libraryDocs.DocstringIr 
     if (!docstring?.description) {
         return "";
     }
-    return escapeMdxPreservingCodeBlocks(docstring.description);
+    return renderDescriptionText(docstring.description);
 }

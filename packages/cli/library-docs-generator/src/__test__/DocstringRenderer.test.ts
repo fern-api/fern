@@ -63,10 +63,12 @@ describe("renderDocstring", () => {
         expect(result).toContain("&#123;generics&#125;");
     });
 
-    it("preserves code blocks in description", () => {
+    it("wraps code blocks in description with CodeBlock component", () => {
         const desc = "Example:\n```python\nx = <T>\n```\nEnd.";
         const result = renderDocstring(docstring({ description: desc }));
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
         expect(result).toContain("```python\nx = <T>\n```");
+        expect(result).toContain("</CodeBlock>");
         expect(result).toContain("End.");
     });
 
@@ -223,7 +225,7 @@ describe("renderDocstring", () => {
         expect(result).toContain("`Optional&lt;int&gt;`");
     });
 
-    it("preserves code blocks in returns description", () => {
+    it("wraps code blocks in returns description with CodeBlock component", () => {
         const desc = "Returns:\n```python\n{\"key\": <value>}\n```";
         const result = renderDocstring(
             docstring({
@@ -232,6 +234,8 @@ describe("renderDocstring", () => {
         );
         // Code block content should not be escaped
         expect(result).toContain('{"key": <value>}');
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
+        expect(result).toContain("</CodeBlock>");
     });
 
     // --- Raises ---
@@ -306,14 +310,15 @@ describe("renderDocstring", () => {
         expect(result).toContain("x = 1");
     });
 
-    it("preserves code blocks in example description", () => {
+    it("wraps code blocks in example description with CodeBlock component", () => {
         const result = renderDocstring(
             docstring({
                 examples: [{ code: "x = 1", description: "Use `<T>` like:\n```python\ny = <T>()\n```" }],
             }),
         );
-        // Inside code block: not escaped
+        // Inside code block: not escaped, and wrapped in CodeBlock
         expect(result).toContain("y = <T>()");
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
     });
 
     it("renders multiple examples", () => {
@@ -346,11 +351,13 @@ describe("renderDocstring", () => {
         expect(result).toContain("Note 2");
     });
 
-    it("preserves code blocks in notes", () => {
+    it("wraps code blocks in notes with CodeBlock component", () => {
         const result = renderDocstring(
             docstring({ notes: ["See:\n```python\nx = {val}\n```"] }),
         );
         expect(result).toContain("x = {val}");
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
+        expect(result).toContain("</CodeBlock>");
     });
 
     // --- Warnings ---
@@ -362,11 +369,13 @@ describe("renderDocstring", () => {
         expect(result).toContain("</Warning>");
     });
 
-    it("preserves code blocks in warnings", () => {
+    it("wraps code blocks in warnings with CodeBlock component", () => {
         const result = renderDocstring(
             docstring({ warnings: ["Don't do:\n```python\nx = <bad>\n```"] }),
         );
         expect(result).toContain("x = <bad>");
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
+        expect(result).toContain("</CodeBlock>");
     });
 
     // --- Combined sections ---
@@ -442,10 +451,12 @@ describe("renderSimpleDocstring", () => {
         expect(result).toContain("&#123;x&#125;");
     });
 
-    it("preserves code blocks", () => {
+    it("wraps code blocks with CodeBlock component", () => {
         const desc = "Example:\n```python\nx = <T>\n```";
         const result = renderSimpleDocstring(docstring({ description: desc }));
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
         expect(result).toContain("```python\nx = <T>\n```");
+        expect(result).toContain("</CodeBlock>");
     });
 
     it("ignores structured sections (params, returns, etc.)", () => {
@@ -511,14 +522,16 @@ describe("renderDocstring (NeMo fixtures)", () => {
         expect(result).not.toContain("**Returns:**");
     });
 
-    it("eval_collate_fn: preserves code block in description", () => {
+    it("eval_collate_fn: wraps code block in description with CodeBlock", () => {
         const ds = NEMO_FIXTURES["eval_collate_fn"]!;
         const result = renderDocstring(ds);
 
-        // Code block in description should be preserved (not escaped), with {doctest} normalized to python
+        // Code block in description should be wrapped in CodeBlock, with {doctest} normalized to python
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
         expect(result).toContain("```python");
         expect(result).not.toContain("{doctest}");
         expect(result).toContain(">>> import torch");
+        expect(result).toContain("</CodeBlock>");
         // Curly braces inside code block should NOT be escaped
         expect(result).toContain("{'role': 'user'");
 
@@ -561,12 +574,14 @@ describe("renderSimpleDocstring (NeMo fixtures)", () => {
         expect(result).not.toContain("<ParamField");
     });
 
-    it("preserves code block in eval_collate_fn description", () => {
+    it("wraps code block in eval_collate_fn description with CodeBlock", () => {
         const ds = NEMO_FIXTURES["eval_collate_fn"]!;
         const result = renderSimpleDocstring(ds);
 
+        expect(result).toContain("<CodeBlock showLineNumbers={false}>");
         expect(result).toContain("```python");
         expect(result).not.toContain("{doctest}");
         expect(result).toContain(">>> import torch");
+        expect(result).toContain("</CodeBlock>");
     });
 });
