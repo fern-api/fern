@@ -67,69 +67,70 @@ async function writeDefinitionForOpenAPIWorkspace({
             context,
             documents: await loader.loadDocuments({ context, specs: [spec] })
         });
-        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-        let existingOverrides: any = {};
-        if (spec.absoluteFilepathToOverrides !== undefined) {
-            // Use the first override file if an array is provided
-            const overridesPath = Array.isArray(spec.absoluteFilepathToOverrides)
-                ? spec.absoluteFilepathToOverrides[0]
-                : spec.absoluteFilepathToOverrides;
+
+        const absolutePathsToOverrides = Array.isArray(spec.absoluteFilepathToOverrides)
+            ? spec.absoluteFilepathToOverrides
+            : [spec.absoluteFilepathToOverrides];
+
+        for (const overridesPath of absolutePathsToOverrides) {
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+            let existingOverrides: any = {};
             if (overridesPath !== undefined) {
                 existingOverrides = await readExistingOverrides(overridesPath, context);
             }
-        }
 
-        const paths: Record<string, Record<string, unknown>> = "path" in existingOverrides
-            ? (existingOverrides.path as Record<string, Record<string, unknown>>)
-            : {};
-        for (const endpoint of ir.endpoints) {
-            const endpointLocation = getEndpointLocation(endpoint);
-            if (!(endpoint.path in paths)) {
-                paths[endpoint.path] = {};
-            }
-            const pathItem = paths[endpoint.path];
-            if (pathItem != null && pathItem[endpoint.method] == null) {
-                const groupName = endpointLocation.file
-                    .split("/")
-                    .map((part) => part.replace(".yml", ""))
-                    .filter((part) => part !== "__package__");
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const sdkMethodNameExtensions: Record<string, any> = {};
-                if (groupName.length > 0) {
-                    sdkMethodNameExtensions["x-fern-sdk-group-name"] = groupName;
+            const paths: Record<string, Record<string, unknown>> = "path" in existingOverrides
+                ? (existingOverrides.path as Record<string, Record<string, unknown>>)
+                : {};
+            for (const endpoint of ir.endpoints) {
+                const endpointLocation = getEndpointLocation(endpoint);
+                if (!(endpoint.path in paths)) {
+                    paths[endpoint.path] = {};
                 }
-                sdkMethodNameExtensions["x-fern-sdk-method-name"] = endpointLocation.endpointId;
-                pathItem[endpoint.method.toLowerCase()] = sdkMethodNameExtensions;
-            } else if (existingOverrides == null) {
-                context.logger.warn(`Endpoint ${endpoint.path} ${endpoint.method} is defined multiple times`);
+                const pathItem = paths[endpoint.path];
+                if (pathItem != null && pathItem[endpoint.method] == null) {
+                    const groupName = endpointLocation.file
+                        .split("/")
+                        .map((part) => part.replace(".yml", ""))
+                        .filter((part) => part !== "__package__");
+                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                    const sdkMethodNameExtensions: Record<string, any> = {};
+                    if (groupName.length > 0) {
+                        sdkMethodNameExtensions["x-fern-sdk-group-name"] = groupName;
+                    }
+                    sdkMethodNameExtensions["x-fern-sdk-method-name"] = endpointLocation.endpointId;
+                    pathItem[endpoint.method.toLowerCase()] = sdkMethodNameExtensions;
+                } else if (existingOverrides == null) {
+                    context.logger.warn(`Endpoint ${endpoint.path} ${endpoint.method} is defined multiple times`);
+                }
             }
-        }
-        const schemas: Record<string, Record<string, unknown>> = "path" in existingOverrides
-            ? (existingOverrides.path as Record<string, Record<string, unknown>>)
-            : {};
-        if (includeModels) {
-            writeModels(schemas, ir.groupedSchemas.rootSchemas);
-            for (const [_, namespacedSchemas] of Object.entries(ir.groupedSchemas.namespacedSchemas)) {
-                writeModels(schemas, namespacedSchemas);
+            const schemas: Record<string, Record<string, unknown>> = "path" in existingOverrides
+                ? (existingOverrides.path as Record<string, Record<string, unknown>>)
+                : {};
+            if (includeModels) {
+                writeModels(schemas, ir.groupedSchemas.rootSchemas);
+                for (const [_, namespacedSchemas] of Object.entries(ir.groupedSchemas.namespacedSchemas)) {
+                    writeModels(schemas, namespacedSchemas);
+                }
             }
-        }
-        const components: Record<string, Record<string, unknown>> = { schemas };
+            const components: Record<string, Record<string, unknown>> = { schemas };
 
-        const specFilename = getFilename(spec.absoluteFilepath);
-        let overridesFilename = "openapi-overrides.yml"; // fallback
-        if (specFilename != null) {
-            const lastDotIndex = specFilename.lastIndexOf(".");
-            if (lastDotIndex > 0) {
-                const nameWithoutExt = specFilename.substring(0, lastDotIndex);
-                const extension = specFilename.substring(lastDotIndex);
-                overridesFilename = `${nameWithoutExt}-overrides${extension}`;
+            const specFilename = getFilename(spec.absoluteFilepath);
+            let overridesFilename = "openapi-overrides.yml"; // fallback
+            if (specFilename != null) {
+                const lastDotIndex = specFilename.lastIndexOf(".");
+                if (lastDotIndex > 0) {
+                    const nameWithoutExt = specFilename.substring(0, lastDotIndex);
+                    const extension = specFilename.substring(lastDotIndex);
+                    overridesFilename = `${nameWithoutExt}-overrides${extension}`;
+                }
             }
-        }
 
-        await writeFile(
-            join(dirname(spec.absoluteFilepath), RelativeFilePath.of(overridesFilename)),
-            yaml.dump({ paths, components })
-        );
+            await writeFile(
+                join(dirname(spec.absoluteFilepath), RelativeFilePath.of(overridesFilename)),
+                yaml.dump({ paths, components })
+            );
+        }
     }
 }
 
