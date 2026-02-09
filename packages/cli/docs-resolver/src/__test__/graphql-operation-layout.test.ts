@@ -144,10 +144,18 @@ describe("GraphQL Operation Layout", () => {
     it("should handle invalid operation format", async () => {
         // Test case to verify error handling for malformed operation strings
         const mockLogger = {
-            error: () => {},
-            warn: () => {},
-            info: () => {},
-            debug: () => {}
+            error: () => {
+                // empty
+            },
+            warn: () => {
+                // empty
+            },
+            info: () => {
+                // empty
+            },
+            debug: () => {
+                // empty
+            }
         };
 
         const contextWithMockLogger = {
