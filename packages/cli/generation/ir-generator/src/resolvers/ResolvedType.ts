@@ -2,7 +2,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-api/ir-sdk";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
-import { FernFileContext } from "../FernFileContext";
+import { FernFileContext } from "../FernFileContext.js";
 
 export declare type ResolvedType =
     | ResolvedType.Container

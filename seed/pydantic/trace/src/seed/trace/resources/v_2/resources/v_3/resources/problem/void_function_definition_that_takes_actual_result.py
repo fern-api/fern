@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from .......core.serialization import FieldMetadata
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .parameter import Parameter
 
@@ -15,7 +17,11 @@ class VoidFunctionDefinitionThatTakesActualResult(UniversalBaseModel):
     The generated signature will include an additional param, actualResult
     """
 
-    additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
+    additional_parameters: typing_extensions.Annotated[
+        typing.List[Parameter],
+        FieldMetadata(alias="additionalParameters"),
+        pydantic.Field(alias="additionalParameters"),
+    ]
     code: FunctionImplementationForMultipleLanguages
 
     if IS_PYDANTIC_V2:

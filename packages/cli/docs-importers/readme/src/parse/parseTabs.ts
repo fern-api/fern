@@ -1,8 +1,8 @@
 import type { Element, Root as HastRoot } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-import { findTitle, getTitleFromLink } from "../extract/title";
-import { scrapedTab } from "../types/scrapedTab";
+import { findTitle, getTitleFromLink } from "../extract/title.js";
+import { scrapedTab } from "../types/scrapedTab.js";
 
 export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined {
     let element: Element | undefined = undefined as Element | undefined;

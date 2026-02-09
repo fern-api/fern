@@ -9,9 +9,9 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { camelCase } from "lodash-es";
 
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 const RESERVED_NAMES = new Set([
     "enum",

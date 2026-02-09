@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
@@ -40,9 +40,6 @@ public class GetAndReturnSetOfPrimitivesTest : BaseMockServerTest
         var response = await Client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
             new HashSet<string>() { "string" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<HashSet<string>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

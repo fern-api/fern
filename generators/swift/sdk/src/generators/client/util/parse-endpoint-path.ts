@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 type PathPart =
     | {
@@ -15,7 +15,7 @@ export type ParseEndpointPathResult = {
     pathParts: PathPart[];
 };
 
-export function parseEndpointPath(endpoint: HttpEndpoint): ParseEndpointPathResult {
+export function parseEndpointPath(endpoint: FernIr.HttpEndpoint): ParseEndpointPathResult {
     const pathParts: PathPart[] = [];
 
     const pathParameterInfosByOriginalName = Object.fromEntries(

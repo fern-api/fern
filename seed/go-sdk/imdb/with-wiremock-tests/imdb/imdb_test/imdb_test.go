@@ -70,7 +70,7 @@ func TestImdbCreateMovieWithWireMock(
 		wiremockPort = "8080"
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
-	client := client.NewClient(
+	client := client.NewIMDBClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &testPackageName.CreateMovieRequest{
@@ -97,7 +97,7 @@ func TestImdbGetMovieWithWireMock(
 		wiremockPort = "8080"
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
-	client := client.NewClient(
+	client := client.NewIMDBClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Imdb.GetMovie(

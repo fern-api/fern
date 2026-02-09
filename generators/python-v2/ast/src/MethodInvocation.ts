@@ -1,7 +1,7 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { MethodArgument } from "./MethodArgument";
-import { Reference } from "./Reference";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { MethodArgument } from "./MethodArgument.js";
+import { Reference } from "./Reference.js";
 
 export declare namespace MethodInvocation {
     interface Args {

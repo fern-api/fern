@@ -1,6 +1,5 @@
 import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import type { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
@@ -11,11 +10,11 @@ import {
     StructureKind,
     ts
 } from "ts-morph";
-import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer";
+import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer.js";
 
 export declare namespace BaseClientContextImpl {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
         retainOriginalCasing: boolean;
@@ -35,7 +34,7 @@ const ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
 const BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
 
 export class BaseClientContextImpl implements BaseClientContext {
-    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly allowCustomFetcher: boolean;
     private readonly requireDefaultEnvironment: boolean;
     private readonly retainOriginalCasing: boolean;

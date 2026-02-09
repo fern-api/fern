@@ -1,6 +1,6 @@
 import type { SimpleGit } from "simple-git";
 
-import { DEFAULT_REMOTE_NAME } from "./constants";
+import { DEFAULT_REMOTE_NAME } from "./constants.js";
 
 export async function getOrUpdateBranch(
     git: SimpleGit,

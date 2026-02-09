@@ -3,12 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 
 
 class TokenizeCard(UniversalBaseModel):
     method: str
-    card_number: str = pydantic.Field(alias="cardNumber")
+    card_number: typing_extensions.Annotated[str, FieldMetadata(alias="cardNumber"), pydantic.Field(alias="cardNumber")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

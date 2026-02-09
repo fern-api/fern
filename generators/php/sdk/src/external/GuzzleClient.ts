@@ -1,6 +1,6 @@
 import { php } from "@fern-api/php-codegen";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * The Guzzle HTTP client.

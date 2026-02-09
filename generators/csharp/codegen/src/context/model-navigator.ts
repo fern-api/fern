@@ -1,22 +1,10 @@
 import { fail } from "node:assert";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import {
-    DeclaredErrorName,
-    DeclaredTypeName,
-    ExampleEnumType,
-    ExampleNamedType,
-    IntermediateRepresentation,
-    Name,
-    NameAndWireValue,
-    NamedType,
-    ProtobufService,
-    Type,
-    TypeDeclaration,
-    WebSocketChannel
-} from "@fern-fern/ir-sdk/api";
-import { type TypesOf } from "../utils/type-extractor";
-import { is } from "../utils/type-guards";
-import { type Generation } from "./generation-info";
+import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+import { type TypesOf } from "../utils/type-extractor.js";
+import { is } from "../utils/type-guards.js";
+import { type Generation } from "./generation-info.js";
 
 /**
  * JsonPath is a string that represents a path of nodes in the Intermediate Representation (IR) to a given node.
@@ -59,15 +47,15 @@ export interface Provenance {
  * ensures that undefined is never considered a valid IR node.
  */
 export type IrNode = Exclude<
-    | TypesOf<IntermediateRepresentation>
-    | TypesOf<FernIr.dynamic.DynamicIntermediateRepresentation>
-    | TypeDeclaration
-    | ProtobufService
-    | WebSocketChannel
-    | FernIr.dynamic.NamedType
-    | FernIr.dynamic.Declaration
-    | DeclaredErrorName
-    | DeclaredTypeName, // hack hack hack! Why did it not work without that?
+    | TypesOf<FernIr.IntermediateRepresentation>
+    | TypesOf<DynamicFernIr.dynamic.DynamicIntermediateRepresentation>
+    | FernIr.TypeDeclaration
+    | FernIr.ProtobufService
+    | FernIr.WebSocketChannel
+    | DynamicFernIr.dynamic.NamedType
+    | DynamicFernIr.dynamic.Declaration
+    | FernIr.DeclaredErrorName
+    | FernIr.DeclaredTypeName, // hack hack hack! Why did it not work without that?
     undefined
 >;
 
@@ -137,7 +125,7 @@ export class ModelNavigator {
     readonly root: Provenance;
 
     /** The Intermediate Representation being navigated */
-    readonly ir: IntermediateRepresentation | FernIr.dynamic.DynamicIntermediateRepresentation;
+    readonly ir: FernIr.IntermediateRepresentation | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Provides access to C# code generation utilities.
@@ -169,7 +157,9 @@ export class ModelNavigator {
         private readonly generation: Generation
     ) {
         this.root = this.createIndex(instance);
-        this.ir = instance as IntermediateRepresentation | FernIr.dynamic.DynamicIntermediateRepresentation;
+        this.ir = instance as
+            | FernIr.IntermediateRepresentation
+            | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
     }
 
     /**
@@ -382,7 +372,7 @@ export class ModelNavigator {
      * @returns The property name to use in generated C# code
      * @throws Error if the enum value name cannot be found in the enum definition
      */
-    getEnumValueName(typeEnum: Type.Enum, valueName: NameAndWireValue | ExampleEnumType): string {
+    getEnumValueName(typeEnum: FernIr.Type.Enum, valueName: FernIr.NameAndWireValue | FernIr.ExampleEnumType): string {
         // get the name of the enum value
         const name = is.IR.ExampleEnumType(valueName) ? valueName.value.name : valueName.name;
         // match the name given to the name in the actual type
@@ -492,7 +482,7 @@ export class ModelNavigator {
      * @param name2 - The second Name object to compare
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
-    nameEquals(name1: Name, name2: Name): boolean {
+    nameEquals(name1: FernIr.Name, name2: FernIr.Name): boolean {
         return name1.camelCase.safeName === name2.camelCase.safeName;
     }
 
@@ -516,16 +506,23 @@ export class ModelNavigator {
      * @returns An object containing the typeId and the resolved TypeDeclaration
      * @throws Error if the typeId cannot be resolved to a TypeDeclaration
      */
-    dereferenceType(typeIdOrDeclaration: TypeDeclaration | NamedType | DeclaredTypeName | ExampleNamedType | string): {
+    dereferenceType(
+        typeIdOrDeclaration:
+            | FernIr.TypeDeclaration
+            | FernIr.NamedType
+            | FernIr.DeclaredTypeName
+            | FernIr.ExampleNamedType
+            | string
+    ): {
         typeId: string;
-        typeDeclaration: TypeDeclaration;
+        typeDeclaration: FernIr.TypeDeclaration;
     };
     /**
      * Dereferences a type reference to get its full type declaration (dynamic IR variant).
      *
      * This overload is similar to the standard dereferenceType but supports resolving
-     * to either a standard TypeDeclaration or a dynamic FernIr.dynamic.NamedType.
-     * The commented-out FernIr.dynamic.NamedType in the input types suggests this
+     * to either a standard TypeDeclaration or a dynamic DynamicFernIr.dynamic.NamedType.
+     * The commented-out DynamicFernIr.dynamic.NamedType in the input types suggests this
      * may be partially implemented or in transition.
      *
      * @param typeIdOrDeclaration - A type reference in any supported form (excluding ExampleNamedType)
@@ -533,10 +530,14 @@ export class ModelNavigator {
      * @throws Error if the typeId cannot be resolved to a type declaration
      */
     dereferenceType(
-        typeIdOrDeclaration: TypeDeclaration | NamedType | DeclaredTypeName /* | FernIr.dynamic.NamedType */ | string
+        typeIdOrDeclaration:
+            | FernIr.TypeDeclaration
+            | FernIr.NamedType
+            | FernIr.DeclaredTypeName /* | FernIr.dynamic.NamedType */
+            | string
     ): {
         typeId: string;
-        typeDeclaration: TypeDeclaration | FernIr.dynamic.NamedType;
+        typeDeclaration: FernIr.TypeDeclaration | DynamicFernIr.dynamic.NamedType;
     } {
         // get the typeId and name
         const typeId = is.string(typeIdOrDeclaration)

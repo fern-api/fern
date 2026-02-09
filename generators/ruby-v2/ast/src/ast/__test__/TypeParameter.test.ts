@@ -1,8 +1,8 @@
-import { ruby } from "../..";
-import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
-import { Writer } from "../core/Writer";
-import { Type } from "../Type";
-import { Variance } from "../TypeParameter";
+import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema.js";
+import { ruby } from "../../index.js";
+import { Writer } from "../core/Writer.js";
+import { Type } from "../Type.js";
+import { Variance } from "../TypeParameter.js";
 
 describe("TypeParameter", () => {
     let writerConfig: Writer.Args;

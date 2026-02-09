@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedBasicAuthEnvironmentVariables.Core;
+using SeedBasicAuthEnvironmentVariables.Test.Utils;
 
 namespace SeedBasicAuthEnvironmentVariables.Test.Unit.MockServer;
 
@@ -37,6 +37,6 @@ public class PostWithBasicAuthTest : BaseMockServerTest
         var response = await Client.BasicAuth.PostWithBasicAuthAsync(
             new Dictionary<object, object?>() { { "key", "value" } }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

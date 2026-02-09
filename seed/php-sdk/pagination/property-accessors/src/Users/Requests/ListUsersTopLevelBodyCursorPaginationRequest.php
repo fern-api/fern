@@ -49,6 +49,7 @@ class ListUsersTopLevelBodyCursorPaginationRequest extends JsonSerializableType
     public function setCursor(?string $value = null): self
     {
         $this->cursor = $value;
+        $this->_setField('cursor');
         return $this;
     }
 
@@ -66,6 +67,7 @@ class ListUsersTopLevelBodyCursorPaginationRequest extends JsonSerializableType
     public function setFilter(?string $value = null): self
     {
         $this->filter = $value;
+        $this->_setField('filter');
         return $this;
     }
 }

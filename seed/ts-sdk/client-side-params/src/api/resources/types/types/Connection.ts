@@ -9,17 +9,17 @@ export interface Connection {
     /** Connection name */
     name: string;
     /** Display name for the connection */
-    display_name?: string;
+    display_name?: string | undefined;
     /** The identity provider identifier (auth0, google-oauth2, facebook, etc.) */
     strategy: string;
     /** Connection-specific configuration options */
-    options?: Record<string, unknown>;
+    options?: Record<string, unknown> | undefined;
     /** List of client IDs that can use this connection */
-    enabled_clients?: string[];
+    enabled_clients?: string[] | undefined;
     /** Applicable realms for enterprise connections */
-    realms?: string[];
+    realms?: string[] | undefined;
     /** Whether this is a domain connection */
-    is_domain_connection?: boolean;
+    is_domain_connection?: boolean | undefined;
     /** Additional metadata */
-    metadata?: Record<string, unknown>;
+    metadata?: Record<string, unknown> | undefined;
 }

@@ -1,11 +1,11 @@
-import { ExampleServerSideEvent } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
 export interface EndpointSampleCode {
     imports: ts.Statement[];
     endpointInvocation: ts.Expression;
-    sseEvents?: ExampleServerSideEvent[];
+    sseEvents?: FernIr.ExampleServerSideEvent[];
 }
 
 export namespace EndpointSampleCode {

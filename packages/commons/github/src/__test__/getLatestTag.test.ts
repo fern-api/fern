@@ -1,4 +1,4 @@
-import { getLatestTag } from "../getLatestTag";
+import { getLatestTag } from "../getLatestTag.js";
 
 describe("getLatestTag", () => {
     it.skip("tag", async () => {

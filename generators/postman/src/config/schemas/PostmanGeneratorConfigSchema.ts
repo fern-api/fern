@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { PublishConfigSchema } from "./PublishConfigSchema";
+import { PublishConfigSchema } from "./PublishConfigSchema.js";
 
 export const PostmanGeneratorConfigSchema = z.union([
     z.null(),

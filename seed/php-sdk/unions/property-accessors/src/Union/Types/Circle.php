@@ -38,6 +38,7 @@ class Circle extends JsonSerializableType
     public function setRadius(float $value): self
     {
         $this->radius = $value;
+        $this->_setField('radius');
         return $this;
     }
 

@@ -1,5 +1,5 @@
-import { AstNode } from "./core/AstNode";
-import { Import } from "./Import";
+import { AstNode } from "./core/AstNode.js";
+import { Import } from "./Import.js";
 
 export declare namespace ExampleNode {
     export interface Init extends AstNode.Init {

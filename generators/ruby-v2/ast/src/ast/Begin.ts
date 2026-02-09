@@ -1,6 +1,6 @@
-import { ClassReference } from "./ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { ClassReference } from "./ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
 
 /**
  * Represents a `begin` block with 0-N `rescue` clauses in the AST. `begin` blocks in Ruby also

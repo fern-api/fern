@@ -1,9 +1,9 @@
 import { Availability } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../getExtension";
-import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { isReferenceObject } from "./utils/isReferenceObject";
+import { getExtension } from "../getExtension.js";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
 
 /**
  * Converts availability information from the OpenAPI schema to the OpenAPI IR.

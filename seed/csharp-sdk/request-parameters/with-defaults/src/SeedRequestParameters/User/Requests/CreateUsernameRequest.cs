@@ -16,7 +16,7 @@ public record CreateUsernameRequest
     public required string Password { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; } = "test";
+    public required string Name { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

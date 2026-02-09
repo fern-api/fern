@@ -2,8 +2,8 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator.js";
 
 export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;

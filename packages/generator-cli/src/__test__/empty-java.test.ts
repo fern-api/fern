@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/empty-java/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/empty-java/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("empty-java", () => {
     testGenerateReadme({

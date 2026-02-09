@@ -62,6 +62,7 @@ class ListUsersPaginationResponse extends JsonSerializableType
     public function setHasNextPage(?bool $value = null): self
     {
         $this->hasNextPage = $value;
+        $this->_setField('hasNextPage');
         return $this;
     }
 
@@ -79,6 +80,7 @@ class ListUsersPaginationResponse extends JsonSerializableType
     public function setPage(?Page $value = null): self
     {
         $this->page = $value;
+        $this->_setField('page');
         return $this;
     }
 
@@ -96,6 +98,7 @@ class ListUsersPaginationResponse extends JsonSerializableType
     public function setTotalCount(int $value): self
     {
         $this->totalCount = $value;
+        $this->_setField('totalCount');
         return $this;
     }
 
@@ -113,6 +116,7 @@ class ListUsersPaginationResponse extends JsonSerializableType
     public function setData(Users $value): self
     {
         $this->data = $value;
+        $this->_setField('data');
         return $this;
     }
 

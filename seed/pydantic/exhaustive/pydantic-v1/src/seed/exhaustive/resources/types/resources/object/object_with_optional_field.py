@@ -5,7 +5,9 @@ import typing
 import uuid
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import UniversalBaseModel
+from .....core.serialization import FieldMetadata
 
 
 class ObjectWithOptionalField(UniversalBaseModel):
@@ -15,16 +17,30 @@ class ObjectWithOptionalField(UniversalBaseModel):
     """
 
     integer: typing.Optional[int] = None
-    long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
+    long_: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="long"), pydantic.Field(alias="long")
+    ] = None
     double: typing.Optional[float] = None
-    bool_: typing.Optional[bool] = pydantic.Field(alias="bool", default=None)
+    bool_: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="bool"), pydantic.Field(alias="bool")
+    ] = None
     datetime: typing.Optional[dt.datetime] = None
     date: typing.Optional[dt.date] = None
-    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
-    base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
-    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
+    uuid_: typing_extensions.Annotated[
+        typing.Optional[uuid.UUID], FieldMetadata(alias="uuid"), pydantic.Field(alias="uuid")
+    ] = None
+    base_64: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="base64"), pydantic.Field(alias="base64")
+    ] = None
+    list_: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="list"), pydantic.Field(alias="list")
+    ] = None
+    set_: typing_extensions.Annotated[
+        typing.Optional[typing.Set[str]], FieldMetadata(alias="set"), pydantic.Field(alias="set")
+    ] = None
+    map_: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map"), pydantic.Field(alias="map")
+    ] = None
     bigint: typing.Optional[str] = None
 
     class Config:

@@ -1,10 +1,4 @@
-import {
-    ExampleTypeShape,
-    ObjectProperty,
-    ObjectPropertyAccess,
-    ObjectTypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     GetReferenceOpts,
     generateInlinePropertiesModule,
@@ -25,7 +19,7 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 interface Property {
     name: string;
@@ -34,20 +28,65 @@ interface Property {
     responseType: ts.TypeNode | undefined;
     hasQuestionToken: boolean;
     docs: string | undefined;
-    irProperty: ObjectProperty | undefined;
+    irProperty: FernIr.ObjectProperty | undefined;
     isReadonly: boolean;
     isWriteonly: boolean;
 }
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
-    extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
+    extends AbstractGeneratedType<FernIr.ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
-    private readonly allObjectProperties: ObjectProperty[];
+    private readonly allObjectProperties: FernIr.ObjectProperty[];
     public readonly type = "object";
-    constructor(init: AbstractGeneratedType.Init<ObjectTypeDeclaration, Context>) {
+    constructor(init: AbstractGeneratedType.Init<FernIr.ObjectTypeDeclaration, Context>) {
         super(init);
         this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
+    }
+
+    /**
+     * Unwraps parenthesized type nodes to get to the underlying type.
+     */
+    private unwrapParens(node: ts.TypeNode): ts.TypeNode {
+        let current = node;
+        while (ts.isParenthesizedTypeNode(current)) {
+            current = current.type;
+        }
+        return current;
+    }
+
+    /**
+     * Checks if a type node is the undefined keyword.
+     */
+    private isUndefinedKeyword(node: ts.TypeNode): boolean {
+        const unwrapped = this.unwrapParens(node);
+        return unwrapped.kind === ts.SyntaxKind.UndefinedKeyword;
+    }
+
+    /**
+     * Strips top-level undefined from a union type node.
+     * This prevents double unions like (T | undefined) | undefined.
+     */
+    private stripTopLevelUndefined(node: ts.TypeNode): ts.TypeNode {
+        const unwrapped = this.unwrapParens(node);
+        if (ts.isUnionTypeNode(unwrapped)) {
+            const nonUndefined = unwrapped.types.filter((t) => !this.isUndefinedKeyword(t));
+            switch (nonUndefined.length) {
+                case 0:
+                    return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
+                case 1: {
+                    const only = nonUndefined[0];
+                    if (only == null) {
+                        // Defensive fallback; should be unreachable given length === 1
+                        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
+                    }
+                    return only;
+                }
+                default:
+                    return ts.factory.createUnionTypeNode(nonUndefined);
+            }
+        }
+        return node;
     }
 
     public generateStatements(
@@ -72,9 +111,16 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     let propertyValue: ts.TypeNode = type;
                     if (irProperty) {
                         const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
+                        const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
+                        const baseType = this.stripTopLevelUndefined(inlineUnionRef.typeNodeWithoutUndefined);
                         propertyValue = hasQuestionToken
-                            ? inlineUnionRef.typeNode
-                            : inlineUnionRef.typeNodeWithoutUndefined;
+                            ? shouldIncludeUndefined
+                                ? ts.factory.createUnionTypeNode([
+                                      baseType,
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                  ])
+                                : baseType
+                            : baseType;
                     }
                     return ts.factory.createPropertySignature(
                         undefined,
@@ -94,10 +140,19 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                   const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(
                                       irProperty.valueType
                                   );
+                                  const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
+                                  const baseTypeCandidate =
+                                      inlineUnionRef.requestTypeNodeWithoutUndefined ??
+                                      inlineUnionRef.typeNodeWithoutUndefined;
+                                  const baseType = this.stripTopLevelUndefined(baseTypeCandidate);
                                   propertyValue = hasQuestionToken
-                                      ? (inlineUnionRef.requestTypeNode ?? inlineUnionRef.typeNode)
-                                      : (inlineUnionRef.requestTypeNodeWithoutUndefined ??
-                                        inlineUnionRef.typeNodeWithoutUndefined);
+                                      ? shouldIncludeUndefined
+                                          ? ts.factory.createUnionTypeNode([
+                                                baseType,
+                                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                            ])
+                                          : baseType
+                                      : baseType;
                               }
                               return ts.factory.createPropertySignature(
                                   undefined,
@@ -118,10 +173,19 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                   const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(
                                       irProperty.valueType
                                   );
+                                  const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
+                                  const baseTypeCandidate =
+                                      inlineUnionRef.responseTypeNodeWithoutUndefined ??
+                                      inlineUnionRef.typeNodeWithoutUndefined;
+                                  const baseType = this.stripTopLevelUndefined(baseTypeCandidate);
                                   propertyValue = hasQuestionToken
-                                      ? (inlineUnionRef.responseTypeNode ?? inlineUnionRef.typeNode)
-                                      : (inlineUnionRef.responseTypeNodeWithoutUndefined ??
-                                        inlineUnionRef.typeNodeWithoutUndefined);
+                                      ? shouldIncludeUndefined
+                                          ? ts.factory.createUnionTypeNode([
+                                                baseType,
+                                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                            ])
+                                          : baseType
+                                      : baseType;
                               }
                               return ts.factory.createPropertySignature(
                                   undefined,
@@ -175,24 +239,43 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     private generatePropertiesInternal(context: Context): Property[] {
         const props = this.shape.properties.map((property) => {
             const value = this.getTypeForObjectProperty(context, property);
+
+            const shouldIncludeUndefined = value.isOptional && !this.includeSerdeLayer;
+            const undefinedKw = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
+
+            const baseType = this.stripTopLevelUndefined(value.typeNodeWithoutUndefined);
+            const typeNodeToUse = this.noOptionalProperties
+                ? value.typeNode
+                : shouldIncludeUndefined
+                  ? ts.factory.createUnionTypeNode([baseType, undefinedKw])
+                  : baseType;
+
+            const baseReqCandidate = value.requestTypeNodeWithoutUndefined ?? value.typeNodeWithoutUndefined;
+            const baseReq = this.stripTopLevelUndefined(baseReqCandidate);
+            const requestTypeNodeToUse = this.noOptionalProperties
+                ? value.requestTypeNode
+                : shouldIncludeUndefined
+                  ? ts.factory.createUnionTypeNode([baseReq, undefinedKw])
+                  : baseReq;
+
+            const baseRespCandidate = value.responseTypeNodeWithoutUndefined ?? value.typeNodeWithoutUndefined;
+            const baseResp = this.stripTopLevelUndefined(baseRespCandidate);
+            const responseTypeNodeToUse = this.noOptionalProperties
+                ? value.responseTypeNode
+                : shouldIncludeUndefined
+                  ? ts.factory.createUnionTypeNode([baseResp, undefinedKw])
+                  : baseResp;
+
             const propertyNode: Property = {
                 name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
-                type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
+                type: typeNodeToUse,
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
                 docs: property.docs,
                 irProperty: property,
                 isReadonly: this.generateReadWriteOnlyTypes ? property.propertyAccess === "READ_ONLY" : false,
                 isWriteonly: this.generateReadWriteOnlyTypes ? property.propertyAccess === "WRITE_ONLY" : false,
-                requestType: this.generateReadWriteOnlyTypes
-                    ? this.noOptionalProperties
-                        ? value.requestTypeNode
-                        : value.requestTypeNodeWithoutUndefined
-                    : undefined,
-                responseType: this.generateReadWriteOnlyTypes
-                    ? this.noOptionalProperties
-                        ? value.responseTypeNode
-                        : value.responseTypeNodeWithoutUndefined
-                    : undefined
+                requestType: this.generateReadWriteOnlyTypes ? requestTypeNodeToUse : undefined,
+                responseType: this.generateReadWriteOnlyTypes ? responseTypeNodeToUse : undefined
             };
             return propertyNode;
         });
@@ -229,7 +312,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return interfaceNode;
     }
 
-    private getTypeForObjectProperty(context: Context, property: ObjectProperty): TypeReferenceNode {
+    private getTypeForObjectProperty(context: Context, property: FernIr.ObjectProperty): TypeReferenceNode {
         return context.type.getReferenceToInlinePropertyType(
             property.valueType,
             this.typeName,
@@ -245,7 +328,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return this.getPropertyKeyFromProperty(property);
     }
 
-    private getPropertyKeyFromProperty(property: ObjectProperty): string {
+    private getPropertyKeyFromProperty(property: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return property.name.name.camelCase.unsafeName;
         } else {
@@ -253,7 +336,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         }
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "object") {
             throw new Error("Example is not for an object");
         }
@@ -262,7 +345,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public buildExampleProperties(
-        example: ExampleTypeShape,
+        example: FernIr.ExampleTypeShape,
         context: Context,
         opts: GetReferenceOpts
     ): ts.ObjectLiteralElementLike[] {
@@ -279,10 +362,10 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     if (typeof property.propertyAccess === "undefined") {
                         return true;
                     }
-                    if (filterOutReadonlyProps && property.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                    if (filterOutReadonlyProps && property.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                         return false;
                     }
-                    if (filterOutWriteonlyProps && property.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+                    if (filterOutWriteonlyProps && property.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
                         return false;
                     }
                     return true;
@@ -292,7 +375,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     if (originalTypeForProperty.type === "union") {
                         const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                             name: property.name,
-                            type: TypeReference.named({
+                            type: FernIr.TypeReference.named({
                                 ...property.originalTypeDeclaration,
                                 default: undefined,
                                 inline: undefined
@@ -340,7 +423,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     public getAllPropertiesIncludingExtensions(
         context: Context,
         { forceCamelCase }: { forceCamelCase?: boolean } = { forceCamelCase: false }
-    ): { propertyKey: string; wireKey: string; type: TypeReference }[] {
+    ): { propertyKey: string; wireKey: string; type: FernIr.TypeReference }[] {
         return [
             ...this.shape.properties.map((property) => ({
                 wireKey: property.name.wireValue,

@@ -1,6 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
 
-import { FernDocsBuilder } from "./FernDocsBuilder";
+import { FernDocsBuilder } from "./FernDocsBuilder.js";
 
 export declare namespace DocsImporter {
     interface BaseArgs {

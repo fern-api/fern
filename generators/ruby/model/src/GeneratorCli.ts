@@ -17,11 +17,11 @@ import {
 } from "@fern-api/ruby-codegen";
 import { AbstractGeneratorCli } from "@fern-api/ruby-generator-cli";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { cp } from "fs/promises";
 
-import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
-import { TypesGenerator } from "./TypesGenerator";
+import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig.js";
+import { TypesGenerator } from "./TypesGenerator.js";
 
 export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomConfig> {
     // TODO: This will probably be used across CLIs (e.g. storing and then writing these files)
@@ -76,7 +76,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         gemName: string,
         clientName: string,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: FernIr.IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator({
             gemName,
@@ -93,7 +93,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         clientName: string,
         config: FernGeneratorExec.GeneratorConfig,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
+        intermediateRepresentation: FernIr.IntermediateRepresentation,
         repoUrl?: string
     ) {
         generatorContext.logger.debug("[Ruby] Generating Ruby project boilerplate.");
@@ -106,7 +106,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         _config: FernGeneratorExec.GeneratorConfig,
         _customConfig: RubyModelCustomConfig,
         _generatorContext: AbstractGeneratorContext,
-        _intermediateRepresentation: IntermediateRepresentation
+        _intermediateRepresentation: FernIr.IntermediateRepresentation
     ): Promise<void> {
         throw new Error("Unimplemented Exception");
     }
@@ -114,7 +114,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
+        intermediateRepresentation: FernIr.IntermediateRepresentation,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void> {
         const gemName = getGemName(
@@ -171,7 +171,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: FernIr.IntermediateRepresentation
     ): Promise<void> {
         const gemName = getGemName(
             config.organization,

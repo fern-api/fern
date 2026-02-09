@@ -1,4 +1,4 @@
-import { SchemaUtils } from "./builders";
+import type { SchemaUtils } from "./builders/index.js";
 
 export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
 
@@ -24,12 +24,16 @@ export const SchemaType = {
     NUMBER: "number",
     STRING: "string",
     UNKNOWN: "unknown",
+    NEVER: "never",
     RECORD: "record",
     SET: "set",
     UNION: "union",
     UNDISCRIMINATED_UNION: "undiscriminatedUnion",
+    NULLABLE: "nullable",
     OPTIONAL: "optional",
+    OPTIONAL_NULLABLE: "optionalNullable",
 } as const;
+
 export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType];
 
 export type MaybeValid<T> = Valid<T> | Invalid;

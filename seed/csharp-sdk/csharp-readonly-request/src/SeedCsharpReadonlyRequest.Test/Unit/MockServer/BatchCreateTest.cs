@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedCsharpReadonlyRequest;
-using SeedCsharpReadonlyRequest.Core;
+using SeedCsharpReadonlyRequest.Test.Utils;
 
 namespace SeedCsharpReadonlyRequest.Test.Unit.MockServer;
 
@@ -65,10 +65,7 @@ public class BatchCreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<CreateVendorResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -129,9 +126,6 @@ public class BatchCreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<CreateVendorResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

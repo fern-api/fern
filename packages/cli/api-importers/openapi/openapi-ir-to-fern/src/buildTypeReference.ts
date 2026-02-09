@@ -22,20 +22,20 @@ import {
     buildEnumTypeDeclaration,
     buildObjectTypeDeclaration,
     buildOneOfTypeDeclaration
-} from "./buildTypeDeclaration";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
-import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
+} from "./buildTypeDeclaration.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema.js";
+import { getDeclarationFileFromGroupName } from "./utils/getDeclarationFileForSchema.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
 import {
     getDefaultFromTypeReference,
     getDocsFromTypeReference,
     getTypeFromTypeReference,
     getValidationFromTypeReference
-} from "./utils/getTypeFromTypeReference";
-import { wrapTypeReferenceAsNullable } from "./utils/wrapTypeReferenceAsNullable";
-import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+} from "./utils/getTypeFromTypeReference.js";
+import { wrapTypeReferenceAsNullable } from "./utils/wrapTypeReferenceAsNullable.js";
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional.js";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
@@ -446,15 +446,16 @@ function makeUndefinedIfOutsideRange(num: number | undefined, type: "integer" | 
 export function buildReferenceTypeReference({
     schema,
     fileContainingReference,
-    context,
-    namespace
+    context
 }: {
     schema: ReferencedSchema;
     fileContainingReference: RelativeFilePath;
     context: OpenApiIrConverterContext;
     namespace: string | undefined;
 }): RawSchemas.TypeReferenceSchema {
-    const resolvedSchema = context.getSchema(schema.schema, namespace);
+    // Use schema.namespace (the reference's target namespace) to look up the schema,
+    // not the current context's namespace
+    const resolvedSchema = context.getSchema(schema.schema, schema.namespace);
     if (resolvedSchema == null) {
         return "unknown";
     }
@@ -462,10 +463,15 @@ export function buildReferenceTypeReference({
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const displayName = getDisplayName(resolvedSchema);
+    // Use the reference's namespace (schema.namespace) to determine the declaration file,
+    // as this is the authoritative source for where the schema lives
     const typeWithPrefix = getPrefixedType({
         context,
         fileContainingReference,
-        declarationFile: convertSdkGroupNameToFile(groupName),
+        declarationFile: getDeclarationFileFromGroupName({
+            namespace: schema.namespace,
+            groupName
+        }),
         type: schemaName
     });
 

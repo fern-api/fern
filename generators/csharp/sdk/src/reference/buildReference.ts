@@ -1,11 +1,16 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { is } from "@fern-api/csharp-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpService = FernIr.HttpService;
+type ServiceId = FernIr.ServiceId;
+
 import path from "path";
-import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
-import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo.js";
+import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();

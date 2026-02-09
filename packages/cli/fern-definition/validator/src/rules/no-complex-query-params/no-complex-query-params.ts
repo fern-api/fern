@@ -1,5 +1,5 @@
-import { ComplexQueryParamTypeDetector } from "../../ComplexQueryParamTypeDetector";
-import { Rule } from "../../Rule";
+import { ComplexQueryParamTypeDetector } from "../../ComplexQueryParamTypeDetector.js";
+import { Rule } from "../../Rule.js";
 
 export const NoComplexQueryParamsRule: Rule = {
     name: "no-complex-query-params",

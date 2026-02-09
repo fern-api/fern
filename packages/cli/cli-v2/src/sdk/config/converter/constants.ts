@@ -1,4 +1,4 @@
-import type { Language } from "../Language";
+import type { Language } from "../Language.js";
 
 /**
  * Mapping of SDK languages to their Docker image names.

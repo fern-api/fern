@@ -5,4 +5,4 @@ export {
     type ExportedFilePathPart,
     ExportsManager,
     NamedExport
-} from "./ExportsManager";
+} from "./ExportsManager.js";

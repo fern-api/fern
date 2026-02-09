@@ -1,36 +1,18 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    BooleanType,
-    DoubleType,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpResponseBody,
-    HttpService,
-    IntegerType,
-    JsonResponse,
-    LongType,
-    Pagination,
-    SdkRequestBodyType,
-    ServiceId,
-    StreamingResponse,
-    StringType,
-    Subpackage,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { getPaginationInfo } from "../utils/getPaginationInfo";
-import { getResponseBodyType } from "../utils/getResponseBodyType";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { getPaginationInfo } from "../utils/getPaginationInfo.js";
+import { getResponseBodyType } from "../utils/getResponseBodyType.js";
 
 export declare namespace HttpEndpointGenerator {
     export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
 
     export interface Args {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 
@@ -45,10 +27,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        subpackage: Subpackage | undefined;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        subpackage: FernIr.Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
     }): go.Method | undefined {
         const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         return this.generateEndpoint({ service, endpoint, signature, subpackage });
@@ -60,10 +42,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature,
         subpackage
     }: {
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
         signature: EndpointSignatureInfo;
-        subpackage: Subpackage | undefined;
+        subpackage: FernIr.Subpackage | undefined;
     }): go.Method {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
@@ -79,7 +61,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private shouldGenerateRawEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+    private shouldGenerateRawEndpoint({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
         return !this.context.isEnabledPaginationEndpoint(endpoint) && !this.context.isStreamingEndpoint(endpoint);
     }
 
@@ -89,8 +71,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
     }): go.CodeBlock {
         const streamingResponse = this.context.getStreamingResponse(endpoint);
         if (streamingResponse != null) {
@@ -118,9 +100,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         streamingResponse
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
-        streamingResponse: StreamingResponse;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
+        streamingResponse: FernIr.StreamingResponse;
     }): go.CodeBlock {
         const errorDecoder = this.buildErrorDecoder({ endpoint });
         const streamPayload = this.context.getStreamPayload(streamingResponse);
@@ -169,9 +151,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         pagination
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
-        pagination: Pagination;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
+        pagination: FernIr.Pagination;
     }): go.CodeBlock {
         const errorDecoder = this.buildErrorDecoder({ endpoint });
         const paginationInfo = getPaginationInfo({
@@ -213,9 +195,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         pagination
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
-        pagination: Pagination;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
+        pagination: FernIr.Pagination;
     }): go.CodeBlock {
         const responseBody = endpoint.response?.body;
         if (responseBody == null) {
@@ -284,8 +266,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         responseBodyType,
         hasErrorDecoder
     }: {
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
         responseBodyType: go.Type;
         hasErrorDecoder: boolean;
     }): go.AstNode {
@@ -376,9 +358,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature,
         subpackage
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         signature: EndpointSignatureInfo;
-        subpackage: Subpackage | undefined;
+        subpackage: FernIr.Subpackage | undefined;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             if (signature.returnType != null) {
@@ -417,10 +399,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        subpackage: Subpackage | undefined;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        subpackage: FernIr.Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
     }): go.Method | undefined {
         if (!this.shouldGenerateRawEndpoint({ endpoint })) {
             return undefined;
@@ -435,10 +417,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature,
         subpackage
     }: {
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
         signature: EndpointSignatureInfo;
-        subpackage: Subpackage | undefined;
+        subpackage: FernIr.Subpackage | undefined;
     }): go.Method {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
@@ -459,8 +441,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
     }): go.CodeBlock {
         const errorDecoder = this.buildErrorDecoder({ endpoint });
         return go.codeblock((writer) => {
@@ -508,8 +490,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         encodeQuery = true
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
         errorDecoder: go.CodeBlock | undefined;
         rawClient: boolean;
         encodeQuery?: boolean;
@@ -555,7 +537,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private buildRequestOptions({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+    private buildRequestOptions({ endpoint }: { endpoint: FernIr.HttpEndpoint }): go.CodeBlock {
         const requestOptions = endpoint.idempotent
             ? this.context.callNewIdempotentRequestOptions(go.codeblock("opts..."))
             : this.context.callNewRequestOptions(go.codeblock("opts..."));
@@ -571,8 +553,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         rawClient
     }: {
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
         rawClient?: boolean;
     }): go.CodeBlock {
         const baseUrlName = this.context.getBaseUrlNameForEndpoint(endpoint);
@@ -631,7 +613,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint,
         signature
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         signature: EndpointSignatureInfo;
     }): go.CodeBlock {
         const pathSuffix = this.getPathSuffix({ endpoint });
@@ -654,8 +636,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    // Extracts the default field from a TypeReference as a TypeInstantiation.
-    private extractDefaultValue(typeReference: TypeReference): go.TypeInstantiation | undefined {
+    // Extracts the default field from a FernIr.TypeReference as a TypeInstantiation.
+    private extractDefaultValue(typeReference: FernIr.TypeReference): go.TypeInstantiation | undefined {
         switch (typeReference.type) {
             case "container":
                 if (typeReference.container.type === "optional") {
@@ -678,31 +660,31 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
 
                 return typeReference.primitive.v2._visit<go.TypeInstantiation | undefined>({
-                    integer: (integerType: IntegerType) => {
+                    integer: (integerType: FernIr.IntegerType) => {
                         if (integerType.default != null) {
                             return go.TypeInstantiation.int(integerType.default);
                         }
                         return undefined;
                     },
-                    long: (longType: LongType) => {
+                    long: (longType: FernIr.LongType) => {
                         if (longType.default != null) {
                             return go.TypeInstantiation.int64(longType.default);
                         }
                         return undefined;
                     },
-                    double: (doubleType: DoubleType) => {
+                    double: (doubleType: FernIr.DoubleType) => {
                         if (doubleType.default != null) {
                             return go.TypeInstantiation.float64(doubleType.default);
                         }
                         return undefined;
                     },
-                    string: (stringType: StringType) => {
+                    string: (stringType: FernIr.StringType) => {
                         if (stringType.default != null) {
                             return go.TypeInstantiation.string(stringType.default);
                         }
                         return undefined;
                     },
-                    boolean: (booleanType: BooleanType) => {
+                    boolean: (booleanType: FernIr.BooleanType) => {
                         if (booleanType.default != null) {
                             return go.TypeInstantiation.bool(booleanType.default);
                         }
@@ -732,7 +714,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClient
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         encodeQuery: boolean;
         rawClient?: boolean;
     }): go.CodeBlock | undefined {
@@ -821,8 +803,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         rawClient
     }: {
-        endpoint: HttpEndpoint;
-        subpackage: Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
+        subpackage: FernIr.Subpackage | undefined;
         rawClient?: boolean;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
@@ -877,7 +859,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private buildErrorDecoder({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+    private buildErrorDecoder({ endpoint }: { endpoint: FernIr.HttpEndpoint }): go.CodeBlock | undefined {
         if (endpoint.errors.length === 0) {
             return undefined;
         }
@@ -929,7 +911,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getResponseInitialization({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+    private getResponseInitialization({ endpoint }: { endpoint: FernIr.HttpEndpoint }): go.CodeBlock | undefined {
         const responseBody = endpoint.response?.body;
         if (responseBody == null || this.context.isEnabledPaginationEndpoint(endpoint)) {
             return undefined;
@@ -957,7 +939,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private getResponseParameterReference({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
+    private getResponseParameterReference({ endpoint }: { endpoint: FernIr.HttpEndpoint }): go.CodeBlock | undefined {
         const responseBody = endpoint.response?.body;
         if (responseBody == null) {
             return undefined;
@@ -981,7 +963,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint
     }: {
         signature: EndpointSignatureInfo;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.write("return ");
@@ -1002,7 +984,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint,
         signature
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         signature: EndpointSignatureInfo;
     }): go.CodeBlock {
         const responseBody = endpoint.response?.body;
@@ -1023,7 +1005,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getResponseBodyReference({ responseBody }: { responseBody: HttpResponseBody }): go.CodeBlock {
+    private getResponseBodyReference({ responseBody }: { responseBody: FernIr.HttpResponseBody }): go.CodeBlock {
         switch (responseBody.type) {
             case "json":
                 return this.getResponseBodyReferenceForJson({ jsonResponse: responseBody.value });
@@ -1039,7 +1021,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private getResponseBodyReferenceForJson({ jsonResponse }: { jsonResponse: JsonResponse }): go.CodeBlock {
+    private getResponseBodyReferenceForJson({ jsonResponse }: { jsonResponse: FernIr.JsonResponse }): go.CodeBlock {
         switch (jsonResponse.type) {
             case "response":
                 return go.codeblock("response");
@@ -1081,7 +1063,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getPathSuffix({ endpoint }: { endpoint: HttpEndpoint }): string {
+    private getPathSuffix({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string {
         let pathSuffix = endpoint.fullPath.head === "/" ? "" : endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts) {
             if (part.pathParameter) {
@@ -1092,7 +1074,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return pathSuffix.replace(/^\/+/, "");
     }
 
-    private getAcceptHeaderValue({ endpoint }: { endpoint: HttpEndpoint }): string | undefined {
+    private getAcceptHeaderValue({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
         const responseBody = endpoint.response?.body;
         if (responseBody == null) {
             return undefined;
@@ -1114,7 +1096,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getAcceptHeaderValueForStreaming({
         streamingResponse
     }: {
-        streamingResponse: StreamingResponse;
+        streamingResponse: FernIr.StreamingResponse;
     }): string | undefined {
         switch (streamingResponse.type) {
             case "sse":
@@ -1127,7 +1109,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private getContentTypeHeaderValue({ endpoint }: { endpoint: HttpEndpoint }): string | undefined {
+    private getContentTypeHeaderValue({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
         const sdkRequest = endpoint.sdkRequest;
         if (sdkRequest == null) {
             return undefined;
@@ -1150,7 +1132,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getContentTypeHeaderValueForJustRequestBody({
         justRequestBody
     }: {
-        justRequestBody: SdkRequestBodyType;
+        justRequestBody: FernIr.SdkRequestBodyType;
     }): string | undefined {
         switch (justRequestBody.type) {
             case "bytes":
@@ -1162,7 +1144,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private getContentTypeHeaderValueForWrapper({ requestBody }: { requestBody: HttpRequestBody }): string | undefined {
+    private getContentTypeHeaderValueForWrapper({
+        requestBody
+    }: {
+        requestBody: FernIr.HttpRequestBody;
+    }): string | undefined {
         switch (requestBody.type) {
             case "bytes":
                 return requestBody.contentType ?? HttpEndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
@@ -1224,7 +1210,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         rawClient
     }: {
-        subpackage?: Subpackage;
+        subpackage?: FernIr.Subpackage;
         rawClient?: boolean;
     }): go.AstNode {
         return go.selector({
@@ -1237,7 +1223,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint,
         signature
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         signature: EndpointSignatureInfo;
     }): go.Type[] {
         if (signature.returnType == null) {
@@ -1259,7 +1245,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return [go.Type.pointer(go.Type.reference(signature.rawReturnTypeReference)), go.Type.error()];
     }
 
-    private getRequestParameterName({ endpoint }: { endpoint: HttpEndpoint }): string {
+    private getRequestParameterName({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string {
         const requestParameterName = endpoint.sdkRequest?.requestParameterName;
         if (requestParameterName == null) {
             return "request";
@@ -1271,7 +1257,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         rawClient
     }: {
-        subpackage?: Subpackage;
+        subpackage?: FernIr.Subpackage;
         rawClient?: boolean;
     }): go.AstNode {
         if (rawClient) {
@@ -1280,7 +1266,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return go.codeblock(this.getClientReceiver({ subpackage }));
     }
 
-    private getClientReceiver({ subpackage }: { subpackage?: Subpackage }): string {
+    private getClientReceiver({ subpackage }: { subpackage?: FernIr.Subpackage }): string {
         if (subpackage == null) {
             return this.context.getRootClientReceiverName();
         }

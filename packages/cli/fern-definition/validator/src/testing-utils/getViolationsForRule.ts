@@ -5,9 +5,9 @@ import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import stripAnsi from "strip-ansi";
 
-import { Rule } from "../Rule";
-import { ValidationViolation } from "../ValidationViolation";
-import { runRulesOnWorkspace } from "../validateFernWorkspace";
+import { Rule } from "../Rule.js";
+import { ValidationViolation } from "../ValidationViolation.js";
+import { runRulesOnWorkspace } from "../validateFernWorkspace.js";
 
 export declare namespace getViolationsForRule {
     export interface Args {

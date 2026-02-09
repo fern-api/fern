@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 
-import { formatDefinitionFile } from "./formatDefinitionFile";
+import { formatDefinitionFile } from "./formatDefinitionFile.js";
 
 export async function formatFernWorkspace({
     workspace,

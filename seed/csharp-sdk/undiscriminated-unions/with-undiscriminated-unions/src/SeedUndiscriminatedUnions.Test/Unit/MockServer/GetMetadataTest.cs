@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedUndiscriminatedUnions;
-using SeedUndiscriminatedUnions.Core;
+using SeedUndiscriminatedUnions.Test.Utils;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 
@@ -26,10 +25,7 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.Union.GetMetadataAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<Key, string>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -53,9 +49,6 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.Union.GetMetadataAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<Key, string>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

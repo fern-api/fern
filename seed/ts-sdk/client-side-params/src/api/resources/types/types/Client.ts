@@ -7,61 +7,61 @@ export interface Client {
     /** The unique client identifier */
     client_id: string;
     /** The tenant name */
-    tenant?: string;
+    tenant?: string | undefined;
     /** Name of the client */
     name: string;
     /** Free text description of the client */
-    description?: string;
+    description?: string | undefined;
     /** Whether this is a global client */
-    global?: boolean;
+    global?: boolean | undefined;
     /** The client secret (only for non-public clients) */
-    client_secret?: string;
+    client_secret?: string | undefined;
     /** The type of application (spa, native, regular_web, non_interactive) */
-    app_type?: string;
+    app_type?: string | undefined;
     /** URL of the client logo */
-    logo_uri?: string;
+    logo_uri?: string | undefined;
     /** Whether this client is a first party client */
-    is_first_party?: boolean;
+    is_first_party?: boolean | undefined;
     /** Whether this client conforms to OIDC specifications */
-    oidc_conformant?: boolean;
+    oidc_conformant?: boolean | undefined;
     /** Allowed callback URLs */
-    callbacks?: string[];
+    callbacks?: string[] | undefined;
     /** Allowed origins for CORS */
-    allowed_origins?: string[];
+    allowed_origins?: string[] | undefined;
     /** Allowed web origins for CORS */
-    web_origins?: string[];
+    web_origins?: string[] | undefined;
     /** Allowed grant types */
-    grant_types?: string[];
+    grant_types?: string[] | undefined;
     /** JWT configuration for the client */
-    jwt_configuration?: Record<string, unknown>;
+    jwt_configuration?: Record<string, unknown> | undefined;
     /** Client signing keys */
-    signing_keys?: Record<string, unknown>[];
+    signing_keys?: Record<string, unknown>[] | undefined;
     /** Encryption key */
-    encryption_key?: Record<string, unknown>;
+    encryption_key?: Record<string, unknown> | undefined;
     /** Whether SSO is enabled */
-    sso?: boolean;
+    sso?: boolean | undefined;
     /** Whether SSO is disabled */
-    sso_disabled?: boolean;
+    sso_disabled?: boolean | undefined;
     /** Whether to use cross-origin authentication */
-    cross_origin_auth?: boolean;
+    cross_origin_auth?: boolean | undefined;
     /** URL for cross-origin authentication */
-    cross_origin_loc?: string;
+    cross_origin_loc?: string | undefined;
     /** Whether a custom login page is enabled */
-    custom_login_page_on?: boolean;
+    custom_login_page_on?: boolean | undefined;
     /** Custom login page URL */
-    custom_login_page?: string;
+    custom_login_page?: string | undefined;
     /** Custom login page preview URL */
-    custom_login_page_preview?: string;
+    custom_login_page_preview?: string | undefined;
     /** Form template for WS-Federation */
-    form_template?: string;
+    form_template?: string | undefined;
     /** Whether this is a Heroku application */
-    is_heroku_app?: boolean;
+    is_heroku_app?: boolean | undefined;
     /** Addons enabled for this client */
-    addons?: Record<string, unknown>;
+    addons?: Record<string, unknown> | undefined;
     /** Requested authentication method for the token endpoint */
-    token_endpoint_auth_method?: string;
+    token_endpoint_auth_method?: string | undefined;
     /** Metadata associated with the client */
-    client_metadata?: Record<string, unknown>;
+    client_metadata?: Record<string, unknown> | undefined;
     /** Mobile app settings */
-    mobile?: Record<string, unknown>;
+    mobile?: Record<string, unknown> | undefined;
 }

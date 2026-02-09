@@ -1,4 +1,4 @@
-export { BaseRustCustomConfigSchema } from "./BaseRustConfigSchema";
-export { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
-export { RustDependencySpecSchema, DependencyValueSchema } from "./RustDependencySpecSchema";
-export type { RustDependencySpec, DependencyValue } from "./RustDependencySpecSchema";
+export { BaseRustCustomConfigSchema } from "./BaseRustConfigSchema.js";
+export { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
+export { RustDependencySpecSchema, DependencyValueSchema } from "./RustDependencySpecSchema.js";
+export type { RustDependencySpec, DependencyValue } from "./RustDependencySpecSchema.js";

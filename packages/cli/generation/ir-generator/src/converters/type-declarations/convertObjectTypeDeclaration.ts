@@ -2,9 +2,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty, ObjectPropertyAccess, Type } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { convertDeclaration } from "../convertDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
+import { convertDeclaration } from "../convertDeclaration.js";
 
 export function convertObjectTypeDeclaration({
     object,

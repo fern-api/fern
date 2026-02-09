@@ -2,8 +2,8 @@ import { GeneratorConfig, GithubOutputMode } from "@fern-api/base-generator";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
-import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
-import { getCollectionOutputFilename } from "./writePostmanCollection";
+import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema.js";
+import { getCollectionOutputFilename } from "./writePostmanCollection.js";
 
 // Use dynamic require to bypass bundler's ES module transformation issues
 const { default: endent } = require("endent") as typeof import("endent");

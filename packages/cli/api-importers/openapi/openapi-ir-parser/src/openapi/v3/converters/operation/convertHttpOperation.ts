@@ -11,21 +11,21 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
-import { OpenAPIExtension } from "../../extensions/extensions";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
-import { getFernAvailability } from "../../extensions/getFernAvailability";
-import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension";
-import { OperationContext } from "../contexts";
-import { convertServer } from "../convertServer";
-import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
-import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest";
-import { convertResponse } from "../endpoint/convertResponse";
+import { getExtension } from "../../../../getExtension.js";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext.js";
+import { OpenAPIExtension } from "../../extensions/extensions.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension.js";
+import { getFernAvailability } from "../../extensions/getFernAvailability.js";
+import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension.js";
+import { OperationContext } from "../contexts.js";
+import { convertServer } from "../convertServer.js";
+import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters.js";
+import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest.js";
+import { convertResponse } from "../endpoint/convertResponse.js";
 
 export function convertHttpOperation({
     operationContext,

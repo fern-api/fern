@@ -1,1 +1,1 @@
-export { addTokenCommand } from "./command";
+export { addTokenCommand } from "./command.js";

@@ -1,6 +1,6 @@
-import { AstNode } from "../core/AstNode";
-import { Import } from "../Import";
-import { Yardoc } from "../Yardoc";
+import { AstNode } from "../core/AstNode.js";
+import { Import } from "../Import.js";
+import { Yardoc } from "../Yardoc.js";
 
 export declare namespace Expression {
     export interface Init extends AstNode.Init {

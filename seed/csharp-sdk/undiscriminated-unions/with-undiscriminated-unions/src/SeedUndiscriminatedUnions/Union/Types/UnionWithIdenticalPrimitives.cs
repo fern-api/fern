@@ -270,7 +270,7 @@ public class UnionWithIdenticalPrimitives
             );
         }
 
-        public override UnionWithIdenticalPrimitives? ReadAsPropertyName(
+        public override UnionWithIdenticalPrimitives ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

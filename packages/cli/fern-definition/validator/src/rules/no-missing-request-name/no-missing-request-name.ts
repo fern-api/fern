@@ -1,7 +1,7 @@
 import { isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import { size } from "lodash-es";
 
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const NoMissingRequestNameRule: Rule = {
     name: "no-missing-request-name",

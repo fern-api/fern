@@ -1,9 +1,11 @@
 import { LogLevel } from "@fern-api/logger";
 import chalk from "chalk";
-import { CliError } from "../errors/CliError";
-import { ValidationError } from "../errors/ValidationError";
-import { Context } from "./Context";
-import type { GlobalArgs } from "./GlobalArgs";
+import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
+import { CliError } from "../errors/CliError.js";
+import { ValidationError } from "../errors/ValidationError.js";
+import { Icons } from "../ui/format.js";
+import { Context } from "./Context.js";
+import type { GlobalArgs } from "./GlobalArgs.js";
 
 /**
  * Wraps a command handler with context creation and error handling.
@@ -45,6 +47,11 @@ function handleError(context: Context, error: unknown): void {
         for (const issue of error.issues) {
             process.stderr.write(`${chalk.red(issue.toString())}\n`);
         }
+        return;
+    }
+
+    if (error instanceof KeyringUnavailableError) {
+        context.stdout.error(`${Icons.error} ${error.message}`);
         return;
     }
 

@@ -1,4 +1,4 @@
-import { swift } from "../..";
+import { swift } from "../../index.js";
 
 describe("Enum", () => {
     describe("write", () => {

@@ -1,10 +1,10 @@
-import * as csharp from "./fixtures/custom-sections/csharp";
-import * as go from "./fixtures/custom-sections/go";
-import * as java from "./fixtures/custom-sections/java";
-import * as php from "./fixtures/custom-sections/php";
-import * as python from "./fixtures/custom-sections/python";
-import * as ts from "./fixtures/custom-sections/typescript";
-import { testGenerateReadme } from "./testGenerateReadme";
+import * as csharp from "./fixtures/custom-sections/csharp.js";
+import * as go from "./fixtures/custom-sections/go.js";
+import * as java from "./fixtures/custom-sections/java.js";
+import * as php from "./fixtures/custom-sections/php.js";
+import * as python from "./fixtures/custom-sections/python.js";
+import * as ts from "./fixtures/custom-sections/typescript.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("typescript custom sections", () => {
     testGenerateReadme({
