@@ -338,6 +338,7 @@ class EndpointResponseCodeWriter:
                 )
                 writer.write("return ")
                 writer.write_node(empty_pager_expr)
+                writer.write("  # type: ignore")
                 writer.write_newline_if_last_line_not()
             elif self._is_raw_client:
                 writer.write("return ")
