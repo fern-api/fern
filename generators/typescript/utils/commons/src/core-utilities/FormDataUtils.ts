@@ -29,8 +29,6 @@ export const MANIFEST: CoreUtility.Manifest = {
     addDependencies: (dependencyManager: DependencyManager, { formDataSupport }): void => {
         if (formDataSupport === "Node16") {
             dependencyManager.addDependency("form-data", "^4.0.4");
-            dependencyManager.addDependency("formdata-node", "^6.0.3");
-            dependencyManager.addDependency("form-data-encoder", "^4.0.2");
         }
     },
     dependsOn: [RuntimeManifest, UrlManifest, FileManifest],

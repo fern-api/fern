@@ -20,13 +20,8 @@ describe("CrossPlatformFormData", () => {
                 filename
             });
 
-            const request = await formData.getRequest();
-            const decoder = new TextDecoder("utf-8");
-            let data = "";
-            for await (const chunk of request.body) {
-                data += decoder.decode(chunk);
-            }
-            expect(data).toContain(filename);
+            const request = formData.getRequest();
+            expect(request.body.get("file").name).toBe(filename);
         });
 
         it("should append a Blob with a specified filename", async () => {
@@ -38,13 +33,8 @@ describe("CrossPlatformFormData", () => {
                 filename
             });
 
-            const request = await formData.getRequest();
-            const decoder = new TextDecoder("utf-8");
-            let data = "";
-            for await (const chunk of request.body) {
-                data += decoder.decode(chunk);
-            }
-            expect(data).toContain(filename);
+            const request = formData.getRequest();
+            expect(request.body.get("file").name).toBe(filename);
         });
 
         it("should append a File with a specified filename", async () => {
@@ -56,13 +46,8 @@ describe("CrossPlatformFormData", () => {
                 filename
             });
 
-            const request = await formData.getRequest();
-            const decoder = new TextDecoder("utf-8");
-            let data = "";
-            for await (const chunk of request.body) {
-                data += decoder.decode(chunk);
-            }
-            expect(data).toContain("testfile.txt");
+            const request = formData.getRequest();
+            expect(request.body.get("file").name).toBe(filename);
         });
 
         it("should append a File with an explicit filename", async () => {
@@ -71,13 +56,8 @@ describe("CrossPlatformFormData", () => {
 
             await formData.appendFile("file", { data: value, filename: "test.txt" });
 
-            const request = await formData.getRequest();
-            const decoder = new TextDecoder("utf-8");
-            let data = "";
-            for await (const chunk of request.body) {
-                data += decoder.decode(chunk);
-            }
-            expect(data).toContain("test.txt");
+            const request = formData.getRequest();
+            expect(request.body.get("file").name).toBe("test.txt");
         });
 
         it("should append stream with path", async () => {
@@ -87,13 +67,8 @@ describe("CrossPlatformFormData", () => {
             (stream as any).path = filePath;
             await formData.appendFile("file", stream);
 
-            const request = await formData.getRequest();
-            const decoder = new TextDecoder("utf-8");
-            let data = "";
-            for await (const chunk of request.body) {
-                data += decoder.decode(chunk);
-            }
-            expect(data).toContain("Content-Disposition: form-data; name=\"file\"; filename=\"" + expectedFileName + "\"");
+            const request = formData.getRequest();
+            expect(request.body.get("file").name).toBe(expectedFileName);
         });
     });
 

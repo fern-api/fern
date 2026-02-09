@@ -171,7 +171,6 @@ export const MANIFEST: CoreUtility.Manifest = {
     addDependencies: (dependencyManager: DependencyManager, { formDataSupport, streamType, fetchSupport }): void => {
         if (formDataSupport === "Node16") {
             dependencyManager.addDependency("form-data", "^4.0.4");
-            dependencyManager.addDependency("formdata-node", "^6.0.3");
         }
 
         if (fetchSupport === "node-fetch") {

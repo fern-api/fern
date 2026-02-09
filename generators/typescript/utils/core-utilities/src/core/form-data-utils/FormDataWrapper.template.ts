@@ -3,27 +3,6 @@ import { toJson } from "../../core/json";
 import { RUNTIME } from "../runtime/index";
 
 <% if (formDataSupport === "Node16") { %>
-<% if (streamType === "wrapper") { %>
-export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<import("readable-stream").Readable> {
-  return (await import("readable-stream")).Readable.from(encoder)
-}
-<% } else { %>
-export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> {
-  const iterator = encoder.encode()
-
-  return new ReadableStream({
-    async pull(controller) {
-      const {value, done} = await iterator.next()
-
-      if (done) {
-        return controller.close()
-      }
-
-      controller.enqueue(value)
-    }
-  })
-}
-<% } %>
 
 export type MaybePromise<T> = Promise<T> | T;
 
@@ -58,11 +37,7 @@ export async function newFormData(): Promise<CrossPlatformFormData> {
     return formdata;
 }
 
-export type Node18FormDataFd =
-    | {
-          append(name: string, value: unknown, filename?: string): void;
-      }
-    | undefined;
+export type Node18FormDataFd = { append(name: string, value: string | Blob, filename?: string): void } | undefined;
 
 /**
  * Form Data Implementation for Node.js 18+
@@ -71,35 +46,27 @@ export class Node18FormData implements CrossPlatformFormData {
     private fd: Node18FormDataFd;
 
     public async setup(): Promise<void> {
-        this.fd = new (await import("formdata-node")).FormData();
+        this.fd = new FormData();
     }
 
-    public append(key: string, value: any): void {
-        this.fd?.append(key, value);
+    public append(key: string, value: unknown): void {
+        this.fd?.append(key, String(value));
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const { data, filename } = await toMultipartDataPart(value);
+        const { data, filename, contentType } = await toMultipartDataPart(value);
 
         if (data instanceof Blob) {
             this.fd?.append(key, data, filename);
-        } else {
-            this.fd?.append(key, {
-                type: undefined,
-                name: filename,
-                [Symbol.toStringTag]: "File",
-                stream() {
-                    return data;
-                }
-            });
+            return;
         }
+        this.fd?.append(key, await convertToBlob(data, contentType), filename);
     }
 
-    public async getRequest(): Promise<FormDataRequest<unknown>> {
-        const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
+    public getRequest(): FormDataRequest<Node18FormDataFd> {
         return {
-            body: await toReadableStream(encoder),
-            headers: encoder.headers,
+            body: this.fd,
+            headers: {},
             duplex: "half"
         };
     }
@@ -176,8 +143,8 @@ export class WebFormData implements CrossPlatformFormData {
         this.fd = new FormData();
     }
 
-    public append(key: string, value: any): void {
-        this.fd?.append(key, value);
+    public append(key: string, value: unknown): void {
+        this.fd?.append(key, String(value));
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
