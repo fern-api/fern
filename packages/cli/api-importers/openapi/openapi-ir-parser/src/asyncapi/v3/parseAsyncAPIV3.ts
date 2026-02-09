@@ -442,11 +442,15 @@ export function parseAsyncAPIV3({
     };
 }
 
+function decodeJsonPointerSegment(segment: string): string {
+    return segment.replace(/~1/g, "/").replace(/~0/g, "~");
+}
+
 function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
     if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
         throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
     }
-    return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
+    return decodeJsonPointerSegment(operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length));
 }
 
 function convertChannelParameterLocation(location: string): {
