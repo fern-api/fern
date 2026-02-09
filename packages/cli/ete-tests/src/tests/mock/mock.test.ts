@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import fetch from "node-fetch";
 
 import { runFernCli } from "../../utils/runFernCli.js";
 
