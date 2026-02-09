@@ -6,6 +6,10 @@ import open from "open";
 
 import type { Auth0TokenResponse } from "./doAuth0LoginFlow.js";
 
+function encodeFormData(params: Record<string, string>): string {
+    return new URLSearchParams(params).toString().replaceAll("+", "%20");
+}
+
 interface DeviceCodeResponse {
     device_code: string;
     user_code: string;
@@ -30,11 +34,11 @@ export async function doAuth0DeviceAuthorizationFlow({
         method: "POST",
         url: `https://${auth0Domain}/oauth/device/code`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
-        data: new URLSearchParams({
+        data: encodeFormData({
             client_id: auth0ClientId,
             audience,
             scope: "openid profile email offline_access"
-        }).toString(),
+        }),
         validateStatus: () => true
     });
 
@@ -95,11 +99,11 @@ async function pollForToken({
         method: "POST",
         url: `https://${auth0Domain}/oauth/token`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
-        data: new URLSearchParams({
+        data: encodeFormData({
             grant_type: "urn:ietf:params:oauth:grant-type:device_code",
             device_code: deviceCode,
             client_id: auth0ClientId
-        }).toString(),
+        }),
         validateStatus: () => true
     });
 
