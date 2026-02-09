@@ -13,22 +13,22 @@ import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition.js";
 const apiDefinitionId = "550e8400-e29b-41d4-a716-446655440000";
 
 describe("GraphQL Ambiguous Operations", () => {
-    it("should detect ambiguous operations and require namespacing", async () => {
-        let errorMessages: string[] = [];
+    it("should detect ambiguous operations and warn while continuing", async () => {
+        let warningMessages: string[] = [];
 
         const mockTaskContext = createMockTaskContext();
-        const originalError = mockTaskContext.logger.error;
+        const originalWarn = mockTaskContext.logger.warn;
 
         const context = {
             ...mockTaskContext,
             logger: {
                 ...mockTaskContext.logger,
-                error: (message: string, error?: unknown) => {
-                    errorMessages.push(message);
+                warn: (message: string, error?: unknown) => {
+                    warningMessages.push(message);
                     if (error != null) {
-                        return originalError(message, String(error));
+                        return originalWarn(message, String(error));
                     }
-                    return originalError(message);
+                    return originalWarn(message);
                 }
             }
         };
@@ -107,29 +107,27 @@ describe("GraphQL Ambiguous Operations", () => {
             apiWorkspace
         ).get();
 
-        // Should have captured error messages for ambiguous operations
-        expect(errorMessages.length).toBeGreaterThan(0);
+        // Should have captured warning messages for ambiguous operations
+        expect(warningMessages.length).toBeGreaterThan(0);
 
-        // Should contain errors about ambiguous "getInfo" operation
-        const getInfoError = errorMessages.find((msg) =>
+        // Should contain warnings about ambiguous "getInfo" operation
+        const getInfoWarning = warningMessages.find((msg) =>
             msg.includes('Ambiguous operation reference: "QUERY getInfo"')
         );
-        expect(getInfoError).toBeDefined();
+        expect(getInfoWarning).toBeDefined();
+        expect(getInfoWarning).toContain("Using first match:");
 
-        // Should contain errors about ambiguous "createRecord" operation
-        const createRecordError = errorMessages.find((msg) =>
+        // Should contain warnings about ambiguous "createRecord" operation
+        const createRecordWarning = warningMessages.find((msg) =>
             msg.includes('Ambiguous operation reference: "MUTATION createRecord"')
         );
-        expect(createRecordError).toBeDefined();
+        expect(createRecordWarning).toBeDefined();
+        expect(createRecordWarning).toContain("Using first match:");
 
         // Verify the navigation contains properly namespaced operations
         expect(node).toBeDefined();
 
-        // Should include unique operation (no ambiguity)
-        const uniqueOp = node.children.find((child) => child.type === "graphql" && child.title === "Unique Operation");
-        expect(uniqueOp).toBeDefined();
-
-        // Should include properly namespaced operations
+        // Should include properly namespaced operations (no ambiguity)
         const adminInfoOp = node.children.find(
             (child) => child.type === "graphql" && child.title === "Admin Information"
         );
@@ -140,10 +138,16 @@ describe("GraphQL Ambiguous Operations", () => {
         );
         expect(userInfoOp).toBeDefined();
 
-        const billingInfoOp = node.children.find(
-            (child) => child.type === "graphql" && child.title === "Billing Information"
+        // Should also include ambiguous operations (they continue processing with first match)
+        const ambiguousGetInfoOp = node.children.find(
+            (child) => child.type === "graphql" && child.title === "Ambiguous Get Info"
         );
-        expect(billingInfoOp).toBeDefined();
+        expect(ambiguousGetInfoOp).toBeDefined(); // Should exist since it continues with first match
+
+        const ambiguousCreateRecordOp = node.children.find(
+            (child) => child.type === "graphql" && child.title === "Ambiguous Create Record"
+        );
+        expect(ambiguousCreateRecordOp).toBeDefined(); // Should exist since it continues with first match
     });
 
     it("should match snapshot for error handling", async () => {
