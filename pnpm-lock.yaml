@@ -4709,8 +4709,8 @@ importers:
         specifier: ^17.0.28
         version: 17.0.35
       axios:
-        specifier: ^1.12.0
-        version: 1.13.4
+        specifier: ^1.13.5
+        version: 1.13.5
       boxen:
         specifier: ^7.1.1
         version: 7.1.1
@@ -6559,8 +6559,8 @@ importers:
         specifier: 0.0.775
         version: 0.0.775
       axios:
-        specifier: ^1.12.0
-        version: 1.13.4
+        specifier: ^1.13.5
+        version: 1.13.5
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -6696,8 +6696,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       axios:
-        specifier: ^1.12.0
-        version: 1.13.4
+        specifier: ^1.13.5
+        version: 1.13.5
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -6776,8 +6776,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       axios:
-        specifier: ^1.12.0
-        version: 1.13.4
+        specifier: ^1.13.5
+        version: 1.13.5
       boxen:
         specifier: ^7.1.1
         version: 7.1.1
@@ -7298,8 +7298,8 @@ importers:
         specifier: ^9.0.8
         version: 9.0.8
       axios:
-        specifier: ^1.12.0
-        version: 1.13.4
+        specifier: ^1.13.5
+        version: 1.13.5
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -10841,6 +10841,7 @@ packages:
   '@rolldown/binding-darwin-arm64@1.0.0-rc.2':
     resolution: {integrity: sha512-PYR+PQu1mMmQiiKHN2JiOctvH32Xc/Mf+Su2RSmWtC9BbIqlqsVWjbulnShk0imjRim0IsbkMMCN5vYQwiuqaA==}
     engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
     os: [darwin]
 
   '@rolldown/binding-darwin-x64@1.0.0-rc.1':
@@ -11609,8 +11610,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.13.4:
-    resolution: {integrity: sha512-1wVkUaAO6WyaYtCkcYCOx12ZgpGf9Zif+qXa4n+oYzK558YryKqiL6UWwd5DqiH3VRW0GYhTZQ/vlgJrCoNQlg==}
+  axios@1.13.5:
+    resolution: {integrity: sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==}
 
   b4a@1.7.3:
     resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
@@ -18396,7 +18397,7 @@ snapshots:
 
   '@types/axios@0.14.4':
     dependencies:
-      axios: 1.13.4
+      axios: 1.13.5
     transitivePeerDependencies:
       - debug
 
@@ -18979,7 +18980,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios@1.13.4:
+  axios@1.13.5:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.5
@@ -21848,7 +21849,7 @@ snapshots:
       '@yarnpkg/lockfile': 1.1.0
       '@yarnpkg/parsers': 3.0.2
       '@zkochan/js-yaml': 0.0.7
-      axios: 1.13.4
+      axios: 1.13.5
       chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
