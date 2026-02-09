@@ -247,7 +247,9 @@ export class ApiReferenceNodeConverter {
                             parentAvailability
                         ),
                     endpoint: (endpoint) =>
-                        this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, parentAvailability)
+                        this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, parentAvailability),
+                    operation: (operation) =>
+                        this.#convertOperation(operation, apiDefinitionPackageId, parentSlug, parentAvailability)
                 })
             )
             .filter(isNonNullish);
@@ -704,6 +706,87 @@ export class ApiReferenceNodeConverter {
         this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint);
 
         return;
+    }
+
+    #convertOperation(
+        operationItem: docsYml.ParsedApiReferenceLayoutItem.Operation,
+        apiDefinitionPackageIdRaw: string | undefined,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild | undefined {
+        // Parse the operation string (e.g., "QUERY account" or "QUERY namespace.createUser")
+        const operationParts = operationItem.operation.trim().split(/\s+/, 2);
+        if (operationParts.length !== 2) {
+            this.taskContext.logger.error(
+                `Invalid operation format in the API Reference layout: ${operationItem.operation}. Expected format: "OPERATION_TYPE operationName" (e.g., "QUERY account")`
+            );
+            return;
+        }
+
+        const [operationType, operationName] = operationParts;
+
+        if (!operationName) {
+            this.taskContext.logger.error(
+                `Invalid operation format in the API Reference layout: ${operationItem.operation}. Expected format: "OPERATION_TYPE operationName" (e.g., "QUERY account")`
+            );
+            return;
+        }
+
+        // Find the GraphQL operation
+        const graphqlOperation = this.#holder.api.rootPackage.graphqlOperations?.find((op) => {
+            // First try exact match on name or id
+            if (op.name === operationName || op.id === operationName) {
+                return op.operationType === operationType;
+            }
+
+            // For namespaced operations (e.g., "namespace.createUser"), try partial matching
+            if (operationName.includes(".")) {
+                const namespacedParts = operationName.split(".");
+                const opName = namespacedParts[namespacedParts.length - 1];
+                return (op.name === opName || op.id === opName) && op.operationType === operationType;
+            }
+
+            return false;
+        });
+
+        if (graphqlOperation == null) {
+            this.taskContext.logger.error(
+                `GraphQL operation not found in the API Reference layout: ${operationItem.operation}`
+            );
+            return;
+        }
+
+        const operationId = APIV1Read.GraphQlOperationId(graphqlOperation.id);
+        if (this.#visitedGraphqlOperations.has(operationId)) {
+            this.taskContext.logger.error(
+                `Duplicate GraphQL operation found in the API Reference layout: ${operationId}`
+            );
+            return;
+        }
+        this.#visitedGraphqlOperations.add(operationId);
+
+        const operationSlug =
+            operationItem.slug != null
+                ? parentSlug.append(operationItem.slug)
+                : parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
+
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
+            type: "graphql" as const,
+            operationType: graphqlOperation.operationType,
+            graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
+            apiDefinitionId: this.apiDefinitionId,
+            availability: operationItem.availability ?? parentAvailability,
+            title: operationItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
+            slug: operationSlug.get(),
+            icon: undefined,
+            hidden: this.hideChildren || operationItem.hidden,
+            playground: undefined,
+            authed: undefined,
+            viewers: operationItem.viewers,
+            orphaned: operationItem.orphaned,
+            featureFlags: operationItem.featureFlags
+        };
     }
 
     // Step 2

@@ -1,0 +1,31 @@
+name: graphql-api
+display-name: GraphQL API
+
+graphql:
+  schema:
+    path: ./schema.graphql
+  operations:
+    getUserProfile:
+      type: query
+      operation-name: getUserProfile
+      display-name: "Get User Profile"
+    createUser:
+      type: mutation
+      operation-name: createUser
+      display-name: "Create User"
+    updateUserProfile:
+      type: mutation
+      operation-name: updateUserProfile
+      display-name: "Update User Profile"
+    userUpdates:
+      type: subscription
+      operation-name: userUpdates
+      display-name: "User Updates Subscription"
+    admin.getSystemInfo:
+      type: query
+      operation-name: getSystemInfo
+      display-name: "Get System Info"
+    admin.resetSystem:
+      type: mutation
+      operation-name: resetSystem
+      display-name: "Reset System"
