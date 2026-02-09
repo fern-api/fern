@@ -16,7 +16,7 @@ export declare namespace generateContainerExample {
 
         skipOptionalProperties: boolean;
 
-        visitedTypes?: Set<string>;
+        visitedTypes?: Map<string, number>;
     }
 }
 
