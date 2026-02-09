@@ -3,7 +3,7 @@ import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } f
 import type { SdkContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
-import type { AuthProviderGenerator } from "./AuthProviderGenerator";
+import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 
 export declare namespace OAuthAuthProviderGenerator {
     export interface Init {

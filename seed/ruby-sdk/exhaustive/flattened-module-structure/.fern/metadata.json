@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-ruby-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "flattenModuleStructure": true
+  },
+  "sdkVersion": "0.0.1"
+}

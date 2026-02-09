@@ -5,8 +5,8 @@ namespace SeedInferredAuthImplicitApiKey;
 
 public partial interface ISeedInferredAuthImplicitApiKeyClient
 {
-    public AuthClient Auth { get; }
-    public NestedNoAuthClient NestedNoAuth { get; }
-    public NestedClient Nested { get; }
-    public SimpleClient Simple { get; }
+    public IAuthClient Auth { get; }
+    public INestedNoAuthClient NestedNoAuth { get; }
+    public INestedClient Nested { get; }
+    public ISimpleClient Simple { get; }
 }

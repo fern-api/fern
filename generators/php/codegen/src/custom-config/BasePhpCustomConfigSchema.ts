@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 export const BasePhpCustomConfigSchema = z.object({
     clientName: z.string().optional(),

@@ -1,0 +1,32 @@
+openapi: 3.0.1
+info:
+  title: Webhook Audience Test
+  version: ''
+paths: {}
+components:
+  schemas:
+    PublicPayload:
+      title: PublicPayload
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    PrivatePayload:
+      title: PrivatePayload
+      type: object
+      properties:
+        secret:
+          type: string
+      required:
+        - secret
+    NoAudiencePayload:
+      title: NoAudiencePayload
+      type: object
+      properties:
+        data:
+          type: string
+      required:
+        - data
+  securitySchemes: {}

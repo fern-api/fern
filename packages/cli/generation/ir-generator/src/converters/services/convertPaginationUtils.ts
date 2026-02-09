@@ -1,9 +1,9 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { FernFileContext } from "../../FernFileContext";
-import { ResolvedType } from "../../resolvers/ResolvedType";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getRequestPropertyComponents, getResponsePropertyComponents } from "./convertProperty";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ResolvedType } from "../../resolvers/ResolvedType.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { getRequestPropertyComponents, getResponsePropertyComponents } from "./convertProperty.js";
 
 export type PaginationPropertyComponents =
     | CursorPaginationPropertyComponents

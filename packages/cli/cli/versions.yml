@@ -1,12 +1,543 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.50.0
+- version: 3.70.0
   changelogEntry:
     - summary: |
         Add PR update feature for local SDK generation in GitHub output mode. When generating SDKs with `mode: pull-request`, the CLI now checks for existing open PRs that were created by the fern-api bot and contain only generation commits. If such a PR exists, it updates the existing PR's branch instead of creating a new one, reducing PR clutter when regenerating SDKs multiple times.
       type: feat
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 3.69.2
+  changelogEntry:
+    - summary: Accommodate namespacing to avoid overwriting types in GraphQL operations
+      type: fix
+  createdAt: "2026-02-08"
+  irVersion: 63
+
+- version: 3.69.1
+  changelogEntry:
+    - summary: Regenerate older IR types with new TypeScript SDK generator.
+      type: internal
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.69.0
+  changelogEntry:
+    - summary: |
+        [Beta] Add `fern docs md generate` command for generating MDX documentation from library
+        source code. This feature requires a `libraries` configuration in docs.yml. The command
+        is in beta and may change in future releases.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.68.1
+  changelogEntry:
+    - summary: |
+        Fix grouped multi-API environment server handling to preserve `defaultUrl`, `urlTemplate`,
+        and `variables` metadata when merging multiple OpenAPI specs with
+        `group-multi-api-environments: true`. Previously, server URL templating metadata was silently
+        dropped during the merge, causing generated SDKs to use malformed template-substituted URLs
+        as defaults. Also fixes API name extraction for grouped base URL keys to use the clean
+        `x-fern-default-url` value instead of the variable-substituted URL.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.68.0
+  changelogEntry:
+    - summary: |
+        Add `folder-title-source` global setting in `docs.yml` under `settings`. When set,
+        this value is used as the default `title-source` for all folder navigations that do not
+        explicitly specify their own `title-source`. This allows configuring `frontmatter` or
+        `filename` as the default title derivation strategy for all folders in one place.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+- version: 3.67.1
+  changelogEntry:
+    - summary: |
+        Fix `title-source: frontmatter` in folder navigation to correctly pass the setting through
+        to `buildNavigationForDirectory`. Previously, the `title-source` option was ignored when
+        expanding folder configurations, so page titles and sidebar titles always derived from file
+        names. Now, when `title-source: frontmatter` is set, page titles and the folder section title
+        use the frontmatter `title` field.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+- version: 3.67.0
+  changelogEntry:
+    - summary: |
+        Adds schema name and title collision detection for OpenAPI/AsyncAPI specs. When
+        `title-as-schema-name` is enabled and multiple schemas share the same title, `fern check`
+        now reports an error identifying the conflicting schemas. To opt in to automatic resolution,
+        set `resolve-schema-collisions: true` in your generators.yml settings under api/specs:
+
+        ```yaml
+        api:
+          specs:
+            - asyncapi: asyncapi.yml
+              settings:
+                title-as-schema-name: true
+                resolve-schema-collisions: true
+        ```
+
+        When enabled, colliding titles are disambiguated with a numeric suffix (e.g. `OpenAI2`)
+        and a warning is emitted instead of an error.
+      type: feat
+    - summary: |
+        Run OSS validation rules (e.g. schema title collision detection) during `fern generate`,
+        not just during `fern check`. This ensures validation errors are surfaced before generation
+        proceeds.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.66.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL templating in multi-URL environments. The Fern definition
+        schema now supports `url-templates`, `default-urls`, and `variables` fields on
+        `MultipleBaseUrlsEnvironmentSchema`, enabling SDKs to expose server variables as
+        constructor parameters with runtime URL interpolation.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.65.1
+  changelogEntry:
+    - summary: |
+        Fix `fern check --strict-broken-links` was not validating markdown files referenced by sections with paths.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.65.0
+  changelogEntry:
+    - summary: |
+        Add `--generator` option to `fern generate` to run a specific generator by name. Filters within the resolved group (from `--group` or `default-group`) to only run the specified generator.
+      type: feat
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 3.64.6
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing when encountering unrecognized generator names. Previously, an unrecognized generator (e.g. `fernapi/java-model`) would block the entire upgrade process. Now unrecognized generators are skipped with a warning, allowing the remaining generators to be upgraded. Also adds support for the `java-model` legacy generator name alias.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.5
+  changelogEntry:
+    - summary: |
+        Add support for legacy generator names (`fernapi/java-model`, `fernapi/fern-typescript`) used in older IR version configurations.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+- version: 3.64.4
+  changelogEntry:
+    - summary: |
+        Fix additionalProperties in examples being lost when a schema defines `additionalProperties: true`. Previously, additional properties in examples were set to undefined during conversion, causing them to be stripped from the output. Now the actual values from the example are preserved.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.3
+  changelogEntry:
+    - summary: |
+        Fix extraction of large generated ZIP files (>2 GiB) by using the `yauzl-promise` library instead of the `decompress` library. Node.js has a 2 GiB limit for reading files into buffers, which caused the `decompress` library to fail with `ERR_FS_FILE_TOO_LARGE` errors for large SDK outputs. The `yauzl-promise` library streams ZIP entries individually instead of loading the entire file into memory.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.2
+  changelogEntry:
+    - summary: |
+        Add support for OpenAPI server templating. Server variables are now preserved in the IR instead of being exploded into multiple environments, enabling SDKs to configure URL variables at runtime. Supports both single and multiple base URL environments.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.1
+  changelogEntry:
+    - summary: |
+        Fix example validation to correctly handle allOf schema compositions. Properties from composed schemas are now properly recognized, eliminating false positive "unexpected property" warnings.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.64.0
+  changelogEntry:
+    - summary: |
+        Improve `.fernignore` to prevent generation of new files. Previously, `.fernignore` only prevented modification or deletion of existing files during SDK regeneration.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 3.63.0
+  changelogEntry:
+    - summary: |
+        Add support for setting subfolder position based on the `position` field in the index file's frontmatter when using `folder` navigation. Subfolders with a position are sorted before those without, and items with the same position are sorted alphabetically.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.62.0
+  changelogEntry:
+    - summary: |
+        Add `title-source` configuration option for folder navigation. When using `folder` navigation, you can now set `title-source: frontmatter` to use the `title` field from frontmatter for page and section titles instead of deriving titles from file names. The default behavior (`title-source: filename`) remains unchanged.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.61.0
+  changelogEntry:
+    - summary: |
+        Add support for `@/` prefix in MDX import statements to indicate absolute paths from the fern folder root.
+        Users can now write `import { Banner } from '@/components/Banner'` instead of using relative paths like
+        `import { Banner } from '../../../components/Banner'`. The imports are transformed to relative paths at
+        publish time.
+      type: feat
+  createdAt: "2026-02-04"
+  irVersion: 63
+
+- version: 3.60.2
+  changelogEntry:
+    - summary: |
+        Fix header example generation to use global header literal values when defined in generators.yml
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.60.1
+  changelogEntry:
+    - summary: |
+        Fix custom header and footer components not being recognized in docs.yml. The serialization schema
+        was missing the header and footer fields, causing validation errors when using these new fields.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.60.0
+  changelogEntry:
+    - summary: |
+        Add support for custom header and footer components in docs.yml. Users can now specify
+        `header: ./path/to/header.tsx` and `footer: ./path/to/footer.tsx` to replace the default
+        header and footer with custom React components. The components must have a default export.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.59.1
+  changelogEntry:
+    - summary: |
+        Fix unknown argument error for `fern completion`.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.59.0
+  changelogEntry:
+    - summary: |
+        Add shell completion support via `fern completion`. Running this command outputs a shell script that can be sourced in your `.bashrc` or `.zshrc` to enable tab completion for Fern CLI commands and options.
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.58.0
+  changelogEntry:
+    - summary: |
+        Add support for setting page availability in frontmatter. Users can now add `availability: beta` (or other values like `stable`, `generally-available`, `in-development`, `pre-release`, `deprecated`) to a page's frontmatter to display an availability badge. When set in frontmatter, it overrides the availability defined in the navigation (docs.yml).
+      type: feat
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.57.1
+  changelogEntry:
+    - summary: |
+        Add availability support for webhooks. Webhooks can now inherit availability status from their parent section/package, and display availability badges in the docs UI.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 63
+
+- version: 3.57.0
+  changelogEntry:
+    - summary: |
+        Add support for `index.mdx` (or `index.md`) files as section overviews when using `folder` navigation. When a nested subfolder contains an `index.mdx` file, it is now automatically used as the section overview page instead of appearing as a regular page in the navigation.
+      type: feat
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.56.10
+  changelogEntry:
+    - summary: |
+        Add proactive debug logging for git environment when using self-hosted GitHub mode. Running with
+        `--log-level debug` now outputs git path, version, and PATH before attempting to clone, helping
+        diagnose git availability issues without requiring manual debug prints.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.56.9
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant displayName to only use user-specified values. Previously, displayName would fall back to the type's originalName, which for OpenAPI-sourced APIs could be long generated schema names (e.g., "ObjectsObjectTypeBatchUpsertPostRequestBody..."). Now displayName is only set when explicitly specified via `display-name` in the Fern definition.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.56.8
+  changelogEntry:
+    - summary: |
+        Support GraphQL API References. You can now add a `graphql` spec to `generators.yml` to render an auto-generated reference in the docs.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.55.7
+  changelogEntry:
+    - summary: |
+        Improve `fern docs diff` region detection with top-down and bottom-up scanning. The algorithm now finds the first change by scanning from the top, and the last change by scanning from the bottom (aligning footers). This handles content shifts naturally and skips small footer changes like timestamps.
+      type: fix
+  createdAt: "2026-01-31"
+  irVersion: 63
+
+- version: 3.55.6
+  changelogEntry:
+    - summary: |
+        Regenerate types for fern-definition, docs-yml, generators-yml, conjure-sdk, openapi-ir, and ir-types-latest schemas.
+      type: internal
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.55.5
+  changelogEntry:
+    - summary: |
+        Fix default value for `switcher-placement` in docs.yml layout configuration.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.4
+  changelogEntry:
+    - summary: |
+        Fix discriminated union variants with optional or nullable object types incorrectly using `samePropertiesAsObject`. When a union variant has a type like `body: optional<SomeObjectType>`, the IR generator now correctly uses `singleProperty` instead of `samePropertiesAsObject`, which ensures the generated TypeScript code has a `value` property with the optional type instead of extending the object type directly.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.3
+  changelogEntry:
+    - summary: Fix schema namespace resolution to OpenAPI importers for proper type reference targeting
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs diff` production URL construction when docs instance URL has a base path (e.g., `/learn`).
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.55.1
+  changelogEntry:
+    - summary: |
+        Add docs param when publishing a doc site to support fine grain access controlls
+      type: chore
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add namespace prefix support for endpoint references. When working with multiple OpenAPI specs that have namespaces, you can now disambiguate endpoints using the `namespace::METHOD /path` syntax (e.g., `oauth::POST /v2/token`). This is useful for OAuth configuration when multiple specs may have overlapping paths.
+      type: feat
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.55.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs diff` command for visual regression testing of docs. This command captures screenshots of preview and production docs pages, generates visual diffs using pixelmatch, and outputs JSON with change percentages.
+      type: feat
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.54.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets not being generated when using the v3 OpenAPI parser. The workspace is now loaded for dynamic snippet generation even when the v3 parser successfully generates the IR, ensuring that generators.yml configuration is available for snippet generation.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.54.0
+  changelogEntry:
+    - summary: |
+        Add support for `switcher-placement` field in docs.yml layout configuration. This allows users to specify the placement of the version and language switcher, with options `header` or `sidebar` (default: `header`).
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.53.2
+  changelogEntry:
+    - summary: |
+        Reduce memory usage when generating docs for customers with many API versions by processing versions in batches of 5 instead of all in parallel.
+      type: fix
+  createdAt: "2026-01-30"
+  irVersion: 63
+
+- version: 3.53.1
+  changelogEntry:
+    - summary: |
+        Fix primitive example generation to handle zero-length strings correctly.
+      type: chore
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.53.0
+  changelogEntry:
+    - summary: |
+        Add internal support for ListType/SetType/MapType validation into IR.
+      type: feat
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.52.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI oneOf with discriminator to be parsed as discriminated union. Previously, when the discriminant property was defined in each variant schema (which is the standard OpenAPI pattern), the union was incorrectly parsed as an undiscriminated union. Now, any oneOf with a discriminator is correctly parsed as a discriminated union, and the discriminant property is filtered out from variant schemas to avoid duplication.
+      type: fix
+  createdAt: "2026-01-29"
+  irVersion: 63
+
+- version: 3.52.0
+  changelogEntry:
+    - summary: |
+        Add support for `branch` property in pull-request GitHub mode. When specified, the PR will target this branch instead of the repository's default branch.
+      type: feat
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting "Invalid OpenAPI reference" errors for AsyncAPI JSON files. The validation rule now detects both YAML format (`asyncapi:`) and JSON format (`"asyncapi":`) when skipping AsyncAPI files.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting "Invalid OpenAPI reference" errors for AsyncAPI JSON files. The validation rule now detects both YAML format (`asyncapi:`) and JSON format (`"asyncapi":`) when skipping AsyncAPI files.
+      type: fix
+  createdAt: "2026-01-28"
+  irVersion: 63
+
+- version: 3.51.2
+  changelogEntry:
+    - summary: |
+        Fix air-gapped environment support for `fern generate --docs`. Added airgapped detection to skip external services that don't have local equivalents (Python docs generation, Venus organization lookup). Fixed protobuf air-gapped detection to use `detectAirGappedModeForProtobuf()` instead of `detectAirGappedMode()`. Added Venus-specific connectivity check for AI example enhancement that doesn't rely on the global cache.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.51.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev --broken-links` failing with "Failed to load API Definition" error for valid API configurations. The broken links validator now properly handles OpenAPI-only workspaces.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.51.0
+  changelogEntry:
+    - summary: |
+        Add support for OAS 3.2's `itemSchema` standard for SSE endpoints. When `text/event-stream` content type uses `itemSchema` instead of `schema`, it is now automatically treated as an SSE streaming endpoint with `x-fern-streaming: format: sse`.
+      type: feat
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.3
+  changelogEntry:
+    - summary: |
+        Fix Python library docs placeholder page appearing on published sites. The placeholder page is now only created during `fern docs dev` (local development), not during `fern generate --docs` (publishing).
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.2
+  changelogEntry:
+    - summary: |
+        Fix `python-docs` configuration not being detected when placed inside product or version files. Previously, `python-docs` only worked when placed in the top-level `docs.yml` navigation. Now it correctly searches through product files and version files referenced via `config.products` and `config.versions`.
+      type: fix
+  createdAt: "2026-01-26"
+  irVersion: 63
+
+- version: 3.50.1
+  changelogEntry:
+    - summary: |
+        Fix `tag-description-pages` not matching OpenAPI tags with spaces or hyphens. The tag ID lookup now normalizes tag names to camelCase to match how subpackage names are derived from OpenAPI tags.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add `--output` option to `fern generate` command. This allows users to specify a custom output directory for preview generation when using the `--preview` flag for SDK generation, instead of the default `.preview` directory.
+      type: feat
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.8
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI error response example names not using the `summary` field. Error examples now use the OpenAPI `summary` field as the example name (similar to success response examples), enabling proper display names like "Validation Error" instead of generic keys like "validationError". Falls back to the original key if summary is undefined or empty.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.7
+  changelogEntry:
+    - summary: |
+        Fix `group-multi-api-environments` URL name extraction for hyphenated subdomains (e.g., `ip-messaging.twilio.com` now extracts as `ip-messaging` instead of colliding with other URLs).
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.6
+  changelogEntry:
+    - summary: |
+        Fix `group-multi-api-environments` to properly accumulate all URLs when merging many OpenAPI specs. Previously only the first two URLs were preserved.
+      type: fix
+    - summary: |
+        Fix `group-multi-api-environments` setting to be inherited from global `api.settings`.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.5
+  changelogEntry:
+    - summary: |
+        Fix docs API registration to use folder name when api-name is not set. When registering APIs with FDR for docs, the folder name (workspace name) is now used as the API identifier when `api-name` is not explicitly set in docs.yml. This enables users to reference APIs by folder name in docs components like `<Schema api="latest" />`.
+      type: fix
+  createdAt: "2026-01-23"
+  irVersion: 63
+
+- version: 3.49.4
+  changelogEntry:
+    - summary: |
+        Fix ANY auth conversion to FDR multiAuth format. When the IR has `AuthSchemesRequirement.ANY`, the converter now properly represents this as multiple auth options (OR semantics) with each scheme in its own array element, rather than all schemes grouped together (AND semantics).
+      type: fix
   createdAt: "2026-01-22"
   irVersion: 63
 
+>>>>>>> origin/main
 - version: 3.49.3
   changelogEntry:
     - summary: |

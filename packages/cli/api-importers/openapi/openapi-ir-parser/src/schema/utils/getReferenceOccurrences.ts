@@ -1,7 +1,7 @@
 import { MediaType } from "@fern-api/core-utils";
 import { OpenAPIV3 } from "openapi-types";
 
-import { isReferenceObject } from "./isReferenceObject";
+import { isReferenceObject } from "./isReferenceObject.js";
 
 export function getReferenceOccurrences(document: OpenAPIV3.Document): Record<string, number> {
     const contentConflictsRemovedDocument = removeApplicationJsonAndMultipartConflictsFromDocument(document);

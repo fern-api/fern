@@ -5,7 +5,7 @@ import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { vi } from "vitest";
 
-import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration";
+import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration.js";
 
 describe("convertGeneratorsConfiguration", () => {
     it("local-file-system allows absolute download path", async () => {

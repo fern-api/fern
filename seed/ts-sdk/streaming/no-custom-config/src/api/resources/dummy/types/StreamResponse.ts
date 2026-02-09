@@ -2,5 +2,5 @@
 
 export interface StreamResponse {
     id: string;
-    name?: string;
+    name?: string | undefined;
 }

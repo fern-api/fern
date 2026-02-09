@@ -3,10 +3,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Writer } from "@fern-api/rust-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { generateModels } from "./generateModels.js";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -15,7 +15,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: ModelCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

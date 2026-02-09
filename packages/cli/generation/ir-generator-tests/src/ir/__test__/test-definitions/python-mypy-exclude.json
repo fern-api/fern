@@ -1,0 +1,118 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {},
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {},
+        "pathParameters": [],
+        "environments": null,
+        "variables": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "generationMetadata": null,
+    "apiPlayground": true,
+    "subpackages": {},
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

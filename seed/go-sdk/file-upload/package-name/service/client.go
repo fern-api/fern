@@ -80,6 +80,22 @@ func (c *Client) JustFileWithQueryParams(
 	return nil
 }
 
+func (c *Client) JustFileWithOptionalQueryParams(
+	ctx context.Context,
+	request *upload.JustFileWithOptionalQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.JustFileWithOptionalQueryParams(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *Client) WithContentType(
 	ctx context.Context,
 	request *upload.WithContentTypeRequest,
@@ -172,4 +188,20 @@ func (c *Client) Simple(
 		return err
 	}
 	return nil
+}
+
+func (c *Client) WithLiteralAndEnumTypes(
+	ctx context.Context,
+	request *upload.LiteralEnumRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithLiteralAndEnumTypes(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
 }

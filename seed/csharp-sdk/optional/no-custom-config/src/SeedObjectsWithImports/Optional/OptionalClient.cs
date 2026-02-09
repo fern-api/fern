@@ -18,6 +18,12 @@ public partial class OptionalClient : IOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedObjectsWithImports.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -26,6 +32,7 @@ public partial class OptionalClient : IOptionalClient
                     Method = HttpMethod.Post,
                     Path = "send-optional-body",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -74,6 +81,12 @@ public partial class OptionalClient : IOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedObjectsWithImports.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -82,6 +95,7 @@ public partial class OptionalClient : IOptionalClient
                     Method = HttpMethod.Post,
                     Path = "send-optional-typed-body",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -134,6 +148,12 @@ public partial class OptionalClient : IOptionalClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedObjectsWithImports.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -146,6 +166,7 @@ public partial class OptionalClient : IOptionalClient
                         ValueConvert.ToPathParameterString(id)
                     ),
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

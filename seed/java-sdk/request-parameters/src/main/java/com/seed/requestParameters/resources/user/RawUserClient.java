@@ -46,8 +46,8 @@ public class RawUserClient {
                 .addPathSegments("username");
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -94,8 +94,8 @@ public class RawUserClient {
                 .addPathSegments("username-referenced");
         QueryStringMapper.addQueryParameter(httpUrl, "tags", request.getTags(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -149,8 +149,8 @@ public class RawUserClient {
                 .addPathSegments("user")
                 .addPathSegments("username-optional");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -221,8 +221,8 @@ public class RawUserClient {
         QueryStringMapper.addQueryParameter(httpUrl, "excludeUser", request.getExcludeUser(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "filter", request.getFilter(), true);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()

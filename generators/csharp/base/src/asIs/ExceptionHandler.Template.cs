@@ -18,7 +18,7 @@ internal class ExceptionHandler
 
     internal void TryCatch(Action action)
     {
-        if (_interceptor == null)
+        if (_interceptor is null)
         {
             action();
             return;
@@ -36,7 +36,7 @@ internal class ExceptionHandler
 
     internal T TryCatch<T>(Func<T> func)
     {
-        if (_interceptor == null)
+        if (_interceptor is null)
         {
             return func();
         }
@@ -53,7 +53,7 @@ internal class ExceptionHandler
 
     internal async SystemTask TryCatchAsync(Func<Task> func)
     {
-        if (_interceptor == null)
+        if (_interceptor is null)
         {
             await func().ConfigureAwait(false);
             return;
@@ -71,7 +71,7 @@ internal class ExceptionHandler
 
     internal async Task<T> TryCatchAsync<T>(Func<Task<T>> func)
     {
-        if (_interceptor == null)
+        if (_interceptor is null)
         {
             return await func().ConfigureAwait(false);
         }

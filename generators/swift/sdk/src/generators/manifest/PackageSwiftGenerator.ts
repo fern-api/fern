@@ -2,8 +2,8 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { SDKRequirements } from "../../requirements";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SDKRequirements } from "../../requirements.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace PackageSwiftGenerator {
     interface Args {

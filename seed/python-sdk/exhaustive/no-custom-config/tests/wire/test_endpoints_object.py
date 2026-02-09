@@ -138,3 +138,13 @@ def test_endpoints_object_get_and_return_nested_with_required_field_as_list() ->
         ]
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-required-field-list", None, 1)
+
+
+def test_endpoints_object_get_and_return_with_datetime_like_string() -> None:
+    """Test getAndReturnWithDatetimeLikeString endpoint with WireMock"""
+    test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"
+    client = get_client(test_id)
+    client.endpoints.object.get_and_return_with_datetime_like_string(
+        datetime_like_string="2023-08-31T14:15:22Z", actual_datetime=datetime.fromisoformat("2023-08-31T14:15:22+00:00")
+    )
+    verify_request_count(test_id, "POST", "/object/get-and-return-with-datetime-like-string", None, 1)

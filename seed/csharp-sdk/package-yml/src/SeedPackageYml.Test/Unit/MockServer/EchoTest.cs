@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedPackageYml;
-using SeedPackageYml.Core;
+using SeedPackageYml.Test.Utils;
 
 namespace SeedPackageYml.Test.Unit.MockServer;
 
@@ -37,7 +37,7 @@ public class EchoTest : BaseMockServerTest
             );
 
         var response = await Client.EchoAsync("id", new EchoRequest { Name = "name", Size = 1 });
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -73,6 +73,6 @@ public class EchoTest : BaseMockServerTest
             "id-ksfd9c1",
             new EchoRequest { Name = "Hello world!", Size = 20 }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

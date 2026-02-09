@@ -29,6 +29,12 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -36,6 +42,7 @@ public partial class UrlsClient : IUrlsClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/MixedCase",
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -90,6 +97,12 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -97,6 +110,7 @@ public partial class UrlsClient : IUrlsClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/no-ending-slash",
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -151,6 +165,12 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -158,6 +178,7 @@ public partial class UrlsClient : IUrlsClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/with-ending-slash/",
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -212,6 +233,12 @@ public partial class UrlsClient : IUrlsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -219,6 +246,7 @@ public partial class UrlsClient : IUrlsClient
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/with_underscores",
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

@@ -1,4 +1,4 @@
-import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -19,7 +19,7 @@ export interface GeneratedEndpointRequest {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Statement[];
     getExampleEndpointParameters({
@@ -28,7 +28,7 @@ export interface GeneratedEndpointRequest {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined;
 }

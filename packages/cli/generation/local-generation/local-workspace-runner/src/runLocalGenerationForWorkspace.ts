@@ -21,8 +21,8 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
-import { isAutoVersion } from "./VersionUtils";
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
+import { isAutoVersion } from "./VersionUtils.js";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -177,6 +177,27 @@ export async function runLocalGenerationForWorkspace({
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
 
+                    // Log git environment info for debugging
+                    interactiveTaskContext.logger.debug(
+                        `Self-hosted GitHub mode: cloning ${selfhostedGithubConfig.uri} to ${absolutePathToLocalOutput}`
+                    );
+                    try {
+                        const { execSync } = await import("child_process");
+                        const gitPath = execSync("which git 2>/dev/null || echo 'not found'", {
+                            encoding: "utf-8"
+                        }).trim();
+                        const gitVersion = execSync("git --version 2>/dev/null || echo 'unknown'", {
+                            encoding: "utf-8"
+                        }).trim();
+                        interactiveTaskContext.logger.debug(
+                            `Git environment: path=${gitPath}, version=${gitVersion}, PATH=${process.env.PATH ?? "unset"}`
+                        );
+                    } catch {
+                        interactiveTaskContext.logger.debug(
+                            `Git environment: unable to determine git info, PATH=${process.env.PATH ?? "unset"}`
+                        );
+                    }
+
                     try {
                         const repo = await cloneRepository({
                             githubRepository: selfhostedGithubConfig.uri,
@@ -185,14 +206,26 @@ export async function runLocalGenerationForWorkspace({
                             timeoutMs: 30000 // 30 seconds timeout for credential/network issues
                         });
 
-                        // For push mode, checkout the target branch while the working tree is clean.
+                        // For push mode and pull-request mode with a target branch,
+                        // checkout the target branch while the working tree is clean.
                         // This prevents non-fast-forward errors that occur when trying to checkout
                         // after files have been generated (dirty working tree).
                         const mode = selfhostedGithubConfig.mode ?? "push";
-                        if (mode === "push" && selfhostedGithubConfig.branch != null) {
+                        if ((mode === "push" || mode === "pull-request") && selfhostedGithubConfig.branch != null) {
                             interactiveTaskContext.logger.debug(
                                 `Checking out branch ${selfhostedGithubConfig.branch} before generation`
                             );
+                            // For pull-request mode, the branch must exist on remote
+                            // (to match remote generation behavior)
+                            if (mode === "pull-request") {
+                                const branchExists = await repo.remoteBranchExists(selfhostedGithubConfig.branch);
+                                if (!branchExists) {
+                                    const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+                                    interactiveTaskContext.failAndThrow(
+                                        `Branch ${selfhostedGithubConfig.branch} does not exist in repository ${parsedRepo.owner}/${parsedRepo.repo}`
+                                    );
+                                }
+                            }
                             await repo.checkoutRemoteBranch(selfhostedGithubConfig.branch);
                         }
                     } catch (error) {

@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { Schema, SdkGroupName } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
-import { convertSdkGroupNameToFile } from "./convertSdkGroupName";
+import { convertSdkGroupNameToFile } from "./convertSdkGroupName.js";
 
 const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
@@ -40,7 +40,7 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
  * If the group name is a string, the group name will be camel cased and a .yml extension will be added.
  * If the group name is an array, we create a directory with the group name and add a file with the group name camel cased and a .yml extension.
  */
-function getDeclarationFileFromGroupName({
+export function getDeclarationFileFromGroupName({
     namespace,
     groupName
 }: {

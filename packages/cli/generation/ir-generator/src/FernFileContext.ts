@@ -4,8 +4,8 @@ import { FernFilepath, TypeReference } from "@fern-api/ir-sdk";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { mapValues } from "lodash-es";
 
-import { convertToFernFilepath } from "./utils/convertToFernFilepath";
-import { parseInlineType } from "./utils/parseInlineType";
+import { convertToFernFilepath } from "./utils/convertToFernFilepath.js";
+import { parseInlineType } from "./utils/parseInlineType.js";
 
 /**
  * here is a description

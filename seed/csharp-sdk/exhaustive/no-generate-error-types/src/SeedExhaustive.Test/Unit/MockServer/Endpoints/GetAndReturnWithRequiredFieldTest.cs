@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
@@ -41,9 +41,6 @@ public class GetAndReturnWithRequiredFieldTest : BaseMockServerTest
         var response = await Client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
             new ObjectWithRequiredField { String = "string" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ObjectWithRequiredField>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

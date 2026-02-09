@@ -437,4 +437,66 @@ import Exhaustive
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func getAndReturnWithDatetimeLikeString1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "datetimeLikeString": "2023-08-31T14:15:22Z",
+                  "actualDatetime": "2023-08-31T14:15:22Z"
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithDatetimeLikeString(
+            datetimeLikeString: "2023-08-31T14:15:22Z",
+            actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+        )
+        let response = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(
+            request: ObjectWithDatetimeLikeString(
+                datetimeLikeString: "2023-08-31T14:15:22Z",
+                actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithDatetimeLikeString2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "datetimeLikeString": "datetimeLikeString",
+                  "actualDatetime": "2024-01-15T09:30:00Z"
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithDatetimeLikeString(
+            datetimeLikeString: "datetimeLikeString",
+            actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
+        )
+        let response = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(
+            request: ObjectWithDatetimeLikeString(
+                datetimeLikeString: "datetimeLikeString",
+                actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

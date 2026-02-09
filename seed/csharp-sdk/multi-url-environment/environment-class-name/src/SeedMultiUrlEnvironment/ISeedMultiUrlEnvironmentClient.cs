@@ -2,6 +2,6 @@ namespace SeedMultiUrlEnvironment;
 
 public partial interface ISeedMultiUrlEnvironmentClient
 {
-    public Ec2Client Ec2 { get; }
-    public S3Client S3 { get; }
+    public IEc2Client Ec2 { get; }
+    public IS3Client S3 { get; }
 }

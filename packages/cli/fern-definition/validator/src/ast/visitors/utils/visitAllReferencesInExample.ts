@@ -1,7 +1,7 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { EXAMPLE_REFERENCE_PREFIX, NodePath } from "@fern-api/fern-definition-schema";
 
-import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor.js";
 
 /**
  * Checks if a string is a valid example reference format.

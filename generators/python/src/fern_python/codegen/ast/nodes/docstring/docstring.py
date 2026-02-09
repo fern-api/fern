@@ -9,7 +9,7 @@ from ..code_writer import CodeWriter
 def escape_docstring(text: str) -> str:
     """
     Escape backslashes in docstrings to avoid SyntaxWarning for invalid escape sequences.
-    This is needed when docstrings contain backslashes in source text (e.g., FOO\_BAR)
+    This is needed when docstrings contain backslashes in source text (e.g., FOO\\_BAR)
     that would otherwise produce invalid escape sequences.
     """
     return text.replace("\\", "\\\\")

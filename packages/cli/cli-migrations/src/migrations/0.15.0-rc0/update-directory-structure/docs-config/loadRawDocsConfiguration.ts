@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { LegacyDocs, LegacyDocsSerializers } from ".";
+import { LegacyDocs, LegacyDocsSerializers } from "./index.js";
 
 export async function loadRawDocsConfiguration({
     absolutePathToWorkspace

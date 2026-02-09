@@ -9,4 +9,5 @@
 
 pub mod resources;
 
-pub use resources::{ApiWideBasePathClient, ServiceClient};
+pub use resources::{ServiceClient, ApiWideBasePathClient};
+

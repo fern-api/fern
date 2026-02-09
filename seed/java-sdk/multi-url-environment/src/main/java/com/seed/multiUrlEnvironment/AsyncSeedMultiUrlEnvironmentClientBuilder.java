@@ -19,7 +19,7 @@ public class AsyncSeedMultiUrlEnvironmentClientBuilder {
 
     private String token = null;
 
-    private Environment environment = Environment.Production;
+    private Environment environment = Environment.PRODUCTION;
 
     private OkHttpClient httpClient;
 

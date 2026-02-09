@@ -1,13 +1,13 @@
-import { java } from "@fern-api/java-ast";
-import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { SnippetExtractor } from "../extractors/SnippetExtractor";
-import { WireTestExample } from "../extractors/TestDataExtractor";
-import { HeaderValidator } from "../validators/HeaderValidator";
-import { JsonValidator } from "../validators/JsonValidator";
-import { PaginationValidator } from "../validators/PaginationValidator";
-import { TestClassBuilder } from "./TestClassBuilder";
+import { java, Writer } from "@fern-api/java-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { SnippetExtractor } from "../extractors/SnippetExtractor.js";
+import { WireTestExample } from "../extractors/TestDataExtractor.js";
+import { TestResourceWriter } from "../resources/TestResourceWriter.js";
+import { HeaderValidator } from "../validators/HeaderValidator.js";
+import { JsonValidator } from "../validators/JsonValidator.js";
+import { PaginationValidator } from "../validators/PaginationValidator.js";
+import { TestClassBuilder } from "./TestClassBuilder.js";
 
 /**
  * Builder for generating individual test methods in wire tests.
@@ -18,6 +18,8 @@ export class TestMethodBuilder {
     private readonly paginationValidator: PaginationValidator;
     private readonly snippetExtractor: SnippetExtractor;
     private readonly testClassBuilder: TestClassBuilder;
+    private resourceWriter: TestResourceWriter | undefined;
+    private currentTestClassName: string | undefined;
 
     constructor(private readonly context: SdkGeneratorContext) {
         this.headerValidator = new HeaderValidator();
@@ -28,10 +30,24 @@ export class TestMethodBuilder {
     }
 
     /**
+     * Sets the resource writer for storing large JSON payloads.
+     */
+    public setResourceWriter(resourceWriter: TestResourceWriter): void {
+        this.resourceWriter = resourceWriter;
+    }
+
+    /**
+     * Sets the current test class name for resource file naming.
+     */
+    public setCurrentTestClassName(className: string): void {
+        this.currentTestClassName = className;
+    }
+
+    /**
      * Creates a test method for an endpoint with mock setup and validation.
      */
     public createTestMethod(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         snippet: string,
         testExample: WireTestExample
     ): (writer: Writer) => void {
@@ -71,10 +87,33 @@ export class TestMethodBuilder {
                 ? JSON.stringify(expectedResponseJson)
                 : this.generateMockResponseForEndpoint(endpoint);
 
+            // Pre-register response resource file if needed - used for both mock setup and validation
+            // to avoid creating duplicate files with identical content
+            let responseResourcePath: string | undefined;
+            if (
+                this.resourceWriter &&
+                this.currentTestClassName &&
+                expectedResponseJson &&
+                this.jsonValidator.shouldUseResourceFile(expectedResponseJson)
+            ) {
+                responseResourcePath = this.resourceWriter.registerResource(
+                    this.currentTestClassName,
+                    testMethodName,
+                    "response",
+                    expectedResponseJson
+                );
+            }
+
             writer.writeLine("server.enqueue(new MockResponse()");
             writer.indent();
             writer.writeLine(`.setResponseCode(${responseStatusCode})`);
-            writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
+
+            if (responseResourcePath) {
+                writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                writer.writeLine(`.setBody(TestResources.loadResource("${responseResourcePath}")));`);
+            } else {
+                writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
+            }
             writer.dedent();
 
             const hasResponseBody = endpoint.response?.body != null;
@@ -129,8 +168,23 @@ export class TestMethodBuilder {
                         'Assertions.assertEquals(expectedRequestBody, actualRequestBody, "Form-urlencoded request body does not match expected");'
                     );
                 } else {
-                    // Standard JSON validation
-                    this.jsonValidator.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
+                    // Use resource file for large request payloads to avoid stack overflow
+                    if (
+                        this.resourceWriter &&
+                        this.currentTestClassName &&
+                        this.jsonValidator.shouldUseResourceFile(expectedRequestJson)
+                    ) {
+                        const resourcePath = this.resourceWriter.registerResource(
+                            this.currentTestClassName,
+                            testMethodName,
+                            "request",
+                            expectedRequestJson
+                        );
+                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                        writer.writeLine(`String expectedRequestBody = TestResources.loadResource("${resourcePath}");`);
+                    } else {
+                        this.jsonValidator.formatMultilineJson(writer, "expectedRequestBody", expectedRequestJson);
+                    }
 
                     writer.writeLine("JsonNode actualJson = objectMapper.readTree(actualRequestBody);");
                     writer.writeLine("JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);");
@@ -158,7 +212,15 @@ export class TestMethodBuilder {
                 } else {
                     writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
 
-                    this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
+                    // Use the same resource file that was registered for mock setup, or inline for small payloads
+                    if (responseResourcePath) {
+                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                        writer.writeLine(
+                            `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
+                        );
+                    } else {
+                        this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
+                    }
 
                     writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
                     writer.writeLine("JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);");
@@ -189,7 +251,7 @@ export class TestMethodBuilder {
     /**
      * Checks if the endpoint uses application/x-www-form-urlencoded content type.
      */
-    private isFormUrlEncodedEndpoint(endpoint: HttpEndpoint): boolean {
+    private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         const requestBody = endpoint.requestBody;
         if (!requestBody) {
             return false;
@@ -223,7 +285,7 @@ export class TestMethodBuilder {
     /**
      * Generates a mock response body for endpoints without example data.
      */
-    private generateMockResponseForEndpoint(endpoint: HttpEndpoint): string {
+    private generateMockResponseForEndpoint(endpoint: FernIr.HttpEndpoint): string {
         const responseBody = endpoint.response?.body;
 
         if (!responseBody || responseBody.type !== "json") {
@@ -239,7 +301,7 @@ export class TestMethodBuilder {
         });
     }
 
-    private getEndpointReturnType(endpoint: HttpEndpoint): string {
+    private getEndpointReturnType(endpoint: FernIr.HttpEndpoint): string {
         try {
             const javaType = this.context.getReturnTypeForEndpoint(endpoint);
 
@@ -266,7 +328,7 @@ export class TestMethodBuilder {
     /**
      * Gets the return type for an endpoint and collects its imports.
      */
-    public getEndpointReturnTypeWithImports(endpoint: HttpEndpoint): { typeName: string; imports: Set<string> } {
+    public getEndpointReturnTypeWithImports(endpoint: FernIr.HttpEndpoint): { typeName: string; imports: Set<string> } {
         try {
             const imports = new Set<string>();
 

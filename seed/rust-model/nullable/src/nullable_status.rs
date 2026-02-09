@@ -3,8 +3,10 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum Status {
+        #[serde(rename = "active")]
         Active,
 
+        #[serde(rename = "archived")]
         Archived {
             #[serde(default)]
             #[serde(with = "crate::core::flexible_datetime::offset::option")]

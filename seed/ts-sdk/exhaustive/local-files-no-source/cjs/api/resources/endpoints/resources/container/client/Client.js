@@ -350,7 +350,7 @@ class ContainerClient {
                 contentType: "application/json",
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
                 requestType: "json",
-                body: request != null ? request : undefined,
+                body: request,
                 timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,

@@ -2,5 +2,5 @@ namespace SeedHeaderTokenEnvironmentVariable;
 
 public partial interface ISeedHeaderTokenEnvironmentVariableClient
 {
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
 }

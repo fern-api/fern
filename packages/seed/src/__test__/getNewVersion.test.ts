@@ -1,8 +1,8 @@
 import { createMockTaskContext } from "@fern-api/task-context";
 import { join } from "path";
 
-import { getNewVersion } from "../commands/publish/publishGenerator";
-import { getNewCliVersion } from "../utils/versionUtilities";
+import { getNewVersion } from "../commands/publish/publishGenerator.js";
+import { getNewCliVersion } from "../utils/versionUtilities.js";
 
 describe("Test getNewVersion", () => {
     it("get only version", async () => {

@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedEndpointSecurityAuth;
-using SeedEndpointSecurityAuth.Core;
+using SeedEndpointSecurityAuth.Test.Utils;
 
 namespace SeedEndpointSecurityAuth.Test.Unit.MockServer;
 
@@ -33,9 +32,6 @@ public class GetWithBasicTest : BaseMockServerTest
             );
 
         var response = await Client.User.GetWithBasicAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

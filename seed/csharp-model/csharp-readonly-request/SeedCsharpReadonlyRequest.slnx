@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedCsharpReadonlyRequest.Test/SeedCsharpReadonlyRequest.Test.csproj" />
+  <Project Path="src/SeedCsharpReadonlyRequest/SeedCsharpReadonlyRequest.csproj" />
+</Solution>

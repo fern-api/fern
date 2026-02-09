@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface GetSubmissionStateResponse {
-    timeSubmitted?: string;
+    timeSubmitted?: string | undefined;
     submission: string;
     language: SeedTrace.Language;
     submissionTypeState: SeedTrace.SubmissionTypeState;

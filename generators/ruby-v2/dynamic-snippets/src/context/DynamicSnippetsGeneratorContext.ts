@@ -6,7 +6,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { upperFirst } from "lodash-es";
 
-import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -46,9 +46,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootModuleName(): string {
-        // Use module config first, then clientModuleName, then organization
+        // Use moduleName config first, then clientModuleName, then organization
         // This aligns with AbstractRubyGeneratorContext.getRootModuleName()
-        return upperFirst(this.customConfig?.module ?? this.customConfig?.clientModuleName ?? this.config.organization);
+        return upperFirst(
+            this.customConfig?.moduleName ?? this.customConfig?.clientModuleName ?? this.config.organization
+        );
     }
 
     public isSingleEnvironmentID(

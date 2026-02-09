@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 export const BaseRubyCustomConfigSchema = z.object({
-    module: z.optional(z.string()),
+    // The Ruby module name used for folder structure and module naming (e.g., "Square" -> lib/square/, module Square)
+    moduleName: z.optional(z.string()),
     clientModuleName: z.optional(z.string()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
     customPagerName: z.optional(z.string()),

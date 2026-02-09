@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "./core";
+import { AstNode, Writer } from "./core/index.js";
 
 export declare namespace Variable {
     interface Args {

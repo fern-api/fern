@@ -1,8 +1,8 @@
-import { AstNode } from "./AstNode";
-import { Attribute } from "./Attribute";
-import { Method } from "./Method";
-import { Type } from "./Type";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Attribute } from "./Attribute.js";
+import { Method } from "./Method.js";
+import { Type } from "./Type.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace ImplBlock {
     interface Args {

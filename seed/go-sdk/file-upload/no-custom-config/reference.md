@@ -13,7 +13,11 @@
 <dd>
 
 ```go
-request := &fern.JustFileRequest{}
+request := &fern.JustFileRequest{
+        File: strings.NewReader(
+            "",
+        ),
+    }
 client.Service.JustFile(
         context.TODO(),
         request,
@@ -43,7 +47,11 @@ client.Service.JustFile(
 <dd>
 
 ```go
-request := &fern.OptionalArgsRequest{}
+request := &fern.OptionalArgsRequest{
+        ImageFile: strings.NewReader(
+            "",
+        ),
+    }
 client.Service.OptionalArgs(
         context.TODO(),
         request,

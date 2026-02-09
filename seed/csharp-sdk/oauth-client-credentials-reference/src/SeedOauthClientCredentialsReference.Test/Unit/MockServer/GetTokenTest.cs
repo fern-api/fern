@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedOauthClientCredentialsReference;
-using SeedOauthClientCredentialsReference.Core;
+using SeedOauthClientCredentialsReference.Test.Utils;
 
 namespace SeedOauthClientCredentialsReference.Test.Unit.MockServer;
 
@@ -42,10 +42,7 @@ public class GetTokenTest : BaseMockServerTest
         var response = await Client.Auth.GetTokenAsync(
             new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -83,9 +80,6 @@ public class GetTokenTest : BaseMockServerTest
         var response = await Client.Auth.GetTokenAsync(
             new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

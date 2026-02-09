@@ -1,25 +1,14 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    EndpointReference,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    Literal,
-    NameAndWireValue,
-    ObjectProperty,
-    PropertyPathItem,
-    ResponseProperty
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace InferredAuthProviderGenerator {
     interface Args {
-        scheme: InferredAuthScheme;
+        scheme: FernIr.InferredAuthScheme;
         context: SdkGeneratorContext;
     }
 }
@@ -28,10 +17,10 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     private static readonly CLASS_NAME = "InferredAuthProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
 
-    private scheme: InferredAuthScheme;
-    private tokenEndpointHttpService: HttpService;
-    private tokenEndpointReference: EndpointReference;
-    private tokenEndpoint: HttpEndpoint;
+    private scheme: FernIr.InferredAuthScheme;
+    private tokenEndpointHttpService: FernIr.HttpService;
+    private tokenEndpointReference: FernIr.EndpointReference;
+    private tokenEndpoint: FernIr.HttpEndpoint;
 
     constructor({ context, scheme }: InferredAuthProviderGenerator.Args) {
         super(context);
@@ -284,9 +273,9 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     private getTokenEndpointRequestProperties(): Array<{
         camelName: string;
         isOptional: boolean;
-        literal?: Literal;
+        literal?: FernIr.Literal;
     }> {
-        const properties: Array<{ camelName: string; isOptional: boolean; literal?: Literal }> = [];
+        const properties: Array<{ camelName: string; isOptional: boolean; literal?: FernIr.Literal }> = [];
         const service = this.tokenEndpointHttpService;
 
         // Add query parameters
@@ -434,11 +423,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         return this.context.getEndpointMethodName(this.tokenEndpoint);
     }
 
-    private getPropertyName(name: NameAndWireValue): string {
+    private getPropertyName(name: FernIr.NameAndWireValue): string {
         return name.name.camelCase.unsafeName;
     }
 
-    private getResponsePropertyAccess(responseProperty: ResponseProperty): string {
+    private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
         const propertyPath = responseProperty.propertyPath ?? [];
         const parts = [
             ...propertyPath.map((p) => this.getPropertyPathItemAccess(p)),
@@ -447,11 +436,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         return parts.join("");
     }
 
-    private getPropertyPathItemAccess(pathItem: PropertyPathItem): string {
+    private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
         return `->${pathItem.name.camelCase.safeName}`;
     }
 
-    private getObjectPropertyAccess(property: ObjectProperty): string {
+    private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
         return `->${property.name.name.camelCase.safeName}`;
     }
 }

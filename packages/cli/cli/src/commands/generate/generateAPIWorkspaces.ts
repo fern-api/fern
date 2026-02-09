@@ -1,14 +1,14 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { PREVIEW_DIRECTORY } from "../../constants";
-import { checkOutputDirectory } from "./checkOutputDirectory";
-import { generateWorkspace } from "./generateAPIWorkspace";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { PREVIEW_DIRECTORY } from "../../constants.js";
+import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { generateWorkspace } from "./generateAPIWorkspace.js";
 
 export const GenerationMode = {
     PullRequest: "pull-request"
@@ -21,6 +21,7 @@ export async function generateAPIWorkspaces({
     cliContext,
     version,
     groupName,
+    generatorName,
     shouldLogS3Url,
     keepDocker,
     useLocalDocker,
@@ -31,12 +32,14 @@ export async function generateAPIWorkspaces({
     inspect,
     lfsOverride,
     fernignorePath,
-    dynamicIrOnly
+    dynamicIrOnly,
+    outputDir
 }: {
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
     groupName: string | undefined;
+    generatorName: string | undefined;
     shouldLogS3Url: boolean;
     useLocalDocker: boolean;
     keepDocker: boolean;
@@ -48,6 +51,7 @@ export async function generateAPIWorkspaces({
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
+    outputDir: string | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -71,7 +75,8 @@ export async function generateAPIWorkspaces({
         const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
         for (const generator of workspace.generatorsConfiguration?.groups
             .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
-            .flatMap((group) => group.generators) ?? []) {
+            .flatMap((group) => group.generators)
+            .filter((generator) => generatorName == null || generator.name === generatorName) ?? []) {
             const { shouldProceed } = await checkOutputDirectory(
                 generator.absolutePathToLocalOutput,
                 cliContext,
@@ -95,14 +100,16 @@ export async function generateAPIWorkspaces({
                     generators: workspace.generatorsConfiguration?.groups
                         .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
                         .map((group) => {
-                            return group.generators.map((generator) => {
-                                return {
-                                    name: generator.name,
-                                    version: generator.version,
-                                    outputMode: generator.outputMode.type,
-                                    config: generator.config
-                                };
-                            });
+                            return group.generators
+                                .filter((generator) => generatorName == null || generator.name === generatorName)
+                                .map((generator) => {
+                                    return {
+                                        name: generator.name,
+                                        version: generator.version,
+                                        outputMode: generator.outputMode.type,
+                                        config: generator.config
+                                    };
+                                });
                         })
                 };
             })
@@ -113,7 +120,9 @@ export async function generateAPIWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
-                    ? join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                    ? outputDir != null
+                        ? AbsoluteFilePath.of(resolve(cwd(), outputDir))
+                        : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
                     : undefined;
 
                 if (absolutePathToPreview != null) {
@@ -127,6 +136,7 @@ export async function generateAPIWorkspaces({
                     context,
                     version,
                     groupName,
+                    generatorName,
                     shouldLogS3Url,
                     token,
                     useLocalDocker,

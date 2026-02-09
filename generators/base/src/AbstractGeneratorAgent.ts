@@ -5,9 +5,9 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
-import { GeneratorAgentClient } from "./GeneratorAgentClient";
-import { ReferenceConfigBuilder } from "./reference";
-import { RawGithubConfig, resolveGitHubConfig } from "./utils";
+import { GeneratorAgentClient } from "./GeneratorAgentClient.js";
+import { ReferenceConfigBuilder } from "./reference/index.js";
+import { RawGithubConfig, resolveGitHubConfig } from "./utils/index.js";
 
 const FEATURES_CONFIG_PATHS = [
     "/assets/features.yml",

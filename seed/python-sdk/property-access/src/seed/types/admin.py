@@ -14,12 +14,11 @@ class Admin(User):
     Admin user object
     """
 
-    admin_level: typing_extensions.Annotated[str, FieldMetadata(alias="adminLevel")] = pydantic.Field(
-        alias="adminLevel"
-    )
-    """
-    The level of admin privileges.
-    """
+    admin_level: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="adminLevel"),
+        pydantic.Field(alias="adminLevel", description="The level of admin privileges."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

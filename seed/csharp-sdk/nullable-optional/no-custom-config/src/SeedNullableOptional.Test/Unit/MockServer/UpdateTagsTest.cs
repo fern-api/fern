@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedNullableOptional;
-using SeedNullableOptional.Core;
+using SeedNullableOptional.Test.Utils;
 
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
@@ -58,9 +58,6 @@ public class UpdateTagsTest : BaseMockServerTest
                 Labels = new List<string>() { "labels", "labels" },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

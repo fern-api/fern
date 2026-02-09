@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { ClassReference } from "./ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { ClassReference } from "./ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
 
 type InternalType =
     | Array

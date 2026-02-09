@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{OrganizationsClient, PathParametersClient, UserClient};
-pub use types::*;
+pub use resources::{OrganizationsClient, UserClient, PathParametersClient};
+pub use types::{*};
+

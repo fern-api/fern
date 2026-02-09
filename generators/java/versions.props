@@ -34,12 +34,14 @@ com.google.guava:guava = 32.0.1-jre
 org.springframework:spring-web = 6.1.14
 
 # slf4j
-org.slf4j:slf4j-api = 1.7.36
+# Updated to 2.0.16 for compatibility with logback 1.5.x
+org.slf4j:slf4j-api = 2.0.16
 
 # okhttp
 com.squareup.okhttp3:okhttp = 5.2.1
 
 # misc
 com.palantir.common:streams = 2.0.0
-ch.qos.logback:logback-classic = 1.3.16
+# Updated to 1.5.25 to fix GHSA-qqpg-mvqg-649v (class instantiation vulnerability)
+ch.qos.logback:logback-classic = 1.5.25
 com.atlassian.commonmark:* = 0.12.1

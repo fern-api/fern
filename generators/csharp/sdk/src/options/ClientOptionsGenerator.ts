@@ -2,10 +2,10 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator.js";
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
@@ -32,6 +32,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
         this.createBaseUrlField(class_);
         this.baseOptionsGenerator.getHttpClientField(class_, optionArgs);
 
+        // Headers property is used for lazy auth header evaluation in root client
         this.baseOptionsGenerator.getHttpHeadersField(class_, {
             optional: false,
             includeInitializer: true,
@@ -88,7 +89,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
 
     private createBaseUrlField(classOrInterface: ast.Interface | ast.Class): ast.Field | undefined {
         const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
-        let defaultEnvironment: Name | undefined = undefined;
+        let defaultEnvironment: FernIr.Name | undefined = undefined;
         if (defaultEnvironmentId != null) {
             defaultEnvironment = this.context.ir.environments?.environments._visit({
                 singleBaseUrl: (value) => {
@@ -183,7 +184,6 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
     private getCloneMethod(cls: ast.Class): void {
         // TODO: add the GRPC options here eventually
         // TODO: iterate over all public fields and generate the clone logic
-        // for Headers, we should add a `.Clone` method on it and call that
 
         cls.addMethod({
             access: ast.Access.Internal,
@@ -202,6 +202,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
                     `(new Dictionary<string, `,
                     this.Types.HeaderValue,
                     `>(Headers)),
+    AdditionalHeaders = AdditionalHeaders,
     ${this.settings.includeExceptionHandler ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                 );

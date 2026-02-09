@@ -7,7 +7,7 @@ const DEFAULT_MAX_DELAY = 30000; // 30 seconds
 const DEFAULT_TIMEOUT = 30000; // 30 seconds
 
 import { getToken } from "@fern-api/auth";
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 // todo: replace with an SDK
 interface RetryConfig {

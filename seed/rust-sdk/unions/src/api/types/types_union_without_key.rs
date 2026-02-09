@@ -3,13 +3,15 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithoutKey {
-    Foo {
-        #[serde(flatten)]
-        data: Foo,
-    },
+        #[serde(rename = "foo")]
+        Foo {
+            #[serde(flatten)]
+            data: Foo,
+        },
 
-    Bar {
-        #[serde(flatten)]
-        data: Bar,
-    },
+        #[serde(rename = "bar")]
+        Bar {
+            #[serde(flatten)]
+            data: Bar,
+        },
 }

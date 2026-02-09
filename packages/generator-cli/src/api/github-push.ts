@@ -1,5 +1,5 @@
-import type { FernGeneratorCli } from "../configuration/sdk";
-import { GitHub } from "../github/GitHub";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { GitHub } from "../github/GitHub.js";
 
 export interface GithubPushParams {
     githubConfig: FernGeneratorCli.GitHubConfig;

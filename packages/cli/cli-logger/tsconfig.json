@@ -5,5 +5,16 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../logger"
+    },
+    {
+      "path": "../../commons/core-utils"
+    }
+  ]
 }

@@ -7,15 +7,16 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
-import { GROUP_CLI_OPTION } from "../../constants";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
-import { GenerationMode } from "./generateAPIWorkspaces";
+import { GROUP_CLI_OPTION } from "../../constants.js";
+import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues.js";
+import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
     organization,
@@ -23,6 +24,7 @@ export async function generateWorkspace({
     projectConfig,
     context,
     groupName,
+    generatorName,
     version,
     shouldLogS3Url,
     token,
@@ -42,6 +44,7 @@ export async function generateWorkspace({
     context: TaskContext;
     version: string | undefined;
     groupName: string | undefined;
+    generatorName: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken | undefined;
     useLocalDocker: boolean;
@@ -90,7 +93,8 @@ export async function generateWorkspace({
     await validateAPIWorkspaceAndLogIssues({
         workspace: await workspace.toFernWorkspace({ context }),
         context,
-        logWarnings: false
+        logWarnings: false,
+        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
     });
 
     // Run generation for all resolved groups in parallel
@@ -101,6 +105,19 @@ export async function generateWorkspace({
             );
             if (group == null) {
                 return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
+            }
+
+            // Filter to specific generator if --generator is specified
+            if (generatorName != null) {
+                const filteredGenerators = group.generators.filter((gen) => gen.name === generatorName);
+                if (filteredGenerators.length === 0) {
+                    const availableGenerators = group.generators.map((gen) => gen.name);
+                    return context.failAndThrow(
+                        `Generator '${generatorName}' not found in group '${resolvedGroupName}'. ` +
+                            `Available generators: ${availableGenerators.join(", ")}`
+                    );
+                }
+                group = { ...group, generators: filteredGenerators };
             }
 
             // Apply lfs-override if specified

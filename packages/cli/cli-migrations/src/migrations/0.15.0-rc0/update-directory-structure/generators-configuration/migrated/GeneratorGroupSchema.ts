@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema";
+import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema.js";
 
 export const GeneratorGroupSchema = z.strictObject({
     audiences: z.optional(z.array(z.string())),

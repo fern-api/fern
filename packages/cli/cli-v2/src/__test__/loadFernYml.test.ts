@@ -1,10 +1,11 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { randomUUID } from "crypto";
 import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { ValidationError } from "../errors/ValidationError";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { ValidationError } from "../errors/ValidationError.js";
 
 const SAMPLE_FERN_YML = `edition: 2026-01-01
 org: acme
@@ -24,12 +25,12 @@ sdks:
 `;
 
 describe("loadFernYml", () => {
-    let testDir: string;
-    let nestedDir: string;
+    let testDir: AbsoluteFilePath;
+    let nestedDir: AbsoluteFilePath;
 
     beforeEach(async () => {
-        testDir = join(tmpdir(), `fern-yml-test-${randomUUID()}`);
-        nestedDir = join(testDir, "nested", "deep");
+        testDir = AbsoluteFilePath.of(join(tmpdir(), `fern-yml-test-${randomUUID()}`));
+        nestedDir = AbsoluteFilePath.of(join(testDir, "nested", "deep"));
         await mkdir(nestedDir, { recursive: true });
         await writeFile(join(testDir, "fern.yml"), SAMPLE_FERN_YML);
     });
@@ -112,7 +113,7 @@ describe("loadFernYml", () => {
     });
 
     it("throws when fern.yml is not found", async () => {
-        const emptyDir = join(tmpdir(), `fern-empty-${Date.now()}`);
+        const emptyDir = AbsoluteFilePath.of(join(tmpdir(), `fern-empty-${Date.now()}`));
         await mkdir(emptyDir, { recursive: true });
         try {
             await expect(loadFernYml({ cwd: emptyDir })).rejects.toThrow("fern.yml");

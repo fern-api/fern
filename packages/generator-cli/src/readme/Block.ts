@@ -1,4 +1,4 @@
-import type { Writer } from "../utils/Writer";
+import type { Writer } from "../utils/Writer.js";
 
 export class Block {
     public id: string;

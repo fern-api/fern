@@ -1444,7 +1444,19 @@ webhooks:
       "default-environment": "Default",
       "display-name": "End Users API",
       "environments": {
-        "Default": "https://example.ada.support/api",
+        "Default": {
+          "audiences": undefined,
+          "default-url": undefined,
+          "url": "https://example.ada.support/api",
+          "url-template": "https://{handle}.ada.support/api",
+          "variables": [
+            {
+              "default": "example",
+              "id": "handle",
+              "values": undefined,
+            },
+          ],
+        },
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -1457,7 +1469,12 @@ error-discrimination:
   strategy: status-code
 display-name: End Users API
 environments:
-  Default: https://example.ada.support/api
+  Default:
+    url: https://example.ada.support/api
+    url-template: https://{handle}.ada.support/api
+    variables:
+      - id: handle
+        default: example
 default-environment: Default
 auth-schemes:
   BearerAuth:

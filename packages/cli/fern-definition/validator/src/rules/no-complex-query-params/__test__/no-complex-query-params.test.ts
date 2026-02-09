@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoComplexQueryParamsRule } from "../no-complex-query-params";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoComplexQueryParamsRule } from "../no-complex-query-params.js";
 
 describe("no-complex-query-params", () => {
     it("simple", async () => {

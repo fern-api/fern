@@ -1,12 +1,10 @@
-import * as FernIr from "@fern-fern/ir-sdk/api";
-
-import { ErrorDeclaration, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { ErrorGenerator } from "../error/ErrorGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ErrorGenerator } from "../error/ErrorGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 // Mock function to create IR with specific error definitions
-function createMockIR(errors: Record<string, ErrorDeclaration>): IntermediateRepresentation {
+function createMockIR(errors: Record<string, FernIr.ErrorDeclaration>): FernIr.IntermediateRepresentation {
     return {
         apiName: {
             originalName: "TestAPI",
@@ -19,11 +17,11 @@ function createMockIR(errors: Record<string, ErrorDeclaration>): IntermediateRep
         errors,
         types: {},
         services: {}
-    } as unknown as IntermediateRepresentation;
+    } as unknown as FernIr.IntermediateRepresentation;
 }
 
 // Mock function to create error declarations
-function createErrorDeclaration(name: string, statusCode: number, type: "text" | "json" = "text"): ErrorDeclaration {
+function createErrorDeclaration(name: string, statusCode: number, type: "text" | "json" = "text"): FernIr.ErrorDeclaration {
     return {
         name: {
             errorId: `${name}Id`,
@@ -57,11 +55,11 @@ function createErrorDeclaration(name: string, statusCode: number, type: "text" |
                       type: "named",
                       typeId: `${name}Body`
                   } as FernIr.TypeReference.Named)
-    } as unknown as ErrorDeclaration;
+    } as unknown as FernIr.ErrorDeclaration;
 }
 
 // Mock function to create context
-function createMockContext(ir: IntermediateRepresentation): SdkGeneratorContext {
+function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
         getClientName: () => "TestClient",

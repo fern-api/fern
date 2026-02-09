@@ -4,6 +4,6 @@ namespace SeedApi.Folder;
 
 public partial interface IFolderClient
 {
-    public ServiceClient Service { get; }
+    public IServiceClient Service { get; }
     Task FooAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
 }

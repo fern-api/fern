@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedMixedFileDirectory;
-using SeedMixedFileDirectory.Core;
+using SeedMixedFileDirectory.Test.Utils;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 
@@ -53,9 +53,6 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Organization.CreateAsync(
             new CreateOrganizationRequest { Name = "name" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,5 +1,4 @@
-import { IntermediateRepresentation, TypeReference } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 /**
  * Detects if a field creates a recursive reference to its containing type.
  * Handles direct recursion (Type → Type) and indirect recursion (Type → A → B → Type).
@@ -22,8 +21,8 @@ import { IntermediateRepresentation, TypeReference } from "@fern-fern/ir-sdk/api
  */
 export function isFieldRecursive(
     containingTypeId: string,
-    fieldTypeReference: TypeReference,
-    ir: IntermediateRepresentation
+    fieldTypeReference: FernIr.TypeReference,
+    ir: FernIr.IntermediateRepresentation
 ): boolean {
     return checkRecursion(containingTypeId, fieldTypeReference, ir, new Set());
 }
@@ -39,8 +38,8 @@ export function isFieldRecursive(
  */
 function checkRecursion(
     targetTypeId: string,
-    typeReference: TypeReference,
-    ir: IntermediateRepresentation,
+    typeReference: FernIr.TypeReference,
+    ir: FernIr.IntermediateRepresentation,
     visitedPath: Set<string>
 ): boolean {
     // Handle container types (Optional, List, Map, Set, etc.)
@@ -196,7 +195,7 @@ function checkRecursion(
  * getReferencedTypeId(Vec<Principal>) → "type_123"
  * getReferencedTypeId(string) → undefined
  */
-export function getReferencedTypeId(typeReference: TypeReference): string | undefined {
+export function getReferencedTypeId(typeReference: FernIr.TypeReference): string | undefined {
     if (typeReference.type === "named") {
         return typeReference.typeId;
     }

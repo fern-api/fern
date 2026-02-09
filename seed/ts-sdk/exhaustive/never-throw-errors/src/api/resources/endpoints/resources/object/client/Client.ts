@@ -589,4 +589,89 @@ export class ObjectClient {
             rawResponse: _response.rawResponse,
         };
     }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+     * without being converted to "2023-08-31T14:15:22.000Z".
+     *
+     * @param {SeedExhaustive.types.ObjectWithDatetimeLikeString} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithDatetimeLikeString({
+     *         datetimeLikeString: "2023-08-31T14:15:22Z",
+     *         actualDatetime: "2023-08-31T14:15:22Z"
+     *     })
+     */
+    public getAndReturnWithDatetimeLikeString(
+        request: SeedExhaustive.types.ObjectWithDatetimeLikeString,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<
+            SeedExhaustive.types.ObjectWithDatetimeLikeString,
+            SeedExhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithDatetimeLikeString(request, requestOptions));
+    }
+
+    private async __getAndReturnWithDatetimeLikeString(
+        request: SeedExhaustive.types.ObjectWithDatetimeLikeString,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedExhaustive.types.ObjectWithDatetimeLikeString,
+                SeedExhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error
+            >
+        >
+    > {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-datetime-like-string",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as SeedExhaustive.types.ObjectWithDatetimeLikeString,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedExhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error._unknown(
+                    _response.error,
+                ),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
 }

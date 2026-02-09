@@ -1,0 +1,3 @@
+rootProject.name = 'java-streaming-accept-header'
+
+include 'sample-app'

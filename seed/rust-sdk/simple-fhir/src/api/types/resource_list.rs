@@ -3,13 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum ResourceList {
-    Account(Account),
+        Account(Account),
 
-    Patient(Patient),
+        Patient(Patient),
 
-    Practitioner(Practitioner),
+        Practitioner(Practitioner),
 
-    Script(Script),
+        Script(Script),
 }
 
 impl ResourceList {
@@ -29,86 +29,72 @@ impl ResourceList {
         matches!(self, Self::Script(_))
     }
 
+
     pub fn as_account(&self) -> Option<&Account> {
         match self {
-            Self::Account(value) => Some(value),
-            _ => None,
-        }
+                    Self::Account(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_account(self) -> Option<Account> {
         match self {
-            Self::Account(value) => Some(value),
-            _ => None,
-        }
+                    Self::Account(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_patient(&self) -> Option<&Patient> {
         match self {
-            Self::Patient(value) => Some(value),
-            _ => None,
-        }
+                    Self::Patient(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_patient(self) -> Option<Patient> {
         match self {
-            Self::Patient(value) => Some(value),
-            _ => None,
-        }
+                    Self::Patient(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_practitioner(&self) -> Option<&Practitioner> {
         match self {
-            Self::Practitioner(value) => Some(value),
-            _ => None,
-        }
+                    Self::Practitioner(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_practitioner(self) -> Option<Practitioner> {
         match self {
-            Self::Practitioner(value) => Some(value),
-            _ => None,
-        }
+                    Self::Practitioner(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn as_script(&self) -> Option<&Script> {
         match self {
-            Self::Script(value) => Some(value),
-            _ => None,
-        }
+                    Self::Script(value) => Some(value),
+                    _ => None,
+                }
     }
 
     pub fn into_script(self) -> Option<Script> {
         match self {
-            Self::Script(value) => Some(value),
-            _ => None,
-        }
+                    Self::Script(value) => Some(value),
+                    _ => None,
+                }
     }
+
 }
 
 impl fmt::Display for ResourceList {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Account(value) => write!(
-                f,
-                "{}",
-                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
-            ),
-            Self::Patient(value) => write!(
-                f,
-                "{}",
-                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
-            ),
-            Self::Practitioner(value) => write!(
-                f,
-                "{}",
-                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
-            ),
-            Self::Script(value) => write!(
-                f,
-                "{}",
-                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
-            ),
+            Self::Account(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::Patient(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::Practitioner(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::Script(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
         }
     }
 }

@@ -1,21 +1,21 @@
 import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { AbstractPythonGeneratorContext } from "../context/AbstractPythonGeneratorContext";
-import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
+import { AbstractPythonGeneratorContext } from "../context/AbstractPythonGeneratorContext.js";
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema.js";
 
 export abstract class AbstractPythonGeneratorCli<
     CustomConfig extends BasePythonCustomConfigSchema,
     PythonGeneratorContext extends AbstractPythonGeneratorContext<CustomConfig>
-> extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, PythonGeneratorContext> {
+> extends AbstractGeneratorCli<CustomConfig, FernIr.IntermediateRepresentation, PythonGeneratorContext> {
     /**
      * Parses the IR for the Python generators
      * @param irFilepath
      * @returns
      */
-    protected async parseIntermediateRepresentation(irFilepath: string): Promise<IntermediateRepresentation> {
-        return await parseIR<IntermediateRepresentation>({
+    protected async parseIntermediateRepresentation(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
+        return await parseIR<FernIr.IntermediateRepresentation>({
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
         });

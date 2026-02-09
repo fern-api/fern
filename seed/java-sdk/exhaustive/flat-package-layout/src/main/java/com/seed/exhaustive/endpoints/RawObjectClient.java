@@ -13,6 +13,7 @@ import com.seed.exhaustive.core.SeedExhaustiveException;
 import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.types.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
@@ -49,11 +50,15 @@ public class RawObjectClient {
 
     public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(
             ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-optional-field")
-                .build();
+                .addPathSegments("get-and-return-with-optional-field");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -62,7 +67,7 @@ public class RawObjectClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -95,11 +100,15 @@ public class RawObjectClient {
 
     public SeedExhaustiveHttpResponse<ObjectWithRequiredField> getAndReturnWithRequiredField(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-required-field")
-                .build();
+                .addPathSegments("get-and-return-with-required-field");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -108,7 +117,7 @@ public class RawObjectClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -140,11 +149,15 @@ public class RawObjectClient {
 
     public SeedExhaustiveHttpResponse<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
             ObjectWithMapOfMap request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-with-map-of-map")
-                .build();
+                .addPathSegments("get-and-return-with-map-of-map");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -153,7 +166,7 @@ public class RawObjectClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -196,11 +209,15 @@ public class RawObjectClient {
 
     public SeedExhaustiveHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-nested-with-optional-field")
-                .build();
+                .addPathSegments("get-and-return-nested-with-optional-field");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -209,7 +226,7 @@ public class RawObjectClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -242,12 +259,16 @@ public class RawObjectClient {
 
     public SeedExhaustiveHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
             String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
                 .addPathSegments("get-and-return-nested-with-required-field")
-                .addPathSegment(string)
-                .build();
+                .addPathSegment(string);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -256,7 +277,7 @@ public class RawObjectClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -289,11 +310,15 @@ public class RawObjectClient {
 
     public SeedExhaustiveHttpResponse<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("object")
-                .addPathSegments("get-and-return-nested-with-required-field-list")
-                .build();
+                .addPathSegments("get-and-return-nested-with-required-field-list");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -302,7 +327,7 @@ public class RawObjectClient {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -318,6 +343,66 @@ public class RawObjectClient {
             if (response.isSuccessful()) {
                 return new SeedExhaustiveHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, NestedObjectWithRequiredField.class),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedExhaustiveApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request) {
+        return getAndReturnWithDatetimeLikeString(request, null);
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-with-datetime-like-string");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedExhaustiveException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedExhaustiveHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

@@ -1,6 +1,6 @@
 import { LiteralEnum, swift } from "@fern-api/swift-codegen";
 
-import { StringEnumGenerator } from "../enum";
+import { StringEnumGenerator } from "../enum/index.js";
 
 export declare namespace LiteralEnumGenerator {
     interface Args {

@@ -1,3 +1,5 @@
+import { Begin } from "./ast/Begin.js";
+import { IfElse } from "./ast/IfElse.js";
 import {
     AstNode,
     Class_,
@@ -16,11 +18,10 @@ import {
     PositionalSplatParameter,
     TypeParameter,
     YieldParameter
-} from "./ast";
-import { Begin } from "./ast/Begin";
-import { IfElse } from "./ast/IfElse";
-import { Raise } from "./ast/Raise";
+} from "./ast/index.js";
+import { Raise } from "./ast/Raise.js";
 
+export { AstNode } from "./ast/core/AstNode.js";
 export {
     Class_,
     ClassInstantiation,
@@ -37,9 +38,8 @@ export {
     TypeLiteral,
     TypeParameter,
     Writer
-} from "./ast";
-export { AstNode } from "./ast/core/AstNode";
-export type { HashEntry } from "./ast/TypeLiteral";
+} from "./ast/index.js";
+export type { HashEntry } from "./ast/TypeLiteral.js";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);

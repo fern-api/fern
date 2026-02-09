@@ -38,9 +38,7 @@ class SimpleClient:
         from seed import SeedOauthClientCredentials
 
         client = SeedOauthClientCredentials(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.simple.get_something()
         """
@@ -81,9 +79,7 @@ class AsyncSimpleClient:
         from seed import AsyncSeedOauthClientCredentials
 
         client = AsyncSeedOauthClientCredentials(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 

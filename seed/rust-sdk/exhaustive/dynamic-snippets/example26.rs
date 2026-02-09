@@ -11,10 +11,10 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_path_and_query(
-            &"param".to_string(),
-            &GetWithPathAndQueryQueryRequest {
+        .get_with_query(
+            &GetWithQueryQueryRequest {
                 query: "query".to_string(),
+                number: 1,
             },
             None,
         )

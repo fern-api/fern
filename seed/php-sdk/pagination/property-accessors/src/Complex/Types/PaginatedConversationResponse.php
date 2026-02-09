@@ -63,6 +63,7 @@ class PaginatedConversationResponse extends JsonSerializableType
     public function setConversations(array $value): self
     {
         $this->conversations = $value;
+        $this->_setField('conversations');
         return $this;
     }
 
@@ -80,6 +81,7 @@ class PaginatedConversationResponse extends JsonSerializableType
     public function setPages(?CursorPages $value = null): self
     {
         $this->pages = $value;
+        $this->_setField('pages');
         return $this;
     }
 
@@ -97,6 +99,7 @@ class PaginatedConversationResponse extends JsonSerializableType
     public function setTotalCount(int $value): self
     {
         $this->totalCount = $value;
+        $this->_setField('totalCount');
         return $this;
     }
 
@@ -114,6 +117,7 @@ class PaginatedConversationResponse extends JsonSerializableType
     public function setType(string $value): self
     {
         $this->type = $value;
+        $this->_setField('type');
         return $this;
     }
 

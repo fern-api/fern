@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedSimpleApi;
-using SeedSimpleApi.Core;
+using SeedSimpleApi.Test.Utils;
 
 namespace SeedSimpleApi.Test.Unit.MockServer;
 
@@ -28,9 +27,6 @@ public class GetTest : BaseMockServerTest
             );
 
         var response = await Client.User.GetAsync("id");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

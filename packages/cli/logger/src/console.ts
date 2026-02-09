@@ -1,6 +1,6 @@
-import { createLogger } from "./createLogger";
-import { Logger } from "./Logger";
-import { LogLevel } from "./LogLevel";
+import { createLogger } from "./createLogger.js";
+import { Logger } from "./Logger.js";
+import { LogLevel } from "./LogLevel.js";
 
 export const CONSOLE_LOGGER: Logger = Object.freeze(createLogger(log));
 

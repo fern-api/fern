@@ -109,7 +109,7 @@ export class UserClient {
                 breadcrumbsPrefix: ["request", "user"],
             }),
             userList: toJson(userList),
-            optionalDeadline: optionalDeadline?.toISOString(),
+            optionalDeadline: optionalDeadline != null ? optionalDeadline?.toISOString() : undefined,
             keyValue: toJson(keyValue),
             optionalString,
             nestedUser: serializers.NestedUser.jsonOrThrow(nestedUser, {

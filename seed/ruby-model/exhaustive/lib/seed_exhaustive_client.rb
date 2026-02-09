@@ -14,6 +14,7 @@ require_relative "seed_exhaustive_client/types/object/types/nested_object_with_o
 require_relative "seed_exhaustive_client/types/object/types/nested_object_with_required_field"
 require_relative "seed_exhaustive_client/types/object/types/double_optional"
 require_relative "seed_exhaustive_client/types/object/types/optional_alias"
+require_relative "seed_exhaustive_client/types/object/types/object_with_datetime_like_string"
 require_relative "seed_exhaustive_client/types/union/types/animal"
 require_relative "seed_exhaustive_client/types/union/types/dog"
 require_relative "seed_exhaustive_client/types/union/types/cat"

@@ -2,8 +2,8 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator.js";
 
 export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
@@ -27,14 +27,12 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile>
         class_.addMethod({
             name: "GetIdempotencyHeaders",
             parameters: [],
-            return_: this.Types.Headers,
+            return_: this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.string),
             interfaceReference: this.Types.IdempotentRequestOptionsInterface,
             type: ast.MethodType.INSTANCE,
             body: this.csharp.codeblock((writer) => {
                 writer.write(
                     "return new ",
-                    this.Types.Headers,
-                    "(new ",
                     this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.string),
                     "()"
                 );
@@ -54,7 +52,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile>
                     );
                 }
                 writer.popScope();
-                writer.writeTextStatement(")");
+                writer.writeTextStatement(";");
             })
         });
         return new CSharpFile({

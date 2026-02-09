@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedNullable;
-using SeedNullable.Core;
+using SeedNullable.Test.Utils;
 
 namespace SeedNullable.Test.Unit.MockServer;
 
@@ -38,6 +38,6 @@ public class DeleteUserTest : BaseMockServerTest
         var response = await Client.Nullable.DeleteUserAsync(
             new DeleteUserRequest { Username = "xy" }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

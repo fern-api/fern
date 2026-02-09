@@ -6,12 +6,12 @@ import {
 import { assertDefined, assertNever, entries, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift } from "@fern-api/swift-codegen";
-import { pascalCase } from "../util/pascal-case";
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
-import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
-import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
-import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
+import { pascalCase } from "../util/pascal-case.js";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
+import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions.js";
+import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
+import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;

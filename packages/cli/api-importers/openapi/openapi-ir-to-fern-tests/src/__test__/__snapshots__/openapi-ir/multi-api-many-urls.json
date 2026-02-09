@@ -1,0 +1,283 @@
+{
+  "title": "API One",
+  "servers": [
+    {
+      "type": "grouped",
+      "name": "default",
+      "description": "default environment",
+      "urls": {
+        "one": {
+          "url": "https://one.example.com"
+        },
+        "two": {
+          "url": "https://two.example.com"
+        },
+        "three": {
+          "url": "https://three.example.com"
+        },
+        "four": {
+          "url": "https://four.example.com"
+        }
+      }
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getOne",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetOneRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetOneResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../api-one.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/one",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../api-one.yml",
+        "type": "openapi"
+      },
+      "__apiName": "one",
+      "servers": [
+        {
+          "name": "one"
+        }
+      ]
+    },
+    {
+      "audiences": [],
+      "operationId": "getTwo",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetTwoRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetTwoResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../api-two.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/two",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../api-two.yml",
+        "type": "openapi"
+      },
+      "__apiName": "two",
+      "servers": [
+        {
+          "name": "two"
+        }
+      ]
+    },
+    {
+      "audiences": [],
+      "operationId": "getThree",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetThreeRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetThreeResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../api-three.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/three",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../api-three.yml",
+        "type": "openapi"
+      },
+      "__apiName": "three",
+      "servers": [
+        {
+          "name": "three"
+        }
+      ]
+    },
+    {
+      "audiences": [],
+      "operationId": "getFour",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetFourRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetFourResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../api-four.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "authed": false,
+      "method": "GET",
+      "path": "/four",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../api-four.yml",
+        "type": "openapi"
+      },
+      "__apiName": "four",
+      "servers": [
+        {
+          "name": "four"
+        }
+      ]
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

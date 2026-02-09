@@ -6,8 +6,8 @@ export interface UserResponse {
     id: string;
     username: string;
     email: string | null;
-    phone?: string;
+    phone?: string | undefined;
     createdAt: string;
     updatedAt: string | null;
-    address?: SeedNullableOptional.Address;
+    address?: SeedNullableOptional.Address | undefined;
 }

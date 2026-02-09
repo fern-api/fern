@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 
-import { type BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
+import { type BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace.js";
 
 export function getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(
     generatorInvocation: generatorsYml.GeneratorInvocation

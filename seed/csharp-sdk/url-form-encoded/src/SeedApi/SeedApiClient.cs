@@ -9,7 +9,8 @@ public partial class SeedApiClient : ISeedApiClient
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -18,8 +19,7 @@ public partial class SeedApiClient : ISeedApiClient
                 { "User-Agent", "Fernurl-form-encoded/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -35,6 +35,12 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new FormRequest
@@ -43,6 +49,7 @@ public partial class SeedApiClient : ISeedApiClient
                     Method = HttpMethod.Post,
                     Path = "submit",
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/x-www-form-urlencoded",
                     Options = options,
                 },

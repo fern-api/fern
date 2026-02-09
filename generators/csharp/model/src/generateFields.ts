@@ -1,9 +1,10 @@
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+type TypeReference = FernIr.TypeReference;
+
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 interface TypeInfo {
     isOptional: boolean;
@@ -89,12 +90,18 @@ export function generateField(
         property,
         className,
         context,
-        jsonProperty = true
+        jsonProperty = true,
+        initializerOverride,
+        useRequiredOverride
     }: {
         property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
         className: string;
         context: ModelGeneratorContext;
         jsonProperty?: boolean;
+        /** Override the default initializer (e.g., for default values) */
+        initializerOverride?: ast.CodeBlock;
+        /** Override whether the field should be required */
+        useRequiredOverride?: boolean;
     }
 ): ast.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
@@ -155,6 +162,14 @@ export function generateField(
         };
         initializer = undefined;
         useRequired = false;
+    }
+
+    // Apply overrides if provided
+    if (initializerOverride !== undefined) {
+        initializer = initializerOverride;
+    }
+    if (useRequiredOverride !== undefined) {
+        useRequired = useRequiredOverride;
     }
 
     return cls.addField({
