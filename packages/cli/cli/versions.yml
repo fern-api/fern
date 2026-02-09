@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.1
+  changelogEntry:
+    - summary: |
+        Remove dependency on `qs` package in the login module, replacing it with native `URLSearchParams`.
+      type: chore
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.70.0
   changelogEntry:
     - summary: |

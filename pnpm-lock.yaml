@@ -14,7 +14,6 @@ overrides:
   nanoid: 3.3.8
   yaml: 2.3.3
   node-fetch@2.x>whatwg-url: ^14.0.0
-  qs: 6.14.1
   url-join: ^4.0.1
   '@fern-api/fdr-sdk': 0.145.4-0ea6e08bf
   es-toolkit: ^1.39.10
@@ -6790,9 +6789,6 @@ importers:
       open:
         specifier: ^8.4.0
         version: 8.4.2
-      qs:
-        specifier: 6.14.1
-        version: 6.14.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6806,9 +6802,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/qs':
-        specifier: 6.9.15
-        version: 6.9.15
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -14404,6 +14397,10 @@ packages:
     resolution: {integrity: sha512-tsSGN1x3h569ZSU1u6diwhltLyfUWDp3YbFHedapTmpBl0B3P6U3+Qptg7xu+v+1io1EwhdPyyRHYbEw0KN2FA==}
     engines: {node: '>=20'}
 
+  qs@6.11.2:
+    resolution: {integrity: sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==}
+    engines: {node: '>=0.6'}
+
   qs@6.14.1:
     resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
     engines: {node: '>=0.6'}
@@ -17196,7 +17193,7 @@ snapshots:
       form-data: 4.0.5
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -17206,7 +17203,7 @@ snapshots:
       form-data: 4.0.5
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -17235,7 +17232,7 @@ snapshots:
     dependencies:
       form-data: 4.0.5
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -17246,7 +17243,7 @@ snapshots:
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.11.2
       readable-stream: 4.7.0
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -17431,7 +17428,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -22356,6 +22353,10 @@ snapshots:
   qified@0.6.0:
     dependencies:
       hookified: 1.15.0
+
+  qs@6.11.2:
+    dependencies:
+      side-channel: 1.1.0
 
   qs@6.14.1:
     dependencies:

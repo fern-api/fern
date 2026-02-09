@@ -3,7 +3,6 @@ import { TaskContext } from "@fern-api/task-context";
 import axios from "axios";
 import boxen from "boxen";
 import open from "open";
-import qs from "qs";
 
 import type { Auth0TokenResponse } from "./doAuth0LoginFlow.js";
 
@@ -31,11 +30,11 @@ export async function doAuth0DeviceAuthorizationFlow({
         method: "POST",
         url: `https://${auth0Domain}/oauth/device/code`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
-        data: qs.stringify({
+        data: new URLSearchParams({
             client_id: auth0ClientId,
             audience,
             scope: "openid profile email offline_access"
-        }),
+        }).toString(),
         validateStatus: () => true
     });
 
@@ -96,11 +95,11 @@ async function pollForToken({
         method: "POST",
         url: `https://${auth0Domain}/oauth/token`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
-        data: qs.stringify({
+        data: new URLSearchParams({
             grant_type: "urn:ietf:params:oauth:grant-type:device_code",
             device_code: deviceCode,
             client_id: auth0ClientId
-        }),
+        }).toString(),
         validateStatus: () => true
     });
 
