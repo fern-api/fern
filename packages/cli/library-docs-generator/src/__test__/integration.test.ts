@@ -1,13 +1,13 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { readFileSync, existsSync, mkdtempSync, rmSync, readdirSync } from "fs";
-import { join } from "path";
-import { tmpdir } from "os";
 import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "fs";
+import { tmpdir } from "os";
+import { join } from "path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { generate } from "../PythonDocsGenerator";
 import type { NavNode } from "../writers/NavigationBuilder";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
-    readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8"),
+    readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
 );
 
 // ---------------------------------------------------------------------------
@@ -23,13 +23,11 @@ function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrA
         classes: [],
         functions: [],
         attributes: [],
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonModuleIr;
 }
 
-function makeFunction(
-    overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>,
-): FdrAPI.libraryDocs.PythonFunctionIr {
+function makeFunction(overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>): FdrAPI.libraryDocs.PythonFunctionIr {
     return {
         name: "func",
         path: "mod.func",
@@ -42,7 +40,7 @@ function makeFunction(
         isProperty: false,
         docstring: undefined,
         returnTypeInfo: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonFunctionIr;
 }
 
@@ -53,7 +51,7 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
         typeInfo: undefined,
         value: undefined,
         docstring: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.AttributeIr;
 }
 
@@ -98,19 +96,23 @@ function flattenNav(nodes: NavNode[]): NavNode[] {
  *       └── aime (leaf — 1 class with methods, has docstring)
  */
 function buildTestIr(): FdrAPI.libraryDocs.PythonLibraryDocsIr {
+    // biome-ignore lint/style/noNonNullAssertion: fixture lookup
     const distillation = NEMO_MODULES["leaf_with_mixed_content"]!;
+    // biome-ignore lint/style/noNonNullAssertion: fixture lookup
     const packageInfo = NEMO_MODULES["leaf_attributes_only"]!;
+    // biome-ignore lint/style/noNonNullAssertion: fixture lookup
     const aime = NEMO_MODULES["module_with_docstring"]!;
 
     const dataModule = makeModule({
         name: "data",
         path: "nemo_rl.data",
-        submodules: [aime],
+        submodules: [aime]
     });
 
     const rootModule = makeModule({
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         ...NEMO_MODULES["package_with_content"]!,
-        submodules: [distillation, packageInfo, dataModule],
+        submodules: [distillation, packageInfo, dataModule]
     });
 
     return { rootModule } as FdrAPI.libraryDocs.PythonLibraryDocsIr;
@@ -155,7 +157,7 @@ describe("generate() — full pipeline integration", () => {
             `${SLUG}/nemo_rl/distillation.mdx`,
             `${SLUG}/nemo_rl/package_info.mdx`,
             `${SLUG}/nemo_rl/data.mdx`,
-            `${SLUG}/nemo_rl/data/aime.mdx`,
+            `${SLUG}/nemo_rl/data/aime.mdx`
         ];
         for (const relPath of expectedFiles) {
             expect(existsSync(join(tmpDir, relPath))).toBe(true);
@@ -275,11 +277,12 @@ describe("generate() — full pipeline integration", () => {
         }
 
         // data section has nested aime section
+        // biome-ignore lint/style/noNonNullAssertion: length asserted above
         const dataSection = result.navigation[2]!;
         expect(dataSection.type).toBe("section");
         if (dataSection.type === "section") {
             expect(dataSection.children).toHaveLength(1);
-            expect(dataSection.children[0]!.title).toBe("aime");
+            expect(dataSection.children[0]?.title).toBe("aime");
         }
     });
 
@@ -335,8 +338,8 @@ describe("generate() — edge cases", () => {
             rootModule: makeModule({
                 name: "simple",
                 path: "simple",
-                functions: [makeFunction({ name: "hello", path: "simple.hello" })],
-            }),
+                functions: [makeFunction({ name: "hello", path: "simple.hello" })]
+            })
         } as FdrAPI.libraryDocs.PythonLibraryDocsIr;
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Simple" });
@@ -352,7 +355,7 @@ describe("generate() — edge cases", () => {
 
     it("generates no pages for empty root module", () => {
         const ir: FdrAPI.libraryDocs.PythonLibraryDocsIr = {
-            rootModule: makeModule({ name: "empty", path: "empty" }),
+            rootModule: makeModule({ name: "empty", path: "empty" })
         } as FdrAPI.libraryDocs.PythonLibraryDocsIr;
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Empty" });
@@ -365,7 +368,7 @@ describe("generate() — edge cases", () => {
         const leaf = makeModule({
             name: "deep",
             path: "a.b.c.deep",
-            attributes: [makeAttr({ name: "X", path: "a.b.c.deep.X" })],
+            attributes: [makeAttr({ name: "X", path: "a.b.c.deep.X" })]
         });
         const c = makeModule({ name: "c", path: "a.b.c", submodules: [leaf] });
         const b = makeModule({ name: "b", path: "a.b", submodules: [c] });

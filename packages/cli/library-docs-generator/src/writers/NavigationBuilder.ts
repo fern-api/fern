@@ -56,10 +56,7 @@ export interface NavSectionNode {
  * @param baseSlug - Base slug prefix (e.g., "reference/python")
  * @returns Navigation items for the root module's children
  */
-export function buildNavigation(
-    rootModule: FdrAPI.libraryDocs.PythonModuleIr,
-    baseSlug: string,
-): NavNode[] {
+export function buildNavigation(rootModule: FdrAPI.libraryDocs.PythonModuleIr, baseSlug: string): NavNode[] {
     return generateModuleNav(rootModule, "", baseSlug);
 }
 
@@ -70,11 +67,7 @@ export function buildNavigation(
 /**
  * Recursively generate navigation for a module and its children.
  */
-function generateModuleNav(
-    module: FdrAPI.libraryDocs.PythonModuleIr,
-    parentPath: string,
-    baseSlug: string,
-): NavNode[] {
+function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath: string, baseSlug: string): NavNode[] {
     const items: NavNode[] = [];
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
     const slug = `${baseSlug}/${modulePath}`;
@@ -107,7 +100,7 @@ function generateModuleNav(
             type: "section",
             title: submodule.name,
             slug: `${baseSlug}/${submodulePath}`,
-            children: subItems,
+            children: subItems
         });
     }
 

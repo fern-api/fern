@@ -1,11 +1,11 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
+    createFrontmatter,
     escapeMdx,
     escapeMdxPreservingCodeBlocks,
-    generateAnchorId,
-    formatTypeAnnotation,
-    createFrontmatter,
     escapeTableCell,
+    formatTypeAnnotation,
+    generateAnchorId
 } from "../utils/mdx";
 
 describe("escapeMdx", () => {
@@ -37,7 +37,7 @@ describe("escapeMdx", () => {
         { input: "List[int]", expected: "List[int]" },
         { input: "Dict[str, Any]", expected: "Dict[str, Any]" },
         { input: "Optional<string>", expected: "Optional&lt;string&gt;" },
-        { input: "std::vector<int>", expected: "std::vector&lt;int&gt;" },
+        { input: "std::vector<int>", expected: "std::vector&lt;int&gt;" }
     ])("escapes type annotation: $input", ({ input, expected }) => {
         expect(escapeMdx(input)).toBe(expected);
     });
@@ -118,7 +118,7 @@ describe("generateAnchorId", () => {
         { input: "requests.models.Response", expected: "requests-models-Response" },
         { input: "mypackage", expected: "mypackage" },
         { input: "a.b.c.d", expected: "a-b-c-d" },
-        { input: "", expected: "" },
+        { input: "", expected: "" }
     ])("converts $input to $expected", ({ input, expected }) => {
         expect(generateAnchorId(input)).toBe(expected);
     });

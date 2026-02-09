@@ -1,12 +1,12 @@
-import { describe, it, expect } from "vitest";
+import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { readFileSync } from "fs";
 import { join } from "path";
-import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { describe, expect, it } from "vitest";
 import { renderClassDetailed } from "../renderers/ClassRenderer";
 import type { RenderContext } from "../utils/TypeLinkResolver";
 
 const NEMO_CLASSES: Record<string, FdrAPI.libraryDocs.PythonClassIr> = JSON.parse(
-    readFileSync(join(__dirname, "fixtures", "nemo-classes.json"), "utf-8"),
+    readFileSync(join(__dirname, "fixtures", "nemo-classes.json"), "utf-8")
 );
 
 // ---------------------------------------------------------------------------
@@ -40,21 +40,19 @@ function makeClass(overrides: Partial<FdrAPI.libraryDocs.PythonClassIr>): FdrAPI
         hasSlots: false,
         typedDictFields: undefined,
         enumMembers: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonClassIr;
 }
 
 /** Build a minimal parameter IR. */
-function makeParam(
-    overrides: Partial<FdrAPI.libraryDocs.PythonParameterIr>,
-): FdrAPI.libraryDocs.PythonParameterIr {
+function makeParam(overrides: Partial<FdrAPI.libraryDocs.PythonParameterIr>): FdrAPI.libraryDocs.PythonParameterIr {
     return {
         name: "x",
         kind: "POSITIONAL" as FdrAPI.libraryDocs.PythonParameterKind,
         typeInfo: undefined,
         default: undefined,
         description: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonParameterIr;
 }
 
@@ -72,7 +70,7 @@ function makeMethod(overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>): Fd
         isProperty: false,
         docstring: undefined,
         returnTypeInfo: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonFunctionIr;
 }
 
@@ -84,7 +82,7 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
         typeInfo: undefined,
         value: undefined,
         docstring: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.AttributeIr;
 }
 
@@ -117,14 +115,14 @@ describe("renderClassDetailed (regular class)", () => {
             constructorParams: [
                 makeParam({
                     name: "x",
-                    typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
+                    typeInfo: { display: "int", resolvedPath: "int", basePath: undefined }
                 }),
                 makeParam({
                     name: "y",
                     typeInfo: { display: "str", resolvedPath: "str", basePath: undefined },
-                    default: "hello",
-                }),
-            ],
+                    default: "hello"
+                })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain("x: int,");
@@ -136,9 +134,9 @@ describe("renderClassDetailed (regular class)", () => {
             constructorParams: [
                 makeParam({
                     name: "sep",
-                    default: undefined,
-                }),
-            ],
+                    default: undefined
+                })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         // No default value should appear
@@ -192,10 +190,10 @@ describe("renderClassDetailed (regular class)", () => {
                     typeInfo: {
                         display: "BaseModel",
                         resolvedPath: "pkg.BaseModel",
-                        basePath: "pkg.BaseModel",
-                    },
-                },
-            ],
+                        basePath: "pkg.BaseModel"
+                    }
+                }
+            ]
         });
         const ctx = ctxWithPaths(["pkg.BaseModel"]);
         const result = renderClassDetailed(cls, ctx);
@@ -205,7 +203,7 @@ describe("renderClassDetailed (regular class)", () => {
 
     it("renders base classes as code when no type info", () => {
         const cls = makeClass({
-            bases: [{ name: "SomeBase", typeInfo: undefined }],
+            bases: [{ name: "SomeBase", typeInfo: undefined }]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain("**Bases:** `SomeBase`");
@@ -215,8 +213,8 @@ describe("renderClassDetailed (regular class)", () => {
         const cls = makeClass({
             bases: [
                 { name: "object", typeInfo: undefined },
-                { name: "ABC", typeInfo: undefined },
-            ],
+                { name: "ABC", typeInfo: undefined }
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).not.toContain("**Bases:**");
@@ -239,8 +237,8 @@ describe("renderClassDetailed (regular class)", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain("A test class with features.");
@@ -251,8 +249,8 @@ describe("renderClassDetailed (regular class)", () => {
             constructorParams: [
                 makeParam({
                     name: "x",
-                    typeInfo: { display: "float", resolvedPath: "float", basePath: undefined },
-                }),
+                    typeInfo: { display: "float", resolvedPath: "float", basePath: undefined }
+                })
             ],
             docstring: {
                 summary: undefined,
@@ -262,8 +260,8 @@ describe("renderClassDetailed (regular class)", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('type="float"');
@@ -276,9 +274,9 @@ describe("renderClassDetailed (regular class)", () => {
             attributes: [
                 makeAttr({
                     name: "count",
-                    typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
-                }),
-            ],
+                    typeInfo: { display: "int", resolvedPath: "int", basePath: undefined }
+                })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('<ParamField path="count"');
@@ -291,9 +289,9 @@ describe("renderClassDetailed (regular class)", () => {
                 makeAttr({
                     name: "timeout",
                     typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
-                    value: "30",
-                }),
-            ],
+                    value: "30"
+                })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('type="int = 30"');
@@ -301,7 +299,7 @@ describe("renderClassDetailed (regular class)", () => {
 
     it("skips redundant attributes (value === name)", () => {
         const cls = makeClass({
-            attributes: [makeAttr({ name: "FOO", value: "FOO" })],
+            attributes: [makeAttr({ name: "FOO", value: "FOO" })]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).not.toContain('<ParamField path="FOO"');
@@ -312,9 +310,9 @@ describe("renderClassDetailed (regular class)", () => {
             attributes: [
                 makeAttr({
                     name: "data",
-                    typeInfo: { display: "Any", resolvedPath: "typing.Any", basePath: undefined },
-                }),
-            ],
+                    typeInfo: { display: "Any", resolvedPath: "typing.Any", basePath: undefined }
+                })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).not.toContain('<ParamField path="data"');
@@ -334,10 +332,10 @@ describe("renderClassDetailed (regular class)", () => {
                         examples: [],
                         notes: [],
                         warnings: [],
-                        returns: undefined,
-                    },
-                }),
-            ],
+                        returns: undefined
+                    }
+                })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('<ParamField path="data"');
@@ -350,8 +348,8 @@ describe("renderClassDetailed (regular class)", () => {
         const cls = makeClass({
             methods: [
                 makeMethod({ name: "__init__", path: "pkg.MyClass.__init__" }),
-                makeMethod({ name: "run", path: "pkg.MyClass.run" }),
-            ],
+                makeMethod({ name: "run", path: "pkg.MyClass.run" })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-MyClass-run">');
@@ -365,9 +363,9 @@ describe("renderClassDetailed (regular class)", () => {
                     name: "value",
                     path: "pkg.MyClass.value",
                     isProperty: true,
-                    returnTypeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
-                }),
-            ],
+                    returnTypeInfo: { display: "int", resolvedPath: "int", basePath: undefined }
+                })
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         // renderProperty renders name: Type without "def"
@@ -386,10 +384,10 @@ describe("renderClassDetailed (regular class)", () => {
                     typeInfo: {
                         display: "Config",
                         resolvedPath: "pkg.sub.Config",
-                        basePath: "pkg.sub.Config",
-                    },
-                }),
-            ],
+                        basePath: "pkg.sub.Config"
+                    }
+                })
+            ]
         });
         const ctx = ctxWithPaths(["pkg.sub.Config"]);
         const result = renderClassDetailed(cls, ctx);
@@ -411,15 +409,15 @@ describe("renderClassDetailed (regular class)", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
+                returns: undefined
             },
             attributes: [
                 makeAttr({
                     name: "count",
-                    typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
-                }),
+                    typeInfo: { display: "int", resolvedPath: "int", basePath: undefined }
+                })
             ],
-            methods: [makeMethod({ name: "run", path: "pkg.MyClass.run" })],
+            methods: [makeMethod({ name: "run", path: "pkg.MyClass.run" })]
         });
         const result = renderClassDetailed(cls, emptyCtx());
 
@@ -452,7 +450,7 @@ describe("renderClassDetailed (TypedDict)", () => {
     it("renders anchor and signature", () => {
         const cls = makeClass({
             kind: "TYPEDDICT" as FdrAPI.libraryDocs.PythonClassKind,
-            path: "pkg.MyConfig",
+            path: "pkg.MyConfig"
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-MyConfig">');
@@ -476,8 +474,8 @@ describe("renderClassDetailed (TypedDict)", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderClassDetailed(cls, emptyCtx());
         // TypedDict uses renderSimpleDocstring — only description, no params section
@@ -493,15 +491,15 @@ describe("renderClassDetailed (TypedDict)", () => {
                     name: "batch_size",
                     typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
                     description: "Number of items per batch.",
-                    required: true,
+                    required: true
                 },
                 {
                     name: "shuffle",
                     typeInfo: { display: "bool", resolvedPath: "bool", basePath: undefined },
                     description: undefined,
-                    required: false,
-                },
-            ],
+                    required: false
+                }
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('<ParamField path="batch_size" type="int">');
@@ -517,9 +515,9 @@ describe("renderClassDetailed (TypedDict)", () => {
                     name: "x",
                     typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
                     description: undefined,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('<ParamField path="x" type="int">');
@@ -534,9 +532,9 @@ describe("renderClassDetailed (TypedDict)", () => {
                     name: "data",
                     typeInfo: undefined,
                     description: undefined,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('type="Any"');
@@ -545,7 +543,7 @@ describe("renderClassDetailed (TypedDict)", () => {
     it("renders no fields when typedDictFields is undefined", () => {
         const cls = makeClass({
             kind: "TYPEDDICT" as FdrAPI.libraryDocs.PythonClassKind,
-            typedDictFields: undefined,
+            typedDictFields: undefined
         });
         const result = renderClassDetailed(cls, emptyCtx());
         // Should have Bases but no ParamField
@@ -556,7 +554,7 @@ describe("renderClassDetailed (TypedDict)", () => {
     it("does not render bases from bases array (TypedDict/Enum skip bases rendering)", () => {
         const cls = makeClass({
             kind: "TYPEDDICT" as FdrAPI.libraryDocs.PythonClassKind,
-            bases: [{ name: "SomeMixin", typeInfo: undefined }],
+            bases: [{ name: "SomeMixin", typeInfo: undefined }]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         // TypedDict always shows typing.TypedDict as base, not the bases array
@@ -573,7 +571,7 @@ describe("renderClassDetailed (Enum)", () => {
     it("renders anchor and signature", () => {
         const cls = makeClass({
             kind: "ENUM" as FdrAPI.libraryDocs.PythonClassKind,
-            path: "pkg.Color",
+            path: "pkg.Color"
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-Color">');
@@ -597,8 +595,8 @@ describe("renderClassDetailed (Enum)", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain("Available colors for the theme.");
@@ -609,8 +607,8 @@ describe("renderClassDetailed (Enum)", () => {
             kind: "ENUM" as FdrAPI.libraryDocs.PythonClassKind,
             enumMembers: [
                 { name: "RED", value: "'red'" },
-                { name: "GREEN", value: "'green'" },
-            ],
+                { name: "GREEN", value: "'green'" }
+            ]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         // escapeMdx only escapes < > { } and ```, single quotes pass through
@@ -621,7 +619,7 @@ describe("renderClassDetailed (Enum)", () => {
     it("renders no members when enumMembers is undefined", () => {
         const cls = makeClass({
             kind: "ENUM" as FdrAPI.libraryDocs.PythonClassKind,
-            enumMembers: undefined,
+            enumMembers: undefined
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain("**Bases:**");
@@ -631,7 +629,7 @@ describe("renderClassDetailed (Enum)", () => {
     it("escapes MDX characters in enum values", () => {
         const cls = makeClass({
             kind: "ENUM" as FdrAPI.libraryDocs.PythonClassKind,
-            enumMembers: [{ name: "OPTION", value: "<default>" }],
+            enumMembers: [{ name: "OPTION", value: "<default>" }]
         });
         const result = renderClassDetailed(cls, emptyCtx());
         expect(result).toContain("&lt;default&gt;");
@@ -690,6 +688,7 @@ describe("renderClassDetailed (dispatch)", () => {
 
 describe("renderClassDetailed (NeMo fixtures)", () => {
     it("PackedTensor: regular CLASS with constructor params and methods", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const cls = NEMO_CLASSES["PackedTensor"]!;
         const ctx = ctxWithPaths(["nemo_rl.data.multimodal_utils.PackedTensor"]);
         const result = renderClassDetailed(cls, ctx);
@@ -709,6 +708,7 @@ describe("renderClassDetailed (NeMo fixtures)", () => {
 
         // No class-level badges (badges may appear inside methods like concat's classmethod badge)
         // Check that no badge appears before the first method anchor
+        // biome-ignore lint/style/noNonNullAssertion: split always has index 0
         const classContent = result.split('id="nemo_rl-data-multimodal_utils-PackedTensor-as_tensor"')[0]!;
         expect(classContent).not.toContain("<Badge>");
 
@@ -718,6 +718,7 @@ describe("renderClassDetailed (NeMo fixtures)", () => {
     });
 
     it("LossType: ENUM with members", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const cls = NEMO_CLASSES["LossType"]!;
         const result = renderClassDetailed(cls, emptyCtx());
 
@@ -733,6 +734,7 @@ describe("renderClassDetailed (NeMo fixtures)", () => {
     });
 
     it("DistillationConfig: TYPEDDICT with fields", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const cls = NEMO_CLASSES["DistillationConfig"]!;
         const result = renderClassDetailed(cls, emptyCtx());
 
@@ -747,6 +749,7 @@ describe("renderClassDetailed (NeMo fixtures)", () => {
     });
 
     it("LossFunction: PROTOCOL with method", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const cls = NEMO_CLASSES["LossFunction"]!;
         const result = renderClassDetailed(cls, emptyCtx());
 
@@ -761,6 +764,7 @@ describe("renderClassDetailed (NeMo fixtures)", () => {
     });
 
     it("OverridesError: EXCEPTION with base class", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const cls = NEMO_CLASSES["OverridesError"]!;
         const result = renderClassDetailed(cls, emptyCtx());
 
@@ -776,6 +780,7 @@ describe("renderClassDetailed (NeMo fixtures)", () => {
     });
 
     it("FLOPSConfig: DATACLASS with attributes", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const cls = NEMO_CLASSES["FLOPSConfig"]!;
         const result = renderClassDetailed(cls, emptyCtx());
 
@@ -790,6 +795,7 @@ describe("renderClassDetailed (NeMo fixtures)", () => {
     });
 
     it("AbstractClass (SequencePacker): abstract class with methods", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const cls = NEMO_CLASSES["AbstractClass"]!;
         const result = renderClassDetailed(cls, emptyCtx());
 

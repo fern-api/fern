@@ -1,13 +1,13 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { readFileSync, existsSync, mkdtempSync, rmSync } from "fs";
-import { join } from "path";
-import { tmpdir } from "os";
 import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "fs";
+import { tmpdir } from "os";
+import { join } from "path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { MdxFileWriter } from "../writers/MdxFileWriter";
 import { buildNavigation, type NavNode } from "../writers/NavigationBuilder";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
-    readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8"),
+    readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
 );
 
 // ---------------------------------------------------------------------------
@@ -23,7 +23,7 @@ function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrA
         classes: [],
         functions: [],
         attributes: [],
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonModuleIr;
 }
 
@@ -43,13 +43,11 @@ function makeClass(overrides: Partial<FdrAPI.libraryDocs.PythonClassIr>): FdrAPI
         hasSlots: false,
         typedDictFields: undefined,
         enumMembers: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonClassIr;
 }
 
-function makeFunction(
-    overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>,
-): FdrAPI.libraryDocs.PythonFunctionIr {
+function makeFunction(overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>): FdrAPI.libraryDocs.PythonFunctionIr {
     return {
         name: "my_func",
         path: "pkg.mymod.my_func",
@@ -62,7 +60,7 @@ function makeFunction(
         isProperty: false,
         docstring: undefined,
         returnTypeInfo: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonFunctionIr;
 }
 
@@ -73,7 +71,7 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
         typeInfo: undefined,
         value: undefined,
         docstring: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.AttributeIr;
 }
 
@@ -185,14 +183,14 @@ describe("buildNavigation", () => {
                 makeModule({
                     name: "utils",
                     path: "pkg.utils",
-                    functions: [makeFunction({ name: "f", path: "pkg.utils.f" })],
-                }),
-            ],
+                    functions: [makeFunction({ name: "f", path: "pkg.utils.f" })]
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
         // Every submodule gets wrapped in a section by the parent
         expect(nav).toHaveLength(1);
-        expect(nav[0]!.type).toBe("section");
+        expect(nav[0]?.type).toBe("section");
         const section = nav[0] as { type: "section"; title: string; slug: string; children: NavNode[] };
         expect(section.title).toBe("utils");
         expect(section.slug).toBe("ref/pkg/utils");
@@ -201,7 +199,7 @@ describe("buildNavigation", () => {
             type: "page",
             title: "utils",
             slug: "ref/pkg/utils",
-            pageId: "ref/pkg/utils.mdx",
+            pageId: "ref/pkg/utils.mdx"
         });
     });
 
@@ -217,23 +215,23 @@ describe("buildNavigation", () => {
                         makeModule({
                             name: "leaf",
                             path: "pkg.sub.leaf",
-                            classes: [makeClass({ name: "C", path: "pkg.sub.leaf.C" })],
-                        }),
-                    ],
-                }),
-            ],
+                            classes: [makeClass({ name: "C", path: "pkg.sub.leaf.C" })]
+                        })
+                    ]
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
         expect(nav).toHaveLength(1);
         // sub is a section wrapping leaf's section
-        expect(nav[0]!.type).toBe("section");
+        expect(nav[0]?.type).toBe("section");
         const sub = nav[0] as { type: "section"; children: NavNode[] };
         expect(sub.children).toHaveLength(1);
         // leaf is also wrapped in a section by sub
-        expect(sub.children[0]!.type).toBe("section");
+        expect(sub.children[0]?.type).toBe("section");
         const leafSection = sub.children[0] as { type: "section"; children: NavNode[] };
         expect(leafSection.children).toHaveLength(1);
-        expect(leafSection.children[0]!.type).toBe("page");
+        expect(leafSection.children[0]?.type).toBe("page");
     });
 
     it("skips submodule with no content and no children", () => {
@@ -245,14 +243,14 @@ describe("buildNavigation", () => {
                 makeModule({
                     name: "filled",
                     path: "pkg.filled",
-                    attributes: [makeAttr({ name: "X", path: "pkg.filled.X" })],
-                }),
-            ],
+                    attributes: [makeAttr({ name: "X", path: "pkg.filled.X" })]
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
         // Only "filled" appears (wrapped in section); "empty" is skipped
         expect(nav).toHaveLength(1);
-        expect(nav[0]!.type).toBe("section");
+        expect(nav[0]?.type).toBe("section");
         expect((nav[0] as { title: string }).title).toBe("filled");
     });
 
@@ -265,9 +263,9 @@ describe("buildNavigation", () => {
                 makeModule({
                     name: "sub",
                     path: "pkg.sub",
-                    classes: [makeClass({ name: "C", path: "pkg.sub.C" })],
-                }),
-            ],
+                    classes: [makeClass({ name: "C", path: "pkg.sub.C" })]
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
         // Root has content + submodules but should NOT appear as a page/section itself
@@ -283,13 +281,13 @@ describe("buildNavigation", () => {
                 makeModule({
                     name: "core",
                     path: "mylib.core",
-                    functions: [makeFunction({ name: "init", path: "mylib.core.init" })],
-                }),
-            ],
+                    functions: [makeFunction({ name: "init", path: "mylib.core.init" })]
+                })
+            ]
         });
         const nav = buildNavigation(root, "reference/python");
         // "core" gets wrapped in a section
-        expect(nav[0]!.type).toBe("section");
+        expect(nav[0]?.type).toBe("section");
         const section = nav[0] as { type: "section"; slug: string; children: NavNode[] };
         expect(section.slug).toBe("reference/python/mylib/core");
         // Inner page has same slug + pageId
@@ -297,7 +295,7 @@ describe("buildNavigation", () => {
             type: "page",
             title: "core",
             slug: "reference/python/mylib/core",
-            pageId: "reference/python/mylib/core.mdx",
+            pageId: "reference/python/mylib/core.mdx"
         });
     });
 
@@ -317,29 +315,32 @@ describe("buildNavigation", () => {
                                 makeModule({
                                     name: "d",
                                     path: "a.b.c.d",
-                                    classes: [makeClass({ name: "X", path: "a.b.c.d.X" })],
-                                }),
-                            ],
-                        }),
-                    ],
-                }),
-            ],
+                                    classes: [makeClass({ name: "X", path: "a.b.c.d.X" })]
+                                })
+                            ]
+                        })
+                    ]
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
 
         // a -> section(b) -> section(c) -> section(d) -> page(d)
         expect(nav).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: length asserted above
         const b = nav[0]! as { type: "section"; children: NavNode[] };
         expect(b.type).toBe("section");
         expect(b.children).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: length asserted above
         const c = b.children[0]! as { type: "section"; children: NavNode[] };
         expect(c.type).toBe("section");
         expect(c.children).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: length asserted above
         const d = c.children[0]! as { type: "section"; title: string; children: NavNode[] };
         expect(d.type).toBe("section");
         expect(d.title).toBe("d");
         expect(d.children).toHaveLength(1);
-        expect(d.children[0]!.type).toBe("page");
+        expect(d.children[0]?.type).toBe("page");
     });
 
     it("module with docstring counts as having content", () => {
@@ -358,18 +359,18 @@ describe("buildNavigation", () => {
                         examples: [],
                         notes: [],
                         warnings: [],
-                        returns: undefined,
-                    },
-                }),
-            ],
+                        returns: undefined
+                    }
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
         expect(nav).toHaveLength(1);
         // Wrapped in section, but inner page exists (docstring = content)
-        expect(nav[0]!.type).toBe("section");
+        expect(nav[0]?.type).toBe("section");
         const section = nav[0] as { type: "section"; children: NavNode[] };
         expect(section.children).toHaveLength(1);
-        expect(section.children[0]!.type).toBe("page");
+        expect(section.children[0]?.type).toBe("page");
     });
 
     it("leaf module with content but also submodules becomes section (not page)", () => {
@@ -385,16 +386,16 @@ describe("buildNavigation", () => {
                         makeModule({
                             name: "child",
                             path: "pkg.hybrid.child",
-                            functions: [makeFunction({ name: "f", path: "pkg.hybrid.child.f" })],
-                        }),
-                    ],
-                }),
-            ],
+                            functions: [makeFunction({ name: "f", path: "pkg.hybrid.child.f" })]
+                        })
+                    ]
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
         // hybrid has content but also submodules -> section with overview, not page
         expect(nav).toHaveLength(1);
-        expect(nav[0]!.type).toBe("section");
+        expect(nav[0]?.type).toBe("section");
     });
 
     it("multiple sibling submodules create multiple nav items", () => {
@@ -405,14 +406,14 @@ describe("buildNavigation", () => {
                 makeModule({
                     name: "alpha",
                     path: "pkg.alpha",
-                    functions: [makeFunction({ name: "f", path: "pkg.alpha.f" })],
+                    functions: [makeFunction({ name: "f", path: "pkg.alpha.f" })]
                 }),
                 makeModule({
                     name: "beta",
                     path: "pkg.beta",
-                    classes: [makeClass({ name: "C", path: "pkg.beta.C" })],
-                }),
-            ],
+                    classes: [makeClass({ name: "C", path: "pkg.beta.C" })]
+                })
+            ]
         });
         const nav = buildNavigation(root, "ref");
         expect(nav).toHaveLength(2);
@@ -428,6 +429,7 @@ describe("buildNavigation (NeMo fixtures)", () => {
     it("package_with_content: stub submodules with empty descendants produce no nav", () => {
         // The fixture has 4 submodules, each with 1 empty stub grandchild
         // Since all grandchildren have no content, no nav items are generated
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const root = NEMO_MODULES["package_with_content"]!;
         const nav = buildNavigation(root, "reference/python");
 
@@ -440,6 +442,7 @@ describe("buildNavigation (NeMo fixtures)", () => {
 
     it("package_submodules_only: builds sections for submodules with leaf content", () => {
         // evals has 2 leaf submodules with no content -> should produce empty nav
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const root = NEMO_MODULES["package_submodules_only"]!;
         const nav = buildNavigation(root, "reference/python");
         // Both submodules are empty stubs, so no nav items
@@ -448,6 +451,7 @@ describe("buildNavigation (NeMo fixtures)", () => {
 
     it("leaf_with_mixed_content: as root, creates no nav (root is section overview)", () => {
         // When used as root, a leaf module's content goes in the section overview
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["leaf_with_mixed_content"]!;
         const nav = buildNavigation(mod, "reference/python");
         // Leaf with no submodules -> root content goes in overview, no child nav items

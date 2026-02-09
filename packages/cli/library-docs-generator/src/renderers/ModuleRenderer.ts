@@ -22,7 +22,7 @@ import {
     extractLinksFromTypes,
     getTypeDisplay,
     type RenderContext,
-    renderCodeBlockWithLinks,
+    renderCodeBlockWithLinks
 } from "../utils/TypeLinkResolver.js";
 import { renderClassDetailed } from "./ClassRenderer.js";
 import { renderSimpleDocstring } from "./DocstringRenderer.js";
@@ -39,7 +39,7 @@ import { renderFunctionDetailed } from "./FunctionRenderer.js";
 function renderSubmodulesSection(
     submodules: FdrAPI.libraryDocs.PythonModuleIr[],
     baseSlug: string,
-    modulePath: string,
+    modulePath: string
 ): string {
     const lines: string[] = [];
 
@@ -117,7 +117,7 @@ function renderAttributeDetailed(attr: FdrAPI.libraryDocs.AttributeIr, ctx: Rend
 export function renderModulePage(
     module: FdrAPI.libraryDocs.PythonModuleIr,
     ctx: RenderContext,
-    parentPath: string = "",
+    parentPath: string = ""
 ): string {
     const lines: string[] = [];
 
@@ -206,7 +206,7 @@ export function renderModulePage(
  */
 export function renderAllModulePages(
     rootModule: FdrAPI.libraryDocs.PythonModuleIr,
-    ctx: RenderContext,
+    ctx: RenderContext
 ): Record<string, string> {
     const pages: Record<string, string> = {};
 

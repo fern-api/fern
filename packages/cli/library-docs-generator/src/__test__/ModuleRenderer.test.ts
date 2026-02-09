@@ -1,12 +1,12 @@
-import { describe, it, expect } from "vitest";
+import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { readFileSync } from "fs";
 import { join } from "path";
-import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { renderModulePage, renderAllModulePages } from "../renderers/ModuleRenderer";
+import { describe, expect, it } from "vitest";
+import { renderAllModulePages, renderModulePage } from "../renderers/ModuleRenderer";
 import type { RenderContext } from "../utils/TypeLinkResolver";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
-    readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8"),
+    readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
 );
 
 // ---------------------------------------------------------------------------
@@ -30,13 +30,11 @@ function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrA
         classes: [],
         functions: [],
         attributes: [],
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonModuleIr;
 }
 
-function makeFunction(
-    overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>,
-): FdrAPI.libraryDocs.PythonFunctionIr {
+function makeFunction(overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>): FdrAPI.libraryDocs.PythonFunctionIr {
     return {
         name: "my_func",
         path: "pkg.mymod.my_func",
@@ -49,7 +47,7 @@ function makeFunction(
         isProperty: false,
         docstring: undefined,
         returnTypeInfo: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonFunctionIr;
 }
 
@@ -69,7 +67,7 @@ function makeClass(overrides: Partial<FdrAPI.libraryDocs.PythonClassIr>): FdrAPI
         hasSlots: false,
         typedDictFields: undefined,
         enumMembers: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonClassIr;
 }
 
@@ -80,7 +78,7 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
         typeInfo: undefined,
         value: undefined,
         docstring: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.AttributeIr;
 }
 
@@ -130,8 +128,8 @@ describe("renderModulePage (docstring)", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("This module provides utilities for data processing.");
@@ -153,9 +151,7 @@ describe("renderModulePage (docstring)", () => {
 describe("renderModulePage (submodules)", () => {
     it("renders Submodules heading for leaf submodules", () => {
         const mod = makeModule({
-            submodules: [
-                makeModule({ name: "child", path: "pkg.mymod.child", submodules: [] }),
-            ],
+            submodules: [makeModule({ name: "child", path: "pkg.mymod.child", submodules: [] })]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("## Submodules");
@@ -168,9 +164,9 @@ describe("renderModulePage (submodules)", () => {
                 makeModule({
                     name: "child",
                     path: "pkg.mymod.child",
-                    submodules: [makeModule({ name: "grandchild", path: "pkg.mymod.child.grandchild" })],
-                }),
-            ],
+                    submodules: [makeModule({ name: "grandchild", path: "pkg.mymod.child.grandchild" })]
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("## Subpackages");
@@ -183,10 +179,10 @@ describe("renderModulePage (submodules)", () => {
                 makeModule({
                     name: "pkg_child",
                     path: "pkg.mymod.pkg_child",
-                    submodules: [makeModule({ name: "deep", path: "pkg.mymod.pkg_child.deep" })],
+                    submodules: [makeModule({ name: "deep", path: "pkg.mymod.pkg_child.deep" })]
                 }),
-                makeModule({ name: "leaf_child", path: "pkg.mymod.leaf_child", submodules: [] }),
-            ],
+                makeModule({ name: "leaf_child", path: "pkg.mymod.leaf_child", submodules: [] })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("## Subpackages");
@@ -195,9 +191,7 @@ describe("renderModulePage (submodules)", () => {
 
     it("renders submodule links with full path and correct URL", () => {
         const mod = makeModule({
-            submodules: [
-                makeModule({ name: "child", path: "pkg.mymod.child", submodules: [] }),
-            ],
+            submodules: [makeModule({ name: "child", path: "pkg.mymod.child", submodules: [] })]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("`pkg.mymod.child`");
@@ -219,7 +213,7 @@ describe("renderModulePage (submodules)", () => {
 describe("renderModulePage (contents header)", () => {
     it("renders 'Module Contents' for leaf modules", () => {
         const mod = makeModule({
-            classes: [makeClass({})],
+            classes: [makeClass({})]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("## Module Contents");
@@ -228,7 +222,7 @@ describe("renderModulePage (contents header)", () => {
     it("renders 'Package Contents' when module has submodules", () => {
         const mod = makeModule({
             submodules: [makeModule({ name: "child", path: "pkg.mymod.child" })],
-            classes: [makeClass({})],
+            classes: [makeClass({})]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("## Package Contents");
@@ -262,10 +256,10 @@ describe("renderModulePage (classes summary)", () => {
                         examples: [],
                         notes: [],
                         warnings: [],
-                        returns: undefined,
-                    },
-                }),
-            ],
+                        returns: undefined
+                    }
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("### Classes");
@@ -276,7 +270,7 @@ describe("renderModulePage (classes summary)", () => {
 
     it("renders dash for class with no summary", () => {
         const mod = makeModule({
-            classes: [makeClass({ name: "Bar", path: "pkg.mymod.Bar", docstring: undefined })],
+            classes: [makeClass({ name: "Bar", path: "pkg.mymod.Bar", docstring: undefined })]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("[`Bar`](#pkg-mymod-Bar) | - |");
@@ -296,10 +290,10 @@ describe("renderModulePage (classes summary)", () => {
                         examples: [],
                         notes: [],
                         warnings: [],
-                        returns: undefined,
-                    },
-                }),
-            ],
+                        returns: undefined
+                    }
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("A \\| B union.");
@@ -331,10 +325,10 @@ describe("renderModulePage (functions summary)", () => {
                         examples: [],
                         notes: [],
                         warnings: [],
-                        returns: undefined,
-                    },
-                }),
-            ],
+                        returns: undefined
+                    }
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("### Functions");
@@ -344,7 +338,7 @@ describe("renderModulePage (functions summary)", () => {
 
     it("renders dash for function with no summary", () => {
         const mod = makeModule({
-            functions: [makeFunction({ name: "helper", path: "pkg.mymod.helper", docstring: undefined })],
+            functions: [makeFunction({ name: "helper", path: "pkg.mymod.helper", docstring: undefined })]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("[`helper`](#pkg-mymod-helper) | - |");
@@ -364,7 +358,7 @@ describe("renderModulePage (functions summary)", () => {
 describe("renderModulePage (data summary)", () => {
     it("renders data section with anchor links", () => {
         const mod = makeModule({
-            attributes: [makeAttr({ name: "VERSION", path: "pkg.mymod.VERSION" })],
+            attributes: [makeAttr({ name: "VERSION", path: "pkg.mymod.VERSION" })]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("### Data");
@@ -385,7 +379,7 @@ describe("renderModulePage (data summary)", () => {
 describe("renderModulePage (API detail)", () => {
     it("renders API heading", () => {
         const mod = makeModule({
-            classes: [makeClass({})],
+            classes: [makeClass({})]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("### API");
@@ -393,7 +387,7 @@ describe("renderModulePage (API detail)", () => {
 
     it("renders class details with Anchor and CodeBlock", () => {
         const mod = makeModule({
-            classes: [makeClass({ name: "Foo", path: "pkg.mymod.Foo" })],
+            classes: [makeClass({ name: "Foo", path: "pkg.mymod.Foo" })]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-mymod-Foo">');
@@ -412,11 +406,11 @@ describe("renderModulePage (API detail)", () => {
                             kind: "POSITIONAL" as FdrAPI.libraryDocs.PythonParameterKind,
                             typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
                             default: undefined,
-                            description: undefined,
-                        },
-                    ],
-                }),
-            ],
+                            description: undefined
+                        }
+                    ]
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-mymod-compute">');
@@ -431,9 +425,9 @@ describe("renderModulePage (API detail)", () => {
                     name: "VERSION",
                     path: "pkg.mymod.VERSION",
                     typeInfo: { display: "str", resolvedPath: "str", basePath: undefined },
-                    value: "'1.0.0'",
-                }),
-            ],
+                    value: "'1.0.0'"
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-mymod-VERSION">');
@@ -446,9 +440,9 @@ describe("renderModulePage (API detail)", () => {
                 makeAttr({
                     name: "DATA",
                     path: "pkg.mymod.DATA",
-                    value: "a".repeat(100),
-                }),
-            ],
+                    value: "a".repeat(100)
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("...");
@@ -469,10 +463,10 @@ describe("renderModulePage (API detail)", () => {
                         examples: [],
                         notes: [],
                         warnings: [],
-                        returns: undefined,
-                    },
-                }),
-            ],
+                        returns: undefined
+                    }
+                })
+            ]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain("<Indent>");
@@ -482,11 +476,12 @@ describe("renderModulePage (API detail)", () => {
 
     it("renders attribute with no docstring — no Indent", () => {
         const mod = makeModule({
-            attributes: [makeAttr({ name: "X", path: "pkg.mymod.X", docstring: undefined })],
+            attributes: [makeAttr({ name: "X", path: "pkg.mymod.X", docstring: undefined })]
         });
         const result = renderModulePage(mod, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-mymod-X">');
         // Indent only appears for attributes with docstrings
+        // biome-ignore lint/style/noNonNullAssertion: split always has index 1
         const attrSection = result.split("### API")[1]!;
         // The attribute detail should not have <Indent> since no docstring
         const attrAnchorIdx = attrSection.indexOf('id="pkg-mymod-X"');
@@ -503,10 +498,10 @@ describe("renderModulePage (API detail)", () => {
                     typeInfo: {
                         display: "pkg.sub.Config",
                         resolvedPath: "pkg.sub.Config",
-                        basePath: "pkg.sub.Config",
-                    },
-                }),
-            ],
+                        basePath: "pkg.sub.Config"
+                    }
+                })
+            ]
         });
         const ctx = ctxWithPaths(["pkg.sub.Config"]);
         const result = renderModulePage(mod, ctx);
@@ -532,11 +527,11 @@ describe("renderModulePage (ordering)", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
+                returns: undefined
             },
             submodules: [makeModule({ name: "child", path: "pkg.mymod.child" })],
             classes: [makeClass({ name: "Foo", path: "pkg.mymod.Foo" })],
-            functions: [makeFunction({ name: "bar", path: "pkg.mymod.bar" })],
+            functions: [makeFunction({ name: "bar", path: "pkg.mymod.bar" })]
         });
         const result = renderModulePage(mod, emptyCtx());
 
@@ -560,7 +555,7 @@ describe("renderModulePage (ordering)", () => {
         const mod = makeModule({
             classes: [makeClass({ name: "Cls", path: "pkg.mymod.Cls" })],
             functions: [makeFunction({ name: "func", path: "pkg.mymod.func" })],
-            attributes: [makeAttr({ name: "ATTR", path: "pkg.mymod.ATTR" })],
+            attributes: [makeAttr({ name: "ATTR", path: "pkg.mymod.ATTR" })]
         });
         const result = renderModulePage(mod, emptyCtx());
 
@@ -587,9 +582,9 @@ describe("renderAllModulePages", () => {
                 makeModule({
                     name: "sub",
                     path: "pkg.sub",
-                    classes: [makeClass({ name: "Sub", path: "pkg.sub.Sub" })],
-                }),
-            ],
+                    classes: [makeClass({ name: "Sub", path: "pkg.sub.Sub" })]
+                })
+            ]
         });
         const pages = renderAllModulePages(root, emptyCtx());
 
@@ -609,11 +604,11 @@ describe("renderAllModulePages", () => {
                         makeModule({
                             name: "c",
                             path: "a.b.c",
-                            classes: [makeClass({ name: "Deep", path: "a.b.c.Deep" })],
-                        }),
-                    ],
-                }),
-            ],
+                            classes: [makeClass({ name: "Deep", path: "a.b.c.Deep" })]
+                        })
+                    ]
+                })
+            ]
         });
         const pages = renderAllModulePages(root, emptyCtx());
 
@@ -631,9 +626,9 @@ describe("renderAllModulePages", () => {
                 makeModule({
                     name: "filled",
                     path: "pkg.filled",
-                    functions: [makeFunction({ name: "f", path: "pkg.filled.f" })],
-                }),
-            ],
+                    functions: [makeFunction({ name: "f", path: "pkg.filled.f" })]
+                })
+            ]
         });
         const pages = renderAllModulePages(root, emptyCtx());
 
@@ -657,8 +652,8 @@ describe("renderAllModulePages", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const pages = renderAllModulePages(root, emptyCtx());
         expect(Object.keys(pages)).toContain("reference/python/pkg.mdx");
@@ -673,9 +668,9 @@ describe("renderAllModulePages", () => {
                 makeModule({
                     name: "sub",
                     path: "pkg.sub",
-                    functions: [makeFunction({ name: "f", path: "pkg.sub.f" })],
-                }),
-            ],
+                    functions: [makeFunction({ name: "f", path: "pkg.sub.f" })]
+                })
+            ]
         });
         const pages = renderAllModulePages(root, emptyCtx());
 
@@ -690,6 +685,7 @@ describe("renderAllModulePages", () => {
 
 describe("renderModulePage (NeMo fixtures)", () => {
     it("leaf_with_mixed_content: renders classes, functions, and attributes", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["leaf_with_mixed_content"]!;
         const result = renderModulePage(mod, emptyCtx(), "nemo_rl/algorithms");
 
@@ -730,6 +726,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
     });
 
     it("leaf_attributes_only: renders only data section", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["leaf_attributes_only"]!;
         const result = renderModulePage(mod, emptyCtx(), "nemo_rl");
 
@@ -752,6 +749,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
     });
 
     it("package_with_content: renders submodules and Package Contents", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["package_with_content"]!;
         const result = renderModulePage(mod, emptyCtx());
 
@@ -772,6 +770,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
     });
 
     it("module_with_docstring: renders docstring text", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["module_with_docstring"]!;
         const result = renderModulePage(mod, emptyCtx(), "nemo_rl/data/datasets/eval_datasets");
 
@@ -790,6 +789,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
     });
 
     it("package_submodules_only: renders submodules but no contents section", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["package_submodules_only"]!;
         const result = renderModulePage(mod, emptyCtx(), "nemo_rl");
 
@@ -810,6 +810,7 @@ describe("renderModulePage (NeMo fixtures)", () => {
 
 describe("renderAllModulePages (NeMo fixtures)", () => {
     it("package_with_content: generates pages for root and all stub submodules", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const root = NEMO_MODULES["package_with_content"]!;
         const pages = renderAllModulePages(root, emptyCtx());
 

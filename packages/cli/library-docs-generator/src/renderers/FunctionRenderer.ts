@@ -19,7 +19,7 @@ import {
     getTypePathForSignature,
     type RenderContext,
     renderCodeBlockWithLinks,
-    type SignatureParam,
+    type SignatureParam
 } from "../utils/TypeLinkResolver.js";
 import { renderDocstring } from "./DocstringRenderer.js";
 
@@ -37,11 +37,9 @@ interface FunctionSignature {
  */
 function buildFunctionSignature(
     func: FdrAPI.libraryDocs.PythonFunctionIr,
-    omitSelf: boolean = false,
+    omitSelf: boolean = false
 ): FunctionSignature {
-    const rawParams = omitSelf
-        ? func.parameters.filter((p) => p.name !== "self" && p.name !== "cls")
-        : func.parameters;
+    const rawParams = omitSelf ? func.parameters.filter((p) => p.name !== "self" && p.name !== "cls") : func.parameters;
 
     const params: SignatureParam[] = [];
     const typeStrings: string[] = [];
@@ -134,7 +132,7 @@ export function renderFunctionDetailed(func: FdrAPI.libraryDocs.PythonFunctionIr
         const docstringMdx = renderDocstring(
             func.docstring,
             buildParamAnnotations(func),
-            getTypeDisplay(func.returnTypeInfo) || undefined,
+            getTypeDisplay(func.returnTypeInfo) || undefined
         );
         if (docstringMdx) {
             lines.push(docstringMdx);
@@ -153,7 +151,7 @@ export function renderFunctionDetailed(func: FdrAPI.libraryDocs.PythonFunctionIr
 export function renderMethodDetailed(
     func: FdrAPI.libraryDocs.PythonFunctionIr,
     ctx: RenderContext,
-    currentModulePath?: string,
+    currentModulePath?: string
 ): string {
     const lines: string[] = [];
     const modulePath = currentModulePath ?? getModulePath(func.path);
@@ -180,7 +178,7 @@ export function renderMethodDetailed(
         const docstringMdx = renderDocstring(
             func.docstring,
             buildParamAnnotations(func),
-            getTypeDisplay(func.returnTypeInfo) || undefined,
+            getTypeDisplay(func.returnTypeInfo) || undefined
         );
         if (docstringMdx) {
             lines.push(docstringMdx);
@@ -199,7 +197,7 @@ export function renderMethodDetailed(
 export function renderProperty(
     func: FdrAPI.libraryDocs.PythonFunctionIr,
     ctx: RenderContext,
-    currentModulePath?: string,
+    currentModulePath?: string
 ): string {
     const lines: string[] = [];
     const modulePath = currentModulePath ?? getModulePath(func.path);

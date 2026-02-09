@@ -1,12 +1,12 @@
-import { describe, it, expect } from "vitest";
+import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { readFileSync } from "fs";
 import { join } from "path";
-import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { describe, expect, it } from "vitest";
 import { renderFunctionDetailed, renderMethodDetailed, renderProperty } from "../renderers/FunctionRenderer";
 import type { RenderContext } from "../utils/TypeLinkResolver";
 
 const NEMO_FUNCTIONS: Record<string, FdrAPI.libraryDocs.PythonFunctionIr> = JSON.parse(
-    readFileSync(join(__dirname, "fixtures", "nemo-functions.json"), "utf-8"),
+    readFileSync(join(__dirname, "fixtures", "nemo-functions.json"), "utf-8")
 );
 
 // ---------------------------------------------------------------------------
@@ -37,21 +37,19 @@ function makeFunction(overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>): 
         isProperty: false,
         docstring: undefined,
         returnTypeInfo: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonFunctionIr;
 }
 
 /** Build a minimal parameter IR. */
-function makeParam(
-    overrides: Partial<FdrAPI.libraryDocs.PythonParameterIr>,
-): FdrAPI.libraryDocs.PythonParameterIr {
+function makeParam(overrides: Partial<FdrAPI.libraryDocs.PythonParameterIr>): FdrAPI.libraryDocs.PythonParameterIr {
     return {
         name: "x",
         kind: "POSITIONAL" as FdrAPI.libraryDocs.PythonParameterKind,
         typeInfo: undefined,
         default: undefined,
         description: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonParameterIr;
 }
 
@@ -86,14 +84,14 @@ describe("renderFunctionDetailed", () => {
             parameters: [
                 makeParam({
                     name: "name",
-                    typeInfo: { display: "str", resolvedPath: "str", basePath: undefined },
+                    typeInfo: { display: "str", resolvedPath: "str", basePath: undefined }
                 }),
                 makeParam({
                     name: "count",
                     typeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
-                    default: "1",
-                }),
-            ],
+                    default: "1"
+                })
+            ]
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).toContain("name: str,");
@@ -102,7 +100,7 @@ describe("renderFunctionDetailed", () => {
 
     it("renders return type in signature", () => {
         const func = makeFunction({
-            returnTypeInfo: { display: "bool", resolvedPath: "bool", basePath: undefined },
+            returnTypeInfo: { display: "bool", resolvedPath: "bool", basePath: undefined }
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).toContain("-> bool");
@@ -110,7 +108,7 @@ describe("renderFunctionDetailed", () => {
 
     it("does NOT omit self/cls from module-level functions", () => {
         const func = makeFunction({
-            parameters: [makeParam({ name: "self" }), makeParam({ name: "x" })],
+            parameters: [makeParam({ name: "self" }), makeParam({ name: "x" })]
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).toContain("self");
@@ -158,7 +156,7 @@ describe("renderFunctionDetailed", () => {
         const func = makeFunction({
             isAsync: true,
             isStaticmethod: true,
-            decorators: ["staticmethod", "abstractmethod"],
+            decorators: ["staticmethod", "abstractmethod"]
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).toContain("<Badge>async</Badge>");
@@ -178,8 +176,8 @@ describe("renderFunctionDetailed", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).toContain("Do something useful.");
@@ -190,8 +188,8 @@ describe("renderFunctionDetailed", () => {
             parameters: [
                 makeParam({
                     name: "x",
-                    typeInfo: { display: "float", resolvedPath: "float", basePath: undefined },
-                }),
+                    typeInfo: { display: "float", resolvedPath: "float", basePath: undefined }
+                })
             ],
             docstring: {
                 summary: undefined,
@@ -201,8 +199,8 @@ describe("renderFunctionDetailed", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).toContain('type="float"');
@@ -219,8 +217,8 @@ describe("renderFunctionDetailed", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: { type: undefined, description: "The count" },
-            },
+                returns: { type: undefined, description: "The count" }
+            }
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).toContain("**Returns:** `int`");
@@ -244,10 +242,10 @@ describe("renderFunctionDetailed", () => {
                     typeInfo: {
                         display: "MyClass",
                         resolvedPath: "pkg.sub.MyClass",
-                        basePath: "pkg.sub.MyClass",
-                    },
-                }),
-            ],
+                        basePath: "pkg.sub.MyClass"
+                    }
+                })
+            ]
         });
         const ctx = ctxWithPaths(["pkg.sub.MyClass"]);
         const result = renderFunctionDetailed(func, ctx);
@@ -264,10 +262,10 @@ describe("renderFunctionDetailed", () => {
                     typeInfo: {
                         display: "ExternalType",
                         resolvedPath: "external.lib.ExternalType",
-                        basePath: "external.lib.ExternalType",
-                    },
-                }),
-            ],
+                        basePath: "external.lib.ExternalType"
+                    }
+                })
+            ]
         });
         const result = renderFunctionDetailed(func, emptyCtx());
         expect(result).not.toContain("links={");
@@ -286,8 +284,8 @@ describe("renderFunctionDetailed", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderFunctionDetailed(func, emptyCtx());
 
@@ -316,8 +314,8 @@ describe("renderMethodDetailed", () => {
             path: "pkg.MyClass.my_method",
             parameters: [
                 makeParam({ name: "self" }),
-                makeParam({ name: "x", typeInfo: { display: "int", resolvedPath: "int", basePath: undefined } }),
-            ],
+                makeParam({ name: "x", typeInfo: { display: "int", resolvedPath: "int", basePath: undefined } })
+            ]
         });
         const result = renderMethodDetailed(func, emptyCtx());
         expect(result).toContain("x: int");
@@ -334,9 +332,9 @@ describe("renderMethodDetailed", () => {
                 makeParam({ name: "cls" }),
                 makeParam({
                     name: "config",
-                    typeInfo: { display: "dict", resolvedPath: "dict", basePath: undefined },
-                }),
-            ],
+                    typeInfo: { display: "dict", resolvedPath: "dict", basePath: undefined }
+                })
+            ]
         });
         const result = renderMethodDetailed(func, emptyCtx());
         expect(result).toContain("config: dict");
@@ -354,10 +352,10 @@ describe("renderMethodDetailed", () => {
                     typeInfo: {
                         display: "Other",
                         resolvedPath: "pkg.mod.Other",
-                        basePath: "pkg.mod.Other",
-                    },
-                }),
-            ],
+                        basePath: "pkg.mod.Other"
+                    }
+                })
+            ]
         });
         const ctx = ctxWithPaths(["pkg.mod.Other"]);
         // When same module, should get local anchor link
@@ -376,7 +374,7 @@ describe("renderMethodDetailed", () => {
         const func = makeFunction({
             path: "pkg.MyClass.my_prop",
             isProperty: true,
-            decorators: ["property"],
+            decorators: ["property"]
         });
         const result = renderMethodDetailed(func, emptyCtx());
         expect(result).toContain("<Badge>property</Badge>");
@@ -385,7 +383,7 @@ describe("renderMethodDetailed", () => {
     it("renders method with no parameters (after self removal)", () => {
         const func = makeFunction({
             path: "pkg.MyClass.reset",
-            parameters: [makeParam({ name: "self" })],
+            parameters: [makeParam({ name: "self" })]
         });
         const result = renderMethodDetailed(func, emptyCtx());
         expect(result).toContain("pkg.MyClass.reset()");
@@ -402,7 +400,7 @@ describe("renderProperty", () => {
             name: "value",
             path: "pkg.MyClass.value",
             isProperty: true,
-            returnTypeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
+            returnTypeInfo: { display: "int", resolvedPath: "int", basePath: undefined }
         });
         const result = renderProperty(func, emptyCtx());
         expect(result).toContain("value: int");
@@ -414,7 +412,7 @@ describe("renderProperty", () => {
             name: "data",
             path: "pkg.MyClass.data",
             isProperty: true,
-            returnTypeInfo: undefined,
+            returnTypeInfo: undefined
         });
         const result = renderProperty(func, emptyCtx());
         expect(result).toContain("```python\ndata\n```");
@@ -424,7 +422,7 @@ describe("renderProperty", () => {
         const func = makeFunction({
             name: "count",
             path: "pkg.MyClass.count",
-            isProperty: true,
+            isProperty: true
         });
         const result = renderProperty(func, emptyCtx());
         expect(result).toContain('<Anchor id="pkg-MyClass-count">');
@@ -443,8 +441,8 @@ describe("renderProperty", () => {
                 examples: [],
                 notes: [],
                 warnings: [],
-                returns: undefined,
-            },
+                returns: undefined
+            }
         });
         const result = renderProperty(func, emptyCtx());
         expect(result).toContain("<Indent>");
@@ -457,7 +455,7 @@ describe("renderProperty", () => {
             name: "size",
             path: "pkg.MyClass.size",
             isProperty: true,
-            docstring: undefined,
+            docstring: undefined
         });
         const result = renderProperty(func, emptyCtx());
         expect(result).not.toContain("<Indent>");
@@ -471,8 +469,8 @@ describe("renderProperty", () => {
             returnTypeInfo: {
                 display: "Config",
                 resolvedPath: "pkg.Config",
-                basePath: "pkg.Config",
-            },
+                basePath: "pkg.Config"
+            }
         });
         const ctx = ctxWithPaths(["pkg.Config"]);
         const result = renderProperty(func, ctx);
@@ -485,7 +483,7 @@ describe("renderProperty", () => {
             name: "value",
             path: "pkg.MyClass.value",
             isProperty: true,
-            returnTypeInfo: { display: "int", resolvedPath: "int", basePath: undefined },
+            returnTypeInfo: { display: "int", resolvedPath: "int", basePath: undefined }
         });
         const result = renderProperty(func, emptyCtx());
         // renderProperty doesn't render badges — that's the caller's responsibility
@@ -499,6 +497,7 @@ describe("renderProperty", () => {
 
 describe("renderFunctionDetailed (NeMo fixtures)", () => {
     it("patch_transformers_module_dir: simple function with typed param, no docstring", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const func = NEMO_FUNCTIONS["patch_transformers_module_dir"]!;
         const result = renderFunctionDetailed(func, emptyCtx());
 
@@ -521,6 +520,7 @@ describe("renderFunctionDetailed (NeMo fixtures)", () => {
     });
 
     it("_check_container_fingerprint: no-param function with description-only docstring", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const func = NEMO_FUNCTIONS["_check_container_fingerprint"]!;
         const result = renderFunctionDetailed(func, emptyCtx());
 
@@ -539,6 +539,7 @@ describe("renderFunctionDetailed (NeMo fixtures)", () => {
 
 describe("renderMethodDetailed (NeMo fixtures)", () => {
     it("concat: classmethod omits cls, renders badge and type links", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const func = NEMO_FUNCTIONS["concat"]!;
         const ctx = ctxWithPaths(["nemo_rl.data.multimodal_utils.PackedTensor"]);
         const result = renderMethodDetailed(func, ctx);
@@ -566,6 +567,7 @@ describe("renderMethodDetailed (NeMo fixtures)", () => {
     });
 
     it("backward: staticmethod with return type, no docstring", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const func = NEMO_FUNCTIONS["backward"]!;
         const result = renderMethodDetailed(func, emptyCtx());
 
@@ -584,6 +586,7 @@ describe("renderMethodDetailed (NeMo fixtures)", () => {
     });
 
     it("push_with_wait_signal: method with self, docstring params, and return type", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const func = NEMO_FUNCTIONS["push_with_wait_signal"]!;
         const result = renderMethodDetailed(func, emptyCtx());
 

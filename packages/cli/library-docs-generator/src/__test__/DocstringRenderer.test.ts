@@ -1,11 +1,11 @@
-import { describe, it, expect } from "vitest";
+import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { readFileSync } from "fs";
 import { join } from "path";
-import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { describe, expect, it } from "vitest";
 import { renderDocstring, renderSimpleDocstring } from "../renderers/DocstringRenderer";
 
 const NEMO_FIXTURES: Record<string, FdrAPI.libraryDocs.DocstringIr> = JSON.parse(
-    readFileSync(join(__dirname, "fixtures", "nemo-docstrings.json"), "utf-8"),
+    readFileSync(join(__dirname, "fixtures", "nemo-docstrings.json"), "utf-8")
 );
 
 // ---------------------------------------------------------------------------
@@ -22,7 +22,7 @@ function emptyDocstring(): FdrAPI.libraryDocs.DocstringIr {
         raises: [],
         examples: [],
         notes: [],
-        warnings: [],
+        warnings: []
     };
 }
 
@@ -77,8 +77,8 @@ describe("renderDocstring", () => {
     it("renders parameters with ParamField components", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "x", type: "int", description: "The x value", default: undefined }],
-            }),
+                params: [{ name: "x", type: "int", description: "The x value", default: undefined }]
+            })
         );
         expect(result).toContain("**Parameters:**");
         expect(result).toContain('<ParamField path="x" type="int">');
@@ -89,9 +89,9 @@ describe("renderDocstring", () => {
     it("uses paramAnnotations as fallback when docstring param has no type", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "x", type: undefined, description: "A number", default: undefined }],
+                params: [{ name: "x", type: undefined, description: "A number", default: undefined }]
             }),
-            { x: "float" },
+            { x: "float" }
         );
         expect(result).toContain('type="float"');
     });
@@ -99,9 +99,9 @@ describe("renderDocstring", () => {
     it("prefers docstring param type over paramAnnotations", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "x", type: "int", description: undefined, default: undefined }],
+                params: [{ name: "x", type: "int", description: undefined, default: undefined }]
             }),
-            { x: "float" },
+            { x: "float" }
         );
         expect(result).toContain('type="int"');
         expect(result).not.toContain("float");
@@ -110,8 +110,8 @@ describe("renderDocstring", () => {
     it("renders param default values", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "x", type: "int", description: undefined, default: "42" }],
-            }),
+                params: [{ name: "x", type: "int", description: undefined, default: "42" }]
+            })
         );
         expect(result).toContain('default="42"');
     });
@@ -119,8 +119,8 @@ describe("renderDocstring", () => {
     it("escapes JSX chars in param default values", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "x", type: undefined, description: undefined, default: "<none>" }],
-            }),
+                params: [{ name: "x", type: undefined, description: undefined, default: "<none>" }]
+            })
         );
         expect(result).toContain('default="&lt;none&gt;"');
     });
@@ -128,8 +128,8 @@ describe("renderDocstring", () => {
     it("omits type attribute when no type is available", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "x", type: undefined, description: "Untyped", default: undefined }],
-            }),
+                params: [{ name: "x", type: undefined, description: "Untyped", default: undefined }]
+            })
         );
         expect(result).toContain('<ParamField path="x">');
         expect(result).not.toContain("type=");
@@ -138,8 +138,8 @@ describe("renderDocstring", () => {
     it("renders empty content for param with no description", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "x", type: "int", description: undefined, default: undefined }],
-            }),
+                params: [{ name: "x", type: "int", description: undefined, default: undefined }]
+            })
         );
         // ParamField should contain empty string between tags
         expect(result).toContain("<ParamField");
@@ -151,9 +151,9 @@ describe("renderDocstring", () => {
             docstring({
                 params: [
                     { name: "a", type: "int", description: "First", default: undefined },
-                    { name: "b", type: "str", description: "Second", default: "'hello'" },
-                ],
-            }),
+                    { name: "b", type: "str", description: "Second", default: "'hello'" }
+                ]
+            })
         );
         expect(result).toContain('path="a"');
         expect(result).toContain('path="b"');
@@ -167,8 +167,8 @@ describe("renderDocstring", () => {
     it("renders returns with type", () => {
         const result = renderDocstring(
             docstring({
-                returns: { type: "bool", description: "True if valid" },
-            }),
+                returns: { type: "bool", description: "True if valid" }
+            })
         );
         expect(result).toContain("**Returns:** `bool`");
         expect(result).toContain("True if valid");
@@ -177,10 +177,10 @@ describe("renderDocstring", () => {
     it("renders returns with returnAnnotation fallback", () => {
         const result = renderDocstring(
             docstring({
-                returns: { type: undefined, description: "The result" },
+                returns: { type: undefined, description: "The result" }
             }),
             undefined,
-            "int",
+            "int"
         );
         expect(result).toContain("**Returns:** `int`");
     });
@@ -188,10 +188,10 @@ describe("renderDocstring", () => {
     it("prefers docstring return type over returnAnnotation", () => {
         const result = renderDocstring(
             docstring({
-                returns: { type: "str", description: undefined },
+                returns: { type: "str", description: undefined }
             }),
             undefined,
-            "int",
+            "int"
         );
         expect(result).toContain("**Returns:** `str`");
         expect(result).not.toContain("`int`");
@@ -200,8 +200,8 @@ describe("renderDocstring", () => {
     it("renders returns without type", () => {
         const result = renderDocstring(
             docstring({
-                returns: { type: undefined, description: "Something" },
-            }),
+                returns: { type: undefined, description: "Something" }
+            })
         );
         expect(result).toContain("**Returns:**");
         expect(result).not.toContain("`");
@@ -210,8 +210,8 @@ describe("renderDocstring", () => {
     it("renders returns without description", () => {
         const result = renderDocstring(
             docstring({
-                returns: { type: "int", description: undefined },
-            }),
+                returns: { type: "int", description: undefined }
+            })
         );
         expect(result).toContain("**Returns:** `int`");
     });
@@ -219,18 +219,18 @@ describe("renderDocstring", () => {
     it("escapes JSX chars in return type", () => {
         const result = renderDocstring(
             docstring({
-                returns: { type: "Optional<int>", description: undefined },
-            }),
+                returns: { type: "Optional<int>", description: undefined }
+            })
         );
         expect(result).toContain("`Optional&lt;int&gt;`");
     });
 
     it("wraps code blocks in returns description with CodeBlock component", () => {
-        const desc = "Returns:\n```python\n{\"key\": <value>}\n```";
+        const desc = 'Returns:\n```python\n{"key": <value>}\n```';
         const result = renderDocstring(
             docstring({
-                returns: { type: "dict", description: desc },
-            }),
+                returns: { type: "dict", description: desc }
+            })
         );
         // Code block content should not be escaped
         expect(result).toContain('{"key": <value>}');
@@ -243,8 +243,8 @@ describe("renderDocstring", () => {
     it("renders raises section", () => {
         const result = renderDocstring(
             docstring({
-                raises: [{ type: "ValueError", description: "If x is negative" }],
-            }),
+                raises: [{ type: "ValueError", description: "If x is negative" }]
+            })
         );
         expect(result).toContain("**Raises:**");
         expect(result).toContain("- `ValueError`: If x is negative");
@@ -253,8 +253,8 @@ describe("renderDocstring", () => {
     it("renders raises without description", () => {
         const result = renderDocstring(
             docstring({
-                raises: [{ type: "RuntimeError", description: undefined }],
-            }),
+                raises: [{ type: "RuntimeError", description: undefined }]
+            })
         );
         expect(result).toContain("- `RuntimeError`");
         // No trailing colon + description after the type
@@ -266,9 +266,9 @@ describe("renderDocstring", () => {
             docstring({
                 raises: [
                     { type: "ValueError", description: "Bad value" },
-                    { type: "TypeError", description: "Wrong type" },
-                ],
-            }),
+                    { type: "TypeError", description: "Wrong type" }
+                ]
+            })
         );
         expect(result).toContain("- `ValueError`: Bad value");
         expect(result).toContain("- `TypeError`: Wrong type");
@@ -277,8 +277,8 @@ describe("renderDocstring", () => {
     it("escapes JSX chars in exception type and description", () => {
         const result = renderDocstring(
             docstring({
-                raises: [{ type: "Error<T>", description: "When {x} fails" }],
-            }),
+                raises: [{ type: "Error<T>", description: "When {x} fails" }]
+            })
         );
         expect(result).toContain("`Error&lt;T&gt;`");
         expect(result).toContain("&#123;x&#125; fails");
@@ -289,8 +289,8 @@ describe("renderDocstring", () => {
     it("renders examples with CodeBlock", () => {
         const result = renderDocstring(
             docstring({
-                examples: [{ code: 'print("hello")', description: undefined }],
-            }),
+                examples: [{ code: 'print("hello")', description: undefined }]
+            })
         );
         expect(result).toContain("**Examples:**");
         expect(result).toContain("<CodeBlock showLineNumbers={false}>");
@@ -303,8 +303,8 @@ describe("renderDocstring", () => {
     it("renders example with description", () => {
         const result = renderDocstring(
             docstring({
-                examples: [{ code: "x = 1", description: "Simple assignment" }],
-            }),
+                examples: [{ code: "x = 1", description: "Simple assignment" }]
+            })
         );
         expect(result).toContain("Simple assignment");
         expect(result).toContain("x = 1");
@@ -313,8 +313,8 @@ describe("renderDocstring", () => {
     it("wraps code blocks in example description with CodeBlock component", () => {
         const result = renderDocstring(
             docstring({
-                examples: [{ code: "x = 1", description: "Use `<T>` like:\n```python\ny = <T>()\n```" }],
-            }),
+                examples: [{ code: "x = 1", description: "Use `<T>` like:\n```python\ny = <T>()\n```" }]
+            })
         );
         // Inside code block: not escaped, and wrapped in CodeBlock
         expect(result).toContain("y = <T>()");
@@ -326,9 +326,9 @@ describe("renderDocstring", () => {
             docstring({
                 examples: [
                     { code: "x = 1", description: "First" },
-                    { code: "x = 2", description: "Second" },
-                ],
-            }),
+                    { code: "x = 2", description: "Second" }
+                ]
+            })
         );
         expect(result).toContain("First");
         expect(result).toContain("x = 1");
@@ -352,9 +352,7 @@ describe("renderDocstring", () => {
     });
 
     it("wraps code blocks in notes with CodeBlock component", () => {
-        const result = renderDocstring(
-            docstring({ notes: ["See:\n```python\nx = {val}\n```"] }),
-        );
+        const result = renderDocstring(docstring({ notes: ["See:\n```python\nx = {val}\n```"] }));
         expect(result).toContain("x = {val}");
         expect(result).toContain("<CodeBlock showLineNumbers={false}>");
         expect(result).toContain("</CodeBlock>");
@@ -370,9 +368,7 @@ describe("renderDocstring", () => {
     });
 
     it("wraps code blocks in warnings with CodeBlock component", () => {
-        const result = renderDocstring(
-            docstring({ warnings: ["Don't do:\n```python\nx = <bad>\n```"] }),
-        );
+        const result = renderDocstring(docstring({ warnings: ["Don't do:\n```python\nx = <bad>\n```"] }));
         expect(result).toContain("x = <bad>");
         expect(result).toContain("<CodeBlock showLineNumbers={false}>");
         expect(result).toContain("</CodeBlock>");
@@ -389,8 +385,8 @@ describe("renderDocstring", () => {
                 raises: [{ type: "ValueError", description: "On error" }],
                 examples: [{ code: "f(1)", description: undefined }],
                 notes: ["Important note"],
-                warnings: ["Watch out"],
-            }),
+                warnings: ["Watch out"]
+            })
         );
 
         const descIdx = result.indexOf("A function.");
@@ -412,8 +408,8 @@ describe("renderDocstring", () => {
     it("only renders sections that have content", () => {
         const result = renderDocstring(
             docstring({
-                description: "Just a description.",
-            }),
+                description: "Just a description."
+            })
         );
         expect(result).not.toContain("**Parameters:**");
         expect(result).not.toContain("**Returns:**");
@@ -464,8 +460,8 @@ describe("renderSimpleDocstring", () => {
             docstring({
                 description: "Just text",
                 params: [{ name: "x", type: "int", description: "Ignored", default: undefined }],
-                returns: { type: "str", description: "Also ignored" },
-            }),
+                returns: { type: "str", description: "Also ignored" }
+            })
         );
         expect(result).toBe("Just text");
         expect(result).not.toContain("Ignored");
@@ -478,6 +474,7 @@ describe("renderSimpleDocstring", () => {
 
 describe("renderDocstring (NeMo fixtures)", () => {
     it("get_tokenizer: renders params, returns, and example", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const ds = NEMO_FIXTURES["get_tokenizer"]!;
         const result = renderDocstring(ds);
 
@@ -504,6 +501,7 @@ describe("renderDocstring (NeMo fixtures)", () => {
     });
 
     it("validate_tensor_consistency: renders params and raises", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const ds = NEMO_FIXTURES["validate_tensor_consistency"]!;
         const result = renderDocstring(ds);
 
@@ -523,6 +521,7 @@ describe("renderDocstring (NeMo fixtures)", () => {
     });
 
     it("eval_collate_fn: wraps code block in description with CodeBlock", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const ds = NEMO_FIXTURES["eval_collate_fn"]!;
         const result = renderDocstring(ds);
 
@@ -543,6 +542,7 @@ describe("renderDocstring (NeMo fixtures)", () => {
     });
 
     it("clipped_pg_loss: description-only with math notation", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const ds = NEMO_FIXTURES["clipped_pg_loss"]!;
         const result = renderDocstring(ds);
 
@@ -564,6 +564,7 @@ describe("renderDocstring (NeMo fixtures)", () => {
 
 describe("renderSimpleDocstring (NeMo fixtures)", () => {
     it("renders only description text, ignoring structured sections", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const ds = NEMO_FIXTURES["get_tokenizer"]!;
         const result = renderSimpleDocstring(ds);
 
@@ -575,6 +576,7 @@ describe("renderSimpleDocstring (NeMo fixtures)", () => {
     });
 
     it("wraps code block in eval_collate_fn description with CodeBlock", () => {
+        // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const ds = NEMO_FIXTURES["eval_collate_fn"]!;
         const result = renderSimpleDocstring(ds);
 

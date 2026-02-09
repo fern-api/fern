@@ -71,7 +71,7 @@ export function generate(options: GenerateOptions): GenerateResult {
     return {
         navigation,
         rootPageId,
-        ...writer.result(),
+        ...writer.result()
     };
 }
 
@@ -88,7 +88,7 @@ function renderModuleTree(
     module: FdrAPI.libraryDocs.PythonModuleIr,
     ctx: RenderContext,
     writer: MdxFileWriter,
-    parentPath: string,
+    parentPath: string
 ): void {
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
 

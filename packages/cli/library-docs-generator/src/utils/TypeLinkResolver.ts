@@ -141,7 +141,7 @@ const QUALIFIED_PATH_REGEX = /[a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)
 export function extractLinksFromTypes(
     typeStrings: string[],
     ctx: RenderContext,
-    currentModulePath?: string,
+    currentModulePath?: string
 ): Record<string, string> {
     const links: Record<string, string> = {};
 
@@ -209,7 +209,7 @@ export function getTypePathForSignature(typeInfo: FdrAPI.libraryDocs.TypeInfo | 
 export function linkTypeInfo(
     typeInfo: FdrAPI.libraryDocs.TypeInfo | undefined,
     ctx: RenderContext,
-    currentModulePath?: string,
+    currentModulePath?: string
 ): string {
     if (!typeInfo) {
         return "-";
@@ -249,7 +249,7 @@ export function renderCodeBlockWithLinks(code: string, links: Record<string, str
         code,
         "```",
         "",
-        "</CodeBlock>",
+        "</CodeBlock>"
     ].join("\n");
 }
 

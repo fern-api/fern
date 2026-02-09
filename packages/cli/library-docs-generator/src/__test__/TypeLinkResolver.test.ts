@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { describe, expect, it } from "vitest";
 import {
     buildTypeLinkData,
     extractLinksFromTypes,
@@ -8,35 +8,30 @@ import {
     getTypeDisplay,
     getTypePathForSignature,
     linkTypeInfo,
-    renderCodeBlockWithLinks,
     type RenderContext,
-    type SignatureParam,
+    renderCodeBlockWithLinks,
+    type SignatureParam
 } from "../utils/TypeLinkResolver.js";
 
 // ============================================================================
 // Test Helpers
 // ============================================================================
 
-function makeTypeInfo(
-    overrides: Partial<FdrAPI.libraryDocs.TypeInfo> = {},
-): FdrAPI.libraryDocs.TypeInfo {
+function makeTypeInfo(overrides: Partial<FdrAPI.libraryDocs.TypeInfo> = {}): FdrAPI.libraryDocs.TypeInfo {
     return {
         display: overrides.display,
         resolvedPath: overrides.resolvedPath,
-        basePath: overrides.basePath,
+        basePath: overrides.basePath
     };
 }
 
-function makeParam(
-    name: string,
-    typeInfo?: FdrAPI.libraryDocs.TypeInfo,
-): FdrAPI.libraryDocs.PythonParameterIr {
+function makeParam(name: string, typeInfo?: FdrAPI.libraryDocs.TypeInfo): FdrAPI.libraryDocs.PythonParameterIr {
     return {
         name,
         typeInfo,
         default: undefined,
         description: undefined,
-        kind: "POSITIONAL" as FdrAPI.libraryDocs.PythonParameterKind,
+        kind: "POSITIONAL" as FdrAPI.libraryDocs.PythonParameterKind
     };
 }
 
@@ -44,7 +39,7 @@ function makeFunction(
     name: string,
     path: string,
     params: FdrAPI.libraryDocs.PythonParameterIr[] = [],
-    returnTypeInfo?: FdrAPI.libraryDocs.TypeInfo,
+    returnTypeInfo?: FdrAPI.libraryDocs.TypeInfo
 ): FdrAPI.libraryDocs.PythonFunctionIr {
     return {
         name,
@@ -57,14 +52,14 @@ function makeFunction(
         decorators: [],
         isClassmethod: false,
         isStaticmethod: false,
-        isProperty: false,
+        isProperty: false
     };
 }
 
 function makeClass(
     name: string,
     path: string,
-    overrides: Partial<FdrAPI.libraryDocs.PythonClassIr> = {},
+    overrides: Partial<FdrAPI.libraryDocs.PythonClassIr> = {}
 ): FdrAPI.libraryDocs.PythonClassIr {
     return {
         name,
@@ -81,14 +76,14 @@ function makeClass(
         hasSlots: false,
         typedDictFields: undefined,
         enumMembers: undefined,
-        ...overrides,
+        ...overrides
     };
 }
 
 function makeModule(
     name: string,
     path: string,
-    overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr> = {},
+    overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr> = {}
 ): FdrAPI.libraryDocs.PythonModuleIr {
     return {
         name,
@@ -98,22 +93,20 @@ function makeModule(
         functions: [],
         attributes: [],
         submodules: [],
-        ...overrides,
+        ...overrides
     };
 }
 
-function makeIr(
-    rootModule: FdrAPI.libraryDocs.PythonModuleIr,
-): FdrAPI.libraryDocs.PythonLibraryDocsIr {
+function makeIr(rootModule: FdrAPI.libraryDocs.PythonModuleIr): FdrAPI.libraryDocs.PythonLibraryDocsIr {
     return {
         metadata: {
             packageName: "test-pkg",
             language: "python",
             sourceUrl: undefined,
             branch: undefined,
-            version: undefined,
+            version: undefined
         },
-        rootModule,
+        rootModule
     };
 }
 
@@ -122,7 +115,7 @@ function makeCtx(overrides: Partial<RenderContext> = {}): RenderContext {
         baseSlug: "reference",
         validPaths: new Set<string>(),
         pathAliases: new Map<string, string>(),
-        ...overrides,
+        ...overrides
     };
 }
 
@@ -134,8 +127,8 @@ describe("buildTypeLinkData", () => {
     it("should collect module paths", () => {
         const ir = makeIr(
             makeModule("pkg", "pkg", {
-                submodules: [makeModule("sub", "pkg.sub")],
-            }),
+                submodules: [makeModule("sub", "pkg.sub")]
+            })
         );
 
         const { validPaths } = buildTypeLinkData(ir);
@@ -146,8 +139,8 @@ describe("buildTypeLinkData", () => {
     it("should collect class paths", () => {
         const ir = makeIr(
             makeModule("pkg", "pkg", {
-                classes: [makeClass("Foo", "pkg.Foo"), makeClass("Bar", "pkg.Bar")],
-            }),
+                classes: [makeClass("Foo", "pkg.Foo"), makeClass("Bar", "pkg.Bar")]
+            })
         );
 
         const { validPaths } = buildTypeLinkData(ir);
@@ -158,8 +151,8 @@ describe("buildTypeLinkData", () => {
     it("should collect function paths", () => {
         const ir = makeIr(
             makeModule("pkg", "pkg", {
-                functions: [makeFunction("do_stuff", "pkg.do_stuff")],
-            }),
+                functions: [makeFunction("do_stuff", "pkg.do_stuff")]
+            })
         );
 
         const { validPaths } = buildTypeLinkData(ir);
@@ -175,10 +168,10 @@ describe("buildTypeLinkData", () => {
                         path: "pkg.VERSION",
                         typeInfo: undefined,
                         value: '"1.0"',
-                        docstring: undefined,
-                    },
-                ],
-            }),
+                        docstring: undefined
+                    }
+                ]
+            })
         );
 
         const { validPaths } = buildTypeLinkData(ir);
@@ -190,10 +183,10 @@ describe("buildTypeLinkData", () => {
             makeModule("pkg", "pkg", {
                 classes: [
                     makeClass("Foo", "pkg.Foo", {
-                        methods: [makeFunction("run", "pkg.Foo.run")],
-                    }),
-                ],
-            }),
+                        methods: [makeFunction("run", "pkg.Foo.run")]
+                    })
+                ]
+            })
         );
 
         const { validPaths } = buildTypeLinkData(ir);
@@ -204,13 +197,13 @@ describe("buildTypeLinkData", () => {
         const typeInfo = makeTypeInfo({
             display: "List[Foo]",
             resolvedPath: "pkg.List[pkg.sub.Foo]",
-            basePath: "pkg.sub.Foo",
+            basePath: "pkg.sub.Foo"
         });
 
         const ir = makeIr(
             makeModule("pkg", "pkg", {
-                functions: [makeFunction("fn", "pkg.fn", [makeParam("x", typeInfo)])],
-            }),
+                functions: [makeFunction("fn", "pkg.fn", [makeParam("x", typeInfo)])]
+            })
         );
 
         const { pathAliases } = buildTypeLinkData(ir);
@@ -221,13 +214,13 @@ describe("buildTypeLinkData", () => {
         const typeInfo = makeTypeInfo({
             display: "Foo",
             resolvedPath: "pkg.Foo",
-            basePath: "pkg.Foo",
+            basePath: "pkg.Foo"
         });
 
         const ir = makeIr(
             makeModule("pkg", "pkg", {
-                functions: [makeFunction("fn", "pkg.fn", [makeParam("x", typeInfo)])],
-            }),
+                functions: [makeFunction("fn", "pkg.fn", [makeParam("x", typeInfo)])]
+            })
         );
 
         const { pathAliases } = buildTypeLinkData(ir);
@@ -237,13 +230,13 @@ describe("buildTypeLinkData", () => {
     it("should collect aliases from return types", () => {
         const returnType = makeTypeInfo({
             resolvedPath: "pkg.Response",
-            basePath: "pkg.http.Response",
+            basePath: "pkg.http.Response"
         });
 
         const ir = makeIr(
             makeModule("pkg", "pkg", {
-                functions: [makeFunction("fn", "pkg.fn", [], returnType)],
-            }),
+                functions: [makeFunction("fn", "pkg.fn", [], returnType)]
+            })
         );
 
         const { pathAliases } = buildTypeLinkData(ir);
@@ -253,17 +246,17 @@ describe("buildTypeLinkData", () => {
     it("should collect aliases from base classes", () => {
         const baseTypeInfo = makeTypeInfo({
             resolvedPath: "pkg.Base",
-            basePath: "pkg.core.Base",
+            basePath: "pkg.core.Base"
         });
 
         const ir = makeIr(
             makeModule("pkg", "pkg", {
                 classes: [
                     makeClass("Child", "pkg.Child", {
-                        bases: [{ name: "Base", typeInfo: baseTypeInfo }],
-                    }),
-                ],
-            }),
+                        bases: [{ name: "Base", typeInfo: baseTypeInfo }]
+                    })
+                ]
+            })
         );
 
         const { pathAliases } = buildTypeLinkData(ir);
@@ -273,7 +266,7 @@ describe("buildTypeLinkData", () => {
     it("should collect aliases from class attributes", () => {
         const attrType = makeTypeInfo({
             resolvedPath: "pkg.Config",
-            basePath: "pkg.settings.Config",
+            basePath: "pkg.settings.Config"
         });
 
         const ir = makeIr(
@@ -281,11 +274,17 @@ describe("buildTypeLinkData", () => {
                 classes: [
                     makeClass("App", "pkg.App", {
                         attributes: [
-                            { name: "config", path: "pkg.App.config", typeInfo: attrType, value: undefined, docstring: undefined },
-                        ],
-                    }),
-                ],
-            }),
+                            {
+                                name: "config",
+                                path: "pkg.App.config",
+                                typeInfo: attrType,
+                                value: undefined,
+                                docstring: undefined
+                            }
+                        ]
+                    })
+                ]
+            })
         );
 
         const { pathAliases } = buildTypeLinkData(ir);
@@ -299,12 +298,12 @@ describe("buildTypeLinkData", () => {
                     makeModule("b", "a.b", {
                         submodules: [
                             makeModule("c", "a.b.c", {
-                                classes: [makeClass("Deep", "a.b.c.Deep")],
-                            }),
-                        ],
-                    }),
-                ],
-            }),
+                                classes: [makeClass("Deep", "a.b.c.Deep")]
+                            })
+                        ]
+                    })
+                ]
+            })
         );
 
         const { validPaths } = buildTypeLinkData(ir);
@@ -340,7 +339,7 @@ describe("getModulePath", () => {
 describe("extractLinksFromTypes", () => {
     it("should extract links for valid qualified paths", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.models.Response"]),
+            validPaths: new Set(["pkg.models.Response"])
         });
 
         const links = extractLinksFromTypes(["pkg.models.Response"], ctx);
@@ -361,7 +360,7 @@ describe("extractLinksFromTypes", () => {
 
     it("should extract multiple links from one type string", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.Foo", "pkg.Bar"]),
+            validPaths: new Set(["pkg.Foo", "pkg.Bar"])
         });
 
         const links = extractLinksFromTypes(["Union[pkg.Foo, pkg.Bar]"], ctx);
@@ -372,7 +371,7 @@ describe("extractLinksFromTypes", () => {
     it("should resolve aliases for re-exported types", () => {
         const ctx = makeCtx({
             validPaths: new Set(["pkg.sub.Foo"]),
-            pathAliases: new Map([["pkg.Foo", "pkg.sub.Foo"]]),
+            pathAliases: new Map([["pkg.Foo", "pkg.sub.Foo"]])
         });
 
         const links = extractLinksFromTypes(["pkg.Foo"], ctx);
@@ -389,7 +388,7 @@ describe("extractLinksFromTypes", () => {
 
     it("should not duplicate links for the same path", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.Foo"]),
+            validPaths: new Set(["pkg.Foo"])
         });
 
         const links = extractLinksFromTypes(["pkg.Foo", "Optional[pkg.Foo]"], ctx);
@@ -398,7 +397,7 @@ describe("extractLinksFromTypes", () => {
 
     it("should use same-page anchors when currentModulePath matches", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.models.Response"]),
+            validPaths: new Set(["pkg.models.Response"])
         });
 
         const links = extractLinksFromTypes(["pkg.models.Response"], ctx, "pkg.models");
@@ -407,7 +406,7 @@ describe("extractLinksFromTypes", () => {
 
     it("should use cross-page links when currentModulePath differs", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.models.Response"]),
+            validPaths: new Set(["pkg.models.Response"])
         });
 
         const links = extractLinksFromTypes(["pkg.models.Response"], ctx, "pkg.other");
@@ -416,7 +415,7 @@ describe("extractLinksFromTypes", () => {
 
     it("should handle multiple type strings across array items", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.Foo", "pkg.Bar", "pkg.Baz"]),
+            validPaths: new Set(["pkg.Foo", "pkg.Bar", "pkg.Baz"])
         });
 
         const links = extractLinksFromTypes(["pkg.Foo", "pkg.Bar", "pkg.Baz"], ctx);
@@ -497,11 +496,11 @@ describe("linkTypeInfo", () => {
 
     it("should return markdown link when basePath is valid", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.models.Response"]),
+            validPaths: new Set(["pkg.models.Response"])
         });
         const ti = makeTypeInfo({
             display: "Response",
-            basePath: "pkg.models.Response",
+            basePath: "pkg.models.Response"
         });
 
         expect(linkTypeInfo(ti, ctx)).toBe("[Response](/reference/pkg/models#pkg-models-Response)");
@@ -511,7 +510,7 @@ describe("linkTypeInfo", () => {
         const ctx = makeCtx({ validPaths: new Set() });
         const ti = makeTypeInfo({
             display: "ExternalType",
-            basePath: "external.ExternalType",
+            basePath: "external.ExternalType"
         });
 
         expect(linkTypeInfo(ti, ctx)).toBe("`ExternalType`");
@@ -526,11 +525,11 @@ describe("linkTypeInfo", () => {
 
     it("should escape MDX in display name", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.Foo"]),
+            validPaths: new Set(["pkg.Foo"])
         });
         const ti = makeTypeInfo({
             display: "Foo<Bar>",
-            basePath: "pkg.Foo",
+            basePath: "pkg.Foo"
         });
 
         expect(linkTypeInfo(ti, ctx)).toBe("[Foo&lt;Bar&gt;](/reference/pkg#pkg-Foo)");
@@ -538,11 +537,11 @@ describe("linkTypeInfo", () => {
 
     it("should use same-page anchors with currentModulePath", () => {
         const ctx = makeCtx({
-            validPaths: new Set(["pkg.models.Response"]),
+            validPaths: new Set(["pkg.models.Response"])
         });
         const ti = makeTypeInfo({
             display: "Response",
-            basePath: "pkg.models.Response",
+            basePath: "pkg.models.Response"
         });
 
         expect(linkTypeInfo(ti, ctx, "pkg.models")).toBe("[Response](#pkg-models-Response)");
@@ -564,7 +563,7 @@ describe("renderCodeBlockWithLinks", () => {
     it("should render code block without links", () => {
         const result = renderCodeBlockWithLinks("def foo():", {});
         expect(result).toBe(
-            `<CodeBlock showLineNumbers={false} wordWrap={true}>\n\n\`\`\`python\ndef foo():\n\`\`\`\n\n</CodeBlock>`,
+            `<CodeBlock showLineNumbers={false} wordWrap={true}>\n\n\`\`\`python\ndef foo():\n\`\`\`\n\n</CodeBlock>`
         );
     });
 
@@ -607,7 +606,7 @@ describe("formatSignatureMultiline", () => {
     it("should format multiple params with commas", () => {
         const params: SignatureParam[] = [
             { name: "x", type: "int" },
-            { name: "y", type: "str" },
+            { name: "y", type: "str" }
         ];
         const result = formatSignatureMultiline("def foo", params);
         expect(result).toBe("def foo(\n    x: int,\n    y: str\n)");

@@ -21,7 +21,7 @@ import {
     linkTypeInfo,
     type RenderContext,
     renderCodeBlockWithLinks,
-    type SignatureParam,
+    type SignatureParam
 } from "../utils/TypeLinkResolver.js";
 import { renderDocstring, renderSimpleDocstring } from "./DocstringRenderer.js";
 import { renderMethodDetailed, renderProperty } from "./FunctionRenderer.js";
@@ -94,7 +94,7 @@ function getClassBadges(cls: FdrAPI.libraryDocs.PythonClassIr): string[] {
 function renderBases(
     cls: FdrAPI.libraryDocs.PythonClassIr,
     ctx: RenderContext,
-    currentModulePath: string,
+    currentModulePath: string
 ): string | null {
     if (cls.bases.length === 0 || ["TYPEDDICT", "ENUM"].includes(cls.kind)) {
         return null;
@@ -221,7 +221,10 @@ function renderRegularClassDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: 
     // Attributes — blank line between attributes but not after last one
     const attrs = cls.attributes.filter(isAttributeMeaningful);
     for (let i = 0; i < attrs.length; i++) {
-        lines.push(renderAttribute(attrs[i]!));
+        const attr = attrs[i];
+        if (attr) {
+            lines.push(renderAttribute(attr));
+        }
         if (i < attrs.length - 1) {
             lines.push("");
         }
@@ -233,7 +236,7 @@ function renderRegularClassDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: 
         lines.push(
             method.isProperty
                 ? renderProperty(method, ctx, currentModulePath)
-                : renderMethodDetailed(method, ctx, currentModulePath),
+                : renderMethodDetailed(method, ctx, currentModulePath)
         );
     }
 
@@ -264,7 +267,12 @@ function renderTypedDictDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, _ctx: Re
     if (cls.typedDictFields && cls.typedDictFields.length > 0) {
         for (const field of cls.typedDictFields) {
             const typeDisplay = getTypeDisplay(field.typeInfo) || "Any";
-            lines.push(`<ParamField path="${field.name}" type="${escapeMdx(typeDisplay)}">`, field.description ? escapeMdx(field.description) : "", "</ParamField>", "");
+            lines.push(
+                `<ParamField path="${field.name}" type="${escapeMdx(typeDisplay)}">`,
+                field.description ? escapeMdx(field.description) : "",
+                "</ParamField>",
+                ""
+            );
         }
     }
 

@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { readFileSync, existsSync, mkdtempSync, rmSync } from "fs";
-import { join } from "path";
-import { tmpdir } from "os";
 import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "fs";
+import { tmpdir } from "os";
+import { join } from "path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { generate } from "../PythonDocsGenerator";
 
 // ---------------------------------------------------------------------------
@@ -18,13 +18,11 @@ function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrA
         classes: [],
         functions: [],
         attributes: [],
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonModuleIr;
 }
 
-function makeFunction(
-    overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>,
-): FdrAPI.libraryDocs.PythonFunctionIr {
+function makeFunction(overrides: Partial<FdrAPI.libraryDocs.PythonFunctionIr>): FdrAPI.libraryDocs.PythonFunctionIr {
     return {
         name: "func",
         path: "mod.func",
@@ -37,7 +35,7 @@ function makeFunction(
         isProperty: false,
         docstring: undefined,
         returnTypeInfo: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonFunctionIr;
 }
 
@@ -57,7 +55,7 @@ function makeClass(overrides: Partial<FdrAPI.libraryDocs.PythonClassIr>): FdrAPI
         hasSlots: false,
         typedDictFields: undefined,
         enumMembers: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.PythonClassIr;
 }
 
@@ -68,7 +66,7 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
         typeInfo: undefined,
         value: undefined,
         docstring: undefined,
-        ...overrides,
+        ...overrides
     } as FdrAPI.libraryDocs.AttributeIr;
 }
 
@@ -100,8 +98,8 @@ describe("generate()", () => {
             makeModule({
                 name: "mylib",
                 path: "mylib",
-                functions: [makeFunction({ name: "init", path: "mylib.init" })],
-            }),
+                functions: [makeFunction({ name: "init", path: "mylib.init" })]
+            })
         );
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "My Lib" });
@@ -127,8 +125,8 @@ describe("generate()", () => {
             makeModule({
                 name: "nemo_rl",
                 path: "nemo_rl",
-                functions: [makeFunction({ name: "f", path: "nemo_rl.f" })],
-            }),
+                functions: [makeFunction({ name: "f", path: "nemo_rl.f" })]
+            })
         );
 
         const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Ref" });
@@ -150,10 +148,10 @@ describe("generate()", () => {
                     makeModule({
                         name: "sub",
                         path: "pkg.sub",
-                        classes: [makeClass({ name: "C", path: "pkg.sub.C" })],
-                    }),
-                ],
-            }),
+                        classes: [makeClass({ name: "C", path: "pkg.sub.C" })]
+                    })
+                ]
+            })
         );
 
         const result = generate({ ir, outputDir: tmpDir, slug: "docs", title: "Pkg" });
@@ -168,8 +166,8 @@ describe("generate()", () => {
             makeModule({
                 name: "lib",
                 path: "lib",
-                attributes: [makeAttr({ name: "V", path: "lib.V" })],
-            }),
+                attributes: [makeAttr({ name: "V", path: "lib.V" })]
+            })
         );
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Lib" });
@@ -193,15 +191,15 @@ describe("generate()", () => {
                     makeModule({
                         name: "a",
                         path: "pkg.a",
-                        functions: [makeFunction({ name: "f", path: "pkg.a.f" })],
+                        functions: [makeFunction({ name: "f", path: "pkg.a.f" })]
                     }),
                     makeModule({
                         name: "b",
                         path: "pkg.b",
-                        attributes: [makeAttr({ name: "X", path: "pkg.b.X" })],
-                    }),
-                ],
-            }),
+                        attributes: [makeAttr({ name: "X", path: "pkg.b.X" })]
+                    })
+                ]
+            })
         );
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
@@ -221,9 +219,14 @@ describe("generate()", () => {
                 path: "pkg",
                 functions: [makeFunction({ name: "f", path: "pkg.f" })],
                 submodules: [
-                    makeModule({ name: "sub", path: "pkg.sub", docstring: { summary: "A sub." } as any }),
-                ],
-            }),
+                    makeModule({
+                        name: "sub",
+                        path: "pkg.sub",
+                        // biome-ignore lint/suspicious/noExplicitAny: partial docstring for test
+                        docstring: { summary: "A sub." } as any
+                    })
+                ]
+            })
         );
 
         generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
@@ -241,10 +244,10 @@ describe("generate()", () => {
                     makeModule({
                         name: "leaf",
                         path: "pkg.leaf",
-                        classes: [makeClass({ name: "C", path: "pkg.leaf.C" })],
-                    }),
-                ],
-            }),
+                        classes: [makeClass({ name: "C", path: "pkg.leaf.C" })]
+                    })
+                ]
+            })
         );
 
         generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
@@ -266,22 +269,22 @@ describe("generate()", () => {
                     makeModule({
                         name: "alpha",
                         path: "pkg.alpha",
-                        functions: [makeFunction({ name: "f", path: "pkg.alpha.f" })],
+                        functions: [makeFunction({ name: "f", path: "pkg.alpha.f" })]
                     }),
                     makeModule({
                         name: "beta",
                         path: "pkg.beta",
-                        classes: [makeClass({ name: "C", path: "pkg.beta.C" })],
-                    }),
-                ],
-            }),
+                        classes: [makeClass({ name: "C", path: "pkg.beta.C" })]
+                    })
+                ]
+            })
         );
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
 
         expect(result.navigation).toHaveLength(2);
-        expect(result.navigation[0]!.title).toBe("alpha");
-        expect(result.navigation[1]!.title).toBe("beta");
+        expect(result.navigation[0]?.title).toBe("alpha");
+        expect(result.navigation[1]?.title).toBe("beta");
     });
 
     it("skips empty submodules from navigation", () => {
@@ -295,10 +298,10 @@ describe("generate()", () => {
                     makeModule({
                         name: "filled",
                         path: "pkg.filled",
-                        attributes: [makeAttr({ name: "X", path: "pkg.filled.X" })],
-                    }),
-                ],
-            }),
+                        attributes: [makeAttr({ name: "X", path: "pkg.filled.X" })]
+                    })
+                ]
+            })
         );
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
@@ -308,7 +311,7 @@ describe("generate()", () => {
         // filled gets a page
         // Navigation should only include filled
         expect(result.navigation).toHaveLength(1);
-        expect(result.navigation[0]!.title).toBe("filled");
+        expect(result.navigation[0]?.title).toBe("filled");
     });
 
     // -----------------------------------------------------------------------
@@ -324,7 +327,7 @@ describe("generate()", () => {
                     makeModule({
                         name: "types",
                         path: "pkg.types",
-                        classes: [makeClass({ name: "Config", path: "pkg.types.Config" })],
+                        classes: [makeClass({ name: "Config", path: "pkg.types.Config" })]
                     }),
                     makeModule({
                         name: "core",
@@ -339,18 +342,18 @@ describe("generate()", () => {
                                         typeInfo: {
                                             display: "pkg.types.Config",
                                             resolvedPath: "pkg.types.Config",
-                                            basePath: "pkg.types.Config",
+                                            basePath: "pkg.types.Config"
                                         },
                                         default: undefined,
                                         docstring: undefined,
-                                        isRequired: true,
-                                    } as FdrAPI.libraryDocs.ParameterIr,
-                                ],
-                            }),
-                        ],
-                    }),
-                ],
-            }),
+                                        isRequired: true
+                                    } as FdrAPI.libraryDocs.ParameterIr
+                                ]
+                            })
+                        ]
+                    })
+                ]
+            })
         );
 
         generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
@@ -369,7 +372,7 @@ describe("generate()", () => {
         const leaf = makeModule({
             name: "deep",
             path: "a.b.c.deep",
-            attributes: [makeAttr({ name: "X", path: "a.b.c.deep.X" })],
+            attributes: [makeAttr({ name: "X", path: "a.b.c.deep.X" })]
         });
         const c = makeModule({ name: "c", path: "a.b.c", submodules: [leaf] });
         const b = makeModule({ name: "b", path: "a.b", submodules: [c] });

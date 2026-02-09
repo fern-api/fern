@@ -18,7 +18,7 @@ function renderDescriptionText(text: string): string {
     const sanitized = escapeMdxPreservingCodeBlocks(text);
     return sanitized.replace(
         /```(\w*)\n([\s\S]*?)\n```/g,
-        "<CodeBlock showLineNumbers={false}>\n\n```$1\n$2\n```\n\n</CodeBlock>",
+        "<CodeBlock showLineNumbers={false}>\n\n```$1\n$2\n```\n\n</CodeBlock>"
     );
 }
 
@@ -33,7 +33,7 @@ function renderDescriptionText(text: string): string {
 export function renderDocstring(
     docstring: FdrAPI.libraryDocs.DocstringIr | null | undefined,
     paramAnnotations?: Record<string, string>,
-    returnAnnotation?: string,
+    returnAnnotation?: string
 ): string {
     if (!docstring) {
         return "";
@@ -62,7 +62,12 @@ export function renderDocstring(
             }
 
             // ParamField is a JSX context — use escapeMdx (code blocks inside JSX are unreliable)
-            lines.push(`<ParamField ${attrs.join(" ")}>`, param.description ? escapeMdx(param.description) : "", "</ParamField>", "");
+            lines.push(
+                `<ParamField ${attrs.join(" ")}>`,
+                param.description ? escapeMdx(param.description) : "",
+                "</ParamField>",
+                ""
+            );
         }
     }
 
@@ -93,7 +98,16 @@ export function renderDocstring(
             if (example.description) {
                 lines.push(renderDescriptionText(example.description), "");
             }
-            lines.push("<CodeBlock showLineNumbers={false}>", "", "```python", example.code, "```", "", "</CodeBlock>", "");
+            lines.push(
+                "<CodeBlock showLineNumbers={false}>",
+                "",
+                "```python",
+                example.code,
+                "```",
+                "",
+                "</CodeBlock>",
+                ""
+            );
         }
     }
 
