@@ -2,5 +2,5 @@
 
 export interface CompletionEvent {
     delta: string;
-    tokens?: number;
+    tokens?: number | undefined;
 }
