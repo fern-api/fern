@@ -1364,6 +1364,7 @@ types:
         docs: Settings for the api playground that affect this endpoint specifically.
 
   ApiReferenceOperationConfiguration:
+    docs: Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)
     extends: [WithPermissions, WithFeatureFlags]
     properties:
       operation: string
