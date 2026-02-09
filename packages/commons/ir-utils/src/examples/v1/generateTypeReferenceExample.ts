@@ -22,6 +22,8 @@ export declare namespace generateTypeReferenceExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+
+        visitedTypes?: Set<string>;
     }
 }
 
@@ -31,7 +33,8 @@ export function generateTypeReferenceExample({
     typeDeclarations,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    visitedTypes
 }: generateTypeReferenceExample.Args): ExampleGenerationResult<ExampleTypeReference> {
     if (currentDepth > maxDepth) {
         return { type: "failure", message: `Exceeded max depth of ${maxDepth}` };
@@ -42,14 +45,21 @@ export function generateTypeReferenceExample({
             if (typeDeclaration == null) {
                 return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` };
             }
+            const visited = visitedTypes ?? new Set<string>();
+            if (visited.has(typeReference.typeId)) {
+                return { type: "failure", message: `Detected recursive type ${typeReference.typeId}` };
+            }
+            visited.add(typeReference.typeId);
             const generatedExample = generateTypeDeclarationExample({
                 fieldName,
                 typeDeclaration,
                 typeDeclarations,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes: visited
             });
+            visited.delete(typeReference.typeId);
             if (generatedExample == null) {
                 return { type: "failure", message: "Failed to generate example for type declaration" };
             }
@@ -76,7 +86,8 @@ export function generateTypeReferenceExample({
                 typeDeclarations,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes
             });
             if (generatedExample.type === "failure") {
                 const { example, jsonExample } = generateEmptyContainerExample({
