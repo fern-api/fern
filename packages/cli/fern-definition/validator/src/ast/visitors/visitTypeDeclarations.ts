@@ -1,10 +1,10 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { NodePath, RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 
-import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
-import { createDocsVisitor } from "./utils/createDocsVisitor";
-import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
-import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
+import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor.js";
+import { createDocsVisitor } from "./utils/createDocsVisitor.js";
+import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample.js";
+import { createTypeReferenceVisitor } from "./utils/visitTypeReference.js";
 
 export function visitTypeDeclarations({
     typeDeclarations,

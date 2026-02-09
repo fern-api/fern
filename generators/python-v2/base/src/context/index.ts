@@ -1,2 +1,2 @@
-export { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext";
-export { PythonTypeMapper } from "./PythonTypeMapper";
+export { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext.js";
+export { PythonTypeMapper } from "./PythonTypeMapper.js";

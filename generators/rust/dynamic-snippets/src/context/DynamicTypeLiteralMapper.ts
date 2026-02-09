@@ -2,7 +2,7 @@ import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { rust } from "@fern-api/rust-codegen";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {

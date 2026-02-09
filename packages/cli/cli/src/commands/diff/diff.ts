@@ -6,7 +6,7 @@ import { FernCliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import semver from "semver";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export type Bump = "major" | "minor" | "patch" | "no_change";
 export interface Result {

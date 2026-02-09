@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
+import { getExtension } from "../../../getExtension.js";
 
 export function getExamples(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ParameterObject): unknown[] {
     const examples = getExtension<unknown[] | Record<string, unknown>>(schema, "examples");

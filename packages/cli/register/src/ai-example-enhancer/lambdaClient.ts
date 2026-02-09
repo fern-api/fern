@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { isNetworkError } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
+import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types.js";
 
 // Configuration constants for AI enhancement
 const DEFAULT_AI_ENHANCEMENT_MAX_RETRIES = 0; // 0 retries = 1 attempt total

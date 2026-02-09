@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ObjectProperty, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import {
     FernWriters,
     getPropertyKey,
@@ -24,13 +23,13 @@ import {
     VariableStatementStructure,
     WriterFunction
 } from "ts-morph";
-import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
-import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
+import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType.js";
+import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType.js";
 
 export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends ModelContext> {
         typeName: string;
-        shape: UnionTypeDeclaration | undefined;
+        shape: FernIr.UnionTypeDeclaration | undefined;
         discriminant: string;
         getDocs: ((context: Context) => string | null | undefined) | undefined;
         parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
@@ -42,7 +41,7 @@ export declare namespace GeneratedUnionImpl {
          */
         includeConstBuilders?: boolean;
         includeOtherInUnionTypes: boolean;
-        baseProperties?: ObjectProperty[];
+        baseProperties?: FernIr.ObjectProperty[];
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
@@ -68,12 +67,12 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     private readonly getDocs: ((context: Context) => string | null | undefined) | undefined;
     private readonly typeName: string;
-    private readonly shape: UnionTypeDeclaration | undefined;
+    private readonly shape: FernIr.UnionTypeDeclaration | undefined;
     private readonly parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
     private readonly unknownSingleUnionType: ParsedSingleUnionType<Context>;
     private readonly includeUtilsOnUnionMembers: boolean;
     private readonly includeOtherInUnionTypes: boolean;
-    private readonly baseProperties: ObjectProperty[];
+    private readonly baseProperties: FernIr.ObjectProperty[];
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly includeConstBuilders: boolean;
@@ -285,7 +284,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return this._getBasePropertyKey(baseProperty);
     }
 
-    private _getBasePropertyKey(baseProperty: ObjectProperty): string {
+    private _getBasePropertyKey(baseProperty: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return baseProperty.name.name.camelCase.unsafeName;
         } else {

@@ -7,8 +7,8 @@ import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
 
 export class DynamicSnippetsRustTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;

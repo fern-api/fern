@@ -21,11 +21,11 @@ $ pnpm add @boundaryml/baml
 import type { BamlRuntime, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Video, FunctionLog } from
 "@boundaryml/baml"
 import { toBamlError, HTTPRequest } from "@boundaryml/baml"
-import type { Checked, Check } from "./types"
-import type * as types from "./types"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
-import type TypeBuilder from "./type_builder"
-import type * as events from "./events"
+import type { Checked, Check } from "./types.js"
+import type * as types from "./types.js"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types.js"
+import type TypeBuilder from "./type_builder.js"
+import type * as events from "./events.js"
 
 type TickReason = "Unknown";
 

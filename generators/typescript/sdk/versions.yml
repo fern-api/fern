@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.0
+  changelogEntry:
+    - summary: |
+        Add support for TypeScript's `exactOptionalPropertyTypes` compiler option when `noSerdeLayer: true`.
+        Optional properties are now generated as `propName?: Type | undefined` instead of `propName?: Type`,
+        allowing users to explicitly set properties to `undefined` (not just omit them). This prevents
+        double unions like `(T | undefined) | undefined` by stripping top-level undefined before adding
+        the union.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
 - version: 3.46.3
   changelogEntry:
     - summary: |

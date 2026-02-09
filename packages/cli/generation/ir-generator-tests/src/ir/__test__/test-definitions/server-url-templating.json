@@ -3230,12 +3230,107 @@
                         }
                     },
                     "urls": {
-                        "Base": "https://api.us-east-1.prod.example.com/v1",
-                        "Auth": "https://auth.us-east-1.example.com"
+                        "Base": "https://api.example.com/v1",
+                        "Auth": "https://auth.example.com"
                     },
-                    "defaultUrls": null,
-                    "urlTemplates": null,
-                    "urlVariables": null,
+                    "defaultUrls": {
+                        "Base": "https://api.example.com/v1",
+                        "Auth": "https://auth.example.com"
+                    },
+                    "urlTemplates": {
+                        "Base": "https://api.{region}.{environment}.example.com/v1",
+                        "Auth": "https://auth.{region}.example.com"
+                    },
+                    "urlVariables": {
+                        "Base": [
+                            {
+                                "id": "region",
+                                "name": {
+                                    "originalName": "region",
+                                    "camelCase": {
+                                        "unsafeName": "region",
+                                        "safeName": "region"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "region",
+                                        "safeName": "region"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REGION",
+                                        "safeName": "REGION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Region",
+                                        "safeName": "Region"
+                                    }
+                                },
+                                "default": "us-east-1",
+                                "values": [
+                                    "us-east-1",
+                                    "us-west-2",
+                                    "eu-west-1"
+                                ]
+                            },
+                            {
+                                "id": "environment",
+                                "name": {
+                                    "originalName": "environment",
+                                    "camelCase": {
+                                        "unsafeName": "environment",
+                                        "safeName": "environment"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "environment",
+                                        "safeName": "environment"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ENVIRONMENT",
+                                        "safeName": "ENVIRONMENT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Environment",
+                                        "safeName": "Environment"
+                                    }
+                                },
+                                "default": "prod",
+                                "values": [
+                                    "prod",
+                                    "staging",
+                                    "dev"
+                                ]
+                            }
+                        ],
+                        "Auth": [
+                            {
+                                "id": "region",
+                                "name": {
+                                    "originalName": "region",
+                                    "camelCase": {
+                                        "unsafeName": "region",
+                                        "safeName": "region"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "region",
+                                        "safeName": "region"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REGION",
+                                        "safeName": "REGION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Region",
+                                        "safeName": "Region"
+                                    }
+                                },
+                                "default": "us-east-1",
+                                "values": [
+                                    "us-east-1",
+                                    "us-west-2",
+                                    "eu-west-1"
+                                ]
+                            }
+                        ]
+                    },
                     "docs": null
                 }
             ]
@@ -3846,8 +3941,8 @@
                             }
                         },
                         "urls": {
-                            "Base": "https://api.us-east-1.prod.example.com/v1",
-                            "Auth": "https://auth.us-east-1.example.com"
+                            "Base": "https://api.example.com/v1",
+                            "Auth": "https://auth.example.com"
                         },
                         "docs": null
                     }

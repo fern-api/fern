@@ -4,27 +4,29 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.8.13
+        version: 3.46.3
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: '@fern-fern/ir-v38-sdk'
+          package-name: "@fern-fern/ir-v38-sdk"
         config:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+          noSerdeLayer: false
         smart-casing: false
   sdks:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.8.13
+        version: 3.46.3
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: '@fern-fern/ir-v38-sdk'
+          package-name: "@fern-fern/ir-v38-sdk"
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
+          noSerdeLayer: false
         smart-casing: false
       - name: fernapi/java-model
         version: 0.5.20

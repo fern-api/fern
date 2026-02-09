@@ -1,8 +1,8 @@
 import { Pagination } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 declare namespace Raw {
     export type PaginationExtensionSchema = boolean | CursorPaginationExtensionSchema | OffsetPaginationExtensionSchema;

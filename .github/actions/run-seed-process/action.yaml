@@ -63,20 +63,12 @@ runs:
       uses: actions/checkout@v4
 
     - name: Run seed
-      if: ${{ steps.json-to-string.outputs.as-string != 'leftovers' }}
       uses: ./.github/actions/cached-seed
       with:
         generator-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
         skip-scripts: ${{ inputs.skip-scripts }}
-
-    - name: Handle Seed Leftover Tests
-      if: ${{ steps.json-to-string.outputs.as-string == 'leftovers' }}
-      uses: ./.github/actions/handle-leftover-seed-tests
-      with:
-        sdk-name: ${{ inputs.sdk-name }}
-        generator-path: ${{ inputs.generator-path }}
 
     - name: Summarize Test Results
       if: always() && !cancelled()

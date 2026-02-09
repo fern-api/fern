@@ -2,12 +2,12 @@
 
 export interface CreateUserRequest {
     email: string;
-    email_verified?: boolean;
-    username?: string;
-    password?: string;
-    phone_number?: string;
-    phone_verified?: boolean;
-    user_metadata?: Record<string, unknown>;
-    app_metadata?: Record<string, unknown>;
+    email_verified?: boolean | undefined;
+    username?: string | undefined;
+    password?: string | undefined;
+    phone_number?: string | undefined;
+    phone_verified?: boolean | undefined;
+    user_metadata?: Record<string, unknown> | undefined;
+    app_metadata?: Record<string, unknown> | undefined;
     connection: string;
 }

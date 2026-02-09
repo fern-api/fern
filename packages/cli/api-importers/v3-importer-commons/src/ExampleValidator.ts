@@ -1,8 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverterContext } from "./AbstractConverterContext";
-import { ExampleConverter } from "./converters/ExampleConverter";
-import { APIError, APIErrorLevel } from "./ErrorCollector";
+import { AbstractConverterContext } from "./AbstractConverterContext.js";
+import { ExampleConverter } from "./converters/ExampleConverter.js";
+import { APIError, APIErrorLevel } from "./ErrorCollector.js";
 
 /**
  * Source of the example being validated

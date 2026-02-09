@@ -7,7 +7,7 @@ import {
     getFrontmatterTitle,
     nameToSlug,
     nameToTitle
-} from "../navigationUtils";
+} from "../navigationUtils.js";
 
 describe("nameToSlug", () => {
     it("should convert filename with .md extension to slug", () => {

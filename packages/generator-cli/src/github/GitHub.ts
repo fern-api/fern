@@ -1,9 +1,8 @@
 import { cwd, resolve } from "@fern-api/fs-utils";
-import { cloneRepository, parseRepository } from "@fern-api/github";
-import type { ClonedRepository } from "@fern-api/github/src/ClonedRepository";
+import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
 
-import type { FernGeneratorCli } from "../configuration/sdk";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
 
 export class GitHub {
     private githubConfig: FernGeneratorCli.GitHubConfig;

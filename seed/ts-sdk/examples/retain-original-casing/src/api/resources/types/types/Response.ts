@@ -18,6 +18,6 @@ import type * as SeedExamples from "../../../index.js";
  *     }
  */
 export interface Response {
-    response?: unknown;
+    response?: unknown | undefined;
     identifiers: SeedExamples.Identifier[];
 }

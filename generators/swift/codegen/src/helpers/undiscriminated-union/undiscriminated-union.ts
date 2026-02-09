@@ -1,6 +1,6 @@
 import { assertNever, assertNonNull } from "@fern-api/core-utils";
 import { camelCase, upperFirst } from "lodash-es";
-import { NameRegistry, swift } from "../..";
+import { NameRegistry, swift } from "../../index.js";
 
 const CASE_LABELS_BY_SWIFT_SYMBOL_NAME: Record<swift.SwiftTypeSymbolName, string> = {
     String: "string",

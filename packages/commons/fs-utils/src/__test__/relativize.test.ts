@@ -1,6 +1,6 @@
-import { AbsoluteFilePath } from "../AbsoluteFilePath";
-import { RelativeFilePath } from "../RelativeFilePath";
-import { relativize } from "../relativize";
+import { AbsoluteFilePath } from "../AbsoluteFilePath.js";
+import { RelativeFilePath } from "../RelativeFilePath.js";
+import { relativize } from "../relativize.js";
 
 describe("join", () => {
     it("simple", async () => {

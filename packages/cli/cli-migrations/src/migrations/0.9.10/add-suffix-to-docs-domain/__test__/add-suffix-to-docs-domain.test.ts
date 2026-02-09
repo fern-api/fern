@@ -3,7 +3,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { cp, readFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { migration } from "../migration";
+import { migration } from "../migration.js";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 

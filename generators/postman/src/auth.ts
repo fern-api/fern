@@ -1,15 +1,14 @@
-import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api";
-
-import { getReferenceToVariable } from "./utils";
+import { getReferenceToVariable } from "./utils.js";
 
 const BASIC_AUTH_USERNAME_VARIABLE = "username";
 const BASIC_AUTH_PASSWORD_VARIABLE = "password";
 const BEARER_AUTH_TOKEN_VARIABLE = "token";
 
-export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefined {
+export function convertAuth(schemes: FernIr.AuthScheme[]): PostmanRequestAuth | undefined {
     for (const scheme of schemes) {
-        const auth = AuthScheme._visit<PostmanRequestAuth | undefined>(scheme, {
+        const auth = FernIr.AuthScheme._visit<PostmanRequestAuth | undefined>(scheme, {
             basic: () => ({
                 type: "basic",
                 basic: [
@@ -80,9 +79,9 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
     return undefined;
 }
 
-export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
+export function getAuthHeaders(schemes: FernIr.AuthScheme[]): PostmanHeader[] {
     return schemes.flatMap((scheme) =>
-        AuthScheme._visit<PostmanHeader[]>(scheme, {
+        FernIr.AuthScheme._visit<PostmanHeader[]>(scheme, {
             basic: () => [],
             bearer: () => [],
             oauth: () => [],
@@ -101,8 +100,8 @@ export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
     );
 }
 
-export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[] {
-    return AuthScheme._visit(scheme, {
+export function getVariablesForAuthScheme(scheme: FernIr.AuthScheme): PostmanVariable[] {
+    return FernIr.AuthScheme._visit(scheme, {
         basic: () => [
             {
                 key: BASIC_AUTH_USERNAME_VARIABLE,
@@ -142,6 +141,6 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
     });
 }
 
-function getVariableForAuthHeader(header: HeaderAuthScheme): string {
+function getVariableForAuthHeader(header: FernIr.HeaderAuthScheme): string {
     return header.name.name.camelCase.unsafeName;
 }

@@ -16,9 +16,9 @@ import {
     validateAndSanitizeCrateName
 } from "@fern-api/rust-base";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;

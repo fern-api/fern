@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { MetadataSchema } from "./MetadataSchema";
-import { OutputSchema } from "./OutputSchema";
-import { PublishSchema } from "./PublishSchema";
-import { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema";
+import { MetadataSchema } from "./MetadataSchema.js";
+import { OutputSchema } from "./OutputSchema.js";
+import { PublishSchema } from "./PublishSchema.js";
+import { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema.js";
 
 export const SdkTargetSchema = z.object({
     api: z.string().optional(),

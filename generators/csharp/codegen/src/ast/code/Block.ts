@@ -1,9 +1,9 @@
-import { type Generation } from "../../context/generation-info";
-import { is } from "../../utils/type-guards";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { CodeBlock } from "../language/CodeBlock";
-import { NamedNode, Statement } from "../language/Expression";
+import { type Generation } from "../../context/generation-info.js";
+import { is } from "../../utils/type-guards.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { CodeBlock } from "../language/CodeBlock.js";
+import { NamedNode, Statement } from "../language/Expression.js";
 export declare namespace Block {
     interface Args {}
 }

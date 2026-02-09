@@ -1,6 +1,6 @@
-import { AstNode } from "./core/AstNode";
-import { Type } from "./Type";
-import { TypeParameter } from "./TypeParameter";
+import { AstNode } from "./core/AstNode.js";
+import { Type } from "./Type.js";
+import { TypeParameter } from "./TypeParameter.js";
 
 export declare namespace Parameter {
     interface Args {

@@ -1,4 +1,4 @@
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const NoMissingAuthRule: Rule = {
     name: "no-missing-auth",

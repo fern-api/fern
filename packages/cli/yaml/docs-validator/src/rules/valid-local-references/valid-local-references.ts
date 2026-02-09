@@ -2,7 +2,7 @@ import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 /**
  * Validates that a reference path exists in the OpenAPI specification

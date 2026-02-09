@@ -46,6 +46,7 @@ class EchoRequest extends JsonSerializableType
     public function setName(string $value): self
     {
         $this->name = $value;
+        $this->_setField('name');
         return $this;
     }
 
@@ -63,6 +64,7 @@ class EchoRequest extends JsonSerializableType
     public function setSize(int $value): self
     {
         $this->size = $value;
+        $this->_setField('size');
         return $this;
     }
 

@@ -8,9 +8,9 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 
-import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer";
-import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
-import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
+import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer/index.js";
+import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth.js";
+import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi.js";
 
 export async function registerApi({
     organization,

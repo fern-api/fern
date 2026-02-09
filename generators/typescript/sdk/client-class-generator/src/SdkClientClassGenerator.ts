@@ -1,13 +1,13 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl.js";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         errorResolver: ErrorResolver;
         packageResolver: PackageResolver;
         neverThrowErrors: boolean;
@@ -44,7 +44,7 @@ export declare namespace SdkClientClassGenerator {
 }
 
 export class SdkClientClassGenerator {
-    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly errorResolver: ErrorResolver;
     private readonly packageResolver: PackageResolver;
     private readonly neverThrowErrors: boolean;

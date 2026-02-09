@@ -1,9 +1,9 @@
-import { HttpService } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedExpressService } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedExpressServiceImpl } from "./GeneratedExpressServiceImpl";
+import { GeneratedExpressServiceImpl } from "./GeneratedExpressServiceImpl.js";
 
 export declare namespace ExpressServiceGenerator {
     export interface Init {
@@ -18,7 +18,7 @@ export declare namespace ExpressServiceGenerator {
     export namespace generateService {
         export interface Args {
             packageId: PackageId;
-            service: HttpService;
+            service: FernIr.HttpService;
             serviceClassName: string;
         }
     }

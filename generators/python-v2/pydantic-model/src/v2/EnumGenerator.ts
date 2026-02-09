@@ -1,17 +1,16 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { EnumTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-
-import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator {
     constructor(
-        private readonly typeId: TypeId,
+        private readonly typeId: FernIr.TypeId,
         private readonly context: PydanticModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly enumDeclaration: EnumTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly enumDeclaration: FernIr.EnumTypeDeclaration
     ) {}
 
     public doGenerate(): WriteablePythonFile {

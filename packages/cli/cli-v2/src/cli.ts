@@ -1,12 +1,12 @@
 import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { addAuthCommand } from "./commands/auth";
-import { addCheckCommand } from "./commands/check";
-import { addConfigCommand } from "./commands/config";
-import { addSdkCommand } from "./commands/sdk";
-import { GlobalArgs } from "./context/GlobalArgs";
-import { Version } from "./version";
+import { addAuthCommand } from "./commands/auth/index.js";
+import { addCheckCommand } from "./commands/check/index.js";
+import { addConfigCommand } from "./commands/config/index.js";
+import { addSdkCommand } from "./commands/sdk/index.js";
+import { GlobalArgs } from "./context/GlobalArgs.js";
+import { Version } from "./version.js";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
     const cli = createCliV2(argv);

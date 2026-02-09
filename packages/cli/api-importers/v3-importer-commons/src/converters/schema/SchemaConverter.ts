@@ -2,15 +2,15 @@ import * as FernIr from "@fern-api/ir-sdk";
 import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, Extensions } from "../..";
-import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
-import { ExampleConverter } from "../ExampleConverter";
-import { ArraySchemaConverter } from "./ArraySchemaConverter";
-import { EnumSchemaConverter } from "./EnumSchemaConverter";
-import { MapSchemaConverter } from "./MapSchemaConverter";
-import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
-import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
-import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
+import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
+import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
+import { ExampleConverter } from "../ExampleConverter.js";
+import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
+import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
+import { MapSchemaConverter } from "./MapSchemaConverter.js";
+import { ObjectSchemaConverter } from "./ObjectSchemaConverter.js";
+import { OneOfSchemaConverter } from "./OneOfSchemaConverter.js";
+import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter.js";
 
 const TYPE_INVARIANT_KEYS = [
     "description",

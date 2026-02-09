@@ -1,9 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { ClassReference } from "./ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { TypeParameter } from "./TypeParameter";
+import { ClassReference } from "./ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { TypeParameter } from "./TypeParameter.js";
 
 interface Self {
     type: "self";

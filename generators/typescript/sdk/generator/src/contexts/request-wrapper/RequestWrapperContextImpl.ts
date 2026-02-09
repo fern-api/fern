@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
 
-import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
+import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer.js";
 
 export declare namespace RequestWrapperContextImpl {
     export interface Init {
@@ -75,7 +75,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.parameterNaming = parameterNaming;
     }
 
-    public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
+    public shouldInlinePathParameters(sdkRequest: FernIr.SdkRequest | undefined | null): boolean {
         if (!this.inlinePathParameters) {
             return false;
         }
@@ -99,7 +99,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         return false;
     }
 
-    public getGeneratedRequestWrapper(packageId: PackageId, endpointName: Name): GeneratedRequestWrapper {
+    public getGeneratedRequestWrapper(packageId: PackageId, endpointName: FernIr.Name): GeneratedRequestWrapper {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
@@ -126,7 +126,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         });
     }
 
-    public getReferenceToRequestWrapper(packageId: PackageId, endpointName: Name): ts.TypeNode {
+    public getReferenceToRequestWrapper(packageId: PackageId, endpointName: FernIr.Name): ts.TypeNode {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName

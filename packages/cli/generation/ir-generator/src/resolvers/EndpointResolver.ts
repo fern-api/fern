@@ -8,9 +8,9 @@ import { CasingsGenerator } from "@fern-api/casings-generator";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { HttpMethod } from "@fern-api/ir-sdk";
 
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
-import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";
-import { ResolvedEndpoint } from "./ResolvedEndpoint";
+import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
+import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName.js";
+import { ResolvedEndpoint } from "./ResolvedEndpoint.js";
 
 export interface EndpointResolver {
     // Resolves an endpoint reference specified in a Fern definition (e.g. "auth.getToken").

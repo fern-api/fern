@@ -1,9 +1,10 @@
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+type TypeReference = FernIr.TypeReference;
+
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 interface TypeInfo {
     isOptional: boolean;

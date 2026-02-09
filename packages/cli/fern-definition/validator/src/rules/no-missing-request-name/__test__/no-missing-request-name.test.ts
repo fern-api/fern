@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoMissingRequestNameRule } from "../no-missing-request-name";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoMissingRequestNameRule } from "../no-missing-request-name.js";
 
 describe("no-missing-request-name", () => {
     it("simple", async () => {

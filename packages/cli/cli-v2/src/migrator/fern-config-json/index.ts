@@ -1,1 +1,1 @@
-export { FernConfigJsonMigrator } from "./FernConfigJsonMigrator";
+export { FernConfigJsonMigrator } from "./FernConfigJsonMigrator.js";

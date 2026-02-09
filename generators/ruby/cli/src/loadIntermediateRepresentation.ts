@@ -1,11 +1,11 @@
 import { parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
-export async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    return await parseIR<IntermediateRepresentation>({
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
+export async function loadIntermediateRepresentation(pathToFile: string): Promise<FernIr.IntermediateRepresentation> {
+    return await parseIR<FernIr.IntermediateRepresentation>({
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
     });

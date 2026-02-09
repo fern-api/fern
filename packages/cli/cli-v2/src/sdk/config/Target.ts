@@ -1,5 +1,5 @@
 import { schemas } from "@fern-api/config";
-import type { Language } from "./Language";
+import type { Language } from "./Language.js";
 
 export interface Target {
     /** Target name from fern.yml (e.g., "node", "python") */

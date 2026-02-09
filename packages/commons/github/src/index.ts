@@ -1,7 +1,7 @@
-export { ClonedRepository } from "./ClonedRepository";
-export { cloneRepository } from "./cloneRepository";
-export { createOrUpdatePullRequest } from "./createOrUpdatePullRequest";
-export { deleteBranch } from "./deleteBranch";
-export { getLatestTag } from "./getLatestTag";
-export { getOrUpdateBranch } from "./getOrUpdateBranch";
-export { parseRepository } from "./parseRepository";
+export { ClonedRepository } from "./ClonedRepository.js";
+export { cloneRepository } from "./cloneRepository.js";
+export { createOrUpdatePullRequest } from "./createOrUpdatePullRequest.js";
+export { deleteBranch } from "./deleteBranch.js";
+export { getLatestTag } from "./getLatestTag.js";
+export { getOrUpdateBranch } from "./getOrUpdateBranch.js";
+export { parseRepository } from "./parseRepository.js";

@@ -1,4 +1,4 @@
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
 import {
@@ -14,17 +14,17 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { AbstractGeneratedType } from "../AbstractGeneratedType";
+import { AbstractGeneratedType } from "../AbstractGeneratedType.js";
 
 export declare namespace GeneratedEnumTypeImpl {
-    export interface Init<Context> extends AbstractGeneratedType.Init<EnumTypeDeclaration, Context> {
+    export interface Init<Context> extends AbstractGeneratedType.Init<FernIr.EnumTypeDeclaration, Context> {
         includeEnumUtils: boolean;
         enableForwardCompatibleEnums: boolean;
     }
 }
 
 export class GeneratedEnumTypeImpl<Context extends BaseContext>
-    extends AbstractGeneratedType<EnumTypeDeclaration, Context>
+    extends AbstractGeneratedType<FernIr.EnumTypeDeclaration, Context>
     implements GeneratedEnumType<Context>
 {
     private static readonly VISITOR_INTERFACE_NAME = "Visitor";
@@ -479,7 +479,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         return enumModule;
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: FernIr.ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "enum") {
             throw new Error("Example is not for an enum");
         }
@@ -505,11 +505,11 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         }
     }
 
-    private getEnumValueName(enumValue: EnumValue): string {
+    private getEnumValueName(enumValue: FernIr.EnumValue): string {
         return enumValue.name.name.pascalCase.unsafeName;
     }
 
-    private getEnumValueVisitPropertyName(enumValue: EnumValue): string {
+    private getEnumValueVisitPropertyName(enumValue: FernIr.EnumValue): string {
         return enumValue.name.name.camelCase.unsafeName;
     }
 }

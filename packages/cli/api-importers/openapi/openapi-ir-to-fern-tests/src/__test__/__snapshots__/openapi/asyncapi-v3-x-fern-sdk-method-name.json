@@ -87,7 +87,21 @@
           "docs": "Chat channel for testing custom method names",
           "examples": [
             {
-              "messages": [],
+              "messages": [
+                {
+                  "body": {
+                    "text": "text",
+                  },
+                  "type": "userMessage",
+                },
+                {
+                  "body": {
+                    "message": "message",
+                    "type": "info",
+                  },
+                  "type": "serverNotification",
+                },
+              ],
             },
           ],
           "messages": {
@@ -122,7 +136,14 @@
       origin: client
       body: root.UserMessagePayload
   examples:
-    - messages: []
+    - messages:
+        - type: userMessage
+          body:
+            text: text
+        - type: serverNotification
+          body:
+            message: message
+            type: info
 imports:
   root: __package__.yml
 ",

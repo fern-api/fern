@@ -1,1 +1,1 @@
-export { ValidLocalReferencesRule } from "./valid-local-references";
+export { ValidLocalReferencesRule } from "./valid-local-references.js";

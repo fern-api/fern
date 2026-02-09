@@ -1,25 +1,25 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
-import { isFieldRecursive } from "../utils/recursiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export class StructGenerator {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly objectTypeDeclaration: ObjectTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly objectTypeDeclaration: FernIr.ObjectTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
     public constructor(
-        typeDeclaration: TypeDeclaration,
-        objectTypeDeclaration: ObjectTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration,
+        objectTypeDeclaration: FernIr.ObjectTypeDeclaration,
         context: ModelGeneratorContext
     ) {
         this.typeDeclaration = typeDeclaration;
@@ -103,7 +103,7 @@ export class StructGenerator {
         return attributes;
     }
 
-    private generateRustFieldForProperty(property: ObjectProperty): rust.Field {
+    private generateRustFieldForProperty(property: FernIr.ObjectProperty): rust.Field {
         // Find the typeId for this struct to detect recursive fields
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 

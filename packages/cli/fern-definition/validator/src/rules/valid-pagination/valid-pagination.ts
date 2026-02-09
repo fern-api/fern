@@ -1,11 +1,11 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
 
-import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import { validateCursorPagination } from "./validateCursorPagination";
-import { validateCustomPagination } from "./validateCustomPagination";
-import { validateOffsetPagination } from "./validateOffsetPagination";
+import { Rule } from "../../Rule.js";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
+import { validateCursorPagination } from "./validateCursorPagination.js";
+import { validateCustomPagination } from "./validateCustomPagination.js";
+import { validateOffsetPagination } from "./validateOffsetPagination.js";
 
 export const ValidPaginationRule: Rule = {
     name: "valid-pagination",

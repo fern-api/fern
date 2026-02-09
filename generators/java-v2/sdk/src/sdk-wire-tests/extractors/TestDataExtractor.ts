@@ -1,12 +1,5 @@
-import {
-    ExampleEndpointCall,
-    ExampleRequestBody,
-    ExampleResponse,
-    ExampleTypeReference,
-    HttpEndpoint,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 /**
  * Extracts test data directly from the static IR for wire test validation.
@@ -16,7 +9,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 export class WireTestDataExtractor {
     constructor(private readonly context: SdkGeneratorContext) {}
 
-    public getTestExamples(endpoint: HttpEndpoint): WireTestExample[] {
+    public getTestExamples(endpoint: FernIr.HttpEndpoint): WireTestExample[] {
         const examples: WireTestExample[] = [];
 
         for (const userExample of endpoint.userSpecifiedExamples) {
@@ -42,7 +35,10 @@ export class WireTestDataExtractor {
         return examples;
     }
 
-    private extractTestExample(example: ExampleEndpointCall, endpoint: HttpEndpoint): WireTestExample | undefined {
+    private extractTestExample(
+        example: FernIr.ExampleEndpointCall,
+        endpoint: FernIr.HttpEndpoint
+    ): WireTestExample | undefined {
         const requestBody = this.extractRequestBody(example.request, endpoint);
 
         return {
@@ -61,7 +57,10 @@ export class WireTestDataExtractor {
         };
     }
 
-    private extractRequestBody(request: ExampleRequestBody | undefined, endpoint: HttpEndpoint): unknown | undefined {
+    private extractRequestBody(
+        request: FernIr.ExampleRequestBody | undefined,
+        endpoint: FernIr.HttpEndpoint
+    ): unknown | undefined {
         if (!request) {
             return undefined;
         }
@@ -101,7 +100,7 @@ export class WireTestDataExtractor {
      * Checks if the body is an empty object ({}) for an optional request body type.
      * Empty objects for optional request bodies should be treated as undefined to skip validation.
      */
-    private isEmptyObjectForOptionalRequest(body: unknown, endpoint: HttpEndpoint): boolean {
+    private isEmptyObjectForOptionalRequest(body: unknown, endpoint: FernIr.HttpEndpoint): boolean {
         if (typeof body !== "object" || body === null || Array.isArray(body)) {
             return false;
         }
@@ -129,7 +128,7 @@ export class WireTestDataExtractor {
      * The Java generator does not support base properties on unions, so we need to
      * remove them from expected JSON to match the actual SDK output.
      */
-    private pruneUnionBaseProperties(body: unknown, endpoint: HttpEndpoint): unknown {
+    private pruneUnionBaseProperties(body: unknown, endpoint: FernIr.HttpEndpoint): unknown {
         if (!body || typeof body !== "object") {
             return body;
         }
@@ -170,7 +169,7 @@ export class WireTestDataExtractor {
      * Removes base properties from a union type's JSON representation.
      * Also handles arrays of unions (e.g., list<BigUnion>).
      */
-    private pruneBasePropertiesFromUnion(body: unknown, typeDecl: TypeDeclaration): unknown {
+    private pruneBasePropertiesFromUnion(body: unknown, typeDecl: FernIr.TypeDeclaration): unknown {
         if (!body) {
             return body;
         }
@@ -203,7 +202,7 @@ export class WireTestDataExtractor {
         return prunedBody;
     }
 
-    private extractResponseBody(response: ExampleResponse | undefined): unknown | undefined {
+    private extractResponseBody(response: FernIr.ExampleResponse | undefined): unknown | undefined {
         if (!response) {
             return undefined;
         }
@@ -232,7 +231,7 @@ export class WireTestDataExtractor {
         });
     }
 
-    private getResponseStatusCode(response: ExampleResponse | undefined): number {
+    private getResponseStatusCode(response: FernIr.ExampleResponse | undefined): number {
         if (!response) {
             return 200;
         }
@@ -247,7 +246,7 @@ export class WireTestDataExtractor {
         });
     }
 
-    private extractHeaders(example: ExampleEndpointCall): Record<string, string> {
+    private extractHeaders(example: FernIr.ExampleEndpointCall): Record<string, string> {
         const headers: Record<string, string> = {};
 
         [...(example.serviceHeaders ?? []), ...(example.endpointHeaders ?? [])].forEach((header) => {
@@ -257,7 +256,7 @@ export class WireTestDataExtractor {
         return headers;
     }
 
-    private extractQueryParams(example: ExampleEndpointCall): Record<string, string> {
+    private extractQueryParams(example: FernIr.ExampleEndpointCall): Record<string, string> {
         const params: Record<string, string> = {};
 
         (example.queryParameters ?? []).forEach((param) => {
@@ -267,7 +266,7 @@ export class WireTestDataExtractor {
         return params;
     }
 
-    private extractPathParams(example: ExampleEndpointCall): Record<string, string> {
+    private extractPathParams(example: FernIr.ExampleEndpointCall): Record<string, string> {
         const params: Record<string, string> = {};
 
         [
@@ -281,7 +280,7 @@ export class WireTestDataExtractor {
         return params;
     }
 
-    private createRawJsonExample(typeRef: ExampleTypeReference): unknown {
+    private createRawJsonExample(typeRef: FernIr.ExampleTypeReference): unknown {
         return typeRef.jsonExample;
     }
 }

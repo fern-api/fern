@@ -1,7 +1,7 @@
 import { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
-import { Source } from "./Source";
+import { Source } from "./Source.js";
 
 export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec | GraphQLSpec;
 

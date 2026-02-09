@@ -1,12 +1,12 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { TaskResult } from "@fern-api/task-context";
 
-import { IrVersions } from "../../ir-versions";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
+} from "../../types/IrMigration.js";
 
 export const V9_TO_V8_MIGRATION: IrMigration<
     IrVersions.V9.ir.IntermediateRepresentation,

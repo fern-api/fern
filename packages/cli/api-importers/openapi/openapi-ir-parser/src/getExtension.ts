@@ -2,10 +2,10 @@ import { Logger } from "@fern-api/logger";
 import { compact } from "lodash-es";
 import { z } from "zod";
 
-import { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
-import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
-import { TypedExtensionId } from "./openapi/v3/extensions/id";
-import { ReadmeOpenAPIExtension } from "./openapi/v3/extensions/readmeExtensions";
+import { OpenAPIExtension } from "./openapi/v3/extensions/extensions.js";
+import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions.js";
+import { TypedExtensionId } from "./openapi/v3/extensions/id.js";
+import { ReadmeOpenAPIExtension } from "./openapi/v3/extensions/readmeExtensions.js";
 
 type Extension<T> =
     | FernOpenAPIExtension

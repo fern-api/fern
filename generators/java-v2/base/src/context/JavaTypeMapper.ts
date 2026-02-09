@@ -1,13 +1,11 @@
+import { assertNever } from "@fern-api/core-utils";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
-
-import { ContainerType, Literal, PrimitiveType, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { assertNever } from "../../../../../packages/commons/core-utils/src";
-import { AbstractJavaGeneratorContext } from "./AbstractJavaGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractJavaGeneratorContext } from "./AbstractJavaGeneratorContext.js";
 
 export declare namespace JavaTypeMapper {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
     }
 }
 
@@ -35,7 +33,7 @@ export class JavaTypeMapper {
         }
     }
 
-    public convertNamed({ reference }: { reference: TypeReference & { type: "named" } }): java.Type {
+    public convertNamed({ reference }: { reference: FernIr.TypeReference & { type: "named" } }): java.Type {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(reference.typeId);
 
         if (!this.wrappedAliases && typeDeclaration.shape.type === "alias") {
@@ -58,7 +56,7 @@ export class JavaTypeMapper {
         return java.Type.reference(this.context.getJavaClassReferenceFromTypeId(typeId));
     }
 
-    public convertContainer({ container }: { container: ContainerType }): java.Type {
+    public convertContainer({ container }: { container: FernIr.ContainerType }): java.Type {
         switch (container.type) {
             case "list":
                 return java.Type.list(this.convert({ reference: container.list }));
@@ -80,7 +78,7 @@ export class JavaTypeMapper {
         }
     }
 
-    public convertLiteral({ literal }: { literal: Literal }): java.Type {
+    public convertLiteral({ literal }: { literal: FernIr.Literal }): java.Type {
         switch (literal.type) {
             case "string":
                 return java.Type.string();
@@ -91,8 +89,8 @@ export class JavaTypeMapper {
         }
     }
 
-    public convertPrimitive({ primitive }: { primitive: PrimitiveType }): java.Type {
-        return PrimitiveTypeV1._visit<java.Type>(primitive.v1, {
+    public convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): java.Type {
+        return FernIr.PrimitiveTypeV1._visit<java.Type>(primitive.v1, {
             integer: () => java.Type.integer(),
             long: () => java.Type.long(),
             uint: () => java.Type.integer(),

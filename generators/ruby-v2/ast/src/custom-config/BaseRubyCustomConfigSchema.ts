@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 export const BaseRubyCustomConfigSchema = z.object({
     // The Ruby module name used for folder structure and module naming (e.g., "Square" -> lib/square/, module Square)

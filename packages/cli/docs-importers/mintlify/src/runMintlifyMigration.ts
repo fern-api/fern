@@ -4,7 +4,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 
-import { MintlifyImporter } from "./MintlifyImporter";
+import { MintlifyImporter } from "./MintlifyImporter.js";
 
 interface RunMintlifyMigrationParams {
     absolutePathToMintJson: AbsoluteFilePath;

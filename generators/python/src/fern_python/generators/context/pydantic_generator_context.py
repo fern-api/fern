@@ -115,7 +115,7 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_initializer_for_type_reference(
-        self, type_reference: ir_types.TypeReference
+        self, type_reference: ir_types.TypeReference, *, for_request_param: bool = False
     ) -> Optional[AST.Expression]: ...
 
     @abstractmethod

@@ -1,31 +1,30 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { HttpEndpointSecurity } from "@fern-api/fern-definition-schema/src/schemas";
 import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildEndpointExample } from "./buildEndpointExample";
-import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
-import { buildHeader } from "./buildHeader";
-import { buildPathParameter } from "./buildPathParameter";
-import { buildQueryParameter } from "./buildQueryParameter";
-import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertFullExample } from "./utils/convertFullExample";
-import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
-import { convertToHttpMethod } from "./utils/convertToHttpMethod";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
+import { buildEndpointExample } from "./buildEndpointExample.js";
+import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition.js";
+import { buildHeader } from "./buildHeader.js";
+import { buildPathParameter } from "./buildPathParameter.js";
+import { buildQueryParameter } from "./buildQueryParameter.js";
+import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { State } from "./State.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertFullExample } from "./utils/convertFullExample.js";
+import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils/convertSdkGroupName.js";
+import { convertToHttpMethod } from "./utils/convertToHttpMethod.js";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup.js";
 import {
     getDocsFromTypeReference,
     getTypeFromTypeReference,
     stripNullableWrapperForExtends
-} from "./utils/getTypeFromTypeReference";
-import { isWriteMethod } from "./utils/isWriteMethod";
+} from "./utils/getTypeFromTypeReference.js";
+import { isWriteMethod } from "./utils/isWriteMethod.js";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -404,7 +403,7 @@ function convertEndpointAuth({
 }: {
     endpoint: Endpoint;
     context: OpenApiIrConverterContext;
-}): true | undefined | HttpEndpointSecurity {
+}): true | undefined | RawSchemas.HttpEndpointSecurity {
     if (endpoint.security == null) {
         if (context.authOverrides?.auth != null) {
             return true;
