@@ -173,8 +173,12 @@ class SocketClientGenerator:
                 writer.write_line("else:")
                 with writer.indent():
                     writer.write("yield ")
-                    writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-                    writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
+                    if self._context.custom_config.pydantic_config.skip_validation:
+                        writer.write_reference(self._context.core_utilities.get_construct_type())
+                        writer.write(f"(type_={self._get_response_type_name()}, object_=json.loads(message))  # type: ignore")
+                    else:
+                        writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                        writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
 
         return _get_iterator_method_body
 
@@ -219,8 +223,12 @@ class SocketClientGenerator:
                     with writer.indent():
                         writer.write_line("json_data = json.loads(raw_message)")
                         writer.write("parsed = ")
-                        writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-                        writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+                        if self._context.custom_config.pydantic_config.skip_validation:
+                            writer.write_reference(self._context.core_utilities.get_construct_type())
+                            writer.write(f"(type_={self._get_response_type_name()}, object_=json_data)  # type: ignore")
+                        else:
+                            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                            writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
                         writer.write_line()
                     writer.write(emit_call_start)
                     writer.write_reference(self._context.core_utilities.get_event_type())
@@ -340,8 +348,12 @@ class SocketClientGenerator:
                 writer.write_line("return data  # type: ignore")
             writer.write_line("json_data = json.loads(data)")
             writer.write("return ")
-            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-            writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+            if self._context.custom_config.pydantic_config.skip_validation:
+                writer.write_reference(self._context.core_utilities.get_construct_type())
+                writer.write(f"(type_={self._get_response_type_name()}, object_=json_data)  # type: ignore")
+            else:
+                writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
 
         return _get_recv_method_body
 

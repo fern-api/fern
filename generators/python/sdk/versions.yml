@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.4
+  changelogEntry:
+    - summary: |
+        Fix websocket message parsing to respect `pydantic_config.skip_validation` setting.
+        When skip_validation is enabled, websocket clients now use `construct_type` instead of
+        `parse_obj_as`, preventing Pydantic validation errors on unknown discriminant values
+        in discriminated unions. Also fix `construct_type` to return raw objects for unknown
+        discriminant values instead of falling through to validation.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 4.55.3
   changelogEntry:
     - summary: |
