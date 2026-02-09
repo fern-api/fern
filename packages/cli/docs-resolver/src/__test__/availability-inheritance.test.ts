@@ -6,9 +6,9 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 
-import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter";
-import { NodeIdGenerator } from "../NodeIdGenerator";
-import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition";
+import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter.js";
+import { NodeIdGenerator } from "../NodeIdGenerator.js";
+import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition.js";
 
 const context = createMockTaskContext();
 const apiDefinitionId = "availability-test-id";

@@ -1,4 +1,4 @@
-import { mergeWithOverrides } from "../mergeWithOverrides";
+import { mergeWithOverrides } from "../mergeWithOverrides.js";
 
 describe("mergeWithOverrides", () => {
     it("should handle schema with null examples", () => {

@@ -1,25 +1,15 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
-import {
-    EndpointReference,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    Literal,
-    NameAndWireValue,
-    ObjectProperty,
-    PropertyPathItem,
-    ResponseProperty
-} from "@fern-fern/ir-sdk/api";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
-import { Comments } from "../utils/comments";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
+import { Comments } from "../utils/comments.js";
 
 export declare namespace InferredAuthProviderGenerator {
     interface Args {
-        scheme: InferredAuthScheme;
+        scheme: FernIr.InferredAuthScheme;
         context: SdkGeneratorContext;
     }
 }
@@ -28,10 +18,10 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     private static readonly CLASS_NAME = "InferredAuthProvider";
     private static readonly BUFFER_IN_SECONDS = 120; // 2 minutes
 
-    private scheme: InferredAuthScheme;
-    private tokenEndpointHttpService: HttpService;
-    private tokenEndpointReference: EndpointReference;
-    private tokenEndpoint: HttpEndpoint;
+    private scheme: FernIr.InferredAuthScheme;
+    private tokenEndpointHttpService: FernIr.HttpService;
+    private tokenEndpointReference: FernIr.EndpointReference;
+    private tokenEndpoint: FernIr.HttpEndpoint;
 
     constructor({ context, scheme }: InferredAuthProviderGenerator.Args) {
         super(context);
@@ -229,9 +219,9 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
     private getTokenEndpointRequestProperties(): Array<{
         snakeName: string;
         isOptional: boolean;
-        literal?: Literal;
+        literal?: FernIr.Literal;
     }> {
-        const properties: Array<{ snakeName: string; isOptional: boolean; literal?: Literal }> = [];
+        const properties: Array<{ snakeName: string; isOptional: boolean; literal?: FernIr.Literal }> = [];
         const service = this.tokenEndpointHttpService;
 
         // Add query parameters
@@ -344,11 +334,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         return this.tokenEndpoint.name.snakeCase.safeName;
     }
 
-    private getPropertyName(name: NameAndWireValue): string {
+    private getPropertyName(name: FernIr.NameAndWireValue): string {
         return name.name.snakeCase.unsafeName;
     }
 
-    private getResponsePropertyAccess(responseProperty: ResponseProperty): string {
+    private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {
         const propertyPath = responseProperty.propertyPath ?? [];
         const parts = [
             ...propertyPath.map((p) => this.getPropertyPathItemAccess(p)),
@@ -357,11 +347,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         return parts.join("");
     }
 
-    private getPropertyPathItemAccess(pathItem: PropertyPathItem): string {
+    private getPropertyPathItemAccess(pathItem: FernIr.PropertyPathItem): string {
         return `.${pathItem.name.snakeCase.safeName}`;
     }
 
-    private getObjectPropertyAccess(property: ObjectProperty): string {
+    private getObjectPropertyAccess(property: FernIr.ObjectProperty): string {
         return `.${property.name.name.snakeCase.safeName}`;
     }
 
@@ -371,10 +361,10 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
 
     private maybeLiteral(typeReference: {
         type: string;
-        container?: { type: string; literal?: Literal };
-    }): Literal | undefined {
+        container?: { type: string; literal?: FernIr.Literal };
+    }): FernIr.Literal | undefined {
         if (typeReference.type === "container") {
-            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
+            const container = typeReference as { type: string; container: { type: string; literal?: FernIr.Literal } };
             if (container.container?.type === "literal") {
                 return container.container.literal;
             }
@@ -382,14 +372,14 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         return undefined;
     }
 
-    private getLiteralAsRubyString(literal: Literal): string {
+    private getLiteralAsRubyString(literal: FernIr.Literal): string {
         switch (literal.type) {
             case "string":
                 return `"${literal.string}"`;
             case "boolean":
                 return literal.boolean ? "true" : "false";
             default:
-                throw new Error(`Unknown literal type: ${(literal as Literal).type}`);
+                throw new Error(`Unknown literal type: ${(literal as FernIr.Literal).type}`);
         }
     }
 }

@@ -1,7 +1,7 @@
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { IrVersions } from "../../../ir-versions";
-import { V63_TO_V62_MIGRATION } from "../migrateFromV63ToV62";
+import { IrVersions } from "../../../ir-versions/index.js";
+import { V63_TO_V62_MIGRATION } from "../migrateFromV63ToV62.js";
 
 describe("migrateFromV63ToV62", () => {
     it("converts ENDPOINT_SECURITY auth requirement to ALL", () => {

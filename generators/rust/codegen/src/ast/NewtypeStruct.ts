@@ -1,9 +1,9 @@
-import { AstNode } from "./AstNode";
-import { Attribute } from "./Attribute";
-import { Type } from "./Type";
-import { Visibility } from "./types";
-import { writeVisibility } from "./utils/writeVisibility";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Attribute } from "./Attribute.js";
+import { Type } from "./Type.js";
+import { Visibility } from "./types.js";
+import { writeVisibility } from "./utils/writeVisibility.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace NewtypeStruct {
     interface Args {

@@ -1,10 +1,4 @@
-import {
-    NameAndWireValue,
-    SingleUnionType,
-    SingleUnionTypeProperties,
-    SingleUnionTypeProperty,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { BaseContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,
@@ -13,12 +7,12 @@ import {
     SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
 
-import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
+import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator.js";
 
 export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {
-        singleUnionType: SingleUnionType;
-        union: UnionTypeDeclaration;
+        singleUnionType: FernIr.SingleUnionType;
+        union: FernIr.UnionTypeDeclaration;
         includeUtilsOnUnionMembers: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -29,10 +23,10 @@ export declare namespace ParsedSingleUnionTypeForUnion {
 }
 
 export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends AbstractKnownSingleUnionType<Context> {
-    private singleUnionTypeFromUnion: SingleUnionType;
+    private singleUnionTypeFromUnion: FernIr.SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
-    protected union: UnionTypeDeclaration;
+    protected union: FernIr.UnionTypeDeclaration;
 
     constructor({
         singleUnionType,
@@ -45,7 +39,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         generateReadWriteOnlyTypes
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
-            singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
+            singleUnionType: FernIr.SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
                 singleUnionType.shape,
                 {
                     noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
@@ -112,12 +106,12 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         }
     }
 
-    protected getDiscriminant(): NameAndWireValue {
+    protected getDiscriminant(): FernIr.NameAndWireValue {
         return this.union.discriminant;
     }
 
     public static getSinglePropertyKey(
-        singleProperty: SingleUnionTypeProperty,
+        singleProperty: FernIr.SingleUnionTypeProperty,
         { includeSerdeLayer, retainOriginalCasing }: { includeSerdeLayer: boolean; retainOriginalCasing: boolean }
     ): string {
         if (includeSerdeLayer && !retainOriginalCasing) {

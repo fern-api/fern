@@ -3,7 +3,7 @@ import { GoFormatter } from "@fern-api/go-formatter";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { readFileSync } from "fs";
 
-import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator";
+import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator.js";
 
 export function buildDynamicSnippetsGenerator({
     irFilepath,

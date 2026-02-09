@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/path-utils";
 
-import { getResolvedPathOfImportedFile } from "./getResolvedPathOfImportedFile";
+import { getResolvedPathOfImportedFile } from "./getResolvedPathOfImportedFile.js";
 
 export interface ReferenceToTypeName {
     typeName: string;

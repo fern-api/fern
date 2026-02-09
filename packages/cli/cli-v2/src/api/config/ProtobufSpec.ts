@@ -1,6 +1,6 @@
 import type { schemas } from "@fern-api/config";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { ApiSpec } from "./ApiSpec";
+import type { ApiSpec } from "./ApiSpec.js";
 
 /**
  * Protobuf definition configuration.

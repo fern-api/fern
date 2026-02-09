@@ -4,9 +4,9 @@ import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { mkdir, readdir, rm } from "fs/promises";
 import moment from "moment";
 
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases.js";
+import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries.js";
 
 export async function generateGeneratorChangelog({
     context,

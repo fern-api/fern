@@ -1,8 +1,8 @@
 import { Values } from "@fern-api/core-utils";
-import { Plugin } from "@redocly/openapi-core/lib/config";
-import { NodeType } from "@redocly/openapi-core/lib/types";
+import { Plugin } from "@redocly/openapi-core/lib/config/index.js";
+import { NodeType } from "@redocly/openapi-core/lib/types/index.js";
 
-import { TypedExtensionId } from "./id";
+import { TypedExtensionId } from "./id.js";
 
 export const XFernStreaming: NodeType = {
     properties: {

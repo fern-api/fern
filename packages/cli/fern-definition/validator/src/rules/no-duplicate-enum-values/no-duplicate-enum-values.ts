@@ -1,8 +1,8 @@
 import { isRawEnumDefinition } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
 
-import { Rule } from "../../Rule";
-import { getDuplicates } from "../../utils/getDuplicates";
+import { Rule } from "../../Rule.js";
+import { getDuplicates } from "../../utils/getDuplicates.js";
 
 export const NoDuplicateEnumValuesRule: Rule = {
     name: "no-duplicate-enum-values",

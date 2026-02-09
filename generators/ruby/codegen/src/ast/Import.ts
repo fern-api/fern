@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 
-import { AstNode } from "./core/AstNode";
+import { AstNode } from "./core/AstNode.js";
 
 export declare namespace Import {
     export interface Init extends AstNode.Init {

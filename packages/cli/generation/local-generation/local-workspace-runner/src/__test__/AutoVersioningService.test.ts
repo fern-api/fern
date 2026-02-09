@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
-import { AutoVersioningException, AutoVersioningService } from "../AutoVersioningService";
+import { AutoVersioningException, AutoVersioningService } from "../AutoVersioningService.js";
 
 // Mock logger for tests
 const mockLogger = {

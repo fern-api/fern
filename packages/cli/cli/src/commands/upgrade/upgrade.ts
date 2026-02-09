@@ -12,8 +12,8 @@ import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 

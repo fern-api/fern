@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using SeedAudiences.Core;
 using SeedAudiences.FolderA;
 using SeedAudiences.Test.Unit.MockServer;
+using SeedAudiences.Test.Utils;
 
 namespace SeedAudiences.Test.Unit.MockServer.FolderA;
 
@@ -40,10 +40,6 @@ public class GetDirectThreadTest : BaseMockServerTest
         var response = await Client.FolderA.Service.GetDirectThreadAsync(
             new GetDirectThreadRequest { Ids = ["ids"], Tags = ["tags"] }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedAudiences.FolderA.Response>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

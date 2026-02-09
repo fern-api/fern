@@ -1,4 +1,4 @@
-import { IrVersions } from "../../ir-versions";
+import { IrVersions } from "../../ir-versions/index.js";
 
 export type StringifiedErrorName = string;
 

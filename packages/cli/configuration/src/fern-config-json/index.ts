@@ -1,2 +1,2 @@
-export { type ProjectConfig } from "./ProjectConfig";
-export { ProjectConfigSchema } from "./schema/ProjectConfigSchema";
+export { type ProjectConfig } from "./ProjectConfig.js";
+export { ProjectConfigSchema } from "./schema/ProjectConfigSchema.js";

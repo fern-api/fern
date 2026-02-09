@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { AbstractConverterContext } from "../../../AbstractConverterContext";
-import { AbstractMediaTypeObjectConverter } from "../AbstractMediaTypeObjectConverter";
+import { AbstractConverterContext } from "../../../AbstractConverterContext.js";
+import { AbstractMediaTypeObjectConverter } from "../AbstractMediaTypeObjectConverter.js";
 
 const mockLogger = {
     debug: vi.fn(),

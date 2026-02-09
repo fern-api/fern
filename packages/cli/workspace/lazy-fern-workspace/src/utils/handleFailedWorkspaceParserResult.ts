@@ -7,7 +7,7 @@ import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
 
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
 
 function decodeJsonPointerSegment(segment: string): string {
     return segment.replace(/~1/g, "/").replace(/~0/g, "~");

@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { NodePath } from "@fern-api/fern-definition-schema";
 
-import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor";
+import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor.js";
 
 export async function visitGeneratorGroups({
     groups,

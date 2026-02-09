@@ -1,8 +1,8 @@
-import { AstNode } from "./AstNode";
-import { Attribute } from "./Attribute";
-import { DocComment } from "./DocComment";
-import { Type } from "./Type";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Attribute } from "./Attribute.js";
+import { DocComment } from "./DocComment.js";
+import { Type } from "./Type.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace EnumVariant {
     interface Args {

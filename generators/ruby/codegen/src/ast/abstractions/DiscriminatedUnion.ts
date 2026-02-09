@@ -1,7 +1,6 @@
-import { NameAndWireValue, SingleUnionTypeProperties, SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
-
-import { Argument } from "../Argument";
-import { Class_ } from "../classes/Class_";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
+import { Argument } from "../Argument.js";
+import { Class_ } from "../classes/Class_.js";
 import {
     BooleanClassReference,
     ClassReference,
@@ -10,14 +9,14 @@ import {
     JsonClassReference,
     StringClassReference,
     VoidClassReference
-} from "../classes/ClassReference";
-import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
-import { Function_ } from "../functions/Function_";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
-import { Parameter } from "../Parameter";
-import { Property } from "../Property";
-import { CaseStatement } from "./CaseStatement";
+} from "../classes/ClassReference.js";
+import { AstNode } from "../core/AstNode.js";
+import { Expression } from "../expressions/Expression.js";
+import { Function_ } from "../functions/Function_.js";
+import { FunctionInvocation } from "../functions/FunctionInvocation.js";
+import { Parameter } from "../Parameter.js";
+import { Property } from "../Property.js";
+import { CaseStatement } from "./CaseStatement.js";
 
 export declare namespace DiscriminatedUnion {
     export interface Init extends Omit<Class_.Init, "functions" | "includeInitializer" | "expressions"> {
@@ -26,9 +25,9 @@ export declare namespace DiscriminatedUnion {
         defaultSubclassReference?: ClassReference;
     }
     export interface Subclass {
-        discriminantValue: NameAndWireValue;
+        discriminantValue: FernIr.NameAndWireValue;
         classReference: ClassReference | undefined;
-        unionPropertiesType: SingleUnionTypeProperties;
+        unionPropertiesType: FernIr.SingleUnionTypeProperties;
     }
 }
 export class DiscriminatedUnion extends Class_ {
@@ -81,7 +80,7 @@ export class DiscriminatedUnion extends Class_ {
     ): Expression {
         const rightSide = unionSubclass.unionPropertiesType._visit<AstNode | string>({
             samePropertiesAsObject: () => unionSubclass.classReference?.fromJson(jsonParameter) ?? jsonParameter,
-            singleProperty: (sutp: SingleUnionTypeProperty) =>
+            singleProperty: (sutp: FernIr.SingleUnionTypeProperty) =>
                 unionSubclass.classReference?.fromJson(`${jsonParameter}.${sutp.name.wireValue}`) ??
                 `${jsonParameter}.${sutp.name.wireValue}`,
             noProperties: () => "nil",
@@ -182,7 +181,7 @@ export class DiscriminatedUnion extends Class_ {
                         }
                     ]
                 }),
-            singleProperty: (sutp: SingleUnionTypeProperty) =>
+            singleProperty: (sutp: FernIr.SingleUnionTypeProperty) =>
                 new HashInstance({
                     contents: new Map([
                         [`"${discriminantField}"`, discriminantProperty.toVariable()],

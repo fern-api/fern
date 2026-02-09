@@ -73,6 +73,9 @@
     },
     {
       "path": "../commons"
+    },
+    {
+      "path": "../../api-importers/graphql"
     }
   ]
 }

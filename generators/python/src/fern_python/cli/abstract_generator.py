@@ -233,9 +233,11 @@ class AbstractGenerator(ABC):
         return generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: publish.registries_v_2.pypi.pypi_metadata,
-            github=lambda github: cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
-            if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
-            else None,
+            github=lambda github: (
+                cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
+                if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
+                else None
+            ),
         )
 
     def _publish(

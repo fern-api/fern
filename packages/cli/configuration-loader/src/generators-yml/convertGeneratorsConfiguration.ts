@@ -8,7 +8,7 @@ import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMeta
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName";
+import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName.js";
 
 /**
  * Union type representing any spec-level settings schema.
@@ -47,7 +47,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
-    defaultIntegerFormat: undefined
+    defaultIntegerFormat: undefined,
+    resolveSchemaCollisions: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -173,7 +174,8 @@ export function parseBaseApiDefinitionSettingsSchema(
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
         ),
-        pathParameterOrder: settings?.["path-parameter-order"]
+        pathParameterOrder: settings?.["path-parameter-order"],
+        resolveSchemaCollisions: settings?.["resolve-schema-collisions"]
     };
 }
 
@@ -441,13 +443,32 @@ async function parseApiConfigurationV2Schema({
                 audiences: [],
                 settings: apiSettings
             };
+        } else if (generatorsYml.isGraphQLSpecSchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "graphql",
+                    path: spec.graphql
+                },
+                origin: spec.origin,
+                overrides: spec.overrides,
+                overlays: undefined,
+                audiences: [],
+                settings: apiSettings
+            };
         } else {
             continue;
         }
-        if ("namespace" in spec && spec.namespace != null) {
-            namespacedDefinitions[spec.namespace] ??= [];
+        // Handle namespace for most specs, but use "resource" for GraphQL specs
+        const namespaceValue =
+            generatorsYml.isGraphQLSpecSchema(spec) && "resource" in spec
+                ? spec.resource
+                : "namespace" in spec
+                  ? spec.namespace
+                  : undefined;
+        if (namespaceValue != null) {
+            namespacedDefinitions[namespaceValue] ??= [];
             // biome-ignore lint/style/noNonNullAssertion: allow
-            namespacedDefinitions[spec.namespace]!.push(definitionLocation);
+            namespacedDefinitions[namespaceValue]!.push(definitionLocation);
         } else {
             rootDefinitions.push(definitionLocation);
         }

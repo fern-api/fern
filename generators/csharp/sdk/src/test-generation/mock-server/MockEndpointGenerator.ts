@@ -1,15 +1,17 @@
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
-import {
-    ExampleEndpointCall,
-    ExampleRequestBody,
-    ExampleTypeReference,
-    HttpEndpoint,
-    ObjectPropertyAccess,
-    TypeId
-} from "@fern-fern/ir-sdk/api";
-import { DefaultValueExtractor, ExtractedDefault } from "../../DefaultValueExtractor";
-import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleRequestBody = FernIr.ExampleRequestBody;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
+const ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
+type TypeId = FernIr.TypeId;
+type TypeReference = FernIr.TypeReference;
+
+import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -19,11 +21,8 @@ export declare namespace TestClass {
 }
 
 export class MockEndpointGenerator extends WithGeneration {
-    private readonly defaultValueExtractor: DefaultValueExtractor;
-
     constructor(private readonly context: SdkGeneratorContext) {
         super(context.generation);
-        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
@@ -44,10 +43,11 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (example.response.type !== "ok" || example.response.value.type !== "body") {
                         throw new Error("Unexpected error response type");
                     }
-                    // Filter the response body to normalize datetime values to ISO 8601 format
                     const responseValue = example.response.value.value;
                     jsonExampleResponse =
-                        responseValue != null ? this.filterExampleTypeReference(responseValue) : undefined;
+                        responseValue != null
+                            ? this.filterExampleTypeReference(responseValue, { filterWriteOnly: true })
+                            : undefined;
                 }
                 const responseBodyType = endpoint.response?.body?.type;
                 // whether or not we support this response type in this generator; the example json may
@@ -198,7 +198,7 @@ export class MockEndpointGenerator extends WithGeneration {
      * Filters read-only properties from a reference request body and normalizes datetime values.
      * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
-    private filterReferenceRequestBody(exampleRequest: ExampleRequestBody.Reference): unknown {
+    private filterReferenceRequestBody(exampleRequest: FernIr.ExampleRequestBody.Reference): unknown {
         // Always use recursive filtering to:
         // 1. Remove read-only properties if any exist
         // 2. Normalize datetime values to ISO 8601 format for wire test matching
@@ -302,14 +302,9 @@ export class MockEndpointGenerator extends WithGeneration {
      * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
     private filterInlinedRequestBody(
-        exampleRequest: ExampleRequestBody.InlinedRequestBody,
-        endpoint: HttpEndpoint
+        exampleRequest: FernIr.ExampleRequestBody.InlinedRequestBody,
+        _endpoint: HttpEndpoint
     ): Record<string, unknown> {
-        const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
-
-        // Get the set of wire values present in the example
-        const exampleWireValues = new Set(exampleRequest.properties.map((prop) => prop.name.wireValue));
-
         // Build the result with filtering and datetime normalization
         const result: Record<string, unknown> = {};
 
@@ -329,61 +324,7 @@ export class MockEndpointGenerator extends WithGeneration {
             }
         }
 
-        // Add default values for properties not present in the example when useDefaults is enabled
-        if (useDefaults && endpoint.requestBody?.type === "inlinedRequestBody") {
-            const allProperties = [
-                ...endpoint.requestBody.properties,
-                ...(endpoint.requestBody.extendedProperties ?? [])
-            ];
-            for (const prop of allProperties) {
-                // Skip if already in the example
-                if (exampleWireValues.has(prop.name.wireValue)) {
-                    continue;
-                }
-                // Skip read-only properties
-                if (prop.propertyAccess === "READ_ONLY") {
-                    continue;
-                }
-                // Get the default value for this property
-                const defaultValue = this.defaultValueExtractor.extractDefault(prop.valueType);
-                if (defaultValue != null) {
-                    result[prop.name.wireValue] = this.parseDefaultValue(defaultValue);
-                }
-            }
-        }
-
         return result;
-    }
-
-    /**
-     * Parses a default value string into its JSON representation.
-     */
-    private parseDefaultValue(defaultValue: ExtractedDefault): unknown {
-        switch (defaultValue.csharpType) {
-            case "string":
-                return defaultValue.value
-                    .slice(1, -1)
-                    .replace(/\\"/g, '"')
-                    .replace(/\\r/g, "\r")
-                    .replace(/\\n/g, "\n")
-                    .replace(/\\t/g, "\t")
-                    .replace(/\\\\/g, "\\"); // Must be last to avoid double-unescaping
-            case "int":
-            case "long":
-            case "uint":
-            case "ulong":
-            case "float":
-            case "double":
-                return parseFloat(defaultValue.value.replace(/[LlFfDd]$/, ""));
-            case "bool":
-                return defaultValue.value === "true";
-            case "BigInteger": {
-                const match = defaultValue.value.match(/BigInteger\.Parse\("(.+)"\)/);
-                return match ? match[1] : defaultValue.value;
-            }
-            default:
-                return defaultValue.value;
-        }
     }
 
     /**
@@ -401,7 +342,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         // Check properties
         for (const prop of typeDeclaration.shape.properties) {
-            if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+            if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 return true;
             }
         }
@@ -409,7 +350,7 @@ export class MockEndpointGenerator extends WithGeneration {
         // Check extended properties
         if (typeDeclaration.shape.extendedProperties) {
             for (const prop of typeDeclaration.shape.extendedProperties) {
-                if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                     return true;
                 }
             }
@@ -419,11 +360,15 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from an example type reference.
+     * Filters properties from an example type reference.
      * Recursively handles containers (optional, list, map, etc.) and named types.
      * Also normalizes datetime/date values to ISO 8601 format for wire test matching.
+     * @param filterWriteOnly - If true, filters write-only properties (for responses). If false, filters read-only (for requests).
      */
-    private filterExampleTypeReference(exampleTypeRef: ExampleTypeReference): unknown {
+    private filterExampleTypeReference(
+        exampleTypeRef: ExampleTypeReference,
+        options: { filterWriteOnly?: boolean } = {}
+    ): unknown {
         const shape = exampleTypeRef.shape;
 
         switch (shape.type) {
@@ -447,15 +392,15 @@ export class MockEndpointGenerator extends WithGeneration {
                 if (shape.container.type === "literal") {
                     return exampleTypeRef.jsonExample;
                 }
-                return this.filterContainerExample(shape.container);
+                return this.filterContainerExample(shape.container, options);
 
             case "named":
-                return this.filterNamedExample(shape);
+                return this.filterNamedExample(shape, options);
         }
     }
 
     /**
-     * Filters read-only properties from a container example (optional, list, map, etc.).
+     * Filters properties from a container example (optional, list, map, etc.).
      */
     private filterContainerExample(
         container:
@@ -464,26 +409,27 @@ export class MockEndpointGenerator extends WithGeneration {
             | { type: "optional"; optional: ExampleTypeReference | undefined }
             | { type: "nullable"; nullable: ExampleTypeReference | undefined }
             | { type: "map"; map: Array<{ key: ExampleTypeReference; value: ExampleTypeReference }> }
-            | { type: "literal"; literal: unknown }
+            | { type: "literal"; literal: unknown },
+        options: { filterWriteOnly?: boolean } = {}
     ): unknown {
         switch (container.type) {
             case "list":
-                return container.list.map((item) => this.filterExampleTypeReference(item));
+                return container.list.map((item) => this.filterExampleTypeReference(item, options));
 
             case "set":
-                return container.set.map((item) => this.filterExampleTypeReference(item));
+                return container.set.map((item) => this.filterExampleTypeReference(item, options));
 
             case "optional":
                 if (container.optional == null) {
                     return null;
                 }
-                return this.filterExampleTypeReference(container.optional);
+                return this.filterExampleTypeReference(container.optional, options);
 
             case "nullable":
                 if (container.nullable == null) {
                     return null;
                 }
-                return this.filterExampleTypeReference(container.nullable);
+                return this.filterExampleTypeReference(container.nullable, options);
 
             case "map": {
                 const mapResult: Record<string, unknown> = {};
@@ -491,7 +437,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     const key = entry.key.jsonExample;
                     // JSON object keys are always strings, but the example might have numeric keys
                     if (typeof key === "string" || typeof key === "number") {
-                        mapResult[String(key)] = this.filterExampleTypeReference(entry.value);
+                        mapResult[String(key)] = this.filterExampleTypeReference(entry.value, options);
                     }
                 }
                 return mapResult;
@@ -520,64 +466,88 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
-     * Filters read-only properties from a named type example.
+     * Filters properties from a named type example.
      */
-    private filterNamedExample(namedShape: {
-        type: "named";
-        typeName: { typeId: TypeId };
-        shape:
-            | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
-            | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
-            | { type: "enum"; value: { wireValue: string } }
-            | { type: "alias"; value: ExampleTypeReference }
-            | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
-    }): unknown {
+    private filterNamedExample(
+        namedShape: {
+            type: "named";
+            typeName: { typeId: TypeId };
+            shape:
+                | { type: "object"; properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> }
+                | { type: "union"; discriminant: { wireValue: string }; singleUnionType: unknown }
+                | { type: "enum"; value: { wireValue: string } }
+                | { type: "alias"; value: ExampleTypeReference }
+                | { type: "undiscriminatedUnion"; index: number; singleUnionType: ExampleTypeReference };
+        },
+        options: { filterWriteOnly?: boolean } = {}
+    ): unknown {
         const typeId = namedShape.typeName.typeId;
         const innerShape = namedShape.shape;
 
         switch (innerShape.type) {
             case "object":
-                return this.filterObjectExample(typeId, innerShape.properties);
+                return this.filterObjectExample(typeId, innerShape.properties, options);
 
             case "alias":
-                return this.filterExampleTypeReference(innerShape.value);
+                return this.filterExampleTypeReference(innerShape.value, options);
 
             case "enum":
                 return innerShape.value.wireValue;
 
             case "union":
                 // For unions, we need to handle the discriminant and the union value
-                return this.filterUnionExample(innerShape);
+                return this.filterUnionExample(innerShape, options);
 
             case "undiscriminatedUnion":
-                return this.filterExampleTypeReference(innerShape.singleUnionType);
+                return this.filterExampleTypeReference(innerShape.singleUnionType, options);
         }
     }
 
     /**
-     * Filters read-only properties from an object example.
+     * Filters properties from an object example.
+     * Also omits null values for properties that are optional-but-not-nullable,
+     * since the SDK won't serialize those nulls.
+     * @param filterWriteOnly - If true, filters both write-only and read-only properties (for responses).
+     *                          Write-only are not deserialized, read-only are not serialized when comparing.
+     *                          If false, filters only read-only (for requests).
      */
     private filterObjectExample(
         typeId: TypeId,
-        properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>
+        properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }>,
+        options: { filterWriteOnly?: boolean } = {}
     ): Record<string, unknown> {
         const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
         const readOnlyNames = this.getReadOnlyPropertyNamesForType(typeDeclaration);
+        const writeOnlyNames = options.filterWriteOnly
+            ? this.getWriteOnlyPropertyNamesForType(typeDeclaration)
+            : new Set<string>();
+        const propertiesToFilter = new Set([...readOnlyNames, ...writeOnlyNames]);
+        const nullableNames = this.getNullablePropertyNamesForType(typeDeclaration);
 
         const result: Record<string, unknown> = {};
         for (const prop of properties) {
-            if (readOnlyNames.has(prop.name.wireValue)) {
+            if (propertiesToFilter.has(prop.name.wireValue)) {
                 continue;
             }
-            result[prop.name.wireValue] = this.filterExampleTypeReference(prop.value);
+            const filteredValue = this.filterExampleTypeReference(prop.value, options);
+
+            // Omit null values for properties that are optional-but-not-nullable
+            // since the SDK won't serialize those nulls (JsonIgnoreCondition.WhenWritingNull)
+            if (filteredValue === null && !nullableNames.has(prop.name.wireValue)) {
+                continue;
+            }
+            result[prop.name.wireValue] = filteredValue;
         }
         return result;
     }
 
     /**
-     * Filters read-only properties from a union example.
+     * Filters properties from a union example.
      */
-    private filterUnionExample(unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown }): unknown {
+    private filterUnionExample(
+        unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown },
+        options: { filterWriteOnly?: boolean } = {}
+    ): unknown {
         // Union examples have a complex structure - for now, return the JSON example
         // and rely on the SDK's serialization to handle read-only properties
         const singleUnionType = unionShape.singleUnionType as {
@@ -599,12 +569,13 @@ export class MockEndpointGenerator extends WithGeneration {
         if (singleUnionType.shape.type === "samePropertiesAsObject") {
             const filteredProps = this.filterObjectExample(
                 singleUnionType.shape.typeId,
-                singleUnionType.shape.object.properties
+                singleUnionType.shape.object.properties,
+                options
             );
             Object.assign(result, filteredProps);
         } else if (singleUnionType.shape.type === "singleProperty") {
             // Single property unions have a nested value
-            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape.typeReference);
+            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape.typeReference, options);
             // The property name for single property unions is typically the variant name
             // but we need to check the union definition for the actual wire name
             Object.assign(result, filteredValue);
@@ -631,20 +602,89 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         for (const prop of shape.properties) {
-            if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+            if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 readOnlyNames.add(prop.name.wireValue);
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
-                if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                     readOnlyNames.add(prop.name.wireValue);
                 }
             }
         }
 
         return readOnlyNames;
+    }
+
+    /**
+     * Gets the set of write-only property wire names for a type declaration.
+     */
+    private getWriteOnlyPropertyNamesForType(typeDeclaration: {
+        shape: {
+            type: string;
+            properties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+            extendedProperties?: Array<{ name: { wireValue: string }; propertyAccess?: string }>;
+        };
+    }): Set<string> {
+        const writeOnlyNames = new Set<string>();
+        const shape = typeDeclaration.shape;
+
+        if (shape.type !== "object" || !shape.properties) {
+            return writeOnlyNames;
+        }
+
+        for (const prop of shape.properties) {
+            if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
+                writeOnlyNames.add(prop.name.wireValue);
+            }
+        }
+
+        if (shape.extendedProperties) {
+            for (const prop of shape.extendedProperties) {
+                if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
+                    writeOnlyNames.add(prop.name.wireValue);
+                }
+            }
+        }
+
+        return writeOnlyNames;
+    }
+
+    /**
+     * Gets the set of nullable property wire names for a type declaration.
+     * A property is nullable if its type is a nullable container or optional<nullable<T>>.
+     */
+    private getNullablePropertyNamesForType(typeDeclaration: {
+        shape: {
+            type: string;
+            properties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
+            extendedProperties?: Array<{ name: { wireValue: string }; valueType: TypeReference }>;
+        };
+    }): Set<string> {
+        const nullableNames = new Set<string>();
+        const shape = typeDeclaration.shape;
+
+        if (shape.type !== "object" || !shape.properties) {
+            return nullableNames;
+        }
+
+        for (const prop of shape.properties) {
+            if (this.context.isNullable(prop.valueType)) {
+                nullableNames.add(prop.name.wireValue);
+            }
+        }
+
+        if (shape.extendedProperties) {
+            for (const prop of shape.extendedProperties) {
+                if (this.context.isNullable(prop.valueType)) {
+                    nullableNames.add(prop.name.wireValue);
+                }
+            }
+        }
+
+        return nullableNames;
     }
 
     /**

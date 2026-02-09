@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { generateModels } from "../generateModels";
-import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
+import { generateModels } from "../generateModels.js";
+import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext.js";
 
 const testDefinitions = [
     "basic-object",

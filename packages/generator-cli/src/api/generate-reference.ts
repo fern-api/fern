@@ -1,8 +1,8 @@
 import { Writable } from "node:stream";
 import type fs from "fs";
 
-import type { FernGeneratorCli } from "../configuration/sdk";
-import { ReferenceGenerator } from "../reference/ReferenceGenerator";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { ReferenceGenerator } from "../reference/ReferenceGenerator.js";
 
 export interface GenerateReferenceToStreamParams {
     referenceConfig: FernGeneratorCli.ReferenceConfig;

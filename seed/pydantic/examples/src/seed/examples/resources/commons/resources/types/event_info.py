@@ -7,6 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .....core.serialization import FieldMetadata
 from .tag import Tag
 
 
@@ -26,7 +27,9 @@ class EventInfo_Metadata(UniversalBaseModel):
     type: typing.Literal["metadata"] = "metadata"
     id: str
     data: typing.Optional[typing.Dict[str, str]] = None
-    json_string: typing.Optional[str] = pydantic.Field(alias="jsonString", default=None)
+    json_string: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="jsonString"), pydantic.Field(alias="jsonString")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

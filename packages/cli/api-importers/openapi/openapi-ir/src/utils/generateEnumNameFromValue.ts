@@ -1,6 +1,6 @@
 import { camelCase, upperFirst } from "lodash-es";
-import { replaceStartingNumber } from "./replaceStartingNumber";
-import { HARDCODED_ENUM_NAMES } from "./constants";
+import { replaceStartingNumber } from "./replaceStartingNumber.js";
+import { HARDCODED_ENUM_NAMES } from "./constants.js";
 
 export function generateEnumNameFromValue(value: string): string {
     const maybeParsedNumber = replaceStartingNumber(value);

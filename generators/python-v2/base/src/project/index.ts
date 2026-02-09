@@ -1,2 +1,2 @@
-export { PythonProject } from "./PythonProject";
-export { WriteablePythonFile } from "./WriteablePythonFile";
+export { PythonProject } from "./PythonProject.js";
+export { WriteablePythonFile } from "./WriteablePythonFile.js";

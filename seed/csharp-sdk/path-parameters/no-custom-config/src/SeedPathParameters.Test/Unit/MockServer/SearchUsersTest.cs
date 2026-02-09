@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedPathParameters;
-using SeedPathParameters.Core;
+using SeedPathParameters.Test.Utils;
 
 namespace SeedPathParameters.Test.Unit.MockServer;
 
@@ -52,9 +52,6 @@ public class SearchUsersTest : BaseMockServerTest
                 Limit = 1,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

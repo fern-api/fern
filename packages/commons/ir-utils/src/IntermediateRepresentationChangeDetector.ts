@@ -30,8 +30,8 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { hashJSON } from "./hashJSON";
-import { isMarkedUnstable } from "./utils/availabilityUtils";
+import { hashJSON } from "./hashJSON.js";
+import { isMarkedUnstable } from "./utils/availabilityUtils.js";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {

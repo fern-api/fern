@@ -1,4 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkErrorClass, SdkContext } from "@fern-typescript/contexts";
@@ -7,7 +7,7 @@ import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructu
 export declare namespace GeneratedSdkErrorClassImpl {
     export interface Init {
         errorClassName: string;
-        errorDeclaration: ErrorDeclaration;
+        errorDeclaration: FernIr.ErrorDeclaration;
     }
 }
 
@@ -20,7 +20,7 @@ export class GeneratedSdkErrorClassImpl
     private static BODY_CONSTRUCTOR_PARAMETER_NAME = "body";
     private static RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME = "rawResponse";
 
-    private errorDeclaration: ErrorDeclaration;
+    private errorDeclaration: FernIr.ErrorDeclaration;
 
     constructor({ errorClassName, errorDeclaration }: GeneratedSdkErrorClassImpl.Init) {
         super({ errorClassName });

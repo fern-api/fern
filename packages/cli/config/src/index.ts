@@ -1,2 +1,2 @@
-export * as schemas from "./schemas";
-export { FernYmlSchema } from "./schemas";
+export * as schemas from "./schemas/index.js";
+export { createEmptyFernRcSchema, FernRcSchema, FernYmlSchema } from "./schemas/index.js";

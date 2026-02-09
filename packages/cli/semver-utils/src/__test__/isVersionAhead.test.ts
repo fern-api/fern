@@ -1,4 +1,4 @@
-import { isVersionAhead } from "../isVersionAhead";
+import { isVersionAhead } from "../isVersionAhead.js";
 
 describe("isVersionAhead", () => {
     it.each`

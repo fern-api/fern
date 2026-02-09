@@ -29,25 +29,24 @@ import {
     VoidClassReference
 } from "@fern-api/ruby-codegen";
 
-import {
-    BytesRequest,
-    ExampleEndpointCall,
-    FileProperty,
-    FileUploadRequest,
-    HttpEndpoint,
-    HttpRequestBodyReference,
-    InlinedRequestBody,
-    InlinedRequestBodyProperty,
-    JsonResponse,
-    JsonResponseBodyWithProperty,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
+type BytesRequest = FernIr.BytesRequest;
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type FileProperty = FernIr.FileProperty;
+type FileUploadRequest = FernIr.FileUploadRequest;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpRequestBodyReference = FernIr.HttpRequestBodyReference;
+type InlinedRequestBody = FernIr.InlinedRequestBody;
+type InlinedRequestBodyProperty = FernIr.InlinedRequestBodyProperty;
+type JsonResponse = FernIr.JsonResponse;
+type JsonResponseBodyWithProperty = FernIr.JsonResponseBodyWithProperty;
+type TypeId = FernIr.TypeId;
+type TypeReference = FernIr.TypeReference;
 
-import { FileUploadUtility } from "./FileUploadUtility";
-import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass";
-import { RequestOptions } from "./RequestOptionsClass";
-import { isTypeOptional } from "./TypeUtilities";
+import { FileUploadUtility } from "./FileUploadUtility.js";
+import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass.js";
+import { RequestOptions } from "./RequestOptionsClass.js";
+import { isTypeOptional } from "./TypeUtilities.js";
 
 export class EndpointGenerator {
     public endpointHasExamples: boolean;

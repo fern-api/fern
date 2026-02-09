@@ -87,6 +87,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "defaultUrl": undefined,
           "docs": undefined,
           "id": "Production",
           "name": {
@@ -109,6 +110,8 @@
             },
           },
           "url": "https://test.com/api",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",

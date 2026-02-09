@@ -11,7 +11,9 @@ from .optional_alias import OptionalAlias
 
 class DoubleOptional(UniversalBaseModel):
     optional_alias: typing_extensions.Annotated[
-        typing.Optional[OptionalAlias], FieldMetadata(alias="optionalAlias")
-    ] = pydantic.Field(alias="optionalAlias", default=None)
+        typing.Optional[OptionalAlias],
+        FieldMetadata(alias="optionalAlias"),
+        pydantic.Field(alias="optionalAlias", default=None),
+    ]
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

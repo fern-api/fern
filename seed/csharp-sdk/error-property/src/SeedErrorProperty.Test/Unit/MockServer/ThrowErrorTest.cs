@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedErrorProperty.Core;
+using SeedErrorProperty.Test.Utils;
 
 namespace SeedErrorProperty.Test.Unit.MockServer;
 
@@ -28,6 +28,6 @@ public class ThrowErrorTest : BaseMockServerTest
             );
 
         var response = await Client.PropertyBasedError.ThrowErrorAsync();
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

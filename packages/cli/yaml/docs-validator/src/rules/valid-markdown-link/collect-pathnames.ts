@@ -1,9 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Position } from "unist";
 
-import { RuleViolation } from "../../Rule";
-import { safeCollectLinksAndSources } from "./collect-links";
-import { stripAnchorsAndSearchParams, urlMatchesInstanceHost } from "./url-utils";
+import { RuleViolation } from "../../Rule.js";
+import { safeCollectLinksAndSources } from "./collect-links.js";
+import { stripAnchorsAndSearchParams, urlMatchesInstanceHost } from "./url-utils.js";
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;

@@ -1,4 +1,7 @@
-import { TypeDeclaration, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type TypeDeclaration = FernIr.TypeDeclaration;
+type WellKnownProtobufType = FernIr.WellKnownProtobufType;
 
 /**
  * An instance of Google's well-known Protobuf types. These types often require

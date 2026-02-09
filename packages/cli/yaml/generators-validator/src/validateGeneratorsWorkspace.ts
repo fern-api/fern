@@ -2,11 +2,11 @@ import { GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/conf
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst";
-import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules";
-import { getAllRules } from "./getAllRules";
-import { Rule, RuleVisitors } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst.js";
+import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules.js";
+import { getAllRules } from "./getAllRules.js";
+import { Rule, RuleVisitors } from "./Rule.js";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export async function validateGeneratorsWorkspace(
     workspace: FernWorkspace,

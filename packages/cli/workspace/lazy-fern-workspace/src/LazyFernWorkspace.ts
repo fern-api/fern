@@ -4,13 +4,13 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";
 
-import { OSSWorkspace } from "./OSSWorkspace";
-import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult";
-import { listFernFiles } from "./utils/listFernFiles";
-import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace";
-import { parseYamlFiles } from "./utils/parseYamlFiles";
-import { processPackageMarkers } from "./utils/processPackageMarkers";
-import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles";
+import { OSSWorkspace } from "./OSSWorkspace.js";
+import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult.js";
+import { listFernFiles } from "./utils/listFernFiles.js";
+import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace.js";
+import { parseYamlFiles } from "./utils/parseYamlFiles.js";
+import { processPackageMarkers } from "./utils/processPackageMarkers.js";
+import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles.js";
 
 export declare namespace LazyFernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {

@@ -1,9 +1,9 @@
 import { resolve } from "node:path";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-import { ModelGeneratorContext } from "../../ModelGeneratorContext";
-import { ObjectGenerator } from "../../object";
-import { createSampleGeneratorContext } from "../../test-utils/createSampleGeneratorContext";
+import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
+import { ObjectGenerator } from "../../object/index.js";
+import { createSampleGeneratorContext } from "../../test-utils/createSampleGeneratorContext.js";
 
 function getObjectTypeDeclarationOrThrow(context: ModelGeneratorContext, name: string) {
     for (const declaration of Object.values(context.ir.types)) {

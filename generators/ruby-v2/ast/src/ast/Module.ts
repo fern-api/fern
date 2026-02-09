@@ -1,8 +1,8 @@
-import { Class_ } from "./Class";
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { TypeParameter } from "./TypeParameter";
+import { Class_ } from "./Class.js";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { TypeParameter } from "./TypeParameter.js";
 
 export declare namespace Module_ {
     export interface Args {

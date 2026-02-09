@@ -3,7 +3,7 @@ import { createFdrService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
 import chalk from "chalk";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 interface PreviewDeployment {
     url: string;
@@ -34,11 +34,10 @@ export async function listDocsPreview({
 
         const fdr = createFdrService({ token: token.value });
 
-        // Fetch all docs URLs and filter for preview URLs client-side
-        // Note: Once FDR SDK is updated with preview filter support, this can be simplified
         const listResponse = await fdr.docs.v2.read.listAllDocsUrls({
             page,
-            limit: limit ?? 100
+            limit: limit ?? 100,
+            preview: true
         });
 
         if (!listResponse.ok) {

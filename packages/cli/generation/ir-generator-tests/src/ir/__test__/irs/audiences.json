@@ -1268,6 +1268,9 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -53,6 +53,6 @@ public class UpdateFooTest : BaseMockServerTest
                 NonNullableText = "non_nullable_text",
             }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<Foo>(mockResponse)).UsingDefaults());
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

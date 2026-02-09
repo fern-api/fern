@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ImportFileExistsRule } from "../import-file-exists";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ImportFileExistsRule } from "../import-file-exists.js";
 
 describe("import-file-exists", () => {
     it("simple", async () => {

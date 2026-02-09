@@ -1,4 +1,4 @@
-import { TypeReference, WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
@@ -18,7 +18,7 @@ export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {
         packageId: PackageId;
         includeSerdeLayer: boolean;
-        channel: WebSocketChannel;
+        channel: FernIr.WebSocketChannel;
         serviceClassName: string;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
@@ -37,7 +37,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private static readonly MESSAGE_PARAMETER_NAME = "message";
     private static readonly CLOSE_CODE_VALUE = 1000;
 
-    private readonly channel: WebSocketChannel;
+    private readonly channel: FernIr.WebSocketChannel;
     private readonly includeSerdeLayer: boolean;
     private readonly serviceClassName: string;
     private readonly packageId: PackageId;
@@ -321,7 +321,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private generateSendMessage(
         context: SdkContext,
-        message: WebSocketMessage,
+        message: FernIr.WebSocketMessage,
         node: ts.TypeNode,
         isBytes: boolean
     ): MethodDeclarationStructure {
@@ -589,7 +589,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     }
 
     private getSerializedExpression(
-        subscribeMessage: WebSocketMessageBody.InlinedBody | WebSocketMessageBody.Reference,
+        subscribeMessage: FernIr.WebSocketMessageBody.InlinedBody | FernIr.WebSocketMessageBody.Reference,
         requestBodyReference: string,
         context: SdkContext
     ): ts.Expression {
@@ -621,7 +621,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             .deserializeResponse(ts.factory.createIdentifier("data"), context);
     }
 
-    private getMessagesForOrigin(origin: "client" | "server"): WebSocketMessage[] {
+    private getMessagesForOrigin(origin: "client" | "server"): FernIr.WebSocketMessage[] {
         return this.channel.messages.filter((message) => message.origin === origin);
     }
 
@@ -640,7 +640,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return ts.factory.createUnionTypeNode(allReturnTypes);
     }
 
-    private getNodeForMessage(context: SdkContext, message: WebSocketMessage): ts.TypeNode {
+    private getNodeForMessage(context: SdkContext, message: FernIr.WebSocketMessage): ts.TypeNode {
         if (message.body.type === "inlinedBody") {
             throw new Error("Websocket inlined schemas are not supported at the moment.");
         }
@@ -648,7 +648,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
     }
 
-    private isBytesType(context: SdkContext, bodyType: TypeReference): boolean {
+    private isBytesType(context: SdkContext, bodyType: FernIr.TypeReference): boolean {
         const resolved = context.type.resolveTypeReference(bodyType);
         if (resolved.type !== "primitive") {
             return false;

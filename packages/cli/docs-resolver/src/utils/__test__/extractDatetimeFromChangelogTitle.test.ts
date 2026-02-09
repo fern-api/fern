@@ -1,4 +1,4 @@
-import { extractDatetimeFromChangelogTitle } from "../extractDatetimeFromChangelogTitle";
+import { extractDatetimeFromChangelogTitle } from "../extractDatetimeFromChangelogTitle.js";
 
 describe("extractDatetimeFromChangelogTitle", () => {
     it("basic", () => {

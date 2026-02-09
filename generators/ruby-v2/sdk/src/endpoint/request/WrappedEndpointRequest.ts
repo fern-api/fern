@@ -1,23 +1,22 @@
 import { ruby } from "@fern-api/ruby-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, SdkRequest, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
         context: SdkGeneratorContext;
-        serviceId: ServiceId;
-        sdkRequest: SdkRequest;
-        wrapper: SdkRequestWrapper;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        sdkRequest: FernIr.SdkRequest;
+        wrapper: FernIr.SdkRequestWrapper;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 
@@ -27,8 +26,8 @@ const PATH_PARAM_NAMES_VN = "path_param_names";
 const HEADER_BAG_NAME = "headers";
 
 export class WrappedEndpointRequest extends EndpointRequest {
-    private serviceId: ServiceId;
-    private wrapper: SdkRequestWrapper;
+    private serviceId: FernIr.ServiceId;
+    private wrapper: FernIr.SdkRequestWrapper;
 
     public constructor({ context, sdkRequest, serviceId, wrapper, endpoint }: WrappedEndpointRequest.Args) {
         super(context, sdkRequest, endpoint);

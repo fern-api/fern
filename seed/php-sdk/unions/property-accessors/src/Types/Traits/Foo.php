@@ -29,6 +29,7 @@ trait Foo
     public function setName(string $value): self
     {
         $this->name = $value;
+        $this->_setField('name');
         return $this;
     }
 }
