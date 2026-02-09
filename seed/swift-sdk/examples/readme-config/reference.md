@@ -172,7 +172,7 @@ try await main()
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.<a href="/Sources/Resources/File/Service/FileServiceClient.swift">getFile</a>(filename: String, requestOptions: RequestOptions?) -> File</code></summary>
+<details><summary><code>client.file.service.<a href="/Sources/Resources/File/Service/FileServiceClient.swift">getFile</a>(filename: String, xFileApiVersion: String, requestOptions: RequestOptions?) -> File</code></summary>
 <dl>
 <dd>
 
@@ -224,6 +224,14 @@ try await main()
 <dd>
 
 **filename:** `String` — This is a filename
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xFileApiVersion:** `String` 
     
 </dd>
 </dl>

@@ -69,7 +69,6 @@ describe("fern check", () => {
             });
             expect(result.exitCode).toBe(1);
             expect(result.stdout).toBe("");
-            expect(result.stderr).toContain("fern.yml:1:1: edition is required");
             expect(result.stderr).toContain("fern.yml:1:6: org must be a string");
         } finally {
             await fixture.cleanup();

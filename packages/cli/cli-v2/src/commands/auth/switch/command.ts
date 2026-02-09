@@ -66,7 +66,7 @@ export class SwitchCommand {
         const choices = accounts.map((account) => ({
             name: account.isActive ? `${account.user} ${chalk.dim("(current)")}` : account.user,
             value: account.user,
-            disabled: account.isActive ? "(current)" : false
+            disabled: account.isActive ? "" : false
         }));
 
         const { selectedUser } = await inquirer.prompt<{ selectedUser: string }>([

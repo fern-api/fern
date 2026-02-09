@@ -7,6 +7,8 @@ import type { Context } from "../../context/Context.js";
 import { Colors, formatMessage, Icons } from "../../ui/format.js";
 import { Task } from "../../ui/Task.js";
 import type { Workspace } from "../../workspace/Workspace.js";
+import type { ApiSpecType } from "../config/ApiSpec.js";
+import { isFernSpec } from "../config/FernSpec.js";
 import { ApiDefinitionValidator } from "../validator/ApiDefinitionValidator.js";
 
 const INDENT = {
@@ -27,6 +29,8 @@ export declare namespace ApiChecker {
     export interface ResolvedViolation extends ValidationViolation {
         /** The API name this violation belongs to */
         apiName: string;
+        /** The type of spec this violation originates from */
+        apiSpecType: ApiSpecType;
         /** File path relative to user's current working directory */
         displayRelativeFilepath: string;
     }
@@ -127,7 +131,13 @@ export class ApiChecker {
                 validApis.add(apiName);
             }
 
-            const resolvedViolations = this.resolveViolationPaths(result.violations, result.workspaceRoot, apiName);
+            const apiSpecType: ApiSpecType = apiDefinition.specs.some(isFernSpec) ? "fern" : "openapi";
+            const resolvedViolations = this.resolveViolationPaths(
+                result.violations,
+                result.workspaceRoot,
+                apiName,
+                apiSpecType
+            );
             allViolations.push(...resolvedViolations);
         }
 
@@ -215,7 +225,8 @@ export class ApiChecker {
     private resolveViolationPaths(
         violations: ValidationViolation[],
         workspaceRoot: AbsoluteFilePath,
-        apiName: string
+        apiName: string,
+        apiSpecType: ApiSpecType
     ): ApiChecker.ResolvedViolation[] {
         return violations.map((violation) => {
             const absolutePath = join(workspaceRoot, RelativeFilePath.of(violation.relativeFilepath));
@@ -223,6 +234,7 @@ export class ApiChecker {
             return {
                 ...violation,
                 displayRelativeFilepath,
+                apiSpecType,
                 apiName
             };
         });
@@ -261,8 +273,12 @@ export class ApiChecker {
                     continue;
                 }
 
-                // Display file header.
-                this.stream.write(`${" ".repeat(baseIndent)}${chalk.underline(filePath)}\n`);
+                // Only display the file header for Fern definitions where the path
+                // corresponds to a real file on disk.
+                const firstFileViolation = fileViolations[0];
+                if (firstFileViolation != null && firstFileViolation.apiSpecType === "fern") {
+                    this.stream.write(`${" ".repeat(baseIndent)}${chalk.underline(filePath)}\n`);
+                }
 
                 // Group by location within the file.
                 const byLocation = this.groupViolationsBy(fileViolations, (v) => this.getLocationKey(v.nodePath));
@@ -282,8 +298,12 @@ export class ApiChecker {
 
                     for (const violation of locationViolations) {
                         const { icon, colorFn } = this.getSeverityStyle(violation.severity);
+                        const message =
+                            violation.apiSpecType === "fern"
+                                ? violation.message
+                                : this.stripSyntheticFilePaths(violation.message);
                         const formatted = formatMessage({
-                            message: violation.message,
+                            message,
                             colorFn,
                             icon,
                             indent: baseIndent + INDENT.VIOLATION,
@@ -361,6 +381,19 @@ export class ApiChecker {
             seen.add(key);
             return true;
         });
+    }
+
+    /**
+     * Strip synthetic file path references from violation messages for non-Fern specs.
+     *
+     * The validator produces messages like:
+     *   "- pet.yml -> getPetById /pet/{petId}"
+     * For non-Fern specs these file names are synthetic (they don't exist on disk),
+     * so we strip them to produce:
+     *   "- getPetById /pet/{petId}"
+     */
+    private stripSyntheticFilePaths(message: string): string {
+        return message.replace(/^(\s*- )\S+\.[a-zA-Z]+ -> /gm, "$1");
     }
 
     private countViolations(violations: ApiChecker.ResolvedViolation[]): { errorCount: number; warningCount: number } {

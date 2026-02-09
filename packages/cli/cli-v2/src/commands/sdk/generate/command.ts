@@ -51,12 +51,12 @@ export declare namespace GenerateCommand {
 
 export class GenerateCommand {
     public async handle(context: Context, args: GenerateCommand.Args): Promise<void> {
-        this.validateArgs(args);
-
         const workspace = await context.loadWorkspaceOrThrow();
         if (workspace.sdks == null) {
             throw new Error("No SDKs configured in fern.yml");
         }
+
+        this.validateArgs({ workspace, args });
 
         const targets = this.getTargets({
             workspace,
@@ -169,7 +169,7 @@ export class GenerateCommand {
         }
     }
 
-    private validateArgs(args: GenerateCommand.Args): void {
+    private validateArgs({ workspace, args }: { workspace: Workspace; args: GenerateCommand.Args }): void {
         if (args.output != null && !args.preview) {
             throw new Error("The --output flag can only be used with --preview");
         }
@@ -179,7 +179,8 @@ export class GenerateCommand {
         if (args.group != null && args.target != null) {
             throw new Error("The --group and --target flags cannot be used together");
         }
-        if (args.group == null && args.target == null) {
+        const defaultGroup = workspace.sdks?.defaultGroup;
+        if (defaultGroup == null && args.group == null && args.target == null) {
             throw new Error("A --target or --group must be specified");
         }
     }

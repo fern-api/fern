@@ -1,14 +1,26 @@
+import chalk from "chalk";
 import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { addAuthCommand } from "./commands/auth/index.js";
 import { addCheckCommand } from "./commands/check/index.js";
 import { addConfigCommand } from "./commands/config/index.js";
+import { addInitCommand } from "./commands/init/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
+import { Icons } from "./ui/format.js";
 import { Version } from "./version.js";
 
+const TIMEOUT_MINUTES = 10;
+const TIMEOUT_MS = TIMEOUT_MINUTES * 60 * 1000;
+
 export async function runCliV2(argv?: string[]): Promise<void> {
+    const timeout = setTimeout(() => {
+        process.stderr.write(`${Icons.error} ${chalk.red(`Timed out after ${TIMEOUT_MINUTES} minutes.\n`)}`);
+        process.exit(1);
+    }, TIMEOUT_MS);
+    timeout.unref();
+
     const cli = createCliV2(argv);
     await cli.parse();
 }
@@ -43,6 +55,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     addAuthCommand(cli);
     addCheckCommand(cli);
     addConfigCommand(cli);
+    addInitCommand(cli);
     addSdkCommand(cli);
 
     return cli;

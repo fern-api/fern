@@ -1268,6 +1268,9 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": [
+                        "external"
+                    ],
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,

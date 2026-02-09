@@ -19,6 +19,7 @@ export class ServersConverter3_0 extends AbstractServerConverter<ServerV3> {
             name: context.casingsGenerator.generateName(serverId),
             url: this.constructServerUrl(server.protocol, server.host),
             docs: undefined,
+            audiences: undefined,
             defaultUrl: undefined,
             urlTemplate: undefined,
             urlVariables: undefined

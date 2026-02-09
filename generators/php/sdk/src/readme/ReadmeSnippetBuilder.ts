@@ -118,7 +118,7 @@ $response = ${this.getMethodCall(retryEndpoint)}(
 $response = ${this.getMethodCall(timeoutEndpoint)}(
     ...,
     options: [
-        'timeout' => 3.0 // Override timeout to 3 seconds
+        '${this.context.getTimeoutOptionName()}' => 3.0 // Override timeout at the request level
     ]
 );
 `)
@@ -129,25 +129,23 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
         const snippet = this.writeCode(`
 use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
 
-// Create a custom Guzzle client with specific configuration.
+// Pass any PSR-18 compatible HTTP client implementation.
+// For example, using Guzzle:
 $customClient = new \\GuzzleHttp\\Client([
     'timeout' => 5.0,
 ]);
 
-// Pass the custom client when creating an instance of the class.
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
-    '${this.context.getGuzzleClientOptionName()}' => $customClient
+    '${this.context.getHttpClientOptionName()}' => $customClient
 ]);
 
-// You can also utilize the same technique to leverage advanced customizations to the client such as adding middleware
-$handlerStack = \\GuzzleHttp\\HandlerStack::create();
-$handlerStack->push(MyCustomMiddleware::create());
-$customClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
-
-// Pass the custom client when creating an instance of the class.
-${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
-    '${this.context.getGuzzleClientOptionName()}' => $customClient
-]);
+// Or using Symfony HttpClient:
+// $customClient = (new \\Symfony\\Component\\HttpClient\\Psr18Client())
+//     ->withOptions(['timeout' => 5.0]);
+//
+// ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
+//     '${this.context.getHttpClientOptionName()}' => $customClient
+// ]);
 `);
         return [snippet];
     }
