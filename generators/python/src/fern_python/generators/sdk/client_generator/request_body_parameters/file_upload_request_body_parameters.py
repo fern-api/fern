@@ -190,7 +190,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                     writer.write_node(expression)
                                 else:
                                     writer.write_node(AST.Expression(self._get_json_dumps(expression)))
-                                writer.write_line(f', "{property_as_union.content_type}")}}') 
+                                writer.write_line(f', "{property_as_union.content_type}")}}')
                                 writer.write_line(f"if {property_as_union.name.wire_value} is not OMIT ")
                                 writer.write_line("else {}")
                             writer.write_line("),")
