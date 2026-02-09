@@ -2,8 +2,8 @@
 - version: 3.70.1
   changelogEntry:
     - summary: |
-        Patch release with bug fixes and improvements.
-      type: fix
+        Add environment audiences support for server filtering
+      type: feat
   createdAt: "2026-02-09"
   irVersion: 63
 
