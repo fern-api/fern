@@ -1,4 +1,4 @@
-import { ContainerType, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, PrimitiveTypeV2, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 import { generateTypeReferenceExample } from "../examples/v1/generateTypeReferenceExample.js";
 
@@ -68,7 +68,7 @@ function optionalNamedRef(typeId: string): TypeReference {
 }
 
 function stringRef(): TypeReference {
-    return TypeReference.primitive({ v1: "STRING", v2: { type: "string", default: undefined, validation: undefined } });
+    return TypeReference.primitive({ v1: "STRING", v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined }) });
 }
 
 describe("v1 cycle detection in generateTypeReferenceExample", () => {
