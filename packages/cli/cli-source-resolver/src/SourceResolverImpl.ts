@@ -4,7 +4,7 @@ import { AbsoluteFilePath, doesPathExistSync, join, RelativeFilePath } from "@fe
 import { ResolvedSource, SourceResolver } from "@fern-api/source-resolver";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ProtobufParser } from "./parsers/ProtobufParser";
+import { ProtobufParser } from "./parsers/ProtobufParser.js";
 
 export class SourceResolverImpl implements SourceResolver {
     private readonly context: TaskContext;

@@ -166,7 +166,7 @@ public class UnionWithIdenticalStrings
             value.Visit(str => writer.WriteStringValue(str));
         }
 
-        public override UnionWithIdenticalStrings? ReadAsPropertyName(
+        public override UnionWithIdenticalStrings ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

@@ -1,10 +1,15 @@
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-import { RawClient } from "../endpoint/http/RawClient";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type Subpackage = FernIr.Subpackage;
+type HttpService = FernIr.HttpService;
+type ServiceId = FernIr.ServiceId;
+
+import { RawClient } from "../endpoint/http/RawClient.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 export declare namespace SubClientGenerator {
     interface Args {

@@ -2,10 +2,10 @@ import { LogLevel } from "@fern-api/logger";
 import { printTable } from "console-table-printer";
 import { minimatch } from "minimatch";
 import path from "path";
-import { loadGeneratorWorkspaces } from "../../loadGeneratorWorkspaces";
-import { Semaphore } from "../../Semaphore";
-import { buildGeneratorImage } from "../img/buildGeneratorImage";
-import { TaskContextFactory } from "../test/TaskContextFactory";
+import { loadGeneratorWorkspaces } from "../../loadGeneratorWorkspaces.js";
+import { Semaphore } from "../../Semaphore.js";
+import { buildGeneratorImage } from "../img/buildGeneratorImage.js";
+import { TaskContextFactory } from "../test/TaskContextFactory.js";
 import {
     ALL_GENERATOR_NICKNAMES,
     ALL_OUTPUT_MODES,
@@ -18,9 +18,9 @@ import {
     OutputMode,
     SEED_REMOTE_LOCAL_OUTPUT_DIR,
     TestFixture
-} from "./constants";
-import { getLatestGeneratorVersions, getLocalGeneratorVersions } from "./dockerHubClient";
-import { runTestCase } from "./testExecution";
+} from "./constants.js";
+import { getLatestGeneratorVersions, getLocalGeneratorVersions } from "./dockerHubClient.js";
+import { runTestCase } from "./testExecution.js";
 
 interface TestResult {
     generator: GeneratorNickname;

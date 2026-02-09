@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { AudienceId } from "../filtered-ir/ids";
+import { AudienceId } from "../filtered-ir/ids.js";
 
 export function getPropertiesByAudience(
     properties: Record<string, RawSchemas.ObjectPropertySchema | RawSchemas.HttpQueryParameterSchema>

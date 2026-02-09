@@ -1,13 +1,13 @@
-import { AccessLevel } from "./AccessLevel";
-import { AstNode, Writer } from "./core";
-import { DocComment } from "./DocComment";
-import type { EnumWithRawValues } from "./EnumWithRawValues";
-import { Expression } from "./Expression";
-import { FunctionArgument } from "./FunctionArgument";
-import { Initializer } from "./Initializer";
-import { Method } from "./Method";
-import { Property } from "./Property";
-import { Protocol } from "./Protocol";
+import { AccessLevel } from "./AccessLevel.js";
+import { AstNode, Writer } from "./core/index.js";
+import { DocComment } from "./DocComment.js";
+import type { EnumWithRawValues } from "./EnumWithRawValues.js";
+import { Expression } from "./Expression.js";
+import { FunctionArgument } from "./FunctionArgument.js";
+import { Initializer } from "./Initializer.js";
+import { Method } from "./Method.js";
+import { Property } from "./Property.js";
+import { Protocol } from "./Protocol.js";
 
 export declare namespace Struct {
     interface Attribute {

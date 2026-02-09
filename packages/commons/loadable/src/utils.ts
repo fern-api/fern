@@ -1,7 +1,7 @@
 import { keys } from "@fern-api/core-utils";
 
-import { failed, isFailed, isLoaded, Loadable, Loading, loaded, loading, NotFailed } from "./Loadable";
-import { visitLoadable } from "./visitor";
+import { failed, isFailed, isLoaded, Loadable, Loading, loaded, loading, NotFailed } from "./Loadable.js";
+import { visitLoadable } from "./visitor.js";
 
 export function getLoadableValue<V>(loadable: Loadable<V> | undefined): V | undefined {
     if (loadable != null && loadable.type === "loaded") {

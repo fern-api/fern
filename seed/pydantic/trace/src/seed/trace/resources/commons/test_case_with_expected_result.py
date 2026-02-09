@@ -5,13 +5,17 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from ...core.serialization import FieldMetadata
 from .test_case import TestCase
 
 
 class TestCaseWithExpectedResult(UniversalBaseModel):
-    test_case: TestCase = pydantic.Field(alias="testCase")
-    expected_result: "VariableValue" = pydantic.Field(alias="expectedResult")
+    test_case: typing_extensions.Annotated[TestCase, FieldMetadata(alias="testCase"), pydantic.Field(alias="testCase")]
+    expected_result: typing_extensions.Annotated[
+        "VariableValue", FieldMetadata(alias="expectedResult"), pydantic.Field(alias="expectedResult")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

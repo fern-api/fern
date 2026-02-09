@@ -1,29 +1,24 @@
-import {
-    ErrorDiscriminationByPropertyStrategy,
-    ErrorDiscriminationStrategy,
-    HttpEndpoint,
-    HttpResponseBody
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
-import { getSuccessReturnType } from "./getSuccessReturnType";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
+import { getSuccessReturnType } from "./getSuccessReturnType.js";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         response:
-            | HttpResponseBody.Json
-            | HttpResponseBody.FileDownload
-            | HttpResponseBody.Streaming
-            | HttpResponseBody.Text
-            | HttpResponseBody.Bytes
+            | FernIr.HttpResponseBody.Json
+            | FernIr.HttpResponseBody.FileDownload
+            | FernIr.HttpResponseBody.Streaming
+            | FernIr.HttpResponseBody.Text
+            | FernIr.HttpResponseBody.Bytes
             | undefined;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
         streamType: "wrapper" | "web";
@@ -35,15 +30,15 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private static RESPONSE_VARIABLE_NAME = "_response";
 
     private packageId: PackageId;
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private response:
-        | HttpResponseBody.Json
-        | HttpResponseBody.FileDownload
-        | HttpResponseBody.Streaming
-        | HttpResponseBody.Text
-        | HttpResponseBody.Bytes
+        | FernIr.HttpResponseBody.Json
+        | FernIr.HttpResponseBody.FileDownload
+        | FernIr.HttpResponseBody.Streaming
+        | FernIr.HttpResponseBody.Text
+        | FernIr.HttpResponseBody.Bytes
         | undefined;
-    private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;
     private streamType: "wrapper" | "web";
@@ -204,7 +199,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     }
 
     private getSwitchStatementForErrors(context: SdkContext) {
-        return ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
+        return FernIr.ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
             property: (propertyErrorDiscriminationStrategy) =>
                 this.getSwitchStatementForPropertyDiscriminatedErrors({
                     context,
@@ -212,7 +207,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                 }),
             statusCode: () => this.getSwitchStatementForStatusCodeDiscriminatedErrors(context),
             _other: () => {
-                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+                throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             }
         });
     }
@@ -222,7 +217,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         propertyErrorDiscriminationStrategy
     }: {
         context: SdkContext;
-        propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
+        propertyErrorDiscriminationStrategy: FernIr.ErrorDiscriminationByPropertyStrategy;
     }) {
         if (this.endpoint.errors.length === 0) {
             throw new Error("Cannot generate switch because there are no errors defined");

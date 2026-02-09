@@ -1,18 +1,17 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    EndpointReference,
-    HttpEndpoint,
-    HttpService,
-    Name,
-    OAuthScheme,
-    ObjectProperty,
-    ResponseProperty
-} from "@fern-fern/ir-sdk/api";
+type EndpointReference = FernIr.EndpointReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpService = FernIr.HttpService;
+type OAuthScheme = FernIr.OAuthScheme;
+type ObjectProperty = FernIr.ObjectProperty;
+type ResponseProperty = FernIr.ResponseProperty;
+
 import { fail } from "assert";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -354,7 +353,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         );
     }
 
-    private dotAccess(property: ObjectProperty, path?: Name[]): string {
+    private dotAccess(property: ObjectProperty, path?: FernIr.Name[]): string {
         if (path != null && path.length > 0) {
             return `${path.map((val) => val.pascalCase).join(".")}.${property.name.name.pascalCase.safeName}`;
         }

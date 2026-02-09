@@ -2,8 +2,8 @@ import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { Project } from "@fern-api/project-loader";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { logViolations } from "./logViolations";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { logViolations } from "./logViolations.js";
 
 export async function validateDocsBrokenLinks({
     project,

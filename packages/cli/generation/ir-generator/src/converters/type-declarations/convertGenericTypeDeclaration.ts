@@ -1,10 +1,10 @@
 import { isRawObjectDefinition, parseGeneric, RawSchemas } from "@fern-api/fern-definition-schema";
 import { Type } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
+import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration.js";
 
 export function convertGenericTypeDeclaration({
     generic,

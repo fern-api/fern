@@ -2,8 +2,8 @@ import type { schemas } from "@fern-api/config";
 import { APIS_DIRECTORY, DEFINITION_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
-import type { MigratorWarning } from "../types";
-import { convertOpenApiSpecSettings } from "./convertSettings";
+import type { MigratorWarning } from "../types/index.js";
+import { convertOpenApiSpecSettings } from "./convertSettings.js";
 
 export interface ConvertApiSpecsResult {
     specs: schemas.ApiSpecSchema[];

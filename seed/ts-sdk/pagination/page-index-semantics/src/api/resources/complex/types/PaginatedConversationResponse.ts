@@ -4,7 +4,7 @@ import type * as SeedPagination from "../../../index.js";
 
 export interface PaginatedConversationResponse {
     conversations: SeedPagination.Conversation[];
-    pages?: SeedPagination.CursorPages;
+    pages?: SeedPagination.CursorPages | undefined;
     total_count: number;
     type: "conversation.list";
 }

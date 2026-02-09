@@ -1,3 +1,4 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import {
     Argument,
     ClassReference,
@@ -13,17 +14,8 @@ import {
     StringClassReference
 } from "@fern-api/ruby-codegen";
 
-import {
-    ApiAuth,
-    AuthSchemesRequirement,
-    BasicAuthScheme,
-    BearerAuthScheme,
-    HeaderAuthScheme,
-    HttpHeader,
-    OAuthScheme
-} from "@fern-fern/ir-sdk/api";
-import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
-import { isTypeOptional } from "./TypeUtilities";
+import { OauthTokenProvider } from "./oauth/OauthTokenProvider.js";
+import { isTypeOptional } from "./TypeUtilities.js";
 
 export interface BasicAuth {
     username: string;
@@ -36,19 +28,19 @@ export interface BearerAuth {
 // For global headers + auth headers
 export class HeadersGenerator {
     BASIC_AUTH_VARIABLE_NAME = "basic_auth_token";
-    public headers: HttpHeader[];
+    public headers: FernIr.HttpHeader[];
     public crf: ClassReferenceFactory;
-    public auth: ApiAuth;
+    public auth: FernIr.ApiAuth;
 
     public isAuthRequired: boolean;
     public shouldGeneratOauth: boolean;
 
-    constructor(headers: HttpHeader[], crf: ClassReferenceFactory, auth: ApiAuth, shouldGeneratOauth: boolean) {
+    constructor(headers: FernIr.HttpHeader[], crf: ClassReferenceFactory, auth: FernIr.ApiAuth, shouldGeneratOauth: boolean) {
         this.headers = headers;
         this.crf = crf;
         this.auth = auth;
 
-        this.isAuthRequired = AuthSchemesRequirement._visit<boolean>(auth.requirement, {
+        this.isAuthRequired = FernIr.AuthSchemesRequirement._visit<boolean>(auth.requirement, {
             all: () => true,
             any: () => false,
             _other: () => {
@@ -76,7 +68,7 @@ export class HeadersGenerator {
     public getAuthHeadersAsParameters(forRootClient: boolean): Parameter[] {
         return this.auth.schemes.flatMap((scheme) =>
             scheme._visit<Parameter[]>({
-                bearer: (bas: BearerAuthScheme) => [
+                bearer: (bas: FernIr.BearerAuthScheme) => [
                     new Parameter({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
@@ -88,7 +80,7 @@ export class HeadersGenerator {
                                 : undefined
                     })
                 ],
-                basic: (bas: BasicAuthScheme) => [
+                basic: (bas: FernIr.BasicAuthScheme) => [
                     new Parameter({
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
@@ -110,7 +102,7 @@ export class HeadersGenerator {
                                 : undefined
                     })
                 ],
-                oauth: (oas: OAuthScheme) =>
+                oauth: (oas: FernIr.OAuthScheme) =>
                     this.shouldGeneratOauth
                         ? oas.configuration._visit<Parameter[]>({
                               clientCredentials: (cc) =>
@@ -158,7 +150,7 @@ export class HeadersGenerator {
                                   example: '"YOUR_AUTH_TOKEN"'
                               })
                           ],
-                header: (has: HeaderAuthScheme) => [
+                header: (has: FernIr.HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
@@ -194,7 +186,7 @@ export class HeadersGenerator {
     public getAuthHeadersAsProperties(isOptionalOverride?: boolean): Property[] {
         return this.auth.schemes.flatMap((scheme) =>
             scheme._visit<Property[]>({
-                bearer: (bas: BearerAuthScheme) => [
+                bearer: (bas: FernIr.BearerAuthScheme) => [
                     new Property({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
@@ -205,7 +197,7 @@ export class HeadersGenerator {
                         wireValue: "Authorization"
                     })
                 ],
-                basic: (bas: BasicAuthScheme) => [
+                basic: (bas: FernIr.BasicAuthScheme) => [
                     new Property({
                         name: this.BASIC_AUTH_VARIABLE_NAME,
                         type: StringClassReference,
@@ -219,7 +211,7 @@ export class HeadersGenerator {
                         wireValue: "Authorization"
                     })
                 ],
-                header: (has: HeaderAuthScheme) => [
+                header: (has: FernIr.HeaderAuthScheme) => [
                     new Property({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
@@ -227,7 +219,7 @@ export class HeadersGenerator {
                         wireValue: has.name.wireValue
                     })
                 ],
-                oauth: (_: OAuthScheme) => [
+                oauth: (_: FernIr.OAuthScheme) => [
                     new Property({
                         name: OauthTokenProvider.FIELD_NAME,
                         type: [StringClassReference, MethodClassReference],
@@ -247,12 +239,12 @@ export class HeadersGenerator {
     //     return this.headers.map((header) => [`"${header.name.wireValue}"`, header.name.name.snakeCase.safeName]);
     // }
 
-    private getBearerAuthorizationHeader(bas: BearerAuthScheme): [string, string] {
+    private getBearerAuthorizationHeader(bas: FernIr.BearerAuthScheme): [string, string] {
         const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
         return [`@${bas.token.snakeCase.safeName}`, `"Bearer #{${bearerValue.write({})}}"`];
     }
 
-    private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
+    private getOAuthBearerAuthorizationHeader(oas: FernIr.OAuthScheme): [string, string] {
         // The meat of the logic for bearer auth happens within an oauth token provider, which passes
         // the get token function to the RequestClient, so this is just leveraging that.
         return this.shouldGeneratOauth
@@ -273,7 +265,7 @@ export class HeadersGenerator {
             : [`@${OauthTokenProvider.FIELD_NAME}`, `"Bearer #{${OauthTokenProvider.FIELD_NAME}}"`];
     }
 
-    private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
+    private getBasicAuthorizationHeader(bas: FernIr.BasicAuthScheme): [string, string] {
         const userName = new Expression({ rightSide: bas.username.snakeCase.safeName, isAssignment: false });
         const password = new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false });
 
@@ -293,7 +285,7 @@ export class HeadersGenerator {
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't
     // have string templates in the AST right now which is necessary for header prefixes
-    private getCustomAuthorizationHeader(has: HeaderAuthScheme): [string, string] {
+    private getCustomAuthorizationHeader(has: FernIr.HeaderAuthScheme): [string, string] {
         // TODO(P0): fix this, we need to know what actually needs to_json, strings do not
         // What other objects can go here, what would that look like?
 
@@ -312,10 +304,10 @@ export class HeadersGenerator {
     public getAuthHeaders(): [string, string][] {
         return this.auth.schemes.map((scheme) =>
             scheme._visit<[string, string]>({
-                bearer: (bas: BearerAuthScheme) => this.getBearerAuthorizationHeader(bas),
-                basic: (bas: BasicAuthScheme) => this.getBasicAuthorizationHeader(bas),
-                header: (has: HeaderAuthScheme) => this.getCustomAuthorizationHeader(has),
-                oauth: (oas: OAuthScheme) => this.getOAuthBearerAuthorizationHeader(oas),
+                bearer: (bas: FernIr.BearerAuthScheme) => this.getBearerAuthorizationHeader(bas),
+                basic: (bas: FernIr.BasicAuthScheme) => this.getBasicAuthorizationHeader(bas),
+                header: (has: FernIr.HeaderAuthScheme) => this.getCustomAuthorizationHeader(has),
+                oauth: (oas: FernIr.OAuthScheme) => this.getOAuthBearerAuthorizationHeader(oas),
                 _other: () => {
                     throw new Error("Unrecognized auth scheme.");
                 }

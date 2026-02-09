@@ -2,9 +2,11 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+type ErrorDeclaration = FernIr.ErrorDeclaration;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ErrorGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     readonly classReference;

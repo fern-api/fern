@@ -1,5 +1,5 @@
-export * from "./constants";
-export { convertNumberToSnakeCase } from "./convertNumberToSnakeCase";
-export { generateEnumNameFromValue } from "./generateEnumNameFromValue";
-export { isSchemaEqual } from "./isSchemaEqual";
-export { replaceStartingNumber } from "./replaceStartingNumber";
+export * from "./constants.js";
+export { convertNumberToSnakeCase } from "./convertNumberToSnakeCase.js";
+export { generateEnumNameFromValue } from "./generateEnumNameFromValue.js";
+export { isSchemaEqual } from "./isSchemaEqual.js";
+export { replaceStartingNumber } from "./replaceStartingNumber.js";

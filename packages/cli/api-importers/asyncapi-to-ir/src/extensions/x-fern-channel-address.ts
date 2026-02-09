@@ -1,7 +1,7 @@
 import { AbstractExtension } from "@fern-api/v3-importer-commons";
 
-import { AsyncAPIV2 } from "../2.x";
-import { AsyncAPIV3 } from "../3.0";
+import { AsyncAPIV2 } from "../2.x/index.js";
+import { AsyncAPIV3 } from "../3.0/index.js";
 
 export declare namespace ChannelAddressExtension {
     export interface Args extends AbstractExtension.Args {

@@ -1,3 +1,3 @@
-export * from "./FeatureImplementation";
-export * from "./FeatureImplementationWithDetails";
-export * from "./GeneratorFeatures";
+export * from "./FeatureImplementation.js";
+export * from "./FeatureImplementationWithDetails.js";
+export * from "./GeneratorFeatures.js";

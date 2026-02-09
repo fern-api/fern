@@ -1,23 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
 import { python } from "@fern-api/python-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    Name,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
-import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
-import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext";
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema.js";
+import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext.js";
 
 export declare namespace PythonTypeMapper {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
     }
 }
 
@@ -45,14 +35,14 @@ export class PythonTypeMapper {
         }
     }
 
-    public convertToClassReference({ typeId, name }: { typeId: TypeId; name: Name }): python.Reference {
+    public convertToClassReference({ typeId, name }: { typeId: FernIr.TypeId; name: FernIr.Name }): python.Reference {
         return new python.Reference({
             name: this.context.getPascalCaseSafeName(name),
             modulePath: [...this.context.getModulePathForId(typeId), this.context.getSnakeCaseSafeName(name)]
         });
     }
 
-    private convertContainer({ container }: { container: ContainerType }): python.Type {
+    private convertContainer({ container }: { container: FernIr.ContainerType }): python.Type {
         switch (container.type) {
             case "list":
                 return python.Type.list(this.convert({ reference: container.list }));
@@ -74,8 +64,8 @@ export class PythonTypeMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): python.Type {
-        return PrimitiveTypeV1._visit<python.Type>(primitive.v1, {
+    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): python.Type {
+        return FernIr.PrimitiveTypeV1._visit<python.Type>(primitive.v1, {
             integer: () => python.Type.int(),
             long: () => python.Type.int(),
             uint: () => python.Type.int(),
@@ -93,7 +83,7 @@ export class PythonTypeMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): python.Type {
+    private convertLiteral({ literal }: { literal: FernIr.Literal }): python.Type {
         switch (literal.type) {
             case "boolean":
                 return python.Type.bool();
@@ -102,7 +92,7 @@ export class PythonTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: DeclaredTypeName }): python.Type {
+    private convertNamed({ named }: { named: FernIr.DeclaredTypeName }): python.Type {
         const objectClassReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {

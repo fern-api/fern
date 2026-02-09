@@ -8,9 +8,6 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../../packages/ir-sdk"
-    },
-    {
       "path": "../../utils/contexts"
     },
     {

@@ -1,7 +1,7 @@
 import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
 
-import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
-import { Writer } from "./Writer";
+import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema.js";
+import { Writer } from "./Writer.js";
 
 export abstract class AstNode extends AbstractAstNode {
     /**

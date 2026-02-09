@@ -1,12 +1,12 @@
 import { fail } from "node:assert";
-import { Literal } from "../ast/code/Literal";
-import { AstNode } from "../ast/core/AstNode";
-import { ClassReference } from "../ast/types/ClassReference";
-import { Type } from "../ast/types/IType";
-import { BaseType, Collection, Optional, OptionalWrapper, Primitive, Value } from "../ast/types/Type";
-import { type Provenance } from "../context/model-navigator";
-import { is as DynamicIR } from "./dynamic-ir-type-guards";
-import { is as IR } from "./ir-type-guards";
+import { Literal } from "../ast/code/Literal.js";
+import { AstNode } from "../ast/core/AstNode.js";
+import { ClassReference } from "../ast/types/ClassReference.js";
+import { Type } from "../ast/types/IType.js";
+import { BaseType, Collection, Optional, OptionalWrapper, Primitive, Value } from "../ast/types/Type.js";
+import { type Provenance } from "../context/model-navigator.js";
+import { is as DynamicIR } from "./dynamic-ir-type-guards.js";
+import { is as IR } from "./ir-type-guards.js";
 
 const ISO_8601_DATE_REGEX = /^[+-]?\d{4}-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])$/;
 
@@ -20,7 +20,88 @@ const ISO_8601_DATE_TIME_REGEX =
  *
  * @see https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-guards
  */
-export const is = {
+export const is: {
+    string: (value: unknown) => value is string;
+    boolean: (value: unknown) => value is boolean;
+    number: (value: unknown) => value is number;
+    date: (value: unknown) => value is Date;
+    object: (value: unknown) => value is object;
+    array: (value: unknown) => value is unknown[];
+    Provenance: (value: unknown) => value is Provenance;
+    Explicit: (value: unknown) => value is Provenance & {
+        explicit: true;
+    };
+    NonNullable: <T>(value: T) => value is NonNullable<T>;
+    isIsoDateString: (value: unknown) => value is string;
+    isIsoDateTimeString: (value: unknown) => value is string;
+    Type: (value: unknown) => value is BaseType;
+    ClassReference: (value: unknown) => value is ClassReference;
+    Optional: (value: Type) => value is Optional;
+    OptionalWrapper: (value: Type) => value is OptionalWrapper;
+    AsyncEnumerable: (value: Type | undefined) => value is Type;
+    Record: {
+        empty: (value: unknown) => value is Record<string, unknown>;
+        nonEmpty: (value: unknown) => value is Record<string, unknown>;
+        withKey: <K extends string>(value: unknown, key: K) => value is Record<K, unknown>;
+        missingKey: <K extends string>(value: unknown, key: K) => value is Record<K, unknown>;
+    };
+    Ast: {
+        Node: (value: unknown) => value is AstNode;
+        NamedNode: (value: unknown) => value is AstNode & { name: string };
+    };
+    OneOf: {
+        OneOf: (value: Type | undefined) => value is ClassReference;
+        OneOfBase: (value: Type | undefined) => value is ClassReference;
+    };
+    Primitive: {
+        string: (value: Type | undefined) => value is Primitive.String;
+        boolean: (value: Type | undefined) => value is Primitive.Boolean;
+        int: (value: Type | undefined) => value is Primitive.Integer;
+        long: (value: Type | undefined) => value is Primitive.Long;
+        uint: (value: Type | undefined) => value is Primitive.Uint;
+        ulong: (value: Type | undefined) => value is Primitive.ULong;
+        float: (value: Type | undefined) => value is Primitive.Float;
+        double: (value: Type | undefined) => value is Primitive.Double;
+        object: (value: Type | undefined) => value is Primitive.Object;
+    };
+    Value: {
+        dateTime: (value: Type | undefined) => value is Value.DateTime;
+        uuid: (value: Type | undefined) => value is Value.Uuid;
+        byte: (value: Type | undefined) => value is Value.Binary;
+        stringEnum: (value: Type | undefined) => value is Value.StringEnum;
+    };
+    Collection: {
+        array: (value: Type | undefined) => value is Collection.Array;
+        listType: (value: Type | undefined) => value is Collection.ListType;
+        list: (value: Type | undefined) => value is Collection.List;
+        set: (value: Type | undefined) => value is Collection.Set;
+        map: (value: Type | undefined) => value is Collection.Map;
+        idictionary: (value: Type | undefined) => value is Collection.IDictionary;
+        keyValuePair: (value: Type | undefined) => value is Collection.KeyValuePair;
+    };
+    Literal: {
+        string: (value: Literal | undefined) => value is Literal.String;
+        boolean: (value: Literal | undefined) => value is Literal.Boolean;
+        decimal: (value: Literal | undefined) => value is Literal.Decimal;
+        double: (value: Literal | undefined) => value is Literal.Double;
+        date: (value: Literal | undefined) => value is Literal.Date;
+        dateTime: (value: Literal | undefined) => value is Literal.DateTime;
+        float: (value: Literal | undefined) => value is Literal.Float;
+        int: (value: Literal | undefined) => value is Literal.Integer;
+        long: (value: Literal | undefined) => value is Literal.Long;
+        uint: (value: Literal | undefined) => value is Literal.Uint;
+        ulong: (value: Literal | undefined) => value is Literal.Ulong;
+        class: (value: Literal | undefined) => value is Literal.Class_;
+        list: (value: Literal | undefined) => value is Literal.List;
+        set: (value: Literal | undefined) => value is Literal.Set;
+        dictionary: (value: Literal | undefined) => value is Literal.Dictionary;
+        nop: (value: Literal | undefined) => value is Literal.Nop;
+        null: (value: Literal | undefined) => value is Literal.Null;
+        unknown: (value: Literal | undefined) => value is Literal.Unknown;
+    };
+    IR: typeof IR;
+    DynamicIR: typeof DynamicIR;
+} = {
     string: (value: unknown): value is string => typeof value === "string",
     boolean: (value: unknown): value is boolean => typeof value === "boolean",
     number: (value: unknown): value is number => typeof value === "number",

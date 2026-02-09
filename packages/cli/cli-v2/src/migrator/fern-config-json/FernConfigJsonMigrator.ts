@@ -1,7 +1,7 @@
 import { PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
-import type { DetectResult, MigratorWarning } from "../types";
+import type { DetectResult, MigratorWarning } from "../types/index.js";
 
 export declare namespace FernConfigJsonMigrator {
     export interface Config {

@@ -1,2 +1,2 @@
-export { ReadmeConfigBuilder } from "./ReadmeConfigBuilder";
-export { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+export { ReadmeConfigBuilder } from "./ReadmeConfigBuilder.js";
+export { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";

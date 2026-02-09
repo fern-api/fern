@@ -1075,6 +1075,9 @@
                         }
                     },
                     "url": "https://api.example.com",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -1099,6 +1102,9 @@
                         }
                     },
                     "url": "https://staging-api.example.com",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

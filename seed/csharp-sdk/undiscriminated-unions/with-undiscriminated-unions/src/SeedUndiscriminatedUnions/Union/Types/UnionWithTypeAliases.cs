@@ -276,7 +276,7 @@ public class UnionWithTypeAliases
             );
         }
 
-        public override UnionWithTypeAliases? ReadAsPropertyName(
+        public override UnionWithTypeAliases ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

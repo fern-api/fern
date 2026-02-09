@@ -11,10 +11,10 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { ParseOpenAPIOptions } from "../options";
-import { convertSchema } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
-import { isReferenceObject } from "./utils/isReferenceObject";
+import { ParseOpenAPIOptions } from "../options.js";
+import { convertSchema } from "./convertSchemas.js";
+import { SchemaParserContext } from "./SchemaParserContext.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
 
 export function convertAdditionalProperties({
     nameOverride,

@@ -234,7 +234,7 @@ public class MetadataUnion
             );
         }
 
-        public override MetadataUnion? ReadAsPropertyName(
+        public override MetadataUnion ReadAsPropertyName(
             ref Utf8JsonReader reader,
             System.Type typeToConvert,
             JsonSerializerOptions options

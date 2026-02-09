@@ -1,10 +1,9 @@
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-
-import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
-import { publishDocs } from "./publishDocs";
+import { publishDocs } from "./publishDocs.js";
 
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
@@ -107,7 +106,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ? Array.isArray(maybeInstance.audiences)
                     ? maybeInstance.audiences
                     : [maybeInstance.audiences]
-                : undefined
+                : undefined,
+            docsUrl: maybeInstance.url
         });
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);

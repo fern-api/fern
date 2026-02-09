@@ -7,11 +7,11 @@ import {
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
 
-import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
-import { RootApiFileAstVisitor } from "../../RootApiFileAstVisitor";
-import { createDocsVisitor } from "../utils/createDocsVisitor";
-import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
-import { createTypeReferenceVisitor } from "../utils/visitTypeReference";
+import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor.js";
+import { RootApiFileAstVisitor } from "../../RootApiFileAstVisitor.js";
+import { createDocsVisitor } from "../utils/createDocsVisitor.js";
+import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample.js";
+import { createTypeReferenceVisitor } from "../utils/visitTypeReference.js";
 
 export function visitHttpService({
     service,

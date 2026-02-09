@@ -45,6 +45,7 @@ class Inlined extends JsonSerializableType
     public function setUnique(string $value): self
     {
         $this->unique = $value;
+        $this->_setField('unique');
         return $this;
     }
 }

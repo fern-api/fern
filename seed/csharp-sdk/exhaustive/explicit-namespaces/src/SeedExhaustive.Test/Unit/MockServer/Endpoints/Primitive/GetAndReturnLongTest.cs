@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
@@ -34,6 +34,6 @@ public class GetAndReturnLongTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<long>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

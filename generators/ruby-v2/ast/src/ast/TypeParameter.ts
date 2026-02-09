@@ -1,6 +1,6 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Type } from "./Type";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Type } from "./Type.js";
 
 export enum Variance {
     Invariant,

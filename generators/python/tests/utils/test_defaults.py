@@ -6,14 +6,16 @@ def test_defaulted_object() -> None:
 
     assert obj_with_none.decimal is None
     assert obj_with_none.string is None
-    assert obj_with_none.required_string is "something else"
+    assert obj_with_none.required_string == "something else"
 
 
 def test_defaulted_object_with_defaults() -> None:
-    obj_with_defaults = ObjectWithDefaults()
+    # Pydantic model fields no longer have primitive defaults from the IR.
+    # Optional fields default to None, and required fields must be provided.
+    obj_with_defaults = ObjectWithDefaults(required_string="I neeeeeeeeeed this!")
 
-    assert obj_with_defaults.decimal == 1.1
-    assert obj_with_defaults.string == "here's a sentence!"
+    assert obj_with_defaults.decimal is None
+    assert obj_with_defaults.string is None
     assert obj_with_defaults.required_string == "I neeeeeeeeeed this!"
 
 

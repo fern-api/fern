@@ -1,1 +1,1 @@
-export * from "./HttpMethod";
+export * from "./HttpMethod.js";

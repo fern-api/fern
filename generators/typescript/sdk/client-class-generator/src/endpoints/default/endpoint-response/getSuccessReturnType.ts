@@ -1,18 +1,18 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { getReadableTypeNode } from "../../../getReadableTypeNode";
+import { getReadableTypeNode } from "../../../getReadableTypeNode.js";
 
 export function getSuccessReturnType(
-    endpoint: HttpEndpoint,
+    endpoint: FernIr.HttpEndpoint,
     response:
-        | HttpResponseBody.Json
-        | HttpResponseBody.FileDownload
-        | HttpResponseBody.Streaming
-        | HttpResponseBody.Text
-        | HttpResponseBody.Bytes
+        | FernIr.HttpResponseBody.Json
+        | FernIr.HttpResponseBody.FileDownload
+        | FernIr.HttpResponseBody.Streaming
+        | FernIr.HttpResponseBody.Text
+        | FernIr.HttpResponseBody.Bytes
         | undefined,
     context: SdkContext,
     opts: {
@@ -43,7 +43,7 @@ export function getSuccessReturnType(
         }
         case "text":
             return context.type.getReferenceToType(
-                TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined })
+                FernIr.TypeReference.primitive({ v1: FernIr.PrimitiveTypeV1.String, v2: undefined })
             ).typeNode;
         case "streaming": {
             const dataEventType = response.value._visit({
@@ -51,7 +51,7 @@ export function getSuccessReturnType(
                 sse: (sse) => context.type.getReferenceToType(sse.payload),
                 text: () =>
                     context.type.getReferenceToType(
-                        TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined })
+                        FernIr.TypeReference.primitive({ v1: FernIr.PrimitiveTypeV1.String, v2: undefined })
                     ),
                 _other: ({ type }) => {
                     throw new Error(`Encountered unknown data event type ${type}`);

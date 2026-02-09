@@ -14,7 +14,7 @@ import { Project } from "@fern-api/project-loader";
 import { FernCliError, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
 import { promisify } from "util";
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 const execAsync = promisify(exec);
 

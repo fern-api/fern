@@ -2263,6 +2263,9 @@
                         }
                     },
                     "url": "https://api.example.com/v1",
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

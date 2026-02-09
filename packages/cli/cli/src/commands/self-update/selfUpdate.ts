@@ -3,7 +3,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
 import { realpath } from "fs/promises";
 import { dirname, normalize, sep } from "path";
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export interface InstallationMethod {
     type: "npm" | "pnpm" | "yarn" | "bun" | "brew" | "unknown";

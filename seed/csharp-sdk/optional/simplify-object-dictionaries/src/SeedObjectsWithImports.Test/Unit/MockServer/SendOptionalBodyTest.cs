@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedObjectsWithImports.Core;
+using SeedObjectsWithImports.Test.Utils;
 
 namespace SeedObjectsWithImports.Test.Unit.MockServer;
 
@@ -45,6 +45,6 @@ public class SendOptionalBodyTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

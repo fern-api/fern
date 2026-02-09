@@ -3,36 +3,38 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    DeclaredErrorName,
-    EnumTypeDeclaration,
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    HttpHeader,
-    HttpService,
-    IntermediateRepresentation,
-    Name,
-    ObjectPropertyAccess,
-    ObjectTypeDeclaration,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    ProtobufService,
-    ServiceId,
-    Subpackage,
-    TypeDeclaration,
-    TypeId,
-    TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import { AsIsFiles } from "../AsIs";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
-import { CsharpProject } from "../project";
-import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
-import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
-import { ProtobufResolver } from "../proto/ProtobufResolver";
-import { CsharpTypeMapper } from "./CsharpTypeMapper";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type DeclaredErrorName = FernIr.DeclaredErrorName;
+type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type FernFilepath = FernIr.FernFilepath;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpHeader = FernIr.HttpHeader;
+type HttpService = FernIr.HttpService;
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+type Name = FernIr.Name;
+type ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
+type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
+type PrimitiveType = FernIr.PrimitiveType;
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type ProtobufService = FernIr.ProtobufService;
+type ServiceId = FernIr.ServiceId;
+type Subpackage = FernIr.Subpackage;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type TypeId = FernIr.TypeId;
+type TypeReference = FernIr.TypeReference;
+type UndiscriminatedUnionTypeDeclaration = FernIr.UndiscriminatedUnionTypeDeclaration;
+type UnionTypeDeclaration = FernIr.UnionTypeDeclaration;
+
+import { AsIsFiles } from "../AsIs.js";
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo.js";
+import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject.js";
+import { CsharpProject } from "../project/index.js";
+import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper.js";
+import { ProtobufResolver } from "../proto/ProtobufResolver.js";
+import { CsharpTypeMapper } from "./CsharpTypeMapper.js";
 
 type Namespace = string;
 
@@ -78,84 +80,84 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
     /** Provides access to C# code generation utilities */
-    public get csharp() {
+    public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
     }
 
     /** Provides access to generation settings and configuration */
-    public get settings() {
+    public get settings(): Generation["settings"] {
         return this.generation.settings;
     }
 
     /** Provides access to generation constants */
-    public get constants() {
+    public get constants(): Generation["constants"] {
         return this.generation.constants;
     }
 
     /** Provides access to namespace management utilities */
-    public get namespaces() {
+    public get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
 
     /** Provides access to naming utilities for generating consistent identifiers */
-    public get names() {
+    public get names(): Generation["names"] {
         return this.generation.names;
     }
 
     /** Provides access to the model navigation and inspection utilities */
-    public get model() {
+    public get model(): Generation["model"] {
         return this.generation.model;
     }
     /** Provides access to text formatting utilities */
-    public get format() {
+    public get format(): Generation["format"] {
         return this.generation.format;
     }
 
     /** Provides access to the type registry for looking up generated types */
-    public get registry() {
+    public get registry(): Generation["registry"] {
         return this.generation.registry;
     }
     /** Provides access to type information and utilities */
-    public get Types() {
+    public get Types(): Generation["Types"] {
         return this.generation.Types;
     }
 
     /** Provides access to .NET System namespace types and utilities */
-    public get System() {
+    public get System(): Generation["extern"]["System"] {
         return this.generation.extern.System;
     }
 
     /** Provides access to NUnit testing framework types */
-    public get NUnit() {
+    public get NUnit(): Generation["extern"]["NUnit"] {
         return this.generation.extern.NUnit;
     }
 
     /** Provides access to OneOf discriminated union library types */
-    public get OneOf() {
+    public get OneOf(): Generation["extern"]["OneOf"] {
         return this.generation.extern.OneOf;
     }
 
     /** Provides access to Google protocol buffer types */
-    public get Google() {
+    public get Google(): Generation["extern"]["Google"] {
         return this.generation.extern.Google;
     }
-    public get Grpc() {
+    public get Grpc(): Generation["extern"]["Grpc"] {
         return this.generation.extern.Grpc;
     }
     /** Provides access to WireMock.Net testing/mocking library types */
-    public get WireMock() {
+    public get WireMock(): Generation["extern"]["WireMock"] {
         return this.generation.extern.WireMock;
     }
     /** Provides access to primitive types */
-    public get Primitive() {
+    public get Primitive(): Generation["Primitive"] {
         return this.generation.Primitive;
     }
     /** Provides access to value types */
-    public get Value() {
+    public get Value(): Generation["Value"] {
         return this.generation.Value;
     }
     /** Provides access to collection types */
-    public get Collection() {
+    public get Collection(): Generation["Collection"] {
         return this.generation.Collection;
     }
 
@@ -358,7 +360,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
     public abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
 
-    public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): ast.Annotation {
+    public createJsonAccessAttribute(propertyAccess: FernIr.ObjectPropertyAccess): ast.Annotation {
         let argument: string;
         switch (propertyAccess) {
             case "READ_ONLY":
@@ -583,7 +585,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     }
 
     public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): ast.CodeBlock {
-        return PrimitiveTypeV1._visit<ast.CodeBlock>(primitive.v1, {
+        return FernIr.PrimitiveTypeV1._visit<ast.CodeBlock>(primitive.v1, {
             integer: () => this.csharp.codeblock("0"),
             long: () => this.csharp.codeblock("0"),
             uint: () => this.csharp.codeblock("0"),

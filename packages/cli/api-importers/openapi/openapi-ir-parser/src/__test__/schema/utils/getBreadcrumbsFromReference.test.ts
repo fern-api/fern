@@ -1,4 +1,4 @@
-import { getBreadcrumbsFromReference } from "../../../schema/utils/getBreadcrumbsFromReference";
+import { getBreadcrumbsFromReference } from "../../../schema/utils/getBreadcrumbsFromReference.js";
 
 describe("it can find the relevant breadcrumbs and exclude openapi keywords", () => {
     test("#/components/schemas/ExampleSchema should return ExampleSchema", () => {

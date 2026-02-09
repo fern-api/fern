@@ -19,6 +19,9 @@ abstract class JsonSerializableType implements \JsonSerializable
     /** @var array<string, mixed> Extra properties from JSON that don't map to class properties */
     private array $__additionalProperties = [];
 
+    /** @var array<string, true> Properties that have been explicitly set via setter methods */
+    private array $__explicitlySetProperties = [];
+
     /**
      * Serializes the object to a JSON string.
      *
@@ -80,7 +83,8 @@ abstract class JsonSerializableType implements \JsonSerializable
                 $value = JsonSerializer::serializeObject($value);
             }
 
-            if ($value !== null) {
+            // Include the value if it's not null, OR if it was explicitly set (even to null)
+            if ($value !== null || array_key_exists($property->getName(), $this->__explicitlySetProperties)) {
                 $result[$jsonKey] = $value;
             }
         }
@@ -191,6 +195,17 @@ abstract class JsonSerializableType implements \JsonSerializable
     public function getAdditionalProperties(): array
     {
         return $this->__additionalProperties;
+    }
+
+    /**
+     * Mark a property as explicitly set.
+     * This ensures the property will be included in JSON serialization even if null.
+     *
+     * @param string $propertyName The name of the property to mark as explicitly set.
+     */
+    protected function _setField(string $propertyName): void
+    {
+        $this->__explicitlySetProperties[$propertyName] = true;
     }
 
     /**

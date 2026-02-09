@@ -1,18 +1,20 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.20.9
+      - name: fernapi/fern-typescript-sdk
+        version: 3.46.2
         output:
           location: local-file-system
           path: ../../../packages/generator-cli/src/configuration/sdk
         config:
+          outputSrcOnly: true
           includeUtilsOnUnionMembers: true
           useBrandedStringAliases: true
           outputSourceFiles: true
-          outputEsm: true
-
+          noSerdeLayer: false
+        smart-casing: false
   sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
@@ -24,16 +26,16 @@ groups:
         config:
           includeUtilsOnUnionMembers: true
           useBrandedStringAliases: true
-
+        smart-casing: false
       - name: fernapi/fern-python-sdk
         version: 4.2.8
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: "fern-fern-generator-cli-sdk"
+          package-name: fern-fern-generator-cli-sdk
         config:
-          package_name: "generatorcli"
-
+          package_name: generatorcli
+        smart-casing: false
       - name: fernapi/fern-go-sdk
         version: 0.22.0
         github:
@@ -41,3 +43,4 @@ groups:
         config:
           union: v1
           packageName: generatorcli
+        smart-casing: false

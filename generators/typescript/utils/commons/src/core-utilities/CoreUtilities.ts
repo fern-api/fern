@@ -1,17 +1,17 @@
-import { Auth } from "./Auth";
-import { CallbackQueue } from "./CallbackQueue";
-import { CustomPagination } from "./CustomPagination";
-import { Fetcher } from "./Fetcher";
-import { FileUtils } from "./FileUtils";
-import { FormDataUtils } from "./FormDataUtils";
-import { Logging } from "./Logging";
-import { Pagination } from "./Pagination";
-import { Runtime } from "./Runtime";
-import { Stream } from "./Stream";
-import { UrlUtils } from "./UrlUtils";
-import { Utils } from "./Utils";
-import { Websocket } from "./Websocket";
-import { Zurg } from "./Zurg";
+import { Auth } from "./Auth.js";
+import { CallbackQueue } from "./CallbackQueue.js";
+import { CustomPagination } from "./CustomPagination.js";
+import { Fetcher } from "./Fetcher.js";
+import { FileUtils } from "./FileUtils.js";
+import { FormDataUtils } from "./FormDataUtils.js";
+import { Logging } from "./Logging.js";
+import { Pagination } from "./Pagination.js";
+import { Runtime } from "./Runtime.js";
+import { Stream } from "./Stream.js";
+import { UrlUtils } from "./UrlUtils.js";
+import { Utils } from "./Utils.js";
+import { Websocket } from "./Websocket.js";
+import { Zurg } from "./Zurg.js";
 
 export interface CoreUtilities {
     zurg: Zurg;

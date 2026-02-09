@@ -3,13 +3,13 @@ import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { visitDefinitionFileYamlAst, visitPackageMarkerYamlAst, visitRootApiFileYamlAst } from "./ast";
-import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
-import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules";
-import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
-import { getAllEnabledRules } from "./getAllRules";
-import { Rule, RuleVisitors } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+import { visitDefinitionFileYamlAst, visitPackageMarkerYamlAst, visitRootApiFileYamlAst } from "./ast/index.js";
+import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules.js";
+import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules.js";
+import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules.js";
+import { getAllEnabledRules } from "./getAllRules.js";
+import { Rule, RuleVisitors } from "./Rule.js";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): ValidationViolation[] {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });

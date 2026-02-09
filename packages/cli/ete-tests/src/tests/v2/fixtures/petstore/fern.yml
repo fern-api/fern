@@ -1,0 +1,30 @@
+edition: 2026-01-01
+
+org: test-org
+
+api:
+  specs:
+    - openapi: ./openapi/openapi.yml
+
+sdks:
+  targets:
+    typescript:
+      version: 3.45.1
+      output:
+        path: ./sdks/typescript
+      group:
+        - prod
+
+    python:
+      version: 4.50.1
+      output:
+        path: ./sdks/python
+      group:
+        - prod
+
+    go:
+      version: 1.23.3
+      output:
+        path: ./sdks/go
+      group:
+        - prod

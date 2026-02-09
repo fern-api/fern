@@ -8,8 +8,8 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
 
 export class DynamicSnippetsJavaTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;

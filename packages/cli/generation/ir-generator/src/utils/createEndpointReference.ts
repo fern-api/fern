@@ -1,8 +1,8 @@
 import { EndpointReference } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
-import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint";
-import { ResolvedEndpoint } from "../resolvers/ResolvedEndpoint";
-import { isRootFernFilepath } from "./isRootFernFilepath";
+import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint.js";
+import { ResolvedEndpoint } from "../resolvers/ResolvedEndpoint.js";
+import { isRootFernFilepath } from "./isRootFernFilepath.js";
 
 export function createEndpointReference({
     resolvedEndpoint

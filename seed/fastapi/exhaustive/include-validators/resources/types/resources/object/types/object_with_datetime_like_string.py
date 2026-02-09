@@ -6,12 +6,14 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
     universal_field_validator,
     universal_root_validator,
 )
+from ......core.serialization import FieldMetadata
 
 
 class ObjectWithDatetimeLikeString(UniversalBaseModel):
@@ -21,15 +23,18 @@ class ObjectWithDatetimeLikeString(UniversalBaseModel):
     should preserve its exact value even if it looks like a datetime.
     """
 
-    datetime_like_string: str = pydantic.Field(alias="datetimeLikeString")
-    """
-    A string field that happens to contain a datetime-like value
-    """
-
-    actual_datetime: dt.datetime = pydantic.Field(alias="actualDatetime")
-    """
-    An actual datetime field for comparison
-    """
+    datetime_like_string: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="datetimeLikeString"),
+        pydantic.Field(
+            alias="datetimeLikeString", description="A string field that happens to contain a datetime-like value"
+        ),
+    ]
+    actual_datetime: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="actualDatetime"),
+        pydantic.Field(alias="actualDatetime", description="An actual datetime field for comparison"),
+    ]
 
     class Validators:
         """

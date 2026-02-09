@@ -1,9 +1,4 @@
-import {
-    EnvironmentBaseUrlId,
-    EnvironmentId,
-    SingleBaseUrlEnvironment,
-    SingleBaseUrlEnvironments
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
@@ -11,15 +6,15 @@ import { ts, VariableDeclarationKind } from "ts-morph";
 export declare namespace GeneratedSingleUrlEnvironmentsImpl {
     export interface Init {
         environmentEnumName: string;
-        defaultEnvironmentId: EnvironmentId | undefined;
-        environments: SingleBaseUrlEnvironments;
+        defaultEnvironmentId: FernIr.EnvironmentId | undefined;
+        environments: FernIr.SingleBaseUrlEnvironments;
     }
 }
 
 export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments {
     private environmentEnumName: string;
-    private environments: SingleBaseUrlEnvironments;
-    private defaultEnvironmentId: EnvironmentId | undefined;
+    private environments: FernIr.SingleBaseUrlEnvironments;
+    private defaultEnvironmentId: FernIr.EnvironmentId | undefined;
 
     constructor({ environments, environmentEnumName, defaultEnvironmentId }: GeneratedSingleUrlEnvironmentsImpl.Init) {
         this.environments = environments;
@@ -99,7 +94,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         baseUrlId
     }: {
         referenceToEnvironmentValue: ts.Expression;
-        baseUrlId: EnvironmentBaseUrlId | undefined;
+        baseUrlId: FernIr.EnvironmentBaseUrlId | undefined;
     }): ts.Expression {
         if (baseUrlId != null) {
             throw new Error(
@@ -109,7 +104,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         return referenceToEnvironmentValue;
     }
 
-    private getNameOfEnvironment(environment: SingleBaseUrlEnvironment): string {
+    private getNameOfEnvironment(environment: FernIr.SingleBaseUrlEnvironment): string {
         return environment.name.pascalCase.unsafeName;
     }
 }

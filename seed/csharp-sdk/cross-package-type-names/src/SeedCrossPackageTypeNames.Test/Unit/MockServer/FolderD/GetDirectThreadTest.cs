@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedCrossPackageTypeNames.Core;
 using SeedCrossPackageTypeNames.Test.Unit.MockServer;
+using SeedCrossPackageTypeNames.Test.Utils;
 
 namespace SeedCrossPackageTypeNames.Test.Unit.MockServer.FolderD;
 
@@ -30,12 +30,6 @@ public class GetDirectThreadTest : BaseMockServerTest
             );
 
         var response = await Client.FolderD.Service.GetDirectThreadAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedCrossPackageTypeNames.FolderD.Response>(mockResponse)
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

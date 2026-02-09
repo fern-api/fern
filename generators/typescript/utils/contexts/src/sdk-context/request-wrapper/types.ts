@@ -1,5 +1,4 @@
-import { FileProperty, HttpHeader, PathParameter, QueryParameter } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 export interface RequestWrapperBodyProperty {
     propertyName: string;
     safeName: string;
@@ -12,22 +11,22 @@ export interface RequestWrapperNonBodyProperty {
 
 interface QueryParameterOriginalParameter {
     type: "query";
-    parameter: QueryParameter;
+    parameter: FernIr.QueryParameter;
 }
 
 interface PathParameterOriginalParameter {
     type: "path";
-    parameter: PathParameter;
+    parameter: FernIr.PathParameter;
 }
 
 interface HeaderOriginalParameter {
     type: "header";
-    parameter: HttpHeader;
+    parameter: FernIr.HttpHeader;
 }
 
 interface FileOriginalParameter {
     type: "file";
-    parameter: FileProperty;
+    parameter: FernIr.FileProperty;
 }
 
 type OriginalParameter<T extends "query" | "path" | "header" | "file"> = T extends "query"

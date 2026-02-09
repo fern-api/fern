@@ -15,19 +15,18 @@ class ObjectWithDatetimeLikeString(UniversalBaseModel):
     should preserve its exact value even if it looks like a datetime.
     """
 
-    datetime_like_string: typing_extensions.Annotated[str, FieldMetadata(alias="datetimeLikeString")] = pydantic.Field(
-        alias="datetimeLikeString"
-    )
-    """
-    A string field that happens to contain a datetime-like value
-    """
-
-    actual_datetime: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="actualDatetime")] = pydantic.Field(
-        alias="actualDatetime"
-    )
-    """
-    An actual datetime field for comparison
-    """
+    datetime_like_string: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="datetimeLikeString"),
+        pydantic.Field(
+            alias="datetimeLikeString", description="A string field that happens to contain a datetime-like value"
+        ),
+    ]
+    actual_datetime: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="actualDatetime"),
+        pydantic.Field(alias="actualDatetime", description="An actual datetime field for comparison"),
+    ]
 
     class Config:
         frozen = True

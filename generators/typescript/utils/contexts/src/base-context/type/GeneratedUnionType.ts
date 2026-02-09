@@ -1,10 +1,9 @@
-import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
-
-import { GeneratedUnion } from "../../commons/GeneratedUnion";
-import { BaseGeneratedType } from "./BaseGeneratedType";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { GeneratedUnion } from "../../commons/GeneratedUnion.js";
+import { BaseGeneratedType } from "./BaseGeneratedType.js";
 
 export interface GeneratedUnionType<Context> extends BaseGeneratedType<Context> {
     type: "union";
     getGeneratedUnion: () => GeneratedUnion<Context>;
-    getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string;
+    getSinglePropertyKey(singleProperty: FernIr.SingleUnionTypeProperty): string;
 }

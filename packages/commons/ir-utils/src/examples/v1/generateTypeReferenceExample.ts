@@ -6,10 +6,10 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
-import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample";
-import { generatePrimitiveExample } from "./generatePrimitiveExample";
-import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
+import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
+import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample.js";
+import { generatePrimitiveExample } from "./generatePrimitiveExample.js";
+import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample.js";
 
 export declare namespace generateTypeReferenceExample {
     interface Args {

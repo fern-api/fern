@@ -6,7 +6,7 @@
 //! ## Type Categories
 //!
 //! - **Request/Response Types**: 1 types for API operations
-//! - **Model Types**: 56 types for data representation
+//! - **Model Types**: 58 types for data representation
 
 pub mod bigunion_big_union;
 pub mod bigunion_normal_sweet;
@@ -39,6 +39,8 @@ pub mod bigunion_potable_bad;
 pub mod bigunion_triangular_repair;
 pub mod bigunion_gaseous_road;
 pub mod types_union;
+pub mod types_union_with_optional_reference;
+pub mod types_union_with_nullable_reference;
 pub mod types_union_with_discriminant;
 pub mod types_union_with_primitive;
 pub mod types_union_with_duplicate_primitive;
@@ -97,6 +99,8 @@ pub use bigunion_potable_bad::PotableBad;
 pub use bigunion_triangular_repair::TriangularRepair;
 pub use bigunion_gaseous_road::GaseousRoad;
 pub use types_union::Union;
+pub use types_union_with_optional_reference::UnionWithOptionalReference;
+pub use types_union_with_nullable_reference::UnionWithNullableReference;
 pub use types_union_with_discriminant::UnionWithDiscriminant;
 pub use types_union_with_primitive::UnionWithPrimitive;
 pub use types_union_with_duplicate_primitive::UnionWithDuplicatePrimitive;

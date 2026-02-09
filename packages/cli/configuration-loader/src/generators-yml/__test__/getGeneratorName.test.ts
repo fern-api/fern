@@ -1,13 +1,13 @@
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { GeneratorName } from "../GeneratorName";
+import { GeneratorName } from "../GeneratorName.js";
 import {
     addDefaultDockerOrgIfNotPresent,
     DEFAULT_DOCKER_ORG,
     getGeneratorNameOrThrow,
     normalizeGeneratorName,
     removeDefaultDockerOrgIfPresent
-} from "../getGeneratorName";
+} from "../getGeneratorName.js";
 
 describe("addDefaultDockerOrgIfNotPresent", () => {
     it("adds fernapi/ prefix to shorthand names", () => {
@@ -123,6 +123,11 @@ describe("normalizeGeneratorName", () => {
         expect(normalizeGeneratorName("fernapi/fern-python-sdk")).toBe(GeneratorName.PYTHON_SDK);
         expect(normalizeGeneratorName("fern-java-sdk")).toBe(GeneratorName.JAVA_SDK);
         expect(normalizeGeneratorName("fernapi/fern-java-sdk")).toBe(GeneratorName.JAVA_SDK);
+    });
+
+    it("resolves legacy alias java-model to fern-java-model", () => {
+        expect(normalizeGeneratorName("java-model")).toBe(GeneratorName.JAVA_MODEL);
+        expect(normalizeGeneratorName("fernapi/java-model")).toBe(GeneratorName.JAVA_MODEL);
     });
 });
 

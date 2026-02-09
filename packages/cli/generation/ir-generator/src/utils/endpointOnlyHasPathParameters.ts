@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { getEndpointPathParameters } from "./getEndpointPathParameters";
+import { getEndpointPathParameters } from "./getEndpointPathParameters.js";
 
 export function endpointOnlyHasPathParameters(
     service: RawSchemas.HttpServiceSchema,

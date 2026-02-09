@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedApi;
-using SeedApi.Core;
+using SeedApi.Test.Utils;
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -26,25 +25,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -53,13 +46,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -72,25 +62,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -99,13 +83,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -123,8 +104,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "practitioner": {
@@ -133,8 +113,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "id": "id",
@@ -142,25 +121,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -169,13 +142,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -190,8 +160,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "practitioner": {
@@ -200,8 +169,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "id": "id",
@@ -209,25 +177,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -236,13 +198,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -260,8 +219,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "practitioner": {
@@ -270,8 +228,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "id": "id",
@@ -279,25 +236,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -306,13 +257,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -334,8 +282,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "practitioner": {
@@ -344,8 +291,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "id": "id",
@@ -353,25 +299,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -380,13 +320,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -401,8 +338,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "practitioner": {
@@ -411,8 +347,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "id": "id",
@@ -420,25 +355,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -447,13 +376,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -471,8 +397,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "practitioner": {
@@ -481,8 +406,7 @@ public class GetAccountTest : BaseMockServerTest
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     "id": "id",
@@ -490,25 +414,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -517,13 +435,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -545,8 +460,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
@@ -555,8 +469,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -565,25 +478,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -592,13 +499,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -611,25 +515,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -638,13 +536,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -661,8 +556,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -671,15 +565,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     {
@@ -692,8 +584,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -702,15 +593,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     }
                   ],
@@ -726,8 +615,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -736,15 +624,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     }
                   }
@@ -762,8 +648,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
@@ -772,8 +657,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -782,25 +666,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -809,13 +687,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -828,25 +703,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -855,13 +724,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -878,8 +744,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -888,15 +753,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     {
@@ -909,8 +772,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -919,15 +781,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     }
                   ],
@@ -943,8 +803,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -953,15 +812,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     }
                   }
@@ -982,8 +839,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
@@ -992,8 +848,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -1002,25 +857,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -1029,13 +878,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -1048,25 +894,19 @@ public class GetAccountTest : BaseMockServerTest
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     ],
@@ -1075,13 +915,10 @@ public class GetAccountTest : BaseMockServerTest
                       "account": {
                         "resource_type": "Account",
                         "name": "name",
-                        "patient": null,
-                        "practitioner": null,
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       }
                     }
@@ -1098,8 +935,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -1108,15 +944,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     },
                     {
@@ -1129,8 +963,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -1139,15 +972,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     }
                   ],
@@ -1163,8 +994,7 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "practitioner": {
@@ -1173,15 +1003,13 @@ public class GetAccountTest : BaseMockServerTest
                         "id": "id",
                         "related_resources": [],
                         "memo": {
-                          "description": "description",
-                          "account": null
+                          "description": "description"
                         }
                       },
                       "id": "id",
                       "related_resources": [],
                       "memo": {
-                        "description": "description",
-                        "account": null
+                        "description": "description"
                       }
                     }
                   }
@@ -1202,9 +1030,6 @@ public class GetAccountTest : BaseMockServerTest
             );
 
         var response = await Client.GetAccountAsync("account_id");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Account>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

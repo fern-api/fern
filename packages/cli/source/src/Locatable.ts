@@ -1,4 +1,4 @@
-import type { SourceLocation } from "./SourceLocation";
+import type { SourceLocation } from "./SourceLocation.js";
 
 /**
  * A value with source location tracking.
