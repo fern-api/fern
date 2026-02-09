@@ -68,9 +68,9 @@ export async function buildCli(config) {
     } = config;
 
     // Build with tsdown
-    await build({
+    const buildConfig = {
         entry: ["src/cli.ts"],
-        format: ["cjs"],
+        format: ["esm"],
         minify,
         outDir,
         sourcemap: true,
@@ -84,7 +84,9 @@ export async function buildCli(config) {
             CLI_VERSION: process.argv[2] || packageJson.version
         },
         ...tsdownOverrides
-    });
+    };
+
+    await build(buildConfig);
 
     // Change to output directory
     process.chdir(path.join(__dirname, outDir));
@@ -103,7 +105,7 @@ export async function buildCli(config) {
     if (missingDeps.length > 0) {
         throw new Error(
             `Missing required runtime dependencies in package.json: ${missingDeps.join(", ")}. ` +
-                `These must be declared in either dependencies or devDependencies.`
+            `These must be declared in either dependencies or devDependencies.`
         );
     }
 
@@ -111,7 +113,7 @@ export async function buildCli(config) {
     const outputPackageJson = {
         version: process.argv[2] || packageJson.version,
         repository: packageJson.repository,
-        files: ["cli.cjs"],
+        files: ["cli.mjs"],
         dependencies,
         ...packageJsonOverrides
     };
