@@ -10,6 +10,7 @@
       type: fix
   createdAt: "2026-02-09"
   irVersion: 63
+  isFirstVersion: false
 
 - version: 4.55.1
   changelogEntry:

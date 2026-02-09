@@ -9,7 +9,7 @@
         "Core Pydantic V1 functionality isn't compatible with Python 3.14" warning.
       type: fix
   createdAt: "2026-02-09"
-  irVersion: 62
+  irVersion: 61
 
 - version: 2.1.0
   changelogEntry:
