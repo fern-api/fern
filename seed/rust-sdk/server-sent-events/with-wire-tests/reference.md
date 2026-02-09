@@ -56,3 +56,60 @@ async fn main() {
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">stream_without_terminator</a>(request: StreamCompletionRequestWithoutTerminator) -> Result&lt;Stream&lt;Vec&lt;u8&gt;&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_server_sent_events::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    client
+        .completions
+        .stream_without_terminator(
+            &StreamCompletionRequestWithoutTerminator {
+                query: "query".to_string(),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
