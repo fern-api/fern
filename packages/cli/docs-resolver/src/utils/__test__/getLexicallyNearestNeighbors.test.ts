@@ -1,5 +1,5 @@
-import { normalizeLocatorString } from "../errorMessages";
-import { getLexicallyNearestNeighbors } from "../getLexicallyNearestNeighbors";
+import { normalizeLocatorString } from "../errorMessages.js";
+import { getLexicallyNearestNeighbors } from "../getLexicallyNearestNeighbors.js";
 
 describe("getLexicallyNearestNeighbors", () => {
     it("returns empty array if numNeighbors is 0", () => {

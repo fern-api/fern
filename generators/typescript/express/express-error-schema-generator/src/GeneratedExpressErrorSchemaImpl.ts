@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getSchemaOptions, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
@@ -8,8 +8,8 @@ import { ModuleDeclaration, ts } from "ts-morph";
 export declare namespace GeneratedExpressErrorSchemaImpl {
     export interface Init {
         errorName: string;
-        errorDeclaration: ErrorDeclaration;
-        type: TypeReference;
+        errorDeclaration: FernIr.ErrorDeclaration;
+        type: FernIr.TypeReference;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
     }
@@ -19,8 +19,8 @@ export class GeneratedExpressErrorSchemaImpl
     extends AbstractGeneratedSchema<ExpressContext>
     implements GeneratedExpressErrorSchema
 {
-    private errorDeclaration: ErrorDeclaration;
-    private type: TypeReference;
+    private errorDeclaration: FernIr.ErrorDeclaration;
+    private type: FernIr.TypeReference;
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
 

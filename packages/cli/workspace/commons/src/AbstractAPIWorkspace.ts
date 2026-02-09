@@ -3,9 +3,9 @@ import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 
-import { APIChangelog } from "./APIChangelog";
-import { ParsedFernFile } from "./FernFile";
-import { FernWorkspace } from "./FernWorkspace";
+import { APIChangelog } from "./APIChangelog.js";
+import { ParsedFernFile } from "./FernFile.js";
+import { FernWorkspace } from "./FernWorkspace.js";
 
 export interface FernDefinition {
     absoluteFilePath: AbsoluteFilePath;

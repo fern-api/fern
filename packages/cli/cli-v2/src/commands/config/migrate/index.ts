@@ -1,1 +1,1 @@
-export { addMigrateCommand } from "./command";
+export { addMigrateCommand } from "./command.js";

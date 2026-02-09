@@ -9,10 +9,10 @@ import {
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter } from "./AbstractConverter";
-import { AbstractConverterContext } from "./AbstractConverterContext";
-import { SchemaConverter } from "./converters/schema/SchemaConverter";
-import { FernIgnoreExtension } from "./extensions";
+import { AbstractConverter } from "./AbstractConverter.js";
+import { AbstractConverterContext } from "./AbstractConverterContext.js";
+import { SchemaConverter } from "./converters/schema/SchemaConverter.js";
+import { FernIgnoreExtension } from "./extensions/index.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 

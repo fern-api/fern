@@ -839,7 +839,11 @@ types:
 channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body:
+            socket_sequence: 1
+            type: heartbeat
+          type: marketData
   messages:
     marketData:
       body: streamRoot.Market

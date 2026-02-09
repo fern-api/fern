@@ -1,6 +1,6 @@
-import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint, ResponseProperty } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { Writer } from "@fern-api/java-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 /**
  * Validator for paginated responses in wire tests.
@@ -12,7 +12,7 @@ export class PaginationValidator {
     /**
      * Generates pagination validation for endpoints with pagination support.
      */
-    public generatePaginationValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+    public generatePaginationValidation(writer: Writer, endpoint: FernIr.HttpEndpoint, actualVarName: string): void {
         if (!this.isPaginatedEndpoint(endpoint)) {
             return;
         }
@@ -51,14 +51,14 @@ export class PaginationValidator {
     /**
      * Checks if an endpoint has pagination configuration.
      */
-    private isPaginatedEndpoint(endpoint: HttpEndpoint): boolean {
+    private isPaginatedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         return endpoint.pagination != null;
     }
 
     /**
      * Gets the path to pagination results from the endpoint configuration.
      */
-    private getPaginationResultsPath(endpoint: HttpEndpoint): string | undefined {
+    private getPaginationResultsPath(endpoint: FernIr.HttpEndpoint): string | undefined {
         if (!endpoint.pagination) {
             return undefined;
         }
@@ -78,9 +78,9 @@ export class PaginationValidator {
      * Extracts a simple path from a ResponseProperty.
      * This is a simplified version - full implementation would handle complex paths.
      */
-    private extractPath(property: ResponseProperty | undefined): string {
+    private extractPath(property: FernIr.ResponseProperty | undefined): string {
         // Simplified extraction - in real implementation this would
-        // parse the ResponseProperty structure properly
+        // parse the FernIr.ResponseProperty structure properly
         return "data";
     }
 }

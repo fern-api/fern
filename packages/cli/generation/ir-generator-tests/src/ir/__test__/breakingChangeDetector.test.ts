@@ -7,7 +7,7 @@ import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { readdir } from "fs/promises";
 import path from "path";
 
-import { generateIRFromPath } from "./generateAndSnapshotIR";
+import { generateIRFromPath } from "./generateAndSnapshotIR.js";
 
 const CHANGES_DIR = path.join(__dirname, "changes");
 

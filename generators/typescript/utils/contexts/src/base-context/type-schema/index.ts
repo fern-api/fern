@@ -1,8 +1,8 @@
-export { type BaseGeneratedTypeSchema } from "./BaseGeneratedTypeSchema";
-export { type GeneratedAliasTypeSchema } from "./GeneratedAliasTypeSchema";
-export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
-export { type GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema";
-export { type GeneratedTypeSchema } from "./GeneratedTypeSchema";
-export { type GeneratedUndiscriminatedUnionTypeSchema } from "./GeneratedUndiscriminatedUnionTypeSchema";
-export { type GeneratedUnionTypeSchema } from "./GeneratedUnionTypeSchema";
-export { type TypeSchemaContext } from "./TypeSchemaContext";
+export { type BaseGeneratedTypeSchema } from "./BaseGeneratedTypeSchema.js";
+export { type GeneratedAliasTypeSchema } from "./GeneratedAliasTypeSchema.js";
+export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema.js";
+export { type GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema.js";
+export { type GeneratedTypeSchema } from "./GeneratedTypeSchema.js";
+export { type GeneratedUndiscriminatedUnionTypeSchema } from "./GeneratedUndiscriminatedUnionTypeSchema.js";
+export { type GeneratedUnionTypeSchema } from "./GeneratedUnionTypeSchema.js";
+export { type TypeSchemaContext } from "./TypeSchemaContext.js";

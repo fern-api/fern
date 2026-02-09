@@ -20,9 +20,9 @@ import {
     MSG_GENERATION_RUNNING_PREFIX,
     REMOTE_GROUP_NAME,
     SDKS_DIRECTORY_NAME
-} from "./constants";
-import { copyGithubOutputToOutputDirectory } from "./githubIntegration";
-import type { GenerationResult, RemoteVsLocalTestCase } from "./types";
+} from "./constants.js";
+import { copyGithubOutputToOutputDirectory } from "./githubIntegration.js";
+import type { GenerationResult, RemoteVsLocalTestCase } from "./types.js";
 
 /**
  * Creates a logger wrapper that parses log level prefixes from output lines

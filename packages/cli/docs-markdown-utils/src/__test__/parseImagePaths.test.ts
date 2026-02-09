@@ -7,7 +7,7 @@ import fs from "fs";
 import { resolve } from "path";
 import { afterEach, beforeEach } from "vitest";
 
-import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths";
+import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths.js";
 
 const CONTEXT = createMockTaskContext();
 

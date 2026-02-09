@@ -13,7 +13,7 @@ import {
     GeneratorNickname,
     LOCAL_BUILD_VERSION,
     SEMVER_REGEX
-} from "./constants";
+} from "./constants.js";
 
 /**
  * Fetches the latest versions for all specified generators from Docker Hub.

@@ -2,7 +2,7 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 
-import { RuleViolation } from "../../Rule";
+import { RuleViolation } from "../../Rule.js";
 
 export function validateRequest({
     example,

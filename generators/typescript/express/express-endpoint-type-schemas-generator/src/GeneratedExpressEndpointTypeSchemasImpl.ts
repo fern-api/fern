@@ -1,17 +1,16 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
-import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
-import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
+import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
+import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl.js";
 
 export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
     export interface Init {
         packageId: PackageId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
         includeSerdeLayer: boolean;
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
@@ -23,7 +22,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private static REQUEST_SCHEMA_NAME = "Request";
     private static RESPONSE_SCHEMA_NAME = "Response";
 
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private includeSerdeLayer: boolean;

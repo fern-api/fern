@@ -1,7 +1,7 @@
 import { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { YamlConfigLoader } from "@fern-api/yaml-loader";
-import { FileFinder } from "../FileFinder";
+import { FileFinder } from "../FileFinder.js";
 
 const FILENAME = "fern.yml";
 

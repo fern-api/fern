@@ -1,1 +1,1 @@
-export * as UndiscriminatedUnion from "./undiscriminated-union";
+export * as UndiscriminatedUnion from "./undiscriminated-union.js";

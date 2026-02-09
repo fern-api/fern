@@ -1,5 +1,5 @@
-import { ClassReference } from "./classes/ClassReference";
-import { AstNode } from "./core/AstNode";
+import { ClassReference } from "./classes/ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
 
 export enum VariableType {
     CLASS,

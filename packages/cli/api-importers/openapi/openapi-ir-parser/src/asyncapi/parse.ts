@@ -1,15 +1,15 @@
 import { Schemas, Source, WebsocketChannel } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ParseOpenAPIOptions } from "../options";
-import { ParseAsyncAPIOptions } from "./options";
-import { ServerContext } from "./sharedTypes";
-import { AsyncAPIV2 } from "./v2";
-import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext";
-import { parseAsyncAPIV2 } from "./v2/parseAsyncAPIV2";
-import { AsyncAPIV3 } from "./v3";
-import { AsyncAPIV3ParserContext } from "./v3/AsyncAPIV3ParserContext";
-import { parseAsyncAPIV3 } from "./v3/parseAsyncAPIV3";
+import { ParseOpenAPIOptions } from "../options.js";
+import { ParseAsyncAPIOptions } from "./options.js";
+import { ServerContext } from "./sharedTypes.js";
+import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext.js";
+import { AsyncAPIV2 } from "./v2/index.js";
+import { parseAsyncAPIV2 } from "./v2/parseAsyncAPIV2.js";
+import { AsyncAPIV3ParserContext } from "./v3/AsyncAPIV3ParserContext.js";
+import { AsyncAPIV3 } from "./v3/index.js";
+import { parseAsyncAPIV3 } from "./v3/parseAsyncAPIV3.js";
 
 export interface AsyncAPIIntermediateRepresentation {
     groupedSchemas: Schemas;

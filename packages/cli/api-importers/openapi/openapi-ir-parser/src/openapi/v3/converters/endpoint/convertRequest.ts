@@ -9,17 +9,17 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
-import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
-import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExtension } from "../../../../getExtension.js";
+import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties.js";
+import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import {
     findApplicationJsonRequest,
     getApplicationJsonSchemaMediaObject,
     getExamples
-} from "./getApplicationJsonSchema";
+} from "./getApplicationJsonSchema.js";
 
 function findApplicationUrlFormEncodedRequest({
     content,

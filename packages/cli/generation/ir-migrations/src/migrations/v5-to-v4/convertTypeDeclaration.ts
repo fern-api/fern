@@ -1,9 +1,9 @@
-import { IrVersions } from "../../ir-versions";
-import { convertContainerType } from "./convertContainerType";
-import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
-import { convertExampleTypeShape } from "./convertExampleTypeReference";
-import { convertNameAndWireValueToV1, convertNameAndWireValueToV2 } from "./convertName";
-import { convertTypeReference } from "./convertTypeReference";
+import { IrVersions } from "../../ir-versions/index.js";
+import { convertContainerType } from "./convertContainerType.js";
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName.js";
+import { convertExampleTypeShape } from "./convertExampleTypeReference.js";
+import { convertNameAndWireValueToV1, convertNameAndWireValueToV2 } from "./convertName.js";
+import { convertTypeReference } from "./convertTypeReference.js";
 
 export function convertTypeDeclaration(
     typeDeclaration: IrVersions.V5.types.TypeDeclaration

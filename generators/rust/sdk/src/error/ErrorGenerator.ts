@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
     CodeBlock,
@@ -16,8 +17,7 @@ import {
     Type,
     UseStatement
 } from "@fern-api/rust-codegen";
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
@@ -108,7 +108,7 @@ export class ErrorGenerator {
         });
     }
 
-    private buildApiErrorVariant(errorDeclaration: ErrorDeclaration): EnumVariant {
+    private buildApiErrorVariant(errorDeclaration: FernIr.ErrorDeclaration): EnumVariant {
         const errorName = this.getErrorVariantName(errorDeclaration);
         const errorMessage = this.getErrorMessage(errorDeclaration);
         const fields = this.buildErrorFields(errorDeclaration);
@@ -120,7 +120,7 @@ export class ErrorGenerator {
         });
     }
 
-    private buildErrorFields(errorDeclaration: ErrorDeclaration): Array<{ name: string; type: Type }> {
+    private buildErrorFields(errorDeclaration: FernIr.ErrorDeclaration): Array<{ name: string; type: Type }> {
         const fields = [{ name: "message", type: Type.string() }];
 
         // Add semantic fields based on status code
@@ -217,8 +217,8 @@ export class ErrorGenerator {
         return arms;
     }
 
-    private groupErrorsByStatusCode(): Map<number, ErrorDeclaration[]> {
-        const groups = new Map<number, Map<string, ErrorDeclaration>>();
+    private groupErrorsByStatusCode(): Map<number, FernIr.ErrorDeclaration[]> {
+        const groups = new Map<number, Map<string, FernIr.ErrorDeclaration>>();
 
         Object.values(this.context.ir.errors).forEach((error) => {
             const statusCode = error.statusCode;
@@ -236,7 +236,7 @@ export class ErrorGenerator {
         });
 
         // Convert to array format
-        const result = new Map<number, ErrorDeclaration[]>();
+        const result = new Map<number, FernIr.ErrorDeclaration[]>();
         groups.forEach((errorMap, statusCode) => {
             result.set(statusCode, Array.from(errorMap.values()));
         });
@@ -244,7 +244,7 @@ export class ErrorGenerator {
         return result;
     }
 
-    private buildSingleErrorMatchArm(errorDeclaration: ErrorDeclaration): MatchArm {
+    private buildSingleErrorMatchArm(errorDeclaration: FernIr.ErrorDeclaration): MatchArm {
         const statusCode = errorDeclaration.statusCode;
         const errorName = this.getErrorVariantName(errorDeclaration);
 
@@ -268,7 +268,7 @@ export class ErrorGenerator {
         return MatchArm.withStatements(Pattern.literal(statusCode), parseBodyStatements);
     }
 
-    private buildSuccessConstruction(errorName: string, errorDeclaration: ErrorDeclaration): Expression {
+    private buildSuccessConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
         const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
         const fieldAssignments = statusFields.map(({ name }) => ({
             name,
@@ -300,7 +300,7 @@ export class ErrorGenerator {
         );
     }
 
-    private buildFallbackConstruction(errorName: string, errorDeclaration: ErrorDeclaration): Expression {
+    private buildFallbackConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
         const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
         const defaultFields = statusFields.map(({ name }) => ({
             name,
@@ -318,7 +318,7 @@ export class ErrorGenerator {
         ]);
     }
 
-    private buildMultiErrorMatchArm(statusCode: number, errors: ErrorDeclaration[]): MatchArm {
+    private buildMultiErrorMatchArm(statusCode: number, errors: FernIr.ErrorDeclaration[]): MatchArm {
         // Build a discriminator-based match for multiple errors with the same status code
         const parseBodyStatements: Statement[] = [];
 
@@ -393,7 +393,7 @@ export class ErrorGenerator {
         return MatchArm.withStatements(Pattern.literal(statusCode), parseBodyStatements);
     }
 
-    private buildErrorTypeMatchExpression(errors: ErrorDeclaration[], statusCode: number): string {
+    private buildErrorTypeMatchExpression(errors: FernIr.ErrorDeclaration[], statusCode: number): string {
         const fields = this.buildDynamicFieldAssignments(statusCode);
 
         // Create match arms for each error type
@@ -499,7 +499,7 @@ export class ErrorGenerator {
     }
 
     // Helper methods
-    private getErrorVariantName(errorDeclaration: ErrorDeclaration): string {
+    private getErrorVariantName(errorDeclaration: FernIr.ErrorDeclaration): string {
         const safeName = errorDeclaration.name.name.pascalCase.safeName;
         if (!safeName) {
             throw new Error(`Error declaration missing safe name: ${JSON.stringify(errorDeclaration.name)}`);
@@ -507,7 +507,7 @@ export class ErrorGenerator {
         return safeName;
     }
 
-    private getErrorMessage(errorDeclaration: ErrorDeclaration): string {
+    private getErrorMessage(errorDeclaration: FernIr.ErrorDeclaration): string {
         const errorName = this.getErrorVariantName(errorDeclaration);
         const statusCode = errorDeclaration.statusCode;
 

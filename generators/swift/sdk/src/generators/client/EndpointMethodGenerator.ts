@@ -1,17 +1,17 @@
 import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
-import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
-import { parseEndpointPath } from "./util/parse-endpoint-path";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift.js";
+import { parseEndpointPath } from "./util/parse-endpoint-path.js";
 
 export declare namespace EndpointMethodGenerator {
     interface Args {
         parentClassSymbol: swift.Symbol;
         clientGeneratorContext: ClientGeneratorContext;
         sdkGeneratorContext: SdkGeneratorContext;
-        service: HttpService | undefined;
+        service: FernIr.HttpService | undefined;
     }
 }
 
@@ -20,7 +20,7 @@ export class EndpointMethodGenerator {
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly referencer: Referencer;
-    private readonly serviceHeaders: HttpHeader[];
+    private readonly serviceHeaders: FernIr.HttpHeader[];
 
     public constructor({
         parentClassSymbol,
@@ -35,7 +35,7 @@ export class EndpointMethodGenerator {
         this.serviceHeaders = service?.headers ?? [];
     }
 
-    public generateMethod(endpoint: HttpEndpoint): swift.Method {
+    public generateMethod(endpoint: FernIr.HttpEndpoint): swift.Method {
         const parameters = this.getMethodParametersForEndpoint(endpoint);
         return swift.method({
             unsafeName: endpoint.name.camelCase.unsafeName,
@@ -59,7 +59,7 @@ export class EndpointMethodGenerator {
         });
     }
 
-    private getMethodParametersForEndpoint(endpoint: HttpEndpoint): swift.FunctionParameter[] {
+    private getMethodParametersForEndpoint(endpoint: FernIr.HttpEndpoint): swift.FunctionParameter[] {
         const params: swift.FunctionParameter[] = [];
 
         const { pathParts } = parseEndpointPath(endpoint);
@@ -176,7 +176,7 @@ export class EndpointMethodGenerator {
         return params;
     }
 
-    private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.TypeReference {
+    private getMethodReturnTypeForEndpoint(endpoint: FernIr.HttpEndpoint): swift.TypeReference {
         if (!endpoint.response || !endpoint.response.body) {
             return this.referencer.referenceSwiftType("Void");
         }
@@ -192,7 +192,7 @@ export class EndpointMethodGenerator {
         });
     }
 
-    private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
+    private getMethodBodyForEndpoint(endpoint: FernIr.HttpEndpoint): swift.CodeBlock {
         // TODO(kafkas): Handle name collisions
 
         const statements: swift.Statement[] = [
@@ -215,7 +215,7 @@ export class EndpointMethodGenerator {
         return swift.CodeBlock.withStatements(statements);
     }
 
-    private getPerformRequestArgumentsForEndpoint(endpoint: HttpEndpoint) {
+    private getPerformRequestArgumentsForEndpoint(endpoint: FernIr.HttpEndpoint) {
         const arguments_ = [
             swift.functionArgument({
                 label: "method",
@@ -400,7 +400,7 @@ export class EndpointMethodGenerator {
         return arguments_;
     }
 
-    private getResolvedSwiftTypeForTypeReference(typeReference: TypeReference): swift.TypeReference {
+    private getResolvedSwiftTypeForTypeReference(typeReference: FernIr.TypeReference): swift.TypeReference {
         if (typeReference.type === "named") {
             const { typeId } = typeReference;
             const typeDeclaration = this.sdkGeneratorContext.ir.types[typeId];
@@ -412,15 +412,11 @@ export class EndpointMethodGenerator {
         return this.getSwiftTypeForTypeReference(typeReference);
     }
 
-    private getSwiftTypeForTypeReference(typeReference: TypeReference) {
+    private getSwiftTypeForTypeReference(typeReference: FernIr.TypeReference) {
         return this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(typeReference, this.parentClassSymbol);
     }
 
-    /**
-     * Combines service headers with endpoint headers, deduplicating by wire value.
-     * Endpoint headers take precedence over service headers when there's a conflict.
-     */
-    private getAllHeaders(endpoint: HttpEndpoint): HttpHeader[] {
+    private getAllHeaders(endpoint: FernIr.HttpEndpoint): FernIr.HttpHeader[] {
         const endpointHeaderWireValues = new Set(endpoint.headers.map((h) => h.name.wireValue));
         const filteredServiceHeaders = this.serviceHeaders.filter(
             (header) => !endpointHeaderWireValues.has(header.name.wireValue)
@@ -428,7 +424,7 @@ export class EndpointMethodGenerator {
         return [...filteredServiceHeaders, ...endpoint.headers];
     }
 
-    private getEnumCaseNameForHttpMethod(method: HttpMethod): string {
+    private getEnumCaseNameForHttpMethod(method: FernIr.HttpMethod): string {
         switch (method) {
             case "GET":
                 return "get";

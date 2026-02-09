@@ -19,8 +19,8 @@ impl Environment {
 impl Default for Environment {
     fn default() -> Self {
         Self::RegionalApiServer(RegionalApiServerUrls {
-            base: "https://api.us-east-1.prod.example.com/v1".to_string(),
-            auth: "https://auth.us-east-1.example.com".to_string(),
+            base: "https://api.example.com/v1".to_string(),
+            auth: "https://auth.example.com".to_string(),
         })
     }
 }

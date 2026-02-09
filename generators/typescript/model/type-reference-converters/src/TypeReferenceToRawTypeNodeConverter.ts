@@ -1,12 +1,12 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
-import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter.js";
+import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter.js";
 
 export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override set(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const itemTypeNode = this.convert({ ...params, typeReference: itemType });
         return this.generateNonOptionalTypeReferenceNode({
             typeNode: ts.factory.createArrayTypeNode(itemTypeNode.typeNode),
@@ -15,7 +15,7 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
         });
     }
 
-    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override optional(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const referencedToValueType = this.convert({ ...params, typeReference: itemType });
         return {
             isOptional: true,
@@ -57,7 +57,7 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
         };
     }
 
-    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
+    protected override nullable(itemType: FernIr.TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const referencedToValueType = this.convert({ ...params, typeReference: itemType });
         return {
             isOptional: true,

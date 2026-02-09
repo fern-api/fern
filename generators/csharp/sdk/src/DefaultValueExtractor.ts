@@ -1,5 +1,5 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 /**
  * Represents an extracted default value with its C# representation
@@ -28,12 +28,12 @@ export class DefaultValueExtractor {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
-     * Extracts the default value from a TypeReference, if one exists.
+     * Extracts the default value from a FernIr.TypeReference, if one exists.
      *
      * @param typeReference - The type reference to extract the default from
      * @returns The extracted default with its C# representation, or undefined if no default exists
      */
-    public extractDefault(typeReference: TypeReference): ExtractedDefault | undefined {
+    public extractDefault(typeReference: FernIr.TypeReference): ExtractedDefault | undefined {
         return typeReference._visit<ExtractedDefault | undefined>({
             primitive: (primitive) => {
                 const v2 = primitive.v2;

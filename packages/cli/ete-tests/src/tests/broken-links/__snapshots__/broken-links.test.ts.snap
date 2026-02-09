@@ -15,3 +15,13 @@ exports[`fern docs broken-links > simple broken links 1`] = `
        
 [docs]:Found 4 errors and 0 warnings in"
 `;
+
+exports[`fern docs broken-links > broken links in sections with path property should be detected 1`] = `
+"[docs]: section-index.mdx
+        [error] broken link to /nonexistent/page
+        	fix here: section-index.mdx:11:21
+        [error] broken link to ./missing.mdx (resolved path: section-with-path/missing.mdx)
+        	fix here: section-index.mdx:12:25
+        
+[docs]: Found 2 errors and 0 warnings in"
+`;

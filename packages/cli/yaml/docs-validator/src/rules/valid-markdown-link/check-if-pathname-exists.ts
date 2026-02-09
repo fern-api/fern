@@ -1,8 +1,8 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getRedirectForPath } from "./redirect-for-path";
-import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils";
+import { getRedirectForPath } from "./redirect-for-path.js";
+import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils.js";
 
 /**
  * Checks if the given path exists in the docs.

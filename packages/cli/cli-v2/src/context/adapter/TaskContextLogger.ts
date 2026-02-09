@@ -1,6 +1,6 @@
 import { LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
-import type { Task } from "../../ui/Task";
-import type { Context } from "../Context";
+import type { Task } from "../../ui/Task.js";
+import type { Context } from "../Context.js";
 
 export class TaskContextLogger implements Logger {
     private readonly context: Context;

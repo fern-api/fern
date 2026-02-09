@@ -1,4 +1,4 @@
-import { removeSuffix } from "../removeSuffix";
+import { removeSuffix } from "../removeSuffix.js";
 
 describe("parseEndpointLocator", () => {
     it("simple", () => {

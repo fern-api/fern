@@ -1,7 +1,7 @@
 import type { Argv, BuilderCallback } from "yargs";
-import type { Context } from "../../context/Context";
-import type { GlobalArgs } from "../../context/GlobalArgs";
-import { withContext } from "../../context/withContext";
+import type { Context } from "../../context/Context.js";
+import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { withContext } from "../../context/withContext.js";
 
 type CommandHandler<T extends GlobalArgs = GlobalArgs> = (context: Context, args: T) => Promise<void>;
 

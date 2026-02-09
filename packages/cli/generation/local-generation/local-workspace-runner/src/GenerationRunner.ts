@@ -7,10 +7,10 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
-import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
-import { ExecutionEnvironment } from "./ExecutionEnvironment";
-import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
-import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
+import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
+import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
 
 export declare namespace GenerationRunner {
     interface RunArgs {

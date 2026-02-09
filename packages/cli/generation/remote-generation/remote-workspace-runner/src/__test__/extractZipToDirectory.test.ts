@@ -4,7 +4,7 @@ import { mkdir, readdir, readFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import yazl from "yazl";
-import { extractZipToDirectory } from "../RemoteTaskHandler";
+import { extractZipToDirectory } from "../RemoteTaskHandler.js";
 
 async function createTestZip(
     tmpDir: tmp.DirectoryResult,

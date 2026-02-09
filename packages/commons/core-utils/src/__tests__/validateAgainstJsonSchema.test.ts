@@ -1,6 +1,6 @@
 import { JSONSchema4 } from "json-schema";
 
-import { validateAgainstJsonSchema } from "../validateAgainstJsonSchema";
+import { validateAgainstJsonSchema } from "../validateAgainstJsonSchema.js";
 
 /**
  * Tests for validateAgainstJsonSchema using realistic schemas based on actual

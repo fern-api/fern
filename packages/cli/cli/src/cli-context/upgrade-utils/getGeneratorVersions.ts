@@ -13,7 +13,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
 
-import { CliContext } from "../CliContext";
+import { CliContext } from "../CliContext.js";
 
 export interface FernGeneratorUpgradeInfo {
     generatorName: string;

@@ -114,15 +114,42 @@ function convertMultipleBaseUrlEnvironments({
         environments: Object.entries(environments).map(
             ([environmentName, rawEnvironment]): MultipleBaseUrlsEnvironment =>
                 visitRawEnvironmentDeclaration<MultipleBaseUrlsEnvironment>(rawEnvironment, {
-                    multipleBaseUrls: (multipleBaseUrlsEnvironment): MultipleBaseUrlsEnvironment => ({
-                        docs: multipleBaseUrlsEnvironment.docs,
-                        id: environmentName,
-                        name: casingsGenerator.generateName(environmentName),
-                        urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url)),
-                        defaultUrls: undefined,
-                        urlTemplates: undefined,
-                        urlVariables: undefined
-                    }),
+                    multipleBaseUrls: (multipleBaseUrlsEnvironment): MultipleBaseUrlsEnvironment => {
+                        const rawUrlTemplates = multipleBaseUrlsEnvironment["url-templates"];
+                        const rawDefaultUrls = multipleBaseUrlsEnvironment["default-urls"];
+                        const rawVariables = multipleBaseUrlsEnvironment.variables;
+
+                        const urlTemplates =
+                            rawUrlTemplates && Object.keys(rawUrlTemplates).length > 0 ? rawUrlTemplates : undefined;
+                        const defaultUrls =
+                            rawDefaultUrls && Object.keys(rawDefaultUrls).length > 0
+                                ? mapValues(rawDefaultUrls, (url) => removeTrailingSlash(url))
+                                : undefined;
+                        const urlVariables =
+                            rawVariables && Object.keys(rawVariables).length > 0
+                                ? Object.fromEntries(
+                                      Object.entries(rawVariables).map(([urlId, vars]) => [
+                                          urlId,
+                                          vars.map((v) => ({
+                                              id: v.id,
+                                              name: casingsGenerator.generateName(v.id),
+                                              default: v.default,
+                                              values: v.values
+                                          }))
+                                      ])
+                                  )
+                                : undefined;
+
+                        return {
+                            docs: multipleBaseUrlsEnvironment.docs,
+                            id: environmentName,
+                            name: casingsGenerator.generateName(environmentName),
+                            urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url)),
+                            defaultUrls,
+                            urlTemplates,
+                            urlVariables
+                        };
+                    },
                     singleBaseUrl: () => {
                         throw new Error(`Environment ${environmentName} does not have multiple base URLs`);
                     }

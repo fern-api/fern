@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { AiConfigSchema } from "./AiConfigSchema";
-import { ApiDefinitionSchema } from "./ApiDefinitionSchema";
-import { ApisSchema } from "./ApisSchema";
-import { CliSchema } from "./CliSchema";
-import { SdksSchema } from "./SdksSchema";
+import { AiConfigSchema } from "./AiConfigSchema.js";
+import { ApiDefinitionSchema } from "./ApiDefinitionSchema.js";
+import { ApisSchema } from "./ApisSchema.js";
+import { CliSchema } from "./CliSchema.js";
+import { SdksSchema } from "./SdksSchema.js";
 
 export const FernYmlSchema = z.object({
     edition: z.string(),

@@ -9,10 +9,9 @@ import {
     TypescriptFile,
     ZodTypeMapper
 } from "@fern-api/typescript-mcp-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
-
-import { ServerGeneratorContext } from "../ServerGeneratorContext";
+import { ServerGeneratorContext } from "../ServerGeneratorContext.js";
 
 export class ToolsGenerator extends FileGenerator<
     TypescriptFile,
@@ -112,8 +111,8 @@ export declare namespace ToolDefinition {
         sdkClientClassReference: ts.Reference;
         sdkClientVariableName: string;
         schemasReference: ts.Reference;
-        endpoint: HttpEndpoint;
-        service: HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        service: FernIr.HttpService;
         builder: ServerGeneratorContext["project"]["builder"];
         zodTypeMapper: ZodTypeMapper;
     }

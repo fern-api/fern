@@ -1,8 +1,8 @@
-export { generateField, generateFieldForFileProperty, generateFields } from "./generateFields";
-export { generateModels } from "./generateModels";
-export { generateModelTests as generateTests } from "./generateTests";
-export { generateVersion } from "./generateVersion";
-export { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
-export * from "./ModelGeneratorCli";
-export { ExampleGenerator } from "./snippets/ExampleGenerator";
-export { getUndiscriminatedUnionSerializerAnnotation } from "./undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation";
+export { generateField, generateFieldForFileProperty, generateFields } from "./generateFields.js";
+export { generateModels } from "./generateModels.js";
+export { generateModelTests as generateTests } from "./generateTests.js";
+export { generateVersion } from "./generateVersion.js";
+export { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles.js";
+export * from "./ModelGeneratorCli.js";
+export { ExampleGenerator } from "./snippets/ExampleGenerator.js";
+export { getUndiscriminatedUnionSerializerAnnotation } from "./undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation.js";

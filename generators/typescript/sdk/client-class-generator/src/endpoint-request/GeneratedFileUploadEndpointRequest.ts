@@ -1,11 +1,4 @@
-import {
-    ExampleEndpointCall,
-    FileProperty,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpService,
-    IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Fetcher,
     GetReferenceOpts,
@@ -15,22 +8,22 @@ import {
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
-import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile";
-import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
-import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
+import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData.js";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile.js";
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
+import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter.js";
+import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest.js";
 
 export declare namespace GeneratedFileUploadEndpointRequest {
     export interface Init {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         packageId: PackageId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
-        requestBody: HttpRequestBody.FileUpload;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        requestBody: FernIr.HttpRequestBody.FileUpload;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
@@ -46,12 +39,12 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private static readonly FORM_DATA_VARIABLE_NAME = "_body";
     private static readonly FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = "_maybeEncodedRequest";
 
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
-    private readonly service: HttpService;
-    private readonly endpoint: HttpEndpoint;
-    private readonly requestBody: HttpRequestBody.FileUpload;
+    private readonly service: FernIr.HttpService;
+    private readonly endpoint: FernIr.HttpEndpoint;
+    private readonly requestBody: FernIr.HttpRequestBody.FileUpload;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly retainOriginalCasing: boolean;
     private readonly inlineFileProperties: boolean;
@@ -139,7 +132,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
@@ -231,7 +224,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return parameters;
     }
 
-    private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
+    private getFileParameterType(property: FernIr.FileProperty, context: SdkContext): ts.TypeNode {
         const types: ts.TypeNode[] = [];
 
         if (this.formDataSupport === "Node16") {
@@ -270,7 +263,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return ts.factory.createUnionTypeNode(types);
     }
 
-    private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
+    private maybeWrapFileArray({
+        property,
+        value
+    }: {
+        property: FernIr.FileProperty;
+        value: ts.TypeNode;
+    }): ts.TypeNode {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
     }
 

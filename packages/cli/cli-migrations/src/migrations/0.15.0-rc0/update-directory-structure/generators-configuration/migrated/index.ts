@@ -1,3 +1,3 @@
-export { GeneratorGroupSchema } from "./GeneratorGroupSchema";
-export { GeneratorInvocationSchema } from "./GeneratorInvocationSchema";
-export { GeneratorsConfigurationSchema } from "./GeneratorsConfigurationSchema";
+export { GeneratorGroupSchema } from "./GeneratorGroupSchema.js";
+export { GeneratorInvocationSchema } from "./GeneratorInvocationSchema.js";
+export { GeneratorsConfigurationSchema } from "./GeneratorsConfigurationSchema.js";

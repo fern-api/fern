@@ -1,5 +1,5 @@
-import { Writer } from "../ast/core/Writer";
-import { XmlDocWriter } from "../ast/core/XmlDocWriter";
+import { Writer } from "../ast/core/Writer.js";
+import { XmlDocWriter } from "../ast/core/XmlDocWriter.js";
 
 /**
  * Simple mock writer that captures written content.

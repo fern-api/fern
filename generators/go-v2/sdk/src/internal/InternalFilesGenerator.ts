@@ -1,8 +1,8 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileLocation, GoFile } from "@fern-api/go-base";
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class InternalFilesGenerator {
     private context: SdkGeneratorContext;
@@ -79,8 +79,8 @@ export class InternalFilesGenerator {
         return Array.from(namespaces.values());
     }
 
-    private groupErrorsByNamespace(): Map<string, ErrorDeclaration[]> {
-        const errorsByNamespace = new Map<string, ErrorDeclaration[]>();
+    private groupErrorsByNamespace(): Map<string, FernIr.ErrorDeclaration[]> {
+        const errorsByNamespace = new Map<string, FernIr.ErrorDeclaration[]>();
 
         for (const errorDeclaration of Object.values(this.context.ir.errors ?? {})) {
             const location = this.context.getLocationForErrorId(errorDeclaration.name.errorId);
@@ -95,7 +95,7 @@ export class InternalFilesGenerator {
         return errorsByNamespace;
     }
 
-    private generateErrorCodesFile(errors: ErrorDeclaration[], location: FileLocation): GoFile {
+    private generateErrorCodesFile(errors: FernIr.ErrorDeclaration[], location: FileLocation): GoFile {
         const isRootPackage = location.importPath === this.context.getRootImportPath();
         const packageName = isRootPackage
             ? this.context.getRootPackageName()

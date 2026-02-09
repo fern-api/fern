@@ -1,18 +1,18 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
-import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class AliasGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly aliasDeclaration: AliasTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly aliasDeclaration: FernIr.AliasTypeDeclaration;
 
     public constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        aliasDeclaration: AliasTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        aliasDeclaration: FernIr.AliasTypeDeclaration
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;

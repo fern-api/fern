@@ -2,11 +2,15 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import chalk from "chalk";
 
-import { RuleViolation } from "../../Rule";
-import { getPathFromSelector } from "../../utils/property-validator/getPathFromSelector";
-import { validatePropertyInType } from "../../utils/property-validator/validatePropertyInType";
-import { maybeFileFromResolvedType, maybePrimitiveType, resolveResponseType } from "../../utils/propertyValidatorUtils";
-import { validateRequestProperty, validateResultsProperty } from "./validateUtils";
+import { RuleViolation } from "../../Rule.js";
+import { getPathFromSelector } from "../../utils/property-validator/getPathFromSelector.js";
+import { validatePropertyInType } from "../../utils/property-validator/validatePropertyInType.js";
+import {
+    maybeFileFromResolvedType,
+    maybePrimitiveType,
+    resolveResponseType
+} from "../../utils/propertyValidatorUtils.js";
+import { validateRequestProperty, validateResultsProperty } from "./validateUtils.js";
 
 export function validateOffsetPagination({
     endpointId,

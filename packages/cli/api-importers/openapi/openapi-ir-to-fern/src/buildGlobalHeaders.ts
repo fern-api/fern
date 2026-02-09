@@ -3,13 +3,13 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { GlobalHeader } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase } from "lodash-es";
-import { buildHeader } from "./buildHeader";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
-import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+import { buildHeader } from "./buildHeader.js";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup.js";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional.js";
 
 class HeaderWithCount {
     public readonly schema: RawSchemas.HttpHeaderSchema;

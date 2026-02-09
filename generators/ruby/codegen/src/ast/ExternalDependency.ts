@@ -1,5 +1,5 @@
-import { ExtraDependenciesSchema } from "../BaseGeneratorConfig";
-import { AstNode } from "./core/AstNode";
+import { ExtraDependenciesSchema } from "../BaseGeneratorConfig.js";
+import { AstNode } from "./core/AstNode.js";
 
 interface Version {
     version: string;

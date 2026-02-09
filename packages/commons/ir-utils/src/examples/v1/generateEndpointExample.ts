@@ -17,16 +17,16 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { hashJSON } from "../../hashJSON";
-import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { hashJSON } from "../../hashJSON.js";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import {
     generateHeaderExamples,
     generatePathParameterExamples,
     generateQueryParameterExamples
-} from "./generateParameterExamples";
-import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+} from "./generateParameterExamples.js";
+import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample.js";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
 export declare namespace generateEndpointExample {
     interface Args {

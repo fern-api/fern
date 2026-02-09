@@ -1,4 +1,4 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const AllRolesMustBeDeclaredRule: Rule = {
     name: "all-roles-must-be-declared",

@@ -1,6 +1,6 @@
 import { PassThrough } from "stream";
-import type { FernGeneratorCli } from "../configuration/sdk";
-import { ReferenceGenerator } from "../reference/ReferenceGenerator";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { ReferenceGenerator } from "../reference/ReferenceGenerator.js";
 
 describe("ReferenceGenerator", () => {
     describe("HTML encoding", () => {

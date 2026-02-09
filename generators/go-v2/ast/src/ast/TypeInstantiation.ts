@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { CodeBlock } from "./CodeBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { FuncInvocation } from "./FuncInvocation";
-import { GoTypeReference } from "./GoTypeReference";
-import { MethodInvocation } from "./MethodInvocation";
-import { Type } from "./Type";
+import { CodeBlock } from "./CodeBlock.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { FuncInvocation } from "./FuncInvocation.js";
+import { GoTypeReference } from "./GoTypeReference.js";
+import { MethodInvocation } from "./MethodInvocation.js";
+import { Type } from "./Type.js";
 
 type InternalTypeInstantiation =
     | Any_
