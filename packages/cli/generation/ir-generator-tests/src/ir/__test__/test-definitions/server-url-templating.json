@@ -3233,6 +3233,7 @@
                         "Base": "https://api.example.com/v1",
                         "Auth": "https://auth.example.com"
                     },
+                    "audiences": null,
                     "defaultUrls": {
                         "Base": "https://api.example.com/v1",
                         "Auth": "https://auth.example.com"

@@ -10,6 +10,14 @@ export function isVersionAhead(a: string, b: string): boolean {
         return false;
     }
 
+    // "latest" is treated as always being the most recent version.
+    if (b === "latest") {
+        return false;
+    }
+    if (a === "latest") {
+        return true;
+    }
+
     const aVersion = parseVersion(a);
     const bVersion = parseVersion(b);
 

@@ -6,7 +6,7 @@ import { CliSchema } from "./CliSchema.js";
 import { SdksSchema } from "./SdksSchema.js";
 
 export const FernYmlSchema = z.object({
-    edition: z.string(),
+    edition: z.string().optional(),
     org: z.string(),
     ai: AiConfigSchema.optional(),
     cli: CliSchema.optional(),
