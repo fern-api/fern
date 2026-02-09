@@ -205,6 +205,11 @@ export class PlatformKeyring {
     }
 
     private async setPasswordWindows(service: string, account: string, password: string): Promise<void> {
+        // NOTE: cmdkey requires the password to be passed via /pass.
+        // This exposes the secret in the process command line briefly.
+        // There is no stdin or interactive alternative for cmdkey.
+        //
+        // TODO: Fix this with powershell or use Bun's secrets module.
         await this.runExeca("cmdkey", [
             `/generic:${this.getTargetName(service, account)}`,
             `/user:${account}`,
