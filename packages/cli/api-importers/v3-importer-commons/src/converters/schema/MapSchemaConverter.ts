@@ -1,9 +1,9 @@
 import { ContainerType, Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { SchemaConverter } from "./SchemaConverter";
-import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { SchemaConverter } from "./SchemaConverter.js";
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";
 
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {

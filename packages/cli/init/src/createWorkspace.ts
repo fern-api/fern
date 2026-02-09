@@ -14,7 +14,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { SAMPLE_IMDB_API } from "./sampleImdbApi";
+import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
 
 export async function createFernWorkspace({
     directoryOfWorkspace,

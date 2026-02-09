@@ -1,5 +1,13 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import {
+    isValidRelativeSlug,
+    parseImagePaths,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
+    transformAtPrefixImports
+} from "@fern-api/docs-markdown-utils";
+import {
     createPythonDocsSectionPlaceholder,
     DocsDefinitionResolver,
     filterOssWorkspaces
@@ -24,14 +32,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
-
-import {
-    isValidRelativeSlug,
-    parseImagePaths,
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown
-} from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
 const frontmatterSidebarTitleCache = new Map<string, string | undefined>();
@@ -189,11 +189,17 @@ export async function getPreviewDocsDefinition({
                 context
             });
 
-            const markdownReplacedMdAndCode = await replaceReferencedCode({
+            const markdownReplacedCode = await replaceReferencedCode({
                 markdown: markdownReplacedMd,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
+            });
+
+            const markdownReplacedMdAndCode = transformAtPrefixImports({
+                markdown: markdownReplacedCode,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath
             });
 
             const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
@@ -340,17 +346,28 @@ class ReferencedAPICollector {
     public addReferencedAPI({
         ir,
         snippetsConfig,
-        playgroundConfig
+        playgroundConfig,
+        graphqlOperations = {},
+        graphqlTypes = {}
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
+        graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+        graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
     }): APIDefinitionID {
         try {
             const id = uuidv4();
 
             const dbApiDefinition = convertAPIDefinitionToDb(
-                convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context: this.context }),
+                convertIrToFdrApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    context: this.context
+                }),
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},

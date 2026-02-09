@@ -1,12 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { BytesRequest } from "../request/BytesRequest";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { ReferencedEndpointRequest } from "../request/ReferencedEndpointRequest";
-import { WrappedEndpointRequest } from "../request/WrappedEndpointRequest";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { BytesRequest } from "../request/BytesRequest.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
+import { ReferencedEndpointRequest } from "../request/ReferencedEndpointRequest.js";
+import { WrappedEndpointRequest } from "../request/WrappedEndpointRequest.js";
 
 export function getEndpointRequest({
     context,
@@ -15,9 +14,9 @@ export function getEndpointRequest({
     service
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
-    serviceId: ServiceId;
-    service: HttpService;
+    endpoint: FernIr.HttpEndpoint;
+    serviceId: FernIr.ServiceId;
+    service: FernIr.HttpService;
 }): EndpointRequest | undefined {
     if (endpoint.sdkRequest == null) {
         return undefined;
@@ -39,10 +38,10 @@ function createEndpointRequest({
     serviceId
 }: {
     context: SdkGeneratorContext;
-    sdkRequest: SdkRequest;
-    endpoint: HttpEndpoint;
-    service: HttpService;
-    serviceId: ServiceId;
+    sdkRequest: FernIr.SdkRequest;
+    endpoint: FernIr.HttpEndpoint;
+    service: FernIr.HttpService;
+    serviceId: FernIr.ServiceId;
 }): EndpointRequest | undefined {
     switch (sdkRequest.shape.type) {
         case "wrapper":

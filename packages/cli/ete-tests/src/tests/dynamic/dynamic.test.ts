@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { generateDynamicIrAsString } from "./generateDynamicIrAsString";
+import { generateDynamicIrAsString } from "./generateDynamicIrAsString.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 

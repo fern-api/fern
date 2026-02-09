@@ -1,2 +1,2 @@
-export * from "./EncodingSchema";
-export * from "./ProtobufTypeSchema";
+export * from "./EncodingSchema.js";
+export * from "./ProtobufTypeSchema.js";

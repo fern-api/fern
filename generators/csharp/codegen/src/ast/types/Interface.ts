@@ -1,6 +1,6 @@
-import { type Generation } from "../../context/generation-info";
-import { Writer } from "../core/Writer";
-import { DefinedType } from "./DefinedType";
+import { type Generation } from "../../context/generation-info.js";
+import { Writer } from "../core/Writer.js";
+import { DefinedType } from "./DefinedType.js";
 
 export declare namespace Interface {
     interface Args extends DefinedType.Args {}

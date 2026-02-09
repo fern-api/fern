@@ -12,12 +12,12 @@ from .stack_frame import StackFrame
 
 
 class StackInformation(UniversalBaseModel):
-    num_stack_frames: typing_extensions.Annotated[int, FieldMetadata(alias="numStackFrames")] = pydantic.Field(
-        alias="numStackFrames"
-    )
-    top_stack_frame: typing_extensions.Annotated[typing.Optional[StackFrame], FieldMetadata(alias="topStackFrame")] = (
-        pydantic.Field(alias="topStackFrame", default=None)
-    )
+    num_stack_frames: typing_extensions.Annotated[
+        int, FieldMetadata(alias="numStackFrames"), pydantic.Field(alias="numStackFrames")
+    ]
+    top_stack_frame: typing_extensions.Annotated[
+        typing.Optional[StackFrame], FieldMetadata(alias="topStackFrame"), pydantic.Field(alias="topStackFrame")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

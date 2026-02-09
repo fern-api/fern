@@ -4,9 +4,9 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
-import { applyOverlays } from "../loaders/applyOverlays";
-import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
-import { parseOpenAPI } from "./parseOpenAPI";
+import { applyOverlays } from "../loaders/applyOverlays.js";
+import { mergeWithOverrides } from "../loaders/mergeWithOverrides.js";
+import { parseOpenAPI } from "./parseOpenAPI.js";
 
 /**
  * Attempts to find a matching OpenAPI path template for a given example path.

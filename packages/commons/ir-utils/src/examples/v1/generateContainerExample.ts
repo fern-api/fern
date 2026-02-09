@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ContainerType, ExampleContainer, ExamplePrimitive, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult.js";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
 export declare namespace generateContainerExample {
     interface Args {

@@ -1,3 +1,4 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import {
     ClassReferenceFactory,
     ConditionalStatement,
@@ -8,14 +9,12 @@ import {
     Variable
 } from "@fern-api/ruby-codegen";
 
-import { HttpHeader } from "@fern-fern/ir-sdk/api";
-
-import { RequestOptions } from "./RequestOptionsClass";
+import { RequestOptions } from "./RequestOptionsClass.js";
 
 export declare namespace IdempotencyRequestOptions {
     export interface Init extends RequestOptions.Init {
         crf: ClassReferenceFactory;
-        idempotencyHeaders: HttpHeader[];
+        idempotencyHeaders: FernIr.HttpHeader[];
     }
 }
 

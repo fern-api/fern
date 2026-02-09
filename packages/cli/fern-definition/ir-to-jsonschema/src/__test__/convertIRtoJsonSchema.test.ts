@@ -7,7 +7,7 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import { describe, expect, it } from "vitest";
 
-import { convertIRtoJsonSchema } from "../convertIRtoJsonSchema";
+import { convertIRtoJsonSchema } from "../convertIRtoJsonSchema.js";
 
 describe("convertIRtoJsonSchema", async () => {
     const TEST_DEFINITIONS_DIR = join(

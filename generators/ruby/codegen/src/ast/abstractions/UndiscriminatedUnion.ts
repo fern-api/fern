@@ -1,18 +1,18 @@
-import { Argument } from "../Argument";
-import { Class_ } from "../classes/Class_";
+import { Argument } from "../Argument.js";
+import { Class_ } from "../classes/Class_.js";
 import {
     ClassReference,
     GenericClassReference,
     JsonClassReference,
     StringClassReference,
     VoidClassReference
-} from "../classes/ClassReference";
-import { Expression } from "../expressions/Expression";
-import { Function_ } from "../functions/Function_";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
-import { Parameter } from "../Parameter";
-import { ConditionalStatement } from "./ConditionalStatement";
-import { RescueStatement } from "./RescueStatement";
+} from "../classes/ClassReference.js";
+import { Expression } from "../expressions/Expression.js";
+import { Function_ } from "../functions/Function_.js";
+import { FunctionInvocation } from "../functions/FunctionInvocation.js";
+import { Parameter } from "../Parameter.js";
+import { ConditionalStatement } from "./ConditionalStatement.js";
+import { RescueStatement } from "./RescueStatement.js";
 
 export declare namespace UndiscriminatedUnion {
     export interface Init extends Omit<Class_.Init, "functions" | "includeInitializer" | "expressions" | "properties"> {

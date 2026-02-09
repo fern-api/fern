@@ -3,12 +3,14 @@ import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base
 import { generateModels } from "@fern-api/typescript-mcp-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src";
-import { ReadmeGenerator } from "./readme/ReadmeGenerator";
-import { ServerGeneratorContext } from "./ServerGeneratorContext";
-import { ToolsGenerator } from "./tools/ToolsGenerator";
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
+import { ReadmeGenerator } from "./readme/ReadmeGenerator.js";
+import { ServerGeneratorContext } from "./ServerGeneratorContext.js";
+import { ToolsGenerator } from "./tools/ToolsGenerator.js";
 
 export declare namespace ServerGeneratorCLI {
     export interface Init {

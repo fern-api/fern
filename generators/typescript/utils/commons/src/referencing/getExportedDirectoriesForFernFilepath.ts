@@ -1,13 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
-import { ExportDeclaration, ExportedDirectory } from "../exports-manager";
+import { ExportDeclaration, ExportedDirectory } from "../exports-manager/index.js";
 
 export function getExportedDirectoriesForFernFilepath({
     fernFilepath,
     subExports
 }: {
-    fernFilepath: FernFilepath;
+    fernFilepath: FernIr.FernFilepath;
     subExports?: Record<RelativeFilePath, ExportDeclaration>;
 }): ExportedDirectory[] {
     const directories = [
@@ -22,7 +22,7 @@ export function getExportedDirectoriesForFernFilepath({
 }
 
 function getExportedDirectoriesForFernFilepathPart(
-    fernFilepathPart: Name,
+    fernFilepathPart: FernIr.Name,
     { subExports }: { subExports?: Record<string, ExportDeclaration> } = {}
 ): ExportedDirectory[] {
     return [

@@ -8,9 +8,9 @@ import {
 } from "@fern-api/fern-definition-schema";
 import { DeclaredTypeName } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { parseTypeName } from "../../utils/parseTypeName";
+import { FernFileContext } from "../../FernFileContext.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;

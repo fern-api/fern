@@ -1,3 +1,3 @@
-export { ContainerTestRunner } from "./ContainerTestRunner";
-export { LocalTestRunner } from "./LocalTestRunner";
-export { TestRunner } from "./TestRunner";
+export { ContainerTestRunner } from "./ContainerTestRunner.js";
+export { LocalTestRunner } from "./LocalTestRunner.js";
+export { TestRunner } from "./TestRunner.js";

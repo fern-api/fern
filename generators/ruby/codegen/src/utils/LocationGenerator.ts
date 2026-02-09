@@ -1,7 +1,7 @@
-import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { snakeCase } from "lodash-es";
 
-import { TYPES_DIRECTORY, TYPES_MODULE } from "./RubyConstants";
+import { TYPES_DIRECTORY, TYPES_MODULE } from "./RubyConstants.js";
 
 export class LocationGenerator {
     public rootModule: string;
@@ -14,7 +14,7 @@ export class LocationGenerator {
         this.shouldFlattenModules = shouldFlattenModules;
     }
 
-    public getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
+    public getLocationForTypeDeclaration(declaredTypeName: FernIr.DeclaredTypeName): string {
         return [
             snakeCase(this.directoryPrefix),
             ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
@@ -23,7 +23,7 @@ export class LocationGenerator {
         ].join("/");
     }
 
-    public getLocationForServiceDeclaration(declaredServiceName: DeclaredServiceName): string {
+    public getLocationForServiceDeclaration(declaredServiceName: FernIr.DeclaredServiceName): string {
         return [
             snakeCase(this.directoryPrefix),
             ...declaredServiceName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName),
@@ -35,7 +35,7 @@ export class LocationGenerator {
     }
 
     // Note: this assumes the file is in a directory of the same name
-    public getLocationFromFernFilepath(fernFilepath: FernFilepath, fileName?: string): string {
+    public getLocationFromFernFilepath(fernFilepath: FernIr.FernFilepath, fileName?: string): string {
         return [
             snakeCase(this.directoryPrefix),
             ...fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
@@ -50,7 +50,7 @@ export class LocationGenerator {
         includeFilename,
         isType
     }: {
-        path: FernFilepath;
+        path: FernIr.FernFilepath;
         includeFilename: boolean;
         isType?: boolean;
     }): string[] {
@@ -67,11 +67,11 @@ export class LocationGenerator {
         }
     }
 
-    public getModulePathFromTypeName(path: FernFilepath, allParts?: boolean): string[] {
+    public getModulePathFromTypeName(path: FernIr.FernFilepath, allParts?: boolean): string[] {
         return (allParts ? path.allParts : path.packagePath).map((pathSegment) => pathSegment.pascalCase.safeName);
     }
 
-    public getClassPathFromTypeName(path: FernFilepath): string | undefined {
+    public getClassPathFromTypeName(path: FernIr.FernFilepath): string | undefined {
         return path.file?.pascalCase.safeName;
     }
 }

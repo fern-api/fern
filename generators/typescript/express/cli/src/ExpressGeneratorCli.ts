@@ -1,13 +1,13 @@
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
-import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
-import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";
+import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig.js";
+import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema.js";
 
 export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfig> {
     protected parseCustomConfig(customConfig: unknown, logger: Logger): ExpressCustomConfig {
@@ -60,7 +60,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         customConfig: ExpressCustomConfig;
         npmPackage: NpmPackage;
         generatorContext: GeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
         const expressGenerator = new ExpressGenerator({
             namespaceExport: `${upperFirst(camelCase(config.organization))}${upperFirst(

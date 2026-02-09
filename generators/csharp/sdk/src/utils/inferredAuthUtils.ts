@@ -1,6 +1,10 @@
-import { HttpEndpoint, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { getRequestBodyProperties } from "./requestBodyUtils";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type TypeReference = FernIr.TypeReference;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getRequestBodyProperties } from "./requestBodyUtils.js";
 
 export interface InferredAuthCredential {
     /**

@@ -1,11 +1,11 @@
-import { SubpackageId, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, WebsocketClassContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
 
-import { WebsocketSocketDeclarationReferencer } from "../../declaration-referencers/WebsocketSocketDeclarationReferencer";
+import { WebsocketSocketDeclarationReferencer } from "../../declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 
 export declare namespace WebsocketContextImpl {
     export interface Init {
@@ -45,8 +45,8 @@ export class WebsocketContextImpl implements WebsocketClassContext {
 
     public getGeneratedWebsocketSocketClass(
         packageId: PackageId,
-        channelId: WebSocketChannelId,
-        channel: WebSocketChannel
+        channelId: FernIr.WebSocketChannelId,
+        channel: FernIr.WebSocketChannel
     ): GeneratedWebsocketSocketClass {
         return this.websocketGenerator.generateWebsocketSocket({
             packageId,
@@ -60,7 +60,7 @@ export class WebsocketContextImpl implements WebsocketClassContext {
         packageId: PackageId,
         { importAlias, npmPackage }: { importAlias?: string; npmPackage?: NpmPackage } = {}
     ): Reference {
-        let subpackageId: SubpackageId | undefined;
+        let subpackageId: FernIr.SubpackageId | undefined;
         if (packageId.isRoot) {
             throw new Error("Cannot get reference to websocket socket class for root package");
         } else {

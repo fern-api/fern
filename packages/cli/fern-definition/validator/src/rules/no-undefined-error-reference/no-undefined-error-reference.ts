@@ -3,8 +3,8 @@ import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/fern-definiti
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { mapValues } from "lodash-es";
-import { visitDefinitionFileYamlAst } from "../../ast";
-import { Rule, RuleViolation } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast/index.js";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 type ErrorName = string;
 

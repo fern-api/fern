@@ -14,7 +14,7 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { loadAPIChangelog } from "./loadAPIChangelog";
+import { loadAPIChangelog } from "./loadAPIChangelog.js";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -100,6 +100,28 @@ export async function loadSingleNamespaceAPIWorkspace({
             specs.push({
                 type: "openrpc",
                 absoluteFilepath: absoluteFilepathToOpenRpc,
+                absoluteFilepathToOverrides,
+                namespace
+            });
+            continue;
+        }
+
+        if (definition.schema.type === "graphql") {
+            const relativeFilepathToGraphQL = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToGraphQL = join(absolutePathToWorkspace, relativeFilepathToGraphQL);
+            if (!(await doesPathExist(absoluteFilepathToGraphQL))) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [relativeFilepathToGraphQL]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            specs.push({
+                type: "graphql",
+                absoluteFilepath: absoluteFilepathToGraphQL,
                 absoluteFilepathToOverrides,
                 namespace
             });
@@ -257,8 +279,8 @@ export async function loadAPIWorkspace({
             }
         }
 
-        return {
-            didSucceed: true,
+        const result = {
+            didSucceed: true as const,
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
                     if (spec.type === "openrpc") {
@@ -286,6 +308,11 @@ export async function loadAPIWorkspace({
                 cliVersion
             })
         };
+
+        // Process GraphQL specs and populate workspace with operations and types
+        await result.workspace.processGraphQLSpecs(context);
+
+        return result;
     }
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {

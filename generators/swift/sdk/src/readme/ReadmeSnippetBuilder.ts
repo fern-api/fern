@@ -3,8 +3,8 @@ import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_TYPES";
@@ -15,7 +15,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         "CUSTOM_NETWORKING_CLIENT";
 
     private readonly context: SdkGeneratorContext;
-    private readonly endpointsById: Record<string, HttpEndpoint>;
+    private readonly endpointsById: Record<string, FernIr.HttpEndpoint>;
     private readonly endpointSnippetsById: Record<string, FernGeneratorExec.Endpoint>;
 
     public constructor({
@@ -33,8 +33,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
     }
 
-    private buildEndpoints(): Record<EndpointId, HttpEndpoint> {
-        const endpoints: Record<EndpointId, HttpEndpoint> = {};
+    private buildEndpoints(): Record<FernIr.EndpointId, FernIr.HttpEndpoint> {
+        const endpoints: Record<FernIr.EndpointId, FernIr.HttpEndpoint> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = endpoint;
@@ -43,7 +43,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return endpoints;
     }
 
-    public override getDefaultEndpointId(): EndpointId {
+    public override getDefaultEndpointId(): FernIr.EndpointId {
         return this.context.ir.readmeConfig?.defaultEndpoint ?? super.getDefaultEndpointId();
     }
 
@@ -319,7 +319,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.endpointSnippetsById[endpointId]?.snippet;
     }
 
-    private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] {
+    private getEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] {
         const endpointIds = this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
         if (endpointIds == null) {
             return [this.getDefaultEndpointId()];

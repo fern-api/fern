@@ -2,14 +2,14 @@ import type { FernToken } from "@fern-api/auth";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { AiConfig } from "../../ai/config/AiConfig";
-import type { ApiDefinition } from "../../api/config/ApiDefinition";
-import type { Context } from "../../context/Context";
-import { CliError } from "../../errors/CliError";
-import type { Task } from "../../ui/Task";
-import type { Target } from "../config/Target";
-import { LegacyGenerationRunner } from "./LegacyGenerationRunner";
-import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner";
+import type { AiConfig } from "../../ai/config/AiConfig.js";
+import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
+import type { Context } from "../../context/Context.js";
+import { CliError } from "../../errors/CliError.js";
+import type { Task } from "../../ui/Task.js";
+import type { Target } from "../config/Target.js";
+import { LegacyGenerationRunner } from "./LegacyGenerationRunner.js";
+import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner.js";
 
 /**
  * Orchestrates SDK generation for a single target.
@@ -32,7 +32,7 @@ export namespace GeneratorPipeline {
         cliVersion: string;
     }
     export interface RunArgs {
-        /** Task for log display */
+        /** The current task */
         task: Task;
 
         /** The target to generate */
@@ -127,6 +127,7 @@ export class GeneratorPipeline {
             cliVersion: this.cliVersion
         });
         const result = await generationRunner.run({
+            task: args.task,
             target: args.target,
             apiDefinition: args.apiDefinition,
             organization: args.organization,
@@ -136,7 +137,6 @@ export class GeneratorPipeline {
             keepContainer: args.keepContainer,
             preview: args.preview,
             outputPath: args.outputPath,
-            task: args.task,
             containerEngine: args.containerEngine
         });
         if (!result.success) {
@@ -166,14 +166,14 @@ export class GeneratorPipeline {
             apiDefinition: args.apiDefinition,
             organization: args.organization,
             token: args.token,
+            task: args.task,
             ai: args.ai,
             audiences: args.audiences,
             version: args.version,
             shouldLogS3Url: args.shouldLogS3Url,
             preview: args.preview,
             outputPath: args.outputPath,
-            fernignorePath: args.fernignorePath,
-            task: args.task
+            fernignorePath: args.fernignorePath
         });
         if (!result.success) {
             return {

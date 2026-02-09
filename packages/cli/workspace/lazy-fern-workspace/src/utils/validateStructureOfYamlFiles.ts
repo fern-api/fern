@@ -8,7 +8,7 @@ import path from "path";
 import * as RootApiFileJsonSchema from "../api-yml.schema.json";
 import * as DefinitionFileJsonSchema from "../fern.schema.json";
 import * as PackageMarkerFileJsonSchema from "../package-yml.schema.json";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;

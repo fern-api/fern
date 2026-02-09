@@ -3,8 +3,8 @@ import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { mapKeys } from "lodash-es";
 
-import { FernDefinition } from "../AbstractAPIWorkspace";
-import { ParsedFernFile } from "../FernFile";
+import { FernDefinition } from "../AbstractAPIWorkspace.js";
+import { ParsedFernFile } from "../FernFile.js";
 
 export declare namespace getAllNamedDefinitionFiles {
     interface Opts {

@@ -5,7 +5,7 @@ namespace Seed;
 use Seed\FolderA\FolderAClient;
 use Seed\FolderD\FolderDClient;
 use Seed\Foo\FooClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

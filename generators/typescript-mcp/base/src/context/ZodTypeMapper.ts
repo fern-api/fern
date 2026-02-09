@@ -1,12 +1,11 @@
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext";
+import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext.js";
 
 export declare namespace ZodTypeMapper {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
     }
 }
 
@@ -29,7 +28,7 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convertSdkRequest(sdkRequest: SdkRequest): string {
+    public convertSdkRequest(sdkRequest: FernIr.SdkRequest): string {
         return sdkRequest?.shape._visit({
             justRequestBody: (value) =>
                 value._visit({
@@ -53,8 +52,8 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convertPrimitiveTypeV1(primitiveTypeV1: PrimitiveTypeV1): string {
-        return PrimitiveTypeV1._visit(primitiveTypeV1, {
+    public convertPrimitiveTypeV1(primitiveTypeV1: FernIr.PrimitiveTypeV1): string {
+        return FernIr.PrimitiveTypeV1._visit(primitiveTypeV1, {
             integer: () => "number",
             long: () => "number",
             uint: () => "number",
@@ -73,7 +72,7 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convertSingleUnionType(singleUnionType: SingleUnionType): string {
+    public convertSingleUnionType(singleUnionType: FernIr.SingleUnionType): string {
         return singleUnionType.shape._visit({
             samePropertiesAsObject: (value) => "any",
             singleProperty: (value) => "any",

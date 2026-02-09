@@ -3,7 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { bundle, Source } from "@redocly/openapi-core";
 import { OpenAPI } from "openapi-types";
 
-import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver";
+import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver.js";
 
 export async function parseOpenAPI({
     absolutePathToOpenAPI,

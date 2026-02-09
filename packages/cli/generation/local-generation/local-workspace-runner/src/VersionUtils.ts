@@ -1,4 +1,4 @@
-import { AutoVersioningException } from "./AutoVersioningService";
+import { AutoVersioningException } from "./AutoVersioningService.js";
 
 export const AUTO_VERSION = "AUTO";
 export const MAGIC_VERSION = "505.503.4455";

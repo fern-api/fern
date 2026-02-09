@@ -7,13 +7,20 @@ import typing
 import pydantic
 import typing_extensions
 from ......core.pydantic_utilities import UniversalBaseModel, universal_field_validator, universal_root_validator
+from ......core.serialization import FieldMetadata
 
 
 class ObjectWithMapOfMap(UniversalBaseModel):
-    map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
+    map_: typing_extensions.Annotated[
+        typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map"), pydantic.Field(alias="map")
+    ]
 
     class Partial(typing.TypedDict):
-        map_: typing_extensions.NotRequired[typing.Dict[str, typing.Dict[str, str]]]
+        map_: typing_extensions.NotRequired[
+            typing_extensions.Annotated[
+                typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map"), pydantic.Field(alias="map")
+            ]
+        ]
 
     class Validators:
         """

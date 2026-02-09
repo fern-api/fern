@@ -3,13 +3,12 @@ import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, WebSocketChannel } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint;
-    fernFilepath: FernFilepath;
+    endpoint: FernIr.HttpEndpoint;
+    fernFilepath: FernIr.FernFilepath;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -24,9 +23,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ELLIPSES = java.codeblock("...");
 
     private readonly context: SdkGeneratorContext;
-    private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {};
-    private readonly defaultEndpointId: EndpointId;
+    private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
+    private readonly prerenderedSnippetsByEndpointId: Record<FernIr.EndpointId, string> = {};
+    private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly rootPackageClientName: string;
     private readonly isPaginationEnabled: boolean;
 
@@ -642,8 +641,8 @@ ${clientClassName} client = ${clientClassName}.builder()
         return this.renderSnippet(snippet);
     }
 
-    private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
+    private buildEndpointsById(): Record<FernIr.EndpointId, EndpointWithFilepath> {
+        const endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
@@ -657,11 +656,11 @@ ${clientClassName} client = ${clientClassName}.builder()
 
     private buildPrerenderedSnippetsByEndpointId(
         endpointSnippets: FernGeneratorExec.Endpoint[]
-    ): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {};
+    ): Record<FernIr.EndpointId, string> {
+        const snippets: Record<FernIr.EndpointId, string> = {};
         const exampleStyle = this.context.ir.readmeConfig?.exampleStyle;
 
-        const snippetsByEndpointId: Record<EndpointId, FernGeneratorExec.Endpoint[]> = {};
+        const snippetsByEndpointId: Record<FernIr.EndpointId, FernGeneratorExec.Endpoint[]> = {};
 
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
@@ -784,16 +783,16 @@ ${clientClassName} client = ${clientClassName}.builder()
         return filteredLines.join("\n");
     }
 
-    private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
+    private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
         const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
         return endpointIds.map(this.lookupEndpointById.bind(this));
     }
 
-    private getConfiguredEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
+    private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
         return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
-    private lookupEndpointById(endpointId: EndpointId): EndpointWithFilepath {
+    private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
             throw new Error(`Internal error; missing endpoint ${endpointId}`);
@@ -809,7 +808,7 @@ ${clientClassName} client = ${clientClassName}.builder()
         });
     }
 
-    private getAccessFromRootClient(fernFilepath: FernFilepath): java.AstNode {
+    private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): java.AstNode {
         const clientAccessParts = fernFilepath.allParts.map(
             (part) => this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
         );
@@ -818,7 +817,7 @@ ${clientClassName} client = ${clientClassName}.builder()
             : java.codeblock(ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME);
     }
 
-    private getEndpointMethodName(endpoint: HttpEndpoint): string {
+    private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 
@@ -837,7 +836,9 @@ ${clientClassName} client = ${clientClassName}.builder()
         return "client";
     }
 
-    private getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
+    private getDefaultEndpointIdWithMaybeEmptySnippets(
+        endpointSnippets: FernGeneratorExec.Endpoint[]
+    ): FernIr.EndpointId {
         if (endpointSnippets.length > 0) {
             return this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
@@ -868,7 +869,7 @@ ${clientClassName} client = ${clientClassName}.builder()
         });
 
         if (endpointsWithReferencedRequestBody.length > 0 && endpointsWithReferencedRequestBody[0] != null) {
-            // Return the EndpointId of the first Endpoint
+            // Return the FernIr.EndpointId of the first Endpoint
             return endpointsWithReferencedRequestBody[0][0];
         }
 
@@ -905,8 +906,8 @@ ${clientClassName} client = ${clientClassName}.builder()
 
     private renderWebSocketSnippet(_endpoint: EndpointWithFilepath): string {
         // Find first WebSocket channel by checking subpackages and root package
-        let channel: WebSocketChannel | null = null;
-        let fernFilepath: FernFilepath | null = null;
+        let channel: FernIr.WebSocketChannel | null = null;
+        let fernFilepath: FernIr.FernFilepath | null = null;
 
         // Check root package first
         if (this.context.ir.rootPackage.websocket != null && this.context.ir.websocketChannels != null) {

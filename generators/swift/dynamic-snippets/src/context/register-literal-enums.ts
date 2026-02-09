@@ -1,7 +1,7 @@
 import { noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { NameRegistry, swift } from "@fern-api/swift-codegen";
-import type { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import type { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export function registerLiteralEnums({
     parentSymbol,

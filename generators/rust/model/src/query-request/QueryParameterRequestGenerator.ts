@@ -1,20 +1,12 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 
-import {
-    ContainerType,
-    HttpEndpoint,
-    IntermediateRepresentation,
-    ObjectProperty,
-    QueryParameter,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
-import { RequestGenerator } from "../inlined-request-body/RequestGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { RequestGenerator } from "../inlined-request-body/RequestGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class QueryParameterRequestGenerator {
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly context: ModelGeneratorContext;
 
     public constructor(context: ModelGeneratorContext) {
@@ -41,7 +33,7 @@ export class QueryParameterRequestGenerator {
         return files;
     }
 
-    private generateQueryRequestFile(endpoint: HttpEndpoint, serviceId: string): RustFile | null {
+    private generateQueryRequestFile(endpoint: FernIr.HttpEndpoint, serviceId: string): RustFile | null {
         try {
             const baseRequestTypeName = this.context.getQueryRequestTypeName(endpoint, serviceId);
             // Get the unique type name (may have suffix if there's a collision)
@@ -73,12 +65,12 @@ export class QueryParameterRequestGenerator {
     }
 
     // Helper method to convert query parameters to object properties
-    private convertQueryParametersToProperties(queryParams: QueryParameter[]): ObjectProperty[] {
+    private convertQueryParametersToProperties(queryParams: FernIr.QueryParameter[]): FernIr.ObjectProperty[] {
         return queryParams.map((queryParam) => {
             // For allow-multiple query params, wrap the type in a list using proper IR constructors
             let valueType = queryParam.valueType;
             if (queryParam.allowMultiple) {
-                valueType = TypeReference.container(ContainerType.list(queryParam.valueType));
+                valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
             }
 
             return {

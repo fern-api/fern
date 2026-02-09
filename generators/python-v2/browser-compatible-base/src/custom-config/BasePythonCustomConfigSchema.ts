@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { BaseDependencyConfig } from "./BaseDependencyConfig";
-import { ClientConfig } from "./ClientConfig";
-import { DependencyConfig } from "./DependencyConfig";
-import { ModuleExport } from "./ModuleExport";
-import { PydanticConfig } from "./PydanticConfig";
+import { BaseDependencyConfig } from "./BaseDependencyConfig.js";
+import { ClientConfig } from "./ClientConfig.js";
+import { DependencyConfig } from "./DependencyConfig.js";
+import { ModuleExport } from "./ModuleExport.js";
+import { PydanticConfig } from "./PydanticConfig.js";
 
 export const BasePythonCustomConfigSchema = z.object({
     // Influence dynamic snippets.

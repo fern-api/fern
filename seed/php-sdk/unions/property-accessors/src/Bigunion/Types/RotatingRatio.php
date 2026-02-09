@@ -38,6 +38,7 @@ class RotatingRatio extends JsonSerializableType
     public function setValue(string $value): self
     {
         $this->value = $value;
+        $this->_setField('value');
         return $this;
     }
 

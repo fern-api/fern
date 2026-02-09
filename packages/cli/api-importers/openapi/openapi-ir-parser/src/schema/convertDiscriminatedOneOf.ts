@@ -9,11 +9,11 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../getExtension";
-import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
-import { isReferenceObject } from "./utils/isReferenceObject";
+import { getExtension } from "../getExtension.js";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
+import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas.js";
+import { SchemaParserContext } from "./SchemaParserContext.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
 
 export function convertDiscriminatedOneOf({
     nameOverride,

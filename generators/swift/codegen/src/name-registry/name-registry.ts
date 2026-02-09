@@ -1,10 +1,10 @@
 import { assertDefined, assertNever, SymbolRegistry as Namespace } from "@fern-api/core-utils";
 import { uniqWith } from "lodash-es";
-import { swift } from "..";
-import { LiteralEnum } from "../helpers";
-import { RequestsNamespace } from "./requests-namespace";
-import { SourceModuleNamespace } from "./source-module-namespace";
-import { TestModuleNamespace } from "./test-module-namespace";
+import { LiteralEnum } from "../helpers/index.js";
+import { swift } from "../index.js";
+import { RequestsNamespace } from "./requests-namespace.js";
+import { SourceModuleNamespace } from "./source-module-namespace.js";
+import { TestModuleNamespace } from "./test-module-namespace.js";
 
 type UndiscriminatedUnionVariant = {
     caseName: string;

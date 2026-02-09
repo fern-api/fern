@@ -5,16 +5,20 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
     universal_field_validator,
     universal_root_validator,
 )
+from ......core.serialization import FieldMetadata
 
 
 class ObjectWithMapOfMap(UniversalBaseModel):
-    map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
+    map_: typing_extensions.Annotated[
+        typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map"), pydantic.Field(alias="map")
+    ]
 
     class Validators:
         """

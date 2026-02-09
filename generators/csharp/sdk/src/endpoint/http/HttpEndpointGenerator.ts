@@ -1,23 +1,23 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    CursorPagination,
-    ExampleEndpointCall,
-    HttpEndpoint,
-    OffsetPagination,
-    RequestProperty,
-    ResponseError,
-    ResponseProperty,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+
+type CursorPagination = FernIr.CursorPagination;
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type OffsetPagination = FernIr.OffsetPagination;
+type RequestProperty = FernIr.RequestProperty;
+type ResponseError = FernIr.ResponseError;
+type ResponseProperty = FernIr.ResponseProperty;
+type ServiceId = FernIr.ServiceId;
+
 import { fail } from "assert";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
-import { RawClient } from "./RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { RawClient } from "./RawClient.js";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -1396,7 +1396,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                     properties: [...enclosingType.scope.fields]
                                         .map((each) => each.field)
                                         .filter(is.NonNullable)
-                                        .filter((each) => each.needsIntialization)
+                                        .filter((each) => each.needsInitialization)
                                         .map((each) => ({
                                             name: each.name,
                                             value: each.type.defaultValue

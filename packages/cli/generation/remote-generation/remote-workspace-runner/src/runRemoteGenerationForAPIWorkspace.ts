@@ -9,8 +9,8 @@ import {
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
-import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
-import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
+import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
+import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];

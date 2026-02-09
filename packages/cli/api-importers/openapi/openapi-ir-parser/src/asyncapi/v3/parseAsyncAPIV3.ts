@@ -2,6 +2,7 @@ import {
     HeaderWithExample,
     PathParameterWithExample,
     QueryParameterWithExample,
+    Schema,
     SchemaId,
     SchemaWithExample,
     Source,
@@ -11,22 +12,22 @@ import {
 } from "@fern-api/openapi-ir";
 import { camelCase, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-
-import { FernOpenAPIExtension } from "../..";
-import { getExtension } from "../../getExtension";
-import { convertAvailability } from "../../schema/convertAvailability";
-import { convertSchema } from "../../schema/convertSchemas";
-import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
-import { getSchemas } from "../../utils/getSchemas";
-import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
-import { FernAsyncAPIExtension } from "../fernExtensions";
-import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples";
-import { ParseAsyncAPIOptions } from "../options";
-import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { ChannelId, ServerContext } from "../sharedTypes";
-import { constructServerUrl, transformToValidPath } from "../sharedUtils";
-import { AsyncAPIV3 } from "../v3";
-import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
+import { getExtension } from "../../getExtension.js";
+import { FernOpenAPIExtension } from "../../index.js";
+import { convertAvailability } from "../../schema/convertAvailability.js";
+import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { getSchemas } from "../../utils/getSchemas.js";
+import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory.js";
+import { FernAsyncAPIExtension } from "../fernExtensions.js";
+import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples.js";
+import { ParseAsyncAPIOptions } from "../options.js";
+import { AsyncAPIIntermediateRepresentation } from "../parse.js";
+import { ChannelId, ServerContext } from "../sharedTypes.js";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils.js";
+import { AsyncAPIV3 } from "../v3/index.js";
+import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext.js";
 
 interface MessageWithMethodName {
     ref: OpenAPIV3.ReferenceObject;
@@ -61,6 +62,9 @@ export function parseAsyncAPIV3({
     asyncApiOptions: ParseAsyncAPIOptions;
     document: AsyncAPIV3.DocumentV3;
 }): AsyncAPIIntermediateRepresentation {
+    // Reset title collision tracker for this document processing
+    resetTitleCollisionTracker();
+
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     const messageSchemas: Record<ChannelId, Record<SchemaId, SchemaWithExample>> = {};
     const seenMessages: Record<string, SeenMessage[]> = {};
@@ -69,8 +73,22 @@ export function parseAsyncAPIV3({
 
     context.logger.debug("Parsing V3 AsyncAPI...");
 
+    const collisionTracker = createSchemaCollisionTracker();
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        schemas[schemaId] = convertSchema(schema, false, false, context, [schemaId], source, context.namespace);
+        const uniqueSchemaId = collisionTracker.getUniqueSchemaId(
+            schemaId,
+            context.logger,
+            context.options.resolveSchemaCollisions
+        );
+        schemas[uniqueSchemaId] = convertSchema(
+            schema,
+            false,
+            false,
+            context,
+            [uniqueSchemaId],
+            source,
+            context.namespace
+        );
     }
 
     for (const [channelId, channel] of Object.entries(document.channels ?? {})) {
@@ -133,11 +151,21 @@ export function parseAsyncAPIV3({
         }
     }
 
-    const flattenedMessageSchemas: Record<string, SchemaWithExample> = Object.values(messageSchemas).reduce(
-        (acc, schemas) => ({ ...acc, ...schemas }),
-        {}
-    );
-    const exampleFactory = new ExampleWebsocketSessionFactory(flattenedMessageSchemas, context);
+    const flattenedMessageSchemas: Record<string, SchemaWithExample> = {};
+    const messageCollisionTracker = createSchemaCollisionTracker();
+
+    for (const [channelId, channelSchemas] of Object.entries(messageSchemas)) {
+        for (const [messageId, messageSchema] of Object.entries(channelSchemas)) {
+            const uniqueMessageId = messageCollisionTracker.getUniqueSchemaId(
+                messageId,
+                context.logger,
+                context.options.resolveSchemaCollisions
+            );
+            flattenedMessageSchemas[uniqueMessageId] = messageSchema;
+        }
+    }
+
+    const exampleFactory = new ExampleWebsocketSessionFactory({ ...schemas, ...flattenedMessageSchemas }, context);
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
@@ -383,6 +411,20 @@ export function parseAsyncAPIV3({
                 `Skipping AsyncAPI channel ${channelPath} as it does not qualify for inclusion (no headers, query params, or operations)`
             );
         }
+    }
+
+    // Merge component schemas with message schemas and convert to Schema objects
+    const allSchemasWithExample = { ...schemas, ...flattenedMessageSchemas };
+    const allSchemas: Record<string, Schema> = {};
+    const finalCollisionTracker = createSchemaCollisionTracker();
+
+    for (const [schemaId, schemaWithExample] of Object.entries(allSchemasWithExample)) {
+        const uniqueSchemaId = finalCollisionTracker.getUniqueSchemaId(
+            schemaId,
+            context.logger,
+            context.options.resolveSchemaCollisions
+        );
+        allSchemas[uniqueSchemaId] = convertSchemaWithExampleToSchema(schemaWithExample);
     }
 
     const groupedSchemas = getSchemas(context.namespace, schemas);

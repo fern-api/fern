@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ExplodedFormDataIsArrayRule } from "../exploded-form-data-is-array";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ExplodedFormDataIsArrayRule } from "../exploded-form-data-is-array.js";
 
 describe("exploded-form-data-is-array", () => {
     it("simple", async () => {

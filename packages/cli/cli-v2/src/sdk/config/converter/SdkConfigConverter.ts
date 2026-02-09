@@ -2,19 +2,13 @@ import { schemas } from "@fern-api/config";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
-import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader";
-import type { DockerImageReference } from "../DockerImageReference";
-import type { GitOutputConfig } from "../GitOutputConfig";
-import { LANGUAGES, type Language } from "../Language";
-import type { License } from "../License";
-import type { NpmPublishConfig } from "../NpmPublishConfig";
-import type { OutputConfig } from "../OutputConfig";
-import type { PublishConfig } from "../PublishConfig";
-import type { SdkConfig } from "../SdkConfig";
-import type { Target } from "../Target";
-import { getImageReferenceFromLanguage } from "./getImageReferenceFromLanguage";
-import { getLanguageFromImage } from "./getLanguageFromImage";
+import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter.js";
+import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
+import { LANGUAGES, type Language } from "../Language.js";
+import type { SdkConfig } from "../SdkConfig.js";
+import type { Target } from "../Target.js";
+import { getImageReferenceFromLanguage } from "./getImageReferenceFromLanguage.js";
+import { getLanguageFromImage } from "./getLanguageFromImage.js";
 
 export namespace SdkConfigConverter {
     export interface GeneratorInfo {
@@ -136,12 +130,10 @@ export class SdkConfigConverter {
             version: generatorInfo.version,
             api: this.resolveApi({ api: target.api }),
             config: target.config != null ? this.convertConfig(target.config) : undefined,
-            output: this.convertOutput({ output: target.output, sourced: sourced.output }),
-            publish:
-                target.publish != null && !isNullish(sourced.publish)
-                    ? this.convertPublish({ publish: target.publish, sourced: sourced.publish })
-                    : undefined,
-            groups: target.group ?? []
+            output: target.output,
+            publish: target.publish,
+            groups: target.group ?? [],
+            metadata: target.metadata
         };
     }
 
@@ -162,7 +154,7 @@ export class SdkConfigConverter {
         if (lang == null) {
             return undefined;
         }
-        const resolvedDockerImage = this.resolveDockerImage({ name, lang, version: target.version });
+        const resolvedDockerImage = getImageReferenceFromLanguage({ lang, version: target.version });
         return {
             lang,
             image: resolvedDockerImage.image,
@@ -174,71 +166,6 @@ export class SdkConfigConverter {
         // For now, we return the config as-is. In the future, we can validate a
         // specific generator's configuration before it's passed to the generator.
         return config;
-    }
-
-    private convertOutput({
-        output,
-        sourced
-    }: {
-        output: schemas.OutputSchema;
-        sourced: Sourced<schemas.OutputSchema>;
-    }): OutputConfig {
-        return {
-            path: output.path,
-            git:
-                output.git != null && !isNullish(sourced.git)
-                    ? this.convertGit({ git: output.git, sourced: sourced.git })
-                    : undefined
-        };
-    }
-
-    private convertGit({
-        git,
-        sourced: _sourced
-    }: {
-        git: schemas.GitOutputSchema;
-        sourced: Sourced<schemas.GitOutputSchema>;
-    }): GitOutputConfig {
-        return {
-            repository: git.repository,
-            mode: git.mode ?? "pr",
-            branch: git.branch,
-            license: git.license != null ? this.convertLicense(git.license) : undefined
-        };
-    }
-
-    private convertLicense(license: schemas.LicenseSchema): License {
-        if (schemas.isWellKnownLicense(license)) {
-            return { type: license };
-        }
-        return { type: "custom", path: license };
-    }
-
-    private convertPublish({
-        publish,
-        sourced
-    }: {
-        publish: schemas.PublishSchema;
-        sourced: Sourced<schemas.PublishSchema>;
-    }): PublishConfig {
-        return {
-            npm:
-                publish.npm != null && !isNullish(sourced.npm)
-                    ? this.convertNpm({ npm: publish.npm, sourced: sourced.npm })
-                    : undefined
-        };
-    }
-
-    private convertNpm({
-        npm,
-        sourced: _sourced
-    }: {
-        npm: schemas.NpmPublishSchema;
-        sourced: Sourced<schemas.NpmPublishSchema>;
-    }): NpmPublishConfig {
-        return {
-            packageName: npm.packageName
-        };
     }
 
     private resolveLanguage({
@@ -269,21 +196,5 @@ export class SdkConfigConverter {
             })
         );
         return undefined;
-    }
-
-    private resolveDockerImage({
-        name,
-        lang,
-        version
-    }: {
-        name: string;
-        lang: Language;
-        version: string | undefined;
-    }): DockerImageReference {
-        const dockerImage = getImageReferenceFromLanguage({ lang, version });
-        if (version == null) {
-            this.logger.debug(`Target "${name}" has no version specified, using ${dockerImage}`);
-        }
-        return dockerImage;
     }
 }

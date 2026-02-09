@@ -1,8 +1,8 @@
 import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
-import { AsyncAPIConverter } from "../AsyncAPIConverter";
-import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
+import { AsyncAPIConverter } from "../AsyncAPIConverter.js";
+import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext.js";
 
 export declare namespace AbstractServerConverter {
     export interface Args<TServer> extends AsyncAPIConverter.AbstractArgs {

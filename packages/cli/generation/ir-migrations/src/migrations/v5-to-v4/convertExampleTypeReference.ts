@@ -1,5 +1,5 @@
-import { IrVersions } from "../../ir-versions";
-import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
+import { IrVersions } from "../../ir-versions/index.js";
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName.js";
 
 export function convertExampleTypeReference(
     example: IrVersions.V5.types.ExampleTypeReference

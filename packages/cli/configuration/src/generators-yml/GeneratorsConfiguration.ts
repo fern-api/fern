@@ -3,9 +3,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-
-import { generatorsYml } from "..";
-import { Audiences } from "../commons";
+import { Audiences } from "../commons/index.js";
+import { generatorsYml } from "../index.js";
 import {
     ApiConfigurationV2SpecsSchema,
     ApiDefinitionSettingsSchema,
@@ -14,7 +13,7 @@ import {
     OpenApiFilterSchema,
     ReadmeSchema,
     RemoveDiscriminantsFromSchemas
-} from "./schemas";
+} from "./schemas/index.js";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -92,6 +91,7 @@ export interface APIDefinitionSettings {
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
+    resolveSchemaCollisions: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -103,7 +103,11 @@ export interface APIDefinitionLocation {
     settings: APIDefinitionSettings | undefined;
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema;
+export type APIDefinitionSchema =
+    | ProtoAPIDefinitionSchema
+    | OSSAPIDefinitionSchema
+    | OpenRPCDefinitionSchema
+    | GraphQLDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -121,6 +125,11 @@ export interface OSSAPIDefinitionSchema {
 
 export interface OpenRPCDefinitionSchema {
     type: "openrpc";
+    path: string;
+}
+
+export interface GraphQLDefinitionSchema {
+    type: "graphql";
     path: string;
 }
 
