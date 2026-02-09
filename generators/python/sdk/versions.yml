@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.2
+  changelogEntry:
+    - summary: |
+        Add websocket compatibility shim for websockets library v14. The generated SDK now
+        uses a `core/websocket_compat.py` module that abstracts the `InvalidStatusCode` vs
+        `InvalidStatus` exception difference, ensuring compatibility with both websockets
+        v12-13 and v14+.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 4.55.1
   changelogEntry:
     - summary: |

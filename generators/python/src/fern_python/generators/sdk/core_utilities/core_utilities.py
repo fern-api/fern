@@ -266,6 +266,17 @@ class CoreUtilities:
                 ),
                 exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
             )
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="websocket_compat.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="websocket_compat"),
+                ),
+                exports={"InvalidWebSocketStatus", "get_status_code"}
+                if not self._exclude_types_from_init_exports
+                else set(),
+            )
 
         # Copy the entire http_sse folder
         self._copy_http_sse_folder_to_project(project=project)
@@ -901,6 +912,24 @@ class CoreUtilities:
     def _sanitize_pager_name(self, name: str) -> str:
         """Sanitize the pager name to be a valid Python identifier in PascalCase."""
         return pascal_case(name)
+
+    def get_reference_to_invalid_websocket_status(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="InvalidWebSocketStatus",
+            ),
+        )
+
+    def get_reference_to_get_status_code(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="get_status_code",
+            ),
+        )
 
     def get_import_paths(self) -> Optional[list[str]]:
         """Get the list of import paths for auto-loading user-defined files."""
