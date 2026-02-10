@@ -419,7 +419,7 @@ class ClientWrapperGenerator:
                     base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=True,
                     async_base_headers=AST.Expression(f"self.{ClientWrapperGenerator.ASYNC_GET_HEADERS_METHOD_NAME}"),
-                    logging=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
+                    logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
                 )
             )
 
@@ -465,7 +465,7 @@ class ClientWrapperGenerator:
                     base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}"),
                     base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=is_async,
-                    logging=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
+                    logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
                 )
             )
 

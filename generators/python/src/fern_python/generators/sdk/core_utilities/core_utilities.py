@@ -616,7 +616,7 @@ class CoreUtilities:
         base_timeout: AST.Expression,
         is_async: bool,
         async_base_headers: Optional[AST.Expression] = None,
-        logging: Optional[AST.Expression] = None,
+        logging_config: Optional[AST.Expression] = None,
     ) -> AST.Expression:
         func_args = [
             ("httpx_client", base_client),
@@ -627,8 +627,8 @@ class CoreUtilities:
             func_args.append(("base_url", base_url))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))
-        if logging is not None:
-            func_args.append(("logging", logging))
+        if logging_config is not None:
+            func_args.append(("logging_config", logging_config))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
