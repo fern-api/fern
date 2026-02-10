@@ -1,5 +1,6 @@
 import { createEmptyFernRcSchema, FernRcSchema } from "@fern-api/config";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { existsSync, readFileSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { homedir } from "os";
@@ -62,6 +63,30 @@ export class FernRcSchemaLoader {
     }
 
     /**
+     * Synchronously loads only the cache path from ~/.fernrc.
+     *
+     * @returns The cache path string if configured, or undefined.
+     */
+    public loadCachePathSync(): string | undefined {
+        try {
+            if (!existsSync(this.absoluteFilePath)) {
+                return undefined;
+            }
+            const contents = readFileSync(this.absoluteFilePath, "utf-8");
+            if (contents.trim().length === 0) {
+                return undefined;
+            }
+            const result = FernRcSchema.safeParse(yaml.load(contents));
+            if (!result.success) {
+                return undefined;
+            }
+            return result.data.cache?.path;
+        } catch {
+            return undefined;
+        }
+    }
+
+    /**
      * Saves the configuration to ~/.fernrc.
      */
     public async save(config: FernRcSchema): Promise<void> {
@@ -76,6 +101,9 @@ export class FernRcSchemaLoader {
         };
         if (config.auth.active == null) {
             delete (toSerialize.auth as Record<string, unknown>).active;
+        }
+        if (config.cache != null) {
+            toSerialize.cache = config.cache;
         }
         const yamlContent = yaml.dump(toSerialize, {
             indent: 2,

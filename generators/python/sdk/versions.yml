@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.4
+  changelogEntry:
+    - summary: |
+        Fix Python 3.14 compatibility by replacing `pydantic.v1.datetime_parse` imports with
+        Pydantic V2 `TypeAdapter`-based `parse_date`/`parse_datetime` implementations. Remaining
+        `pydantic.v1` imports are wrapped with warning suppression to avoid the
+        "Core Pydantic V1 functionality isn't compatible with Python 3.14" warning.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 4.55.3
   changelogEntry:
     - summary: |

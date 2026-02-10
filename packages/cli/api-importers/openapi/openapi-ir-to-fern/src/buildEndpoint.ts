@@ -104,6 +104,18 @@ export function buildEndpoint({
                     results: endpoint.pagination.results
                 };
                 break;
+            case "uri":
+                pagination = {
+                    next_uri: endpoint.pagination.nextUri,
+                    results: endpoint.pagination.results
+                };
+                break;
+            case "path":
+                pagination = {
+                    next_path: endpoint.pagination.nextPath,
+                    results: endpoint.pagination.results
+                };
+                break;
             default:
                 assertNever(endpoint.pagination);
         }

@@ -1,7 +1,6 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { appendFileSync, mkdirSync, writeFileSync } from "fs";
-import { homedir } from "os";
 
 /**
  * Writes logs to a file for later inspection.
@@ -10,11 +9,9 @@ export class LogFileWriter {
     public readonly logFilePath: AbsoluteFilePath;
     private initialized = false;
 
-    constructor() {
+    constructor(logsDirectory: AbsoluteFilePath) {
         const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-
-        const logsDir = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(".cache/fern/v1/logs"));
-        this.logFilePath = join(logsDir, RelativeFilePath.of(`${timestamp}.log`));
+        this.logFilePath = join(logsDirectory, RelativeFilePath.of(`${timestamp}.log`));
     }
 
     /**
@@ -39,8 +36,7 @@ export class LogFileWriter {
             return;
         }
         // Create the logs directory and file.
-        const logsDir = join(this.logFilePath, RelativeFilePath.of(".."));
-        mkdirSync(logsDir, { recursive: true });
+        mkdirSync(dirname(this.logFilePath), { recursive: true });
         writeFileSync(this.logFilePath, `Fern Debug Log - ${new Date().toISOString()}\n${"=".repeat(60)}\n\n`);
         this.initialized = true;
     }
