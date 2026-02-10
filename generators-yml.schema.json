@@ -2440,7 +2440,7 @@
             }
           ]
         },
-        "resource": {
+        "name": {
           "oneOf": [
             {
               "type": "string"

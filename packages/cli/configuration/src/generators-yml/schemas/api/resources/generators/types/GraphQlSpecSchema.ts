@@ -4,5 +4,5 @@ export interface GraphQlSpecSchema {
     graphql: string;
     origin?: string;
     overrides?: string;
-    resource?: string;
+    name?: string;
 }

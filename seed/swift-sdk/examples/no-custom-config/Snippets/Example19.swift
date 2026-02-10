@@ -91,18 +91,7 @@ private func main() async throws {
             nodes: [
                 Node(
                     name: "name",
-                    nodes: [
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        ),
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        )
-                    ],
+                    nodes: [],
                     trees: [
                         Tree(
                             nodes: []
@@ -114,18 +103,7 @@ private func main() async throws {
                 ),
                 Node(
                     name: "name",
-                    nodes: [
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        ),
-                        Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
-                        )
-                    ],
+                    nodes: [],
                     trees: [
                         Tree(
                             nodes: []
@@ -192,18 +170,7 @@ private func main() async throws {
                             contents: "contents"
                         )
                     ],
-                    directories: [
-                        Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
-                        ),
-                        Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
-                        )
-                    ]
+                    directories: []
                 ),
                 Directory(
                     name: "name",
@@ -217,18 +184,7 @@ private func main() async throws {
                             contents: "contents"
                         )
                     ],
-                    directories: [
-                        Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
-                        ),
-                        Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
-                        )
-                    ]
+                    directories: []
                 )
             ]
         ),
