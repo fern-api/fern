@@ -69,6 +69,8 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.OptionalNullableGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
+import com.fern.java.generators.SseEventGenerator;
+import com.fern.java.generators.SseEventParserGenerator;
 import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -355,6 +357,12 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         StreamGenerator streamGenerator = new StreamGenerator(context);
         this.addGeneratedFile(streamGenerator.generateFile());
+
+        SseEventGenerator sseEventGenerator = new SseEventGenerator(context);
+        this.addGeneratedFile(sseEventGenerator.generateFile());
+
+        SseEventParserGenerator sseEventParserGenerator = new SseEventParserGenerator(context);
+        this.addGeneratedFile(sseEventParserGenerator.generateFile());
 
         QueryStringMapperGenerator queryStringMapperGenerator = new QueryStringMapperGenerator(context);
         this.addGeneratedFile(queryStringMapperGenerator.generateFile());

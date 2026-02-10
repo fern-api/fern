@@ -2,8 +2,16 @@
 - version: 3.73.0
   changelogEntry:
     - summary: |
-        Add `basepath-aware` experimental flag to docs.yml. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+        Add accent scale color override support (accent-1 through accent-12) to docs configuration. Fixes compatibility with updated fdr-sdk.
       type: feat
+  createdAt: "2026-02-10"
+  irVersion: 65
+
+- version: 3.72.1
+  changelogEntry:
+    - summary: |
+        Process x-fern-ignore flag from a referenced parameter object.
+      type: fix
   createdAt: "2026-02-10"
   irVersion: 65
 
