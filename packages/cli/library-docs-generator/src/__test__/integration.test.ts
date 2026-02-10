@@ -4,7 +4,8 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { generate } from "../PythonDocsGenerator";
-import type { NavNode } from "../writers/NavigationBuilder";
+import jsYaml from "js-yaml";
+import { writeNavigation, NAVIGATION_FILENAME, type NavNode } from "../writers/NavigationBuilder";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
     readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
@@ -393,5 +394,54 @@ describe("generate() — edge cases", () => {
         const reportedFiles = [...result.writtenFiles].sort();
 
         expect(reportedFiles).toEqual(filesOnDisk);
+    });
+});
+
+// ===========================================================================
+// writeNavigation — full pipeline integration
+// ===========================================================================
+
+describe("writeNavigation — NeMo fixture integration", () => {
+    let tmpDir: string;
+    const SLUG = "reference/python";
+
+    beforeEach(() => {
+        tmpDir = mkdtempSync(join(tmpdir(), "libdocs-nav-integration-"));
+    });
+
+    afterEach(() => {
+        rmSync(tmpDir, { recursive: true, force: true });
+    });
+
+    it("generate() → writeNavigation() round-trips with correct structure", () => {
+        const ir = buildTestIr();
+        const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
+
+        // Write navigation YAML
+        const navPath = writeNavigation(tmpDir, result.navigation);
+
+        // Read back and parse
+        const raw = readFileSync(navPath, "utf-8");
+        const yamlContent = raw.split("\n").slice(1).join("\n");
+        const parsed = jsYaml.load(yamlContent) as NavNode[];
+
+        // Node count matches
+        expect(parsed).toHaveLength(result.navigation.length);
+
+        // Hierarchy matches: top-level titles should be distillation, package_info, data
+        const titles = parsed.map((n) => n.title);
+        expect(titles).toEqual(["distillation", "package_info", "data"]);
+
+        // All page nodes in navigation correspond to actual MDX files on disk
+        const allNodes = flattenNav(parsed);
+        const pages = allNodes.filter((n): n is NavNode & { type: "page"; pageId: string } => n.type === "page");
+        for (const page of pages) {
+            expect(existsSync(join(tmpDir, page.pageId))).toBe(true);
+        }
+
+        // Slugs use the correct base prefix
+        for (const node of allNodes) {
+            expect(node.slug).toMatch(new RegExp(`^${SLUG}/`));
+        }
     });
 });

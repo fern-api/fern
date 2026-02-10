@@ -6744,10 +6744,16 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: 0.145.4-0ea6e08bf
         version: 0.145.4-0ea6e08bf(typescript@5.9.3)
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.9
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -10707,7 +10713,6 @@ packages:
   '@rolldown/binding-darwin-arm64@1.0.0-rc.2':
     resolution: {integrity: sha512-PYR+PQu1mMmQiiKHN2JiOctvH32Xc/Mf+Su2RSmWtC9BbIqlqsVWjbulnShk0imjRim0IsbkMMCN5vYQwiuqaA==}
     engines: {node: ^20.19.0 || >=22.12.0}
-    cpu: [arm64]
     os: [darwin]
 
   '@rolldown/binding-darwin-x64@1.0.0-rc.1':
