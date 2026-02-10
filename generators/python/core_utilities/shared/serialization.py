@@ -158,12 +158,7 @@ def _convert_mapping(
     direction: typing.Literal["read", "write"],
 ) -> typing.Mapping[str, object]:
     converted_object: typing.Dict[str, object] = {}
-    try:
-        annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
-    except NameError:
-        # The TypedDict contains a circular reference, so
-        # we use the __annotations__ attribute directly.
-        annotations = getattr(expected_type, "__annotations__", {})
+    annotations = _get_typehints(expected_type)
     aliases_to_field_names = _get_alias_to_field_name(annotations)
     for key, value in object_.items():
         if direction == "read" and key in aliases_to_field_names:
@@ -219,13 +214,31 @@ def _remove_annotations(type_: typing.Any) -> typing.Any:
 
 
 def get_alias_to_field_mapping(type_: typing.Any) -> typing.Dict[str, str]:
-    annotations = typing_extensions.get_type_hints(type_, include_extras=True)
+    annotations = _get_typehints(type_)
     return _get_alias_to_field_name(annotations)
 
 
 def get_field_to_alias_mapping(type_: typing.Any) -> typing.Dict[str, str]:
-    annotations = typing_extensions.get_type_hints(type_, include_extras=True)
+    annotations = _get_typehints(type_)
     return _get_field_to_alias_name(annotations)
+
+
+def _get_typehints(type_: typing.Any) -> typing.Dict[str, typing.Any]:
+    try:
+        return typing_extensions.get_type_hints(type_, include_extras=True)
+    except NameError:
+        localns: typing.Dict[str, typing.Any] = {}
+        annotations: typing.Dict[str, typing.Any] = getattr(type_, "__annotations__", {})
+        for _ in range(20):
+            try:
+                return typing_extensions.get_type_hints(type_, localns=localns, include_extras=True)
+            except NameError as inner_e:
+                missing = str(inner_e).split("'")[1] if "'" in str(inner_e) else None
+                if missing and missing not in localns:
+                    localns[missing] = typing.Any
+                else:
+                    break
+        return annotations
 
 
 def _get_alias_to_field_name(

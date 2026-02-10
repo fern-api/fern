@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.4
+  changelogEntry:
+    - summary: |
+        Fix FieldMetadata aliases silently broken on Python 3.10+ when TypedDict has circular
+        TYPE_CHECKING imports. When `get_type_hints` fails due to unresolvable forward references
+        (e.g., circular TypedDict references with `from __future__ import annotations`), the
+        serialization layer now retries with missing names stubbed as `typing.Any`, preserving
+        alias resolution for all resolvable fields.
+      type: fix
+  createdAt: "2026-02-10"
+  irVersion: 63
+
 - version: 4.55.3
   changelogEntry:
     - summary: |
