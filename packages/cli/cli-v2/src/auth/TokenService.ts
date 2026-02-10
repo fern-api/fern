@@ -2,7 +2,7 @@ import { schemas } from "@fern-api/config";
 import jwt from "jsonwebtoken";
 
 import { FernRcAccountManager, FernRcSchemaLoader, LegacyTokenMigrator } from "../config/fern-rc/index.js";
-import { KeyringStore } from "./KeyringStore.js";
+import { CredentialStore } from "./CredentialStore.js";
 
 export namespace TokenService {
     /**
@@ -60,15 +60,15 @@ export namespace TokenService {
  * Automatically handles migration of legacy tokens on first use.
  */
 export class TokenService {
-    private readonly keyring: KeyringStore;
+    private readonly credential: CredentialStore;
     private readonly accountManager: FernRcAccountManager;
     private readonly migrator: LegacyTokenMigrator;
 
     // Tracks whether or not we've already performed the migration.
     private migrationPromise: Promise<void> | null = null;
 
-    constructor({ keyring }: { keyring: KeyringStore }) {
-        this.keyring = keyring;
+    constructor({ credential }: { credential: CredentialStore }) {
+        this.credential = credential;
 
         const loader = new FernRcSchemaLoader();
         this.accountManager = new FernRcAccountManager({ loader });
@@ -80,7 +80,7 @@ export class TokenService {
      */
     public async login(account: string, token: string): Promise<TokenService.LoginResult> {
         await this.ensureMigrated();
-        await this.keyring.store(account, token);
+        await this.credential.store(account, token);
         return this.accountManager.addAccount({ user: account });
     }
 
@@ -89,7 +89,7 @@ export class TokenService {
      */
     public async logout(account: string): Promise<TokenService.LogoutResult> {
         await this.ensureMigrated();
-        await this.keyring.remove(account);
+        await this.credential.remove(account);
         return this.accountManager.removeAccount(account);
     }
 
@@ -100,7 +100,7 @@ export class TokenService {
         await this.ensureMigrated();
         const { accounts } = await this.accountManager.getAllAccounts();
         for (const account of accounts) {
-            await this.keyring.remove(account.user);
+            await this.credential.remove(account.user);
         }
         return this.accountManager.removeAllAccounts();
     }
@@ -114,7 +114,7 @@ export class TokenService {
         if (account == null) {
             return undefined;
         }
-        return this.keyring.get(account.user);
+        return this.credential.get(account.user);
     }
 
     /**
@@ -126,7 +126,7 @@ export class TokenService {
         if (accountInfo == null) {
             return undefined;
         }
-        return this.keyring.get(account);
+        return this.credential.get(account);
     }
 
     /**
@@ -150,7 +150,7 @@ export class TokenService {
 
         const { accounts, active } = await this.accountManager.getAllAccounts();
         for (const account of accounts) {
-            const token = await this.keyring.get(account.user);
+            const token = await this.credential.get(account.user);
             const tokenInfo = token != null ? this.parseTokenInfo(token) : undefined;
 
             result.push({
@@ -174,7 +174,7 @@ export class TokenService {
             return undefined;
         }
 
-        const token = await this.keyring.get(account.user);
+        const token = await this.credential.get(account.user);
         const tokenInfo = token != null ? this.parseTokenInfo(token) : undefined;
 
         return {
@@ -287,7 +287,7 @@ export class TokenService {
     private async performMigration(): Promise<void> {
         const result = await this.migrator.migrate();
         if (result.migrated && result.token != null && result.user != null) {
-            await this.keyring.store(result.user, result.token);
+            await this.credential.store(result.user, result.token);
         }
 
         // TODO: Before we go live with the new CLI, we should

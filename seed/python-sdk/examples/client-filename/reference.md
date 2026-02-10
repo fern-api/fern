@@ -745,18 +745,7 @@ client.service.create_big_entity(
         nodes=[
             Node(
                 name="name",
-                nodes=[
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    ),
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    ),
-                ],
+                nodes=[],
                 trees=[
                     Tree(
                         nodes=[],
@@ -768,18 +757,7 @@ client.service.create_big_entity(
             ),
             Node(
                 name="name",
-                nodes=[
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    ),
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    ),
-                ],
+                nodes=[],
                 trees=[
                     Tree(
                         nodes=[],
@@ -846,18 +824,7 @@ client.service.create_big_entity(
                         contents="contents",
                     ),
                 ],
-                directories=[
-                    Directory(
-                        name="name",
-                        files=[],
-                        directories=[],
-                    ),
-                    Directory(
-                        name="name",
-                        files=[],
-                        directories=[],
-                    ),
-                ],
+                directories=[],
             ),
             Directory(
                 name="name",
@@ -871,18 +838,7 @@ client.service.create_big_entity(
                         contents="contents",
                     ),
                 ],
-                directories=[
-                    Directory(
-                        name="name",
-                        files=[],
-                        directories=[],
-                    ),
-                    Directory(
-                        name="name",
-                        files=[],
-                        directories=[],
-                    ),
-                ],
+                directories=[],
             ),
         ],
     ),

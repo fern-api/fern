@@ -177,12 +177,27 @@ export function parseAsyncAPIV3({
     }
 
     const channelEvents: Record<string, ChannelEvents> = {};
+
+    // Get available channel paths for fallback when operation.channel is null
+    const availableChannelPaths = Object.keys(document.channels ?? {});
+
     for (const [operationId, operation] of Object.entries(document.operations ?? {})) {
         if (getExtension<boolean>(operation, FernAsyncAPIExtension.IGNORE)) {
             continue;
         }
 
-        const channelPath = getChannelPathFromOperation(operation);
+        // Handle operations with null/undefined channel (from overrides)
+        let channelPath: string;
+        if (operation.channel == null || !("$ref" in operation.channel) || operation.channel.$ref == null) {
+            if (availableChannelPaths.length === 1 && availableChannelPaths[0] != null) {
+                channelPath = availableChannelPaths[0];
+            } else {
+                // Skip operations with null channel when there are multiple or no channels
+                continue;
+            }
+        } else {
+            channelPath = getChannelPathFromOperation(operation);
+        }
         if (!channelEvents[channelPath]) {
             channelEvents[channelPath] = { subscribe: [], publish: [], __parsedMessages: [] };
         }
@@ -190,16 +205,30 @@ export function parseAsyncAPIV3({
         // Extract method name from x-fern-sdk-method-name extension
         const methodName = getExtension<string>(operation, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME);
 
-        // Associate the method name with each message from this operation
-        const messagesWithMethodName: MessageWithMethodName[] = operation.messages.map((ref) => ({
-            ref,
-            methodName
-        }));
+        // Skip operations without messages
+        if (!operation.messages || !Array.isArray(operation.messages)) {
+            continue;
+        }
+
+        // Associate the method name with each message from this operation, filtering out invalid references
+        const messagesWithMethodName: MessageWithMethodName[] = operation.messages
+            .filter((ref) => ref != null && ref.$ref != null)
+            .map((ref) => ({
+                ref,
+                methodName
+            }));
+
+        const channelEvent = channelEvents[channelPath];
+        if (channelEvent == null) {
+            throw new Error(
+                `Internal error: channelEvents["${channelPath}"] is unexpectedly undefined for operation ${operationId}`
+            );
+        }
 
         if (operation.action === "receive") {
-            channelEvents[channelPath].subscribe.push(...messagesWithMethodName);
+            channelEvent.subscribe.push(...messagesWithMethodName);
         } else if (operation.action === "send") {
-            channelEvents[channelPath].publish.push(...messagesWithMethodName);
+            channelEvent.publish.push(...messagesWithMethodName);
         } else {
             throw new Error(`Operation ${operationId} has an invalid action: ${operation.action}`);
         }
@@ -442,11 +471,21 @@ export function parseAsyncAPIV3({
     };
 }
 
+function decodeJsonPointerSegment(segment: string): string {
+    return segment.replace(/~1/g, "/").replace(/~0/g, "~");
+}
+
 function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
+    if (!operation.channel) {
+        throw new Error("Operation is missing required 'channel' field");
+    }
+    if (!operation.channel.$ref) {
+        throw new Error("Operation channel is missing required '$ref' field");
+    }
     if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
         throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
     }
-    return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
+    return decodeJsonPointerSegment(operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length));
 }
 
 function convertChannelParameterLocation(location: string): {
