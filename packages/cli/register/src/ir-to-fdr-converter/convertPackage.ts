@@ -489,7 +489,8 @@ function convertIrEnvironments({
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: singleBaseUrlEnvironment.url
+                    baseUrl: singleBaseUrlEnvironment.url,
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         case "multipleBaseUrls":
@@ -504,7 +505,8 @@ function convertIrEnvironments({
                         }
                         return {
                             id: FdrCjsSdk.EnvironmentId(baseUrlId),
-                            baseUrl: endpointBaseUrl
+                            baseUrl: endpointBaseUrl,
+                            audiences: singleBaseUrlEnvironment.audiences
                         };
                     });
                 });
@@ -525,7 +527,8 @@ function convertIrEnvironments({
                 }
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: endpointBaseUrl
+                    baseUrl: endpointBaseUrl,
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         default:
@@ -547,7 +550,8 @@ function convertIrWebSocketEnvironments({
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: replaceProtocol(singleBaseUrlEnvironment.url, "wss")
+                    baseUrl: replaceProtocol(singleBaseUrlEnvironment.url, "wss"),
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         case "multipleBaseUrls":
@@ -563,7 +567,8 @@ function convertIrWebSocketEnvironments({
                 }
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: channelBaseUrl
+                    baseUrl: channelBaseUrl,
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         default:

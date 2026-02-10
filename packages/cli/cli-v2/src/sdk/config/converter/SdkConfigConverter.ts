@@ -4,7 +4,6 @@ import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter.js";
 import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
-import type { DockerImageReference } from "../DockerImageReference.js";
 import { LANGUAGES, type Language } from "../Language.js";
 import type { SdkConfig } from "../SdkConfig.js";
 import type { Target } from "../Target.js";
@@ -155,7 +154,7 @@ export class SdkConfigConverter {
         if (lang == null) {
             return undefined;
         }
-        const resolvedDockerImage = this.resolveDockerImage({ name, lang, version: target.version });
+        const resolvedDockerImage = getImageReferenceFromLanguage({ lang, version: target.version });
         return {
             lang,
             image: resolvedDockerImage.image,
@@ -197,21 +196,5 @@ export class SdkConfigConverter {
             })
         );
         return undefined;
-    }
-
-    private resolveDockerImage({
-        name,
-        lang,
-        version
-    }: {
-        name: string;
-        lang: Language;
-        version: string | undefined;
-    }): DockerImageReference {
-        const dockerImage = getImageReferenceFromLanguage({ lang, version });
-        if (version == null) {
-            this.logger.debug(`Target "${name}" has no version specified, using ${dockerImage}`);
-        }
-        return dockerImage;
     }
 }

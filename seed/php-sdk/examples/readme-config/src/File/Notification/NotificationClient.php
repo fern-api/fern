@@ -3,7 +3,7 @@
 namespace Seed\File\Notification;
 
 use Seed\File\Notification\Service\ServiceClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class NotificationClient

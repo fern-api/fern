@@ -42,14 +42,14 @@ describe("loadFernYml", () => {
     it("finds fern.yml in the current directory", async () => {
         const result = await loadFernYml({ cwd: testDir });
 
-        expect(result.sourced.edition.value).toBe("2026-01-01");
+        expect(result.sourced.edition?.value).toBe("2026-01-01");
         expect(result.sourced.org.value).toBe("acme");
     });
 
     it("crawls up the directory tree to find fern.yml", async () => {
         const result = await loadFernYml({ cwd: nestedDir });
 
-        expect(result.sourced.edition.value).toBe("2026-01-01");
+        expect(result.sourced.edition?.value).toBe("2026-01-01");
         expect(result.sourced.org.value).toBe("acme");
     });
 
@@ -64,8 +64,8 @@ describe("loadFernYml", () => {
     it("preserves source location for top-level values", async () => {
         const result = await loadFernYml({ cwd: testDir });
 
-        expect(result.sourced.edition.$loc.line).toBe(1);
-        expect(result.sourced.edition.$loc.column).toBe(10);
+        expect(result.sourced.edition?.$loc.line).toBe(1);
+        expect(result.sourced.edition?.$loc.column).toBe(10);
         expect(result.sourced.org.$loc.line).toBe(2);
         expect(result.sourced.org.$loc.column).toBe(6);
     });
@@ -140,9 +140,8 @@ cli:
                 expect(error).toBeInstanceOf(ValidationError);
 
                 const validationError = error as ValidationError;
-                expect(validationError.issues.length).toBeGreaterThanOrEqual(2);
-                expect(validationError.issues[0]?.message).toContain("edition is required");
-                expect(validationError.issues[1]?.message).toContain("org is required");
+                expect(validationError.issues.length).toEqual(1);
+                expect(validationError.issues[0]?.message).toContain("org is required");
             }
         });
 

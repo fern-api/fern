@@ -22,6 +22,8 @@ export declare namespace generateTypeReferenceExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+
+        visitedTypes?: Map<string, number>;
     }
 }
 
@@ -31,7 +33,8 @@ export function generateTypeReferenceExample({
     typeDeclarations,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    visitedTypes
 }: generateTypeReferenceExample.Args): ExampleGenerationResult<ExampleTypeReference> {
     if (currentDepth > maxDepth) {
         return { type: "failure", message: `Exceeded max depth of ${maxDepth}` };
@@ -42,14 +45,27 @@ export function generateTypeReferenceExample({
             if (typeDeclaration == null) {
                 return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` };
             }
+            const visited = visitedTypes ?? new Map<string, number>();
+            const count = visited.get(typeReference.typeId) ?? 0;
+            if (count >= 2) {
+                return { type: "failure", message: `Detected recursive type ${typeReference.typeId}` };
+            }
+            visited.set(typeReference.typeId, count + 1);
             const generatedExample = generateTypeDeclarationExample({
                 fieldName,
                 typeDeclaration,
                 typeDeclarations,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes: visited
             });
+            const newCount = (visited.get(typeReference.typeId) ?? 1) - 1;
+            if (newCount <= 0) {
+                visited.delete(typeReference.typeId);
+            } else {
+                visited.set(typeReference.typeId, newCount);
+            }
             if (generatedExample == null) {
                 return { type: "failure", message: "Failed to generate example for type declaration" };
             }
@@ -76,7 +92,8 @@ export function generateTypeReferenceExample({
                 typeDeclarations,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                visitedTypes
             });
             if (generatedExample.type === "failure") {
                 const { example, jsonExample } = generateEmptyContainerExample({

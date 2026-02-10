@@ -4,6 +4,7 @@ namespace Seed\Tests\Core\Json;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Seed\Core\Json\JsonEncoder;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Types\ArrayType;
@@ -136,7 +137,7 @@ class ExhaustiveTest extends TestCase
      */
     public function testExhaustive(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'nested_type' => ['nested_property' => '1995-07-20'],
                 'simple_property' => 'Test String',
@@ -155,7 +156,6 @@ class ExhaustiveTest extends TestCase
                 ],
                 'dates_array' => ['2023-01-01', null, '2023-03-01'] // Testing nullable dates in array>
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = Type::fromJson($expectedJson);

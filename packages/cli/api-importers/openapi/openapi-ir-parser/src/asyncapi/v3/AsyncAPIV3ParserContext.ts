@@ -38,10 +38,19 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         const CHANNELS_PATH_PART = "#/channels/";
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
 
+        if (message == null) {
+            throw new Error("Cannot resolve message reference: message is null or undefined");
+        }
+
+        if (!message.$ref) {
+            throw new Error("Cannot resolve message reference: message.$ref is undefined or empty");
+        }
+
         if (message.$ref.startsWith(CHANNELS_PATH_PART)) {
             const parts = message.$ref.split("/");
-            const channelPath = parts[2];
+            const rawChannelPath = parts[2];
             const messageKey = parts[4];
+            const channelPath = rawChannelPath?.replace(/~1/g, "/").replace(/~0/g, "~");
 
             if (channelPath == null || messageKey == null || !this.document.channels?.[channelPath]) {
                 throw new Error(`Failed to resolve message reference ${message.$ref} in channel ${channelPath}`);

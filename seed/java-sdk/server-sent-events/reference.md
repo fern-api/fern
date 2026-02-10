@@ -44,3 +44,48 @@ client.completions().stream(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.completions.streamWithoutTerminator(request) -> Iterable&amp;lt;StreamedCompletion&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.completions().streamWithoutTerminator(
+    StreamCompletionRequestWithoutTerminator
+        .builder()
+        .query("query")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
