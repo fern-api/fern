@@ -26,6 +26,7 @@ import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import jsYaml from "js-yaml";
 import { camelCase, kebabCase } from "lodash-es";
+
 /** Shape of navigation nodes in _navigation.yml (from library-docs-generator). */
 interface LibraryNavNode {
     type: "page" | "section";
@@ -1601,9 +1602,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.SectionNode | null> {
         const libraryConfig = this.parsedDocsConfig.libraries?.[item.libraryName];
         if (libraryConfig == null) {
-            this.taskContext.logger.warn(
-                `Library '${item.libraryName}' not found in libraries config. Skipping.`
-            );
+            this.taskContext.logger.warn(`Library '${item.libraryName}' not found in libraries config. Skipping.`);
             return null;
         }
 
@@ -1629,12 +1628,25 @@ export class DocsDefinitionResolver {
         });
         const sectionId = this.#idgen.get(`library/${item.libraryName}`);
 
+        // Derive root page from nav nodes' common parent slug (same pattern as section overviews)
+        let overviewPageId: FernNavigation.PageId | undefined;
+        if (navNodes.length > 0) {
+            const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
+            const rootPagePath = join(outputDir, RelativeFilePath.of(`${rootSlug}.mdx`));
+            if (existsSync(rootPagePath)) {
+                const relPath = relative(this.docsWorkspace.absoluteFilePath, rootPagePath);
+                const content = await readFile(rootPagePath, "utf-8");
+                this.parsedDocsConfig.pages[relPath] = content;
+                overviewPageId = FernNavigation.PageId(relPath);
+            }
+        }
+
         const children = await this.convertLibraryNavNodes(navNodes, outputDir, sectionSlug);
 
         return {
             id: sectionId,
             type: "section",
-            overviewPageId: undefined,
+            overviewPageId,
             slug: sectionSlug.get(),
             title: sectionTitle,
             icon: undefined,
@@ -1722,11 +1734,7 @@ export class DocsDefinitionResolver {
                     (child) => !(child.type === "page" && child.slug === node.slug)
                 );
 
-                const sectionChildren = await this.convertLibraryNavNodes(
-                    filteredChildren,
-                    outputDir,
-                    sectionSlug
-                );
+                const sectionChildren = await this.convertLibraryNavNodes(filteredChildren, outputDir, sectionSlug);
 
                 children.push({
                     id: sectionId,

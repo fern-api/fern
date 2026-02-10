@@ -1,11 +1,11 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "fs";
+import jsYaml from "js-yaml";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { MdxFileWriter } from "../writers/MdxFileWriter";
-import jsYaml from "js-yaml";
-import { buildNavigation, writeNavigation, NAVIGATION_FILENAME, type NavNode } from "../writers/NavigationBuilder";
+import { buildNavigation, NAVIGATION_FILENAME, type NavNode, writeNavigation } from "../writers/NavigationBuilder";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
     readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
@@ -488,7 +488,14 @@ describe("writeNavigation", () => {
                 type: "section",
                 title: "utils",
                 slug: "ref/pkg/utils",
-                children: [{ type: "page", title: "helpers", slug: "ref/pkg/utils/helpers", pageId: "ref/pkg/utils/helpers.mdx" }]
+                children: [
+                    {
+                        type: "page",
+                        title: "helpers",
+                        slug: "ref/pkg/utils/helpers",
+                        pageId: "ref/pkg/utils/helpers.mdx"
+                    }
+                ]
             }
         ];
         writeNavigation(tmpDir, nav);
@@ -532,7 +539,14 @@ describe("writeNavigation", () => {
                                 type: "section",
                                 title: "c",
                                 slug: "ref/a/b/c",
-                                children: [{ type: "page", title: "leaf", slug: "ref/a/b/c/leaf", pageId: "ref/a/b/c/leaf.mdx" }]
+                                children: [
+                                    {
+                                        type: "page",
+                                        title: "leaf",
+                                        slug: "ref/a/b/c/leaf",
+                                        pageId: "ref/a/b/c/leaf.mdx"
+                                    }
+                                ]
                             }
                         ]
                     }

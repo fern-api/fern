@@ -11,8 +11,8 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import jsYaml from "js-yaml";
 import { mkdirSync, writeFileSync } from "fs";
+import jsYaml from "js-yaml";
 import { dirname, join } from "path";
 
 // ============================================================================

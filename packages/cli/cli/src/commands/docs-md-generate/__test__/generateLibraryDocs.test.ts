@@ -1,5 +1,5 @@
 import path from "path";
-import { afterEach, describe, expect, it, vi, beforeEach, type Mock } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
 vi.mock("@fern-api/login", () => ({
     askToLogin: vi.fn()
@@ -13,11 +13,11 @@ vi.mock("@fern-api/library-docs-generator", () => ({
     generate: vi.fn()
 }));
 
-// Must import after vi.mock so mocks are in place
-import { askToLogin } from "@fern-api/login";
 import { createFdrService } from "@fern-api/core";
 import { generate } from "@fern-api/library-docs-generator";
-import { generateLibraryDocs, type GenerateLibraryDocsOptions } from "../generateLibraryDocs.js";
+// Must import after vi.mock so mocks are in place
+import { askToLogin } from "@fern-api/login";
+import { type GenerateLibraryDocsOptions, generateLibraryDocs } from "../generateLibraryDocs.js";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -35,12 +35,19 @@ function makeMockCliContext() {
         logs,
         errors,
         failAndThrow: vi.fn(fail),
-        runTask: vi.fn(async (fn: (ctx: { logger: { info: (m: string) => void }; failAndThrow: (...args: unknown[]) => never }) => unknown) => {
-            return fn({
-                logger: { info: (m: string) => logs.push(m) },
-                failAndThrow: fail
-            });
-        }),
+        runTask: vi.fn(
+            async (
+                fn: (ctx: {
+                    logger: { info: (m: string) => void };
+                    failAndThrow: (...args: unknown[]) => never;
+                }) => unknown
+            ) => {
+                return fn({
+                    logger: { info: (m: string) => logs.push(m) },
+                    failAndThrow: fail
+                });
+            }
+        ),
         logger: { info: (m: string) => logs.push(m) }
     };
 }
@@ -79,9 +86,11 @@ function makeMockFdr({
                     getLibraryDocsGenerationStatus: vi.fn().mockImplementation(async () => {
                         return statusResponses[statusCallIndex++];
                     }),
-                    getLibraryDocsResult: vi.fn().mockResolvedValue(
-                        resultResponse ?? { ok: true, body: { resultUrl: "https://s3.example.com/ir.json" } }
-                    )
+                    getLibraryDocsResult: vi
+                        .fn()
+                        .mockResolvedValue(
+                            resultResponse ?? { ok: true, body: { resultUrl: "https://s3.example.com/ir.json" } }
+                        )
                 }
             }
         }
@@ -368,7 +377,9 @@ describe("generateLibraryDocs — FDR flow", () => {
         (createFdrService as Mock).mockReturnValue(mockFdr);
 
         // Mock global fetch for IR download
-        const mockIr = { rootModule: { name: "sdk", path: "sdk", submodules: [], classes: [], functions: [], attributes: [] } };
+        const mockIr = {
+            rootModule: { name: "sdk", path: "sdk", submodules: [], classes: [], functions: [], attributes: [] }
+        };
         const originalFetch = globalThis.fetch;
         globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
@@ -401,7 +412,7 @@ describe("generateLibraryDocs — FDR flow", () => {
         expect(createFdrService).toHaveBeenCalledWith({ token: "tok-123" });
 
         // Verify start was called with correct params
-        const startCall = mockFdr.docs.v2.write.startLibraryDocsGeneration.mock.calls[0]![0];
+        const startCall = mockFdr.docs.v2.write.startLibraryDocsGeneration.mock.calls[0]?.[0];
         expect(startCall.language).toBe("PYTHON");
         expect(startCall.githubUrl).toBe("https://github.com/acme/sdk");
 
@@ -509,7 +520,9 @@ describe("generateLibraryDocs — FDR flow", () => {
         const originalFetch = globalThis.fetch;
         globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
-            json: async () => ({ rootModule: { name: "lib", path: "lib", submodules: [], classes: [], functions: [], attributes: [] } })
+            json: async () => ({
+                rootModule: { name: "lib", path: "lib", submodules: [], classes: [], functions: [], attributes: [] }
+            })
         }) as unknown as typeof fetch;
 
         (generate as Mock).mockReturnValue({
@@ -529,7 +542,7 @@ describe("generateLibraryDocs — FDR flow", () => {
         await advancePolling();
         await promise;
 
-        const startCall = mockFdr.docs.v2.write.startLibraryDocsGeneration.mock.calls[0]![0];
+        const startCall = mockFdr.docs.v2.write.startLibraryDocsGeneration.mock.calls[0]?.[0];
         expect(startCall.language).toBe("CPP");
 
         globalThis.fetch = originalFetch;

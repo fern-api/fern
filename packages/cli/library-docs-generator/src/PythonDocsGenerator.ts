@@ -15,7 +15,7 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { renderModulePage } from "./renderers/ModuleRenderer.js";
 import { buildTypeLinkData, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
-import { buildNavigation, writeNavigation, type NavNode } from "./writers/NavigationBuilder.js";
+import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
 
 // ============================================================================
 // Public Types

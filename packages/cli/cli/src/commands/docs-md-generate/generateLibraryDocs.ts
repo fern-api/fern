@@ -192,9 +192,7 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
             });
 
             context.logger.info(
-                chalk.green(
-                    `Generated ${generateResult.pageCount} pages for '${name}' at ${resolvedOutputPath}`
-                )
+                chalk.green(`Generated ${generateResult.pageCount} pages for '${name}' at ${resolvedOutputPath}`)
             );
         });
     }

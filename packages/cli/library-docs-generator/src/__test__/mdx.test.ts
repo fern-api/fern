@@ -122,7 +122,8 @@ describe("escapeMdxPreservingCodeBlocks", () => {
     });
 
     it("handles multiple indented code blocks in numbered list", () => {
-        const input = "1. First:\n    ```python\n    a = 1\n    ```\n\n2. Second:\n    ```yaml\n    key: val\n    ```\nDone";
+        const input =
+            "1. First:\n    ```python\n    a = 1\n    ```\n\n2. Second:\n    ```yaml\n    key: val\n    ```\nDone";
         const result = escapeMdxPreservingCodeBlocks(input);
         expect(result).toContain("a = 1");
         expect(result).toContain("key: val");

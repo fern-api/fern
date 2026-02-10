@@ -5,4 +5,10 @@
  */
 
 export { type GenerateOptions, type GenerateResult, generate } from "./PythonDocsGenerator.js";
-export { writeNavigation, NAVIGATION_FILENAME, type NavNode, type NavPageNode, type NavSectionNode } from "./writers/NavigationBuilder.js";
+export {
+    NAVIGATION_FILENAME,
+    type NavNode,
+    type NavPageNode,
+    type NavSectionNode,
+    writeNavigation
+} from "./writers/NavigationBuilder.js";

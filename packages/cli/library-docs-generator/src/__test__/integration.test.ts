@@ -1,10 +1,10 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "fs";
+import jsYaml from "js-yaml";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { generate } from "../PythonDocsGenerator";
-import jsYaml from "js-yaml";
 import { NAVIGATION_FILENAME, type NavNode } from "../writers/NavigationBuilder";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
