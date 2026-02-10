@@ -5,7 +5,7 @@ import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { generate } from "../PythonDocsGenerator";
 import jsYaml from "js-yaml";
-import { writeNavigation, NAVIGATION_FILENAME, type NavNode } from "../writers/NavigationBuilder";
+import { NAVIGATION_FILENAME, type NavNode } from "../writers/NavigationBuilder";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
     readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
@@ -139,9 +139,10 @@ describe("generate() — full pipeline integration", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        // 5 pages: nemo_rl, distillation, package_info, data, aime
+        // 5 MDX pages: nemo_rl, distillation, package_info, data, aime
         expect(result.pageCount).toBe(5);
-        expect(result.writtenFiles).toHaveLength(5);
+        // writtenFiles includes MDX pages + _navigation.yml
+        expect(result.writtenFiles).toHaveLength(6);
     });
 
     it("writes all files to the correct paths on disk", () => {
@@ -180,7 +181,8 @@ describe("generate() — full pipeline integration", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        for (const filePath of result.writtenFiles) {
+        const mdxFiles = result.writtenFiles.filter((f) => f.endsWith(".mdx"));
+        for (const filePath of mdxFiles) {
             const content = readFileSync(filePath, "utf-8");
             expect(content).toMatch(/^---\n/);
             expect(content).toMatch(/slug:/);
@@ -386,22 +388,30 @@ describe("generate() — edge cases", () => {
         expect(existsSync(join(tmpDir, "ref/a/b/c/deep.mdx"))).toBe(true);
     });
 
-    it("written files match what exists on disk", () => {
+    it("written MDX files match what exists on disk", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Test" });
 
-        const filesOnDisk = collectMdxFiles(tmpDir).sort();
-        const reportedFiles = [...result.writtenFiles].sort();
+        const mdxOnDisk = collectMdxFiles(tmpDir).sort();
+        const reportedMdx = result.writtenFiles.filter((f) => f.endsWith(".mdx")).sort();
 
-        expect(reportedFiles).toEqual(filesOnDisk);
+        expect(reportedMdx).toEqual(mdxOnDisk);
+    });
+
+    it("navigationFilePath points to _navigation.yml on disk", () => {
+        const ir = buildTestIr();
+        const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Test" });
+
+        expect(result.navigationFilePath).toContain(NAVIGATION_FILENAME);
+        expect(existsSync(result.navigationFilePath)).toBe(true);
     });
 });
 
 // ===========================================================================
-// writeNavigation — full pipeline integration
+// Navigation YAML — auto-written by generate()
 // ===========================================================================
 
-describe("writeNavigation — NeMo fixture integration", () => {
+describe("generate() writes _navigation.yml automatically", () => {
     let tmpDir: string;
     const SLUG = "reference/python";
 
@@ -413,15 +423,15 @@ describe("writeNavigation — NeMo fixture integration", () => {
         rmSync(tmpDir, { recursive: true, force: true });
     });
 
-    it("generate() → writeNavigation() round-trips with correct structure", () => {
+    it("navigation YAML is written and round-trips with correct structure", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        // Write navigation YAML
-        const navPath = writeNavigation(tmpDir, result.navigation);
+        // _navigation.yml should already exist (written by generate())
+        expect(existsSync(result.navigationFilePath)).toBe(true);
 
         // Read back and parse
-        const raw = readFileSync(navPath, "utf-8");
+        const raw = readFileSync(result.navigationFilePath, "utf-8");
         const yamlContent = raw.split("\n").slice(1).join("\n");
         const parsed = jsYaml.load(yamlContent) as NavNode[];
 

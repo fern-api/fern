@@ -4594,6 +4594,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/library-docs-generator':
+        specifier: workspace:*
+        version: link:../library-docs-generator
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../generation/local-generation/local-workspace-runner

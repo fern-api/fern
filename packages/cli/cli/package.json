@@ -78,6 +78,7 @@
     "@fern-api/ir-to-jsonschema": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
+    "@fern-api/library-docs-generator": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",

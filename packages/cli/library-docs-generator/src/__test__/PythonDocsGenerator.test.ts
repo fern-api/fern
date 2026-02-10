@@ -116,7 +116,8 @@ describe("generate()", () => {
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Empty" });
 
         expect(result.pageCount).toBe(0);
-        expect(result.writtenFiles).toEqual([]);
+        // Only the _navigation.yml is written (no MDX pages)
+        expect(result.writtenFiles.filter((f) => f.endsWith(".mdx"))).toEqual([]);
         expect(result.navigation).toEqual([]);
     });
 
@@ -204,7 +205,8 @@ describe("generate()", () => {
 
         const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
 
-        for (const filePath of result.writtenFiles) {
+        const mdxFiles = result.writtenFiles.filter((f) => f.endsWith(".mdx"));
+        for (const filePath of mdxFiles) {
             const content = readFileSync(filePath, "utf-8");
             expect(content).toMatch(/^---\n/);
             expect(content).toMatch(/\nslug:/);
