@@ -499,7 +499,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -734,11 +735,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -833,7 +837,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -928,7 +933,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -973,7 +979,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1295,7 +1302,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1340,7 +1348,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1385,7 +1394,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1591,7 +1601,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1636,7 +1647,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1681,7 +1693,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1776,7 +1789,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1821,7 +1835,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1866,7 +1881,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -1961,7 +1977,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2006,7 +2023,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2101,7 +2119,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2146,7 +2165,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2241,7 +2261,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2286,7 +2307,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2331,7 +2353,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2426,7 +2449,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2471,7 +2495,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2516,7 +2541,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2611,7 +2637,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2656,7 +2683,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2701,7 +2729,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2746,7 +2775,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2841,7 +2871,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2886,7 +2917,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -2981,7 +3013,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -3026,7 +3059,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -3071,7 +3105,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -3783,7 +3818,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -3828,7 +3864,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -3873,7 +3910,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -3968,7 +4006,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4013,7 +4052,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4108,7 +4148,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4153,7 +4194,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4248,7 +4290,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4293,7 +4336,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4338,7 +4382,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4383,7 +4428,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4428,7 +4474,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4473,7 +4520,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4518,7 +4566,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4563,7 +4612,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4608,7 +4658,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4653,7 +4704,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4748,7 +4800,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4793,7 +4846,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4838,7 +4892,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4883,7 +4938,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4928,7 +4984,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -4973,7 +5030,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5068,7 +5126,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5113,7 +5172,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5158,7 +5218,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5435,7 +5496,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5530,7 +5592,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5625,7 +5688,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5720,7 +5784,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5815,7 +5880,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -5910,7 +5976,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -6100,7 +6167,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -6663,7 +6731,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -6708,7 +6777,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -7811,7 +7881,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -7856,7 +7927,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -7901,7 +7973,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -7946,7 +8019,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -7991,7 +8065,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -8036,7 +8111,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -10889,7 +10965,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -10934,7 +11011,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -11568,7 +11646,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -11663,7 +11742,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -11708,7 +11788,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -12423,7 +12504,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -12468,7 +12550,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -12775,7 +12858,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -12820,7 +12904,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -13402,7 +13487,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -13447,7 +13533,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -13500,11 +13587,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -13557,11 +13647,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -13614,11 +13707,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -14115,7 +14211,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -14276,7 +14373,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -14321,7 +14419,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -14482,7 +14581,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -14527,7 +14627,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -14622,7 +14723,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -15301,11 +15403,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -15400,7 +15505,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -15445,7 +15551,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -15490,7 +15597,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -16750,7 +16858,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -16795,7 +16904,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -16972,7 +17082,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17017,7 +17128,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17062,7 +17174,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17107,7 +17220,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17152,7 +17266,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17358,7 +17473,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17519,7 +17635,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17564,7 +17681,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17659,7 +17777,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -17938,11 +18057,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18037,7 +18159,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18082,7 +18205,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18243,7 +18367,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18484,7 +18609,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18529,7 +18655,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18574,7 +18701,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18948,7 +19076,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -18993,7 +19122,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19242,7 +19372,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19512,7 +19643,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19557,7 +19689,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19602,7 +19735,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19647,7 +19781,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19692,7 +19827,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19737,7 +19873,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -19782,7 +19919,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -20513,7 +20651,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -20740,7 +20879,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -24018,7 +24158,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -24238,7 +24379,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -24283,7 +24425,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -24328,7 +24471,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -24373,7 +24517,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -24456,7 +24601,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26279,11 +26425,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26336,11 +26485,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26385,7 +26537,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26430,7 +26583,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26483,11 +26637,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26843,11 +27000,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26892,7 +27052,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26937,7 +27098,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -26982,7 +27144,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -28441,7 +28604,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -28486,7 +28650,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -28581,7 +28746,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -28626,7 +28792,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -32406,7 +32573,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -32451,7 +32619,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -33641,7 +33810,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -33686,7 +33856,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -33731,7 +33902,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -33776,7 +33948,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -33821,7 +33994,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -35344,7 +35518,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -35389,7 +35564,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -35580,7 +35756,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -36025,7 +36202,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -36522,11 +36700,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -36687,7 +36868,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -36732,7 +36914,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -36777,7 +36960,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -38431,7 +38615,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -40702,7 +40887,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -40879,7 +41065,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -41186,7 +41373,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -41231,7 +41419,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -41474,7 +41663,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -41519,7 +41709,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -42698,7 +42889,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -42743,7 +42935,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -43608,7 +43801,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44102,7 +44296,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44263,7 +44458,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44308,7 +44504,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44533,7 +44730,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44578,7 +44776,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44689,7 +44888,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44734,7 +44934,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44779,7 +44980,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -44890,7 +45092,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -45212,7 +45415,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -45432,7 +45636,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -45477,7 +45682,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -45816,7 +46022,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -45861,7 +46068,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -45906,7 +46114,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46265,7 +46474,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46310,7 +46520,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46405,7 +46616,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46450,7 +46662,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46675,7 +46888,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46770,7 +46984,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46815,7 +47030,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -46860,7 +47076,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -47267,7 +47484,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -47312,7 +47530,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -49564,7 +49783,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -49609,7 +49829,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -49784,7 +50005,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -50325,7 +50547,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -50370,7 +50593,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -50415,7 +50639,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -50526,7 +50751,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -51197,7 +51423,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -51242,7 +51469,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -51667,7 +51895,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -52076,7 +52305,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -52601,11 +52831,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -52700,7 +52933,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -52976,7 +53210,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -53606,7 +53841,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -55493,7 +55729,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -55980,7 +56217,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -57038,7 +57276,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -57133,7 +57372,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -57780,7 +58020,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -58057,7 +58298,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -58683,7 +58925,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -58968,11 +59211,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -59249,7 +59495,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -59302,11 +59549,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -59458,11 +59708,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -59684,7 +59937,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -60857,7 +61111,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -61938,7 +62193,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -62448,7 +62704,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -63444,7 +63701,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -63929,7 +64187,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -63974,7 +64233,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -64114,7 +64374,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -64275,7 +64536,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -64684,7 +64946,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -64729,7 +64992,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -64774,7 +65038,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -65299,7 +65564,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -65640,7 +65906,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -65815,7 +66082,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -66187,7 +66455,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -66348,7 +66617,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -66443,7 +66713,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -66686,7 +66957,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -66776,7 +67048,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -67067,7 +67340,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -67112,7 +67386,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -67890,7 +68165,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -67935,7 +68211,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -68308,7 +68585,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -69083,7 +69361,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -69302,11 +69581,14 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                               "validation": null
                             }
                           }
-                        }
+                        },
+                        "validation": null
                       }
-                    }
+                    },
+                    "validation": null
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -69640,7 +69922,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -69735,7 +70018,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -69830,7 +70114,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -70846,7 +71131,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -70957,7 +71243,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -72033,7 +72320,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -72194,7 +72482,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -72239,7 +72528,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -72665,7 +72955,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -72710,7 +73001,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -72921,7 +73213,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -72966,7 +73259,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -73061,7 +73355,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -73156,7 +73451,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -75227,7 +75523,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -76988,7 +77285,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -77033,7 +77331,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -77128,7 +77427,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -77173,7 +77473,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -80116,7 +80417,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -80161,7 +80463,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -80256,7 +80559,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -80301,7 +80605,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -80732,7 +81037,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -80777,7 +81083,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -81004,7 +81311,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
@@ -81049,7 +81357,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                       "validation": null
                     }
                   }
-                }
+                },
+                "validation": null
               }
             },
             "propertyAccess": null,
