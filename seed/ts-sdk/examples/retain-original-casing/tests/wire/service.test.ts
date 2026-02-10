@@ -170,22 +170,8 @@ describe("ServiceClient", () => {
             node: {
                 name: "name",
                 nodes: [
-                    {
-                        name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
-                        trees: [{ nodes: [] }, { nodes: [] }],
-                    },
-                    {
-                        name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
-                        trees: [{ nodes: [] }, { nodes: [] }],
-                    },
+                    { name: "name", nodes: [], trees: [{ nodes: [] }, { nodes: [] }] },
+                    { name: "name", nodes: [], trees: [{ nodes: [] }, { nodes: [] }] },
                 ],
                 trees: [
                     {
@@ -215,10 +201,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [],
                     },
                     {
                         name: "name",
@@ -226,10 +209,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [],
                     },
                 ],
             },
@@ -327,18 +307,7 @@ describe("ServiceClient", () => {
                 nodes: [
                     {
                         name: "name",
-                        nodes: [
-                            {
-                                name: "name",
-                                nodes: [],
-                                trees: [],
-                            },
-                            {
-                                name: "name",
-                                nodes: [],
-                                trees: [],
-                            },
-                        ],
+                        nodes: [],
                         trees: [
                             {
                                 nodes: [],
@@ -350,18 +319,7 @@ describe("ServiceClient", () => {
                     },
                     {
                         name: "name",
-                        nodes: [
-                            {
-                                name: "name",
-                                nodes: [],
-                                trees: [],
-                            },
-                            {
-                                name: "name",
-                                nodes: [],
-                                trees: [],
-                            },
-                        ],
+                        nodes: [],
                         trees: [
                             {
                                 nodes: [],
@@ -428,18 +386,7 @@ describe("ServiceClient", () => {
                                 contents: "contents",
                             },
                         ],
-                        directories: [
-                            {
-                                name: "name",
-                                files: [],
-                                directories: [],
-                            },
-                            {
-                                name: "name",
-                                files: [],
-                                directories: [],
-                            },
-                        ],
+                        directories: [],
                     },
                     {
                         name: "name",
@@ -453,18 +400,7 @@ describe("ServiceClient", () => {
                                 contents: "contents",
                             },
                         ],
-                        directories: [
-                            {
-                                name: "name",
-                                files: [],
-                                directories: [],
-                            },
-                            {
-                                name: "name",
-                                files: [],
-                                directories: [],
-                            },
-                        ],
+                        directories: [],
                     },
                 ],
             },

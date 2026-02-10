@@ -461,6 +461,17 @@ export declare namespace ParsedApiReferenceLayoutItem {
         playground: PlaygroundSettings | undefined;
     }
 
+    export interface Operation
+        extends CjsFdrSdk.navigation.v1.WithPermissions,
+            CjsFdrSdk.navigation.latest.WithFeatureFlags {
+        type: "operation";
+        operation: string; // GraphQL operation locator (e.g., "QUERY account" or "QUERY namespace.createUser")
+        title: string | undefined;
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        availability: Availability | undefined;
+    }
+
     export interface Item {
         type: "item";
         value: string; // this could be either an endpoint or subpackage.
@@ -472,6 +483,7 @@ export type ParsedApiReferenceLayoutItem =
     | ParsedApiReferenceLayoutItem.Section
     | ParsedApiReferenceLayoutItem.Package
     | ParsedApiReferenceLayoutItem.Endpoint
+    | ParsedApiReferenceLayoutItem.Operation
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;
 

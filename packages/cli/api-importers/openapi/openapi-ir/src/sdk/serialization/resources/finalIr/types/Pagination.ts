@@ -6,6 +6,8 @@ import type * as serializers from "../../../index.js";
 import { CursorPagination } from "./CursorPagination.js";
 import { CustomPagination } from "./CustomPagination.js";
 import { OffsetPagination } from "./OffsetPagination.js";
+import { PathPagination } from "./PathPagination.js";
+import { UriPagination } from "./UriPagination.js";
 
 export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, FernOpenapiIr.Pagination> =
     core.serialization
@@ -13,6 +15,8 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
             cursor: CursorPagination,
             offset: OffsetPagination,
             custom: CustomPagination,
+            uri: UriPagination,
+            path: PathPagination,
         })
         .transform<FernOpenapiIr.Pagination>({
             transform: (value) => {
@@ -23,6 +27,10 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
                         return FernOpenapiIr.Pagination.offset(value);
                     case "custom":
                         return FernOpenapiIr.Pagination.custom(value);
+                    case "uri":
+                        return FernOpenapiIr.Pagination.uri(value);
+                    case "path":
+                        return FernOpenapiIr.Pagination.path(value);
                     default:
                         return value as FernOpenapiIr.Pagination;
                 }
@@ -31,7 +39,7 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
         });
 
 export declare namespace Pagination {
-    export type Raw = Pagination.Cursor | Pagination.Offset | Pagination.Custom;
+    export type Raw = Pagination.Cursor | Pagination.Offset | Pagination.Custom | Pagination.Uri | Pagination.Path;
 
     export interface Cursor extends CursorPagination.Raw {
         type: "cursor";
@@ -43,5 +51,13 @@ export declare namespace Pagination {
 
     export interface Custom extends CustomPagination.Raw {
         type: "custom";
+    }
+
+    export interface Uri extends UriPagination.Raw {
+        type: "uri";
+    }
+
+    export interface Path extends PathPagination.Raw {
+        type: "path";
     }
 }

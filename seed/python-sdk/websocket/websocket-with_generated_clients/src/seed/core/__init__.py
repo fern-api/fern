@@ -27,6 +27,7 @@ if typing.TYPE_CHECKING:
     from .remove_none_from_dict import remove_none_from_dict
     from .request_options import RequestOptions
     from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
+    from .websocket_compat import InvalidWebSocketStatus, get_status_code
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiError": ".api_error",
     "AsyncClientWrapper": ".client_wrapper",
@@ -40,6 +41,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HttpClient": ".http_client",
     "HttpResponse": ".http_response",
     "IS_PYDANTIC_V2": ".pydantic_utilities",
+    "InvalidWebSocketStatus": ".websocket_compat",
     "RequestOptions": ".request_options",
     "SyncClientWrapper": ".client_wrapper",
     "UniversalBaseModel": ".pydantic_utilities",
@@ -47,6 +49,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
     "encode_query": ".query_encoder",
+    "get_status_code": ".websocket_compat",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
     "remove_none_from_dict": ".remove_none_from_dict",
@@ -92,6 +95,7 @@ __all__ = [
     "HttpClient",
     "HttpResponse",
     "IS_PYDANTIC_V2",
+    "InvalidWebSocketStatus",
     "RequestOptions",
     "SyncClientWrapper",
     "UniversalBaseModel",
@@ -99,6 +103,7 @@ __all__ = [
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
     "encode_query",
+    "get_status_code",
     "jsonable_encoder",
     "parse_obj_as",
     "remove_none_from_dict",
