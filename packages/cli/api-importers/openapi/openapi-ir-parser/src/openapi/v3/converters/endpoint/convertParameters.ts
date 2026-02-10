@@ -52,8 +52,6 @@ export function convertParameters({
             ? context.resolveParameterReference(parameter)
             : parameter;
 
-        // Avoid direct access to 'type' that may be missing on ReferenceObject
-        // (schemaType logic removed because only used for logging)
         const shouldIgnore =
             getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE) ??
             getExtension<boolean>(resolvedParameter, FernOpenAPIExtension.IGNORE);
