@@ -5627,6 +5627,9 @@ importers:
       heap-js:
         specifier: ^2.6.0
         version: 2.7.1
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.23
@@ -5643,6 +5646,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.9
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
