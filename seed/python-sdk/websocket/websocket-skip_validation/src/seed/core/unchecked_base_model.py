@@ -227,16 +227,16 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
         for metadata in annotated_metadata:
             if isinstance(metadata, UnionMetadata):
                 try:
-                    discriminant_value = None
-                    try:
-                        discriminant_value = getattr(object_, metadata.discriminant)
-                    except:
-                        discriminant_value = object_[metadata.discriminant]
+                    # Cast to the correct type, based on the discriminant
                     for inner_type in get_args(union_type):
-                        if inner_type.__fields__[metadata.discriminant].default == discriminant_value:
+                        try:
+                            objects_discriminant = getattr(object_, metadata.discriminant)
+                        except:
+                            objects_discriminant = object_[metadata.discriminant]
+                        if inner_type.__fields__[metadata.discriminant].default == objects_discriminant:
                             return construct_type(object_=object_, type_=inner_type)
-                    return object_
                 except Exception:
+                    # Allow to fall through to our regular union handling
                     pass
     return _convert_undiscriminated_union_type(union_type, object_)
 
