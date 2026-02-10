@@ -6739,6 +6739,28 @@ importers:
         specifier: ^4.0.8
         version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
 
+  packages/cli/library-docs-generator:
+    dependencies:
+      '@fern-api/fdr-sdk':
+        specifier: 0.145.4-0ea6e08bf
+        version: 0.145.4-0ea6e08bf(typescript@5.9.3)
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^4.0.8
+        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
+
   packages/cli/logger:
     dependencies:
       '@fern-api/core-utils':
