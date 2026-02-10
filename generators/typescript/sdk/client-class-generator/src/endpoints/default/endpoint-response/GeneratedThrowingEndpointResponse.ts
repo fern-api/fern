@@ -669,7 +669,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
                     type: "sse" as const,
-                    streamTerminator: ts.factory.createStringLiteral(sse.terminator ?? "[DONE]"),
+                    ...(sse.terminator != null
+                        ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
+                        : {}),
                     discriminated: this.isEventLevelDiscrimination(sse.payload, context)
                 }),
                 json: (json) => ({

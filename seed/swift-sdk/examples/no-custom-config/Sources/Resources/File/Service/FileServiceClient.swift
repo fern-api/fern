@@ -11,10 +11,13 @@ public final class FileServiceClient: Sendable {
     ///
     /// - Parameter filename: This is a filename
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getFile(filename: String, requestOptions: RequestOptions? = nil) async throws -> File {
+    public func getFile(filename: String, xFileApiVersion: String, requestOptions: RequestOptions? = nil) async throws -> File {
         return try await httpClient.performRequest(
             method: .get,
             path: "/file/\(filename)",
+            headers: [
+                "X-File-API-Version": xFileApiVersion
+            ],
             requestOptions: requestOptions,
             responseType: File.self
         )

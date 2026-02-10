@@ -44,6 +44,7 @@
           "description": "Demonstrates oneOf with discriminator mapping.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },

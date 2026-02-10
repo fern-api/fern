@@ -7,7 +7,7 @@ use Seed\InlinedRequest\InlinedRequestClient;
 use Seed\MultipartForm\MultipartFormClient;
 use Seed\PathParam\PathParamClient;
 use Seed\QueryParam\QueryParamClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

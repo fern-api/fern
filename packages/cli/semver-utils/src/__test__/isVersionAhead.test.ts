@@ -43,6 +43,17 @@ describe("isVersionAhead", () => {
         ${"0.0.190-beta.1"}         | ${"0.0.190-beta.0"}         | ${true}
         ${"0.0.190-beta.0"}         | ${"0.0.190-alpha.0"}        | ${true}
         ${"0.0.190-alpha.0"}        | ${"0.0.190-beta.0"}         | ${false}
+        ${"latest"}                 | ${"0.0.191"}                | ${true}
+        ${"latest"}                 | ${"0.0.191-rc0"}            | ${true}
+        ${"latest"}                 | ${"0.0.191-4-abc"}          | ${true}
+        ${"latest"}                 | ${"0.0.191-beta.0"}         | ${true}
+        ${"latest"}                 | ${"0.0.191-alpha.0"}        | ${true}
+        ${"0.0.191"}                | ${"latest"}                 | ${false}
+        ${"0.0.191-rc0"}            | ${"latest"}                 | ${false}
+        ${"0.0.191-4-abc"}          | ${"latest"}                 | ${false}
+        ${"0.0.191-beta.0"}         | ${"latest"}                 | ${false}
+        ${"0.0.191-alpha.0"}        | ${"latest"}                 | ${false}
+        ${"latest"}                 | ${"latest"}                 | ${false}
     `("$a vs. $b", ({ a, b, expected }) => {
         expect(isVersionAhead(a, b)).toBe(expected);
     });

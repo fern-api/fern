@@ -69,3 +69,40 @@ func (c *Client) Stream(
 		},
 	)
 }
+
+func (c *Client) StreamWithoutTerminator(
+	ctx context.Context,
+	request *sse.StreamCompletionRequestWithoutTerminator,
+	opts ...option.RequestOption,
+) (*core.Stream[sse.StreamedCompletion], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream-no-terminator"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Prefix:          internal.DefaultSSEDataPrefix,
+			Terminator:      internal.DefaultSSETerminator,
+			Format:          core.StreamFormatSSE,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+		},
+	)
+}
