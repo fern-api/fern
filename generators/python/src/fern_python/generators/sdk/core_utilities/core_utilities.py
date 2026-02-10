@@ -123,6 +123,17 @@ class CoreUtilities:
         )
         self._copy_file_to_project(
             project=project,
+            relative_filepath_on_disk="logging.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="logging"),
+            ),
+            exports={"Logger", "LogConfig", "LogLevel", "create_logger"}
+            if not self._exclude_types_from_init_exports
+            else set(),
+        )
+        self._copy_file_to_project(
+            project=project,
             relative_filepath_on_disk="http_client.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
@@ -605,6 +616,7 @@ class CoreUtilities:
         base_timeout: AST.Expression,
         is_async: bool,
         async_base_headers: Optional[AST.Expression] = None,
+        logging: Optional[AST.Expression] = None,
     ) -> AST.Expression:
         func_args = [
             ("httpx_client", base_client),
@@ -615,6 +627,8 @@ class CoreUtilities:
             func_args.append(("base_url", base_url))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))
+        if logging is not None:
+            func_args.append(("logging", logging))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
@@ -934,3 +948,21 @@ class CoreUtilities:
     def get_import_paths(self) -> Optional[list[str]]:
         """Get the list of import paths for auto-loading user-defined files."""
         return self._import_paths
+
+    def get_reference_to_log_config(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "logging"),
+                named_import="LogConfig",
+            ),
+        )
+
+    def get_reference_to_logger(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "logging"),
+                named_import="Logger",
+            ),
+        )
