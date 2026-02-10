@@ -2440,7 +2440,7 @@
             }
           ]
         },
-        "service-name": {
+        "name": {
           "oneOf": [
             {
               "type": "string"

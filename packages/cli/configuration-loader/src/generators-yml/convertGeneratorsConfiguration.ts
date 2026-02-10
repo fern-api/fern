@@ -458,10 +458,10 @@ async function parseApiConfigurationV2Schema({
         } else {
             continue;
         }
-        // Handle namespace for most specs, but use "service-name" for GraphQL specs
+        // Handle namespace for most specs, but use "name" for GraphQL specs
         const namespaceValue =
-            generatorsYml.isGraphQLSpecSchema(spec) && "service-name" in spec
-                ? spec["service-name"]
+            generatorsYml.isGraphQLSpecSchema(spec) && "name" in spec
+                ? spec.name
                 : "namespace" in spec
                   ? spec.namespace
                   : undefined;
