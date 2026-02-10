@@ -261,6 +261,8 @@ types:
       cursor: CursorPagination
       offset: OffsetPagination
       custom: CustomPagination
+      uri: UriPagination
+      path: PathPagination
 
   CursorPagination:
     properties:
@@ -274,6 +276,22 @@ types:
       results: string
       step: optional<string>
       hasNextPage: optional<string>
+
+  UriPagination:
+    docs: |
+      Pagination where the next URI is contained in a response property.
+      The next URI is the complete URI to fetch the next page.
+    properties:
+      nextUri: string
+      results: string
+
+  PathPagination:
+    docs: |
+      Pagination where the next path is contained in a response property.
+      The next path is everything after the base hostname and port.
+    properties:
+      nextPath: string
+      results: string
 
   CustomPagination:
     docs: |

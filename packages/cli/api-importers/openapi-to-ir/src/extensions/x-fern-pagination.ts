@@ -5,7 +5,9 @@ import { z } from "zod";
 import {
     CursorPaginationExtensionSchema,
     OffsetPaginationExtensionSchema,
-    PaginationExtensionSchema
+    PaginationExtensionSchema,
+    PathPaginationExtensionSchema,
+    UriPaginationExtensionSchema
 } from "../schemas/PaginationSchema.js";
 
 const REQUEST_PREFIX = "$request.";
@@ -30,6 +32,16 @@ export declare namespace FernPaginationExtension {
               results: string;
               step: string | undefined;
               hasNextPage: string | undefined;
+          }
+        | {
+              type: "uri";
+              nextUri: string;
+              results: string;
+          }
+        | {
+              type: "path";
+              nextPath: string;
+              results: string;
           };
 }
 
@@ -104,7 +116,11 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
     private convertPaginationConfig({
         config
     }: {
-        config: z.infer<typeof CursorPaginationExtensionSchema> | z.infer<typeof OffsetPaginationExtensionSchema>;
+        config:
+            | z.infer<typeof CursorPaginationExtensionSchema>
+            | z.infer<typeof OffsetPaginationExtensionSchema>
+            | z.infer<typeof UriPaginationExtensionSchema>
+            | z.infer<typeof PathPaginationExtensionSchema>;
     }): FernPaginationExtension.Output {
         const maybeCursorPagination = config as z.infer<typeof CursorPaginationExtensionSchema>;
         if ("cursor" in maybeCursorPagination) {
@@ -116,6 +132,24 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
                     RESPONSE_PREFIX
                 ),
                 results: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.results, RESPONSE_PREFIX)
+            };
+        }
+
+        const maybeUriPagination = config as z.infer<typeof UriPaginationExtensionSchema>;
+        if ("next_uri" in maybeUriPagination) {
+            return {
+                type: "uri",
+                nextUri: AbstractConverterContext.maybeTrimPrefix(maybeUriPagination.next_uri, RESPONSE_PREFIX),
+                results: AbstractConverterContext.maybeTrimPrefix(maybeUriPagination.results, RESPONSE_PREFIX)
+            };
+        }
+
+        const maybePathPagination = config as z.infer<typeof PathPaginationExtensionSchema>;
+        if ("next_path" in maybePathPagination) {
+            return {
+                type: "path",
+                nextPath: AbstractConverterContext.maybeTrimPrefix(maybePathPagination.next_path, RESPONSE_PREFIX),
+                results: AbstractConverterContext.maybeTrimPrefix(maybePathPagination.results, RESPONSE_PREFIX)
             };
         }
 
