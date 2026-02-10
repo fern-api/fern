@@ -326,18 +326,7 @@ class ServiceClient:
                 nodes=[
                     Node(
                         name="name",
-                        nodes=[
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                        ],
+                        nodes=[],
                         trees=[
                             Tree(
                                 nodes=[],
@@ -349,18 +338,7 @@ class ServiceClient:
                     ),
                     Node(
                         name="name",
-                        nodes=[
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                        ],
+                        nodes=[],
                         trees=[
                             Tree(
                                 nodes=[],
@@ -427,18 +405,7 @@ class ServiceClient:
                                 contents="contents",
                             ),
                         ],
-                        directories=[
-                            Directory(
-                                name="name",
-                                files=[],
-                                directories=[],
-                            ),
-                            Directory(
-                                name="name",
-                                files=[],
-                                directories=[],
-                            ),
-                        ],
+                        directories=[],
                     ),
                     Directory(
                         name="name",
@@ -452,18 +419,7 @@ class ServiceClient:
                                 contents="contents",
                             ),
                         ],
-                        directories=[
-                            Directory(
-                                name="name",
-                                files=[],
-                                directories=[],
-                            ),
-                            Directory(
-                                name="name",
-                                files=[],
-                                directories=[],
-                            ),
-                        ],
+                        directories=[],
                     ),
                 ],
             ),
@@ -857,18 +813,7 @@ class AsyncServiceClient:
                     nodes=[
                         Node(
                             name="name",
-                            nodes=[
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                            ],
+                            nodes=[],
                             trees=[
                                 Tree(
                                     nodes=[],
@@ -880,18 +825,7 @@ class AsyncServiceClient:
                         ),
                         Node(
                             name="name",
-                            nodes=[
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                            ],
+                            nodes=[],
                             trees=[
                                 Tree(
                                     nodes=[],
@@ -958,18 +892,7 @@ class AsyncServiceClient:
                                     contents="contents",
                                 ),
                             ],
-                            directories=[
-                                Directory(
-                                    name="name",
-                                    files=[],
-                                    directories=[],
-                                ),
-                                Directory(
-                                    name="name",
-                                    files=[],
-                                    directories=[],
-                                ),
-                            ],
+                            directories=[],
                         ),
                         Directory(
                             name="name",
@@ -983,18 +906,7 @@ class AsyncServiceClient:
                                     contents="contents",
                                 ),
                             ],
-                            directories=[
-                                Directory(
-                                    name="name",
-                                    files=[],
-                                    directories=[],
-                                ),
-                                Directory(
-                                    name="name",
-                                    files=[],
-                                    directories=[],
-                                ),
-                            ],
+                            directories=[],
                         ),
                     ],
                 ),

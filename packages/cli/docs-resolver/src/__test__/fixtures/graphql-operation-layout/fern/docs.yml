@@ -1,0 +1,22 @@
+instances: []
+
+navigation:
+  - api: GraphQL API Reference
+    layout:
+      - section: User Operations
+        contents:
+          - operation: QUERY getUserProfile
+            title: "Get User Profile"
+          - operation: MUTATION createUser
+            title: "Create New User"
+            slug: create-user
+          - operation: MUTATION updateUserProfile
+      - section: Admin Operations
+        contents:
+          - operation: QUERY admin.getSystemInfo
+            title: "System Information"
+          - operation: MUTATION admin.resetSystem
+            hidden: true
+      - operation: SUBSCRIPTION userUpdates
+        title: "Real-time User Updates"
+        availability: beta
