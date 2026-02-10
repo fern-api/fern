@@ -149,10 +149,7 @@ export class Stream<T> implements AsyncIterable<T> {
                         } catch (_e) {
                             // data is not JSON, keep as string
                         }
-                        const envelope: Record<string, unknown> =
-                            typeof parsedData === "object" && parsedData !== null
-                                ? { ...(parsedData as Record<string, unknown>) }
-                                : { data: parsedData };
+                        const envelope: Record<string, unknown> = { data: parsedData };
                         if (eventType != null) {
                             envelope.event = eventType;
                         }
@@ -189,10 +186,7 @@ export class Stream<T> implements AsyncIterable<T> {
             } catch (_e) {
                 // data is not JSON, keep as string
             }
-            const envelope: Record<string, unknown> =
-                typeof parsedData === "object" && parsedData !== null
-                    ? { ...(parsedData as Record<string, unknown>) }
-                    : { data: parsedData };
+            const envelope: Record<string, unknown> = { data: parsedData };
             if (eventType != null) {
                 envelope.event = eventType;
             }
