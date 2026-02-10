@@ -56,6 +56,52 @@ func (s *StreamCompletionRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	streamCompletionRequestWithoutTerminatorFieldQuery = big.NewInt(1 << 0)
+)
+
+type StreamCompletionRequestWithoutTerminator struct {
+	Query string `json:"query" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamCompletionRequestWithoutTerminator) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamCompletionRequestWithoutTerminator) SetQuery(query string) {
+	s.Query = query
+	s.require(streamCompletionRequestWithoutTerminatorFieldQuery)
+}
+
+func (s *StreamCompletionRequestWithoutTerminator) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamCompletionRequestWithoutTerminator
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamCompletionRequestWithoutTerminator(body)
+	return nil
+}
+
+func (s *StreamCompletionRequestWithoutTerminator) MarshalJSON() ([]byte, error) {
+	type embed StreamCompletionRequestWithoutTerminator
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	streamedCompletionFieldDelta  = big.NewInt(1 << 0)
 	streamedCompletionFieldTokens = big.NewInt(1 << 1)
 )

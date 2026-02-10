@@ -1266,6 +1266,20 @@ function parseApiReferenceLayoutItem(
                 featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
+    } else if (isRawApiRefOperationConfiguration(item)) {
+        return [
+            {
+                type: "operation",
+                operation: item.operation,
+                title: item.title,
+                slug: item.slug,
+                hidden: item.hidden,
+                availability: item.availability,
+                viewers: parseRoles(item.viewers),
+                orphaned: item.orphaned,
+                featureFlags: convertFeatureFlag(item.featureFlag)
+            }
+        ];
     }
     return Object.entries(item).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
         if (isRawApiRefPackageConfiguration(value)) {
@@ -1398,6 +1412,12 @@ function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSche
 
 function isRawApiRefEndpointConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceEndpointConfiguration {
     return isPlainObject(item) && typeof item.endpoint === "string";
+}
+
+function isRawApiRefOperationConfiguration(
+    item: unknown
+): item is docsYml.RawSchemas.ApiReferenceOperationConfiguration {
+    return isPlainObject(item) && typeof item.operation === "string";
 }
 
 function isRawApiRefPackageConfiguration(

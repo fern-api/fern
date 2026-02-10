@@ -7,4 +7,10 @@ public partial interface ICompletionsClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    IAsyncEnumerable<StreamedCompletion> StreamWithoutTerminatorAsync(
+        StreamCompletionRequestWithoutTerminator request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

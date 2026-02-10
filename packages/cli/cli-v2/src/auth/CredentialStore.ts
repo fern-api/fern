@@ -1,12 +1,12 @@
-import type * as keytar from "keytar";
 import { KeyringUnavailableError } from "./errors/KeyringUnavailableError.js";
+import { PlatformKeyring } from "./PlatformKeyring.js";
 
 /**
  * Service name used for storing Fern tokens in the system keyring.
  */
 const SERVICE_NAME = "fern";
 
-export declare namespace KeyringStore {
+export declare namespace CredentialStore {
     /**
      * A stored credential from the keyring.
      */
@@ -19,22 +19,24 @@ export declare namespace KeyringStore {
 /**
  * Service for securely storing and retrieving tokens using the system keyring.
  *
- * Uses the platform's native credential storage:
- *  - macOS: Keychain
- *  - Linux: GNOME Keyring / libsecret
- *  - Windows: Credential Manager
+ * Uses platform CLI tools for native credential storage:
+ *  - macOS: `security` (Keychain)
+ *  - Linux: `secret-tool` (libsecret)
+ *  - Windows: `cmdkey` / PowerShell (Credential Manager)
  */
-export class KeyringStore {
-    private keytarModule: typeof keytar | null = null;
-    private keytarLoadError: Error | null = null;
+export class CredentialStore {
+    private readonly keyring: PlatformKeyring;
+
+    constructor() {
+        this.keyring = new PlatformKeyring();
+    }
 
     /**
      * Stores a token in the system keyring for the given account.
      */
     public async store(account: string, token: string): Promise<void> {
-        const kt = await this.getKeytar();
         try {
-            await kt.setPassword(SERVICE_NAME, account, token);
+            await this.keyring.setPassword(SERVICE_NAME, account, token);
         } catch (error) {
             throw new KeyringUnavailableError(process.platform, error instanceof Error ? error : undefined);
         }
@@ -42,12 +44,10 @@ export class KeyringStore {
 
     /**
      * Retrieves a token from the system keyring for the given account.
-     * Returns undefined if not found.
      */
     public async get(account: string): Promise<string | undefined> {
-        const kt = await this.getKeytar();
         try {
-            const token = await kt.getPassword(SERVICE_NAME, account);
+            const token = await this.keyring.getPassword(SERVICE_NAME, account);
             return token ?? undefined;
         } catch (error) {
             throw new KeyringUnavailableError(process.platform, error instanceof Error ? error : undefined);
@@ -59,9 +59,8 @@ export class KeyringStore {
      * Returns true if a token was removed, false if not found.
      */
     public async remove(account: string): Promise<boolean> {
-        const kt = await this.getKeytar();
         try {
-            return await kt.deletePassword(SERVICE_NAME, account);
+            return await this.keyring.deletePassword(SERVICE_NAME, account);
         } catch (error) {
             throw new KeyringUnavailableError(process.platform, error instanceof Error ? error : undefined);
         }
@@ -70,10 +69,9 @@ export class KeyringStore {
     /**
      * Retrieves all account/token pairs from the keyring.
      */
-    public async getAll(): Promise<KeyringStore.Credential[]> {
-        const kt = await this.getKeytar();
+    public async getAll(): Promise<CredentialStore.Credential[]> {
         try {
-            const credentials = await kt.findCredentials(SERVICE_NAME);
+            const credentials = await this.keyring.findCredentials(SERVICE_NAME);
             return credentials.map((cred) => ({
                 account: cred.account,
                 token: cred.password
@@ -85,32 +83,14 @@ export class KeyringStore {
 
     /**
      * Checks if the keyring is available on this system.
-     * Useful for early detection of keyring issues.
      */
     public async isAvailable(): Promise<boolean> {
         try {
-            await this.getKeytar();
+            // Try a harmless read to verify the keyring is accessible.
+            await this.keyring.getPassword(SERVICE_NAME, "__fern_keyring_test__");
             return true;
         } catch {
             return false;
         }
-    }
-
-    /**
-     * Lazily loads the keytar module to avoid issues if the native module fails to load.
-     */
-    private async getKeytar(): Promise<typeof keytar> {
-        if (this.keytarLoadError != null) {
-            throw new KeyringUnavailableError(process.platform, this.keytarLoadError);
-        }
-        if (this.keytarModule == null) {
-            try {
-                this.keytarModule = await import("keytar");
-            } catch (error) {
-                this.keytarLoadError = error instanceof Error ? error : new Error(String(error));
-                throw new KeyringUnavailableError(process.platform, this.keytarLoadError);
-            }
-        }
-        return this.keytarModule;
     }
 }
