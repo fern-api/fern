@@ -4,14 +4,14 @@ namespace SeedCsharpNamespaceCollision;
 
 public partial interface ISeedCsharpNamespaceCollisionClient
 {
-    public SystemClient System { get; }
-    Task<User> CreateUserAsync(
+    public ISystemClient System { get; }
+    WithRawResponseTask<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Task> CreateTaskAsync(
+    WithRawResponseTask<Task> CreateTaskAsync(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

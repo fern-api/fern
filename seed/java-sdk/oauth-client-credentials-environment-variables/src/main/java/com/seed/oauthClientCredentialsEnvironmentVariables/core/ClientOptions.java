@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:oauth-client-credentials-environment-variables/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:oauth-client-credentials-environment-variables-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

@@ -33,6 +33,10 @@ public class AsyncNullableClient {
         return this.rawClient.getUsers().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<List<User>> getUsers(RequestOptions requestOptions) {
+        return this.rawClient.getUsers(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<List<User>> getUsers(GetUsersRequest request) {
         return this.rawClient.getUsers(request).thenApply(response -> response.body());
     }
@@ -51,6 +55,10 @@ public class AsyncNullableClient {
 
     public CompletableFuture<Boolean> deleteUser() {
         return this.rawClient.deleteUser().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Boolean> deleteUser(RequestOptions requestOptions) {
+        return this.rawClient.deleteUser(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Boolean> deleteUser(DeleteUserRequest request) {

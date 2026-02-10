@@ -134,12 +134,40 @@ types:
   #   properties:
   #     app-id: string
 
+  AiExamplesConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      style:
+        type: optional<string>
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
       title:
         type: optional<string>
         docs: A string that is used as the tab bar title.
+      libraries:
+        type: optional<map<LibraryName, LibraryConfiguration>>
+        docs: |
+          Configuration for library documentation generation. Each library entry defines
+          a source repository and output location for generated MDX documentation.
+
+          Example:
+          ```yaml
+          libraries:
+            my-sdk:
+              input:
+                git: https://github.com/acme/sdk-python
+                subpath: src/sdk
+              output:
+                path: ./static/sdk-docs
+              lang: python
+          ```
       analytics:
         type: optional<AnalyticsConfig>
         docs: |
@@ -179,6 +207,12 @@ types:
 
       "ai-search": optional<AIChatConfig>
 
+      # ai examples
+      "ai-examples":
+        type: optional<AiExamplesConfig>
+        docs: |
+          Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
@@ -203,6 +237,18 @@ types:
       # scripts
       css: optional<CssConfig>
       js: optional<JsConfig>
+
+      # custom components
+      header:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom React component (TSX/JSX) that replaces the default header.
+          The component must have a default export.
+      footer:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom React component (TSX/JSX) that replaces the default footer.
+          The component must have a default export.
 
   TabId: string
 
@@ -411,6 +457,14 @@ types:
   EditThisPageConfig:
     properties:
       github: optional<GithubEditThisPageConfig>
+      launch:
+        type: optional<EditThisPageLaunch>
+        docs: The launch method for "Edit this page" button. Defaults to github.
+
+  EditThisPageLaunch:
+    enum:
+      - github
+      - dashboard
 
   GithubEditThisPageConfig:
     properties:
@@ -525,6 +579,8 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
+      - PythonDocsConfiguration
+      - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
       - FolderConfiguration
@@ -651,6 +707,15 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      switcher-placement:
+        type: optional<SwitcherPlacement>
+        docs: |
+          Set the placement of the version and language switcher
+
+          @default: `header`
+
+          Note: this setting is ignored when `disable-header` is set to true.
+
       content-alignment:
         type: optional<ContentAlignment>
         docs: |
@@ -748,6 +813,13 @@ types:
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
+      folder-title-source:
+        type: optional<TitleSource>
+        docs: |
+          Sets the default title source for all folder navigations. When set, this value is used as the
+          default `title-source` for any folder that does not explicitly specify its own `title-source`.
+          Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename`
+          (derive title from the file name).
       substitute-env-vars:
         type: optional<boolean>
         docs: |
@@ -832,6 +904,11 @@ types:
       - sidebar
 
   TabsPlacement:
+    enum:
+      - header
+      - sidebar
+
+  SwitcherPlacement:
     enum:
       - header
       - sidebar
@@ -1035,12 +1112,21 @@ types:
         type: optional<string>
         docs: |
           The title to display for this folder section. If not provided, the folder name will be used.
+      title-source:
+        type: optional<TitleSource>
+        docs: |
+          Determines how page titles are derived for files in this folder. Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename` (derive title from the file name). Defaults to `filename`.
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed: optional<boolean>
       availability: optional<Availability>
+
+  TitleSource:
+    enum:
+      - frontmatter
+      - filename
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1095,6 +1181,112 @@ types:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
 
+  PythonDocsConfiguration:
+    docs: |
+      Configuration for generating Python library documentation from source code.
+      The docs are generated from a GitHub repository and merged into the navigation.
+    availability: deprecated
+    properties:
+      python-docs:
+        type: string
+        docs: |
+          GitHub URL to the repository containing the Python library source code.
+          Example: https://github.com/django/django
+      title:
+        type: optional<string>
+        docs: |
+          Navigation title for the Python docs section.
+          @default: "Python Reference"
+      slug:
+        type: optional<string>
+        docs: |
+          URL slug for the Python docs pages.
+          @default: "python-docs"
+
+  # Library Documentation Types
+  LibraryName:
+    type: string
+    docs: The name identifier for a library. Used to reference the library in navigation.
+
+  LibraryLanguage:
+    enum:
+      - python
+      - cpp
+    docs: The programming language of the library source code.
+
+  LibraryInputConfiguration:
+    docs: Configuration for the library source location.
+    discriminated: false
+    union:
+      - GitLibraryInputSchema
+      - PathLibraryInputSchema
+
+  GitLibraryInputSchema:
+    docs: Configuration for fetching library source from a Git repository.
+    properties:
+      git:
+        type: string
+        docs: |
+          GitHub URL to the repository containing the library source code.
+          Example: https://github.com/django/django
+      subpath:
+        type: optional<string>
+        docs: |
+          Optional path within the repository to the library source.
+          Example: django/core
+
+  PathLibraryInputSchema:
+    docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
+    properties:
+      path:
+        type: string
+        docs: |
+          Local filesystem path to the library source.
+          Example: ./src/my-library
+
+  LibraryOutputConfiguration:
+    docs: Configuration for the library documentation output.
+    properties:
+      path:
+        type: string
+        docs: |
+          The output directory where MDX files will be generated.
+          Example: ./static/sdk-docs
+
+  LibraryConfiguration:
+    docs: |
+      Configuration for a library documentation source.
+      Used by `fern docs md generate` to generate MDX files from library source code.
+    properties:
+      input:
+        type: LibraryInputConfiguration
+        docs: Configuration for the library source location.
+      output:
+        type: LibraryOutputConfiguration
+        docs: Configuration for the library documentation output.
+      lang:
+        type: LibraryLanguage
+        docs: The programming language of the library source code.
+
+  LibraryReferenceConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    docs: |
+      References a library defined in the `libraries` section.
+      The library's generated navigation will be injected at this point.
+    properties:
+      library:
+        type: LibraryName
+        docs: |
+          The name of the library to reference (must match a key in the `libraries` section).
+      title:
+        type: optional<string>
+        docs: |
+          Override the display title for this library reference.
+      slug:
+        type: optional<string>
+        docs: |
+          Override the URL slug for this library reference.
+
   ApiReferenceLayoutItem:
     docs: |
       Use the `layout` object to customize the order that your API endpoints
@@ -1107,6 +1299,7 @@ types:
         docs: Keyed by subpackage name, this object allows you to group endpoints and pages together.
       - ApiReferenceSectionConfiguration
       - ApiReferenceEndpointConfiguration
+      - ApiReferenceOperationConfiguration
       - PageConfiguration
       - LinkConfiguration
 
@@ -1169,6 +1362,16 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
+
+  ApiReferenceOperationConfiguration:
+    docs: Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      operation: string
+      title: optional<string>
+      slug: optional<string>
+      hidden: optional<boolean>
+      availability: optional<Availability>
 
   LinkConfiguration:
     properties:
@@ -1611,17 +1814,27 @@ types:
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
       ai-examples:
         type: optional<boolean>
-        availability: pre-release
+        availability: deprecated
         docs: |
           Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+          DEPRECATED: Use the top-level `ai-examples` property instead.
       ai-example-style-instructions:
         type: optional<string>
-        availability: pre-release
+        availability: deprecated
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+          DEPRECATED: Use the top-level `ai-example-style-instructions` property instead.
+      exclude-apis:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation.
+
   PlaygroundSettings:
     properties:
+      hidden: optional<boolean>
       environments:
         type: optional<list<string>>
         docs: A list of environment IDs that are allowed to be used in the playground.

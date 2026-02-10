@@ -1,6 +1,4 @@
-
-import { Readable } from "stream";
-
+import type { Readable } from "stream";
 
 import { RUNTIME } from "../runtime/index.js";
 
@@ -9,9 +7,9 @@ export declare namespace Stream {
         /**
          * The HTTP response stream to read from.
          */
-        
+
         stream: Readable | ReadableStream;
-        
+
         /**
          * The event shape to use for parsing the stream data.
          */
@@ -36,9 +34,8 @@ export declare namespace Stream {
 const DATA_PREFIX = "data:";
 
 export class Stream<T> implements AsyncIterable<T> {
-    
     private stream: Readable | ReadableStream;
-    
+
     private parse: (val: unknown) => Promise<T>;
     /**
      * The prefix to use for each message. For example,
@@ -155,6 +152,6 @@ export function readableStreamAsyncIterable<T>(stream: any): AsyncIterableIterat
         },
         [Symbol.asyncIterator]() {
             return this;
-        }
+        },
     };
 }

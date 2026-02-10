@@ -52,7 +52,7 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "endent": "^2.1.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
     "zod": "^3.22.3"

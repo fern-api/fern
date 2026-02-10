@@ -41,16 +41,25 @@ public class AsyncRawOptionalClient {
     }
 
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalBody(
+            RequestOptions requestOptions) {
+        return sendOptionalBody(Optional.empty(), requestOptions);
+    }
+
+    public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalBody(
             Optional<Map<String, Object>> request) {
         return sendOptionalBody(request, null);
     }
 
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalBody(
             Optional<Map<String, Object>> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("send-optional-body")
-                .build();
+                .addPathSegments("send-optional-body");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -62,7 +71,7 @@ public class AsyncRawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -107,16 +116,25 @@ public class AsyncRawOptionalClient {
     }
 
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalTypedBody(
+            RequestOptions requestOptions) {
+        return sendOptionalTypedBody(Optional.empty(), requestOptions);
+    }
+
+    public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalTypedBody(
             Optional<SendOptionalBodyRequest> request) {
         return sendOptionalTypedBody(request, null);
     }
 
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> sendOptionalTypedBody(
             Optional<SendOptionalBodyRequest> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("send-optional-typed-body")
-                .build();
+                .addPathSegments("send-optional-typed-body");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -128,7 +146,7 @@ public class AsyncRawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -182,6 +200,15 @@ public class AsyncRawOptionalClient {
      * This should not generate wire tests expecting {} when Optional.empty() is passed.
      */
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>>
+            sendOptionalNullableWithAllOptionalProperties(String actionId, String id, RequestOptions requestOptions) {
+        return sendOptionalNullableWithAllOptionalProperties(actionId, id, Optional.empty(), requestOptions);
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>>
             sendOptionalNullableWithAllOptionalProperties(String actionId, String id, Optional<DeployParams> request) {
         return sendOptionalNullableWithAllOptionalProperties(actionId, id, request, null);
     }
@@ -193,13 +220,17 @@ public class AsyncRawOptionalClient {
     public CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>>
             sendOptionalNullableWithAllOptionalProperties(
                     String actionId, String id, Optional<DeployParams> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("deploy")
                 .addPathSegment(actionId)
                 .addPathSegments("versions")
-                .addPathSegment(id)
-                .build();
+                .addPathSegment(id);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -211,7 +242,7 @@ public class AsyncRawOptionalClient {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

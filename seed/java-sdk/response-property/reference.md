@@ -160,7 +160,7 @@ client.service().getMovie("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getOptionalMovie(request) -> Optional&lt;Response&gt;</code></summary>
+<details><summary><code>client.service.getOptionalMovie(request) -> Optional&amp;lt;Response&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -200,7 +200,7 @@ client.service().getMovie("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getOptionalMovieDocs(request) -> Optional&lt;WithDocs&gt;</code></summary>
+<details><summary><code>client.service.getOptionalMovieDocs(request) -> Optional&amp;lt;WithDocs&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -240,7 +240,7 @@ client.service().getMovie("string");
 </dl>
 </details>
 
-<details><summary><code>client.service.getOptionalMovieName(request) -> Optional&lt;StringResponse&gt;</code></summary>
+<details><summary><code>client.service.getOptionalMovieName(request) -> Optional&amp;lt;StringResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 

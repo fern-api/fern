@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoGetRequestBodyRule } from "../no-get-request-body";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoGetRequestBodyRule } from "../no-get-request-body.js";
 
 describe("no-get-request-body", () => {
     it("simple", async () => {

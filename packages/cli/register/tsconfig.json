@@ -3,16 +3,24 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src",
-    "moduleResolution": "bundler"
+    "rootDir": "src"
   },
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../api-importers/v3-importer-commons"
+    },
+    {
       "path": "../task-context"
     },
     {
+      "path": "../api-importers/openapi-to-ir"
+    },
+    {
       "path": "../api-importers/openapi-pruner"
+    },
+    {
+      "path": "../logger"
     },
     {
       "path": "../workspace/lazy-fern-workspace"

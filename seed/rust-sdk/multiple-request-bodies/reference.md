@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">upload_json_document</a>(request: UploadDocumentRequest) -> Result<UploadDocumentResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">upload_json_document</a>(request: UploadDocumentRequest) -> Result&lt;UploadDocumentResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

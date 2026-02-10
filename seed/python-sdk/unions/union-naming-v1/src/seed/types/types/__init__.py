@@ -44,6 +44,16 @@ if typing.TYPE_CHECKING:
         UnionWithMultipleNoProperties,
     )
     from .union_with_no_properties import EmptyUnionWithNoProperties, FooUnionWithNoProperties, UnionWithNoProperties
+    from .union_with_nullable_reference import (
+        BarUnionWithNullableReference,
+        FooUnionWithNullableReference,
+        UnionWithNullableReference,
+    )
+    from .union_with_optional_reference import (
+        BarUnionWithOptionalReference,
+        FooUnionWithOptionalReference,
+        UnionWithOptionalReference,
+    )
     from .union_with_optional_time import (
         DateUnionWithOptionalTime,
         DatetimeUnionWithOptionalTime,
@@ -71,6 +81,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Bar": ".bar",
     "BarUnion": ".union",
     "BarUnionWithDiscriminant": ".union_with_discriminant",
+    "BarUnionWithNullableReference": ".union_with_nullable_reference",
+    "BarUnionWithOptionalReference": ".union_with_optional_reference",
     "BarUnionWithoutKey": ".union_without_key",
     "CustomFormatUnionWithSameStringTypes": ".union_with_same_string_types",
     "DateUnionWithOptionalTime": ".union_with_optional_time",
@@ -93,6 +105,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FooUnionWithDiscriminant": ".union_with_discriminant",
     "FooUnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "FooUnionWithNoProperties": ".union_with_no_properties",
+    "FooUnionWithNullableReference": ".union_with_nullable_reference",
+    "FooUnionWithOptionalReference": ".union_with_optional_reference",
     "FooUnionWithSingleElement": ".union_with_single_element",
     "FooUnionWithSubTypes": ".union_with_sub_types",
     "FooUnionWithoutKey": ".union_without_key",
@@ -119,6 +133,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "UnionWithNoProperties": ".union_with_no_properties",
+    "UnionWithNullableReference": ".union_with_nullable_reference",
+    "UnionWithOptionalReference": ".union_with_optional_reference",
     "UnionWithOptionalTime": ".union_with_optional_time",
     "UnionWithPrimitive": ".union_with_primitive",
     "UnionWithSameNumberTypes": ".union_with_same_number_types",
@@ -157,6 +173,8 @@ __all__ = [
     "Bar",
     "BarUnion",
     "BarUnionWithDiscriminant",
+    "BarUnionWithNullableReference",
+    "BarUnionWithOptionalReference",
     "BarUnionWithoutKey",
     "CustomFormatUnionWithSameStringTypes",
     "DateUnionWithOptionalTime",
@@ -179,6 +197,8 @@ __all__ = [
     "FooUnionWithDiscriminant",
     "FooUnionWithMultipleNoProperties",
     "FooUnionWithNoProperties",
+    "FooUnionWithNullableReference",
+    "FooUnionWithOptionalReference",
     "FooUnionWithSingleElement",
     "FooUnionWithSubTypes",
     "FooUnionWithoutKey",
@@ -205,6 +225,8 @@ __all__ = [
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",
+    "UnionWithNullableReference",
+    "UnionWithOptionalReference",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
     "UnionWithSameNumberTypes",

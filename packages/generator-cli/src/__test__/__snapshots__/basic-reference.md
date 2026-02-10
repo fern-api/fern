@@ -223,7 +223,7 @@ client.users.get(update=User(id="ID")
 <dl>
 <dd>
 
-**update:** `<a href="./src/users.py">User</a>` — The updated user object to send to the server.
+**update:** [User](./src/users.py) — The updated user object to send to the server.
     
 </dd>
 </dl>

@@ -42,6 +42,7 @@ require_relative "seed_pagination_client/users/types/list_users_extended_optiona
 require_relative "seed_pagination_client/users/types/list_users_pagination_response"
 require_relative "seed_pagination_client/users/types/list_users_optional_data_pagination_response"
 require_relative "seed_pagination_client/users/types/list_users_mixed_type_pagination_response"
+require_relative "seed_pagination_client/users/types/list_users_top_level_cursor_pagination_response"
 require_relative "seed_pagination_client/users/types/page"
 require_relative "seed_pagination_client/users/types/next_page"
 require_relative "seed_pagination_client/users/types/user"

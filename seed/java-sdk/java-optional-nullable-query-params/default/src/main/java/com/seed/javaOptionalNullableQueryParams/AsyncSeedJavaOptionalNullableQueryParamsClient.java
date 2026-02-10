@@ -36,6 +36,13 @@ public class AsyncSeedJavaOptionalNullableQueryParamsClient {
     /**
      * Search endpoint with optional nullable query params with defaults
      */
+    public CompletableFuture<SearchResponse> search(RequestOptions requestOptions) {
+        return this.rawClient.search(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Search endpoint with optional nullable query params with defaults
+     */
     public CompletableFuture<SearchResponse> search(SearchRequest request) {
         return this.rawClient.search(request).thenApply(response -> response.body());
     }

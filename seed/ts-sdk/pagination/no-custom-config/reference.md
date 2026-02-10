@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>(index, { ...params }) -> core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse></code></summary>
+<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>(index, { ...params }) -> core.Page&lt;SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +90,7 @@ const response = page.response;
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +161,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersMixedTypePaginationResponse.Data.Users.Item, SeedPagination.ListUsersMixedTypePaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersMixedTypePaginationResponse.Data.Users.Item, SeedPagination.ListUsersMixedTypePaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -226,7 +226,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -295,7 +295,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -366,7 +366,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -437,7 +437,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -506,7 +506,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -575,7 +575,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -644,7 +644,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page<SeedPagination.UserListContainer.Users.Item, SeedPagination.ListUsersExtendedResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page&lt;SeedPagination.UserListContainer.Users.Item, SeedPagination.ListUsersExtendedResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -709,7 +709,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page<SeedPagination.UserOptionalListContainer.Users.Item, SeedPagination.ListUsersExtendedOptionalListResponse></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page&lt;SeedPagination.UserOptionalListContainer.Users.Item, SeedPagination.ListUsersExtendedOptionalListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -774,7 +774,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameCursor></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameCursor&gt;</code></summary>
 <dl>
 <dd>
 
@@ -839,7 +839,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameContainer></code></summary>
+<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameContainer&gt;</code></summary>
 <dl>
 <dd>
 
@@ -905,7 +905,7 @@ const response = page.response;
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -976,7 +976,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1041,7 +1041,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1110,7 +1110,90 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithTopLevelBodyCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersTopLevelCursorPaginationResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.users.listWithTopLevelBodyCursorPagination({
+    cursor: "initial_cursor",
+    filter: "active"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithTopLevelBodyCursorPagination({
+    cursor: "initial_cursor",
+    filter: "active"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1181,7 +1264,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1252,7 +1335,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1321,7 +1404,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1390,7 +1473,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1459,7 +1542,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersExtendedResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1524,7 +1607,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1589,7 +1672,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameCursor></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameCursor&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1654,7 +1737,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesWithOptionalResponse</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameCursor | undefined></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesWithOptionalResponse</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameCursor | undefined&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1719,7 +1802,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page<string, SeedPagination.UsernameContainer></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameContainer&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1784,7 +1867,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOptionalData</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersOptionalDataPaginationResponse></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOptionalData</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersOptionalDataPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 

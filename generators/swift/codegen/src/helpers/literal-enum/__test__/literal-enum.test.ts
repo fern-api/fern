@@ -1,4 +1,4 @@
-import { sanitizeLiteralValue } from "../literal-enum";
+import { sanitizeLiteralValue } from "../literal-enum.js";
 
 describe("sanitizeLiteralValue", () => {
     describe("empty and whitespace values", () => {

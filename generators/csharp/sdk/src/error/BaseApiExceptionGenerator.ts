@@ -18,9 +18,14 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
                         name: "statusCode",
                         type: this.Primitive.integer
                     }),
-                    this.csharp.parameter({ name: "body", type: this.Primitive.object })
+                    this.csharp.parameter({ name: "body", type: this.Primitive.object }),
+                    this.csharp.parameter({
+                        name: "innerException",
+                        type: this.System.Exception.asOptional(),
+                        initializer: "null"
+                    })
                 ],
-                superClassArguments: [this.csharp.codeblock("message")]
+                superClassArguments: [this.csharp.codeblock("message"), this.csharp.codeblock("innerException")]
             },
             summary: "This exception type will be thrown for any non-2XX API responses."
         });

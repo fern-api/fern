@@ -31,6 +31,10 @@ public class AsyncSeedApiClient {
         return this.rawClient.uploadJsonDocument().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<UploadDocumentResponse> uploadJsonDocument(RequestOptions requestOptions) {
+        return this.rawClient.uploadJsonDocument(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<UploadDocumentResponse> uploadJsonDocument(UploadDocumentRequest request) {
         return this.rawClient.uploadJsonDocument(request).thenApply(response -> response.body());
     }

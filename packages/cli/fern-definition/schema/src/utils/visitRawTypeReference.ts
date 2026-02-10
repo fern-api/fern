@@ -1,8 +1,15 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
-import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas";
-import { RawPrimitiveType } from "./RawPrimitiveType";
+import { NumberValidationSchema, StringValidationSchema, ValidationSchema } from "../schemas/index.js";
+import { RawPrimitiveType } from "./RawPrimitiveType.js";
 
-export const FernContainerRegex = {
+export const FernContainerRegex: {
+    readonly MAP: RegExp;
+    readonly LIST: RegExp;
+    readonly SET: RegExp;
+    readonly OPTIONAL: RegExp;
+    readonly NULLABLE: RegExp;
+    readonly LITERAL: RegExp;
+} = {
     MAP: /^map<\s*([^,]*)\s*,\s*(.*)\s*>$/,
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,
@@ -96,13 +103,25 @@ export function visitRawTypeReference<R>({
                 v1: PrimitiveTypeV1.Float,
                 v2: undefined
             });
-        case RawPrimitiveType.long:
+        case RawPrimitiveType.long: {
+            const maybeNumberValidation = validation != null ? (validation as NumberValidationSchema) : undefined;
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Long,
                 v2: PrimitiveTypeV2.long({
-                    default: _default != null ? (_default as number) : undefined
+                    default: _default != null ? (_default as number) : undefined,
+                    validation:
+                        maybeNumberValidation != null
+                            ? {
+                                  min: maybeNumberValidation.min,
+                                  max: maybeNumberValidation.max,
+                                  exclusiveMin: maybeNumberValidation.exclusiveMin,
+                                  exclusiveMax: maybeNumberValidation.exclusiveMax,
+                                  multipleOf: maybeNumberValidation.multipleOf
+                              }
+                            : undefined
                 })
             });
+        }
         case RawPrimitiveType.boolean:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Boolean,

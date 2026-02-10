@@ -101,6 +101,7 @@ client = SeedBasicAuth(
 )
 response = client.basic_auth.with_raw_response.post_with_basic_auth(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

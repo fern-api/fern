@@ -3,8 +3,8 @@ import { mkdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { describe, expect, it, vi } from "vitest";
 
-import { CliContext } from "../cli-context/CliContext";
-import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory";
+import { CliContext } from "../cli-context/CliContext.js";
+import { checkOutputDirectory } from "../commands/generate/checkOutputDirectory.js";
 
 describe.sequential("checkOutputDirectory in CI", () => {
     it("doesn't prompt in CI environment even with files present", async () => {

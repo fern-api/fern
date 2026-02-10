@@ -1,5 +1,4 @@
 use seed_idempotency_headers::prelude::*;
-use seed_idempotency_headers::Currency;
 
 #[tokio::main]
 async fn main() {

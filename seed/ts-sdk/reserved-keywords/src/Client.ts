@@ -2,14 +2,12 @@
 
 import { PackageClient } from "./api/resources/package/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedNurseryApiClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedNurseryApiClient {
@@ -17,7 +15,6 @@ export class SeedNurseryApiClient {
     protected _package: PackageClient | undefined;
 
     constructor(options: SeedNurseryApiClient.Options) {
-
         this._options = normalizeClientOptions(options);
     }
 

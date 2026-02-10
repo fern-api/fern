@@ -11,6 +11,9 @@ node_modules/
 # nx
 .nx
 
+# tsup
+.tsup
+
 # production
 packages/**/build
 packages/**/lib

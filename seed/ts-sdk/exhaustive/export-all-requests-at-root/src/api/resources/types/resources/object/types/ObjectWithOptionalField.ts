@@ -2,17 +2,17 @@
 
 export interface ObjectWithOptionalField {
     /** This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered. */
-    string?: string;
-    integer?: number;
-    long?: number;
-    double?: number;
-    bool?: boolean;
-    datetime?: string;
-    date?: string;
-    uuid?: string;
-    base64?: string;
-    list?: string[];
-    set?: string[];
-    map?: Record<number, string>;
-    bigint?: string;
+    string?: string | undefined;
+    integer?: number | undefined;
+    long?: number | undefined;
+    double?: number | undefined;
+    bool?: boolean | undefined;
+    datetime?: string | undefined;
+    date?: string | undefined;
+    uuid?: string | undefined;
+    base64?: string | undefined;
+    list?: string[] | undefined;
+    set?: string[] | undefined;
+    map?: Record<number, string> | undefined;
+    bigint?: string | undefined;
 }

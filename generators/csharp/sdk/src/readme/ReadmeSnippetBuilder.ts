@@ -2,17 +2,18 @@ import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    EndpointId,
-    EnumValue,
-    FeatureId,
-    FernFilepath,
-    HttpEndpoint,
-    Type,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+type HttpEndpoint = FernIr.HttpEndpoint;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type EnumValue = FernIr.EnumValue;
+type FernFilepath = FernIr.FernFilepath;
+type EndpointId = FernIr.EndpointId;
+type FeatureId = FernIr.FeatureId;
+type Type = FernIr.Type;
+
+import { Generation } from "../../../codegen/src/context/generation-info.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -22,6 +23,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static FORWARD_COMPATIBLE_ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "FORWARD_COMPATIBLE_ENUMS";
+    private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -48,59 +50,59 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 : this.getDefaultEndpointId();
         this.requestOptionsName = this.Types.RequestOptions.name;
     }
-    protected get generation() {
+    protected get generation(): Generation {
         return this.context.generation;
     }
-    protected get namespaces() {
+    protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
-    protected get registry() {
+    protected get registry(): Generation["registry"] {
         return this.generation.registry;
     }
-    protected get settings() {
+    protected get settings(): Generation["settings"] {
         return this.generation.settings;
     }
-    protected get constants() {
+    protected get constants(): Generation["constants"] {
         return this.generation.constants;
     }
-    protected get names() {
+    protected get names(): Generation["names"] {
         return this.generation.names;
     }
-    protected get model() {
+    protected get model(): Generation["model"] {
         return this.generation.model;
     }
-    protected get format() {
+    protected get format(): Generation["format"] {
         return this.generation.format;
     }
-    protected get csharp() {
+    protected get csharp(): Generation["csharp"] {
         return this.generation.csharp;
     }
-    protected get Types() {
+    protected get Types(): Generation["Types"] {
         return this.generation.Types;
     }
 
-    protected get System() {
+    protected get System(): Generation["extern"]["System"] {
         return this.generation.extern.System;
     }
-    protected get NUnit() {
+    protected get NUnit(): Generation["extern"]["NUnit"] {
         return this.generation.extern.NUnit;
     }
-    protected get OneOf() {
+    protected get OneOf(): Generation["extern"]["OneOf"] {
         return this.generation.extern.OneOf;
     }
-    protected get Google() {
+    protected get Google(): Generation["extern"]["Google"] {
         return this.generation.extern.Google;
     }
-    protected get WireMock() {
+    protected get WireMock(): Generation["extern"]["WireMock"] {
         return this.generation.extern.WireMock;
     }
-    protected get Primitive() {
+    protected get Primitive(): Generation["Primitive"] {
         return this.generation.Primitive;
     }
-    protected get Value() {
+    protected get Value(): Generation["Value"] {
         return this.generation.Value;
     }
-    protected get Collection() {
+    protected get Collection(): Generation["Collection"] {
         return this.generation.Collection;
     }
 
@@ -110,6 +112,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
@@ -174,6 +177,35 @@ try {
         );
     }
 
+    private buildRawResponseSnippets(): string[] {
+        const rawResponseEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID);
+        return rawResponseEndpoints.map((rawResponseEndpoint) =>
+            this.writeCode(`
+using ${this.namespaces.root};
+
+// Access raw response data (status code, headers, etc.) alongside the parsed response
+var result = await ${this.getMethodCall(rawResponseEndpoint)}(...).WithRawResponse();
+
+// Access the parsed data
+var data = result.Data;
+
+// Access raw response metadata
+var statusCode = result.RawResponse.StatusCode;
+var headers = result.RawResponse.Headers;
+var url = result.RawResponse.Url;
+
+// Access specific headers (case-insensitive)
+if (headers.TryGetValue("X-Request-Id", out var requestId))
+{
+    System.Console.WriteLine($"Request ID: {requestId}");
+}
+
+// For the default behavior, simply await without .WithRawResponse()
+var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
+`)
+        );
+    }
+
     private buildPaginationSnippets(): string[] {
         const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
             FernGeneratorCli.StructuredFeatureId.Pagination
@@ -203,7 +235,7 @@ try {
             return [];
         }
         const firstEnum = enumsWithValues[0] as TypeDeclaration & {
-            shape: Type.Enum;
+            shape: FernIr.Type.Enum;
         };
 
         const enumName = firstEnum.name.name.pascalCase.safeName;

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->foo()</code></summary>
+<details><summary><code>$client-&gt;foo()</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ $client->foo();
 </details>
 
 ## A B
-<details><summary><code>$client->a->b->foo()</code></summary>
+<details><summary><code>$client-&gt;a-&gt;b-&gt;foo()</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ $client->foo();
 </details>
 
 ## A C
-<details><summary><code>$client->a->c->foo()</code></summary>
+<details><summary><code>$client-&gt;a-&gt;c-&gt;foo()</code></summary>
 <dl>
 <dd>
 
@@ -77,7 +77,7 @@ $client->foo();
 </details>
 
 ## Folder
-<details><summary><code>$client->folder->foo()</code></summary>
+<details><summary><code>$client-&gt;folder-&gt;foo()</code></summary>
 <dl>
 <dd>
 
@@ -103,7 +103,7 @@ $client->foo();
 </details>
 
 ## Folder Service
-<details><summary><code>$client->folder->service->endpoint()</code></summary>
+<details><summary><code>$client-&gt;folder-&gt;service-&gt;endpoint()</code></summary>
 <dl>
 <dd>
 
@@ -128,7 +128,7 @@ $client->folder->service->endpoint();
 </dl>
 </details>
 
-<details><summary><code>$client->folder->service->unknownRequest($request)</code></summary>
+<details><summary><code>$client-&gt;folder-&gt;service-&gt;unknownRequest($request)</code></summary>
 <dl>
 <dd>
 

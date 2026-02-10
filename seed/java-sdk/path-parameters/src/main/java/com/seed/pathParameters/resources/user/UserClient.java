@@ -34,6 +34,10 @@ public class UserClient {
         return this.rawClient.getUser(userId).body();
     }
 
+    public User getUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getUser(userId, requestOptions).body();
+    }
+
     public User getUser(String userId, GetUsersRequest request) {
         return this.rawClient.getUser(userId, request).body();
     }
@@ -62,6 +66,10 @@ public class UserClient {
         return this.rawClient.searchUsers(userId).body();
     }
 
+    public List<User> searchUsers(String userId, RequestOptions requestOptions) {
+        return this.rawClient.searchUsers(userId, requestOptions).body();
+    }
+
     public List<User> searchUsers(String userId, SearchUsersRequest request) {
         return this.rawClient.searchUsers(userId, request).body();
     }
@@ -75,6 +83,13 @@ public class UserClient {
      */
     public User getUserMetadata(String userId, int version) {
         return this.rawClient.getUserMetadata(userId, version).body();
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public User getUserMetadata(String userId, int version, RequestOptions requestOptions) {
+        return this.rawClient.getUserMetadata(userId, version, requestOptions).body();
     }
 
     /**
@@ -99,6 +114,15 @@ public class UserClient {
      */
     public User getUserSpecifics(String userId, int version, String thought) {
         return this.rawClient.getUserSpecifics(userId, version, thought).body();
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public User getUserSpecifics(String userId, int version, String thought, RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserSpecifics(userId, version, thought, requestOptions)
+                .body();
     }
 
     /**

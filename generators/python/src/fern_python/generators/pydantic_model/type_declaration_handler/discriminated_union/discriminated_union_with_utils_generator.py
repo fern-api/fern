@@ -195,6 +195,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
                     field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
                     use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
+                    positional_single_property_constructors=self._custom_config.positional_single_property_constructors,
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     internal_single_union_types.append(internal_single_union_type)
@@ -263,8 +264,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     # we assume that the forward-refed types are the ones
                     # that circularly reference this union type
                     referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-                        same_properties_as_object=lambda type_name: self._context.get_referenced_types_of_type_declaration(
-                            self._context.get_declaration_for_type_id(type_name.type_id),
+                        same_properties_as_object=lambda type_name: (
+                            self._context.get_referenced_types_of_type_declaration(
+                                self._context.get_declaration_for_type_id(type_name.type_id),
+                            )
                         ),
                         single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
                             single_property.type

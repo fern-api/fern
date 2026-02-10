@@ -1,11 +1,11 @@
-import { SubpackageId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
-import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
-export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<SubpackageId> {
-    public getExportedFilepath(subpackageId: SubpackageId): ExportedFilePath {
+export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<FernIr.SubpackageId> {
+    public getExportedFilepath(subpackageId: FernIr.SubpackageId): ExportedFilePath {
         return {
             directories: this.getExportedDirectory(subpackageId),
             file: {
@@ -18,16 +18,16 @@ export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkCl
         return "Client.ts";
     }
 
-    public getExportedName(subpackageId: SubpackageId): string {
+    public getExportedName(subpackageId: FernIr.SubpackageId): string {
         const subpackage = this.packageResolver.resolveSubpackage(subpackageId);
         return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
-    public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<SubpackageId>): Reference {
+    public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<FernIr.SubpackageId>): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 
-    protected getPackageIdFromName(subpackageId: SubpackageId): PackageId {
+    protected getPackageIdFromName(subpackageId: FernIr.SubpackageId): PackageId {
         return { isRoot: false, subpackageId };
     }
 }

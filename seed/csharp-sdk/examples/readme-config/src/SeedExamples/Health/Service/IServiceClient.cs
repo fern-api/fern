@@ -16,7 +16,7 @@ public partial interface IServiceClient
     /// <summary>
     /// This endpoint checks the health of the service.
     /// </summary>
-    Task<bool> PingAsync(
+    WithRawResponseTask<bool> PingAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

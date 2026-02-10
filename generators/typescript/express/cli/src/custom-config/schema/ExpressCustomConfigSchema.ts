@@ -20,6 +20,7 @@ export const ExpressCustomConfigSchema = z.strictObject({
 
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),
+    outputSrcOnly: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
     includeOtherInUnionTypes: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),

@@ -1,5 +1,4 @@
 use seed_literal::prelude::*;
-use seed_literal::{AliasToPrompt, AliasToStream};
 
 #[tokio::main]
 async fn main() {

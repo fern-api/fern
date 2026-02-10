@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...) -> AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.headers.send(
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="src/seed/inlined/client.py">send</a>(...) -> AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.inlined.<a href="src/seed/inlined/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
 <dl>
 <dd>
 
@@ -150,7 +150,7 @@ client.inlined.send(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="src/seed/path/client.py">send</a>() -> AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.path.<a href="src/seed/path/client.py">send</a>() -&gt; AsyncHttpResponse[SendResponse]</code></summary>
 <dl>
 <dd>
 
@@ -197,7 +197,7 @@ client.path.send()
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="src/seed/query/client.py">send</a>(...) -> AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.query.<a href="src/seed/query/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
 <dl>
 <dd>
 
@@ -286,7 +286,7 @@ client.query.send(
 </details>
 
 ## Reference
-<details><summary><code>client.reference.<a href="src/seed/reference/client.py">send</a>(...) -> AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.reference.<a href="src/seed/reference/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
 <dl>
 <dd>
 

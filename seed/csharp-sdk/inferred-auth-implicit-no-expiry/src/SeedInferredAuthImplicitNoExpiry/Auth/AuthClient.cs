@@ -12,28 +12,19 @@ public partial class AuthClient : IAuthClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Auth.GetTokenWithClientCredentialsAsync(
-    ///     new GetTokenRequest
-    ///     {
-    ///         XApiKey = "X-Api-Key",
-    ///         ClientId = "client_id",
-    ///         ClientSecret = "client_secret",
-    ///         Audience = "https://api.example.com",
-    ///         GrantType = "client_credentials",
-    ///         Scope = "scope",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
+    private async Task<WithRawResponse<TokenResponse>> GetTokenWithClientCredentialsAsyncCore(
         GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>() { { "X-Api-Key", request.XApiKey } }
-        );
+        var _headers = await new SeedInferredAuthImplicitNoExpiry.Core.HeadersBuilder.Builder()
+            .Add("X-Api-Key", request.XApiKey)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -53,17 +44,28 @@ public partial class AuthClient : IAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                return new WithRawResponse<TokenResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedInferredAuthImplicitNoExpiryException(
+                throw new SeedInferredAuthImplicitNoExpiryApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedInferredAuthImplicitNoExpiryApiException(
@@ -74,29 +76,19 @@ public partial class AuthClient : IAuthClient
         }
     }
 
-    /// <example><code>
-    /// await client.Auth.RefreshTokenAsync(
-    ///     new RefreshTokenRequest
-    ///     {
-    ///         XApiKey = "X-Api-Key",
-    ///         ClientId = "client_id",
-    ///         ClientSecret = "client_secret",
-    ///         RefreshToken = "refresh_token",
-    ///         Audience = "https://api.example.com",
-    ///         GrantType = "refresh_token",
-    ///         Scope = "scope",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<TokenResponse> RefreshTokenAsync(
+    private async Task<WithRawResponse<TokenResponse>> RefreshTokenAsyncCore(
         RefreshTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>() { { "X-Api-Key", request.XApiKey } }
-        );
+        var _headers = await new SeedInferredAuthImplicitNoExpiry.Core.HeadersBuilder.Builder()
+            .Add("X-Api-Key", request.XApiKey)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -116,17 +108,28 @@ public partial class AuthClient : IAuthClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+                return new WithRawResponse<TokenResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedInferredAuthImplicitNoExpiryException(
+                throw new SeedInferredAuthImplicitNoExpiryApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedInferredAuthImplicitNoExpiryApiException(
@@ -135,5 +138,54 @@ public partial class AuthClient : IAuthClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Auth.GetTokenWithClientCredentialsAsync(
+    ///     new GetTokenRequest
+    ///     {
+    ///         XApiKey = "X-Api-Key",
+    ///         ClientId = "client_id",
+    ///         ClientSecret = "client_secret",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "client_credentials",
+    ///         Scope = "scope",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<TokenResponse> GetTokenWithClientCredentialsAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TokenResponse>(
+            GetTokenWithClientCredentialsAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Auth.RefreshTokenAsync(
+    ///     new RefreshTokenRequest
+    ///     {
+    ///         XApiKey = "X-Api-Key",
+    ///         ClientId = "client_id",
+    ///         ClientSecret = "client_secret",
+    ///         RefreshToken = "refresh_token",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "refresh_token",
+    ///         Scope = "scope",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<TokenResponse> RefreshTokenAsync(
+        RefreshTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TokenResponse>(
+            RefreshTokenAsyncCore(request, options, cancellationToken)
+        );
     }
 }

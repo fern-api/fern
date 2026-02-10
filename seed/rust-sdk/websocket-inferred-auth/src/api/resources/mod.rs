@@ -5,7 +5,7 @@
 //! - **Auth**
 //! - **Realtime**
 
-use crate::{ApiError, ClientConfig};
+use crate::{ClientConfig, ApiError};
 
 pub mod auth;
 pub mod realtime;
@@ -18,9 +18,10 @@ impl WebsocketAuthClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            auth: AuthClient::new(config.clone())?,
+            auth: AuthClient::new(config.clone())?
         })
     }
+
 }
 
 pub use auth::AuthClient;

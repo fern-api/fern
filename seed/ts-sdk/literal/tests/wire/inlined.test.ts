@@ -4,39 +4,44 @@ import { SeedLiteralClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("InlinedClient", () => {
-    
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedLiteralClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "temperature" : 10.1 , "prompt" : "You are a helpful assistant" , "context" : "You're super wise" , "aliasedContext" : "You're super wise" , "maybeContext" : "You're super wise" , "objectWithLiteral" : { "nestedLiteral" : { "myLiteral" : "How super cool" } } , "stream" : false , "query" : "What is the weather today" };
-        const rawResponseBody = { "message" : "The weather is sunny" , "status" : 200 , "success" : true };
+        const client = new SeedLiteralClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {
+            temperature: 10.1,
+            prompt: "You are a helpful assistant",
+            context: "You're super wise",
+            aliasedContext: "You're super wise",
+            maybeContext: "You're super wise",
+            objectWithLiteral: { nestedLiteral: { myLiteral: "How super cool" } },
+            stream: false,
+            query: "What is the weather today",
+        };
+        const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
         server
             .mockEndpoint()
-            .post("/inlined").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/inlined")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.inlined.send({
-    temperature: 10.1,
-    context: "You're super wise",
-    maybeContext: "You're super wise",
-    objectWithLiteral: {
-        nestedLiteral: {
-            myLiteral: "How super cool"
-        }
-    },
-    query: "What is the weather today"
-});
-                            expect(response).toEqual({
-    message: "The weather is sunny",
-    status: 200,
-    success: true
-});
-                          
-                
+        const response = await client.inlined.send({
+            temperature: 10.1,
+            context: "You're super wise",
+            maybeContext: "You're super wise",
+            objectWithLiteral: {
+                nestedLiteral: {
+                    myLiteral: "How super cool",
+                },
+            },
+            query: "What is the weather today",
+        });
+        expect(response).toEqual({
+            message: "The weather is sunny",
+            status: 200,
+            success: true,
+        });
     });
-          
 });

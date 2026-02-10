@@ -14,7 +14,7 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { loadAPIChangelog } from "./loadAPIChangelog";
+import { loadAPIChangelog } from "./loadAPIChangelog.js";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -31,6 +31,10 @@ export async function loadSingleNamespaceAPIWorkspace({
         const absoluteFilepathToOverrides =
             definition.overrides != null
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
+                : undefined;
+        const absoluteFilepathToOverlays =
+            definition.overlays != null
+                ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
                 : undefined;
         if (definition.schema.type === "protobuf") {
             const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
@@ -95,6 +99,28 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue;
         }
 
+        if (definition.schema.type === "graphql") {
+            const relativeFilepathToGraphQL = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToGraphQL = join(absolutePathToWorkspace, relativeFilepathToGraphQL);
+            if (!(await doesPathExist(absoluteFilepathToGraphQL))) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [relativeFilepathToGraphQL]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            specs.push({
+                type: "graphql",
+                absoluteFilepath: absoluteFilepathToGraphQL,
+                absoluteFilepathToOverrides,
+                namespace
+            });
+            continue;
+        }
+
         const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
@@ -120,11 +146,26 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             };
         }
+        if (
+            definition.overlays != null &&
+            absoluteFilepathToOverlays != null &&
+            !(await doesPathExist(absoluteFilepathToOverlays))
+        ) {
+            return {
+                didSucceed: false,
+                failures: {
+                    [RelativeFilePath.of(definition.overlays)]: {
+                        type: WorkspaceLoaderFailureType.FILE_MISSING
+                    }
+                }
+            };
+        }
         const apiSettings = getAPIDefinitionSettings(definition.settings);
         specs.push({
             type: "openapi",
             absoluteFilepath,
             absoluteFilepathToOverrides,
+            absoluteFilepathToOverlays,
             settings: {
                 ...apiSettings,
                 audiences: definition.audiences ?? []
@@ -221,8 +262,8 @@ export async function loadAPIWorkspace({
             }
         }
 
-        return {
-            didSucceed: true,
+        const result = {
+            didSucceed: true as const,
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
                     if (spec.type === "openrpc") {
@@ -250,6 +291,11 @@ export async function loadAPIWorkspace({
                 cliVersion
             })
         };
+
+        // Process GraphQL specs and populate workspace with operations and types
+        await result.workspace.processGraphQLSpecs(context);
+
+        return result;
     }
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {

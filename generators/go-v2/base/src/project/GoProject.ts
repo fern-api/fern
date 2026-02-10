@@ -6,10 +6,10 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
-import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
-import { ModuleConfig } from "../module/ModuleConfig";
-import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
-import { GoFile } from "./GoFile";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";
+import { ModuleConfig } from "../module/ModuleConfig.js";
+import { ModuleConfigWriter } from "../module/ModuleConfigWriter.js";
+import { GoFile } from "./GoFile.js";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
@@ -84,10 +84,17 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
         const isModule = this.getModuleConfig({ config: this.context.config }) != null;
         if (files.length > 0 && isModule) {
-            await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
-                doNotPipeOutput: true,
-                cwd: this.absolutePathToOutputDirectory
-            });
+            try {
+                await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
+                    doNotPipeOutput: true,
+                    cwd: this.absolutePathToOutputDirectory
+                });
+            } catch (error) {
+                this.context.logger.warn(
+                    `Failed to format Go files with 'go fmt': ${error instanceof Error ? error.message : String(error)}. ` +
+                        "The generated files have been written but may not be properly formatted."
+                );
+            }
         }
         return this.absolutePathToOutputDirectory;
     }

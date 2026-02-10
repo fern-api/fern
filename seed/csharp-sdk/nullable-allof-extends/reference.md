@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetTestAsync</a>() -> RootObject</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetTestAsync</a>() -> WithRawResponseTask&lt;RootObject&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ await client.GetTestAsync();
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">CreateTestAsync</a>(RootObject { ... }) -> RootObject</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">CreateTestAsync</a>(RootObject { ... }) -> WithRawResponseTask&lt;RootObject&gt;</code></summary>
 <dl>
 <dd>
 

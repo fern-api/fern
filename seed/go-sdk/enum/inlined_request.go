@@ -3,6 +3,8 @@
 package enum
 
 import (
+	json "encoding/json"
+	internal "github.com/enum/fern/internal"
 	big "math/big"
 )
 
@@ -16,7 +18,7 @@ var (
 type SendEnumInlinedRequest struct {
 	Operand             Operand         `json:"operand" url:"-"`
 	MaybeOperand        *Operand        `json:"maybeOperand,omitempty" url:"-"`
-	OperandOrColor      *ColorOrOperand `json:"operandOrColor,omitempty" url:"-"`
+	OperandOrColor      *ColorOrOperand `json:"operandOrColor" url:"-"`
 	MaybeOperandOrColor *ColorOrOperand `json:"maybeOperandOrColor,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -56,4 +58,25 @@ func (s *SendEnumInlinedRequest) SetOperandOrColor(operandOrColor *ColorOrOperan
 func (s *SendEnumInlinedRequest) SetMaybeOperandOrColor(maybeOperandOrColor *ColorOrOperand) {
 	s.MaybeOperandOrColor = maybeOperandOrColor
 	s.require(sendEnumInlinedRequestFieldMaybeOperandOrColor)
+}
+
+func (s *SendEnumInlinedRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SendEnumInlinedRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SendEnumInlinedRequest(body)
+	return nil
+}
+
+func (s *SendEnumInlinedRequest) MarshalJSON() ([]byte, error) {
+	type embed SendEnumInlinedRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

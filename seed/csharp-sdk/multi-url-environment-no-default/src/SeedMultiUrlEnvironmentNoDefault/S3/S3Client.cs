@@ -12,15 +12,18 @@ public partial class S3Client : IS3Client
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "s3Key" });
-    /// </code></example>
-    public async Task<string> GetPresignedUrlAsync(
+    private async Task<WithRawResponse<string>> GetPresignedUrlAsyncCore(
         GetPresignedUrlRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedMultiUrlEnvironmentNoDefault.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -29,6 +32,7 @@ public partial class S3Client : IS3Client
                     Method = HttpMethod.Post,
                     Path = "/s3/presigned-url",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -39,17 +43,28 @@ public partial class S3Client : IS3Client
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedMultiUrlEnvironmentNoDefaultException(
+                throw new SeedMultiUrlEnvironmentNoDefaultApiException(
                     "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
                     e
                 );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedMultiUrlEnvironmentNoDefaultApiException(
@@ -58,5 +73,19 @@ public partial class S3Client : IS3Client
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "s3Key" });
+    /// </code></example>
+    public WithRawResponseTask<string> GetPresignedUrlAsync(
+        GetPresignedUrlRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            GetPresignedUrlAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -11,6 +11,26 @@ export class CustomExceptionInterceptorGenerator extends FileGenerator<CSharpFil
             summary: `Custom exception interceptor for the SDK. Implement the Intercept method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).`
         });
 
+        class_.addField({
+            access: ast.Access.Private,
+            origin: class_.explicit("_clientOptions"),
+            type: this.Types.ClientOptions,
+            readonly: true
+        });
+
+        class_.addConstructor({
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "clientOptions",
+                    type: this.Types.ClientOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine("_clientOptions = clientOptions;");
+            })
+        });
+
         class_.addMethod({
             name: "Intercept",
             access: ast.Access.Public,

@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">get</a>(...) -> AsyncHttpResponse[BigUnion]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">get</a>(...) -&gt; AsyncHttpResponse[BigUnion]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.bigunion.get(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update</a>(...) -> AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -115,7 +115,7 @@ client.bigunion.update(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update_many</a>(...) -> AsyncHttpResponse[typing.Dict[str, bool]]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update_many</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, bool]]</code></summary>
 <dl>
 <dd>
 
@@ -180,7 +180,7 @@ client.bigunion.update_many(
 </details>
 
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -> AsyncHttpResponse[Shape]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -&gt; AsyncHttpResponse[Shape]</code></summary>
 <dl>
 <dd>
 
@@ -236,7 +236,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update</a>(...) -> AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">update</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 

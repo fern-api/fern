@@ -7,9 +7,9 @@ import { Volume } from "memfs/lib/volume";
 import path from "path";
 import tmp from "tmp-promise";
 import { Project } from "ts-morph";
-import { PackageDependencies } from "../dependency-manager/DependencyManager";
-import { JSR } from "./JSR";
-import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
+import { PackageDependencies } from "../dependency-manager/DependencyManager.js";
+import { JSR } from "./JSR.js";
+import { PersistedTypescriptProject } from "./PersistedTypescriptProject.js";
 
 export declare namespace TypescriptProject {
     export interface Init {
@@ -381,17 +381,17 @@ export abstract class TypescriptProject {
             typescript: "~5.7.2"
         };
         if (this.linter === "biome" || this.formatter === "biome") {
-            deps["@biomejs/biome"] = "2.3.1";
+            deps["@biomejs/biome"] = "2.3.11";
         }
         if (this.linter === "oxlint") {
-            deps["oxlint"] = "1.32.0";
-            deps["oxlint-tsgolint"] = "0.8.4";
+            deps["oxlint"] = "1.42.0";
+            deps["oxlint-tsgolint"] = "0.11.4";
         }
         if (this.formatter === "prettier") {
-            deps["prettier"] = "3.4.2";
+            deps["prettier"] = "3.7.4";
         }
         if (this.formatter === "oxfmt") {
-            deps["oxfmt"] = "0.17.0";
+            deps["oxfmt"] = "0.27.0";
         }
         return deps;
     }

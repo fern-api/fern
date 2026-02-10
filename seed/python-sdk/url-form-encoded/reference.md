@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">submit_form_data</a>(...) -> AsyncHttpResponse[PostSubmitResponse]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">submit_form_data</a>(...) -&gt; AsyncHttpResponse[PostSubmitResponse]</code></summary>
 <dl>
 <dd>
 

@@ -43,6 +43,13 @@ public class AsyncEventsClient {
     /**
      * List all user events.
      */
+    public CompletableFuture<List<Event>> listEvents(RequestOptions requestOptions) {
+        return this.rawClient.listEvents(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * List all user events.
+     */
     public CompletableFuture<List<Event>> listEvents(ListUserEventsRequest request) {
         return this.rawClient.listEvents(request).thenApply(response -> response.body());
     }

@@ -46,6 +46,7 @@ class NestedUser extends JsonSerializableType
     public function setName(string $value): self
     {
         $this->name = $value;
+        $this->_setField('name');
         return $this;
     }
 
@@ -63,6 +64,7 @@ class NestedUser extends JsonSerializableType
     public function setUser(User $value): self
     {
         $this->user = $value;
+        $this->_setField('user');
         return $this;
     }
 

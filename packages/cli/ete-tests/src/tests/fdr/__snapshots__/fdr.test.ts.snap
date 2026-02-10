@@ -310,7 +310,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
             "types": [
                 "type_commons:UndiscriminatedUnion"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "graphqlOperations": []
         },
         "subpackage_director": {
             "subpackageId": "subpackage_director",
@@ -323,7 +324,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                 "type_director:Age",
                 "type_director:LiteralString"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "graphqlOperations": []
         },
         "subpackage_imdb": {
             "subpackageId": "subpackage_imdb",
@@ -372,6 +374,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "json",
@@ -542,6 +545,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     ],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "response": {
                         "type": {
@@ -693,6 +697,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "responsesV2": {},
                     "errorsV2": [
@@ -774,6 +779,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "bytes",
@@ -805,7 +811,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                 "type_imdb:Person",
                 "type_imdb:RecursiveType"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "graphqlOperations": []
         }
     },
     "rootPackage": {
@@ -817,7 +824,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
             "subpackage_commons",
             "subpackage_director",
             "subpackage_imdb"
-        ]
+        ],
+        "graphqlOperations": []
     },
     "apiName": "my-api",
     "authSchemes": {},
@@ -1149,7 +1157,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
             "types": [
                 "type_commons:UndiscriminatedUnion"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "graphqlOperations": []
         },
         "subpackage_director": {
             "subpackageId": "subpackage_director",
@@ -1162,7 +1171,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
                 "type_director:Age",
                 "type_director:LiteralString"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "graphqlOperations": []
         },
         "subpackage_imdb": {
             "subpackageId": "subpackage_imdb",
@@ -1211,6 +1221,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "json",
@@ -1381,6 +1392,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     ],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "response": {
                         "type": {
@@ -1532,6 +1544,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "responsesV2": {},
                     "errorsV2": [
@@ -1613,6 +1626,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "bytes",
@@ -1644,7 +1658,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
                 "type_imdb:Person",
                 "type_imdb:RecursiveType"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "graphqlOperations": []
         }
     },
     "rootPackage": {
@@ -1656,7 +1671,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
             "subpackage_commons",
             "subpackage_director",
             "subpackage_imdb"
-        ]
+        ],
+        "graphqlOperations": []
     },
     "apiName": "my-api",
     "authSchemes": {},

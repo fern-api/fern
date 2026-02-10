@@ -1,5 +1,4 @@
 use seed_errors::prelude::*;
-use seed_errors::FooRequest;
 
 #[tokio::main]
 async fn main() {

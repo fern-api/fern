@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.getAndReturnListOfPrimitives(request) -> List&lt;String&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnListOfPrimitives(request) -> List&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.endpoints().container().getAndReturnListOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnListOfObjects(request) -> List&lt;ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnListOfObjects(request) -> List&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ client.endpoints().container().getAndReturnListOfObjects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnSetOfPrimitives(request) -> Set&lt;String&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnSetOfPrimitives(request) -> Set&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ client.endpoints().container().getAndReturnSetOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnSetOfObjects(request) -> Set&lt;ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnSetOfObjects(request) -> Set&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -186,7 +186,7 @@ client.endpoints().container().getAndReturnSetOfObjects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnMapPrimToPrim(request) -> Map&lt;String, String&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnMapPrimToPrim(request) -> Map&amp;lt;String, String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -230,7 +230,7 @@ client.endpoints().container().getAndReturnMapPrimToPrim(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToObject(request) -> Map&lt;String, ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToObject(request) -> Map&amp;lt;String, ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -277,7 +277,7 @@ client.endpoints().container().getAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&lt;ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1187,6 +1187,68 @@ client.endpoints().object().getAndReturnNestedWithRequiredFieldAsList(
 <dd>
 
 **request:** `List<NestedObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnWithDatetimeLikeString(request) -> ObjectWithDatetimeLikeString</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithDatetimeLikeString(
+    ObjectWithDatetimeLikeString
+        .builder()
+        .datetimeLikeString("2023-08-31T14:15:22Z")
+        .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>

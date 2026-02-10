@@ -76,7 +76,7 @@ func (c *Client) GetAndReturnLong(
 		opts...,
 	)
 	if err != nil {
-		return 0, err
+		return int64(0), err
 	}
 	return response.Body, nil
 }

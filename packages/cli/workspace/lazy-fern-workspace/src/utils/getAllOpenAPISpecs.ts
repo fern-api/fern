@@ -3,7 +3,7 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { listFiles, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator";
+import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator.js";
 
 export async function getAllOpenAPISpecs({
     context,
@@ -84,6 +84,7 @@ export async function convertProtobufToOpenAPI({
             type: "openapi",
             absoluteFilepath: openAPIAbsoluteFilePath.absoluteFilepath,
             absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
+            absoluteFilepathToOverlays: undefined,
             settings: protobufSpec.settings,
             source: {
                 type: "protobuf",

@@ -12,23 +12,24 @@ public partial class FileUploadExampleClient : IFileUploadExampleClient
         _client = client;
     }
 
-    /// <summary>
-    /// Upload a file to the database
-    /// </summary>
-    /// <example><code>
-    /// await client.FileUploadExample.UploadFileAsync(new UploadFileRequest { Name = "name" });
-    /// </code></example>
-    public async Task<string> UploadFileAsync(
+    private async Task<WithRawResponse<string>> UploadFileAsyncCore(
         UploadFileRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
             BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "upload-file",
+            Headers = _headers,
             Options = options,
         };
         multipartFormRequest_.AddStringPart("name", request.Name);
@@ -41,14 +42,28 @@ public partial class FileUploadExampleClient : IFileUploadExampleClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedApiException("Failed to deserialize response", e);
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedApiApiException(
@@ -57,5 +72,22 @@ public partial class FileUploadExampleClient : IFileUploadExampleClient
                 responseBody
             );
         }
+    }
+
+    /// <summary>
+    /// Upload a file to the database
+    /// </summary>
+    /// <example><code>
+    /// await client.FileUploadExample.UploadFileAsync(new UploadFileRequest { Name = "name" });
+    /// </code></example>
+    public WithRawResponseTask<string> UploadFileAsync(
+        UploadFileRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            UploadFileAsyncCore(request, options, cancellationToken)
+        );
     }
 }

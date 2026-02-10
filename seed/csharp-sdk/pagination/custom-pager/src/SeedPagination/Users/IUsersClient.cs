@@ -22,6 +22,17 @@ public partial interface IUsersClient
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// Pagination endpoint with a top-level cursor field in the request body.
+    /// This tests that the mock server correctly ignores cursor mismatches
+    /// when getNextPage() is called with a different cursor value.
+    /// </summary>
+    Task<Pager<User>> ListWithTopLevelBodyCursorPaginationAsync(
+        ListUsersTopLevelBodyCursorPaginationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     Task<Pager<User>> ListWithOffsetPaginationAsync(
         ListUsersOffsetPaginationRequest request,
         RequestOptions? options = null,

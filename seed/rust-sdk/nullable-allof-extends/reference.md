@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">get_test</a>() -> Result<RootObject, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">get_test</a>() -> Result&lt;RootObject, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/client.rs">create_test</a>(request: RootObject) -> Result<RootObject, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">create_test</a>(request: RootObject) -> Result&lt;RootObject, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -75,7 +75,6 @@ Creates a test object with nullable allOf in request body.
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::RootObject;
 
 #[tokio::main]
 async fn main() {

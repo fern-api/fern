@@ -1,6 +1,6 @@
 # Reference
 ## Long Path
-<details><summary><code>client.deepCursorPath.doThing(request) -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.deepCursorPath.doThing(request) -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.deepCursorPath().doThing(
 </dl>
 </details>
 
-<details><summary><code>client.deepCursorPath.doThingRequired(request) -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.deepCursorPath.doThingRequired(request) -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +113,7 @@ client.deepCursorPath().doThingRequired(
 </dl>
 </details>
 
-<details><summary><code>client.deepCursorPath.doThingInline(request) -> SyncPagingIterable&lt;String&gt;</code></summary>
+<details><summary><code>client.deepCursorPath.doThingInline(request) -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 

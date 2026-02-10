@@ -56,6 +56,9 @@
       "path": "../logger"
     },
     {
+      "path": "../../migrations-base"
+    },
+    {
       "path": "../generation/local-generation/local-workspace-runner"
     },
     {
@@ -126,6 +129,9 @@
     },
     {
       "path": "../cli-logger"
+    },
+    {
+      "path": "../cli-v2"
     },
     {
       "path": "../../commons/casings-generator"

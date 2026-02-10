@@ -2,19 +2,19 @@ namespace SeedUnions;
 
 public partial interface IBigunionClient
 {
-    Task<object> GetAsync(
+    WithRawResponseTask<object> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> UpdateAsync(
+    WithRawResponseTask<bool> UpdateAsync(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Dictionary<string, bool>> UpdateManyAsync(
+    WithRawResponseTask<Dictionary<string, bool>> UpdateManyAsync(
         IEnumerable<object> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

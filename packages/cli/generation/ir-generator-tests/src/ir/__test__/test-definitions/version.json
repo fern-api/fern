@@ -1423,6 +1423,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }

@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .metadata import Metadata
     from .metadata_union import MetadataUnion
     from .my_union import MyUnion
+    from .name import Name
     from .named_metadata import NamedMetadata
     from .nested_union_l_1 import NestedUnionL1
     from .nested_union_l_2 import NestedUnionL2
@@ -24,6 +25,9 @@ if typing.TYPE_CHECKING:
     from .union_with_duplicate_types import UnionWithDuplicateTypes
     from .union_with_identical_primitives import UnionWithIdenticalPrimitives
     from .union_with_identical_strings import UnionWithIdenticalStrings
+    from .union_with_reserved_names import UnionWithReservedNames
+    from .union_with_type_aliases import UnionWithTypeAliases
+    from .user_id import UserId
 _dynamic_imports: typing.Dict[str, str] = {
     "ConvertToken": ".convert_token",
     "Key": ".key",
@@ -31,6 +35,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Metadata": ".metadata",
     "MetadataUnion": ".metadata_union",
     "MyUnion": ".my_union",
+    "Name": ".name",
     "NamedMetadata": ".named_metadata",
     "NestedUnionL1": ".nested_union_l_1",
     "NestedUnionL2": ".nested_union_l_2",
@@ -43,6 +48,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "UnionWithIdenticalPrimitives": ".union_with_identical_primitives",
     "UnionWithIdenticalStrings": ".union_with_identical_strings",
+    "UnionWithReservedNames": ".union_with_reserved_names",
+    "UnionWithTypeAliases": ".union_with_type_aliases",
+    "UserId": ".user_id",
 }
 
 
@@ -74,6 +82,7 @@ __all__ = [
     "Metadata",
     "MetadataUnion",
     "MyUnion",
+    "Name",
     "NamedMetadata",
     "NestedUnionL1",
     "NestedUnionL2",
@@ -86,4 +95,7 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
+    "UnionWithTypeAliases",
+    "UserId",
 ]

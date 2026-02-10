@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>$client->unknown->post($request) -> array</code></summary>
+<details><summary><code>$client-&gt;unknown-&gt;post($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ $client->unknown->post(
 </dl>
 </details>
 
-<details><summary><code>$client->unknown->postObject($request) -> array</code></summary>
+<details><summary><code>$client-&gt;unknown-&gt;postObject($request) -> array</code></summary>
 <dl>
 <dd>
 

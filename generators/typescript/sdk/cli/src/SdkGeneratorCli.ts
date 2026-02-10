@@ -2,7 +2,7 @@ import { FernGeneratorExec } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { getNamespaceExport } from "@fern-api/typescript-base";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import {
     convertJestImportsToVitest,
@@ -16,8 +16,8 @@ import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { copyFile } from "fs/promises";
 import path from "path";
 
-import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
-import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
+import { SdkCustomConfig } from "./custom-config/SdkCustomConfig.js";
+import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema.js";
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
@@ -43,6 +43,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
             outputEsm: parsed?.outputEsm ?? false,
+            outputSrcOnly: parsed?.outputSrcOnly ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
@@ -158,7 +159,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         customConfig: SdkCustomConfig;
         npmPackage: NpmPackage;
         generatorContext: GeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         const useLegacyExports = customConfig.useLegacyExports ?? false;
@@ -340,6 +341,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return customConfig.outputSourceFiles;
     }
 
+    protected outputSrcOnly(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
+        return customConfig.outputSrcOnly ?? false;
+    }
+
     protected shouldTolerateRepublish(_customConfig: SdkCustomConfig): boolean {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.tolerateRepublish;
@@ -371,7 +377,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         ir,
         config
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
     }): boolean {
         const hasGitHubOutputMode = config.output.mode.type === "github";

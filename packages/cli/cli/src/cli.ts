@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { runCliV2 } from "@fern-api/cli-v2";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
@@ -11,7 +12,14 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import {
+    initializeAPI,
+    initializeDocs,
+    initializeWithMintlify,
+    initializeWithReadme,
+    LoadOpenAPIStatus,
+    loadOpenAPIFromUrl
+} from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
@@ -20,46 +28,47 @@ import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
-import { CliContext } from "./cli-context/CliContext";
-import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
-import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
-import { diff } from "./commands/diff/diff";
-import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
-import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
-import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
-import { downgrade } from "./commands/downgrade/downgrade";
-import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
-import { formatWorkspaces } from "./commands/format/formatWorkspaces";
-import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
-import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
-import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
-import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
-import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
-import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
-import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
-import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs";
-import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
-import { mockServer } from "./commands/mock/mockServer";
-import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
-import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
-import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
-import { selfUpdate } from "./commands/self-update/selfUpdate";
-import { testOutput } from "./commands/test/testOutput";
-import { generateToken } from "./commands/token/token";
-import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
-import { upgrade } from "./commands/upgrade/upgrade";
-import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks";
-import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
-import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
-import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject";
-import { FERN_CWD_ENV_VAR } from "./cwd";
-import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-import { RUNTIME } from "./runtime";
+import { CliContext } from "./cli-context/CliContext.js";
+import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli.js";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
+import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
+import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { diff } from "./commands/diff/diff.js";
+import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
+import { docsDiff } from "./commands/docs-diff/docsDiff.js";
+import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
+import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
+import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { downgrade } from "./commands/downgrade/downgrade.js";
+import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
+import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
+import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
+import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
+import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
+import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
+import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces.js";
+import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces.js";
+import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
+import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
+import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { mockServer } from "./commands/mock/mockServer.js";
+import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
+import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
+import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { selfUpdate } from "./commands/self-update/selfUpdate.js";
+import { testOutput } from "./commands/test/testOutput.js";
+import { generateToken } from "./commands/token/token.js";
+import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
+import { upgrade } from "./commands/upgrade/upgrade.js";
+import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
+import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
+import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
+import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
+import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
+import { RUNTIME } from "./runtime.js";
 
 void runCli();
 
@@ -131,9 +140,20 @@ async function runCli() {
 }
 
 async function tryRunCli(cliContext: CliContext) {
-    const cli: Argv<GlobalCliOptions> = yargs(hideBin(process.argv))
+    const args = hideBin(process.argv);
+
+    if (args[0] === "completion") {
+        yargs(args)
+            .scriptName(cliContext.environment.cliName)
+            .completion("completion", "Generate shell completion script")
+            .parse();
+        return;
+    }
+
+    const cli: Argv<GlobalCliOptions> = yargs(args)
         .scriptName(cliContext.environment.cliName)
         .version(false)
+        .completion("completion", "Generate shell completion script")
         .fail((message, error: unknown, argv) => {
             // if error is null, it's a yargs validation error
             if (error == null) {
@@ -205,6 +225,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addBetaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -560,6 +581,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The group to generate"
                 })
+                .option("generator", {
+                    type: "string",
+                    description: "The name of a specific generator to run"
+                })
                 .option("mode", {
                     choices: Object.values(GenerationMode),
                     description: "Defaults to the mode specified in generators.yml"
@@ -639,6 +664,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Only upload dynamic IR for specified version, skip SDK generation (remote generation only)",
                     default: false
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Custom output directory (currently only supported with --preview for SDK generation)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -670,6 +699,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     "The --dynamic-ir-only flag can only be used for API generation, not docs generation."
                 );
             }
+            if (argv.output != null && !argv.preview) {
+                return cliContext.failWithoutThrowing("The --output flag currently only works with --preview.");
+            }
+            if (argv.output != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
+            }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -679,6 +714,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     version: argv.version,
                     groupName: argv.group,
+                    generatorName: argv.generator,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -689,12 +725,16 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
-                    dynamicIrOnly: argv["dynamic-ir-only"]
+                    dynamicIrOnly: argv["dynamic-ir-only"],
+                    outputDir: argv.output
                 });
             }
             if (argv.docs != null) {
                 if (argv.group != null) {
                     cliContext.logger.warn("--group is ignored when generating docs");
+                }
+                if (argv.generator != null) {
+                    cliContext.logger.warn("--generator is ignored when generating docs");
                 }
                 if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
@@ -727,6 +767,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
+                generatorName: argv.generator,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
@@ -737,7 +778,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
-                dynamicIrOnly: argv["dynamic-ir-only"]
+                dynamicIrOnly: argv["dynamic-ir-only"],
+                outputDir: argv.output
             });
         }
     );
@@ -1159,11 +1201,17 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         "api update",
         `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description:
-                    "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description:
+                        "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
+                }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
                 command: "fern api update"
@@ -1173,7 +1221,8 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
-                })
+                }),
+                indent: argv.indent
             });
         }
     );
@@ -1499,8 +1548,92 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
         addDocsPreviewCommand(yargs, cliContext);
+        addDocsDiffCommand(yargs, cliContext);
+        addDocsMdCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    // Hidden command - pass false as description to hide from help output
+    // This command is in beta and not yet ready for general use
+    cli.command("md", false, (yargs) => {
+        addDocsMdGenerateCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "generate",
+        "[Beta] Generate MDX documentation from library source code. Requires 'libraries' config in docs.yml.",
+        (yargs) =>
+            yargs.option("library", {
+                type: "string",
+                description: "Name of a specific library defined in docs.yml to generate docs for"
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs md generate"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            await generateLibraryDocs({
+                project,
+                cliContext,
+                library: argv.library
+            });
+        }
+    );
+}
+
+function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "diff <preview-url> <files..>",
+        "Generate visual diffs between preview and production docs pages",
+        (yargs) =>
+            yargs
+                .positional("preview-url", {
+                    type: "string",
+                    description: "The preview deployment URL (e.g. acme-preview-abc123.docs.buildwithfern.com)",
+                    demandOption: true
+                })
+                .positional("files", {
+                    type: "string",
+                    array: true,
+                    description: "File paths to generate diffs for (e.g. fern/pages/intro.mdx)",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    default: ".fern/diff",
+                    description: "Output directory for diff images"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs diff"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const result = await docsDiff({
+                cliContext,
+                project,
+                previewUrl: argv.previewUrl,
+                files: argv.files ?? [],
+                outputDir: argv.output
+            });
+
+            cliContext.logger.info(JSON.stringify(result, null, 2));
+        }
+    );
 }
 
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -1773,6 +1906,11 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API"
+                })
+                .option("indent", {
+                    type: "number",
+                    description: "Indentation width in spaces (default: 2)",
+                    default: 2
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -1788,8 +1926,30 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     defaultToAllApiWorkspaces: false
                 }),
                 cliContext,
-                outputPath: resolve(cwd(), argv.outputPath)
+                outputPath: resolve(cwd(), argv.outputPath),
+                indent: argv.indent
             });
+        }
+    );
+}
+
+function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "beta",
+        false, // Hidden from --help while in-development.
+        (yargs) =>
+            yargs.help(false).version(false).strict(false).parserConfiguration({
+                "unknown-options-as-args": true
+            }),
+        async (argv) => {
+            try {
+                // Pass through all arguments after "v2" to the v2 CLI
+                const v2Args = argv._.slice(1).map(String);
+                await runCliV2(v2Args);
+            } catch (error) {
+                cliContext.logger.error("CLI v2 failed:", String(error));
+                cliContext.failWithoutThrowing();
+            }
         }
     );
 }

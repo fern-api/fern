@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -16,9 +16,7 @@
 from seed import SeedOauthClientCredentialsMandatoryAuth
 
 client = SeedOauthClientCredentialsMandatoryAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.auth.get_token_with_client_credentials(
     client_id="my_oauth_app_123",
@@ -76,7 +74,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -92,9 +90,7 @@ client.auth.get_token_with_client_credentials(
 from seed import SeedOauthClientCredentialsMandatoryAuth
 
 client = SeedOauthClientCredentialsMandatoryAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.auth.refresh_token(
     client_id="my_oauth_app_123",
@@ -162,7 +158,7 @@ client.auth.refresh_token(
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>() -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -178,9 +174,7 @@ client.auth.refresh_token(
 from seed import SeedOauthClientCredentialsMandatoryAuth
 
 client = SeedOauthClientCredentialsMandatoryAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.nested.api.get_something()
 
@@ -211,7 +205,7 @@ client.nested.api.get_something()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>() -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -227,9 +221,7 @@ client.nested.api.get_something()
 from seed import SeedOauthClientCredentialsMandatoryAuth
 
 client = SeedOauthClientCredentialsMandatoryAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    base_url="YOUR_BASE_URL",
 )
 client.simple.get_something()
 

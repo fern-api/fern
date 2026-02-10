@@ -10,6 +10,6 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_optional_data(&ListWithOptionalDataQueryRequest { page: Some(1) }, None)
+        .list_with_global_config(&ListWithGlobalConfigQueryRequest2 { offset: Some(1) }, None)
         .await;
 }

@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .client import AsyncSeedFileUpload, SeedFileUpload
     from .service import (
         Id,
+        ModelType,
         MyAliasObject,
         MyAliasObjectParams,
         MyCollectionAliasObject,
@@ -21,11 +22,13 @@ if typing.TYPE_CHECKING:
         MyObjectWithOptional,
         MyObjectWithOptionalParams,
         ObjectType,
+        OpenEnumType,
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedFileUpload": ".client",
     "Id": ".service",
+    "ModelType": ".service",
     "MyAliasObject": ".service",
     "MyAliasObjectParams": ".service",
     "MyCollectionAliasObject": ".service",
@@ -37,6 +40,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MyObjectWithOptional": ".service",
     "MyObjectWithOptionalParams": ".service",
     "ObjectType": ".service",
+    "OpenEnumType": ".service",
     "SeedFileUpload": ".client",
     "__version__": ".version",
     "service": ".service",
@@ -67,6 +71,7 @@ def __dir__():
 __all__ = [
     "AsyncSeedFileUpload",
     "Id",
+    "ModelType",
     "MyAliasObject",
     "MyAliasObjectParams",
     "MyCollectionAliasObject",
@@ -78,6 +83,7 @@ __all__ = [
     "MyObjectWithOptional",
     "MyObjectWithOptionalParams",
     "ObjectType",
+    "OpenEnumType",
     "SeedFileUpload",
     "__version__",
     "service",

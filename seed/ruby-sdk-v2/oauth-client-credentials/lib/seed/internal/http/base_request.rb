@@ -22,6 +22,12 @@ module Seed
           @request_options = request_options
         end
 
+        # @return [Hash] The query parameters merged with additional query parameters from request options.
+        def encode_query
+          additional_query = @request_options&.dig(:additional_query_parameters) || @request_options&.dig("additional_query_parameters") || {}
+          @query.merge(additional_query)
+        end
+
         # Child classes should implement:
         # - encode_headers: Returns the encoded HTTP request headers.
         # - encode_body: Returns the encoded HTTP request body.

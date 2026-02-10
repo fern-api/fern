@@ -22,18 +22,23 @@ public partial class UsersClient : IUsersClient
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.StartingAfter != null)
-        {
-            _query["starting_after"] = request.StartingAfter;
-        }
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("starting_after", request.StartingAfter)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var httpRequest = await _client.CreateHttpRequestAsync(
             new JsonRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
-                Query = _query,
+                Headers = _headers,
                 Options = options,
             }
         );

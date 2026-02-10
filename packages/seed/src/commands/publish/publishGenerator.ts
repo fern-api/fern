@@ -5,10 +5,10 @@ import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources
 import path from "path";
 import semver from "semver";
 
-import { PublishDockerConfiguration } from "../../config/api";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { runCommands, subVersion } from "../../utils/publishUtilities";
+import { PublishDockerConfiguration } from "../../config/api/index.js";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases.js";
+import { runCommands, subVersion } from "../../utils/publishUtilities.js";
 
 interface VersionFilePair {
     latestChangelogPath: string;
@@ -25,7 +25,7 @@ export async function publishGenerator({
     context: TaskContext;
 }): Promise<void> {
     const generatorId = generator.workspaceName;
-    context.logger.info(`Publishing generator ${generatorId}@${version}...`);
+    context.logger.info(`Publishing generator ${generatorId}@${typeof version === "string" ? version : "latest"}...`);
 
     let publishVersion: string;
     if (typeof version !== "string") {
@@ -93,12 +93,16 @@ async function buildAndPushContainerImage(
         input: dockerHubPassword
     });
 
-    const aliases = [containerConfig.image, ...(containerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`);
-    const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat();
-    context.logger.debug(`Pushing container image ${aliases[0]} using docker...`);
-    if (aliases.length > 1) {
-        context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`);
+    const images = [containerConfig.image, ...(containerConfig.aliases ?? [])];
+    const versionTags = images.map((image) => `${image}:${version}`);
+    const latestTags = images.map((image) => `${image}:latest`);
+    const allTags = [...versionTags, ...latestTags];
+    const tagArgs = allTags.map((imageTag) => ["-t", imageTag]).flat();
+    context.logger.debug(`Pushing container images ${allTags[0]} using docker...`);
+    if (images.length > 1) {
+        context.logger.debug(`Also tagging with aliases: ${images.slice(1).join(", ")}`);
     }
+    context.logger.debug(`Also tagging as latest: ${latestTags.join(", ")}`);
     const standardBuildOptions = [
         "build",
         "--push",

@@ -53,7 +53,7 @@
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
-        "prettier": "3.4.2"
+        "prettier": "3.7.4"
     },
     "browser": {
         "fs": false,

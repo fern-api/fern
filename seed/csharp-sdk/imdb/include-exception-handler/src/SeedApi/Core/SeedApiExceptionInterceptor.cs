@@ -1,3 +1,5 @@
+using SeedApi;
+
 namespace SeedApi.Core;
 
 /// <summary>
@@ -5,6 +7,13 @@ namespace SeedApi.Core;
 /// </summary>
 public class SeedApiExceptionInterceptor : IExceptionInterceptor
 {
+    private readonly ClientOptions _clientOptions;
+
+    public SeedApiExceptionInterceptor(ClientOptions clientOptions)
+    {
+        _clientOptions = clientOptions;
+    }
+
     /// <summary>
     /// Intercepts an exception and returns it after capturing.
     /// </summary>

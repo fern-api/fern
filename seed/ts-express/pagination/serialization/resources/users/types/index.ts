@@ -3,6 +3,7 @@ export * from "./ListUsersExtendedResponse";
 export * from "./ListUsersMixedTypePaginationResponse";
 export * from "./ListUsersOptionalDataPaginationResponse";
 export * from "./ListUsersPaginationResponse";
+export * from "./ListUsersTopLevelCursorPaginationResponse";
 export * from "./NextPage";
 export * from "./Order";
 export * from "./Page";

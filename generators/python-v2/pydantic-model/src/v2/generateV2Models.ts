@@ -1,9 +1,9 @@
 import { WriteablePythonFile } from "@fern-api/python-base";
 
-import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
-import { EnumGenerator } from "./EnumGenerator";
-import { ObjectGenerator } from "./ObjectGenerator";
-import { WrappedAliasGenerator } from "./WrappedAliasGenerator";
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { EnumGenerator } from "./EnumGenerator.js";
+import { ObjectGenerator } from "./ObjectGenerator.js";
+import { WrappedAliasGenerator } from "./WrappedAliasGenerator.js";
 
 export function generateV2Models({ context }: { context: PydanticModelGeneratorContext }): WriteablePythonFile[] {
     const files: WriteablePythonFile[] = [];

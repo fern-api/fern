@@ -2,9 +2,8 @@
 
 import { BearerAuthProvider } from "./auth/BearerAuthProvider";
 import * as core from "./core";
-import type { AuthProvider } from "./core/auth";
 import { mergeHeaders } from "./core/headers";
-import * as environments from "./environments";
+import type * as environments from "./environments";
 
 export type BaseClientOptions = {
     environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
@@ -38,18 +37,26 @@ export interface BaseRequestOptions {
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
     authProvider?: core.AuthProvider;
-}
+};
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> = NormalizedClientOptions<T> & {
-    authProvider: core.AuthProvider;
-}
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> =
+    NormalizedClientOptions<T> & {
+        authProvider: core.AuthProvider;
+    };
 
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
-    options: T
+    options: T,
 ): NormalizedClientOptions<T> {
     const headers = mergeHeaders(
-        { "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "@fern/simple-api", "X-Fern-SDK-Version": "0.0.1", "User-Agent": "@fern/simple-api/0.0.1", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version },
-        options?.headers
+        {
+            "X-Fern-Language": "JavaScript",
+            "X-Fern-SDK-Name": "@fern/simple-api",
+            "X-Fern-SDK-Version": "0.0.1",
+            "User-Agent": "@fern/simple-api/0.0.1",
+            "X-Fern-Runtime": core.RUNTIME.type,
+            "X-Fern-Runtime-Version": core.RUNTIME.version,
+        },
+        options?.headers,
     );
 
     return {
@@ -60,7 +67,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
 }
 
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
-    options: T
+    options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
@@ -69,10 +76,10 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
 }
 
 function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
-    options: NormalizedClientOptions<T>
+    options: NormalizedClientOptions<T>,
 ): NormalizedClientOptionsWithAuth<T> {
     return {
         ...options,
-        authProvider: new core.NoOpAuthProvider()
+        authProvider: new core.NoOpAuthProvider(),
     };
 }

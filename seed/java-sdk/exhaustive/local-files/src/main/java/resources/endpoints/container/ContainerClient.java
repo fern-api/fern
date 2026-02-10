@@ -91,6 +91,10 @@ public class ContainerClient {
     return this.rawClient.getAndReturnOptional().body();
   }
 
+  public Optional<ObjectWithRequiredField> getAndReturnOptional(RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnOptional(requestOptions).body();
+  }
+
   public Optional<ObjectWithRequiredField> getAndReturnOptional(
       Optional<ObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnOptional(request).body();

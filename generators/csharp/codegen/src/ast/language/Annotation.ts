@@ -1,7 +1,7 @@
-import { type Generation } from "../../context/generation-info";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { type ClassReference } from "../types/ClassReference";
+import { type Generation } from "../../context/generation-info.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { type ClassReference } from "../types/ClassReference.js";
 
 export declare namespace Annotation {
     interface Args {
@@ -13,7 +13,7 @@ export declare namespace Annotation {
 }
 
 export class Annotation extends AstNode {
-    private reference: ClassReference;
+    public readonly reference: ClassReference;
     private argument?: string | AstNode;
 
     constructor(args: Annotation.Args, generation: Generation) {

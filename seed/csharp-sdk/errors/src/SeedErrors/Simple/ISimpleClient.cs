@@ -2,19 +2,19 @@ namespace SeedErrors;
 
 public partial interface ISimpleClient
 {
-    Task<FooResponse> FooWithoutEndpointErrorAsync(
+    WithRawResponseTask<FooResponse> FooWithoutEndpointErrorAsync(
         FooRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<FooResponse> FooAsync(
+    WithRawResponseTask<FooResponse> FooAsync(
         FooRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<FooResponse> FooWithExamplesAsync(
+    WithRawResponseTask<FooResponse> FooWithExamplesAsync(
         FooRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

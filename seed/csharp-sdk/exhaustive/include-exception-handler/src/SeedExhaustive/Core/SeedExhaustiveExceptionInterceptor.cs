@@ -1,3 +1,5 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive.Core;
 
 /// <summary>
@@ -5,6 +7,13 @@ namespace SeedExhaustive.Core;
 /// </summary>
 public class SeedExhaustiveExceptionInterceptor : IExceptionInterceptor
 {
+    private readonly ClientOptions _clientOptions;
+
+    public SeedExhaustiveExceptionInterceptor(ClientOptions clientOptions)
+    {
+        _clientOptions = clientOptions;
+    }
+
     /// <summary>
     /// Intercepts an exception and returns it after capturing.
     /// </summary>

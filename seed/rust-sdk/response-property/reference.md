@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(request: String) -> Result<Response, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -34,7 +34,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_docs</a>(request: String) -> Result<Response, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_docs</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_name</a>(request: String) -> Result<StringResponse, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_name</a>(request: String) -> Result&lt;StringResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -102,7 +102,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_metadata</a>(request: String) -> Result<Response, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie_metadata</a>(request: String) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -136,7 +136,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie</a>(request: String) -> Result<Option<Response>, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie</a>(request: String) -> Result&lt;Option&lt;Response&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -170,7 +170,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie_docs</a>(request: String) -> Result<OptionalWithDocs, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie_docs</a>(request: String) -> Result&lt;OptionalWithDocs, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -204,7 +204,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie_name</a>(request: String) -> Result<OptionalStringResponse, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_optional_movie_name</a>(request: String) -> Result&lt;OptionalStringResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

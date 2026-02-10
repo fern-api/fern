@@ -14,6 +14,7 @@
         "description": "Creates a product with various min/max constrained fields",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -177,6 +178,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -204,6 +206,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -334,6 +337,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -354,6 +358,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
@@ -433,8 +438,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": 0,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },
@@ -450,8 +458,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -467,8 +478,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": 10000,
                 "minimum": 0,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },
@@ -484,8 +498,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -503,8 +520,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": 1000,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -530,6 +550,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -554,6 +576,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -578,6 +602,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "primitive",
@@ -613,6 +639,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "primitive",
@@ -695,6 +723,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -777,8 +807,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": 0,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },
@@ -794,8 +827,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -811,8 +847,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": 10000,
                 "minimum": 0,
+                "multipleOf": undefined,
                 "type": "integer",
               },
             },
@@ -828,8 +867,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -847,8 +889,11 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
+                  "exclusiveMaximum": 1000,
+                  "exclusiveMinimum": 0,
                   "maximum": undefined,
                   "minimum": undefined,
+                  "multipleOf": undefined,
                   "type": "double",
                 },
               },
@@ -874,6 +919,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -898,6 +945,8 @@
                     "type": "string",
                   },
                 },
+                "maxItems": undefined,
+                "minItems": undefined,
                 "type": "list",
               },
               "type": "optional",
@@ -922,6 +971,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "primitive",
@@ -957,6 +1008,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "primitive",

@@ -39,6 +39,13 @@ public class RawEventsClient {
     /**
      * List all user events.
      */
+    public SeedMixedFileDirectoryHttpResponse<List<Event>> listEvents(RequestOptions requestOptions) {
+        return listEvents(ListUserEventsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all user events.
+     */
     public SeedMixedFileDirectoryHttpResponse<List<Event>> listEvents(ListUserEventsRequest request) {
         return listEvents(request, null);
     }
@@ -54,6 +61,11 @@ public class RawEventsClient {
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "limit", request.getLimit().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

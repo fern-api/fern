@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> IEnumerable<Resource></code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Resource&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ await client.Service.ListResourcesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetResourceAsync</a>(resourceId, GetResourceRequest { ... }) -> Resource</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetResourceAsync</a>(resourceId, GetResourceRequest { ... }) -> WithRawResponseTask&lt;Resource&gt;</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ await client.Service.GetResourceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">SearchResourcesAsync</a>(SearchResourcesRequest { ... }) -> SearchResponse</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">SearchResourcesAsync</a>(SearchResourcesRequest { ... }) -> WithRawResponseTask&lt;SearchResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -198,7 +198,7 @@ await client.Service.SearchResourcesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> PaginatedUserResponse</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> WithRawResponseTask&lt;PaginatedUserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -264,7 +264,7 @@ await client.Service.ListUsersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetUserByIdAsync</a>(userId, GetUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetUserByIdAsync</a>(userId, GetUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -329,7 +329,7 @@ await client.Service.GetUserByIdAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -408,7 +408,7 @@ await client.Service.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">UpdateUserAsync</a>(userId, UpdateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">UpdateUserAsync</a>(userId, UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -550,7 +550,7 @@ await client.Service.DeleteUserAsync("userId");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListConnectionsAsync</a>(ListConnectionsRequest { ... }) -> IEnumerable<Connection></code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListConnectionsAsync</a>(ListConnectionsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Connection&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -611,7 +611,7 @@ await client.Service.ListConnectionsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetConnectionAsync</a>(connectionId, GetConnectionRequest { ... }) -> Connection</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetConnectionAsync</a>(connectionId, GetConnectionRequest { ... }) -> WithRawResponseTask&lt;Connection&gt;</code></summary>
 <dl>
 <dd>
 
@@ -676,7 +676,7 @@ await client.Service.GetConnectionAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListClientsAsync</a>(ListClientsRequest { ... }) -> PaginatedClientResponse</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListClientsAsync</a>(ListClientsRequest { ... }) -> WithRawResponseTask&lt;PaginatedClientResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -742,7 +742,7 @@ await client.Service.ListClientsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetClientAsync</a>(clientId, GetClientRequest { ... }) -> Client</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetClientAsync</a>(clientId, GetClientRequest { ... }) -> WithRawResponseTask&lt;Client&gt;</code></summary>
 <dl>
 <dd>
 

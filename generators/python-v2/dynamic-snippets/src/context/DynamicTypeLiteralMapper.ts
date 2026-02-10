@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 const UNION_VALUE_KEY = "value";
 
@@ -414,8 +414,12 @@ export class DynamicTypeLiteralMapper {
     }): python.TypeInstantiation | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                return this.convert({ typeReference, value });
-            } catch (e) {
+                const instantiation = this.convert({ typeReference, value });
+                if (python.TypeInstantiation.isNop(instantiation)) {
+                    continue;
+                }
+                return instantiation;
+            } catch {
                 continue;
             }
         }

@@ -7,8 +7,8 @@ import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues } from "lodash-es";
 
-import { FernDefinition } from "..";
-import { BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
+import { FernDefinition } from "../index.js";
+import { BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace.js";
 
 /**
  * Extracts the auth scheme names referenced by an auth configuration.

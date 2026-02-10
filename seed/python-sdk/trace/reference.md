@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v_2.<a href="src/seed/v_2/client.py">test</a>() -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.v_2.<a href="src/seed/v_2/client.py">test</a>() -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ client.v_2.test()
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_test_submission_status</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_test_submission_status</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +119,7 @@ client.admin.update_test_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_test_submission_update</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_test_submission_update</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -202,7 +202,7 @@ client.admin.send_test_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_workspace_submission_status</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_workspace_submission_status</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -273,7 +273,7 @@ client.admin.update_workspace_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_workspace_submission_update</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_workspace_submission_update</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -358,7 +358,7 @@ client.admin.send_workspace_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -540,7 +540,7 @@ client.admin.store_traced_test_case(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case_v_2</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case_v_2</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -707,7 +707,7 @@ client.admin.store_traced_test_case_v_2(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -880,7 +880,7 @@ client.admin.store_traced_workspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace_v_2</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace_v_2</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -1039,7 +1039,7 @@ client.admin.store_traced_workspace_v_2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">get_homepage_problems</a>() -> AsyncHttpResponse[typing.List[ProblemId]]</code></summary>
+<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">get_homepage_problems</a>() -&gt; AsyncHttpResponse[typing.List[ProblemId]]</code></summary>
 <dl>
 <dd>
 
@@ -1086,7 +1086,7 @@ client.homepage.get_homepage_problems()
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">set_homepage_problems</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">set_homepage_problems</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -1144,7 +1144,7 @@ client.homepage.set_homepage_problems(
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="src/seed/migration/client.py">get_attempted_migrations</a>(...) -> AsyncHttpResponse[typing.List[Migration]]</code></summary>
+<details><summary><code>client.migration.<a href="src/seed/migration/client.py">get_attempted_migrations</a>(...) -&gt; AsyncHttpResponse[typing.List[Migration]]</code></summary>
 <dl>
 <dd>
 
@@ -1202,7 +1202,7 @@ client.migration.get_attempted_migrations(
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">create_playlist</a>(...) -> AsyncHttpResponse[Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">create_playlist</a>(...) -&gt; AsyncHttpResponse[Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1315,7 +1315,7 @@ client.playlist.create_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlists</a>(...) -> AsyncHttpResponse[typing.List[Playlist]]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlists</a>(...) -&gt; AsyncHttpResponse[typing.List[Playlist]]</code></summary>
 <dl>
 <dd>
 
@@ -1434,7 +1434,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlist</a>(...) -> AsyncHttpResponse[Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlist</a>(...) -&gt; AsyncHttpResponse[Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1514,7 +1514,7 @@ client.playlist.get_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">update_playlist</a>(...) -> AsyncHttpResponse[typing.Optional[Playlist]]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">update_playlist</a>(...) -&gt; AsyncHttpResponse[typing.Optional[Playlist]]</code></summary>
 <dl>
 <dd>
 
@@ -1607,7 +1607,7 @@ client.playlist.update_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">delete_playlist</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">delete_playlist</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -1688,7 +1688,7 @@ client.playlist.delete_playlist(
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">create_problem</a>(...) -> AsyncHttpResponse[CreateProblemResponse]</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">create_problem</a>(...) -&gt; AsyncHttpResponse[CreateProblemResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1878,7 +1878,7 @@ client.problem.create_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">update_problem</a>(...) -> AsyncHttpResponse[UpdateProblemResponse]</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">update_problem</a>(...) -&gt; AsyncHttpResponse[UpdateProblemResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2077,7 +2077,7 @@ client.problem.update_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">delete_problem</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">delete_problem</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2148,7 +2148,7 @@ client.problem.delete_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">get_default_starter_files</a>(...) -> AsyncHttpResponse[GetDefaultStarterFilesResponse]</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">get_default_starter_files</a>(...) -&gt; AsyncHttpResponse[GetDefaultStarterFilesResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2256,7 +2256,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">create_execution_session</a>(...) -> AsyncHttpResponse[ExecutionSessionResponse]</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">create_execution_session</a>(...) -&gt; AsyncHttpResponse[ExecutionSessionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2327,7 +2327,7 @@ client.submission.create_execution_session(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_session</a>(...) -> AsyncHttpResponse[typing.Optional[ExecutionSessionResponse]]</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_session</a>(...) -&gt; AsyncHttpResponse[typing.Optional[ExecutionSessionResponse]]</code></summary>
 <dl>
 <dd>
 
@@ -2398,7 +2398,7 @@ client.submission.get_execution_session(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">stop_execution_session</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">stop_execution_session</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2469,7 +2469,7 @@ client.submission.stop_execution_session(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_sessions_state</a>() -> AsyncHttpResponse[GetExecutionSessionStateResponse]</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_sessions_state</a>() -&gt; AsyncHttpResponse[GetExecutionSessionStateResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2517,7 +2517,7 @@ client.submission.get_execution_sessions_state()
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">set_num_warm_instances</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">set_num_warm_instances</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2583,7 +2583,7 @@ client.sysprop.set_num_warm_instances(
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">get_num_warm_instances</a>() -> AsyncHttpResponse[typing.Dict[Language, int]]</code></summary>
+<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">get_num_warm_instances</a>() -&gt; AsyncHttpResponse[typing.Dict[Language, int]]</code></summary>
 <dl>
 <dd>
 
@@ -2631,7 +2631,7 @@ client.sysprop.get_num_warm_instances()
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_lightweight_problems</a>() -> AsyncHttpResponse[typing.List[LightweightProblemInfoV2]]</code></summary>
+<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_lightweight_problems</a>() -&gt; AsyncHttpResponse[typing.List[LightweightProblemInfoV2]]</code></summary>
 <dl>
 <dd>
 
@@ -2692,7 +2692,7 @@ client.v_2.problem.get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_problems</a>() -> AsyncHttpResponse[typing.List[ProblemInfoV2]]</code></summary>
+<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_problems</a>() -&gt; AsyncHttpResponse[typing.List[ProblemInfoV2]]</code></summary>
 <dl>
 <dd>
 
@@ -2753,7 +2753,7 @@ client.v_2.problem.get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_latest_problem</a>(...) -> AsyncHttpResponse[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_latest_problem</a>(...) -&gt; AsyncHttpResponse[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2824,7 +2824,7 @@ client.v_2.problem.get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_problem_version</a>(...) -> AsyncHttpResponse[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.problem.<a href="src/seed/v_2/problem/client.py">get_problem_version</a>(...) -&gt; AsyncHttpResponse[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2905,7 +2905,7 @@ client.v_2.problem.get_problem_version(
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_lightweight_problems</a>() -> AsyncHttpResponse[typing.List[LightweightProblemInfoV2]]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_lightweight_problems</a>() -&gt; AsyncHttpResponse[typing.List[LightweightProblemInfoV2]]</code></summary>
 <dl>
 <dd>
 
@@ -2966,7 +2966,7 @@ client.v_2.v_3.problem.get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_problems</a>() -> AsyncHttpResponse[typing.List[ProblemInfoV2]]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_problems</a>() -&gt; AsyncHttpResponse[typing.List[ProblemInfoV2]]</code></summary>
 <dl>
 <dd>
 
@@ -3027,7 +3027,7 @@ client.v_2.v_3.problem.get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_latest_problem</a>(...) -> AsyncHttpResponse[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_latest_problem</a>(...) -&gt; AsyncHttpResponse[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -3098,7 +3098,7 @@ client.v_2.v_3.problem.get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_problem_version</a>(...) -> AsyncHttpResponse[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.<a href="src/seed/v_2/v_3/problem/client.py">get_problem_version</a>(...) -&gt; AsyncHttpResponse[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 

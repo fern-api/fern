@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->getResource($resourceId) -> Resource</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getResource($resourceId) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ $client->service->getResource(
 </dl>
 </details>
 
-<details><summary><code>$client->service->listResources($request) -> array</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listResources($request) -> array</code></summary>
 <dl>
 <dd>
 

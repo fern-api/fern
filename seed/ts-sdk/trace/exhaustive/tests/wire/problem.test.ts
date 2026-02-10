@@ -5,284 +5,437 @@ import { SeedTraceClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ProblemClient", () => {
-    
     test("createProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ "maxRetries" : 0 , "token" : "test" , "xRandomHeader" : "test" , "environment" : server.baseUrl });
-        const rawRequestBody = { "problemName" : "problemName" , "problemDescription" : { "boards" : [ { "type" : "html" , "value" : "boards" } , { "type" : "html" , "value" : "boards" } ] } , "files" : { "JAVA" : { "solutionFile" : { "filename" : "filename" , "contents" : "contents" } , "readOnlyFiles" : [ { "filename" : "filename" , "contents" : "contents" } , { "filename" : "filename" , "contents" : "contents" } ] } } , "inputParams" : [ { "variableType" : { "type" : "integerType" } , "name" : "name" } , { "variableType" : { "type" : "integerType" } , "name" : "name" } ] , "outputType" : { "type" : "integerType" } , "testcases" : [ { "testCase" : { "id" : "id" , "params" : [ { "type" : "integerValue" , "value" : 1 } , { "type" : "integerValue" , "value" : 1 } ] } , "expectedResult" : { "type" : "integerValue" , "value" : 1 } } , { "testCase" : { "id" : "id" , "params" : [ { "type" : "integerValue" , "value" : 1 } , { "type" : "integerValue" , "value" : 1 } ] } , "expectedResult" : { "type" : "integerValue" , "value" : 1 } } ] , "methodName" : "methodName" };
-        const rawResponseBody = { "type" : "success" , "value" : "string" };
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            problemName: "problemName",
+            problemDescription: {
+                boards: [
+                    { type: "html", value: "boards" },
+                    { type: "html", value: "boards" },
+                ],
+            },
+            files: {
+                JAVA: {
+                    solutionFile: { filename: "filename", contents: "contents" },
+                    readOnlyFiles: [
+                        { filename: "filename", contents: "contents" },
+                        { filename: "filename", contents: "contents" },
+                    ],
+                },
+            },
+            inputParams: [
+                { variableType: { type: "integerType" }, name: "name" },
+                { variableType: { type: "integerType" }, name: "name" },
+            ],
+            outputType: { type: "integerType" },
+            testcases: [
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            { type: "integerValue", value: 1 },
+                            { type: "integerValue", value: 1 },
+                        ],
+                    },
+                    expectedResult: { type: "integerValue", value: 1 },
+                },
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            { type: "integerValue", value: 1 },
+                            { type: "integerValue", value: 1 },
+                        ],
+                    },
+                    expectedResult: { type: "integerValue", value: 1 },
+                },
+            ],
+            methodName: "methodName",
+        };
+        const rawResponseBody = { type: "success", value: "string" };
         server
             .mockEndpoint()
-            .post("/problem-crud/create").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/problem-crud/create")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.problem.createProblem({
-    problemName: "problemName",
-    problemDescription: {
-        boards: [{
-                type: "html",
-                value: "boards"
-            }, {
-                type: "html",
-                value: "boards"
-            }]
-    },
-    files: {
-        ["JAVA"]: {
-            solutionFile: {
-                filename: "filename",
-                contents: "contents"
+        const response = await client.problem.createProblem({
+            problemName: "problemName",
+            problemDescription: {
+                boards: [
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                ],
             },
-            readOnlyFiles: [{
-                    filename: "filename",
-                    contents: "contents"
-                }, {
-                    filename: "filename",
-                    contents: "contents"
-                }]
-        }
-    },
-    inputParams: [{
-            variableType: {
-                type: "integerType"
+            files: {
+                JAVA: {
+                    solutionFile: {
+                        filename: "filename",
+                        contents: "contents",
+                    },
+                    readOnlyFiles: [
+                        {
+                            filename: "filename",
+                            contents: "contents",
+                        },
+                        {
+                            filename: "filename",
+                            contents: "contents",
+                        },
+                    ],
+                },
             },
-            name: "name"
-        }, {
-            variableType: {
-                type: "integerType"
+            inputParams: [
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+            ],
+            outputType: {
+                type: "integerType",
             },
-            name: "name"
-        }],
-    outputType: {
-        type: "integerType"
-    },
-    testcases: [{
-            testCase: {
-                id: "id",
-                params: [{
+            testcases: [
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        ],
+                    },
+                    expectedResult: {
                         type: "integerValue",
-                        value: 1
-                    }, {
+                        value: 1,
+                    },
+                },
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        ],
+                    },
+                    expectedResult: {
                         type: "integerValue",
-                        value: 1
-                    }]
+                        value: 1,
+                    },
+                },
+            ],
+            methodName: "methodName",
+        });
+        expect(response).toEqual({
+            body: {
+                type: "success",
+                value: SeedTrace.ProblemId("string"),
             },
-            expectedResult: {
-                type: "integerValue",
-                value: 1
-            }
-        }, {
-            testCase: {
-                id: "id",
-                params: [{
-                        type: "integerValue",
-                        value: 1
-                    }, {
-                        type: "integerValue",
-                        value: 1
-                    }]
-            },
-            expectedResult: {
-                type: "integerValue",
-                value: 1
-            }
-        }],
-    methodName: "methodName"
-});
-                            expect(response).toEqual({
-                    body: {
-    type: "success",
-    value: SeedTrace.ProblemId("string")
-},
-                    ok: true,
-                    headers: expect.any(Object),
-                    rawResponse: expect.any(Object),
-                });
-                          
-                
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-          
+
     test("updateProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ "maxRetries" : 0 , "token" : "test" , "xRandomHeader" : "test" , "environment" : server.baseUrl });
-        const rawRequestBody = { "problemName" : "problemName" , "problemDescription" : { "boards" : [ { "type" : "html" , "value" : "boards" } , { "type" : "html" , "value" : "boards" } ] } , "files" : { "JAVA" : { "solutionFile" : { "filename" : "filename" , "contents" : "contents" } , "readOnlyFiles" : [ { "filename" : "filename" , "contents" : "contents" } , { "filename" : "filename" , "contents" : "contents" } ] } } , "inputParams" : [ { "variableType" : { "type" : "integerType" } , "name" : "name" } , { "variableType" : { "type" : "integerType" } , "name" : "name" } ] , "outputType" : { "type" : "integerType" } , "testcases" : [ { "testCase" : { "id" : "id" , "params" : [ { "type" : "integerValue" , "value" : 1 } , { "type" : "integerValue" , "value" : 1 } ] } , "expectedResult" : { "type" : "integerValue" , "value" : 1 } } , { "testCase" : { "id" : "id" , "params" : [ { "type" : "integerValue" , "value" : 1 } , { "type" : "integerValue" , "value" : 1 } ] } , "expectedResult" : { "type" : "integerValue" , "value" : 1 } } ] , "methodName" : "methodName" };
-        const rawResponseBody = { "problemVersion" : 1 };
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            problemName: "problemName",
+            problemDescription: {
+                boards: [
+                    { type: "html", value: "boards" },
+                    { type: "html", value: "boards" },
+                ],
+            },
+            files: {
+                JAVA: {
+                    solutionFile: { filename: "filename", contents: "contents" },
+                    readOnlyFiles: [
+                        { filename: "filename", contents: "contents" },
+                        { filename: "filename", contents: "contents" },
+                    ],
+                },
+            },
+            inputParams: [
+                { variableType: { type: "integerType" }, name: "name" },
+                { variableType: { type: "integerType" }, name: "name" },
+            ],
+            outputType: { type: "integerType" },
+            testcases: [
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            { type: "integerValue", value: 1 },
+                            { type: "integerValue", value: 1 },
+                        ],
+                    },
+                    expectedResult: { type: "integerValue", value: 1 },
+                },
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            { type: "integerValue", value: 1 },
+                            { type: "integerValue", value: 1 },
+                        ],
+                    },
+                    expectedResult: { type: "integerValue", value: 1 },
+                },
+            ],
+            methodName: "methodName",
+        };
+        const rawResponseBody = { problemVersion: 1 };
         server
             .mockEndpoint()
-            .post("/problem-crud/update/problemId").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/problem-crud/update/problemId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
-    problemName: "problemName",
-    problemDescription: {
-        boards: [{
-                type: "html",
-                value: "boards"
-            }, {
-                type: "html",
-                value: "boards"
-            }]
-    },
-    files: {
-        ["JAVA"]: {
-            solutionFile: {
-                filename: "filename",
-                contents: "contents"
+        const response = await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
+            problemName: "problemName",
+            problemDescription: {
+                boards: [
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                    {
+                        type: "html",
+                        value: "boards",
+                    },
+                ],
             },
-            readOnlyFiles: [{
-                    filename: "filename",
-                    contents: "contents"
-                }, {
-                    filename: "filename",
-                    contents: "contents"
-                }]
-        }
-    },
-    inputParams: [{
-            variableType: {
-                type: "integerType"
+            files: {
+                JAVA: {
+                    solutionFile: {
+                        filename: "filename",
+                        contents: "contents",
+                    },
+                    readOnlyFiles: [
+                        {
+                            filename: "filename",
+                            contents: "contents",
+                        },
+                        {
+                            filename: "filename",
+                            contents: "contents",
+                        },
+                    ],
+                },
             },
-            name: "name"
-        }, {
-            variableType: {
-                type: "integerType"
+            inputParams: [
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+            ],
+            outputType: {
+                type: "integerType",
             },
-            name: "name"
-        }],
-    outputType: {
-        type: "integerType"
-    },
-    testcases: [{
-            testCase: {
-                id: "id",
-                params: [{
+            testcases: [
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        ],
+                    },
+                    expectedResult: {
                         type: "integerValue",
-                        value: 1
-                    }, {
+                        value: 1,
+                    },
+                },
+                {
+                    testCase: {
+                        id: "id",
+                        params: [
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                            {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        ],
+                    },
+                    expectedResult: {
                         type: "integerValue",
-                        value: 1
-                    }]
+                        value: 1,
+                    },
+                },
+            ],
+            methodName: "methodName",
+        });
+        expect(response).toEqual({
+            body: {
+                problemVersion: 1,
             },
-            expectedResult: {
-                type: "integerValue",
-                value: 1
-            }
-        }, {
-            testCase: {
-                id: "id",
-                params: [{
-                        type: "integerValue",
-                        value: 1
-                    }, {
-                        type: "integerValue",
-                        value: 1
-                    }]
-            },
-            expectedResult: {
-                type: "integerValue",
-                value: 1
-            }
-        }],
-    methodName: "methodName"
-});
-                            expect(response).toEqual({
-                    body: {
-    problemVersion: 1
-},
-                    ok: true,
-                    headers: expect.any(Object),
-                    rawResponse: expect.any(Object),
-                });
-                          
-                
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-          
+
     test("deleteProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ "maxRetries" : 0 , "token" : "test" , "xRandomHeader" : "test" , "environment" : server.baseUrl });
-        
-        
-        server
-            .mockEndpoint()
-            .delete("/problem-crud/delete/problemId").respondWith()
-            .statusCode(200).build();
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
-        
-                    
-                            const response = await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"));
-                            expect(response).toEqual({
-                    body: undefined,
-                    ok: true,
-                    headers: expect.any(Object),
-                    rawResponse: expect.any(Object),
-                });
-                          
-                
+        server.mockEndpoint().delete("/problem-crud/delete/problemId").respondWith().statusCode(200).build();
+
+        const response = await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"));
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-          
+
     test("getDefaultStarterFiles", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ "maxRetries" : 0 , "token" : "test" , "xRandomHeader" : "test" , "environment" : server.baseUrl });
-        const rawRequestBody = { "inputParams" : [ { "variableType" : { "type" : "integerType" } , "name" : "name" } , { "variableType" : { "type" : "integerType" } , "name" : "name" } ] , "outputType" : { "type" : "integerType" } , "methodName" : "methodName" };
-        const rawResponseBody = { "files" : { "JAVA" : { "solutionFile" : { "filename" : "filename" , "contents" : "contents" } , "readOnlyFiles" : [ { "filename" : "filename" , "contents" : "contents" } , { "filename" : "filename" , "contents" : "contents" } ] } } };
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {
+            inputParams: [
+                { variableType: { type: "integerType" }, name: "name" },
+                { variableType: { type: "integerType" }, name: "name" },
+            ],
+            outputType: { type: "integerType" },
+            methodName: "methodName",
+        };
+        const rawResponseBody = {
+            files: {
+                JAVA: {
+                    solutionFile: { filename: "filename", contents: "contents" },
+                    readOnlyFiles: [
+                        { filename: "filename", contents: "contents" },
+                        { filename: "filename", contents: "contents" },
+                    ],
+                },
+            },
+        };
         server
             .mockEndpoint()
-            .post("/problem-crud/default-starter-files").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/problem-crud/default-starter-files")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.problem.getDefaultStarterFiles({
-    inputParams: [{
-            variableType: {
-                type: "integerType"
+        const response = await client.problem.getDefaultStarterFiles({
+            inputParams: [
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+                {
+                    variableType: {
+                        type: "integerType",
+                    },
+                    name: "name",
+                },
+            ],
+            outputType: {
+                type: "integerType",
             },
-            name: "name"
-        }, {
-            variableType: {
-                type: "integerType"
+            methodName: "methodName",
+        });
+        expect(response).toEqual({
+            body: {
+                files: {
+                    JAVA: {
+                        solutionFile: {
+                            filename: "filename",
+                            contents: "contents",
+                        },
+                        readOnlyFiles: [
+                            {
+                                filename: "filename",
+                                contents: "contents",
+                            },
+                            {
+                                filename: "filename",
+                                contents: "contents",
+                            },
+                        ],
+                    },
+                },
             },
-            name: "name"
-        }],
-    outputType: {
-        type: "integerType"
-    },
-    methodName: "methodName"
-});
-                            expect(response).toEqual({
-                    body: {
-    files: {
-        ["JAVA"]: {
-            solutionFile: {
-                filename: "filename",
-                contents: "contents"
-            },
-            readOnlyFiles: [{
-                    filename: "filename",
-                    contents: "contents"
-                }, {
-                    filename: "filename",
-                    contents: "contents"
-                }]
-        }
-    }
-},
-                    ok: true,
-                    headers: expect.any(Object),
-                    rawResponse: expect.any(Object),
-                });
-                          
-                
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-          
 });

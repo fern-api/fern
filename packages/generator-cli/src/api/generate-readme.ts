@@ -1,9 +1,9 @@
 import { Writable } from "node:stream";
 import type fs from "fs";
 
-import type { FernGeneratorCli } from "../configuration/sdk";
-import { ReadmeGenerator } from "../readme/ReadmeGenerator";
-import { ReadmeParser } from "../readme/ReadmeParser";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { ReadmeGenerator } from "../readme/ReadmeGenerator.js";
+import { ReadmeParser } from "../readme/ReadmeParser.js";
 
 export interface GenerateReadmeToStreamParams {
     originalReadmeContent?: string;

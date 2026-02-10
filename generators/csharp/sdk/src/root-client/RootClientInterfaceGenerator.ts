@@ -2,8 +2,11 @@ import { fail } from "node:assert";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private serviceId: ServiceId | undefined;
@@ -27,14 +30,12 @@ export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkG
 
         for (const subpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
-                // Use concrete class reference (not interface) to match the implementing class's property type
-                // C# requires exact type match when implementing interface properties
                 interface_.addField({
                     name: subpackage.name.pascalCase.safeName,
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,
-                    type: this.context.getSubpackageClassReference(subpackage)
+                    type: this.context.getSubpackageInterfaceReference(subpackage)
                 });
             }
         }

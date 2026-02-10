@@ -1,3 +1,4 @@
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -5,43 +6,45 @@ namespace SeedExhaustive.Endpoints;
 
 public partial interface IContainerClient
 {
-    Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
+    WithRawResponseTask<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
         IEnumerable<string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+    WithRawResponseTask<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
         IEnumerable<ObjectWithRequiredField> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
+    WithRawResponseTask<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
         HashSet<string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
+    WithRawResponseTask<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
         HashSet<ObjectWithRequiredField> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
+    WithRawResponseTask<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
         Dictionary<string, string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<Dictionary<string, ObjectWithRequiredField>> GetAndReturnMapOfPrimToObjectAsync(
+    WithRawResponseTask<
+        Dictionary<string, ObjectWithRequiredField>
+    > GetAndReturnMapOfPrimToObjectAsync(
         Dictionary<string, ObjectWithRequiredField> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
+    WithRawResponseTask<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
         ObjectWithRequiredField? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

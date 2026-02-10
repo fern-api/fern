@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->post($pathParam, $serviceParam, $endpointParam, $resourceParam)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;post($pathParam, $serviceParam, $endpointParam, $resourceParam)</code></summary>
 <dl>
 <dd>
 

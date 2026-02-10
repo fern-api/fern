@@ -202,7 +202,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> Record<string, string></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> Record&lt;string, string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +253,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record<string, SeedExhaustive.ObjectWithRequiredField></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record&lt;string, SeedExhaustive.ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1204,6 +1204,74 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 <dd>
 
 **request:** `SeedExhaustive.NestedObjectWithRequiredField[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> SeedExhaustive.ObjectWithDatetimeLikeString</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.object.getAndReturnWithDatetimeLikeString({
+    datetimeLikeString: "2023-08-31T14:15:22Z",
+    actualDatetime: "2023-08-31T14:15:22Z"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>

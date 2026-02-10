@@ -121,4 +121,38 @@ public class QueryStringConverterTests
             )
         );
     }
+
+    [Test]
+    public void ToQueryStringCollection_DeepObject_WithPrefix()
+    {
+        var obj = new
+        {
+            custom_session_id = "my-id",
+            system_prompt = "You are helpful",
+            variables = new { name = "Alice", age = 25 },
+        };
+        var result = QueryStringConverter.ToDeepObject("session_settings", obj);
+        var expected = new List<KeyValuePair<string, string>>
+        {
+            new("session_settings[custom_session_id]", "my-id"),
+            new("session_settings[system_prompt]", "You are helpful"),
+            new("session_settings[variables][name]", "Alice"),
+            new("session_settings[variables][age]", "25"),
+        };
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ToQueryStringCollection_ExplodedForm_WithPrefix()
+    {
+        var obj = new { Name = "John", Tags = new[] { "Developer", "Blogger" } };
+        var result = QueryStringConverter.ToExplodedForm("user", obj);
+        var expected = new List<KeyValuePair<string, string>>
+        {
+            new("user[Name]", "John"),
+            new("user[Tags]", "Developer"),
+            new("user[Tags]", "Blogger"),
+        };
+        Assert.That(result, Is.EqualTo(expected));
+    }
 }

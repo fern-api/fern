@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>$client->headers->send($request) -> SendResponse</code></summary>
+<details><summary><code>$client-&gt;headers-&gt;send($request) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +63,7 @@ $client->headers->send(
 </details>
 
 ## Inlined
-<details><summary><code>$client->inlined->send($request) -> SendResponse</code></summary>
+<details><summary><code>$client-&gt;inlined-&gt;send($request) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -175,7 +175,7 @@ $client->inlined->send(
 </details>
 
 ## Path
-<details><summary><code>$client->path->send($id) -> SendResponse</code></summary>
+<details><summary><code>$client-&gt;path-&gt;send($id) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -218,7 +218,7 @@ $client->path->send(
 </details>
 
 ## Query
-<details><summary><code>$client->query->send($request) -> SendResponse</code></summary>
+<details><summary><code>$client-&gt;query-&gt;send($request) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -335,7 +335,7 @@ $client->query->send(
 </details>
 
 ## Reference
-<details><summary><code>$client->reference->send($request) -> SendResponse</code></summary>
+<details><summary><code>$client-&gt;reference-&gt;send($request) -> SendResponse</code></summary>
 <dl>
 <dd>
 

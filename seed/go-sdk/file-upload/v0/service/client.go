@@ -91,6 +91,24 @@ func (c *Client) JustFileWithQueryParams(
 	return nil
 }
 
+func (c *Client) JustFileWithOptionalQueryParams(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.JustFileWithOptionalQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.JustFileWithOptionalQueryParams(
+		ctx,
+		file,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *Client) WithContentType(
 	ctx context.Context,
 	file io.Reader,
@@ -187,6 +205,24 @@ func (c *Client) WithInlineType(
 	return response.Body, nil
 }
 
+func (c *Client) WithJsonProperty(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.WithJsonPropertyRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithJsonProperty(
+		ctx,
+		file,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -199,4 +235,22 @@ func (c *Client) Simple(
 		return err
 	}
 	return nil
+}
+
+func (c *Client) WithLiteralAndEnumTypes(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.LiteralEnumRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithLiteralAndEnumTypes(
+		ctx,
+		file,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
 }

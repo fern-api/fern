@@ -44,7 +44,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{Address, CreateUserRequest, NullableUserId, OptionalUserId};
 
 #[tokio::main]
 async fn main() {

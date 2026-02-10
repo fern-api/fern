@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folder_a().service.<a href="/src/api/resources/folder_a/service/client.rs">get_direct_thread</a>() -> Result<Response, ApiError></code></summary>
+<details><summary><code>client.folder_a().service.<a href="/src/api/resources/folder_a/service/client.rs">get_direct_thread</a>() -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -35,7 +35,7 @@ async fn main() {
 </details>
 
 ## FolderD Service
-<details><summary><code>client.folder_d().service.<a href="/src/api/resources/folder_d/service/client.rs">get_direct_thread</a>() -> Result<Response, ApiError></code></summary>
+<details><summary><code>client.folder_d().service.<a href="/src/api/resources/folder_d/service/client.rs">get_direct_thread</a>() -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ async fn main() {
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/src/api/resources/foo/client.rs">find</a>(request: FindRequest, optional_string: Option<OptionalString>) -> Result<ImportingType, ApiError></code></summary>
+<details><summary><code>client.foo.<a href="/src/api/resources/foo/client.rs">find</a>(request: FindRequest, optional_string: Option&lt;OptionalString&gt;) -> Result&lt;ImportingType, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,6 @@ async fn main() {
 
 ```rust
 use seed_cross_package_type_names::prelude::*;
-use seed_cross_package_type_names::OptionalString;
 
 #[tokio::main]
 async fn main() {

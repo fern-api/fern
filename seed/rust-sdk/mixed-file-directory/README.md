@@ -43,7 +43,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_mixed_file_directory::prelude::*;
-use seed_mixed_file_directory::CreateOrganizationRequest;
 
 #[tokio::main]
 async fn main() {

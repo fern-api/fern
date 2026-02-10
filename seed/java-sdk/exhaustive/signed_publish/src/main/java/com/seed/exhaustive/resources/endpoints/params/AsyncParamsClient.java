@@ -54,6 +54,13 @@ public class AsyncParamsClient {
     /**
      * GET with path param
      */
+    public CompletableFuture<String> getWithInlinePath(String param, RequestOptions requestOptions) {
+        return this.rawClient.getWithInlinePath(param, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * GET with path param
+     */
     public CompletableFuture<String> getWithInlinePath(String param, GetWithInlinePath request) {
         return this.rawClient.getWithInlinePath(param, request).thenApply(response -> response.body());
     }

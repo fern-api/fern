@@ -1,0 +1,10 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-rust-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "packageLicense": "Apache-2.0",
+    "packageLicenseFile": "LICENSE.md"
+  },
+  "sdkVersion": "0.0.1"
+}

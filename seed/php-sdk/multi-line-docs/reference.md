@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client->user->getUser($userId)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUser($userId)</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>$client->user->createUser($request) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUser($request) -> User</code></summary>
 <dl>
 <dd>
 

@@ -5,14 +5,12 @@ import { NestedClient } from "./api/resources/nested/client/Client.js";
 import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.js";
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedOauthClientCredentialsEnvironmentVariablesClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedOauthClientCredentialsEnvironmentVariablesClient {
@@ -23,10 +21,7 @@ export class SeedOauthClientCredentialsEnvironmentVariablesClient {
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedOauthClientCredentialsEnvironmentVariablesClient.Options) {
-
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get auth(): AuthClient {

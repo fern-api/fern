@@ -19,6 +19,7 @@
 "/users"
 "/users"
 "/users"
+"/users/top-level-cursor"
 "/users"
 "/users"
 "/users"

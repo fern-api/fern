@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client->auth->getToken($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -81,7 +81,7 @@ $client->auth->getToken(
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>$client->nestedNoAuth->api->getSomething()</code></summary>
+<details><summary><code>$client-&gt;nestedNoAuth-&gt;api-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +107,7 @@ $client->nestedNoAuth->api->getSomething();
 </details>
 
 ## Nested Api
-<details><summary><code>$client->nested->api->getSomething()</code></summary>
+<details><summary><code>$client-&gt;nested-&gt;api-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -133,7 +133,7 @@ $client->nested->api->getSomething();
 </details>
 
 ## Simple
-<details><summary><code>$client->simple->getSomething()</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 

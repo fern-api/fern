@@ -7,8 +7,8 @@ import {
     WebSocketChannelId
 } from "@fern-api/ir-sdk";
 
-import { IdGenerator } from "../utils/IdGenerator";
-import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
+import { IdGenerator } from "../utils/IdGenerator.js";
+import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids.js";
 
 export interface FilteredIr {
     hasType(type: TypeDeclaration): boolean;

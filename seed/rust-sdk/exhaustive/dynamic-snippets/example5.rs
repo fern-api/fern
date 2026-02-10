@@ -1,5 +1,4 @@
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {

@@ -87,6 +87,8 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
+          "defaultUrl": undefined,
           "docs": undefined,
           "id": "Production",
           "name": {
@@ -109,6 +111,8 @@
             },
           },
           "url": "https://test.com/api",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",
@@ -327,6 +331,7 @@
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
+          "responseHeaders": [],
           "retries": undefined,
           "sdkRequest": undefined,
           "security": [
@@ -944,6 +949,13 @@
                       "_visit": [Function],
                       "default": undefined,
                       "type": "long",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
                     },
                   },
                   "type": "primitive",

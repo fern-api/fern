@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>$client->organizations->getOrganization($tenantId, $organizationId) -> Organization</code></summary>
+<details><summary><code>$client-&gt;organizations-&gt;getOrganization($tenantId, $organizationId) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ $client->organizations->getOrganization(
 </dl>
 </details>
 
-<details><summary><code>$client->organizations->getOrganizationUser($tenantId, $organizationId, $userId) -> User</code></summary>
+<details><summary><code>$client-&gt;organizations-&gt;getOrganizationUser($tenantId, $organizationId, $userId) -> User</code></summary>
 <dl>
 <dd>
 
@@ -111,7 +111,7 @@ $client->organizations->getOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>$client->organizations->searchOrganizations($tenantId, $organizationId, $request) -> array</code></summary>
+<details><summary><code>$client-&gt;organizations-&gt;searchOrganizations($tenantId, $organizationId, $request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ $client->organizations->searchOrganizations(
 </details>
 
 ## User
-<details><summary><code>$client->user->getUser($tenantId, $userId) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUser($tenantId, $userId) -> User</code></summary>
 <dl>
 <dd>
 
@@ -225,7 +225,7 @@ $client->user->getUser(
 </dl>
 </details>
 
-<details><summary><code>$client->user->createUser($tenantId, $request) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUser($tenantId, $request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -282,7 +282,7 @@ $client->user->createUser(
 </dl>
 </details>
 
-<details><summary><code>$client->user->updateUser($tenantId, $userId, $request) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;updateUser($tenantId, $userId, $request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -350,7 +350,7 @@ $client->user->updateUser(
 </dl>
 </details>
 
-<details><summary><code>$client->user->searchUsers($tenantId, $userId, $request) -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;searchUsers($tenantId, $userId, $request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -412,7 +412,7 @@ $client->user->searchUsers(
 </dl>
 </details>
 
-<details><summary><code>$client->user->getUserMetadata($tenantId, $userId, $version) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUserMetadata($tenantId, $userId, $version) -> User</code></summary>
 <dl>
 <dd>
 
@@ -486,7 +486,7 @@ $client->user->getUserMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client->user->getUserSpecifics($tenantId, $userId, $version, $thought) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUserSpecifics($tenantId, $userId, $version, $thought) -> User</code></summary>
 <dl>
 <dd>
 

@@ -5,7 +5,7 @@ namespace SeedExhaustive.Endpoints.Enum;
 
 public partial interface IEnumClient
 {
-    Task<WeatherReport> GetAndReturnEnumAsync(
+    WithRawResponseTask<WeatherReport> GetAndReturnEnumAsync(
         WeatherReport request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

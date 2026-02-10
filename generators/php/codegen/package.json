@@ -31,7 +31,7 @@
     "test:update": "vitest --run --passWithNoTests -u"
   },
   "dependencies": {
-    "lodash-es": "4.17.21"
+    "lodash-es": "4.17.23"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",

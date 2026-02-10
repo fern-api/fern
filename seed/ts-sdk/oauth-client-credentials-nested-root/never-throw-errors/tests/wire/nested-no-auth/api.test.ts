@@ -5,29 +5,25 @@ import { mockServerPool } from "../../mock-server/MockServerPool";
 import { mockOAuthScheme } from "../mockAuth";
 
 describe("ApiClient", () => {
-    
     test("getSomething", async () => {
-        const server = mockServerPool.createServer();mockOAuthScheme(server);
+        const server = mockServerPool.createServer();
+        mockOAuthScheme(server);
 
-        const client = new SeedOauthClientCredentialsClient({ "maxRetries" : 0 , "clientId" : "client_id" , "clientSecret" : "client_secret" , "environment" : server.baseUrl });
-        
-        
-        server
-            .mockEndpoint()
-            .get("/nested-no-auth/get-something").respondWith()
-            .statusCode(200).build();
+        const client = new SeedOauthClientCredentialsClient({
+            maxRetries: 0,
+            clientId: "client_id",
+            clientSecret: "client_secret",
+            environment: server.baseUrl,
+        });
 
-        
-                    
-                            const response = await client.nestedNoAuth.api.getSomething();
-                            expect(response).toEqual({
-                    body: undefined,
-                    ok: true,
-                    headers: expect.any(Object),
-                    rawResponse: expect.any(Object),
-                });
-                          
-                
+        server.mockEndpoint().get("/nested-no-auth/get-something").respondWith().statusCode(200).build();
+
+        const response = await client.nestedNoAuth.api.getSomething();
+        expect(response).toEqual({
+            body: undefined,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-          
 });

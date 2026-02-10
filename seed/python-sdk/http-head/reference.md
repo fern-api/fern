@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">head</a>() -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">head</a>() -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -46,7 +46,7 @@ client.user.head()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
 <dl>
 <dd>
 

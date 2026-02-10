@@ -27,6 +27,12 @@ public partial class V2Client : IV2Client
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -34,6 +40,7 @@ public partial class V2Client : IV2Client
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

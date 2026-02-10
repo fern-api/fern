@@ -422,7 +422,7 @@ class EndpointFunctionGenerator:
                         docs=query_parameter.docs,
                         type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
                         initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
-                            query_parameter.value_type
+                            query_parameter.value_type, for_request_param=True
                         ),
                     ),
                 )
@@ -1199,7 +1199,7 @@ class EndpointFunctionGenerator:
     ) -> None:
         if response is not None and response.body:
             response.body.visit(
-                file_download=lambda fd: (self._write_standard_return(writer, response_hint, fd.docs)),
+                file_download=lambda fd: self._write_standard_return(writer, response_hint, fd.docs),
                 json=lambda json_response: self._write_standard_return(
                     writer, response_hint, json_response.get_as_union().docs
                 ),
@@ -1509,19 +1509,23 @@ class EndpointFunctionGenerator:
             container=lambda container: container.visit(
                 list_=lambda x: False,
                 set_=lambda x: False,
-                optional=lambda item_type: allow_optional
-                and self._does_type_reference_match_primitives(
-                    item_type,
-                    expected=expected,
-                    allow_optional=True,
-                    allow_enum=allow_enum,
+                optional=lambda item_type: (
+                    allow_optional
+                    and self._does_type_reference_match_primitives(
+                        item_type,
+                        expected=expected,
+                        allow_optional=True,
+                        allow_enum=allow_enum,
+                    )
                 ),
-                nullable=lambda item_type: allow_optional
-                and self._does_type_reference_match_primitives(
-                    item_type,
-                    expected=expected,
-                    allow_optional=True,
-                    allow_enum=allow_enum,
+                nullable=lambda item_type: (
+                    allow_optional
+                    and self._does_type_reference_match_primitives(
+                        item_type,
+                        expected=expected,
+                        allow_optional=True,
+                        allow_enum=allow_enum,
+                    )
                 ),
                 map_=lambda x: False,
                 literal=lambda literal: literal.visit(
@@ -1569,10 +1573,12 @@ class EndpointFunctionGenerator:
             container=lambda container: container.visit(
                 list_=lambda _lt: False,
                 set_=lambda _st: False,
-                optional=lambda item_type: allow_optional
-                and self._is_enum_type_with_value(item_type, allow_optional=True),
-                nullable=lambda item_type: allow_optional
-                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                optional=lambda item_type: (
+                    allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True)
+                ),
+                nullable=lambda item_type: (
+                    allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True)
+                ),
                 map_=lambda _mt: False,
                 literal=lambda _lit: False,
             ),
@@ -1907,8 +1913,10 @@ class EndpointFunctionSnippetGenerator:
             )
             args.extend(
                 self.example.request.visit(
-                    inlined_request_body=lambda inlined_request_body: self._get_snippet_for_inlined_request_body_properties(
-                        example_inlined_request_body=inlined_request_body,
+                    inlined_request_body=lambda inlined_request_body: (
+                        self._get_snippet_for_inlined_request_body_properties(
+                            example_inlined_request_body=inlined_request_body,
+                        )
                     ),
                     reference=lambda reference: self._get_snippet_for_request_reference(
                         example_type_reference=reference,

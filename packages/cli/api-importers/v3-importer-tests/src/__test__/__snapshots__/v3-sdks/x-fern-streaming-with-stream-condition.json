@@ -549,6 +549,7 @@
               }
             }
           ],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -1142,6 +1143,7 @@
               }
             }
           ],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

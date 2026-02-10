@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->get($typeId)</code></summary>
+<details><summary><code>$client-&gt;get($typeId)</code></summary>
 <dl>
 <dd>
 

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -73,7 +73,7 @@ client.echo(
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">nop</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">nop</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

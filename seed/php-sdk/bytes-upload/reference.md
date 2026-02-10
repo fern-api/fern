@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->upload()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;upload()</code></summary>
 <dl>
 <dd>
 

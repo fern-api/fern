@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">patch</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">patch</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ client.service.patch(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">patch_complex</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">patch_complex</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -228,7 +228,7 @@ client.service.patch_complex(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">named_patch_with_mixed</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">named_patch_with_mixed</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -326,7 +326,7 @@ client.service.named_patch_with_mixed(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">optional_merge_patch_test</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">optional_merge_patch_test</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -435,7 +435,7 @@ client.service.optional_merge_patch_test(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">regular_patch</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">regular_patch</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

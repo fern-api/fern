@@ -6,8 +6,9 @@ namespace SeedBasicAuthEnvironmentVariables;
 public class SeedBasicAuthEnvironmentVariablesApiException(
     string message,
     int statusCode,
-    object body
-) : SeedBasicAuthEnvironmentVariablesException(message)
+    object body,
+    Exception? innerException = null
+) : SeedBasicAuthEnvironmentVariablesException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

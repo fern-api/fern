@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post</a>(...) -> AsyncHttpResponse[typing.List[typing.Any]]</code></summary>
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post</a>(...) -&gt; AsyncHttpResponse[typing.List[typing.Any]]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.unknown.post(
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post_object</a>(...) -> AsyncHttpResponse[typing.List[typing.Any]]</code></summary>
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post_object</a>(...) -&gt; AsyncHttpResponse[typing.List[typing.Any]]</code></summary>
 <dl>
 <dd>
 

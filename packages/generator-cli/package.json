@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern"
+    "url": "git+https://github.com/fern-api/fern.git",
+    "directory": "packages/generator-cli"
   },
   "type": "commonjs",
   "main": "dist/api.js",
   "source": "src/index.ts",
   "types": "dist/api.d.ts",
   "bin": {
-    "generator-cli": "dist/cli"
+    "generator-cli": "bin/cli"
   },
   "files": ["bin", "dist"],
   "scripts": {

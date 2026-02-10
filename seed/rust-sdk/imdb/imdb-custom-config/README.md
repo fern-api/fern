@@ -43,7 +43,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use custom_imdb_sdk::prelude::*;
-use custom_imdb_sdk::CreateMovieRequest;
 
 #[tokio::main]
 async fn main() {

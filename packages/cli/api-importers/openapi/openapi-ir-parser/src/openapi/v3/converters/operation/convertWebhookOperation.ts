@@ -1,16 +1,23 @@
-import { NamedFullExample, Source, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
+import {
+    MultipartFormDataWebhookPayloadWithExample,
+    NamedFullExample,
+    SchemaWithExample,
+    Source,
+    WebhookExampleCall,
+    WebhookWithExample
+} from "@fern-api/openapi-ir";
 import { createHash } from "crypto";
 
-import { getExtension } from "../../../../getExtension";
-import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { OperationContext } from "../contexts";
-import { convertParameters } from "../endpoint/convertParameters";
-import { convertRequest } from "../endpoint/convertRequest";
-import { convertResponse } from "../endpoint/convertResponse";
+import { getExtension } from "../../../../getExtension.js";
+import { convertToFullExample } from "../../../../schema/examples/convertToFullExample.js";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { OperationContext } from "../contexts.js";
+import { convertParameters } from "../endpoint/convertParameters.js";
+import { convertRequest } from "../endpoint/convertRequest.js";
+import { convertResponse } from "../endpoint/convertResponse.js";
 
 export function convertWebhookOperation({
     context,
@@ -77,9 +84,38 @@ export function convertWebhookOperation({
         )
         .filter((request) => request != null)
         .map((request) => {
-            if (request == null || (request.type !== "json" && request.type !== "formUrlEncoded")) {
-                context.logger.error(`Skipping webhook ${path} because non-json and non-formUrlEncoded request body`);
+            if (
+                request == null ||
+                (request.type !== "json" && request.type !== "formUrlEncoded" && request.type !== "multipart")
+            ) {
+                context.logger.error(
+                    `Skipping webhook ${path} because non-json, non-formUrlEncoded, and non-multipart request body`
+                );
                 return undefined;
+            }
+
+            let multipartFormData: MultipartFormDataWebhookPayloadWithExample | undefined;
+            let payload: SchemaWithExample;
+
+            if (request.type === "multipart") {
+                multipartFormData = {
+                    name: request.name,
+                    properties: request.properties,
+                    description: request.description,
+                    source: request.source
+                };
+                payload = SchemaWithExample.unknown({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
+                    title: undefined,
+                    description: request.description,
+                    availability: undefined,
+                    namespace: context.namespace,
+                    groupName: undefined,
+                    example: undefined
+                });
+            } else {
+                payload = request.schema;
             }
 
             const webhook: WebhookWithExample = {
@@ -92,7 +128,8 @@ export function convertWebhookOperation({
                 tags: context.resolveTagsToTagIds(operation.tags),
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
-                payload: request.schema,
+                payload,
+                multipartFormData,
                 response: convertedResponse?.value,
                 description: operation.description,
                 examples: convertWebhookExamples(request.fullExamples),

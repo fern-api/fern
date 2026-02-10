@@ -16,7 +16,7 @@ public partial interface IUserClient
     /// Create a new user.
     /// This endpoint is used to create a new user.
     /// </summary>
-    Task<User> CreateUserAsync(
+    WithRawResponseTask<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

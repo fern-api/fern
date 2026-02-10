@@ -5,21 +5,25 @@
 from . import service
 from .service import (
     Id,
+    ModelType,
     MyAliasObject,
     MyCollectionAliasObject,
     MyInlineType,
     MyObject,
     MyObjectWithOptional,
     ObjectType,
+    OpenEnumType,
 )
 
 __all__ = [
     "Id",
+    "ModelType",
     "MyAliasObject",
     "MyCollectionAliasObject",
     "MyInlineType",
     "MyObject",
     "MyObjectWithOptional",
     "ObjectType",
+    "OpenEnumType",
     "service",
 ]

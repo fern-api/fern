@@ -719,6 +719,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -1098,6 +1099,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -1969,6 +1971,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Tests optional(nullable(T)) where T has only optional properties.\nThis should not generate wire tests expecting {} when Optional.empty() is passed."
                 }

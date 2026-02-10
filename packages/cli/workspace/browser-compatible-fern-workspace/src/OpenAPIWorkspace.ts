@@ -1,12 +1,13 @@
 import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
+import { type Overlay } from "@fern-api/core-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
 
-import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader";
+import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader.js";
 
 const IN_MEMORY_ABSOLUTE_FILEPATH = AbsoluteFilePath.of("/<memory>");
 
@@ -25,6 +26,7 @@ export declare namespace OpenAPIWorkspace {
     export interface Spec {
         parsed: OpenAPI.Document;
         overrides?: Partial<OpenAPI.Document>;
+        overlays?: Overlay;
         settings?: Settings;
     }
 

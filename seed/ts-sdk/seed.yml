@@ -105,6 +105,10 @@ fixtures:
       outputMode: local_files
       customConfig:
         outputSourceFiles: false
+    - outputFolder: output-src-only
+      outputMode: local_files
+      customConfig:
+        outputSrcOnly: true
     - outputFolder: never-throw-errors
       customConfig:
         neverThrowErrors: true
@@ -443,6 +447,10 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: forward-compatible-enums-with-serde
+      customConfig:
+        enableForwardCompatibleEnums: true
+        noSerdeLayer: false
   pagination:
     - outputFolder: no-custom-config
       customConfig: null
@@ -453,6 +461,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: "MyPager"
+  ts-extra-properties:
+    - outputFolder: .
+      customConfig:
+        noSerdeLayer: false
 scripts:
   - image: fernapi/ts-seed
     commands:
@@ -501,12 +513,14 @@ scripts:
 allowedFailures:
   - enum:no-custom-config
   - enum:forward-compatible-enums
+  - enum:forward-compatible-enums-with-serde
   - enum:serde
   - error-property:no-custom-config
   - error-property:union-utils
   - errors
   - oauth-client-credentials-custom
   - package-yml
+  - server-url-templating
   - trace:no-custom-config
   - trace:serde
   - inferred-auth-implicit-reference

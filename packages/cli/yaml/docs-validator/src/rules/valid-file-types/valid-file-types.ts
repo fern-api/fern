@@ -4,7 +4,7 @@ import { fileTypeFromBuffer, type MimeType } from "file-type";
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 const ALLOWED_FILE_TYPES = new Set<MimeType>([
     // image files

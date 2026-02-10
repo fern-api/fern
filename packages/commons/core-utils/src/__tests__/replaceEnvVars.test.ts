@@ -1,6 +1,6 @@
 import { vi } from "vitest";
 
-import { replaceEnvVariables } from "../replaceEnvVars";
+import { replaceEnvVariables } from "../replaceEnvVars.js";
 
 describe("replaceEnvVariables", () => {
     it("works and can replace templated env vars, even when they are nested", () => {

@@ -822,7 +822,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -2086,7 +2088,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -2129,7 +2133,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -2407,7 +2413,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -2450,7 +2458,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -2493,7 +2503,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4071,7 +4083,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT_64",
                     "v2": {
-                      "type": "uint64"
+                      "type": "uint64",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4114,7 +4128,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT_64",
                     "v2": {
-                      "type": "uint64"
+                      "type": "uint64",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4207,7 +4223,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4250,7 +4268,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4293,7 +4313,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4336,7 +4358,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4379,7 +4403,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4422,7 +4448,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4465,7 +4493,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4508,7 +4538,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4551,7 +4583,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -4594,7 +4628,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -5467,7 +5503,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -5561,7 +5599,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                     "v1": "LONG",
                     "v2": {
                       "type": "long",
-                      "default": null
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -5654,7 +5693,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT_64",
                     "v2": {
-                      "type": "uint64"
+                      "type": "uint64",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -5842,7 +5883,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -7721,7 +7764,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -7764,7 +7809,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -7807,7 +7854,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -7850,7 +7899,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -7893,7 +7944,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -7936,7 +7989,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -10767,7 +10822,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                     "v1": "LONG",
                     "v2": {
                       "type": "long",
-                      "default": null
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -23989,7 +24045,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT_64",
                     "v2": {
-                      "type": "uint64"
+                      "type": "uint64",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -24033,7 +24091,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                     "v1": "LONG",
                     "v2": {
                       "type": "long",
-                      "default": null
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -28122,7 +28181,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -28165,7 +28226,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -28258,7 +28321,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -28301,7 +28366,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -35036,7 +35103,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -36320,7 +36389,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -36363,7 +36434,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -36406,7 +36479,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -41064,7 +41139,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -41107,7 +41184,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -43865,7 +43944,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT_64",
                     "v2": {
-                      "type": "uint64"
+                      "type": "uint64",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -44240,7 +44321,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -44283,7 +44366,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -44326,7 +44411,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -44753,7 +44840,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -45350,7 +45439,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -45393,7 +45484,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -45436,7 +45529,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -45789,7 +45884,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -45832,7 +45929,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -45970,7 +46069,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -46285,7 +46386,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -46328,7 +46431,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -46371,7 +46476,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -51523,7 +51630,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -56206,7 +56315,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "primitive": {
                 "v1": "FLOAT",
                 "v2": {
-                  "type": "float"
+                  "type": "float",
+                  "default": null,
+                  "validation": null
                 }
               }
             },
@@ -56233,7 +56344,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v1": "LONG",
                 "v2": {
                   "type": "long",
-                  "default": null
+                  "default": null,
+                  "validation": null
                 }
               }
             },
@@ -56245,7 +56357,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "primitive": {
                 "v1": "UINT",
                 "v2": {
-                  "type": "uint"
+                  "type": "uint",
+                  "default": null,
+                  "validation": null
                 }
               }
             },
@@ -56257,7 +56371,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "primitive": {
                 "v1": "UINT_64",
                 "v2": {
-                  "type": "uint64"
+                  "type": "uint64",
+                  "default": null,
+                  "validation": null
                 }
               }
             },
@@ -57463,7 +57579,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -59079,7 +59197,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -64080,7 +64200,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -64123,7 +64245,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -66435,7 +66559,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -68388,7 +68514,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -71480,7 +71608,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                     "v1": "LONG",
                     "v2": {
                       "type": "long",
-                      "default": null
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -74476,7 +74605,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -75192,7 +75323,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
               "primitive": {
                 "v1": "UINT_64",
                 "v2": {
-                  "type": "uint64"
+                  "type": "uint64",
+                  "default": null,
+                  "validation": null
                 }
               }
             },
@@ -76363,7 +76496,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -76406,7 +76541,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "FLOAT",
                     "v2": {
-                      "type": "float"
+                      "type": "float",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -79508,7 +79645,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -79934,7 +80073,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                     "v1": "LONG",
                     "v2": {
                       "type": "long",
-                      "default": null
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -80202,7 +80342,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -80245,7 +80387,9 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                   "primitive": {
                     "v1": "UINT",
                     "v2": {
-                      "type": "uint"
+                      "type": "uint",
+                      "default": null,
+                      "validation": null
                     }
                   }
                 }
@@ -81617,6 +81761,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Create or update an entity and get a response confirming whether the Entity Manager API succesfully processes\\n the entity. Ideal for testing environments.\\n When publishing an entity, only your integration can modify or delete that entity; other sources, such as the\\n UI or other integrations, can't. If you're pushing entity updates so fast that your publish task can't keep\\n up with your update rate (a rough estimate of >= 1 Hz), use the PublishEntities request instead."
         },
@@ -82805,6 +82950,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Create or update one or more entities rapidly using PublishEntities, which doesn't return error messages\\n for invalid entities or provide server feedback. When publishing entities, only your integration can\\n modify or delete those entities; other sources, such as the UI or other integrations, can't.\\n When you use PublishEntities, you gain higher throughput at the expense of receiving no server responses or\\n validation. In addition, due to gRPC stream mechanics, you risk losing messages queued on the outgoing gRPC\\n buffer if the stream connection is lost prior to the messages being sent. If you need validation responses,\\n are developing in testing environments, or have lower entity update rates, use PublishEntity."
         },
@@ -83995,6 +84141,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Get an entity using its entityId."
         },
@@ -85198,6 +85345,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Override an Entity Component. An override is a definitive change to entity data. Any authorized user of service\\n can override overridable components on any entity. Only fields marked with overridable can be overridden.\\n When setting an override, the user or service setting the override is asserting that they are certain of the change\\n and the truth behind it."
         },
@@ -85374,6 +85522,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Remove an override for an Entity component."
         },
@@ -86600,6 +86749,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Returns a stream of entities with specified components populated."
         }
@@ -88981,6 +89131,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Create a new Task."
         },
@@ -90222,6 +90373,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Get an existing Task."
         },
@@ -91466,6 +91618,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Find Tasks that match request criteria."
         },
@@ -92759,6 +92912,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Update the status of a Task."
         },
@@ -93952,6 +94106,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
           "audiences": [],
           "retries": null,
           "apiPlayground": null,
+          "responseHeaders": [],
           "availability": null,
           "docs": "Stream Tasks ready for RPC Agent execution that match agent selector (ex: entity_ids).\\n Intended for use by Taskable Agents that need to receive Tasks ready for execution by RPC."
         }

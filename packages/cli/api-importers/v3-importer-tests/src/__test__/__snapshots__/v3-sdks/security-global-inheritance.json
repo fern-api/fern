@@ -213,6 +213,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": true,
           "security": [

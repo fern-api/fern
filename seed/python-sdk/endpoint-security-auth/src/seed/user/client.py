@@ -39,9 +39,7 @@ class UserClient:
         from seed import SeedEndpointSecurityAuth
 
         client = SeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_with_bearer()
         """
@@ -64,9 +62,7 @@ class UserClient:
         from seed import SeedEndpointSecurityAuth
 
         client = SeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_with_api_key()
         """
@@ -89,9 +85,7 @@ class UserClient:
         from seed import SeedEndpointSecurityAuth
 
         client = SeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_with_o_auth()
         """
@@ -114,9 +108,7 @@ class UserClient:
         from seed import SeedEndpointSecurityAuth
 
         client = SeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_with_basic()
         """
@@ -139,9 +131,7 @@ class UserClient:
         from seed import SeedEndpointSecurityAuth
 
         client = SeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_with_inferred_auth()
         """
@@ -164,9 +154,7 @@ class UserClient:
         from seed import SeedEndpointSecurityAuth
 
         client = SeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_with_any_auth()
         """
@@ -189,9 +177,7 @@ class UserClient:
         from seed import SeedEndpointSecurityAuth
 
         client = SeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
         client.user.get_with_all_auth()
         """
@@ -232,9 +218,7 @@ class AsyncUserClient:
         from seed import AsyncSeedEndpointSecurityAuth
 
         client = AsyncSeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -265,9 +249,7 @@ class AsyncUserClient:
         from seed import AsyncSeedEndpointSecurityAuth
 
         client = AsyncSeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -298,9 +280,7 @@ class AsyncUserClient:
         from seed import AsyncSeedEndpointSecurityAuth
 
         client = AsyncSeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -331,9 +311,7 @@ class AsyncUserClient:
         from seed import AsyncSeedEndpointSecurityAuth
 
         client = AsyncSeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -366,9 +344,7 @@ class AsyncUserClient:
         from seed import AsyncSeedEndpointSecurityAuth
 
         client = AsyncSeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -399,9 +375,7 @@ class AsyncUserClient:
         from seed import AsyncSeedEndpointSecurityAuth
 
         client = AsyncSeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 
@@ -432,9 +406,7 @@ class AsyncUserClient:
         from seed import AsyncSeedEndpointSecurityAuth
 
         client = AsyncSeedEndpointSecurityAuth(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+            base_url="YOUR_BASE_URL",
         )
 
 

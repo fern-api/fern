@@ -26,6 +26,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "https://api.example.com/v1",
           },
@@ -134,6 +135,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -161,6 +163,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "https://api.example.com/v1",
           },
@@ -233,6 +236,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -259,6 +263,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [

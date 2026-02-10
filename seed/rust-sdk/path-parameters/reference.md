@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">get_organization</a>(tenant_id: String, organization_id: String) -> Result<Organization, ApiError></code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">get_organization</a>(tenant_id: String, organization_id: String) -> Result&lt;Organization, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">get_organization_user</a>(tenant_id: String, organization_id: String, user_id: String) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">get_organization_user</a>(tenant_id: String, organization_id: String, user_id: String) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">search_organizations</a>(tenant_id: String, organization_id: String, limit: Option<Option<i64>>) -> Result<Vec<Organization>, ApiError></code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">search_organizations</a>(tenant_id: String, organization_id: String, limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;Organization&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -211,7 +211,7 @@ async fn main() {
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user</a>(tenant_id: String, user_id: String) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user</a>(tenant_id: String, user_id: String) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -271,7 +271,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_user</a>(tenant_id: String, request: User) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_user</a>(tenant_id: String, request: User) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -285,7 +285,6 @@ async fn main() {
 
 ```rust
 use seed_path_parameters::prelude::*;
-use seed_path_parameters::User;
 
 #[tokio::main]
 async fn main() {
@@ -331,7 +330,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">update_user</a>(tenant_id: String, user_id: String, request: User) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">update_user</a>(tenant_id: String, user_id: String, request: User) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -345,7 +344,6 @@ async fn main() {
 
 ```rust
 use seed_path_parameters::prelude::*;
-use seed_path_parameters::User;
 
 #[tokio::main]
 async fn main() {
@@ -400,7 +398,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">search_users</a>(tenant_id: String, user_id: String, limit: Option<Option<i64>>) -> Result<Vec<User>, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">search_users</a>(tenant_id: String, user_id: String, limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -473,7 +471,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user_metadata</a>(tenant_id: String, user_id: String, version: i64) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user_metadata</a>(tenant_id: String, user_id: String, version: i64) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -555,7 +553,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user_specifics</a>(tenant_id: String, user_id: String, version: i64, thought: String) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user_specifics</a>(tenant_id: String, user_id: String, version: i64, thought: String) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

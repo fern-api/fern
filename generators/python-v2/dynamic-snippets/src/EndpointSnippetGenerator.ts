@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     type: "primitive",
@@ -269,8 +269,7 @@ export class EndpointSnippetGenerator {
                     this.addAuthMismatchError(auth, values);
                     return [];
                 }
-                this.addWarning("The Python SDK Generator does not support Inferred auth scheme yet");
-                return [];
+                return this.getConstructorInferredAuthArgs({ auth, values });
             default:
                 assertNever(auth);
         }
@@ -356,6 +355,48 @@ export class EndpointSnippetGenerator {
                 value: python.TypeInstantiation.str(values.clientSecret)
             }
         ];
+    }
+
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): python.NamedValue[] {
+        const parameters = auth.parameters ?? [];
+        if (parameters.length === 0) {
+            this.addWarning("Inferred auth scheme is missing parameters; cannot generate constructor arguments.");
+            return [];
+        }
+
+        const authValues = values.values;
+        if (authValues == null) {
+            this.addWarning("Inferred auth values were not provided; cannot generate constructor arguments.");
+            return [];
+        }
+
+        const fields: python.NamedValue[] = [];
+        for (const parameter of parameters) {
+            const wireValue = parameter.name.wireValue;
+            if (!Object.hasOwn(authValues, wireValue)) {
+                this.addWarning(`Missing inferred auth value for ${wireValue}`);
+                continue;
+            }
+            const value = authValues[wireValue];
+            const typeLiteral = this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: parameter.typeReference,
+                value
+            });
+            if (python.TypeInstantiation.isNop(typeLiteral)) {
+                continue;
+            }
+            fields.push({
+                name: this.context.getPropertyName(parameter.name.name),
+                value: typeLiteral
+            });
+        }
+        return fields;
     }
 
     private getConstructorHeaderArgs({
@@ -593,6 +634,14 @@ export class EndpointSnippetGenerator {
                     }
                 ];
             case "object": {
+                if (this.context.customConfig.inline_request_params === false) {
+                    return [
+                        {
+                            name: REQUEST_BODY_ARG_NAME,
+                            value: this.context.dynamicTypeLiteralMapper.convert({ typeReference, value })
+                        }
+                    ];
+                }
                 const bodyProperties = this.context.associateByWireValue({
                     parameters: named.properties,
                     values: this.context.getRecord(value) ?? {}

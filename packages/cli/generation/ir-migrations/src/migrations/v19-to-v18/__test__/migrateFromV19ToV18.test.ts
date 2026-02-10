@@ -2,8 +2,8 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
-import { V19_TO_V18_MIGRATION } from "../migrateFromV19ToV18";
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester.js";
+import { V19_TO_V18_MIGRATION } from "../migrateFromV19ToV18.js";
 
 const runMigration = createMigrationTester(V19_TO_V18_MIGRATION);
 

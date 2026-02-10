@@ -79,6 +79,11 @@ public class RawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "search", request.getSearch().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -126,6 +131,11 @@ public class RawServiceClient {
                 httpUrl, "include_metadata", request.getIncludeMetadata().orElse(false), false);
         QueryStringMapper.addQueryParameter(
                 httpUrl, "format", request.getFormat().orElse("json"), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -170,6 +180,11 @@ public class RawServiceClient {
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(100), false);
         QueryStringMapper.addQueryParameter(
                 httpUrl, "offset", request.getOffset().orElse(0), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -208,6 +223,13 @@ public class RawServiceClient {
      */
     public SeedClientSideParamsHttpResponse<PaginatedUserResponse> listUsers() {
         return listUsers(ListUsersRequest.builder().build());
+    }
+
+    /**
+     * List or search for users
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedUserResponse> listUsers(RequestOptions requestOptions) {
+        return listUsers(ListUsersRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -253,6 +275,11 @@ public class RawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -288,6 +315,13 @@ public class RawServiceClient {
     /**
      * Get a user by ID
      */
+    public SeedClientSideParamsHttpResponse<User> getUserById(String userId, RequestOptions requestOptions) {
+        return getUserById(userId, GetUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a user by ID
+     */
     public SeedClientSideParamsHttpResponse<User> getUserById(String userId, GetUserRequest request) {
         return getUserById(userId, request, null);
     }
@@ -308,6 +342,11 @@ public class RawServiceClient {
         }
         QueryStringMapper.addQueryParameter(
                 httpUrl, "include_fields", request.getIncludeFields().orElse(true), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -344,11 +383,15 @@ public class RawServiceClient {
      * Create a new user
      */
     public SeedClientSideParamsHttpResponse<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
-                .addPathSegments("users")
-                .build();
+                .addPathSegments("users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -357,7 +400,7 @@ public class RawServiceClient {
             throw new SeedClientSideParamsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -392,6 +435,13 @@ public class RawServiceClient {
     /**
      * Update a user
      */
+    public SeedClientSideParamsHttpResponse<User> updateUser(String userId, RequestOptions requestOptions) {
+        return updateUser(userId, UpdateUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Update a user
+     */
     public SeedClientSideParamsHttpResponse<User> updateUser(String userId, UpdateUserRequest request) {
         return updateUser(userId, request, null);
     }
@@ -401,12 +451,16 @@ public class RawServiceClient {
      */
     public SeedClientSideParamsHttpResponse<User> updateUser(
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -415,7 +469,7 @@ public class RawServiceClient {
             throw new SeedClientSideParamsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -451,14 +505,18 @@ public class RawServiceClient {
      * Delete a user
      */
     public SeedClientSideParamsHttpResponse<Void> deleteUser(String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
@@ -490,6 +548,13 @@ public class RawServiceClient {
     /**
      * List all connections
      */
+    public SeedClientSideParamsHttpResponse<List<Connection>> listConnections(RequestOptions requestOptions) {
+        return listConnections(ListConnectionsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all connections
+     */
     public SeedClientSideParamsHttpResponse<List<Connection>> listConnections(ListConnectionsRequest request) {
         return listConnections(request, null);
     }
@@ -514,6 +579,11 @@ public class RawServiceClient {
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -553,6 +623,14 @@ public class RawServiceClient {
      * Get a connection by ID
      */
     public SeedClientSideParamsHttpResponse<Connection> getConnection(
+            String connectionId, RequestOptions requestOptions) {
+        return getConnection(connectionId, GetConnectionRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public SeedClientSideParamsHttpResponse<Connection> getConnection(
             String connectionId, GetConnectionRequest request) {
         return getConnection(connectionId, request, null);
     }
@@ -570,6 +648,11 @@ public class RawServiceClient {
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -601,6 +684,13 @@ public class RawServiceClient {
      */
     public SeedClientSideParamsHttpResponse<PaginatedClientResponse> listClients() {
         return listClients(ListClientsRequest.builder().build());
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedClientResponse> listClients(RequestOptions requestOptions) {
+        return listClients(ListClientsRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -651,6 +741,11 @@ public class RawServiceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "app_type", request.getAppType().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -687,6 +782,13 @@ public class RawServiceClient {
     /**
      * Get a client by ID
      */
+    public SeedClientSideParamsHttpResponse<Client> getClient(String clientId, RequestOptions requestOptions) {
+        return getClient(clientId, GetClientRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a client by ID
+     */
     public SeedClientSideParamsHttpResponse<Client> getClient(String clientId, GetClientRequest request) {
         return getClient(clientId, request, null);
     }
@@ -708,6 +810,11 @@ public class RawServiceClient {
         if (request.getIncludeFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "include_fields", request.getIncludeFields().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

@@ -4,7 +4,7 @@ namespace SeedOauthClientCredentials.Auth;
 
 public partial interface IAuthClient
 {
-    Task<TokenResponse> GetTokenAsync(
+    WithRawResponseTask<TokenResponse> GetTokenAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

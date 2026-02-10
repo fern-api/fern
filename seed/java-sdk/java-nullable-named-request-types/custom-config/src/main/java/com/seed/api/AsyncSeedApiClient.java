@@ -44,6 +44,13 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
+            String id, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithNonNullableNamedRequestBodyType(id, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
             String id, NonNullableObject request) {
         return this.rawClient
                 .postWithNonNullableNamedRequestBodyType(id, request)

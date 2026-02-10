@@ -3,6 +3,7 @@
     "**/.next": true,
     "**/.pnp.*": true,
     "**/.turbo": true,
+    "**/.tsup": true,
     "**/.nx": true,
     "**/.yarn": true,
     "**/__snapshots__/**": true,
@@ -24,6 +25,7 @@
     "**/.next": true,
     "**/.pnp.*": true,
     "**/.turbo": true,
+    "**/.tsup": true,
     "**/.nx": true,
     "**/.yarn": true,
     "seed/**": true,
@@ -44,6 +46,7 @@
   "files.readonlyInclude": {
     ".husky/_": true,
     ".turbo": true,
+    ".tsup": true,
     ".nx": true,
     "pnpm-lock.yaml": true
   },

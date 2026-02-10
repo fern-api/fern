@@ -8,6 +8,8 @@ pub struct ClientConfig {
     pub token: Option<String>,
     pub username: Option<String>,
     pub password: Option<String>,
+    pub client_id: Option<String>,
+    pub client_secret: Option<String>,
     pub timeout: Duration,
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
@@ -21,9 +23,15 @@ impl Default for ClientConfig {
             token: None,
             username: None,
             password: None,
+            client_id: None,
+            client_secret: None,
             timeout: Duration::from_secs(60),
             max_retries: 3,
-            custom_headers: HashMap::new(),
+            custom_headers: HashMap::from([
+                ("X-Fern-Language".to_string(), "Rust".to_string()),
+                ("X-Fern-SDK-Name".to_string(), "custom_imdb_sdk".to_string()),
+                ("X-Fern-SDK-Version".to_string(), "2.1.0".to_string()),
+            ]),
             user_agent: "Api Rust SDK".to_string(),
         }
     }

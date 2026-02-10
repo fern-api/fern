@@ -2134,6 +2134,7 @@
                     ],
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -4973,6 +4974,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Retrieve a movie from the database based on the ID"
                 }
@@ -5031,6 +5033,12 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": [
+                        "external"
+                    ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -5055,6 +5063,13 @@
                         }
                     },
                     "url": "https://www.staging.yoursite.com",
+                    "audiences": [
+                        "internal",
+                        "development"
+                    ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": "This staging environment is helpful for testing!"
                 }
             ]
@@ -5179,6 +5194,7 @@
                     },
                     "docs": null
                 },
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
@@ -5282,6 +5298,7 @@
                     },
                     "docs": null
                 },
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,

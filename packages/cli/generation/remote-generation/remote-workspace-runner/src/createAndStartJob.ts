@@ -157,13 +157,18 @@ async function createJob({
             },
             insufficientPermissions: () => {
                 return context.failAndThrow(
-                    "You do not have permission to run this generator. Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
-                        "If you believe this is an error, please contact support@buildwithfern.com"
+                    `You do not have permission to run this generator for organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
                 );
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
                     "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com."
+                );
+            },
+            branchDoesNotExist: (value) => {
+                return context.failAndThrow(
+                    `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`
                 );
             },
             _other: (content) => {
@@ -299,6 +304,8 @@ function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Err
                 return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body);
             case "OrgNotConfiguredForWhitelabel":
                 return FernFiddle.remoteGen.createJobV3.Error.orgNotConfiguredForWhitelabel(body.body);
+            case "BranchDoesNotExist":
+                return FernFiddle.remoteGen.createJobV3.Error.branchDoesNotExist(body.body);
         }
     }
     return error;

@@ -9,5 +9,5 @@
       "path": "github.com/fern-api/sse-go"
     }
   },
-  "sdkVersion": "0.0.1"
+  "sdkVersion": "v0.0.1"
 }

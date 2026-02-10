@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const CLIENT_VAR_NAME = "$client";
 const SNIPPET_NAMESPACE = "Example";
@@ -215,7 +215,7 @@ export class EndpointSnippetGenerator {
                 if (endpoint.auth.type === "inferred") {
                     // For inferred auth, provide default test values
                     const defaultInferredAuthValues: FernIr.dynamic.InferredAuthValues = {
-                        type: "inferred"
+                        values: undefined
                     };
                     authArgs.push(
                         ...this.getConstructorInferredAuthArgs({

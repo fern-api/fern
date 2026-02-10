@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/add-new-blocks/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/add-new-blocks/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("add new blocks", () => {
     testGenerateReadme({

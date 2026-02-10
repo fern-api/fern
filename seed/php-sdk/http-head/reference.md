@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client->user->head()</code></summary>
+<details><summary><code>$client-&gt;user-&gt;head()</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ $client->user->head();
 </dl>
 </details>
 
-<details><summary><code>$client->user->list($request) -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;list($request) -> array</code></summary>
 <dl>
 <dd>
 

@@ -5,19 +5,21 @@ import { Document, getParseOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 
-import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3";
-import { loadAsyncAPI } from "../utils/loadAsyncAPI";
-import { loadOpenAPI } from "../utils/loadOpenAPI";
+import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3.js";
+import { loadAsyncAPI } from "../utils/loadAsyncAPI.js";
+import { loadOpenAPI } from "../utils/loadOpenAPI.js";
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
 
     public async loadDocuments({
         context,
-        specs
+        specs,
+        loadAiExamples = false
     }: {
         context: TaskContext;
         specs: OpenAPISpec[];
+        loadAiExamples?: boolean;
     }): Promise<Document[]> {
         const documents: Document[] = [];
         for (const spec of specs) {
@@ -37,7 +39,9 @@ export class OpenAPILoader {
                         const openAPI = await loadOpenAPI({
                             absolutePathToOpenAPI: spec.absoluteFilepath,
                             context,
-                            absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
+                            absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
+                            absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays,
+                            loadAiExamples
                         });
                         if (isOpenAPIV3(openAPI)) {
                             documents.push({

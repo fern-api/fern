@@ -13,15 +13,18 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
-    /// </code></example>
-    public async Task<SeedExamples.Exception> GetExceptionAsync(
+    private async Task<WithRawResponse<SeedExamples.Exception>> GetExceptionAsyncCore(
         string notificationId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -32,6 +35,7 @@ public partial class ServiceClient : IServiceClient
                         "/file/notification/{0}",
                         ValueConvert.ToPathParameterString(notificationId)
                     ),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -42,14 +46,28 @@ public partial class ServiceClient : IServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SeedExamples.Exception>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SeedExamples.Exception>(responseBody)!;
+                return new WithRawResponse<SeedExamples.Exception>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedExamplesApiException(
@@ -58,5 +76,19 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
+    /// </code></example>
+    public WithRawResponseTask<SeedExamples.Exception> GetExceptionAsync(
+        string notificationId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SeedExamples.Exception>(
+            GetExceptionAsyncCore(notificationId, options, cancellationToken)
+        );
     }
 }

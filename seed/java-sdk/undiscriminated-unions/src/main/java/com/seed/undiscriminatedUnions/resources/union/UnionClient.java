@@ -59,6 +59,10 @@ public class UnionClient {
         return this.rawClient.call().body();
     }
 
+    public boolean call(RequestOptions requestOptions) {
+        return this.rawClient.call(requestOptions).body();
+    }
+
     public boolean call(Request request) {
         return this.rawClient.call(request).body();
     }

@@ -38,6 +38,10 @@ public class RawNullableClient {
         return getUsers(GetUsersRequest.builder().build());
     }
 
+    public SeedNullableHttpResponse<List<User>> getUsers(RequestOptions requestOptions) {
+        return getUsers(GetUsersRequest.builder().build(), requestOptions);
+    }
+
     public SeedNullableHttpResponse<List<User>> getUsers(GetUsersRequest request) {
         return getUsers(request, null);
     }
@@ -65,6 +69,11 @@ public class RawNullableClient {
         if (request.getTags().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "tags", request.getTags().get(), true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -97,10 +106,14 @@ public class RawNullableClient {
     }
 
     public SeedNullableHttpResponse<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users")
-                .build();
+                .addPathSegments("users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -109,7 +122,7 @@ public class RawNullableClient {
             throw new SeedNullableException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -138,15 +151,23 @@ public class RawNullableClient {
         return deleteUser(DeleteUserRequest.builder().build());
     }
 
+    public SeedNullableHttpResponse<Boolean> deleteUser(RequestOptions requestOptions) {
+        return deleteUser(DeleteUserRequest.builder().build(), requestOptions);
+    }
+
     public SeedNullableHttpResponse<Boolean> deleteUser(DeleteUserRequest request) {
         return deleteUser(request, null);
     }
 
     public SeedNullableHttpResponse<Boolean> deleteUser(DeleteUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users")
-                .build();
+                .addPathSegments("users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -155,7 +176,7 @@ public class RawNullableClient {
             throw new SeedNullableException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("DELETE", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

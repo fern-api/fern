@@ -1100,6 +1100,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Get a user by their ID.\nFor Windows authentication, use DOMAIN\\username format.\nOther backslash examples: FOO\\_BAR, path\\to\\file, C:\\Users\\name"
                 }

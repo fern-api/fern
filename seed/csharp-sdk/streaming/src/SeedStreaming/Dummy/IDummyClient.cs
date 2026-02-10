@@ -8,7 +8,7 @@ public partial interface IDummyClient
         CancellationToken cancellationToken = default
     );
 
-    Task<StreamResponse> GenerateAsync(
+    WithRawResponseTask<StreamResponse> GenerateAsync(
         Generateequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

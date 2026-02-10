@@ -1,12 +1,16 @@
 import { GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
-import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator";
-import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
-import { RawClient } from "./http/RawClient";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator.js";
+import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator.js";
+import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator.js";
+import { RawClient } from "./http/RawClient.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
 export class EndpointGenerator extends AbstractEndpointGenerator {
     private http: HttpEndpointGenerator;
@@ -81,16 +85,27 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 _other: () => false
             }) ?? false;
 
-        // Wrap return type in Task<T> for interface methods, EXCEPT for streaming endpoints
-        // which use async iterators that return IAsyncEnumerable<T> directly
+        // Check if rawReturn is WithRawResponseTask<T>
+        const isWithRawResponseTask =
+            rawReturn != null && "name" in rawReturn && rawReturn.name === "WithRawResponseTask";
+
+        // For interface methods:
+        // - Streaming endpoints return IAsyncEnumerable<T> directly (async iterator pattern)
+        // - WithRawResponseTask<T> is already task-like, don't wrap in Task<>
+        // - Empty responses return Task
         let return_: ast.Type;
         if (isStreaming) {
-            // Streaming endpoints return IAsyncEnumerable<T> directly (async iterator pattern)
+            // Streaming endpoints return IAsyncEnumerable<T> directly
             return_ = rawReturn ?? this.System.Threading.Tasks.Task();
+        } else if (isWithRawResponseTask) {
+            // WithRawResponseTask<T> is already task-like, use it directly
+            return_ = rawReturn;
+        } else if (rawReturn != null) {
+            // Other non-streaming endpoints (like HEAD requests that return HttpResponseHeaders)
+            return_ = rawReturn;
         } else {
-            // Regular async methods return Task<T>
-            return_ =
-                rawReturn != null ? this.System.Threading.Tasks.Task(rawReturn) : this.System.Threading.Tasks.Task();
+            // Empty responses return Task
+            return_ = this.System.Threading.Tasks.Task();
         }
 
         interface_.addMethod({

@@ -59,6 +59,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "https://api.example.com/v1",
           },
@@ -209,6 +210,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -240,6 +242,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "https://api.example.com/v1",
           },
@@ -366,6 +369,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -395,6 +399,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "https://api.example.com/v1",
           },
@@ -473,6 +478,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -502,6 +508,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "https://api.example.com/v1",
           },
@@ -583,10 +590,13 @@
                 "type": "id",
                 "value": "User",
               },
+              "maxItems": undefined,
+              "minItems": undefined,
               "type": "list",
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -601,6 +611,8 @@
                     "type": "id",
                     "value": "User",
                   },
+                  "maxItems": undefined,
+                  "minItems": undefined,
                   "type": "list",
                 },
               },
@@ -610,6 +622,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
@@ -747,8 +760,11 @@
               "type": "primitive",
               "value": {
                 "default": undefined,
+                "exclusiveMaximum": undefined,
+                "exclusiveMinimum": undefined,
                 "maximum": undefined,
                 "minimum": undefined,
+                "multipleOf": undefined,
                 "type": "double",
               },
             },

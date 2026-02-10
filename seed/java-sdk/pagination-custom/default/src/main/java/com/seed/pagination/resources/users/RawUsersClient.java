@@ -32,6 +32,10 @@ public class RawUsersClient {
         return listUsernamesCustom(ListUsernamesRequestCustom.builder().build());
     }
 
+    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom(RequestOptions requestOptions) {
+        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build(), requestOptions);
+    }
+
     public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom(
             ListUsernamesRequestCustom request) {
         return listUsernamesCustom(request, null);
@@ -45,6 +49,11 @@ public class RawUsersClient {
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.getUsers() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.nullable.getUsers() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 

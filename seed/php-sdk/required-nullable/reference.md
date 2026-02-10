@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->getFoo($request) -> Foo</code></summary>
+<details><summary><code>$client-&gt;getFoo($request) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ $client->getFoo(
 </dl>
 </details>
 
-<details><summary><code>$client->updateFoo($id, $request) -> Foo</code></summary>
+<details><summary><code>$client-&gt;updateFoo($id, $request) -> Foo</code></summary>
 <dl>
 <dd>
 

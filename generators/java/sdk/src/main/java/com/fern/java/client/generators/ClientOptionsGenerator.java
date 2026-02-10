@@ -56,6 +56,8 @@ import okhttp3.OkHttpClient;
 public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     public static final String HEADERS_METHOD_NAME = "headers";
+    public static final String AUTH_HEADERS_METHOD_NAME = "getAuthHeaders";
+    public static final String AUTH_PROVIDER_FIELD_NAME = "authProvider";
 
     private static final String CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 
@@ -182,6 +184,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private final FieldSpec apiVersionField;
     private final FieldSpec webSocketFactoryField;
+    private final FieldSpec authProviderField;
 
     public ClientOptionsGenerator(
             ClientGeneratorContext clientGeneratorContext,
@@ -218,6 +221,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .build();
         } else {
             this.webSocketFactoryField = null;
+        }
+        // Only create AuthProvider field if using endpoint security
+        if (clientGeneratorContext.isEndpointSecurity()) {
+            this.authProviderField = FieldSpec.builder(
+                            clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("AuthProvider"),
+                            AUTH_PROVIDER_FIELD_NAME,
+                            Modifier.PRIVATE,
+                            Modifier.FINAL)
+                    .build();
+        } else {
+            this.authProviderField = null;
         }
     }
 
@@ -266,6 +280,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             .build());
         }
 
+        // Only add authProvider parameter if using endpoint security
+        if (authProviderField != null) {
+            constructorBuilder.addParameter(ParameterSpec.builder(authProviderField.type, authProviderField.name)
+                    .build());
+        }
+
         constructorBuilder
                 .addParameters(variableFields.values().stream()
                         .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
@@ -295,6 +315,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             constructorBuilder.addStatement("this.$L = $L", webSocketFactoryField.name, webSocketFactoryField.name);
         }
 
+        // Only add authProvider assignment if using endpoint security
+        if (authProviderField != null) {
+            constructorBuilder.addStatement("this.$L = $L", authProviderField.name, authProviderField.name);
+        }
+
         addApiVersionToConstructor(constructorBuilder);
 
         variableFields
@@ -317,6 +342,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         // Only add webSocketFactory field if WebSocket channels are present
         if (webSocketFactoryField != null) {
             clientOptionsBuilder.addField(webSocketFactoryField);
+        }
+
+        // Only add authProvider field if using endpoint security
+        if (authProviderField != null) {
+            clientOptionsBuilder.addField(authProviderField);
         }
 
         clientOptionsBuilder
@@ -402,6 +432,19 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         if (webSocketFactoryField != null) {
             MethodSpec webSocketFactoryGetter = createGetter(webSocketFactoryField);
             clientOptionsBuilder.addMethod(webSocketFactoryGetter);
+        }
+
+        // Only add authProvider getter and getAuthHeaders method if using endpoint security
+        if (authProviderField != null) {
+            ClassName endpointMetadataClassName =
+                    clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
+            MethodSpec getAuthHeadersMethod = MethodSpec.methodBuilder(AUTH_HEADERS_METHOD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(endpointMetadataClassName, "endpointMetadata")
+                    .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
+                    .addStatement("return this.$L.getAuthHeaders(endpointMetadata)", authProviderField.name)
+                    .build();
+            clientOptionsBuilder.addMethod(getAuthHeadersMethod);
         }
 
         TypeSpec clientOptions = clientOptionsBuilder
@@ -595,6 +638,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .build());
         }
 
+        // Only add authProvider field to builder if using endpoint security
+        if (authProviderField != null) {
+            builder.addField(FieldSpec.builder(authProviderField.type, authProviderField.name, Modifier.PRIVATE)
+                    .build());
+        }
+
         builder.addFields(variableFields.values())
                 .addFields(apiPathParamFields.values())
                 .addMethod(getEnvironmentBuilder())
@@ -648,6 +697,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             webSocketFactoryField.name,
                             Optional.class,
                             webSocketFactoryField.name)
+                    .addStatement("return this")
+                    .build());
+        }
+
+        // Only add authProvider method to builder if using endpoint security
+        if (authProviderField != null) {
+            builder.addMethod(MethodSpec.methodBuilder(authProviderField.name)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc("Set the authentication provider for routing auth to endpoints.\n")
+                    .returns(builderClassName)
+                    .addParameter(authProviderField.type, authProviderField.name)
+                    .addStatement("this.$L = $L", authProviderField.name, authProviderField.name)
                     .addStatement("return this")
                     .build());
         }
@@ -972,25 +1033,28 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 HEADER_SUPPLIERS_FIELD.name,
                 OKHTTP_CLIENT_FIELD.name);
 
-        // Build return string conditionally based on WebSocket presence
-        String returnString;
+        // Build return string with all optional fields
+        StringBuilder returnStringBuilder = new StringBuilder();
+        returnStringBuilder.append("return new $T($L, $L, $L, $L, this.timeout.get(), this.");
+        returnStringBuilder.append(MAX_RETRIES_FIELD.name);
+
+        // Add webSocketFactory if present
         if (webSocketFactoryField != null) {
-            returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name
-                    + ", this." + webSocketFactoryField.name;
-        } else {
-            returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name;
+            returnStringBuilder.append(", this.").append(webSocketFactoryField.name);
         }
 
+        // Add authProvider if using endpoint security
+        if (authProviderField != null) {
+            returnStringBuilder.append(", this.").append(authProviderField.name);
+        }
+
+        // Add apiVersion if present
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
             argsBuilder.add(apiVersionField.name);
-            if (webSocketFactoryField != null) {
-                returnString = "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name
-                        + ", this." + webSocketFactoryField.name + ", $L";
-            } else {
-                returnString =
-                        "return new $T($L, $L, $L, $L, this.timeout.get(), this." + MAX_RETRIES_FIELD.name + ", $L";
-            }
+            returnStringBuilder.append(", $L");
         }
+
+        String returnString = returnStringBuilder.toString();
 
         Object[] args = argsBuilder.build().toArray();
 

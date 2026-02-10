@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "isin": {
+      "type": "string"
+    },
+    "type": {
+      "const": "ISIN"
+    }
+  },
+  "required": [
+    "isin",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

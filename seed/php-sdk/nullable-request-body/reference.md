@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>$client->testGroup->testMethodName($pathParam, $request) -> mixed</code></summary>
+<details><summary><code>$client-&gt;testGroup-&gt;testMethodName($pathParam, $request) -> mixed</code></summary>
 <dl>
 <dd>
 

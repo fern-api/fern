@@ -4,32 +4,28 @@ import { SeedExhaustiveClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("NoAuthClient", () => {
-    
     test("postWithNoAuth", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
-        const rawRequestBody = { "key" : "value" };
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server
             .mockEndpoint()
-            .post("/no-auth").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/no-auth")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.noAuth.postWithNoAuth({
-    "key": "value"
-});
-                            expect(response).toEqual({
-                    body: true,
-                    ok: true,
-                    headers: expect.any(Object),
-                    rawResponse: expect.any(Object),
-                });
-                          
-                
+        const response = await client.noAuth.postWithNoAuth({
+            key: "value",
+        });
+        expect(response).toEqual({
+            body: true,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
     });
-          
 });

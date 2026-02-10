@@ -71,9 +71,7 @@ func TestAuthGetTokenWithClientCredentialsWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.GetTokenRequest{
 		ClientId:     "my_oauth_app_123",
@@ -103,9 +101,7 @@ func TestAuthRefreshTokenWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.RefreshTokenRequest{
 		ClientId:     "my_oauth_app_123",

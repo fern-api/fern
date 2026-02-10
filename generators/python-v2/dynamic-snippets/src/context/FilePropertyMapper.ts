@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export interface FilePropertyInfo {
     fileFields: python.NamedValue[];
@@ -95,7 +95,8 @@ export class FilePropertyMapper {
     }): python.TypeInstantiation {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return python.TypeInstantiation.nop();
+            const fallback = `example_${property.wireValue ?? "files"}`;
+            return python.TypeInstantiation.list([this.context.getFileFromString(fallback)]);
         }
         return python.TypeInstantiation.list(fileValues.map((value) => this.context.getFileFromString(value)));
     }

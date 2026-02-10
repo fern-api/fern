@@ -10,11 +10,11 @@ import {
     VariableResolverImpl
 } from "@fern-api/ir-generator";
 
-import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import { validateExampleEndpointCallParameters } from "./validateExampleEndpointCallParameters";
-import { validateRequest } from "./validateRequest";
-import { validateResponse } from "./validateResponse";
+import { Rule } from "../../Rule.js";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
+import { validateExampleEndpointCallParameters } from "./validateExampleEndpointCallParameters.js";
+import { validateRequest } from "./validateRequest.js";
+import { validateResponse } from "./validateResponse.js";
 
 export const ValidExampleEndpointCallRule: Rule = {
     name: "valid-example-endpoint-call",

@@ -1,6 +1,6 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::api::{*};
 
 pub struct ServiceClient {
     pub http_client: HttpClient,
@@ -9,24 +9,18 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
 
-    pub async fn patch(
-        &self,
-        request: &PatchProxyRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PATCH,
-                "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
-                None,
-                options,
-            )
-            .await
+    pub async fn patch(&self, request: &PatchProxyRequest, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            "",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
     }
 
     /// Update with JSON merge patch - complex types.
@@ -41,21 +35,14 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn patch_complex(
-        &self,
-        id: &String,
-        request: &PatchComplexRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PATCH,
-                &format!("complex/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
-                None,
-                options,
-            )
-            .await
+    pub async fn patch_complex(&self, id: &String, request: &PatchComplexRequest, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("complex/{}", id),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
     }
 
     /// Named request with mixed optional/nullable fields and merge-patch content type.
@@ -68,21 +55,14 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn named_patch_with_mixed(
-        &self,
-        id: &String,
-        request: &NamedMixedPatchRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PATCH,
-                &format!("named-mixed/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
-                None,
-                options,
-            )
-            .await
+    pub async fn named_patch_with_mixed(&self, id: &String, request: &NamedMixedPatchRequest, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("named-mixed/{}", id),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
     }
 
     /// Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
@@ -97,20 +77,14 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn optional_merge_patch_test(
-        &self,
-        request: &OptionalMergePatchRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PATCH,
-                "optional-merge-patch-test",
-                Some(serde_json::to_value(request).unwrap_or_default()),
-                None,
-                options,
-            )
-            .await
+    pub async fn optional_merge_patch_test(&self, request: &OptionalMergePatchRequest, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            "optional-merge-patch-test",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
     }
 
     /// Regular PATCH endpoint without merge-patch semantics
@@ -122,20 +96,15 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn regular_patch(
-        &self,
-        id: &String,
-        request: &RegularPatchRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PATCH,
-                &format!("regular/{}", id),
-                Some(serde_json::to_value(request).unwrap_or_default()),
-                None,
-                options,
-            )
-            .await
+    pub async fn regular_patch(&self, id: &String, request: &RegularPatchRequest, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            &format!("regular/{}", id),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
     }
+
 }
+

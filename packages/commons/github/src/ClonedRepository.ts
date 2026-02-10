@@ -2,7 +2,7 @@ import { cp, lstat, readdir, readFile, rm } from "fs/promises";
 import path, { resolve } from "path";
 import { type SimpleGit, simpleGit } from "simple-git";
 
-import { FERNIGNORE, GIT_DIR, GITIGNORE, README_FILEPATH } from "./constants";
+import { FERNIGNORE, GIT_DIR, GITIGNORE, README_FILEPATH } from "./constants.js";
 
 const DEFAULT_IGNORED_FILES = [FERNIGNORE, GITIGNORE, GIT_DIR];
 
@@ -225,6 +225,21 @@ export class ClonedRepository {
                 // (but don't push - let the caller decide when to push)
                 await this.git.checkoutLocalBranch(branch);
             }
+        }
+    }
+
+    /**
+     * Checks if a branch exists on the remote.
+     * @param branch The branch name to check
+     * @returns true if the branch exists on remote, false otherwise
+     */
+    public async remoteBranchExists(branch: string): Promise<boolean> {
+        await this.git.cwd(this.clonePath);
+        try {
+            const result = await this.git.raw(["ls-remote", "--heads", "origin", branch]);
+            return result.trim().length > 0;
+        } catch (_error) {
+            return false;
         }
     }
 

@@ -4,23 +4,13 @@ import { SeedPackageYmlClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ServiceClient", () => {
-    
     test("nop", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPackageYmlClient({ "maxRetries" : 0 , "id" : "id-a2ijs82" , "environment" : server.baseUrl });
-        
-        
-        server
-            .mockEndpoint()
-            .get("/id-a2ijs82/id-219xca8").respondWith()
-            .statusCode(200).build();
+        const client = new SeedPackageYmlClient({ maxRetries: 0, id: "id-a2ijs82", environment: server.baseUrl });
 
-        
-                    
-                            const response = await client.service.nop("id-219xca8");
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().get("/id-a2ijs82/id-219xca8").respondWith().statusCode(200).build();
+
+        const response = await client.service.nop("id-219xca8");
+        expect(response).toEqual(undefined);
     });
-          
 });

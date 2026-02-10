@@ -142,9 +142,9 @@ class EndpointResponseCodeWriter:
                             AST.TryStatement(
                                 body=[
                                     AST.YieldStatement(
-                                        self._context.core_utilities.get_construct(
+                                        self._context.core_utilities.get_construct_sse(
                                             self._get_streaming_response_data_type(stream_response),
-                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.json()"),
+                                            AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}"),
                                         ),
                                     ),
                                 ],
@@ -794,8 +794,8 @@ class EndpointResponseCodeWriter:
                 response.response_body_type
             ),
             # TODO: What is the case where you have a nested property as response, but no response property configured?
-            nested_property_as_response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                response.response_body_type
+            nested_property_as_response=lambda response: (
+                self._context.pydantic_generator_context.get_type_hint_for_type_reference(response.response_body_type)
             ),
         )
 

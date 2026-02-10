@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>$client->optional->sendOptionalBody($request) -> string</code></summary>
+<details><summary><code>$client-&gt;optional-&gt;sendOptionalBody($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -46,7 +46,7 @@ $client->optional->sendOptionalBody(
 </dl>
 </details>
 
-<details><summary><code>$client->optional->sendOptionalTypedBody($request) -> string</code></summary>
+<details><summary><code>$client-&gt;optional-&gt;sendOptionalTypedBody($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +90,7 @@ $client->optional->sendOptionalTypedBody(
 </dl>
 </details>
 
-<details><summary><code>$client->optional->sendOptionalNullableWithAllOptionalProperties($actionId, $id, $request) -> DeployResponse</code></summary>
+<details><summary><code>$client-&gt;optional-&gt;sendOptionalNullableWithAllOptionalProperties($actionId, $id, $request) -> DeployResponse</code></summary>
 <dl>
 <dd>
 

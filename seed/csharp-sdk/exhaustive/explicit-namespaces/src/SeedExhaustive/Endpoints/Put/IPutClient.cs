@@ -4,7 +4,7 @@ namespace SeedExhaustive.Endpoints.Put;
 
 public partial interface IPutClient
 {
-    Task<PutResponse> AddAsync(
+    WithRawResponseTask<PutResponse> AddAsync(
         PutRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

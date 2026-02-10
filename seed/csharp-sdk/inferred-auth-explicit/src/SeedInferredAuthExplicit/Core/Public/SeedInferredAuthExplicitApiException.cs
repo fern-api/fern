@@ -3,8 +3,12 @@ namespace SeedInferredAuthExplicit;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedInferredAuthExplicitApiException(string message, int statusCode, object body)
-    : SeedInferredAuthExplicitException(message)
+public class SeedInferredAuthExplicitApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedInferredAuthExplicitException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

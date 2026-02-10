@@ -40,6 +40,12 @@ public class OrganizationsClient {
         return this.rawClient.getOrganizationUser(organizationId, userId).body();
     }
 
+    public User getOrganizationUser(String organizationId, String userId, RequestOptions requestOptions) {
+        return this.rawClient
+                .getOrganizationUser(organizationId, userId, requestOptions)
+                .body();
+    }
+
     public User getOrganizationUser(String organizationId, String userId, GetOrganizationUserRequest request) {
         return this.rawClient
                 .getOrganizationUser(organizationId, userId, request)
@@ -55,6 +61,12 @@ public class OrganizationsClient {
 
     public List<Organization> searchOrganizations(String organizationId) {
         return this.rawClient.searchOrganizations(organizationId).body();
+    }
+
+    public List<Organization> searchOrganizations(String organizationId, RequestOptions requestOptions) {
+        return this.rawClient
+                .searchOrganizations(organizationId, requestOptions)
+                .body();
     }
 
     public List<Organization> searchOrganizations(String organizationId, SearchOrganizationsRequest request) {

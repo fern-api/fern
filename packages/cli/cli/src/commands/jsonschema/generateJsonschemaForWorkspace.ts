@@ -9,7 +9,7 @@ import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function generateJsonschemaForWorkspaces({
     typeLocator,

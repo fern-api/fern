@@ -2,50 +2,19 @@
 
 namespace Seed\Tests\Wire;
 
-use GuzzleHttp\Client as HttpClient;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use PHPUnit\Framework\TestCase;
+use Seed\Core\Json\JsonEncoder;
 
 /**
  * Base test case for WireMock-based wire tests.
  *
- * This class manages the WireMock container lifecycle for integration tests.
+ * The WireMock container lifecycle is managed by the bootstrap file (tests/Wire/bootstrap.php)
+ * which starts the container once before all tests and stops it after all tests complete.
  */
 abstract class WireMockTestCase extends TestCase
 {
-    protected static string $dockerComposeFile;
-
-    public static function setUpBeforeClass(): void
-    {
-        $testDir = __DIR__;
-        $projectRoot = \dirname($testDir, 2);
-        $wiremockDir = $projectRoot . '/wiremock';
-        self::$dockerComposeFile = $wiremockDir . '/docker-compose.test.yml';
-
-        echo "\nStarting WireMock container...\n";
-        $cmd = sprintf(
-            'docker compose -f %s up -d --wait 2>&1',
-            escapeshellarg(self::$dockerComposeFile)
-        );
-        exec($cmd, $output, $exitCode);
-        if ($exitCode !== 0) {
-            throw new \RuntimeException("Failed to start WireMock: " . implode("\n", $output));
-        }
-        echo "WireMock container is ready\n";
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        if (!isset(self::$dockerComposeFile)) {
-            return;
-        }
-        echo "\nStopping WireMock container...\n";
-        $cmd = sprintf(
-            'docker compose -f %s down -v 2>&1',
-            escapeshellarg(self::$dockerComposeFile)
-        );
-        exec($cmd);
-    }
-
     /**
      * Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
      *
@@ -62,7 +31,10 @@ abstract class WireMockTestCase extends TestCase
         ?array $queryParams,
         int $expected
     ): void {
-        $client = new HttpClient();
+        $client = Psr18ClientDiscovery::find();
+        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+
         $body = [
             'method' => $method,
             'urlPath' => $urlPath,
@@ -77,9 +49,10 @@ abstract class WireMockTestCase extends TestCase
             }
         }
 
-        $response = $client->post('http://localhost:8080/__admin/requests/find', [
-            'json' => $body,
-        ]);
+        $request = $requestFactory->createRequest('POST', 'http://localhost:8080/__admin/requests/find')
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($streamFactory->createStream(JsonEncoder::encode($body)));
+        $response = $client->sendRequest($request);
 
         $this->assertSame(200, $response->getStatusCode(), 'Failed to query WireMock requests');
 

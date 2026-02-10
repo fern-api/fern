@@ -1,9 +1,4 @@
 use seed_examples::prelude::*;
-use seed_examples::{
-    Actor, Actress, BasicType, BigEntity, CastMember, ComplexType, Data, Directory, Entity,
-    EventInfo, Exception, ExceptionInfo, ExtendedMovie, File, Metadata, Migration, MigrationStatus,
-    Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
-};
 
 #[tokio::main]
 async fn main() {

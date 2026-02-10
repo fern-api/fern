@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse<SeedOauthClientCredentials.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error></code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedOauthClientCredentials.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ await client.auth.getToken({
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> core.APIResponse<void, SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error></code></summary>
+<details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ await client.nestedNoAuth.api.getSomething();
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> core.APIResponse<void, SeedOauthClientCredentials.nested.api.getSomething.Error></code></summary>
+<details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedOauthClientCredentials.nested.api.getSomething.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -138,7 +138,7 @@ await client.nested.api.getSomething();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse<void, SeedOauthClientCredentials.simple.getSomething.Error></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedOauthClientCredentials.simple.getSomething.Error&gt;</code></summary>
 <dl>
 <dd>
 

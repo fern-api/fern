@@ -12,13 +12,31 @@ public partial class ComplexClient : IComplexClient
         _client = client;
     }
 
-    private async Task<PaginatedConversationResponse> SearchInternalAsync(
+    private WithRawResponseTask<PaginatedConversationResponse> SearchInternalAsync(
         string index,
         SearchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        return new WithRawResponseTask<PaginatedConversationResponse>(
+            SearchInternalAsyncCore(index, request, options, cancellationToken)
+        );
+    }
+
+    private async Task<WithRawResponse<PaginatedConversationResponse>> SearchInternalAsyncCore(
+        string index,
+        SearchRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedPagination.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -30,6 +48,7 @@ public partial class ComplexClient : IComplexClient
                         ValueConvert.ToPathParameterString(index)
                     ),
                     Body = request,
+                    Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -41,14 +60,30 @@ public partial class ComplexClient : IComplexClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<PaginatedConversationResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<PaginatedConversationResponse>(
+                    responseBody
+                )!;
+                return new WithRawResponse<PaginatedConversationResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedPaginationException("Failed to deserialize response", e);
+                throw new SeedPaginationApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPaginationApiException(
@@ -95,8 +130,9 @@ public partial class ComplexClient : IComplexClient
             .CreateInstanceAsync(
                 request,
                 options,
-                (request, options, cancellationToken) =>
-                    SearchInternalAsync(index, request, options, cancellationToken),
+                async (request, options, cancellationToken) =>
+                    await SearchInternalAsync(index, request, options, cancellationToken)
+                        .ConfigureAwait(false),
                 (request, cursor) =>
                 {
                     request.Pagination ??= new StartingAfterPaging() { PerPage = 0 };

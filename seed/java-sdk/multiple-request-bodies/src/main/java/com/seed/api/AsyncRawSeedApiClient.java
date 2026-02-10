@@ -42,16 +42,25 @@ public class AsyncRawSeedApiClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> uploadJsonDocument(
+            RequestOptions requestOptions) {
+        return uploadJsonDocument(UploadDocumentRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> uploadJsonDocument(
             UploadDocumentRequest request) {
         return uploadJsonDocument(request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> uploadJsonDocument(
             UploadDocumentRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("documents/upload")
-                .build();
+                .addPathSegments("documents/upload");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -60,7 +69,7 @@ public class AsyncRawSeedApiClient {
             throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -105,13 +114,17 @@ public class AsyncRawSeedApiClient {
 
     public CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> uploadPdfDocument(
             InputStream request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("documents/upload")
-                .build();
+                .addPathSegments("documents/upload");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();

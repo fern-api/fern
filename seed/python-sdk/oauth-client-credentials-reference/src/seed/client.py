@@ -61,9 +61,7 @@ class SeedOauthClientCredentialsReference:
     from seed import SeedOauthClientCredentialsReference
 
     client = SeedOauthClientCredentialsReference(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...
@@ -222,9 +220,7 @@ class AsyncSeedOauthClientCredentialsReference:
     from seed import AsyncSeedOauthClientCredentialsReference
 
     client = AsyncSeedOauthClientCredentialsReference(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
+        base_url="YOUR_BASE_URL",
     )
 
     # or ...

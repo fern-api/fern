@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>$client->folderA->service->getDirectThread($request) -> Response</code></summary>
+<details><summary><code>$client-&gt;folderA-&gt;service-&gt;getDirectThread($request) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -58,7 +58,7 @@ $client->folderA->service->getDirectThread(
 </details>
 
 ## FolderD Service
-<details><summary><code>$client->folderD->service->getDirectThread() -> Response</code></summary>
+<details><summary><code>$client-&gt;folderD-&gt;service-&gt;getDirectThread() -> Response</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ $client->folderD->service->getDirectThread();
 </details>
 
 ## Foo
-<details><summary><code>$client->foo->find($request) -> ImportingType</code></summary>
+<details><summary><code>$client-&gt;foo-&gt;find($request) -> ImportingType</code></summary>
 <dl>
 <dd>
 

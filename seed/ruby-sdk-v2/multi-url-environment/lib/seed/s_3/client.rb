@@ -25,14 +25,11 @@ module Seed
       # @return [String]
       def get_presigned_url(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        body_prop_names = %i[s_3_key]
-        body_bag = params.slice(*body_prop_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || @base_url || @environment&.dig(:s_3),
           method: "POST",
           path: "/s3/presigned-url",
-          body: Seed::S3::Types::GetPresignedUrlRequest.new(body_bag).to_h,
+          body: Seed::S3::Types::GetPresignedUrlRequest.new(params).to_h,
           request_options: request_options
         )
         begin

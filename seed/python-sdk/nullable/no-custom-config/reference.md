@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">get_users</a>(...) -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">get_users</a>(...) -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
 <dl>
 <dd>
 
@@ -92,7 +92,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">create_user</a>(...) -> AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
@@ -189,7 +189,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">delete_user</a>(...) -> AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">delete_user</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 

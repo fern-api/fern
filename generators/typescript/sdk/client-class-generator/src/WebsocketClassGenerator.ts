@@ -1,12 +1,12 @@
-import { IntermediateRepresentation, WebSocketChannel } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass } from "@fern-typescript/contexts";
 
-import { GeneratedWebsocketSocketClassImpl } from "./GeneratedWebsocketSocketClassImpl";
+import { GeneratedWebsocketSocketClassImpl } from "./GeneratedWebsocketSocketClassImpl.js";
 
 export declare namespace WebsocketClassGenerator {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
         skipResponseValidation: boolean;
@@ -15,7 +15,7 @@ export declare namespace WebsocketClassGenerator {
     export namespace generateWebsocketSocket {
         export interface Args {
             packageId: PackageId;
-            channel: WebSocketChannel;
+            channel: FernIr.WebSocketChannel;
             serviceClassName: string;
             includeSerdeLayer: boolean;
         }
@@ -23,7 +23,7 @@ export declare namespace WebsocketClassGenerator {
 }
 
 export class WebsocketClassGenerator {
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
     private skipResponseValidation: boolean;

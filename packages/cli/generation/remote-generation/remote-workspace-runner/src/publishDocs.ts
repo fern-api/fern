@@ -13,6 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -20,13 +21,13 @@ import axios from "axios";
 import chalk from "chalk";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
-import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { measureImageSizes } from "./measureImageSizes";
-import { asyncPool } from "./utils/asyncPool";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { measureImageSizes } from "./measureImageSizes.js";
+import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -58,7 +59,9 @@ export async function publishDocs({
     disableTemplates = false,
     skipUpload = false,
     withAiExamples = true,
-    targetAudiences
+    excludeApis = false,
+    targetAudiences,
+    docsUrl
 }: {
     token: FernToken;
     organization: string;
@@ -74,10 +77,24 @@ export async function publishDocs({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     withAiExamples?: boolean;
+    excludeApis?: boolean;
     targetAudiences?: string[];
+    docsUrl?: string;
 }): Promise<void> {
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
+    if (isAirGapped) {
+        context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
+    }
+
     const fdr = createFdrService({ token: token.value });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
+
+    if (excludeApis) {
+        context.logger.debug(
+            "Experimental flag 'exclude-apis' is enabled - API references will be excluded from S3 upload"
+        );
+    }
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
@@ -200,7 +217,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             } else {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
@@ -252,16 +269,34 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath
                     );
                 } else {
-                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
                 }
             }
         },
-        registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+        registerApi: async ({
+            ir,
+            snippetsConfig,
+            playgroundConfig,
+            apiName,
+            workspace,
+            graphqlOperations,
+            graphqlTypes
+        }) => {
+            // Use apiName from docs.yml (folder name) as the API identifier for FDR
+            // This ensures users can reference APIs by their folder name in docs components
+            let apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context,
+                apiNameOverride: apiName
+            });
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,
-                docsWorkspace.config.experimental?.aiExampleStyleInstructions
+                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
@@ -281,7 +316,9 @@ export async function publishDocs({
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
             let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
-            if (!disableDynamicSnippets) {
+            if (Object.keys(snippetsConfig).length === 0) {
+                context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
+            } else if (!disableDynamicSnippets) {
                 // Check for existing SDK dynamic IRs before generating
                 const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
                     fdr,
@@ -318,10 +355,11 @@ export async function publishDocs({
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
+                apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName.originalName),
                 definition: apiDefinition,
                 definitionV2: undefined,
-                dynamicIRs: dynamicIRsByLanguage
+                dynamicIRs: dynamicIRsByLanguage,
+                docsUrl
             });
 
             if (response.ok) {
@@ -403,13 +441,84 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
+    // Handle Python docs generation if configured
+    let libraryDocsConfig: DocsV2Write.LibraryDocsRegistrationConfig | undefined;
+    const pythonDocsSection = await extractPythonDocsSectionFromConfig(
+        docsWorkspace.config,
+        docsWorkspace.absoluteFilePath
+    );
+    if (pythonDocsSection != null && !isAirGapped) {
+        // Config is already deserialized with camelCase properties
+        const githubUrl = pythonDocsSection.pythonDocs;
+
+        context.logger.info(`Generating Python documentation from ${githubUrl}...`);
+
+        // Start Python docs generation
+        const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
+            orgId: CjsFdrSdk.OrgId(organization),
+            githubUrl: CjsFdrSdk.Url(githubUrl),
+            language: "PYTHON",
+            config: {
+                branch: undefined,
+                packagePath: undefined,
+                title: pythonDocsSection.title,
+                slug: pythonDocsSection.slug
+            }
+        });
+
+        if (!startResponse.ok) {
+            return context.failAndThrow(`Failed to start Python docs generation for ${githubUrl}`, startResponse.error);
+        }
+
+        const jobId = startResponse.body.jobId;
+        context.logger.debug(`Python docs generation started with jobId: ${jobId}`);
+
+        // Poll for completion
+        const POLL_INTERVAL_MS = 3000;
+        const MAX_POLL_ATTEMPTS = 100; // ~5 minutes
+        let pollAttempts = 0;
+
+        while (pollAttempts < MAX_POLL_ATTEMPTS) {
+            const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
+
+            if (!statusResponse.ok) {
+                return context.failAndThrow(`Failed to check Python docs generation status`, statusResponse.error);
+            }
+
+            const status = statusResponse.body.status;
+            context.logger.debug(`Python docs generation status: ${status}`);
+
+            if (status === "COMPLETED") {
+                context.logger.info("Python documentation generation completed.");
+                libraryDocsConfig = {
+                    jobId,
+                    slug: pythonDocsSection.slug,
+                    title: pythonDocsSection.title
+                };
+                break;
+            } else if (status === "FAILED") {
+                const errorMsg = statusResponse.body.error?.message ?? "Unknown error";
+                return context.failAndThrow(`Python docs generation failed: ${errorMsg}`);
+            }
+
+            // Wait before next poll
+            await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+            pollAttempts++;
+        }
+
+        if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+            return context.failAndThrow("Python docs generation timed out");
+        }
+    }
+
     context.logger.info("Publishing docs to FDR...");
     const publishStart = performance.now();
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
-            excludeApis: false
+            excludeApis,
+            libraryDocs: libraryDocsConfig
         }
     );
 
@@ -435,6 +544,11 @@ export async function publishDocs({
                 return context.failAndThrow(
                     "Failed to publish docs to " + domain,
                     `Docs registration ID ${docsRegistrationId} does not exist.`
+                );
+            case "LibraryDocsJobInvalidForRegistrationError":
+                return context.failAndThrow(
+                    "Failed to publish docs to " + domain,
+                    "Library docs job is invalid for registration. The job may not exist, may not be completed, or may belong to a different organization."
                 );
             default:
                 return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error);
@@ -500,7 +614,8 @@ function convertToFilePathPairs(
 
 async function startDocsRegisterFailed(
     error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
-    context: TaskContext
+    context: TaskContext,
+    organization: string
 ): Promise<never> {
     await context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -508,6 +623,12 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization);
+    if (authErrorMessage != null) {
+        return context.failAndThrow(authErrorMessage);
+    }
+
     switch (error.error) {
         case "InvalidCustomDomainError":
             return context.failAndThrow(
@@ -518,10 +639,14 @@ async function startDocsRegisterFailed(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
         case "UnauthorizedError":
-            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.");
+            return context.failAndThrow(
+                `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
+                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
             );
         case "UnavailableError":
             return context.failAndThrow(
@@ -530,6 +655,25 @@ async function startDocsRegisterFailed(
         default:
             return context.failAndThrow("Failed to publish docs.", error);
     }
+}
+
+function getAuthenticationErrorMessage(error: unknown, organization: string): string | undefined {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+
+    if (content?.reason === "status-code") {
+        const statusCode = content.statusCode as number | undefined;
+
+        if (statusCode === 401 || statusCode === 403) {
+            const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
+            const contactMessage =
+                "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
+
+            return `${baseMessage}\n\n${contactMessage}`;
+        }
+    }
+
+    return undefined;
 }
 
 function parseBasePath(domain: string): string | undefined {
@@ -612,7 +756,10 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         return undefined;
     }
 }
-
+// normalize Go package names by stripping https:// prefix to match how upload keys are generated.
+function normalizeGoPackageForLookup(repository: string): string {
+    return repository.replace(/^https:\/\//, "");
+}
 async function buildSnippetConfigurationWithVersions({
     fdr,
     workspace,
@@ -648,7 +795,9 @@ async function buildSnippetConfigurationWithVersions({
         },
         {
             language: "go",
-            snippetName: snippetsConfig.goSdk?.githubRepo,
+            // Normalize to match S3 upload key format (github.com/owner/repo vs https://github.com/owner/repo)
+            snippetName:
+                snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
             explicitVersion: snippetsConfig.goSdk?.version
         },
         {
@@ -820,17 +969,12 @@ async function generateLanguageSpecificDynamicIRs({
         return undefined;
     }
 
-    if (Object.keys(snippetsConfig).length === 0) {
-        context.logger.warn(`WARNING: No snippets defined for ${workspace.workspaceName}.`);
-        context.logger.warn("Did you add snippets to your docs configuration?");
-        context.logger.warn("For more info: https://buildwithfern.com/learn/docs/api-references/sdk-snippets");
-    }
-
     let snippetConfiguration = {
         typescript: snippetsConfig.typescriptSdk?.package,
         python: snippetsConfig.pythonSdk?.package,
         java: snippetsConfig.javaSdk?.coordinate,
-        go: snippetsConfig.goSdk?.githubRepo,
+        // normalize Go package name to match generator package format for comparison logic
+        go: snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
         csharp: snippetsConfig.csharpSdk?.package,
         ruby: snippetsConfig.rubySdk?.gem,
         php: snippetsConfig.phpSdk?.package,
@@ -1054,4 +1198,200 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
         // Include the raw error for complete debugging if needed
         rawError: error
     };
+}
+
+/**
+ * Extracts the first library section configuration from the docs config navigation.
+ * Only supports Python libraries for now.
+ * Searches through top-level navigation, tabbed navigation, versioned navigation,
+ * and product-based navigation (including product files and version files).
+ */
+async function extractPythonDocsSectionFromConfig(
+    config: docsYml.RawSchemas.DocsConfiguration,
+    absolutePathToFernFolder: AbsoluteFilePath
+): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> {
+    // Helper to check if an item is a Python docs config
+    // The config may have "pythonDocs" (camelCase, deserialized) or "python-docs" (kebab-case, raw YAML)
+    const isPythonDocsConfig = (item: unknown): boolean => {
+        if (item == null || typeof item !== "object") {
+            return false;
+        }
+        const obj = item as Record<string, unknown>;
+        // Check for deserialized format (pythonDocs) or raw YAML format (python-docs)
+        return typeof obj.pythonDocs === "string" || typeof obj["python-docs"] === "string";
+    };
+
+    // Helper to normalize python-docs config to the expected format
+    const normalizePythonDocsConfig = (item: unknown): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (item == null || typeof item !== "object") {
+            return undefined;
+        }
+        const obj = item as Record<string, unknown>;
+        // If it has pythonDocs (deserialized format), return as-is
+        if (typeof obj.pythonDocs === "string") {
+            return item as docsYml.RawSchemas.PythonDocsConfiguration;
+        }
+        // If it has python-docs (raw YAML format), convert to deserialized format
+        if (typeof obj["python-docs"] === "string") {
+            return {
+                pythonDocs: obj["python-docs"],
+                title: typeof obj.title === "string" ? obj.title : undefined,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined
+            } as docsYml.RawSchemas.PythonDocsConfiguration;
+        }
+        return undefined;
+    };
+
+    // Helper to recursively search navigation items
+    const findPythonDocsSectionInItems = (
+        items: unknown[] | undefined
+    ): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (items == null) {
+            return undefined;
+        }
+        for (const item of items) {
+            if (isPythonDocsConfig(item)) {
+                return normalizePythonDocsConfig(item);
+            }
+            // Check in section contents
+            if (item != null && typeof item === "object" && "section" in item) {
+                const sectionItem = item as { contents?: unknown[] };
+                if (sectionItem.contents) {
+                    const found = findPythonDocsSectionInItems(sectionItem.contents);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+            // Check in tabbed navigation items (items with tab and layout properties)
+            if (item != null && typeof item === "object" && "tab" in item && "layout" in item) {
+                const tabbedItem = item as { layout?: unknown[] };
+                if (tabbedItem.layout) {
+                    const found = findPythonDocsSectionInItems(tabbedItem.layout);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+        }
+        return undefined;
+    };
+
+    // Helper to search in a navigation config (handles arrays, tabbed, and versioned)
+    const findInNavigationConfig = (navigation: unknown): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (navigation == null) {
+            return undefined;
+        }
+
+        // Check if it's an array (simple navigation)
+        if (Array.isArray(navigation)) {
+            return findPythonDocsSectionInItems(navigation);
+        }
+
+        // Check if it's an object with tabs
+        if (navigation != null && typeof navigation === "object") {
+            const navObj = navigation as Record<string, unknown>;
+
+            // Tabbed navigation - check each tab's layout
+            if (Array.isArray(navObj.tabs)) {
+                for (const tab of navObj.tabs) {
+                    if (tab != null && typeof tab === "object") {
+                        const tabObj = tab as Record<string, unknown>;
+                        if (Array.isArray(tabObj.layout)) {
+                            const found = findPythonDocsSectionInItems(tabObj.layout);
+                            if (found) {
+                                return found;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return undefined;
+    };
+
+    // Helper to load and search a version file
+    const searchVersionFile = async (
+        versionPath: string
+    ): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> => {
+        try {
+            const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(versionPath));
+            const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+            if (content != null && typeof content === "object") {
+                const versionContent = content as Record<string, unknown>;
+                return findInNavigationConfig(versionContent.navigation);
+            }
+        } catch {
+            // If we can't read the file, skip it
+        }
+        return undefined;
+    };
+
+    // Helper to load and search a product file
+    const searchProductFile = async (
+        productPath: string,
+        productVersions?: docsYml.RawSchemas.VersionConfig[]
+    ): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> => {
+        try {
+            const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(productPath));
+            const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+
+            if (content != null && typeof content === "object") {
+                const productContent = content as Record<string, unknown>;
+
+                // First check the product file's own navigation
+                const found = findInNavigationConfig(productContent.navigation);
+                if (found) {
+                    return found;
+                }
+            }
+
+            // If the product has versions, search each version file
+            if (productVersions != null && productVersions.length > 0) {
+                for (const version of productVersions) {
+                    const found = await searchVersionFile(version.path);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+        } catch {
+            // If we can't read the file, skip it
+        }
+        return undefined;
+    };
+
+    // First, check top-level navigation
+    if (config.navigation != null) {
+        const found = findInNavigationConfig(config.navigation);
+        if (found) {
+            return found;
+        }
+    }
+
+    // Check top-level versions (versioned navigation at root level)
+    if (config.versions != null && config.versions.length > 0) {
+        for (const version of config.versions) {
+            const found = await searchVersionFile(version.path);
+            if (found) {
+                return found;
+            }
+        }
+    }
+
+    // Check products (product-based navigation)
+    if (config.products != null && config.products.length > 0) {
+        for (const product of config.products) {
+            // Only internal products have a path to a product file
+            if ("path" in product && product.path != null) {
+                const found = await searchProductFile(product.path, product.versions);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+    }
+
+    return undefined;
 }

@@ -61,14 +61,18 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> getUser(
             String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -119,11 +123,15 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> createUser(
             CreateUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
-                .addPathSegments("users")
-                .build();
+                .addPathSegments("users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -132,7 +140,7 @@ public class AsyncRawNullableOptionalClient {
             throw new SeedNullableOptionalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -183,6 +191,14 @@ public class AsyncRawNullableOptionalClient {
      * Update a user (partial update)
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> updateUser(
+            String userId, RequestOptions requestOptions) {
+        return updateUser(userId, UpdateUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Update a user (partial update)
+     */
+    public CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> updateUser(
             String userId, UpdateUserRequest request) {
         return updateUser(userId, request, null);
     }
@@ -192,12 +208,16 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> updateUser(
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -206,7 +226,7 @@ public class AsyncRawNullableOptionalClient {
             throw new SeedNullableOptionalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -256,6 +276,14 @@ public class AsyncRawNullableOptionalClient {
     /**
      * List all users
      */
+    public CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> listUsers(
+            RequestOptions requestOptions) {
+        return listUsers(ListUsersRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all users
+     */
     public CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> listUsers(ListUsersRequest request) {
         return listUsers(request, null);
     }
@@ -284,6 +312,11 @@ public class AsyncRawNullableOptionalClient {
         if (!request.getSortBy().isAbsent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "sortBy", request.getSortBy().orElse(null), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -357,6 +390,11 @@ public class AsyncRawNullableOptionalClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "isActive", request.getIsActive().orElse(null), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -412,11 +450,15 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> createComplexProfile(
             ComplexProfile request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
-                .addPathSegments("profiles/complex")
-                .build();
+                .addPathSegments("profiles/complex");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -425,7 +467,7 @@ public class AsyncRawNullableOptionalClient {
             throw new SeedNullableOptionalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -478,14 +520,18 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> getComplexProfile(
             String profileId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("profiles/complex")
-                .addPathSegment(profileId)
-                .build();
+                .addPathSegment(profileId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -537,6 +583,15 @@ public class AsyncRawNullableOptionalClient {
      * Update complex profile to test nullable field updates
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> updateComplexProfile(
+            String profileId, RequestOptions requestOptions) {
+        return updateComplexProfile(
+                profileId, UpdateComplexProfileRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Update complex profile to test nullable field updates
+     */
+    public CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> updateComplexProfile(
             String profileId, UpdateComplexProfileRequest request) {
         return updateComplexProfile(profileId, request, null);
     }
@@ -546,12 +601,16 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> updateComplexProfile(
             String profileId, UpdateComplexProfileRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("profiles/complex")
-                .addPathSegment(profileId)
-                .build();
+                .addPathSegment(profileId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -560,7 +619,7 @@ public class AsyncRawNullableOptionalClient {
             throw new SeedNullableOptionalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -614,11 +673,15 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<DeserializationTestResponse>> testDeserialization(
             DeserializationTestRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
-                .addPathSegments("test/deserialization")
-                .build();
+                .addPathSegments("test/deserialization");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -627,7 +690,7 @@ public class AsyncRawNullableOptionalClient {
             throw new SeedNullableOptionalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -699,6 +762,11 @@ public class AsyncRawNullableOptionalClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "secondaryRole", request.getSecondaryRole().orElse(null), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -754,15 +822,19 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<OptionalNullable<NotificationMethod>>>
             getNotificationSettings(String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
-                .addPathSegments("notifications")
-                .build();
+                .addPathSegments("notifications");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -818,13 +890,17 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<List<String>>> updateTags(
             String userId, UpdateTagsRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
-                .addPathSegments("tags")
-                .build();
+                .addPathSegments("tags");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -833,7 +909,7 @@ public class AsyncRawNullableOptionalClient {
             throw new SeedNullableOptionalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -888,11 +964,15 @@ public class AsyncRawNullableOptionalClient {
      */
     public CompletableFuture<SeedNullableOptionalHttpResponse<OptionalNullable<List<SearchResult>>>> getSearchResults(
             SearchRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("api")
-                .addPathSegments("search")
-                .build();
+                .addPathSegments("search");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -901,7 +981,7 @@ public class AsyncRawNullableOptionalClient {
             throw new SeedNullableOptionalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

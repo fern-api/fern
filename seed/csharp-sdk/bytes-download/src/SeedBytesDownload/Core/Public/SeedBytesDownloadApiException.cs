@@ -3,8 +3,12 @@ namespace SeedBytesDownload;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedBytesDownloadApiException(string message, int statusCode, object body)
-    : SeedBytesDownloadException(message)
+public class SeedBytesDownloadApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedBytesDownloadException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

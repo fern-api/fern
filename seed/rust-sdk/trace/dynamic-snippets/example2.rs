@@ -1,12 +1,4 @@
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, GradedTestCaseUpdate,
-    InternalError, KeyValuePair, MapValue, NodeId, RecordedTestCaseUpdate, RunningSubmissionState,
-    RuntimeError, SinglyLinkedListNodeValue, SinglyLinkedListValue, SubmissionId, TestCaseGrade,
-    TestCaseHiddenGrade, TestCaseId, TestCaseNonHiddenGrade, TestSubmissionUpdate,
-    TestSubmissionUpdateInfo, VariableValue,
-};
 
 #[tokio::main]
 async fn main() {

@@ -32,6 +32,10 @@ public class NullableClient {
         return this.rawClient.getUsers().body();
     }
 
+    public List<User> getUsers(RequestOptions requestOptions) {
+        return this.rawClient.getUsers(requestOptions).body();
+    }
+
     public List<User> getUsers(GetUsersRequest request) {
         return this.rawClient.getUsers(request).body();
     }
@@ -50,6 +54,10 @@ public class NullableClient {
 
     public boolean deleteUser() {
         return this.rawClient.deleteUser().body();
+    }
+
+    public boolean deleteUser(RequestOptions requestOptions) {
+        return this.rawClient.deleteUser(requestOptions).body();
     }
 
     public boolean deleteUser(DeleteUserRequest request) {

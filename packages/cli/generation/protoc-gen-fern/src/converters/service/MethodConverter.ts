@@ -11,8 +11,8 @@ import {
     ProtobufMethodType
 } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
-import { ExampleConverter } from "../message/ExampleConverter";
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { ExampleConverter } from "../message/ExampleConverter.js";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
 
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -106,7 +106,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 }),
                 audiences: [],
                 retries: undefined,
-                apiPlayground: undefined
+                apiPlayground: undefined,
+                responseHeaders: []
             }
         };
     }

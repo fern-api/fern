@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec_2.<a href="/src/api/resources/ec_2/client.rs">boot_instance</a>(request: BootInstanceRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.ec_2.<a href="/src/api/resources/ec_2/client.rs">boot_instance</a>(request: BootInstanceRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ async fn main() {
 </details>
 
 ## S3
-<details><summary><code>client.s_3.<a href="/src/api/resources/s_3/client.rs">get_presigned_url</a>(request: GetPresignedUrlRequest) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.s_3.<a href="/src/api/resources/s_3/client.rs">get_presigned_url</a>(request: GetPresignedUrlRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

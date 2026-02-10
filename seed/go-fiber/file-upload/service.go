@@ -12,6 +12,11 @@ import (
 type JustFileRequest struct {
 }
 
+type JustFileWithOptionalQueryParamsRequest struct {
+	MaybeString  *string `query:"maybeString"`
+	MaybeInteger *int    `query:"maybeInteger"`
+}
+
 type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `query:"maybeString"`
 	Integer               int       `query:"integer"`
@@ -29,16 +34,18 @@ type MyRequest struct {
 	Integer               int                     `json:"integer" url:"-"`
 	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings []string                `json:"optional_list_of_strings,omitempty" url:"-"`
-	ListOfObjects         []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+	ListOfObjects         []*MyObject             `json:"list_of_objects" url:"-"`
 	OptionalMetadata      interface{}             `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId            *Id                     `json:"optional_id,omitempty" url:"-"`
-	AliasObject           MyAliasObject           `json:"alias_object,omitempty" url:"-"`
-	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
-	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+	AliasObject           MyAliasObject           `json:"alias_object" url:"-"`
+	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object" url:"-"`
+	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
 }
 
 type Id = string
+
+type ModelType = string
 
 type MyAliasObject = *MyObject
 
@@ -295,9 +302,34 @@ func (o ObjectType) Ptr() *ObjectType {
 	return &o
 }
 
+type OpenEnumType string
+
+const (
+	OpenEnumTypeOptionA OpenEnumType = "OPTION_A"
+	OpenEnumTypeOptionB OpenEnumType = "OPTION_B"
+	OpenEnumTypeOptionC OpenEnumType = "OPTION_C"
+)
+
+func NewOpenEnumTypeFromString(s string) (OpenEnumType, error) {
+	switch s {
+	case "OPTION_A":
+		return OpenEnumTypeOptionA, nil
+	case "OPTION_B":
+		return OpenEnumTypeOptionB, nil
+	case "OPTION_C":
+		return OpenEnumTypeOptionC, nil
+	}
+	var t OpenEnumType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OpenEnumType) Ptr() *OpenEnumType {
+	return &o
+}
+
 type WithContentTypeRequest struct {
 	Foo    string    `json:"foo" url:"-"`
-	Bar    *MyObject `json:"bar,omitempty" url:"-"`
+	Bar    *MyObject `json:"bar" url:"-"`
 	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
 }
 
@@ -306,21 +338,31 @@ type MyOtherRequest struct {
 	Integer                    int                     `json:"integer" url:"-"`
 	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
 	OptionalListOfStrings      []string                `json:"optional_list_of_strings,omitempty" url:"-"`
-	ListOfObjects              []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+	ListOfObjects              []*MyObject             `json:"list_of_objects" url:"-"`
 	OptionalMetadata           interface{}             `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
 	OptionalId                 *Id                     `json:"optional_id,omitempty" url:"-"`
-	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals,omitempty" url:"-"`
-	AliasObject                MyAliasObject           `json:"alias_object,omitempty" url:"-"`
-	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
-	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals" url:"-"`
+	AliasObject                MyAliasObject           `json:"alias_object" url:"-"`
+	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object" url:"-"`
+	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
 }
 
 type WithFormEncodingRequest struct {
 	Foo string    `json:"foo" url:"-"`
-	Bar *MyObject `json:"bar,omitempty" url:"-"`
+	Bar *MyObject `json:"bar" url:"-"`
 }
 
 type InlineTypeRequest struct {
-	Request *MyInlineType `json:"request,omitempty" url:"-"`
+	Request *MyInlineType `json:"request" url:"-"`
+}
+
+type WithJsonPropertyRequest struct {
+	Json *MyObject `json:"json,omitempty" url:"-"`
+}
+
+type LiteralEnumRequest struct {
+	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
+	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`
+	MaybeName *string       `json:"maybe_name,omitempty" url:"-"`
 }

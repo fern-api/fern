@@ -4,14 +4,12 @@ import { BigunionClient } from "./api/resources/bigunion/client/Client.js";
 import { TypesClient } from "./api/resources/types/client/Client.js";
 import { UnionClient } from "./api/resources/union/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedUnionsClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedUnionsClient {
@@ -21,7 +19,6 @@ export class SeedUnionsClient {
     protected _union: UnionClient | undefined;
 
     constructor(options: SeedUnionsClient.Options) {
-
         this._options = normalizeClientOptions(options);
     }
 

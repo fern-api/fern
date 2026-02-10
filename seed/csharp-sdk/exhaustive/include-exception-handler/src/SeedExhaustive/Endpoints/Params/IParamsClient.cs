@@ -7,7 +7,7 @@ public partial interface IParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    Task<string> GetWithPathAsync(
+    WithRawResponseTask<string> GetWithPathAsync(
         string param,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -16,7 +16,7 @@ public partial interface IParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    Task<string> GetWithInlinePathAsync(
+    WithRawResponseTask<string> GetWithInlinePathAsync(
         GetWithInlinePath request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -62,7 +62,7 @@ public partial interface IParamsClient
     /// <summary>
     /// PUT to update with path param
     /// </summary>
-    Task<string> ModifyWithPathAsync(
+    WithRawResponseTask<string> ModifyWithPathAsync(
         string param,
         string request,
         RequestOptions? options = null,
@@ -72,7 +72,7 @@ public partial interface IParamsClient
     /// <summary>
     /// PUT to update with path param
     /// </summary>
-    Task<string> ModifyWithInlinePathAsync(
+    WithRawResponseTask<string> ModifyWithInlinePathAsync(
         ModifyResourceAtInlinedPath request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

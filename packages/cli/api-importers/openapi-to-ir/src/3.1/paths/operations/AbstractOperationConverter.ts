@@ -4,11 +4,11 @@ import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
-import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
-import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
-import { ParameterConverter } from "../ParameterConverter";
-import { RequestBodyConverter } from "../RequestBodyConverter";
+import { FernStreamingExtension } from "../../../extensions/x-fern-streaming.js";
+import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation.js";
+import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1.js";
+import { ParameterConverter } from "../ParameterConverter.js";
+import { RequestBodyConverter } from "../RequestBodyConverter.js";
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 

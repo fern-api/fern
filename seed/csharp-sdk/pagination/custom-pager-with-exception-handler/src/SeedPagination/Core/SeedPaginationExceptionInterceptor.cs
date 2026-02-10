@@ -1,3 +1,5 @@
+using SeedPagination;
+
 namespace SeedPagination.Core;
 
 /// <summary>
@@ -5,6 +7,13 @@ namespace SeedPagination.Core;
 /// </summary>
 public class SeedPaginationExceptionInterceptor : IExceptionInterceptor
 {
+    private readonly ClientOptions _clientOptions;
+
+    public SeedPaginationExceptionInterceptor(ClientOptions clientOptions)
+    {
+        _clientOptions = clientOptions;
+    }
+
     /// <summary>
     /// Intercepts an exception and returns it after capturing.
     /// </summary>

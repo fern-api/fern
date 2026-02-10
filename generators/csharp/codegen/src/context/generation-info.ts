@@ -1,22 +1,27 @@
 export type Namespace = string;
 
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { FernFilepath, IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
-import { join } from "path";
-import { is, text } from "..";
-import * as ast from "../ast";
-import { ClassReference } from "../ast/types/ClassReference";
-import { Type } from "../ast/types/IType";
-import { Collection, Primitive, Value } from "../ast/types/Type";
-import { CSharp } from "../csharp";
-import { type CsharpConfigSchema } from "../custom-config";
-import { lazy } from "../utils/lazy";
-import { camelCase, upperFirst } from "../utils/text";
+import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common";
-import { Extern } from "./extern";
-import { ModelNavigator } from "./model-navigator";
-import { NameRegistry } from "./name-registry";
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+type TypeId = FernIr.TypeId;
+type FernFilepath = FernIr.FernFilepath;
+
+import { join } from "path";
+import * as ast from "../ast/index.js";
+import { ClassReference } from "../ast/types/ClassReference.js";
+import { Type } from "../ast/types/IType.js";
+import { Collection, Primitive, Value } from "../ast/types/Type.js";
+import { CSharp } from "../csharp.js";
+import { type CsharpConfigSchema } from "../custom-config/index.js";
+import { is, text } from "../index.js";
+import { lazy } from "../utils/lazy.js";
+import { camelCase, upperFirst } from "../utils/text.js";
+
+import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common.js";
+import { Extern } from "./extern.js";
+import { ModelNavigator } from "./model-navigator.js";
+import { NameRegistry } from "./name-registry.js";
 
 /**
  * Central configuration and code generation context for C# SDK generation.
@@ -61,7 +66,7 @@ export class Generation {
     constructor(
         public readonly intermediateRepresentation:
             | IntermediateRepresentation
-            | FernIr.dynamic.DynamicIntermediateRepresentation,
+            | DynamicFernIr.dynamic.DynamicIntermediateRepresentation,
         private readonly apiName: string,
         private readonly customConfig: CsharpConfigSchema,
         private readonly generatorConfig: MinimalGeneratorConfig,
@@ -85,11 +90,11 @@ export class Generation {
             : ({} as IntermediateRepresentation);
         this.dir = is.DynamicIR.DynamicIntermediateRepresentation(intermediateRepresentation)
             ? intermediateRepresentation
-            : ({} as FernIr.dynamic.DynamicIntermediateRepresentation);
+            : ({} as DynamicFernIr.dynamic.DynamicIntermediateRepresentation);
     }
 
     public readonly ir: IntermediateRepresentation;
-    public readonly dir: FernIr.dynamic.DynamicIntermediateRepresentation;
+    public readonly dir: DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Utility for generating C# AST nodes and type references.
@@ -146,6 +151,10 @@ export class Generation {
         enableWebsockets: () => this.customConfig["experimental-enable-websockets"] ?? false,
         /** When true, generates readonly constants instead of static properties. Default: false. */
         enableReadonlyConstants: () => this.customConfig["experimental-readonly-constants"] ?? false,
+        /** When true, uses explicit nullable/optional attributes and Optional<T?> wrapper for better null handling. Default: false. */
+        enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
+        /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
+        useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
         /** Temporary mapping of websocket environment configurations. Default: {}. */
         temporaryWebsocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
         /** Custom name for the base API exception class. Default: "" (auto-generated). */
@@ -154,6 +163,8 @@ export class Generation {
         baseExceptionClassName: () => this.customConfig["base-exception-class-name"] ?? "",
         /** When true, generates discriminated unions with type discriminators. Default: true. */
         shouldGeneratedDiscriminatedUnions: () => this.customConfig["use-discriminated-unions"] ?? true,
+        /** When true, generates undiscriminated unions with runtime type detection. Default: false. */
+        shouldGenerateUndiscriminatedUnions: () => this.customConfig["use-undiscriminated-unions"] ?? false,
         /** Custom name for the exported public client class. Default: "" (uses clientClassName or computed name). */
         exportedClientClassName: () => this.customConfig["exported-client-class-name"] ?? "",
         /** Custom name for the internal client class. Default: "" (auto-generated from organization/workspace). */
@@ -169,11 +180,6 @@ export class Generation {
             true,
         /** Mapping of websocket environment configurations. Default: {}. */
         websocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
-        /** When true, generates additional properties support for objects to handle extra fields. Default: true. */
-        generateNewAdditionalProperties: () =>
-            this.customConfig["additional-properties"] ??
-            this.customConfig["experimental-additional-properties"] ??
-            true,
         /** Custom name for the pagination class. Default: "" (auto-generated). */
         customPagerName: () => this.customConfig["custom-pager-name"] ?? "",
         /** Custom name for the environment configuration class. Default: "" (auto-generated). */
@@ -293,7 +299,7 @@ export class Generation {
      * - `testUtils`: Helper methods for tests
      * - `mockServerTest`: Mock server testing infrastructure
      * - `publicCore`: Public core utilities exposed to SDK users
-     * - `asyncCore`: Asynchronous API utilities (websockets, streaming)
+     * - `webSocketsCore`: WebSocket API utilities
      * - `publicCoreTest`: Tests for public core functionality
      * - `asIsTestUtils`: Test utilities that preserve original casing
      * - `publicCoreClasses`: Location for core classes based on rootNamespaceForCoreClasses setting
@@ -314,8 +320,8 @@ export class Generation {
         mockServerTest: (): string => `${this.namespaces.test}.Unit.MockServer`,
         /** Public Core namespace, same as root for publicly exposed core utilities. */
         publicCore: (): string => this.namespaces.root,
-        /** Async Core namespace for asynchronous APIs like websockets and streaming ({root}.Core.Async). */
-        asyncCore: (): string => `${this.namespaces.core}.Async`,
+        /** WebSockets Core namespace for WebSocket APIs ({root}.Core.WebSockets). */
+        webSocketsCore: (): string => `${this.namespaces.core}.WebSockets`,
         /** Public Core test namespace for testing public core functionality ({root}.Test.PublicCore). */
         publicCoreTest: (): string => `${this.namespaces.root}.Test.PublicCore`,
         /** Test utilities namespace that preserves original casing ({root}.Test.Utils). */
@@ -422,7 +428,7 @@ export class Generation {
      * ### Client Infrastructure:
      * - `RootClient`, `RootClientForSnippets`: Main SDK client classes
      * - `TestClient`: Testing infrastructure
-     * - `AsyncApi`: Asynchronous API support (websockets, streaming)
+     * - `WebSocketClient`: WebSocket client for managing connections
      *
      * ### Error Handling:
      * - `BaseException`, `BaseApiException`: Exception hierarchy
@@ -468,14 +474,14 @@ export class Generation {
      * ### Generic Types (evaluated per call):
      * ```typescript
      * const pager = generation.Types.Pager(itemType); // Returns new ClassReference each time
-     * const asyncApi = generation.Types.AsyncApi(messageType);
+     * const webSocketClient = generation.Types.WebSocketClient();
      * ```
      *
      * All type references include proper namespace information and are registered with
      * the NameRegistry to ensure correct imports in generated code.
      */
     public readonly Types = lazy({
-        Arbitrary: (name: string) => new Primitive.AribitraryType(name, this),
+        Arbitrary: (name: string) => new Primitive.ArbitraryType(name, this),
         HttpMethodExtensions: () =>
             this.csharp.classReference({
                 namespace: this.namespaces.core,
@@ -486,6 +492,12 @@ export class Generation {
             this.csharp.classReference({
                 namespace: this.namespaces.core,
                 origin: this.model.staticExplicit("FormRequest")
+            }),
+        /** Optional<T> wrapper type for explicit undefined/null semantics */
+        Optional: () =>
+            this.csharp.classReference({
+                namespace: this.namespaces.core,
+                origin: this.model.staticExplicit("Optional")
             }),
         /** Configuration options for the SDK client (base URL, headers, timeout, etc.) */
         ClientOptions: () =>
@@ -622,6 +634,12 @@ export class Generation {
                 origin: this.model.staticExplicit("JsonUtils"),
                 namespace: this.namespaces.core
             }),
+        /** Test assertion helper for JSON comparison */
+        JsonAssert: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("JsonAssert"),
+                namespace: this.namespaces.testUtils
+            }),
         /** Factory for creating custom pagination instances */
         CustomPagerFactory: () =>
             this.csharp.classReference({
@@ -670,17 +688,29 @@ export class Generation {
                 origin: this.model.staticExplicit("IStringEnum"),
                 namespace: this.namespaces.core
             }),
-        /** Configuration options for asynchronous APIs (websockets, streaming) */
-        AsyncApiOptions: () =>
+        /** WebSocket client for managing WebSocket connections */
+        WebSocketClient: () =>
             this.csharp.classReference({
-                origin: this.model.staticExplicit("AsyncApiOptions"),
-                namespace: `${this.namespaces.asyncCore}.Models`
+                origin: this.model.staticExplicit("WebSocketClient"),
+                namespace: this.namespaces.webSocketsCore
             }),
-        /** Query string builder utility */
+        /** Query string builder utility for WebSocket URLs (legacy) */
         QueryBuilder: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("Query"),
-                namespace: this.namespaces.asyncCore
+                namespace: this.namespaces.webSocketsCore
+            }),
+        /** High-performance query string builder with fluent API */
+        QueryStringBuilder: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("QueryStringBuilder"),
+                namespace: this.namespaces.core
+            }),
+        /** Fluent builder for constructing query strings */
+        QueryStringBuilderBuilder: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("QueryStringBuilder.Builder"),
+                namespace: this.namespaces.core
             }),
         /** OAuth token provider for authentication */
         OAuthTokenProvider: () =>
@@ -735,27 +765,34 @@ export class Generation {
                 generics: genericType ? [genericType] : undefined
             }),
         /**
-         * Generic asynchronous API wrapper for websockets and streaming.
-         * @param genericType - The message type for the async API
-         */
-        AsyncApi: (genericType: ast.Type | ast.ClassReference): ast.ClassReference => {
-            return this.csharp.classReference({
-                origin: this.model.staticExplicit("AsyncApi"),
-                namespace: this.namespaces.asyncCore,
-                generics: [genericType]
-            });
-        },
-        /**
-         * Generic event wrapper for asynchronous APIs.
+         * Generic event wrapper for WebSocket APIs.
          * @param genericType - The event payload type
          */
-        AsyncEvent: (genericType: ast.Type | ast.ClassReference): ast.ClassReference => {
+        WebSocketEvent: (genericType: ast.Type | ast.ClassReference): ast.ClassReference => {
             return this.csharp.classReference({
                 origin: this.model.staticExplicit("Event"),
-                namespace: `${this.namespaces.asyncCore}.Events`,
+                namespace: this.namespaces.webSocketsCore,
                 generics: [genericType]
             });
         },
+        /** Connection status enum for WebSocket connections */
+        ConnectionStatus: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("ConnectionStatus"),
+                namespace: this.namespaces.webSocketsCore
+            }),
+        /** Connected event for WebSocket connections */
+        WebSocketConnected: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("Connected"),
+                namespace: this.namespaces.webSocketsCore
+            }),
+        /** Closed event for WebSocket connections */
+        WebSocketClosed: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("Closed"),
+                namespace: this.namespaces.webSocketsCore
+            }),
         /**
          * JSON serializer for string-based enum types.
          * @param enumClassReference - The enum type to serialize
@@ -1114,7 +1151,7 @@ export class Generation {
     /** One-time initializers that are called before any generator actually starts to generate code. */
     public readonly initializers = lazy({
         implicitNamespaces: () => {
-            // add all the implict namespaces
+            // add all the implicit namespaces
             for (const namespace of this.namespaces.implicit) {
                 this.registry.addImplicitNamespace(namespace);
             }

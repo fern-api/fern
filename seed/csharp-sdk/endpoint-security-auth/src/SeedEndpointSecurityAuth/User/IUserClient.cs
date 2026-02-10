@@ -2,37 +2,37 @@ namespace SeedEndpointSecurityAuth;
 
 public partial interface IUserClient
 {
-    Task<IEnumerable<User>> GetWithBearerAsync(
+    WithRawResponseTask<IEnumerable<User>> GetWithBearerAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> GetWithApiKeyAsync(
+    WithRawResponseTask<IEnumerable<User>> GetWithApiKeyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> GetWithOAuthAsync(
+    WithRawResponseTask<IEnumerable<User>> GetWithOAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> GetWithBasicAsync(
+    WithRawResponseTask<IEnumerable<User>> GetWithBasicAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> GetWithInferredAuthAsync(
+    WithRawResponseTask<IEnumerable<User>> GetWithInferredAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> GetWithAnyAuthAsync(
+    WithRawResponseTask<IEnumerable<User>> GetWithAnyAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<User>> GetWithAllAuthAsync(
+    WithRawResponseTask<IEnumerable<User>> GetWithAllAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

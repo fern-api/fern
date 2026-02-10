@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -17,6 +17,9 @@ from seed import SeedWebsocketAuth
 
 client = SeedWebsocketAuth(
     base_url="https://yourhost.com/path/to/api",
+    x_api_key="YOUR_X_API_KEY",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token_with_client_credentials(
     x_api_key="X-Api-Key",
@@ -83,7 +86,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -100,6 +103,9 @@ from seed import SeedWebsocketAuth
 
 client = SeedWebsocketAuth(
     base_url="https://yourhost.com/path/to/api",
+    x_api_key="YOUR_X_API_KEY",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.refresh_token(
     x_api_key="X-Api-Key",

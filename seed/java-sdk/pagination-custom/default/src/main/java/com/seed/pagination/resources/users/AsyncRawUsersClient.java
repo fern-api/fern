@@ -38,6 +38,11 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
+            listUsernamesCustom(RequestOptions requestOptions) {
+        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
             listUsernamesCustom(ListUsernamesRequestCustom request) {
         return listUsernamesCustom(request, null);
     }
@@ -50,6 +55,11 @@ public class AsyncRawUsersClient {
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

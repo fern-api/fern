@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>$client->bigunion->get($id) -> BigUnion</code></summary>
+<details><summary><code>$client-&gt;bigunion-&gt;get($id) -> BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ $client->bigunion->get(
 </dl>
 </details>
 
-<details><summary><code>$client->bigunion->update($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;bigunion-&gt;update($request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +86,7 @@ $client->bigunion->update(
 </dl>
 </details>
 
-<details><summary><code>$client->bigunion->updateMany($request) -> array</code></summary>
+<details><summary><code>$client-&gt;bigunion-&gt;updateMany($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -136,7 +136,7 @@ $client->bigunion->updateMany(
 </details>
 
 ## Types
-<details><summary><code>$client->types->get($id) -> UnionWithTime</code></summary>
+<details><summary><code>$client-&gt;types-&gt;get($id) -> UnionWithTime</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +178,7 @@ $client->types->get(
 </dl>
 </details>
 
-<details><summary><code>$client->types->update($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;types-&gt;update($request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -221,7 +221,7 @@ $client->types->update(
 </details>
 
 ## Union
-<details><summary><code>$client->union->get($id) -> Shape</code></summary>
+<details><summary><code>$client-&gt;union-&gt;get($id) -> Shape</code></summary>
 <dl>
 <dd>
 
@@ -263,7 +263,7 @@ $client->bigunion->get(
 </dl>
 </details>
 
-<details><summary><code>$client->union->update($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;union-&gt;update($request) -> bool</code></summary>
 <dl>
 <dd>
 

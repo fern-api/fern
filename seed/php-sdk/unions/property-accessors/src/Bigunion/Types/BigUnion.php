@@ -196,6 +196,7 @@ class BigUnion extends JsonSerializableType
     public function setId(string $value): self
     {
         $this->id = $value;
+        $this->_setField('id');
         return $this;
     }
 
@@ -213,6 +214,7 @@ class BigUnion extends JsonSerializableType
     public function setCreatedAt(DateTime $value): self
     {
         $this->createdAt = $value;
+        $this->_setField('createdAt');
         return $this;
     }
 
@@ -230,6 +232,7 @@ class BigUnion extends JsonSerializableType
     public function setArchivedAt(?DateTime $value = null): self
     {
         $this->archivedAt = $value;
+        $this->_setField('archivedAt');
         return $this;
     }
 

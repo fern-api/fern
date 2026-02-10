@@ -91,6 +91,27 @@ func (l *ListUsersBodyCursorPaginationRequest) SetPagination(pagination *WithCur
 	l.require(listUsersBodyCursorPaginationRequestFieldPagination)
 }
 
+func (l *ListUsersBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	listUsersBodyOffsetPaginationRequestFieldPagination = big.NewInt(1 << 0)
 )
@@ -116,6 +137,27 @@ func (l *ListUsersBodyOffsetPaginationRequest) require(field *big.Int) {
 func (l *ListUsersBodyOffsetPaginationRequest) SetPagination(pagination *WithPage) {
 	l.Pagination = pagination
 	l.require(listUsersBodyOffsetPaginationRequestFieldPagination)
+}
+
+func (l *ListUsersBodyOffsetPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersBodyOffsetPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersBodyOffsetPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersBodyOffsetPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersBodyOffsetPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -504,6 +546,64 @@ func (l *ListUsersOptionalDataRequest) require(field *big.Int) {
 func (l *ListUsersOptionalDataRequest) SetPage(page *int) {
 	l.Page = page
 	l.require(listUsersOptionalDataRequestFieldPage)
+}
+
+var (
+	listUsersTopLevelBodyCursorPaginationRequestFieldCursor = big.NewInt(1 << 0)
+	listUsersTopLevelBodyCursorPaginationRequestFieldFilter = big.NewInt(1 << 1)
+)
+
+type ListUsersTopLevelBodyCursorPaginationRequest struct {
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	Cursor *string `json:"cursor,omitempty" url:"-"`
+	// An optional filter to apply to the results.
+	Filter *string `json:"filter,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCursor sets the Cursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) SetCursor(cursor *string) {
+	l.Cursor = cursor
+	l.require(listUsersTopLevelBodyCursorPaginationRequestFieldCursor)
+}
+
+// SetFilter sets the Filter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) SetFilter(filter *string) {
+	l.Filter = filter
+	l.require(listUsersTopLevelBodyCursorPaginationRequestFieldFilter)
+}
+
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersTopLevelBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersTopLevelBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersTopLevelBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -1065,6 +1165,100 @@ func (l *ListUsersPaginationResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersPaginationResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUsersTopLevelCursorPaginationResponseFieldNextCursor = big.NewInt(1 << 0)
+	listUsersTopLevelCursorPaginationResponseFieldData       = big.NewInt(1 << 1)
+)
+
+type ListUsersTopLevelCursorPaginationResponse struct {
+	NextCursor *string `json:"next_cursor,omitempty" url:"next_cursor,omitempty"`
+	Data       []*User `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersTopLevelCursorPaginationResponse) GetNextCursor() *string {
+	if l == nil {
+		return nil
+	}
+	return l.NextCursor
+}
+
+func (l *ListUsersTopLevelCursorPaginationResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersTopLevelCursorPaginationResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *ListUsersTopLevelCursorPaginationResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNextCursor sets the NextCursor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersTopLevelCursorPaginationResponse) SetNextCursor(nextCursor *string) {
+	l.NextCursor = nextCursor
+	l.require(listUsersTopLevelCursorPaginationResponseFieldNextCursor)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersTopLevelCursorPaginationResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersTopLevelCursorPaginationResponseFieldData)
+}
+
+func (l *ListUsersTopLevelCursorPaginationResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersTopLevelCursorPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersTopLevelCursorPaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersTopLevelCursorPaginationResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersTopLevelCursorPaginationResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersTopLevelCursorPaginationResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value

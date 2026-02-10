@@ -540,6 +540,16 @@
               "type": "null"
             }
           ]
+        },
+        "omit": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -1209,6 +1219,58 @@
       },
       "additionalProperties": false
     },
+    "fernDefinition.validation.ListValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxItems": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "fernDefinition.validation.MapValidationSchema": {
+      "type": "object",
+      "properties": {
+        "minProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maxProperties": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "fernDefinition.validation.ValidationSchema": {
       "anyOf": [
         {
@@ -1216,6 +1278,12 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.validation.NumberValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.validation.ListValidationSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.validation.MapValidationSchema"
         }
       ]
     },
@@ -1375,6 +1443,41 @@
     "fernDefinition.service.HttpHeaderSchema": {
       "$ref": "#/definitions/fernDefinition.service.TypeReferenceDeclarationWithEnvOverride"
     },
+    "fernDefinition.environments.ServerVariableSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.environments.SingleBaseUrlEnvironmentSchema": {
       "type": "object",
       "properties": {
@@ -1403,6 +1506,39 @@
         },
         "url": {
           "type": "string"
+        },
+        "default-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url-template": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fernDefinition.environments.ServerVariableSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1441,6 +1577,48 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "url-templates": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-urls": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/fernDefinition.environments.ServerVariableSchema"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1769,6 +1947,16 @@
             }
           ]
         },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1968,6 +2156,16 @@
             }
           ]
         },
+        "overlays": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "namespace": {
           "oneOf": [
             {
@@ -2097,6 +2295,16 @@
             }
           ]
         },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "message-naming": {
           "oneOf": [
             {
@@ -2206,6 +2414,48 @@
       ],
       "additionalProperties": false
     },
+    "generators.GraphQLSpecSchema": {
+      "type": "object",
+      "properties": {
+        "graphql": {
+          "type": "string"
+        },
+        "origin": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "graphql"
+      ],
+      "additionalProperties": false
+    },
     "generators.SpecSchema": {
       "anyOf": [
         {
@@ -2219,6 +2469,9 @@
         },
         {
           "$ref": "#/definitions/generators.OpenRPCSpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.GraphQLSpecSchema"
         }
       ]
     },
@@ -2514,6 +2767,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

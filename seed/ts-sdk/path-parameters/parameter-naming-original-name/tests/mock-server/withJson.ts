@@ -2,12 +2,26 @@ import { type HttpResponseResolver, passthrough } from "msw";
 
 import { fromJson, toJson } from "../../src/core/json";
 
+export interface WithJsonOptions {
+    /**
+     * List of field names to ignore when comparing request bodies.
+     * This is useful for pagination cursor fields that change between requests.
+     */
+    ignoredFields?: string[];
+}
+
 /**
  * Creates a request matcher that validates if the request JSON body exactly matches the expected object
  * @param expectedBody - The exact body object to match against
  * @param resolver - Response resolver to execute if body matches
+ * @param options - Optional configuration including fields to ignore
  */
-export function withJson(expectedBody: unknown, resolver: HttpResponseResolver): HttpResponseResolver {
+export function withJson(
+    expectedBody: unknown,
+    resolver: HttpResponseResolver,
+    options?: WithJsonOptions,
+): HttpResponseResolver {
+    const ignoredFields = options?.ignoredFields ?? [];
     return async (args) => {
         const { request } = args;
 
@@ -28,7 +42,8 @@ export function withJson(expectedBody: unknown, resolver: HttpResponseResolver):
         }
 
         const mismatches = findMismatches(actualBody, expectedBody);
-        if (Object.keys(mismatches).filter((key) => !key.startsWith("pagination.")).length > 0) {
+        const filteredMismatches = Object.keys(mismatches).filter((key) => !ignoredFields.includes(key));
+        if (filteredMismatches.length > 0) {
             console.error("JSON body mismatch:", toJson(mismatches, undefined, 2));
             return passthrough();
         }

@@ -2,6 +2,7 @@ import {
     AbstractAPIWorkspace,
     BaseOpenAPIWorkspace,
     FernWorkspace,
+    GraphQLSpec,
     getOpenAPISettings,
     IdentifiableSource,
     OpenAPISpec,
@@ -9,8 +10,10 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
@@ -23,12 +26,11 @@ import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
-import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
-import { loadOpenRpc } from "./loaders";
-import { OpenAPILoader } from "./loaders/OpenAPILoader";
-import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator";
-import { MaybeValid } from "./protobuf/utils";
-import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
+import { loadOpenRpc } from "./loaders/index.js";
+import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
+import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator.js";
+import { MaybeValid } from "./protobuf/utils.js";
+import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs.js";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -64,6 +66,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private loader: OpenAPILoader;
     private readonly parseOptions: Partial<ParseOpenAPIOptions>;
     private readonly groupMultiApiEnvironments: boolean;
+
+    private graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
+    private graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         super({
@@ -135,13 +140,55 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         };
     }
 
+    public getGraphqlOperations(): Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> {
+        return this.graphqlOperations;
+    }
+
+    public getGraphqlTypes(): Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> {
+        return this.graphqlTypes;
+    }
+
+    public getGraphqlOperationsCount(): number {
+        return Object.keys(this.graphqlOperations).length;
+    }
+
+    public getGraphqlTypesCount(): number {
+        return Object.keys(this.graphqlTypes).length;
+    }
+
+    public async processGraphQLSpecs(context: TaskContext): Promise<void> {
+        const { GraphQLConverter } = await import("@fern-api/graphql-to-fdr");
+        const graphqlSpecs = this.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+
+        for (const spec of graphqlSpecs) {
+            try {
+                const converter = new GraphQLConverter({
+                    context,
+                    filePath: spec.absoluteFilepath
+                });
+                const result = await converter.convert();
+
+                // Merge GraphQL operations and types into workspace
+                Object.assign(this.graphqlOperations, result.graphqlOperations);
+                Object.assign(this.graphqlTypes, result.types);
+            } catch (error) {
+                context.logger.error(
+                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                    error instanceof Error ? error.message : String(error)
+                );
+            }
+        }
+    }
+
     public async getOpenAPIIr(
         {
             context,
-            relativePathToDependency
+            relativePathToDependency,
+            loadAiExamples = false
         }: {
             context: TaskContext;
             relativePathToDependency?: RelativeFilePath;
+            loadAiExamples?: boolean;
         },
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
@@ -150,7 +197,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             context,
             documents: await this.loader.loadDocuments({
                 context,
-                specs: openApiSpecs
+                specs: openApiSpecs,
+                loadAiExamples
             }),
             options: {
                 ...settings,
@@ -371,23 +419,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     ? ` for ${errorCollector.relativeFilepathToSpec}`
                     : "";
 
-                // TODO(kenny): we should do something more useful with the warnings here, or remove.
-
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",
-                        `API validation${specInfo} completed with ${errorStats.numErrors} errors and ${errorStats.numWarnings} warnings.`
+                        `API validation${specInfo} completed with ${errorStats.numErrors} errors.`
                     );
-                } else if (errorStats.numWarnings > 0) {
+                } else if (errorStats.numWarnings > 0 && logWarnings) {
                     context.logger.log(
                         "warn",
                         `API validation${specInfo} completed with ${errorStats.numWarnings} warnings.`
                     );
-                } else {
-                    context.logger.log("info", `All checks passed when parsing OpenAPI${specInfo}.`);
                 }
-
-                context.logger.log("info", "");
 
                 await errorCollector.logErrors({ logWarnings });
             }
@@ -478,19 +520,23 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 const absoluteFilepathToOverrides = spec.overrides
                     ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
                     : undefined;
+                const absoluteFilepathToOverlays = spec.overlays
+                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
+                    : undefined;
 
                 // Create a minimal OpenAPI spec with default settings
                 const openApiSpec: OpenAPISpec = {
                     type: "openapi",
                     absoluteFilepath,
                     absoluteFilepathToOverrides,
+                    absoluteFilepathToOverlays,
                     // Use default settings from existing specs for compatibility
                     settings: this.specs.length > 0 ? this.specs[0]?.settings : undefined,
                     source: {
                         type: "openapi",
                         file: absoluteFilepath
                     },
-                    namespace: spec.namespace ?? this.workspaceName
+                    namespace: spec.namespace ?? undefined
                 };
 
                 specs.push(openApiSpec);

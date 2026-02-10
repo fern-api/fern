@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->echo_($id, $request) -> string</code></summary>
+<details><summary><code>$client-&gt;echo_($id, $request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ $client->echo_(
 </details>
 
 ## Service
-<details><summary><code>$client->service->nop($id, $nestedId)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;nop($id, $nestedId)</code></summary>
 <dl>
 <dd>
 

@@ -209,6 +209,32 @@
             }
         },
         {
+            "example_identifier": "WithCursor",
+            "id": {
+                "method": "POST",
+                "path": "/users/top-level-cursor",
+                "identifier_override": "endpoint_users.listWithTopLevelBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"initial_cursor\")\n                .filter(\"active\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"initial_cursor\")\n                .filter(\"active\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "663bb263",
+            "id": {
+                "method": "POST",
+                "path": "/users/top-level-cursor",
+                "identifier_override": "endpoint_users.listWithTopLevelBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "7af957d9",
             "id": {
                 "method": "GET",

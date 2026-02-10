@@ -40,6 +40,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:websocket/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:websocket-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

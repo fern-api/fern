@@ -6,6 +6,7 @@ import (
 	context "context"
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
+	file "github.com/examples/fern/file"
 	internal "github.com/examples/fern/internal"
 	option "github.com/examples/fern/option"
 	http "net/http"
@@ -63,7 +64,7 @@ func (r *RawClient) GetFile(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(file.ErrorCodes),
 		},
 	)
 	if err != nil {

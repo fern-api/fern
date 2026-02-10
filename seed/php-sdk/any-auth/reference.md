@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client->auth->getToken($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ $client->auth->getToken(
 </details>
 
 ## User
-<details><summary><code>$client->user->get() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;get() -> array</code></summary>
 <dl>
 <dd>
 
@@ -97,7 +97,7 @@ $client->user->get();
 </dl>
 </details>
 
-<details><summary><code>$client->user->getAdmins() -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getAdmins() -> array</code></summary>
 <dl>
 <dd>
 

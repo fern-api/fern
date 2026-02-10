@@ -12,5 +12,5 @@ public partial class InlineUsersClient : IInlineUsersClient
         InlineUsers = new InlineUsersClient_(_client);
     }
 
-    public InlineUsersClient_ InlineUsers { get; }
+    public IInlineUsersClient_ InlineUsers { get; }
 }

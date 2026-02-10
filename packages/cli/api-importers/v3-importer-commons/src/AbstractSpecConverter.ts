@@ -9,10 +9,10 @@ import {
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter } from "./AbstractConverter";
-import { AbstractConverterContext } from "./AbstractConverterContext";
-import { SchemaConverter } from "./converters/schema/SchemaConverter";
-import { FernIgnoreExtension } from "./extensions";
+import { AbstractConverter } from "./AbstractConverter.js";
+import { AbstractConverterContext } from "./AbstractConverterContext.js";
+import { SchemaConverter } from "./converters/schema/SchemaConverter.js";
+import { FernIgnoreExtension } from "./extensions/index.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -193,7 +193,12 @@ export abstract class AbstractSpecConverter<
             Object.entries(ir.websocketChannels ?? {}).filter(([channelId]) => filteredChannels.has(channelId))
         );
         ir.webhookGroups = Object.fromEntries(
-            Object.entries(ir.webhookGroups).filter(([webhookId]) => filteredWebhooks.has(webhookId))
+            Object.entries(ir.webhookGroups).map(([webhookGroupId, webhookGroup]) => {
+                const filteredWebhookGroup = webhookGroup.filter(
+                    (webhook) => webhook.id != null && filteredWebhooks.has(webhook.id)
+                );
+                return [webhookGroupId, filteredWebhookGroup];
+            })
         );
         return ir;
     }

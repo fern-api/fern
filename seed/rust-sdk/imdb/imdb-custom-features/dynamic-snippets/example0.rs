@@ -1,5 +1,4 @@
 use seed_api::prelude::*;
-use seed_api::CreateMovieRequest;
 
 #[tokio::main]
 async fn main() {

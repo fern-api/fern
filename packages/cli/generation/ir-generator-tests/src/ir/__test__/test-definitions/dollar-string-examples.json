@@ -314,6 +314,7 @@
                     },
                     "docs": null
                 },
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": [
                     {

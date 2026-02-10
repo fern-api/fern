@@ -16,12 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersOptionalDataRequest{
-        Page: fern.Int(
+    request := &fern.ListWithGlobalConfigRequest{
+        Offset: fern.Int(
             1,
         ),
     }
-    client.Users.ListWithOptionalData(
+    client.Users.ListWithGlobalConfig(
         context.TODO(),
         request,
     )

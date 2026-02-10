@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_text</a>() -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_text</a>() -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 

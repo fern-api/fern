@@ -12,9 +12,9 @@ import {
     SchemaWithExample
 } from "@fern-api/openapi-ir";
 
-import { SchemaParserContext } from "../SchemaParserContext";
-import { convertToFullExample } from "./convertToFullExample";
-import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
+import { SchemaParserContext } from "../SchemaParserContext.js";
+import { convertToFullExample } from "./convertToFullExample.js";
+import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample.js";
 
 export declare namespace ExampleTypeFactory {
     interface Options {

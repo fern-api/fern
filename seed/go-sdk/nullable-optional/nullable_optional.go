@@ -96,6 +96,27 @@ func (s *SearchRequest) SetIncludeTypes(includeTypes []string) {
 	s.require(searchRequestFieldIncludeTypes)
 }
 
+func (s *SearchRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SearchRequest(body)
+	return nil
+}
+
+func (s *SearchRequest) MarshalJSON() ([]byte, error) {
+	type embed SearchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	listUsersRequestFieldLimit          = big.NewInt(1 << 0)
 	listUsersRequestFieldOffset         = big.NewInt(1 << 1)
@@ -2957,6 +2978,27 @@ func (u *UpdateComplexProfileRequest) SetNullableArray(nullableArray []string) {
 	u.require(updateComplexProfileRequestFieldNullableArray)
 }
 
+func (u *UpdateComplexProfileRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateComplexProfileRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateComplexProfileRequest(body)
+	return nil
+}
+
+func (u *UpdateComplexProfileRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateComplexProfileRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	updateTagsRequestFieldTags       = big.NewInt(1 << 0)
 	updateTagsRequestFieldCategories = big.NewInt(1 << 1)
@@ -2998,4 +3040,25 @@ func (u *UpdateTagsRequest) SetCategories(categories []string) {
 func (u *UpdateTagsRequest) SetLabels(labels []string) {
 	u.Labels = labels
 	u.require(updateTagsRequestFieldLabels)
+}
+
+func (u *UpdateTagsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateTagsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateTagsRequest(body)
+	return nil
+}
+
+func (u *UpdateTagsRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateTagsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

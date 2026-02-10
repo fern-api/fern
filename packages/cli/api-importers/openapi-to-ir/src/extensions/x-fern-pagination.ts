@@ -6,7 +6,7 @@ import {
     CursorPaginationExtensionSchema,
     OffsetPaginationExtensionSchema,
     PaginationExtensionSchema
-} from "../schemas/PaginationSchema";
+} from "../schemas/PaginationSchema.js";
 
 const REQUEST_PREFIX = "$request.";
 const RESPONSE_PREFIX = "$response.";

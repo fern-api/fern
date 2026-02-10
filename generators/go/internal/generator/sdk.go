@@ -3226,9 +3226,10 @@ func (f *fileWriter) WriteRequestType(
 		}
 	}
 
-	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties {
-		// If the request doesn't specify any literals or a reference type,
-		// we don't need to customize the [de]serialization logic at all.
+	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties && len(propertyNames) == 0 {
+		// If the request doesn't specify any literals, a reference type, or properties
+		// that could use explicit field handling, we don't need to customize the
+		// [de]serialization logic at all.
 		return nil
 	}
 
@@ -3574,11 +3575,12 @@ type requestBodyVisitor struct {
 
 func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
 	typeVisitor := &typeVisitor{
-		typeName:           inlinedRequestBody.Name.PascalCase.UnsafeName,
-		baseImportPath:     r.baseImportPath,
-		importPath:         r.importPath,
-		writer:             r.writer,
-		gettersPassByValue: r.writer.gettersPassByValue,
+		typeName:                     inlinedRequestBody.Name.PascalCase.UnsafeName,
+		baseImportPath:               r.baseImportPath,
+		importPath:                   r.importPath,
+		writer:                       r.writer,
+		gettersPassByValue:           r.writer.gettersPassByValue,
+		alwaysSendRequiredProperties: r.writer.alwaysSendRequiredProperties,
 	}
 	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
 	objectProperties := typeVisitor.visitObjectProperties(
@@ -3641,11 +3643,12 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		r.writer.P(parameterName, " ", parameterType, " `json:\"-\" url:\"-\"`")
 	}
 	typeVisitor := &typeVisitor{
-		typeName:           fileUpload.Name.PascalCase.UnsafeName,
-		baseImportPath:     r.baseImportPath,
-		importPath:         r.importPath,
-		writer:             r.writer,
-		gettersPassByValue: r.writer.gettersPassByValue,
+		typeName:                     fileUpload.Name.PascalCase.UnsafeName,
+		baseImportPath:               r.baseImportPath,
+		importPath:                   r.importPath,
+		writer:                       r.writer,
+		gettersPassByValue:           r.writer.gettersPassByValue,
+		alwaysSendRequiredProperties: r.writer.alwaysSendRequiredProperties,
 	}
 	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
 	objectProperties := typeVisitor.visitObjectProperties(

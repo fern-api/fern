@@ -1,5 +1,4 @@
 use seed_unions::prelude::*;
-use seed_unions::{Circle, Shape, Square};
 
 #[tokio::main]
 async fn main() {

@@ -1,5 +1,4 @@
 use seed_api::prelude::*;
-use seed_api::PlainObject;
 
 #[tokio::main]
 async fn main() {

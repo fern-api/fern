@@ -1,0 +1,77 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../yaml/loader"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../source"
+    },
+    {
+      "path": "../generation/remote-generation/remote-workspace-runner"
+    },
+    {
+      "path": "../workspace/oss-validator"
+    },
+    {
+      "path": "../api-importers/openapi/openapi-ir-parser"
+    },
+    {
+      "path": "../login"
+    },
+    {
+      "path": "../logger"
+    },
+    {
+      "path": "../generation/local-generation/local-workspace-runner"
+    },
+    {
+      "path": "../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../../commons/github"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../../commons/logging-execa"
+    },
+    {
+      "path": "../fern-definition/validator"
+    },
+    {
+      "path": "../fern-definition/schema"
+    },
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../core"
+    },
+    {
+      "path": "../configuration"
+    },
+    {
+      "path": "../config"
+    },
+    {
+      "path": "../cli-logger"
+    },
+    {
+      "path": "../auth"
+    },
+    {
+      "path": "../workspace/commons"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationAsync</a>(tenantId, organizationId) -> Organization</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationAsync</a>(tenantId, organizationId) -> WithRawResponseTask&lt;Organization&gt;</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(tenantId, organizationId, userId, GetOrganizationUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(tenantId, organizationId, userId, GetOrganizationUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -117,7 +117,7 @@ await client.Organizations.GetOrganizationUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">SearchOrganizationsAsync</a>(tenantId, organizationId, SearchOrganizationsRequest { ... }) -> IEnumerable<Organization></code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">SearchOrganizationsAsync</a>(tenantId, organizationId, SearchOrganizationsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Organization&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +178,7 @@ await client.Organizations.SearchOrganizationsAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(tenantId, userId, GetUsersRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(tenantId, userId, GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -234,7 +234,7 @@ await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">CreateUserAsync</a>(tenantId, User { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">CreateUserAsync</a>(tenantId, User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -289,7 +289,7 @@ await client.User.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, UpdateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -356,7 +356,7 @@ await client.User.UpdateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(tenantId, userId, SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(tenantId, userId, SearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -412,7 +412,7 @@ await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersReques
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserMetadataAsync</a>(tenantId, userId, version, GetUserMetadataRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserMetadataAsync</a>(tenantId, userId, version, GetUserMetadataRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -490,7 +490,7 @@ await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMet
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(tenantId, userId, version, thought, GetUserSpecificsRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(tenantId, userId, version, thought, GetUserSpecificsRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

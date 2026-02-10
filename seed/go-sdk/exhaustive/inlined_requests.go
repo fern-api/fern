@@ -3,6 +3,8 @@
 package exhaustive
 
 import (
+	json "encoding/json"
+	internal "github.com/exhaustive/fern/internal"
 	types "github.com/exhaustive/fern/types"
 	big "math/big"
 )
@@ -16,7 +18,7 @@ var (
 type PostWithObjectBody struct {
 	FieldString  string                         `json:"string" url:"-"`
 	Integer      int                            `json:"integer" url:"-"`
-	NestedObject *types.ObjectWithOptionalField `json:"NestedObject,omitempty" url:"-"`
+	NestedObject *types.ObjectWithOptionalField `json:"NestedObject" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -48,4 +50,25 @@ func (p *PostWithObjectBody) SetInteger(integer int) {
 func (p *PostWithObjectBody) SetNestedObject(nestedObject *types.ObjectWithOptionalField) {
 	p.NestedObject = nestedObject
 	p.require(postWithObjectBodyFieldNestedObject)
+}
+
+func (p *PostWithObjectBody) UnmarshalJSON(data []byte) error {
+	type unmarshaler PostWithObjectBody
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PostWithObjectBody(body)
+	return nil
+}
+
+func (p *PostWithObjectBody) MarshalJSON() ([]byte, error) {
+	type embed PostWithObjectBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

@@ -1,6 +1,6 @@
 # Reference
 ## BasicAuth
-<details><summary><code>client.basic_auth.<a href="/src/api/resources/basic_auth/client.rs">get_with_basic_auth</a>() -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.basic_auth.<a href="/src/api/resources/basic_auth/client.rs">get_with_basic_auth</a>() -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -50,7 +50,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.basic_auth.<a href="/src/api/resources/basic_auth/client.rs">post_with_basic_auth</a>(request: serde_json::Value) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.basic_auth.<a href="/src/api/resources/basic_auth/client.rs">post_with_basic_auth</a>(request: serde_json::Value) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

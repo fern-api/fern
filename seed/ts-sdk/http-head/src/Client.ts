@@ -2,14 +2,12 @@
 
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedHttpHeadClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedHttpHeadClient {
@@ -17,7 +15,6 @@ export class SeedHttpHeadClient {
     protected _user: UserClient | undefined;
 
     constructor(options: SeedHttpHeadClient.Options) {
-
         this._options = normalizeClientOptions(options);
     }
 

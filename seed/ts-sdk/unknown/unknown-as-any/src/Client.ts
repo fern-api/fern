@@ -2,14 +2,12 @@
 
 import { UnknownClient } from "./api/resources/unknown/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedUnknownAsAnyClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedUnknownAsAnyClient {
@@ -17,7 +15,6 @@ export class SeedUnknownAsAnyClient {
     protected _unknown: UnknownClient | undefined;
 
     constructor(options: SeedUnknownAsAnyClient.Options) {
-
         this._options = normalizeClientOptions(options);
     }
 

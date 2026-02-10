@@ -42,6 +42,10 @@
             "safeName": "Password"
           }
         },
+        "usernameEnvVar": "MY_USERNAME",
+        "passwordEnvVar": "MY_PaSSwoOD",
+        "usernameOmit": false,
+        "passwordOmit": false,
         "type": "basic"
       }
     ]
@@ -261,6 +265,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -571,6 +576,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

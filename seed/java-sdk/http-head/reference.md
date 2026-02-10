@@ -25,7 +25,7 @@ client.user().head();
 </dl>
 </details>
 
-<details><summary><code>client.user.list() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.list() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 

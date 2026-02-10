@@ -13,9 +13,9 @@ import path from "path";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
-import { DebugLogger } from "./DebugLogger";
-import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle";
-import { getPreviewDocsDefinition } from "./previewDocs";
+import { DebugLogger } from "./DebugLogger.js";
+import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { getPreviewDocsDefinition } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -51,10 +51,12 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         pageActions: undefined,
         theme: undefined,
         header: undefined,
-        footer: undefined
+        footer: undefined,
+        editThisPageLaunch: undefined
     },
     jsFiles: undefined,
-    id: undefined
+    id: undefined,
+    apiNameToId: {}
 };
 
 /**

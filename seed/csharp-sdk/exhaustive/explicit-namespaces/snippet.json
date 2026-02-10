@@ -254,6 +254,18 @@
             }
         },
         {
+            "example_identifier": "DatetimeLikeStringExample",
+            "id": {
+                "path": "/object/get-and-return-with-datetime-like-string",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Types.Object;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(\n    new ObjectWithDatetimeLikeString\n    {\n        DatetimeLikeString = \"2023-08-31T14:15:22Z\",\n        ActualDatetime = new DateTime(2023, 08, 31, 14, 15, 22, 000),\n    }\n);\n"
+            }
+        },
+        {
             "example_identifier": null,
             "id": {
                 "path": "/params/path/{param}",

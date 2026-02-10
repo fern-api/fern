@@ -4,50 +4,38 @@ import { SeedMultiLineDocsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("UserClient", () => {
-    
     test("getUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMultiLineDocsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        
-        server
-            .mockEndpoint()
-            .get("/users/userId").respondWith()
-            .statusCode(200).build();
+        const client = new SeedMultiLineDocsClient({ maxRetries: 0, environment: server.baseUrl });
 
-        
-                    
-                            const response = await client.user.getUser("userId");
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().get("/users/userId").respondWith().statusCode(200).build();
+
+        const response = await client.user.getUser("userId");
+        expect(response).toEqual(undefined);
     });
-          
+
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMultiLineDocsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "name" : "name" , "age" : 1 };
-        const rawResponseBody = { "id" : "id" , "name" : "name" , "age" : 1 };
+        const client = new SeedMultiLineDocsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { name: "name", age: 1 };
+        const rawResponseBody = { id: "id", name: "name", age: 1 };
         server
             .mockEndpoint()
-            .post("/users").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/users")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.user.createUser({
-    name: "name",
-    age: 1
-});
-                            expect(response).toEqual({
-    id: "id",
-    name: "name",
-    age: 1
-});
-                          
-                
+        const response = await client.user.createUser({
+            name: "name",
+            age: 1,
+        });
+        expect(response).toEqual({
+            id: "id",
+            name: "name",
+            age: 1,
+        });
     });
-          
 });

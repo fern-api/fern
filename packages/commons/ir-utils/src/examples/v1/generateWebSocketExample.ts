@@ -8,13 +8,13 @@ import {
     WebSocketMessage
 } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import {
     generateHeaderExamples,
     generatePathParameterExamples,
     generateQueryParameterExamples
-} from "./generateParameterExamples";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+} from "./generateParameterExamples.js";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
 export declare namespace generateWebSocketExample {
     interface Args {

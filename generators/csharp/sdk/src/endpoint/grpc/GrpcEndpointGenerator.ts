@@ -1,10 +1,15 @@
 import { GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
-import { ExampleEndpointCall, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { EndpointRequest } from "../request/EndpointRequest";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { EndpointRequest } from "../request/EndpointRequest.js";
 
 export declare namespace GrpcEndpointGenerator {
     export interface Args {
@@ -140,14 +145,47 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
 
     private createCallOptions({ rawGrpcClientReference }: { rawGrpcClientReference: string }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
+            const requestOptionsVar = this.names.parameters.requestOptions;
+
+            // Build gRPC metadata from headers
+            writer.writeLine("var metadata = new global::Grpc.Core.Metadata();");
+
+            // Add client-level headers (includes lazy auth headers)
+            writer.writeLine("foreach (var header in _client.Options.Headers)");
+            writer.pushScope();
+            writer.writeLine("var value = header.Value?.Match(str => str, func => func.Invoke());");
+            writer.writeLine("if (value != null) metadata.Add(header.Key, value);");
+            writer.popScope();
+
+            // Add client-level additional headers
+            writer.writeLine("if (_client.Options.AdditionalHeaders != null)");
+            writer.pushScope();
+            writer.writeLine("foreach (var header in _client.Options.AdditionalHeaders)");
+            writer.pushScope();
+            writer.writeLine("if (header.Value != null) metadata.Add(header.Key, header.Value);");
+            writer.popScope();
+            writer.popScope();
+
+            // Add request-level additional headers (highest priority)
+            writer.writeLine(`if (${requestOptionsVar}?.AdditionalHeaders != null)`);
+            writer.pushScope();
+            writer.writeLine(`foreach (var header in ${requestOptionsVar}.AdditionalHeaders)`);
+            writer.pushScope();
+            writer.writeLine("if (header.Value != null) metadata.Add(header.Key, header.Value);");
+            writer.popScope();
+            writer.popScope();
+            writer.writeLine();
+
+            // Create CallOptions with the built metadata
             writer.write("var callOptions = ");
             writer.writeNode(
                 this.csharp.invokeMethod({
                     on: this.csharp.codeblock(rawGrpcClientReference),
                     method: "CreateCallOptions",
                     arguments_: [
+                        this.csharp.codeblock("metadata"),
                         this.csharp.codeblock((writer) => {
-                            writer.write(`${this.names.parameters.requestOptions} ?? `);
+                            writer.write(`${requestOptionsVar} ?? `);
                             writer.writeNode(
                                 this.csharp.instantiateClass({
                                     classReference: this.Types.GrpcRequestOptions,

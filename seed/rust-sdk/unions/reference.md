@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client.rs">get</a>(id: String) -> Result<BigUnion, ApiError></code></summary>
+<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client.rs">get</a>(id: String) -> Result&lt;BigUnion, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client.rs">update</a>(request: BigUnion) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client.rs">update</a>(request: BigUnion) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -63,13 +63,6 @@ async fn main() {
 
 ```rust
 use seed_unions::prelude::*;
-use seed_unions::{
-    ActiveDiamond, AttractiveScript, BigUnion, CircularCard, ColorfulCover, DiligentDeal,
-    DisloyalValue, DistinctFailure, FalseMirror, FrozenSleep, GaseousRoad, GruesomeCoach,
-    HarmoniousPlay, HastyPain, HoarseMouse, JumboEnd, LimpingStep, MistySnow, NormalSweet,
-    PopularLimit, PotableBad, PracticalPrinciple, PrimaryBlock, RotatingRatio, ThankfulFactor,
-    TotalWork, TriangularRepair, UniqueStress, UnwillingSmoke, VibrantExcitement,
-};
 
 #[tokio::main]
 async fn main() {
@@ -100,7 +93,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client.rs">update_many</a>(request: Vec<BigUnion>) -> Result<std::collections::HashMap<String, bool>, ApiError></code></summary>
+<details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client.rs">update_many</a>(request: Vec&lt;BigUnion&gt;) -> Result&lt;std::collections::HashMap&lt;String, bool&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -114,13 +107,6 @@ async fn main() {
 
 ```rust
 use seed_unions::prelude::*;
-use seed_unions::{
-    ActiveDiamond, AttractiveScript, BigUnion, CircularCard, ColorfulCover, DiligentDeal,
-    DisloyalValue, DistinctFailure, FalseMirror, FrozenSleep, GaseousRoad, GruesomeCoach,
-    HarmoniousPlay, HastyPain, HoarseMouse, JumboEnd, LimpingStep, MistySnow, NormalSweet,
-    PopularLimit, PotableBad, PracticalPrinciple, PrimaryBlock, RotatingRatio, ThankfulFactor,
-    TotalWork, TriangularRepair, UniqueStress, UnwillingSmoke, VibrantExcitement,
-};
 
 #[tokio::main]
 async fn main() {
@@ -159,7 +145,7 @@ async fn main() {
 </details>
 
 ## Union
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(id: String) -> Result<Shape, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(id: String) -> Result&lt;Shape, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -208,7 +194,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update</a>(request: Shape) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update</a>(request: Shape) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -222,7 +208,6 @@ async fn main() {
 
 ```rust
 use seed_unions::prelude::*;
-use seed_unions::{Circle, Shape, Square};
 
 #[tokio::main]
 async fn main() {

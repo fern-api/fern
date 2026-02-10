@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -69,7 +84,8 @@ This SDK supports two authentication methods:
 If you already have a valid access token, you can use it directly:
 
 ```java
-SeedAnyAuthClient client = SeedAnyAuthClient.withToken("your-access-token")
+SeedAnyAuthClient client = SeedAnyAuthClient.builder()
+    .token("your-access-token")
     .url("https://api.example.com")
     .build();
 ```
@@ -79,7 +95,8 @@ SeedAnyAuthClient client = SeedAnyAuthClient.withToken("your-access-token")
 The SDK can automatically handle token acquisition and refresh:
 
 ```java
-SeedAnyAuthClient client = SeedAnyAuthClient.withCredentials("client-id", "client-secret")
+SeedAnyAuthClient client = SeedAnyAuthClient.builder()
+    .credentials("client-id", "client-secret")
     .url("https://api.example.com")
     .build();
 ```

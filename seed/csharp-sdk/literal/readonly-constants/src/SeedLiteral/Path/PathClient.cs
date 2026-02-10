@@ -12,15 +12,18 @@ public partial class PathClient : IPathClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Path.SendAsync("123");
-    /// </code></example>
-    public async Task<SendResponse> SendAsync(
+    private async Task<WithRawResponse<SendResponse>> SendAsyncCore(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedLiteral.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -28,6 +31,7 @@ public partial class PathClient : IPathClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format("path/{0}", ValueConvert.ToPathParameterString(id)),
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -38,14 +42,28 @@ public partial class PathClient : IPathClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
+                return new WithRawResponse<SendResponse>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
             }
             catch (JsonException e)
             {
-                throw new SeedLiteralException("Failed to deserialize response", e);
+                throw new SeedLiteralApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
             }
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedLiteralApiException(
@@ -54,5 +72,17 @@ public partial class PathClient : IPathClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Path.SendAsync("123");
+    /// </code></example>
+    public WithRawResponseTask<SendResponse> SendAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SendResponse>(SendAsyncCore(id, options, cancellationToken));
     }
 }

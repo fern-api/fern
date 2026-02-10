@@ -2,13 +2,13 @@ namespace SeedUnknownAsAny;
 
 public partial interface IUnknownClient
 {
-    Task<IEnumerable<object>> PostAsync(
+    WithRawResponseTask<IEnumerable<object>> PostAsync(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<IEnumerable<object>> PostObjectAsync(
+    WithRawResponseTask<IEnumerable<object>> PostObjectAsync(
         MyObject request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

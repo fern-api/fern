@@ -1,5 +1,4 @@
 use seed_trace::prelude::*;
-use seed_trace::{PlaylistCreateRequest, ProblemId};
 
 #[tokio::main]
 async fn main() {

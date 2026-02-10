@@ -42,6 +42,13 @@ public class UserClient {
     /**
      * List all users.
      */
+    public List<User> list(RequestOptions requestOptions) {
+        return this.rawClient.list(requestOptions).body();
+    }
+
+    /**
+     * List all users.
+     */
     public List<User> list(ListUsersRequest request) {
         return this.rawClient.list(request).body();
     }

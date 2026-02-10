@@ -14,6 +14,7 @@
         "description": "Returns the health status of the service",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -119,6 +120,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -146,6 +148,7 @@
         "description": "Retrieves a user by their unique identifier",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -303,6 +306,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -330,6 +334,7 @@
         "description": "Creates a new user with the provided information",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -480,6 +485,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -500,6 +506,7 @@
         "slug": undefined,
       },
     ],
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
@@ -611,6 +618,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "unknown",
@@ -685,6 +694,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "unknown",
@@ -894,6 +905,8 @@
                     "type": "string",
                   },
                 },
+                "maxProperties": undefined,
+                "minProperties": undefined,
                 "type": "map",
                 "valueType": {
                   "type": "unknown",

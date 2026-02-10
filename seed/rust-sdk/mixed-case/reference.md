@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_resource</a>(resource_id: String) -> Result<Resource, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_resource</a>(resource_id: String) -> Result&lt;Resource, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -52,7 +52,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_resources</a>(page_limit: Option<i64>, before_date: Option<String>) -> Result<Vec<Resource>, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_resources</a>(page_limit: Option&lt;i64&gt;, before_date: Option&lt;String&gt;) -> Result&lt;Vec&lt;Resource&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

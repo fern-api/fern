@@ -3,16 +3,16 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
-import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation, Literal } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
     snippetAst: ruby.AstNode;
-    endpoint: HttpEndpoint;
-    service: HttpService;
+    endpoint: FernIr.HttpEndpoint;
+    service: FernIr.HttpService;
     exampleIndex: number;
     testId: string;
 }
@@ -21,21 +21,21 @@ interface EndpointTestCase {
  * Generates WireMock-based integration tests for Ruby SDK.
  *
  * Architecture:
- * - Uses dynamic snippets to generate client code
+ * - Uses FernIr.dynamic snippets to generate client code
  * - Generates Ruby test files using Minitest
  * - Creates helper methods for WireMock interaction
  */
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
-    private dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -66,7 +66,7 @@ export class WireTestGenerator {
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
     }
 
-    private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<File> {
+    private async generateServiceTestFile(serviceName: string, endpoints: FernIr.HttpEndpoint[]): Promise<File> {
         const endpointTestCases = new Map<string, EndpointTestCase>();
 
         for (const endpoint of endpoints) {
@@ -108,7 +108,11 @@ export class WireTestGenerator {
         return new File(`${serviceName}_test.rb`, RelativeFilePath.of("test/wire"), testFileContent);
     }
 
-    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
+    private buildDeterministicTestId(
+        service: FernIr.HttpService,
+        endpoint: FernIr.HttpEndpoint,
+        exampleIndex: number
+    ): string {
         const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         const endpointName = endpoint.name.snakeCase.safeName;
 
@@ -275,10 +279,10 @@ export class WireTestGenerator {
      */
     private maybeLiteral(typeReference: {
         type: string;
-        container?: { type: string; literal?: Literal };
-    }): Literal | undefined {
+        container?: { type: string; literal?: FernIr.Literal };
+    }): FernIr.Literal | undefined {
         if (typeReference.type === "container") {
-            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
+            const container = typeReference as { type: string; container: { type: string; literal?: FernIr.Literal } };
             if (container.container?.type === "literal") {
                 return container.container.literal;
             }
@@ -287,7 +291,7 @@ export class WireTestGenerator {
     }
 
     private async generateEndpointTestMethod(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         snippetAst: ruby.AstNode,
         serviceName: string,
         testId: string
@@ -351,7 +355,7 @@ export class WireTestGenerator {
         }
     }
 
-    private buildBasePath(endpoint: HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
         let basePath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
@@ -380,7 +384,7 @@ export class WireTestGenerator {
                 basePath = basePath.replace(`{${paramName}}`, pathParam.equalTo);
             });
         } else {
-            // Fallback: Get path parameters from dynamic endpoint example
+            // Fallback: Get path parameters from FernIr.dynamic endpoint example
             const dynamicExample = this.getDynamicEndpointExample(endpoint);
             if (dynamicExample?.pathParameters) {
                 Object.entries(dynamicExample.pathParameters).forEach(([paramName, paramValue]) => {
@@ -399,7 +403,7 @@ export class WireTestGenerator {
      * Only includes REQUIRED query params to avoid mismatches with optional params
      * that may not be included in the generated snippet.
      */
-    private buildQueryParamsCode(endpoint: HttpEndpoint): string {
+    private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
 
         if (!dynamicEndpointExample?.queryParameters) {
@@ -435,12 +439,12 @@ export class WireTestGenerator {
         return `{ ${queryParamEntries.join(", ")} }`;
     }
 
-    private getTestMethodName(endpoint: HttpEndpoint, serviceName: string): string {
+    private getTestMethodName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
         const endpointName = endpoint.name.snakeCase.safeName;
         return `test_${serviceName}_${endpointName}_with_wiremock`;
     }
 
-    private getDynamicEndpointExample(endpoint: HttpEndpoint): dynamic.EndpointSnippetRequest | null {
+    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointSnippetRequest | null {
         const example = this.dynamicIr.endpoints[endpoint.id];
         if (!example) {
             return null;
@@ -458,13 +462,13 @@ export class WireTestGenerator {
         endpoint,
         testId
     }: {
-        example: dynamic.EndpointSnippetRequest;
-        endpoint: HttpEndpoint;
+        example: FernIr.dynamic.EndpointSnippetRequest;
+        endpoint: FernIr.HttpEndpoint;
         testId: string;
     }): Promise<ruby.AstNode> {
         // Inject the X-Test-Id header into the example request
         // Auth is handled in the setup method, so we don't need to inject it here
-        const exampleWithTestId: dynamic.EndpointSnippetRequest = {
+        const exampleWithTestId: FernIr.dynamic.EndpointSnippetRequest = {
             ...example,
             headers: {
                 ...(example.headers ?? {}),
@@ -479,8 +483,8 @@ export class WireTestGenerator {
         return snippetAst as ruby.AstNode;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             // Skip root-level services (services without a fernFilepath)
@@ -499,7 +503,7 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private getFormattedServiceName(service: HttpService): string {
+    private getFormattedServiceName(service: FernIr.HttpService): string {
         return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
     }
 

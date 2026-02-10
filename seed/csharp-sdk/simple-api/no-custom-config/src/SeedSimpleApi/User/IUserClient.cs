@@ -2,7 +2,7 @@ namespace SeedSimpleApi;
 
 public partial interface IUserClient
 {
-    Task<User> GetAsync(
+    WithRawResponseTask<User> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

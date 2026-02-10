@@ -33,6 +33,10 @@ public class AsyncOptionalClient {
         return this.rawClient.sendOptionalBody().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<String> sendOptionalBody(RequestOptions requestOptions) {
+        return this.rawClient.sendOptionalBody(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<String> sendOptionalBody(Optional<Map<String, Object>> request) {
         return this.rawClient.sendOptionalBody(request).thenApply(response -> response.body());
     }
@@ -44,6 +48,10 @@ public class AsyncOptionalClient {
 
     public CompletableFuture<String> sendOptionalTypedBody() {
         return this.rawClient.sendOptionalTypedBody().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> sendOptionalTypedBody(RequestOptions requestOptions) {
+        return this.rawClient.sendOptionalTypedBody(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> sendOptionalTypedBody(Optional<SendOptionalBodyRequest> request) {
@@ -62,6 +70,17 @@ public class AsyncOptionalClient {
     public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(String actionId, String id) {
         return this.rawClient
                 .sendOptionalNullableWithAllOptionalProperties(actionId, id)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, RequestOptions requestOptions) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id, requestOptions)
                 .thenApply(response -> response.body());
     }
 

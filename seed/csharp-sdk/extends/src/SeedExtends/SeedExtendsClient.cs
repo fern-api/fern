@@ -8,7 +8,8 @@ public partial class SeedExtendsClient : ISeedExtendsClient
 
     public SeedExtendsClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedExtendsClient : ISeedExtendsClient
                 { "User-Agent", "Fernextends/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -44,6 +44,12 @@ public partial class SeedExtendsClient : ISeedExtendsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedExtends.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -52,6 +58,7 @@ public partial class SeedExtendsClient : ISeedExtendsClient
                     Method = HttpMethod.Post,
                     Path = "/extends/extended-inline-request-body",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

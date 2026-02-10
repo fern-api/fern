@@ -389,6 +389,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -754,6 +755,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -861,6 +863,10 @@
                         "ec2": "https://ec2.aws.com",
                         "s3": "https://s3.aws.com"
                     },
+                    "audiences": null,
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -888,6 +894,10 @@
                         "ec2": "https://staging.ec2.aws.com",
                         "s3": "https://staging.s3.aws.com"
                     },
+                    "audiences": null,
+                    "defaultUrls": null,
+                    "urlTemplates": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

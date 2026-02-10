@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedCsharpXmlEntities/SeedCsharpXmlEntitiesClient.cs">GetTimeZoneAsync</a>() -> TimeZoneModel</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpXmlEntities/SeedCsharpXmlEntitiesClient.cs">GetTimeZoneAsync</a>() -> WithRawResponseTask&lt;TimeZoneModel&gt;</code></summary>
 <dl>
 <dd>
 

@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:java-staged-builder-ordering/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:staged-builder-ordering-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

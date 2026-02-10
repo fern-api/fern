@@ -582,6 +582,7 @@
             }
           ],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -2048,6 +2049,7 @@
             }
           ],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],

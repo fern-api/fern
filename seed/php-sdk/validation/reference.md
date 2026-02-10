@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->create($request) -> Type</code></summary>
+<details><summary><code>$client-&gt;create($request) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ $client->create(
 </dl>
 </details>
 
-<details><summary><code>$client->get($request) -> Type</code></summary>
+<details><summary><code>$client-&gt;get($request) -> Type</code></summary>
 <dl>
 <dd>
 

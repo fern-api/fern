@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>$client->nullableOptional->getUser($userId) -> UserResponse</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;getUser($userId) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ $client->nullableOptional->getUser(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->createUser($request) -> UserResponse</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;createUser($request) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +125,7 @@ $client->nullableOptional->createUser(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->updateUser($userId, $request) -> UserResponse</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;updateUser($userId, $request) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -203,7 +203,7 @@ $client->nullableOptional->updateUser(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->listUsers($request) -> array</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;listUsers($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -288,7 +288,7 @@ $client->nullableOptional->listUsers(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->searchUsers($request) -> array</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;searchUsers($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -373,7 +373,7 @@ $client->nullableOptional->searchUsers(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->createComplexProfile($request) -> ComplexProfile</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;createComplexProfile($request) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -528,7 +528,7 @@ $client->nullableOptional->createComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->getComplexProfile($profileId) -> ComplexProfile</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;getComplexProfile($profileId) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -584,7 +584,7 @@ $client->nullableOptional->getComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->updateComplexProfile($profileId, $request) -> ComplexProfile</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;updateComplexProfile($profileId, $request) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -710,7 +710,7 @@ $client->nullableOptional->updateComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->testDeserialization($request) -> DeserializationTestResponse</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;testDeserialization($request) -> DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -817,7 +817,7 @@ $client->nullableOptional->testDeserialization(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->filterByRole($request) -> array</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;filterByRole($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -893,7 +893,7 @@ $client->nullableOptional->filterByRole(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->getNotificationSettings($userId) -> ?NotificationMethod</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;getNotificationSettings($userId) -> ?NotificationMethod</code></summary>
 <dl>
 <dd>
 
@@ -949,7 +949,7 @@ $client->nullableOptional->getNotificationSettings(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->updateTags($userId, $request) -> array</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;updateTags($userId, $request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -1043,7 +1043,7 @@ $client->nullableOptional->updateTags(
 </dl>
 </details>
 
-<details><summary><code>$client->nullableOptional->getSearchResults($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;nullableOptional-&gt;getSearchResults($request) -> ?array</code></summary>
 <dl>
 <dd>
 

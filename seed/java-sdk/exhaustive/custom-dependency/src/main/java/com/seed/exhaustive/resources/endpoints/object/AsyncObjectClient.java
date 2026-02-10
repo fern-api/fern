@@ -7,6 +7,7 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
@@ -32,6 +33,10 @@ public class AsyncObjectClient {
 
     public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField() {
         return this.rawClient.getAndReturnWithOptionalField().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(RequestOptions requestOptions) {
+        return this.rawClient.getAndReturnWithOptionalField(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(ObjectWithOptionalField request) {
@@ -70,6 +75,13 @@ public class AsyncObjectClient {
     }
 
     public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnNestedWithOptionalField(requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
             NestedObjectWithOptionalField request) {
         return this.rawClient.getAndReturnNestedWithOptionalField(request).thenApply(response -> response.body());
     }
@@ -104,6 +116,28 @@ public class AsyncObjectClient {
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnNestedWithRequiredFieldAsList(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request) {
+        return this.rawClient.getAndReturnWithDatetimeLikeString(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests that string fields containing datetime-like values are NOT reformatted.
+     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+     */
+    public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithDatetimeLikeString(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 }

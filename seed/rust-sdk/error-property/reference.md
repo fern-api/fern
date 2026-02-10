@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>client.property_based_error.<a href="/src/api/resources/property_based_error/client.rs">throw_error</a>() -> Result<String, ApiError></code></summary>
+<details><summary><code>client.property_based_error.<a href="/src/api/resources/property_based_error/client.rs">throw_error</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

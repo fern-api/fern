@@ -4,12 +4,12 @@ namespace SeedExhaustive;
 
 public partial interface INoReqBodyClient
 {
-    Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
+    WithRawResponseTask<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<string> PostWithNoRequestBodyAsync(
+    WithRawResponseTask<string> PostWithNoRequestBodyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

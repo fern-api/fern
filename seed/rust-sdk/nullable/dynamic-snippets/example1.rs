@@ -1,5 +1,4 @@
 use seed_nullable::prelude::*;
-use seed_nullable::{Metadata, Status};
 
 #[tokio::main]
 async fn main() {

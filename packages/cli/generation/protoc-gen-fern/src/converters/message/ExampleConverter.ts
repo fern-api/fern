@@ -9,9 +9,9 @@ import {
 
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
-import { Logger } from "../../commons/logging";
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { initializeGlobalCommentsStore } from "../utils/CreateGlobalCommentsStore";
+import { Logger } from "../../commons/logging.js";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { initializeGlobalCommentsStore } from "../utils/CreateGlobalCommentsStore.js";
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

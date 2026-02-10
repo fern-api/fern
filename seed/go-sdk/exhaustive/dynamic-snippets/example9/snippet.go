@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    request := types.WeatherReportSunny
+    request := types.WeatherReportSunny.Ptr()
     client.Endpoints.Enum.GetAndReturnEnum(
         context.TODO(),
         request,

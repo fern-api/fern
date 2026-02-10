@@ -1487,6 +1487,127 @@
         },
         {
           "_type": "endpoint",
+          "name": "List With Top Level Body Cursor Pagination",
+          "request": {
+            "description": "Pagination endpoint with a top-level cursor field in the request body.\nThis tests that the mock server correctly ignores cursor mismatches\nwhen getNextPage() is called with a different cursor value.",
+            "url": {
+              "raw": "{{baseUrl}}/users/top-level-cursor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "top-level-cursor"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cursor\": \"initial_cursor\",\n    \"filter\": \"active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Pagination endpoint with a top-level cursor field in the request body.\nThis tests that the mock server correctly ignores cursor mismatches\nwhen getNextPage() is called with a different cursor value.",
+                "url": {
+                  "raw": "{{baseUrl}}/users/top-level-cursor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "top-level-cursor"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"cursor\": \"initial_cursor\",\n    \"filter\": \"active\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"next_cursor\": \"next_cursor_value\",\n    \"data\": [\n        {\n            \"name\": \"Alice\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"Bob\",\n            \"id\": 2\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Pagination endpoint with a top-level cursor field in the request body.\nThis tests that the mock server correctly ignores cursor mismatches\nwhen getNextPage() is called with a different cursor value.",
+                "url": {
+                  "raw": "{{baseUrl}}/users/top-level-cursor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "top-level-cursor"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"cursor\": \"cursor\",\n    \"filter\": \"filter\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"next_cursor\": \"next_cursor\",\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
           "name": "List With Offset Pagination",
           "request": {
             "description": null,

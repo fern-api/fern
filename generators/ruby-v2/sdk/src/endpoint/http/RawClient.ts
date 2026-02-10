@@ -1,13 +1,13 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export const RAW_CLIENT_REQUEST_VARIABLE_NAME = "request";
 export declare namespace RawClient {
     export interface CreateHttpRequestWrapperArgs {
         baseUrl: ruby.CodeBlock;
         /** the endpoint for the endpoint */
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         /** reference to a variable that is the body */
         bodyReference?: ruby.CodeBlock;
         /** the path parameter id to reference */
@@ -127,7 +127,7 @@ export class RawClient {
         pathParameterReferences
     }: {
         writer: ruby.Writer;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): void {
         const hasPathParameters = endpoint.fullPath.parts.some((part) => part.pathParameter != null);

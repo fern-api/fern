@@ -2,7 +2,7 @@ import { APIChangelog } from "@fern-api/api-workspace-commons";
 import { CHANGELOG_DIRECTORY } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { listFernFiles } from "./listFernFiles";
+import { listFernFiles } from "./listFernFiles.js";
 
 export async function loadAPIChangelog({
     absolutePathToWorkspace

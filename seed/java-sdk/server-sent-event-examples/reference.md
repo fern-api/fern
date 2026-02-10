@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.stream(request) -> Iterable&lt;StreamedCompletion&gt;</code></summary>
+<details><summary><code>client.completions.stream(request) -> Iterable&amp;lt;StreamedCompletion&amp;gt;</code></summary>
 <dl>
 <dd>
 

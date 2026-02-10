@@ -1,23 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
-import {
-    ContainerType,
-    Literal,
-    NamedType,
-    PrimitiveTypeV1,
-    TypeDeclaration,
-    TypeReference,
-    UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "../AbstractModelGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly unionDeclaration: UndiscriminatedUnionTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly unionDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration
     ) {
         super(context, typeDeclaration);
     }
@@ -42,7 +34,7 @@ export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
         });
     }
 
-    private getMemberFieldName(typeReference: TypeReference): string {
+    private getMemberFieldName(typeReference: FernIr.TypeReference): string {
         switch (typeReference.type) {
             case "named":
                 return this.getMemberFieldNameForNamed({ named: typeReference });
@@ -57,12 +49,12 @@ export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
         }
     }
 
-    private getMemberFieldNameForNamed({ named }: { named: NamedType }): string {
+    private getMemberFieldNameForNamed({ named }: { named: FernIr.NamedType }): string {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         return this.context.getFieldName(typeDeclaration.name.name);
     }
 
-    private getMemberFieldNameForContainer({ container }: { container: ContainerType }): string {
+    private getMemberFieldNameForContainer({ container }: { container: FernIr.ContainerType }): string {
         switch (container.type) {
             case "list":
                 return this.getMemberFieldNameForList({ list: container });
@@ -81,33 +73,33 @@ export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
         }
     }
 
-    private getMemberFieldNameForList({ list }: { list: ContainerType.List }): string {
+    private getMemberFieldNameForList({ list }: { list: FernIr.ContainerType.List }): string {
         const fieldName = this.getMemberFieldName(list.list);
         return `${fieldName}List`;
     }
 
-    private getMemberFieldNameForMap({ map }: { map: ContainerType.Map }): string {
+    private getMemberFieldNameForMap({ map }: { map: FernIr.ContainerType.Map }): string {
         const keyFieldName = this.getMemberFieldName(map.keyType);
         const valueFieldName = this.getMemberFieldName(map.valueType);
         return `${keyFieldName}${valueFieldName}Map`;
     }
 
-    private getMemberFieldNameForOptional({ optional }: { optional: ContainerType.Optional }): string {
+    private getMemberFieldNameForOptional({ optional }: { optional: FernIr.ContainerType.Optional }): string {
         const fieldName = this.getMemberFieldName(optional.optional);
         return `${fieldName}Optional`;
     }
 
-    private getMemberFieldNameForNullable({ nullable }: { nullable: ContainerType.Nullable }): string {
+    private getMemberFieldNameForNullable({ nullable }: { nullable: FernIr.ContainerType.Nullable }): string {
         const fieldName = this.getMemberFieldName(nullable.nullable);
         return `${fieldName}Optional`;
     }
 
-    private getMemberFieldNameForSet({ set }: { set: ContainerType.Set }): string {
+    private getMemberFieldNameForSet({ set }: { set: FernIr.ContainerType.Set }): string {
         const fieldName = this.getMemberFieldName(set.set);
         return `${fieldName}Set`;
     }
 
-    private getMemberFieldNameForLiteral({ literal }: { literal: Literal }): string {
+    private getMemberFieldNameForLiteral({ literal }: { literal: FernIr.Literal }): string {
         switch (literal.type) {
             case "boolean":
                 if (literal.boolean) {
@@ -121,7 +113,7 @@ export class UndiscriminatedUnionGenerator extends AbstractModelGenerator {
         }
     }
 
-    private getMemberFieldNameForPrimitive({ primitive }: { primitive: PrimitiveTypeV1 }): string {
+    private getMemberFieldNameForPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): string {
         switch (primitive) {
             case "INTEGER":
             case "UINT":

@@ -2,8 +2,7 @@
 
 import { BearerAuthProvider } from "./auth/BearerAuthProvider.js";
 import * as core from "./core/index.js";
-import type { AuthProvider } from "./core/auth/index.js";
-import * as environments from "./environments.js";
+import type * as environments from "./environments.js";
 
 export type BaseClientOptions = {
     environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
@@ -37,22 +36,24 @@ export interface BaseRequestOptions {
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
     authProvider?: core.AuthProvider;
-}
+};
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> = NormalizedClientOptions<T> & {
-    authProvider: core.AuthProvider;
-}
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> =
+    NormalizedClientOptions<T> & {
+        authProvider: core.AuthProvider;
+    };
 
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
-    options: T
-): NormalizedClientOptions<T> {    return {
+    options: T,
+): NormalizedClientOptions<T> {
+    return {
         ...options,
         logging: core.logging.createLogger(options?.logging),
     } as NormalizedClientOptions<T>;
 }
 
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
-    options: T
+    options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
@@ -61,10 +62,10 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
 }
 
 function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
-    options: NormalizedClientOptions<T>
+    options: NormalizedClientOptions<T>,
 ): NormalizedClientOptionsWithAuth<T> {
     return {
         ...options,
-        authProvider: new core.NoOpAuthProvider()
+        authProvider: new core.NoOpAuthProvider(),
     };
 }

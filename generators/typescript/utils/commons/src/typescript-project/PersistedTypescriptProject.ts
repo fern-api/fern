@@ -255,6 +255,26 @@ export class PersistedTypescriptProject {
         });
     }
 
+    public async copySrcContentsTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
+        logger
+    }: {
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
+        logger: Logger;
+    }): Promise<void> {
+        const srcDirectoryPath = join(this.directory, this.srcDirectory);
+        await this.zipDirectoryContents(srcDirectoryPath, {
+            logger,
+            destinationPath,
+            zipFilename,
+            unzipOutput
+        });
+    }
+
     public async copyDistTo({
         destinationPath,
         zipFilename,

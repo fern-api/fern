@@ -3,8 +3,12 @@ namespace SeedCsharpXmlEntities;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedCsharpXmlEntitiesApiException(string message, int statusCode, object body)
-    : SeedCsharpXmlEntitiesException(message)
+public class SeedCsharpXmlEntitiesApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedCsharpXmlEntitiesException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.<a href="/src/api/resources/test_group/client.rs">test_method_name</a>(path_param: String, request: Option<PlainObject>, query_param_object: Option<Option<Option<PlainObject>>>, query_param_integer: Option<Option<Option<i64>>>) -> Result<serde_json::Value, ApiError></code></summary>
+<details><summary><code>client.test_group.<a href="/src/api/resources/test_group/client.rs">test_method_name</a>(path_param: String, request: Option&lt;PlainObject&gt;, query_param_object: Option&lt;Option&lt;Option&lt;PlainObject&gt;&gt;&gt;, query_param_integer: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;serde_json::Value, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,6 @@ Post a nullable request body
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::PlainObject;
 
 #[tokio::main]
 async fn main() {

@@ -8,9 +8,9 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 
-import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer";
-import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
-import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
+import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer/index.js";
+import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth.js";
+import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi.js";
 
 export async function registerApi({
     organization,
@@ -20,6 +20,8 @@ export async function registerApi({
     audiences,
     snippetsConfig,
     playgroundConfig,
+    graphqlOperations = {},
+    graphqlTypes = {},
     aiEnhancerConfig
 }: {
     organization: string;
@@ -29,6 +31,8 @@ export async function registerApi({
     audiences: Audiences;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>;
+    graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     aiEnhancerConfig?: AIExampleEnhancerConfig;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = generateIntermediateRepresentation({
@@ -49,7 +53,14 @@ export async function registerApi({
         token: token.value
     });
 
-    let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+    let apiDefinition = convertIrToFdrApi({
+        ir,
+        snippetsConfig,
+        playgroundConfig,
+        graphqlOperations,
+        graphqlTypes,
+        context
+    });
 
     if (aiEnhancerConfig) {
         const sources = workspace.getSources();

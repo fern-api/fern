@@ -5,25 +5,24 @@ import { SeedExamplesClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("ServiceClient", () => {
-    
     test("getFile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
-        
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
         const rawResponseBody = "A file with that name was not found!";
         server
             .mockEndpoint()
-            .get("/file/file.txt").header("X-File-API-Version", "0.0.2")
-                    .respondWith()
-            .statusCode(404).jsonBody(rawResponseBody)
-                .build();
+            .get("/file/file.txt")
+            .header("X-File-API-Version", "0.0.2")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-            await expect(async () => {
-                return await client.file.service.getFile("file.txt", {
-    "X-File-API-Version": "0.0.2"
-})
-            }).rejects.toThrow(SeedExamples.NotFoundError);
+        await expect(async () => {
+            return await client.file.service.getFile("file.txt", {
+                "X-File-API-Version": "0.0.2",
+            });
+        }).rejects.toThrow(SeedExamples.NotFoundError);
     });
-          
 });

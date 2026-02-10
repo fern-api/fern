@@ -46,6 +46,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:version/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:version-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

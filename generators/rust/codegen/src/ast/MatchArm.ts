@@ -1,8 +1,8 @@
-import { AstNode } from "./AstNode";
-import { Expression } from "./Expression";
-import { Pattern } from "./Pattern";
-import { Statement } from "./Statement";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Expression } from "./Expression.js";
+import { Pattern } from "./Pattern.js";
+import { Statement } from "./Statement.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace MatchArm {
     interface Args {

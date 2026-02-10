@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->getTest() -> RootObject</code></summary>
+<details><summary><code>$client-&gt;getTest() -> RootObject</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ $client->getTest();
 </dl>
 </details>
 
-<details><summary><code>$client->createTest($request) -> RootObject</code></summary>
+<details><summary><code>$client-&gt;createTest($request) -> RootObject</code></summary>
 <dl>
 <dd>
 

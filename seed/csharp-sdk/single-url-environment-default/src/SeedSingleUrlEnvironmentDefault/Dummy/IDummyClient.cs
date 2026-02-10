@@ -2,7 +2,7 @@ namespace SeedSingleUrlEnvironmentDefault;
 
 public partial interface IDummyClient
 {
-    Task<string> GetDummyAsync(
+    WithRawResponseTask<string> GetDummyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

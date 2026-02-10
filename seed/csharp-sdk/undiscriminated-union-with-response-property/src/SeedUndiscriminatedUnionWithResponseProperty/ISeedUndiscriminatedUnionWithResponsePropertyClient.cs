@@ -2,12 +2,12 @@ namespace SeedUndiscriminatedUnionWithResponseProperty;
 
 public partial interface ISeedUndiscriminatedUnionWithResponsePropertyClient
 {
-    Task<UnionResponse> GetUnionAsync(
+    WithRawResponseTask<UnionResponse> GetUnionAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task<UnionListResponse> ListUnionsAsync(
+    WithRawResponseTask<UnionListResponse> ListUnionsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

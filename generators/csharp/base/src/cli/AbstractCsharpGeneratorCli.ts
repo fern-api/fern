@@ -1,10 +1,11 @@
 import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { CsharpConfigSchema } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { FernIr, serialization as IrSerialization } from "@fern-fern/ir-sdk";
 
-import { GeneratorContext } from "../context/GeneratorContext";
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { GeneratorContext } from "../context/GeneratorContext.js";
 
 export abstract class AbstractCsharpGeneratorCli extends AbstractGeneratorCli<
     CsharpConfigSchema,

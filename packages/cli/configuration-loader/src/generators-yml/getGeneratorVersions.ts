@@ -64,6 +64,7 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         case "fern-fastapi-server":
             return "fastapi";
         // TypeScript
+        case "fern-typescript":
         case "fern-typescript-browser-sdk":
         case "fern-typescript-node-sdk":
         case "fern-typescript-sdk":
@@ -73,6 +74,7 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         // Java
         case "fern-java-sdk":
             return "java-sdk";
+        case "fern-java-model":
         case "java-model":
             return "java-model";
         case "fern-java-spring":

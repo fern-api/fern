@@ -7751,7 +7751,8 @@
           "source": {
             "type": "openrpc"
           },
-          "audiences": []
+          "audiences": [],
+          "responseHeaders": []
         },
         {
           "baseUrl": "Base",
@@ -8340,7 +8341,8 @@
           "source": {
             "type": "openrpc"
           },
-          "audiences": []
+          "audiences": [],
+          "responseHeaders": []
         }
       ]
     }

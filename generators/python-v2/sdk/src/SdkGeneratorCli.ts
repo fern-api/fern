@@ -2,11 +2,10 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPythonGeneratorCli } from "@fern-api/python-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
 export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -15,7 +14,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -49,7 +48,8 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     }
 
     private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
-        if (!context.customConfig.enable_wire_tests) {
+        const wireTestsEnabled = context.customConfig.wire_tests?.enabled ?? context.customConfig.enable_wire_tests;
+        if (!wireTestsEnabled) {
             return;
         }
 

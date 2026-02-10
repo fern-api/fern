@@ -1,5 +1,5 @@
-import { IrVersions } from "../../ir-versions";
-import { convertTypeReference } from "./convertTypeReference";
+import { IrVersions } from "../../ir-versions/index.js";
+import { convertTypeReference } from "./convertTypeReference.js";
 
 export function convertContainerType(
     containerType: IrVersions.V5.types.ContainerType

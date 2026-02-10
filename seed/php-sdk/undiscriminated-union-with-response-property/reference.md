@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->getUnion() -> UnionResponse</code></summary>
+<details><summary><code>$client-&gt;getUnion() -> UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -24,7 +24,7 @@ $client->getUnion();
 </dl>
 </details>
 
-<details><summary><code>$client->listUnions() -> UnionListResponse</code></summary>
+<details><summary><code>$client-&gt;listUnions() -> UnionListResponse</code></summary>
 <dl>
 <dd>
 

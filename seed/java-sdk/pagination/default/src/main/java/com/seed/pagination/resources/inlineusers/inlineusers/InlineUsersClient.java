@@ -41,6 +41,10 @@ public class InlineUsersClient {
         return this.rawClient.listWithCursorPagination().body();
     }
 
+    public SyncPagingIterable<User> listWithCursorPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithCursorPagination(requestOptions).body();
+    }
+
     public SyncPagingIterable<User> listWithCursorPagination(ListUsersCursorPaginationRequest request) {
         return this.rawClient.listWithCursorPagination(request).body();
     }
@@ -52,6 +56,10 @@ public class InlineUsersClient {
 
     public SyncPagingIterable<User> listWithMixedTypeCursorPagination() {
         return this.rawClient.listWithMixedTypeCursorPagination().body();
+    }
+
+    public SyncPagingIterable<User> listWithMixedTypeCursorPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithMixedTypeCursorPagination(requestOptions).body();
     }
 
     public SyncPagingIterable<User> listWithMixedTypeCursorPagination(
@@ -70,6 +78,10 @@ public class InlineUsersClient {
         return this.rawClient.listWithBodyCursorPagination().body();
     }
 
+    public SyncPagingIterable<User> listWithBodyCursorPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithBodyCursorPagination(requestOptions).body();
+    }
+
     public SyncPagingIterable<User> listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest request) {
         return this.rawClient.listWithBodyCursorPagination(request).body();
     }
@@ -85,6 +97,10 @@ public class InlineUsersClient {
         return this.rawClient.listWithOffsetPagination().body();
     }
 
+    public SyncPagingIterable<User> listWithOffsetPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithOffsetPagination(requestOptions).body();
+    }
+
     public SyncPagingIterable<User> listWithOffsetPagination(ListUsersOffsetPaginationRequest request) {
         return this.rawClient.listWithOffsetPagination(request).body();
     }
@@ -96,6 +112,10 @@ public class InlineUsersClient {
 
     public SyncPagingIterable<User> listWithDoubleOffsetPagination() {
         return this.rawClient.listWithDoubleOffsetPagination().body();
+    }
+
+    public SyncPagingIterable<User> listWithDoubleOffsetPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithDoubleOffsetPagination(requestOptions).body();
     }
 
     public SyncPagingIterable<User> listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest request) {
@@ -113,6 +133,10 @@ public class InlineUsersClient {
         return this.rawClient.listWithBodyOffsetPagination().body();
     }
 
+    public SyncPagingIterable<User> listWithBodyOffsetPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithBodyOffsetPagination(requestOptions).body();
+    }
+
     public SyncPagingIterable<User> listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest request) {
         return this.rawClient.listWithBodyOffsetPagination(request).body();
     }
@@ -128,6 +152,10 @@ public class InlineUsersClient {
         return this.rawClient.listWithOffsetStepPagination().body();
     }
 
+    public SyncPagingIterable<User> listWithOffsetStepPagination(RequestOptions requestOptions) {
+        return this.rawClient.listWithOffsetStepPagination(requestOptions).body();
+    }
+
     public SyncPagingIterable<User> listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest request) {
         return this.rawClient.listWithOffsetStepPagination(request).body();
     }
@@ -141,6 +169,12 @@ public class InlineUsersClient {
 
     public SyncPagingIterable<User> listWithOffsetPaginationHasNextPage() {
         return this.rawClient.listWithOffsetPaginationHasNextPage().body();
+    }
+
+    public SyncPagingIterable<User> listWithOffsetPaginationHasNextPage(RequestOptions requestOptions) {
+        return this.rawClient
+                .listWithOffsetPaginationHasNextPage(requestOptions)
+                .body();
     }
 
     public SyncPagingIterable<User> listWithOffsetPaginationHasNextPage(
@@ -159,6 +193,10 @@ public class InlineUsersClient {
         return this.rawClient.listWithExtendedResults().body();
     }
 
+    public SyncPagingIterable<User> listWithExtendedResults(RequestOptions requestOptions) {
+        return this.rawClient.listWithExtendedResults(requestOptions).body();
+    }
+
     public SyncPagingIterable<User> listWithExtendedResults(ListUsersExtendedRequest request) {
         return this.rawClient.listWithExtendedResults(request).body();
     }
@@ -170,6 +208,12 @@ public class InlineUsersClient {
 
     public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData() {
         return this.rawClient.listWithExtendedResultsAndOptionalData().body();
+    }
+
+    public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData(RequestOptions requestOptions) {
+        return this.rawClient
+                .listWithExtendedResultsAndOptionalData(requestOptions)
+                .body();
     }
 
     public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData(
@@ -188,6 +232,10 @@ public class InlineUsersClient {
         return this.rawClient.listUsernames().body();
     }
 
+    public SyncPagingIterable<String> listUsernames(RequestOptions requestOptions) {
+        return this.rawClient.listUsernames(requestOptions).body();
+    }
+
     public SyncPagingIterable<String> listUsernames(ListUsernamesRequest request) {
         return this.rawClient.listUsernames(request).body();
     }
@@ -198,6 +246,10 @@ public class InlineUsersClient {
 
     public SyncPagingIterable<String> listWithGlobalConfig() {
         return this.rawClient.listWithGlobalConfig().body();
+    }
+
+    public SyncPagingIterable<String> listWithGlobalConfig(RequestOptions requestOptions) {
+        return this.rawClient.listWithGlobalConfig(requestOptions).body();
     }
 
     public SyncPagingIterable<String> listWithGlobalConfig(ListWithGlobalConfigRequest request) {

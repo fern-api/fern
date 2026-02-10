@@ -1,6 +1,6 @@
 import { ast } from "@fern-api/csharp-codegen";
 
-import { EndpointRequest } from "./request/EndpointRequest";
+import { EndpointRequest } from "./request/EndpointRequest.js";
 
 export interface EndpointSignatureInfo {
     baseParameters: ast.Parameter[]; // Includes both pathParameters and the requestParameter (if any).

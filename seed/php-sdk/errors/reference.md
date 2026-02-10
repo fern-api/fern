@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>$client->simple->fooWithoutEndpointError($request) -> FooResponse</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;fooWithoutEndpointError($request) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ $client->simple->fooWithoutEndpointError(
 </dl>
 </details>
 
-<details><summary><code>$client->simple->foo($request) -> FooResponse</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;foo($request) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -88,7 +88,7 @@ $client->simple->foo(
 </dl>
 </details>
 
-<details><summary><code>$client->simple->fooWithExamples($request) -> FooResponse</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;fooWithExamples($request) -> FooResponse</code></summary>
 <dl>
 <dd>
 

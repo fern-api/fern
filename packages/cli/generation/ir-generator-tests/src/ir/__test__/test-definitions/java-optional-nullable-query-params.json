@@ -1865,6 +1865,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Search endpoint with optional nullable query params with defaults"
                 }

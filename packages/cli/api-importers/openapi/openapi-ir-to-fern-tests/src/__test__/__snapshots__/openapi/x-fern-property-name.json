@@ -25,6 +25,80 @@
               "openapi": "../openapi.yml",
             },
           },
+          "TestA": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "aFeature": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TestB": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "bFeature": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TestIdentity": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": {
+              "name": "type",
+              "value": "@type",
+            },
+            "docs": "Test description",
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "TestA": "TestA",
+              "TestB": "TestB",
+            },
+          },
+          "UnionWithDiscriminant": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": {
+              "name": "type",
+              "value": "@type",
+            },
+            "docs": "A union type with a discriminant property.",
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "VariantOne": "VariantOne",
+              "VariantTwo": "VariantTwo",
+            },
+          },
+          "VariantOne": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "featureOne": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "VariantTwo": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "featureTwo": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
@@ -35,6 +109,48 @@
         validation:
           format: uuid
         name: renamed_id
+    source:
+      openapi: ../openapi.yml
+  UnionWithDiscriminant:
+    discriminant:
+      name: type
+      value: '@type'
+    base-properties: {}
+    docs: A union type with a discriminant property.
+    union:
+      VariantOne: VariantOne
+      VariantTwo: VariantTwo
+    source:
+      openapi: ../openapi.yml
+  VariantOne:
+    properties:
+      featureOne: optional<string>
+    source:
+      openapi: ../openapi.yml
+  VariantTwo:
+    properties:
+      featureTwo: optional<string>
+    source:
+      openapi: ../openapi.yml
+  TestIdentity:
+    discriminant:
+      name: type
+      value: '@type'
+    base-properties: {}
+    docs: Test description
+    union:
+      TestA: TestA
+      TestB: TestB
+    source:
+      openapi: ../openapi.yml
+  TestA:
+    properties:
+      aFeature: optional<string>
+    source:
+      openapi: ../openapi.yml
+  TestB:
+    properties:
+      bFeature: optional<string>
     source:
       openapi: ../openapi.yml
 ",

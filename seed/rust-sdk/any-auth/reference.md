@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result<TokenResponse, ApiError></code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +86,7 @@ async fn main() {
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get</a>() -> Result<Vec<User>, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_admins</a>() -> Result<Vec<User>, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_admins</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

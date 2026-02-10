@@ -4,31 +4,27 @@ import { SeedMixedFileDirectoryClient } from "../../../../src/Client";
 import { mockServerPool } from "../../../mock-server/MockServerPool";
 
 describe("MetadataClient", () => {
-    
     test("getMetadata", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedFileDirectoryClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        const rawResponseBody = { "id" : "id" , "value" : { "key" : "value" } };
+        const client = new SeedMixedFileDirectoryClient({ maxRetries: 0, environment: server.baseUrl });
+
+        const rawResponseBody = { id: "id", value: { key: "value" } };
         server
             .mockEndpoint()
-            .get("/users/events/metadata/").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .get("/users/events/metadata/")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.user.events.metadata.getMetadata({
-    id: "id"
-});
-                            expect(response).toEqual({
-    id: "id",
-    value: {
-        "key": "value"
-    }
-});
-                          
-                
+        const response = await client.user.events.metadata.getMetadata({
+            id: "id",
+        });
+        expect(response).toEqual({
+            id: "id",
+            value: {
+                key: "value",
+            },
+        });
     });
-          
 });

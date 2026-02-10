@@ -1,8 +1,13 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ServiceId = FernIr.ServiceId;
+type HttpService = FernIr.HttpService;
+type Subpackage = FernIr.Subpackage;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace SubPackageClientInterfaceGenerator {
     interface Args {
@@ -37,14 +42,12 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
 
         for (const childSubpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(childSubpackage)) {
-                // Use concrete class reference (not interface) to match the implementing class's property type
-                // C# requires exact type match when implementing interface properties
                 interface_.addField({
                     name: childSubpackage.name.pascalCase.safeName,
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,
-                    type: this.context.getSubpackageClassReference(childSubpackage)
+                    type: this.context.getSubpackageInterfaceReference(childSubpackage)
                 });
             }
         }

@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>client.property_based_error.<a href="src/seed/property_based_error/client.py">throw_error</a>() -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.property_based_error.<a href="src/seed/property_based_error/client.py">throw_error</a>() -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 

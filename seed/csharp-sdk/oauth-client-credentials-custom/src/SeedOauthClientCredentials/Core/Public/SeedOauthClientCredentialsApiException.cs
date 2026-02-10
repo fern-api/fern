@@ -3,8 +3,12 @@ namespace SeedOauthClientCredentials;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
-public class SeedOauthClientCredentialsApiException(string message, int statusCode, object body)
-    : SeedOauthClientCredentialsException(message)
+public class SeedOauthClientCredentialsApiException(
+    string message,
+    int statusCode,
+    object body,
+    Exception? innerException = null
+) : SeedOauthClientCredentialsException(message, innerException)
 {
     /// <summary>
     /// The error code of the response that triggered the exception.

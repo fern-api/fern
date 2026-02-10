@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client.rs">post</a>(request: serde_json::Value) -> Result<Vec<serde_json::Value>, ApiError></code></summary>
+<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client.rs">post</a>(request: serde_json::Value) -> Result&lt;Vec&lt;serde_json::Value&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -37,7 +37,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client.rs">post_object</a>(request: MyObject) -> Result<Vec<serde_json::Value>, ApiError></code></summary>
+<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client.rs">post_object</a>(request: MyObject) -> Result&lt;Vec&lt;serde_json::Value&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,6 @@ async fn main() {
 
 ```rust
 use seed_unknown_as_any::prelude::*;
-use seed_unknown_as_any::MyObject;
 
 #[tokio::main]
 async fn main() {

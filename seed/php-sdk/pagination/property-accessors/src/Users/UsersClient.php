@@ -2,7 +2,7 @@
 
 namespace Seed\Users;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Users\Requests\ListUsersCursorPaginationRequest;
 use Seed\Core\Pagination\Pager;
@@ -13,6 +13,8 @@ use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
 use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
 use Seed\Users\Requests\ListUsersBodyCursorPaginationRequest;
 use Seed\Core\Pagination\PaginationHelper;
+use Seed\Users\Requests\ListUsersTopLevelBodyCursorPaginationRequest;
+use Seed\Users\Types\ListUsersTopLevelCursorPaginationResponse;
 use Seed\Users\Requests\ListUsersOffsetPaginationRequest;
 use Seed\Core\Pagination\OffsetPager;
 use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
@@ -35,7 +37,6 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class UsersClient
@@ -152,6 +153,37 @@ class UsersClient
             getNextCursor: fn (ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
             /* @phpstan-ignore-next-line */
             getItems: fn (ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+        );
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     *
+     * @param ListUsersTopLevelBodyCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersTopLevelBodyCursorPaginationRequest $request) => $this->_listWithTopLevelBodyCursorPagination($request, $options),
+            setCursor: function (ListUsersTopLevelBodyCursorPaginationRequest $request, ?string $cursor) {
+                $request->setCursor($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->getNextCursor() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (ListUsersTopLevelCursorPaginationResponse $response) => $response?->getData() ?? [],
         );
     }
 
@@ -522,16 +554,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -580,16 +602,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -634,16 +646,54 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     *
+     * @param ListUsersTopLevelBodyCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ListUsersTopLevelCursorPaginationResponse
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    private function _listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): ListUsersTopLevelCursorPaginationResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users/top-level-cursor",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
             );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return ListUsersTopLevelCursorPaginationResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -701,16 +751,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -768,16 +808,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -822,16 +852,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -886,16 +906,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -950,16 +960,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1008,16 +1008,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1066,16 +1056,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1124,16 +1104,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1185,16 +1155,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1243,16 +1203,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -1301,16 +1251,6 @@ class UsersClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade IR version to 63.
+      type: chore
+  createdAt: "2026-01-12"
+  irVersion: 63
+  version: 2.0.0-rc5
+
+- changelogEntry:
+    - summary: |
         Capture and display Gradle output in error messages when publish fails. The generator now includes the last 100 lines of stdout/stderr in error messages, making it possible to see actual Gradle compilation errors, dependency resolution failures, or Maven publish issues when running in hosted environments. Also adds --console=plain flag for better log capture.
       type: fix
   createdAt: "2025-11-20"
