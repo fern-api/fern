@@ -376,14 +376,14 @@ describe("generateLibraryDocs — FDR flow", () => {
         });
         (createFdrService as Mock).mockReturnValue(mockFdr);
 
-        // Mock global fetch for IR download
+        // Mock global fetch for IR download (Lambda wraps IR in { ir: ... })
         const mockIr = {
             rootModule: { name: "sdk", path: "sdk", submodules: [], classes: [], functions: [], attributes: [] }
         };
         const originalFetch = globalThis.fetch;
         globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
-            json: async () => mockIr
+            json: async () => ({ ir: mockIr })
         }) as unknown as typeof fetch;
 
         (generate as Mock).mockReturnValue({
@@ -521,7 +521,9 @@ describe("generateLibraryDocs — FDR flow", () => {
         globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
             json: async () => ({
-                rootModule: { name: "lib", path: "lib", submodules: [], classes: [], functions: [], attributes: [] }
+                ir: {
+                    rootModule: { name: "lib", path: "lib", submodules: [], classes: [], functions: [], attributes: [] }
+                }
             })
         }) as unknown as typeof fetch;
 
