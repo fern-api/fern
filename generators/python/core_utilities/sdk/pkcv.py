@@ -6,7 +6,6 @@ from urllib.parse import urlparse
 import httpx
 import jwt as jwt_lib
 
-
 PKCV_SIGNED_HEADERS = ["authorization", "host"]
 PKCV_JWT_CTY = "twilio-pkrv;v=1"
 PKCV_JWT_ALGORITHM = "RS256"
@@ -39,9 +38,7 @@ def _build_canonical_request(
 
     signed_headers = sorted(PKCV_SIGNED_HEADERS)
 
-    headers_str = "\n".join(
-        "{}:{}".format(h, all_headers_lower[h]) for h in signed_headers if h in all_headers_lower
-    )
+    headers_str = "\n".join("{}:{}".format(h, all_headers_lower[h]) for h in signed_headers if h in all_headers_lower)
 
     sorted_query = _sort_and_join(query_string.split("&"), "&") if query_string else ""
 
