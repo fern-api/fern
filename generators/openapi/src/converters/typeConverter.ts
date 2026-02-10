@@ -414,10 +414,10 @@ function applyNumericValidation(
     if (rules.max != null) {
         schema.maximum = rules.max;
     }
-    if (rules.exclusiveMin != null) {
+    if (rules.exclusiveMin === true) {
         schema.exclusiveMinimum = rules.exclusiveMin;
     }
-    if (rules.exclusiveMax != null) {
+    if (rules.exclusiveMax === true) {
         schema.exclusiveMaximum = rules.exclusiveMax;
     }
     if (rules.multipleOf != null) {

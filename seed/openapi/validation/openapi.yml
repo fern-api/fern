@@ -29,13 +29,11 @@ paths:
                   minimum: 1.1
                   maximum: 2.2
                   exclusiveMinimum: true
-                  exclusiveMaximum: false
                   multipleOf: 1.1
                 even:
                   type: integer
                   minimum: 0
                   maximum: 100
-                  exclusiveMinimum: false
                   exclusiveMaximum: true
                   multipleOf: 2
                 name:
@@ -66,7 +64,6 @@ paths:
             minimum: 1.1
             maximum: 2.2
             exclusiveMinimum: true
-            exclusiveMaximum: false
             multipleOf: 1.1
         - name: even
           in: query
@@ -75,7 +72,6 @@ paths:
             type: integer
             minimum: 0
             maximum: 100
-            exclusiveMinimum: false
             exclusiveMaximum: true
             multipleOf: 2
         - name: name
@@ -143,14 +139,12 @@ components:
           minimum: 1.1
           maximum: 2.2
           exclusiveMinimum: true
-          exclusiveMaximum: false
           multipleOf: 1.1
           example: 1.1
         even:
           type: integer
           minimum: 0
           maximum: 100
-          exclusiveMinimum: false
           exclusiveMaximum: true
           multipleOf: 2
           example: 2
