@@ -6742,8 +6742,8 @@ importers:
   packages/cli/library-docs-generator:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.145.4-0ea6e08bf
-        version: 0.145.4-0ea6e08bf(typescript@5.9.3)
+        specifier: 0.145.11-7874dfee3
+        version: 0.145.11-7874dfee3(typescript@5.9.3)
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
