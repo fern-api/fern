@@ -123,7 +123,19 @@ export function convertThemedColorConfig(
         )?.toRgb(),
         // NOTE: logo and backgroundImage filepaths need to be resolved in publishDocs.ts and not here.
         logo: undefined,
-        backgroundImage: undefined
+        backgroundImage: undefined,
+        accent1: undefined,
+        accent2: undefined,
+        accent3: undefined,
+        accent4: undefined,
+        accent5: undefined,
+        accent6: undefined,
+        accent7: undefined,
+        accent8: undefined,
+        accent9: undefined,
+        accent10: undefined,
+        accent11: undefined,
+        accent12: undefined
     };
 }
 
