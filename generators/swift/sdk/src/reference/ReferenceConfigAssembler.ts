@@ -71,7 +71,8 @@ export class ReferenceConfigAssembler {
                 const endpointMethodGenerator = new EndpointMethodGenerator({
                     parentClassSymbol: rootClientSymbol,
                     clientGeneratorContext,
-                    sdkGeneratorContext: this.context
+                    sdkGeneratorContext: this.context,
+                    service
                 });
                 const endpointMethod = endpointMethodGenerator.generateMethod(endpoint);
                 const firstExample = this.context.ir.dynamic?.endpoints[endpoint.id]?.examples?.[0];

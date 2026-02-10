@@ -373,14 +373,21 @@ class WebsocketConnectMethodGenerator:
                     handlers=[
                         AST.ExceptHandler(
                             exception_type=AST.Expression(
-                                AST.ReferenceNode(reference=Websockets.get_invalid_status_code_exception()),
+                                AST.ReferenceNode(
+                                    reference=self._context.core_utilities.get_reference_to_invalid_websocket_status()
+                                ),
                             ),
                             name="exc",
                             body=[
                                 AST.VariableDeclaration(
                                     name="status_code",
                                     type_hint=AST.TypeHint.int_(),
-                                    initializer=AST.Expression("exc.status_code"),
+                                    initializer=AST.Expression(
+                                        AST.FunctionInvocation(
+                                            function_definition=self._context.core_utilities.get_reference_to_get_status_code(),
+                                            args=[AST.Expression("exc")],
+                                        )
+                                    ),
                                 ),
                                 AST.ConditionalTree(
                                     conditions=[

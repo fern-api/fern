@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.47.1
+  changelogEntry:
+    - summary: |
+        Fix SSE stream terminator to be optional instead of defaulting to `"[DONE]"`. When no
+        `terminator` is specified in the Fern definition, the generated SDK no longer passes a
+        `streamTerminator` to the Stream constructor, allowing the stream to end only when the
+        connection closes.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.47.0
   changelogEntry:
     - summary: |

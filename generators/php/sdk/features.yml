@@ -10,8 +10,8 @@ features:
   - id: CUSTOM_CLIENT
     advanced: true
     description: |
-      This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
-      By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
+      This SDK is built to work with any HTTP client that implements the [PSR-18](https://www.php-fig.org/psr/psr-18/) `ClientInterface`.
+      By default, if no client is provided, the SDK will use `php-http/discovery` to find an installed HTTP client.
       However, you can pass your own client that adheres to `ClientInterface`:
 
   - id: PAGINATION
