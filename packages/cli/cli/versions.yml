@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.0
+  changelogEntry:
+    - summary: |
+        Adds support for customizing GraphQL API Reference layout (ordering, renaming operations, overriding slugs).
+      type: feat
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 3.70.3
+  changelogEntry:
+    - summary: |
+        Rename `resource` to `name` in the GraphQL spec schema for generators.yml configuration.
+      type: chore
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 3.70.2
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI V3 parser failing to resolve channel references that use JSON Pointer encoding. Channel paths containing forward slashes (e.g., `/api/v1/streaming-tts/stream`) are encoded as `~1api~1v1~1streaming-tts~1stream` in `$ref` values per RFC 6901. The parser now correctly decodes `~1` to `/` and `~0` to `~` when resolving channel and message references.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
 - version: 3.70.1
   changelogEntry:
     - summary: |

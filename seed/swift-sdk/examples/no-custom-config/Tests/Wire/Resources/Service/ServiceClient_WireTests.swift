@@ -405,18 +405,7 @@ import Examples
                     nodes: [
                         Node(
                             name: "name",
-                            nodes: [
-                                Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
-                                ),
-                                Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
-                                )
-                            ],
+                            nodes: [],
                             trees: [
                                 Tree(
                                     nodes: []
@@ -428,18 +417,7 @@ import Examples
                         ),
                         Node(
                             name: "name",
-                            nodes: [
-                                Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
-                                ),
-                                Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
-                                )
-                            ],
+                            nodes: [],
                             trees: [
                                 Tree(
                                     nodes: []
@@ -506,18 +484,7 @@ import Examples
                                     contents: "contents"
                                 )
                             ],
-                            directories: [
-                                Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
-                                ),
-                                Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
-                                )
-                            ]
+                            directories: []
                         ),
                         Directory(
                             name: "name",
@@ -531,18 +498,7 @@ import Examples
                                     contents: "contents"
                                 )
                             ],
-                            directories: [
-                                Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
-                                ),
-                                Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
-                                )
-                            ]
+                            directories: []
                         )
                     ]
                 ),

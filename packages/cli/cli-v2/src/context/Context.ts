@@ -5,7 +5,7 @@ import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { KeyringStore, TokenService } from "../auth/index.js";
+import { CredentialStore, TokenService } from "../auth/index.js";
 import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
 import { CliError } from "../errors/CliError.js";
 import { ValidationError } from "../errors/ValidationError.js";
@@ -43,9 +43,7 @@ export class Context {
         this.logFileWriter = new LogFileWriter();
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
-
-        const keyring = new KeyringStore();
-        this.tokenService = new TokenService({ keyring });
+        this.tokenService = new TokenService({ credential: new CredentialStore() });
     }
 
     public async loadWorkspaceOrThrow(): Promise<Workspace> {

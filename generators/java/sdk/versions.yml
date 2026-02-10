@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.34.9
+  changelogEntry:
+    - summary: |
+        Update container packages to fix 9 security vulnerabilities: openssl-fips-provider-latest
+        and openssl-libs (CVE-2025-15467), libtasn1 (CVE-2025-13151), libcap (CVE-2025-61726,
+        CVE-2025-61728, CVE-2025-61730, CVE-2025-61731, CVE-2025-68119, CVE-2025-68121),
+        python3-pip-wheel (CVE-2026-21441), libxml2 (CVE-2026-0989, CVE-2026-0990, CVE-2026-0992),
+        libpng (CVE-2026-22695, CVE-2026-22801), and unzip (CVE-2019-13232).
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.34.8
   changelogEntry:
     - summary: |

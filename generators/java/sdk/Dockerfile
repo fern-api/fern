@@ -29,7 +29,19 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # Amazon Linux 2023 uses dnf instead of apt-get
 # Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
 # need to update what's present and remove what we don't need
-RUN dnf update -y && \
+# Security update 2026-02-09: use --releasever=latest to get patches beyond the
+# base image's pinned repo snapshot (2023.10.20260120) for CVE-2025-15467,
+# CVE-2025-13151, CVE-2025-61726, CVE-2026-21441, CVE-2026-0990, CVE-2026-0992,
+# CVE-2026-0989, CVE-2026-22695, CVE-2026-22801, CVE-2019-13232
+RUN dnf --releasever=latest update -y \
+    openssl-fips-provider-latest \
+    openssl-libs \
+    libtasn1 \
+    libcap \
+    python3-pip-wheel \
+    libxml2 \
+    libpng \
+    unzip && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf

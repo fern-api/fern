@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.0
+  changelogEntry:
+    - summary: |
+        Set `Accept: text/event-stream` header for SSE streaming endpoints. The fetcher now
+        handles `responseType: "sse"` by setting the appropriate Accept header, matching the
+        behavior of the Go and Rust generators. Non-SSE streaming endpoints (JSON/text) continue
+        to use the default Accept header.
+      type: feat
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 3.47.1
   changelogEntry:
     - summary: |
@@ -39,7 +50,6 @@
       type: fix
   createdAt: "2026-01-30"
   irVersion: 63
-
 - version: 3.46.1
   changelogEntry:
     - summary: |

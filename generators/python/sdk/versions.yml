@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.3
+  changelogEntry:
+    - summary: |
+        Fix body property named `json` clashing with the `json` module import when generating
+        `json.dumps(jsonable_encoder(...))` for multipart file upload requests. The `json` module
+        is now aliased as `_json` when a body property named `json` is detected.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
 - version: 4.55.2
   changelogEntry:
     - summary: |
