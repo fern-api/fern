@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.1
+  changelogEntry:
+    - summary: |
+        Process x-fern-ignore flag from a referenced parameter object.
+      type: fix
+  createdAt: "2026-02-10"
+  irVersion: 65
+
 - version: 3.72.0
   changelogEntry:
     - summary: |
