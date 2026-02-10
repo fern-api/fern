@@ -2,7 +2,7 @@ from typing import List, Any
 
 from .typeddict_models.types.core.serialization import convert_and_respect_annotation_metadata
 from .typeddict_models.types import ShapeParams, ObjectWithOptionalFieldParams
-from .typeddict_models.types.resources.types.requests.circular_edit_json import EditJsonParams
+from .circular_type_a import CircularTypeA
 
 
 UNION_TEST: ShapeParams = {"radius_measurement": 1.0, "shape_type": "circle", "id": "1"}
@@ -72,28 +72,28 @@ def test_convert_and_respect_annotation_metadata_with_empty_object() -> None:
 
 
 def test_convert_and_respect_annotation_metadata_with_circular_typeddict() -> None:
-    data: EditJsonParams = {
+    data: CircularTypeA = {
         "description": "test",
-        "extend_edit_bbox": {"left": 1, "top": 2, "right": 3, "bottom": 4},
+        "alias_field": {"left": 1, "top": 2, "right": 3, "bottom": 4},
     }
     converted = convert_and_respect_annotation_metadata(
-        object_=data, annotation=EditJsonParams, direction="write"
+        object_=data, annotation=CircularTypeA, direction="write"
     )
     assert converted == {
         "description": "test",
-        "extend_edit:bbox": {"left": 1, "top": 2, "right": 3, "bottom": 4},
+        "alias:field": {"left": 1, "top": 2, "right": 3, "bottom": 4},
     }
 
 
 def test_convert_and_respect_annotation_metadata_with_circular_typeddict_read() -> None:
     data = {
         "description": "test",
-        "extend_edit:bbox": {"left": 1, "top": 2, "right": 3, "bottom": 4},
+        "alias:field": {"left": 1, "top": 2, "right": 3, "bottom": 4},
     }
     converted = convert_and_respect_annotation_metadata(
-        object_=data, annotation=EditJsonParams, direction="read"
+        object_=data, annotation=CircularTypeA, direction="read"
     )
     assert converted == {
         "description": "test",
-        "extend_edit_bbox": {"left": 1, "top": 2, "right": 3, "bottom": 4},
+        "alias_field": {"left": 1, "top": 2, "right": 3, "bottom": 4},
     }
