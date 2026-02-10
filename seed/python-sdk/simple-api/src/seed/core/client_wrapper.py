@@ -71,7 +71,7 @@ class SyncClientWrapper(BaseClientWrapper):
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
-            logging=self._logging,
+            logging_config=self._logging,
         )
 
 
@@ -95,7 +95,7 @@ class AsyncClientWrapper(BaseClientWrapper):
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
             async_base_headers=self.async_get_headers,
-            logging=self._logging,
+            logging_config=self._logging,
         )
 
     async def async_get_headers(self) -> typing.Dict[str, str]:

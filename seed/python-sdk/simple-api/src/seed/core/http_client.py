@@ -265,13 +265,13 @@ class HttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
-        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
         self.httpx_client = httpx_client
-        self.logger = create_logger(logging)
+        self.logger = create_logger(logging_config)
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
@@ -508,14 +508,14 @@ class AsyncHttpClient:
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
         async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
-        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
         self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
-        self.logger = create_logger(logging)
+        self.logger = create_logger(logging_config)
 
     async def _get_headers(self) -> typing.Dict[str, str]:
         if self.async_base_headers is not None:

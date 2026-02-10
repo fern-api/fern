@@ -9,6 +9,7 @@ from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
 from .http_client import AsyncHttpClient, HttpClient
 from .http_response import AsyncHttpResponse, HttpResponse
 from .jsonable_encoder import jsonable_encoder
+from .logging import LogConfig, LogLevel, Logger, create_logger
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
@@ -34,12 +35,16 @@ __all__ = [
     "HttpClient",
     "HttpResponse",
     "IS_PYDANTIC_V2",
+    "LogConfig",
+    "LogLevel",
+    "Logger",
     "RequestOptions",
     "SyncClientWrapper",
     "UniversalBaseModel",
     "UniversalRootModel",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
+    "create_logger",
     "encode_query",
     "jsonable_encoder",
     "parse_obj_as",
