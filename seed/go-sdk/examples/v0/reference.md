@@ -574,18 +574,7 @@ request := &fern.BigEntity{
             Nodes: []*fern.Node{
                 &fern.Node{
                     Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
+                    Nodes: []*fern.Node{},
                     Trees: []*fern.Tree{
                         &fern.Tree{
                             Nodes: []*fern.Node{},
@@ -597,18 +586,7 @@ request := &fern.BigEntity{
                 },
                 &fern.Node{
                     Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
+                    Nodes: []*fern.Node{},
                     Trees: []*fern.Tree{
                         &fern.Tree{
                             Nodes: []*fern.Node{},
@@ -675,18 +653,7 @@ request := &fern.BigEntity{
                             Contents: "contents",
                         },
                     },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                    },
+                    Directories: []*fern.Directory{},
                 },
                 &fern.Directory{
                     Name: "name",
@@ -700,18 +667,7 @@ request := &fern.BigEntity{
                             Contents: "contents",
                         },
                     },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                    },
+                    Directories: []*fern.Directory{},
                 },
             },
         },

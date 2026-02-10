@@ -559,6 +559,20 @@ func (i *InlineTypeRequest) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
+type WithJsonPropertyRequest struct {
+	Json *MyObject `json:"json,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WithJsonPropertyRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
 type LiteralEnumRequest struct {
 	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
 	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`
