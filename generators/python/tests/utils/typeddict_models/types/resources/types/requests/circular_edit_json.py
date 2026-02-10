@@ -3,10 +3,10 @@ from __future__ import annotations
 import typing
 import typing_extensions
 
-from .....core.serialization import FieldMetadata
+from ....core.serialization import FieldMetadata
 
 if typing.TYPE_CHECKING:
-    from .edit_object_json import EditObjectJsonParams
+    from .circular_edit_object_json import EditObjectJsonParams
 
 
 class EditJsonParams(typing_extensions.TypedDict):

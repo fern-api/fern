@@ -4,7 +4,7 @@ import typing
 import typing_extensions
 
 if typing.TYPE_CHECKING:
-    from .edit_json import EditJsonParams
+    from .circular_edit_json import EditJsonParams
 
 
 class EditObjectJsonParams(typing_extensions.TypedDict):

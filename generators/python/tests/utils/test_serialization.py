@@ -2,7 +2,7 @@ from typing import List, Any
 
 from .typeddict_models.types.core.serialization import convert_and_respect_annotation_metadata
 from .typeddict_models.types import ShapeParams, ObjectWithOptionalFieldParams
-from .typeddict_models.types.resources.types.requests.circular import EditJsonParams
+from .typeddict_models.types.resources.types.requests.circular_edit_json import EditJsonParams
 
 
 UNION_TEST: ShapeParams = {"radius_measurement": 1.0, "shape_type": "circle", "id": "1"}
