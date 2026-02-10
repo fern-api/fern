@@ -22,7 +22,7 @@ if typing.TYPE_CHECKING:
 
 class EndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._container: typing.Optional[ContainerClient] = None
         self._content_type: typing.Optional[ContentTypeClient] = None
@@ -44,7 +44,7 @@ class EndpointsClient:
         -------
         RawEndpointsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     @property
     def container(self):
@@ -129,7 +129,7 @@ class EndpointsClient:
 
 class AsyncEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._container: typing.Optional[AsyncContainerClient] = None
         self._content_type: typing.Optional[AsyncContentTypeClient] = None
@@ -151,7 +151,7 @@ class AsyncEndpointsClient:
         -------
         AsyncRawEndpointsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     @property
     def container(self):

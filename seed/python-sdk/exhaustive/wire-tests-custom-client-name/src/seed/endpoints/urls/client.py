@@ -9,7 +9,7 @@ from .raw_client import AsyncRawUrlsClient, RawUrlsClient
 
 class UrlsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawUrlsClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawUrlsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawUrlsClient:
@@ -20,7 +20,7 @@ class UrlsClient:
         -------
         RawUrlsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def with_mixed_case(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -43,7 +43,7 @@ class UrlsClient:
         )
         client.endpoints.urls.with_mixed_case()
         """
-        _response = self._raw_client.with_mixed_case(request_options=request_options)
+        _response = self.__raw_client.with_mixed_case(request_options=request_options)
         return _response.data
 
     def no_ending_slash(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -67,7 +67,7 @@ class UrlsClient:
         )
         client.endpoints.urls.no_ending_slash()
         """
-        _response = self._raw_client.no_ending_slash(request_options=request_options)
+        _response = self.__raw_client.no_ending_slash(request_options=request_options)
         return _response.data
 
     def with_ending_slash(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -91,7 +91,7 @@ class UrlsClient:
         )
         client.endpoints.urls.with_ending_slash()
         """
-        _response = self._raw_client.with_ending_slash(request_options=request_options)
+        _response = self.__raw_client.with_ending_slash(request_options=request_options)
         return _response.data
 
     def with_underscores(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -115,13 +115,13 @@ class UrlsClient:
         )
         client.endpoints.urls.with_underscores()
         """
-        _response = self._raw_client.with_underscores(request_options=request_options)
+        _response = self.__raw_client.with_underscores(request_options=request_options)
         return _response.data
 
 
 class AsyncUrlsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawUrlsClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawUrlsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawUrlsClient:
@@ -132,7 +132,7 @@ class AsyncUrlsClient:
         -------
         AsyncRawUrlsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def with_mixed_case(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -163,7 +163,7 @@ class AsyncUrlsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.with_mixed_case(request_options=request_options)
+        _response = await self.__raw_client.with_mixed_case(request_options=request_options)
         return _response.data
 
     async def no_ending_slash(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -195,7 +195,7 @@ class AsyncUrlsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.no_ending_slash(request_options=request_options)
+        _response = await self.__raw_client.no_ending_slash(request_options=request_options)
         return _response.data
 
     async def with_ending_slash(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -227,7 +227,7 @@ class AsyncUrlsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.with_ending_slash(request_options=request_options)
+        _response = await self.__raw_client.with_ending_slash(request_options=request_options)
         return _response.data
 
     async def with_underscores(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -259,5 +259,5 @@ class AsyncUrlsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.with_underscores(request_options=request_options)
+        _response = await self.__raw_client.with_underscores(request_options=request_options)
         return _response.data

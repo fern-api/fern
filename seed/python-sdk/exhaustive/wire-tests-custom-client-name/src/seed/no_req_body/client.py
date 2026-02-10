@@ -10,7 +10,7 @@ from .raw_client import AsyncRawNoReqBodyClient, RawNoReqBodyClient
 
 class NoReqBodyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawNoReqBodyClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawNoReqBodyClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawNoReqBodyClient:
@@ -21,7 +21,7 @@ class NoReqBodyClient:
         -------
         RawNoReqBodyClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_with_no_request_body(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -46,7 +46,7 @@ class NoReqBodyClient:
         )
         client.no_req_body.get_with_no_request_body()
         """
-        _response = self._raw_client.get_with_no_request_body(request_options=request_options)
+        _response = self.__raw_client.get_with_no_request_body(request_options=request_options)
         return _response.data
 
     def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -70,13 +70,13 @@ class NoReqBodyClient:
         )
         client.no_req_body.post_with_no_request_body()
         """
-        _response = self._raw_client.post_with_no_request_body(request_options=request_options)
+        _response = self.__raw_client.post_with_no_request_body(request_options=request_options)
         return _response.data
 
 
 class AsyncNoReqBodyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawNoReqBodyClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawNoReqBodyClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawNoReqBodyClient:
@@ -87,7 +87,7 @@ class AsyncNoReqBodyClient:
         -------
         AsyncRawNoReqBodyClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_with_no_request_body(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -120,7 +120,7 @@ class AsyncNoReqBodyClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_no_request_body(request_options=request_options)
+        _response = await self.__raw_client.get_with_no_request_body(request_options=request_options)
         return _response.data
 
     async def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -152,5 +152,5 @@ class AsyncNoReqBodyClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_with_no_request_body(request_options=request_options)
+        _response = await self.__raw_client.post_with_no_request_body(request_options=request_options)
         return _response.data

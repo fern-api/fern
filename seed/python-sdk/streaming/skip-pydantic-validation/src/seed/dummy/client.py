@@ -13,7 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class DummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawDummyClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawDummyClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawDummyClient:
@@ -24,7 +24,7 @@ class DummyClient:
         -------
         RawDummyClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def generate_stream(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -54,7 +54,7 @@ class DummyClient:
         for chunk in response:
             yield chunk
         """
-        with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
+        with self.__raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
             yield from r.data
 
     def generate(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> StreamResponse:
@@ -81,13 +81,13 @@ class DummyClient:
             num_events=5,
         )
         """
-        _response = self._raw_client.generate(num_events=num_events, request_options=request_options)
+        _response = self.__raw_client.generate(num_events=num_events, request_options=request_options)
         return _response.data
 
 
 class AsyncDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawDummyClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawDummyClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawDummyClient:
@@ -98,7 +98,7 @@ class AsyncDummyClient:
         -------
         AsyncRawDummyClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def generate_stream(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -136,7 +136,7 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
+        async with self.__raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 
@@ -174,5 +174,5 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.generate(num_events=num_events, request_options=request_options)
+        _response = await self.__raw_client.generate(num_events=num_events, request_options=request_options)
         return _response.data

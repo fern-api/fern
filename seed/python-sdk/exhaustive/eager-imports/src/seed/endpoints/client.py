@@ -16,7 +16,7 @@ from .urls.client import AsyncUrlsClient, UrlsClient
 
 class EndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self.container = ContainerClient(client_wrapper=self._client_wrapper)
         self.content_type = ContentTypeClient(client_wrapper=self._client_wrapper)
@@ -38,12 +38,12 @@ class EndpointsClient:
         -------
         RawEndpointsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
 
 class AsyncEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self.container = AsyncContainerClient(client_wrapper=self._client_wrapper)
         self.content_type = AsyncContentTypeClient(client_wrapper=self._client_wrapper)
@@ -65,4 +65,4 @@ class AsyncEndpointsClient:
         -------
         AsyncRawEndpointsClient
         """
-        return self._raw_client
+        return self.__raw_client

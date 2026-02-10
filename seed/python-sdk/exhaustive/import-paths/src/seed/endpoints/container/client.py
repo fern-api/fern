@@ -13,7 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ContainerClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawContainerClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawContainerClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawContainerClient:
@@ -24,7 +24,7 @@ class ContainerClient:
         -------
         RawContainerClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_and_return_list_of_primitives(
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
@@ -53,7 +53,9 @@ class ContainerClient:
             request=["string", "string"],
         )
         """
-        _response = self._raw_client.get_and_return_list_of_primitives(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_list_of_primitives(
+            request=request, request_options=request_options
+        )
         return _response.data
 
     def get_and_return_list_of_objects(
@@ -94,7 +96,7 @@ class ContainerClient:
             ],
         )
         """
-        _response = self._raw_client.get_and_return_list_of_objects(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_list_of_objects(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_set_of_primitives(
@@ -124,7 +126,7 @@ class ContainerClient:
             request={"string"},
         )
         """
-        _response = self._raw_client.get_and_return_set_of_primitives(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_set_of_primitives(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_set_of_objects(
@@ -162,7 +164,7 @@ class ContainerClient:
             ],
         )
         """
-        _response = self._raw_client.get_and_return_set_of_objects(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_set_of_objects(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_map_prim_to_prim(
@@ -192,7 +194,7 @@ class ContainerClient:
             request={"string": "string"},
         )
         """
-        _response = self._raw_client.get_and_return_map_prim_to_prim(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_map_prim_to_prim(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_map_of_prim_to_object(
@@ -230,7 +232,7 @@ class ContainerClient:
             },
         )
         """
-        _response = self._raw_client.get_and_return_map_of_prim_to_object(
+        _response = self.__raw_client.get_and_return_map_of_prim_to_object(
             request=request, request_options=request_options
         )
         return _response.data
@@ -268,13 +270,13 @@ class ContainerClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_optional(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_optional(request=request, request_options=request_options)
         return _response.data
 
 
 class AsyncContainerClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawContainerClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawContainerClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawContainerClient:
@@ -285,7 +287,7 @@ class AsyncContainerClient:
         -------
         AsyncRawContainerClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_and_return_list_of_primitives(
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
@@ -322,7 +324,7 @@ class AsyncContainerClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_list_of_primitives(
+        _response = await self.__raw_client.get_and_return_list_of_primitives(
             request=request, request_options=request_options
         )
         return _response.data
@@ -373,7 +375,7 @@ class AsyncContainerClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_list_of_objects(
+        _response = await self.__raw_client.get_and_return_list_of_objects(
             request=request, request_options=request_options
         )
         return _response.data
@@ -413,7 +415,7 @@ class AsyncContainerClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_set_of_primitives(
+        _response = await self.__raw_client.get_and_return_set_of_primitives(
             request=request, request_options=request_options
         )
         return _response.data
@@ -461,7 +463,7 @@ class AsyncContainerClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_set_of_objects(
+        _response = await self.__raw_client.get_and_return_set_of_objects(
             request=request, request_options=request_options
         )
         return _response.data
@@ -501,7 +503,7 @@ class AsyncContainerClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_map_prim_to_prim(
+        _response = await self.__raw_client.get_and_return_map_prim_to_prim(
             request=request, request_options=request_options
         )
         return _response.data
@@ -549,7 +551,7 @@ class AsyncContainerClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_map_of_prim_to_object(
+        _response = await self.__raw_client.get_and_return_map_of_prim_to_object(
             request=request, request_options=request_options
         )
         return _response.data
@@ -595,5 +597,5 @@ class AsyncContainerClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_optional(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_optional(request=request, request_options=request_options)
         return _response.data

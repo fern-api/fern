@@ -13,7 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class InlinedRequestsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawInlinedRequestsClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawInlinedRequestsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawInlinedRequestsClient:
@@ -24,7 +24,7 @@ class InlinedRequestsClient:
         -------
         RawInlinedRequestsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def post_with_object_bodyand_response(
         self,
@@ -90,7 +90,7 @@ class InlinedRequestsClient:
             ),
         )
         """
-        _response = self._raw_client.post_with_object_bodyand_response(
+        _response = self.__raw_client.post_with_object_bodyand_response(
             string=string, integer=integer, nested_object=nested_object, request_options=request_options
         )
         return _response.data
@@ -98,7 +98,7 @@ class InlinedRequestsClient:
 
 class AsyncInlinedRequestsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawInlinedRequestsClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawInlinedRequestsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawInlinedRequestsClient:
@@ -109,7 +109,7 @@ class AsyncInlinedRequestsClient:
         -------
         AsyncRawInlinedRequestsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def post_with_object_bodyand_response(
         self,
@@ -182,7 +182,7 @@ class AsyncInlinedRequestsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_with_object_bodyand_response(
+        _response = await self.__raw_client.post_with_object_bodyand_response(
             string=string, integer=integer, nested_object=nested_object, request_options=request_options
         )
         return _response.data

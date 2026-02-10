@@ -14,7 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class PrimitiveClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawPrimitiveClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawPrimitiveClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawPrimitiveClient:
@@ -25,7 +25,7 @@ class PrimitiveClient:
         -------
         RawPrimitiveClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_and_return_string(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -52,7 +52,7 @@ class PrimitiveClient:
             request="string",
         )
         """
-        _response = self._raw_client.get_and_return_string(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_string(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
@@ -80,7 +80,7 @@ class PrimitiveClient:
             request=1,
         )
         """
-        _response = self._raw_client.get_and_return_int(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_int(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_long(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
@@ -108,7 +108,7 @@ class PrimitiveClient:
             request=1000000,
         )
         """
-        _response = self._raw_client.get_and_return_long(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_long(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_double(
@@ -138,7 +138,7 @@ class PrimitiveClient:
             request=1.1,
         )
         """
-        _response = self._raw_client.get_and_return_double(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_double(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_bool(self, *, request: bool, request_options: typing.Optional[RequestOptions] = None) -> bool:
@@ -166,7 +166,7 @@ class PrimitiveClient:
             request=True,
         )
         """
-        _response = self._raw_client.get_and_return_bool(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_bool(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_datetime(
@@ -200,7 +200,7 @@ class PrimitiveClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_datetime(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_datetime(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_date(
@@ -234,7 +234,7 @@ class PrimitiveClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_date(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_date(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_uuid(
@@ -268,7 +268,7 @@ class PrimitiveClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_uuid(request=request, request_options=request_options)
         return _response.data
 
     def get_and_return_base_64(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -296,13 +296,13 @@ class PrimitiveClient:
             request="SGVsbG8gd29ybGQh",
         )
         """
-        _response = self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_base_64(request=request, request_options=request_options)
         return _response.data
 
 
 class AsyncPrimitiveClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawPrimitiveClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawPrimitiveClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawPrimitiveClient:
@@ -313,7 +313,7 @@ class AsyncPrimitiveClient:
         -------
         AsyncRawPrimitiveClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_and_return_string(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -350,7 +350,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_string(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_string(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
@@ -386,7 +386,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_int(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_int(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_long(
@@ -424,7 +424,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_long(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_long(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_double(
@@ -462,7 +462,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_double(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_double(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_bool(
@@ -500,7 +500,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_bool(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_bool(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_datetime(
@@ -541,7 +541,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_datetime(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_datetime(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_date(
@@ -582,7 +582,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_date(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_date(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_uuid(
@@ -623,7 +623,7 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_uuid(request=request, request_options=request_options)
         return _response.data
 
     async def get_and_return_base_64(
@@ -661,5 +661,5 @@ class AsyncPrimitiveClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_base_64(request=request, request_options=request_options)
         return _response.data

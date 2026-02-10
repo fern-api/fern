@@ -15,7 +15,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class HttpMethodsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawHttpMethodsClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawHttpMethodsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawHttpMethodsClient:
@@ -26,7 +26,7 @@ class HttpMethodsClient:
         -------
         RawHttpMethodsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def test_get(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -53,7 +53,7 @@ class HttpMethodsClient:
             id="id",
         )
         """
-        _response = self._raw_client.test_get(id=id, request_options=request_options)
+        _response = self.__raw_client.test_get(id=id, request_options=request_options)
         return _response.data
 
     def test_post(
@@ -83,7 +83,7 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        _response = self._raw_client.test_post(string=string, request_options=request_options)
+        _response = self.__raw_client.test_post(string=string, request_options=request_options)
         return _response.data
 
     def test_put(
@@ -116,7 +116,7 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        _response = self._raw_client.test_put(id=id, string=string, request_options=request_options)
+        _response = self.__raw_client.test_put(id=id, string=string, request_options=request_options)
         return _response.data
 
     def test_patch(
@@ -211,7 +211,7 @@ class HttpMethodsClient:
             bigint=1000000,
         )
         """
-        _response = self._raw_client.test_patch(
+        _response = self.__raw_client.test_patch(
             id=id,
             string=string,
             integer=integer,
@@ -255,13 +255,13 @@ class HttpMethodsClient:
             id="id",
         )
         """
-        _response = self._raw_client.test_delete(id=id, request_options=request_options)
+        _response = self.__raw_client.test_delete(id=id, request_options=request_options)
         return _response.data
 
 
 class AsyncHttpMethodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawHttpMethodsClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawHttpMethodsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawHttpMethodsClient:
@@ -272,7 +272,7 @@ class AsyncHttpMethodsClient:
         -------
         AsyncRawHttpMethodsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def test_get(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -307,7 +307,7 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.test_get(id=id, request_options=request_options)
+        _response = await self.__raw_client.test_get(id=id, request_options=request_options)
         return _response.data
 
     async def test_post(
@@ -345,7 +345,7 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.test_post(string=string, request_options=request_options)
+        _response = await self.__raw_client.test_post(string=string, request_options=request_options)
         return _response.data
 
     async def test_put(
@@ -386,7 +386,7 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.test_put(id=id, string=string, request_options=request_options)
+        _response = await self.__raw_client.test_put(id=id, string=string, request_options=request_options)
         return _response.data
 
     async def test_patch(
@@ -488,7 +488,7 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.test_patch(
+        _response = await self.__raw_client.test_patch(
             id=id,
             string=string,
             integer=integer,
@@ -540,5 +540,5 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.test_delete(id=id, request_options=request_options)
+        _response = await self.__raw_client.test_delete(id=id, request_options=request_options)
         return _response.data

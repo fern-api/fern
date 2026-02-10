@@ -14,7 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ContentTypeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawContentTypeClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawContentTypeClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawContentTypeClient:
@@ -25,7 +25,7 @@ class ContentTypeClient:
         -------
         RawContentTypeClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def post_json_patch_content_type(
         self,
@@ -115,7 +115,7 @@ class ContentTypeClient:
             bigint=1000000,
         )
         """
-        _response = self._raw_client.post_json_patch_content_type(
+        _response = self.__raw_client.post_json_patch_content_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -221,7 +221,7 @@ class ContentTypeClient:
             bigint=1000000,
         )
         """
-        _response = self._raw_client.post_json_patch_content_with_charset_type(
+        _response = self.__raw_client.post_json_patch_content_with_charset_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -242,7 +242,7 @@ class ContentTypeClient:
 
 class AsyncContentTypeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawContentTypeClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawContentTypeClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawContentTypeClient:
@@ -253,7 +253,7 @@ class AsyncContentTypeClient:
         -------
         AsyncRawContentTypeClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def post_json_patch_content_type(
         self,
@@ -350,7 +350,7 @@ class AsyncContentTypeClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_json_patch_content_type(
+        _response = await self.__raw_client.post_json_patch_content_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -463,7 +463,7 @@ class AsyncContentTypeClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_json_patch_content_with_charset_type(
+        _response = await self.__raw_client.post_json_patch_content_with_charset_type(
             string=string,
             integer=integer,
             long_=long_,

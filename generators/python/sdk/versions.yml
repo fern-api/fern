@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.4
+  changelogEntry:
+    - summary: |
+        Use Python name mangling for the internal `_raw_client` attribute (now `__raw_client`) on
+        generated wrapped clients. This prevents attribute collisions when combining root and
+        subpackage clients via multiple inheritance (e.g. `class ClientV2(V2Client, Client)`),
+        which previously caused wrapper methods to reference the wrong raw client instance.
+      type: fix
+  createdAt: "2026-02-10"
+  irVersion: 63
+
 - version: 4.55.3
   changelogEntry:
     - summary: |

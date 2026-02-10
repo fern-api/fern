@@ -12,7 +12,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class NoAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawNoAuthClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawNoAuthClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawNoAuthClient:
@@ -23,7 +23,7 @@ class NoAuthClient:
         -------
         RawNoAuthClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def post_with_no_auth(
         self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
@@ -54,13 +54,13 @@ class NoAuthClient:
             request={"key": "value"},
         )
         """
-        _response = self._raw_client.post_with_no_auth(request=request, request_options=request_options)
+        _response = self.__raw_client.post_with_no_auth(request=request, request_options=request_options)
         return _response.data
 
 
 class AsyncNoAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawNoAuthClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawNoAuthClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawNoAuthClient:
@@ -71,7 +71,7 @@ class AsyncNoAuthClient:
         -------
         AsyncRawNoAuthClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def post_with_no_auth(
         self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
@@ -110,5 +110,5 @@ class AsyncNoAuthClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_with_no_auth(request=request, request_options=request_options)
+        _response = await self.__raw_client.post_with_no_auth(request=request, request_options=request_options)
         return _response.data

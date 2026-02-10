@@ -12,7 +12,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ParamsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawParamsClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawParamsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawParamsClient:
@@ -23,7 +23,7 @@ class ParamsClient:
         -------
         RawParamsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_with_path(self, *, param: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -52,7 +52,7 @@ class ParamsClient:
             param="param",
         )
         """
-        _response = self._raw_client.get_with_path(param=param, request_options=request_options)
+        _response = self.__raw_client.get_with_path(param=param, request_options=request_options)
         return _response.data
 
     def get_with_inline_path(self, *, param: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -82,7 +82,7 @@ class ParamsClient:
             param="param",
         )
         """
-        _response = self._raw_client.get_with_inline_path(param=param, request_options=request_options)
+        _response = self.__raw_client.get_with_inline_path(param=param, request_options=request_options)
         return _response.data
 
     def get_with_query(
@@ -117,7 +117,7 @@ class ParamsClient:
             number=1,
         )
         """
-        _response = self._raw_client.get_with_query(query=query, number=number, request_options=request_options)
+        _response = self.__raw_client.get_with_query(query=query, number=number, request_options=request_options)
         return _response.data
 
     def get_with_allow_multiple_query(
@@ -156,7 +156,7 @@ class ParamsClient:
             number=1,
         )
         """
-        _response = self._raw_client.get_with_allow_multiple_query(
+        _response = self.__raw_client.get_with_allow_multiple_query(
             query=query, number=number, request_options=request_options
         )
         return _response.data
@@ -193,7 +193,7 @@ class ParamsClient:
             query="query",
         )
         """
-        _response = self._raw_client.get_with_path_and_query(param=param, query=query, request_options=request_options)
+        _response = self.__raw_client.get_with_path_and_query(param=param, query=query, request_options=request_options)
         return _response.data
 
     def get_with_inline_path_and_query(
@@ -228,7 +228,7 @@ class ParamsClient:
             query="query",
         )
         """
-        _response = self._raw_client.get_with_inline_path_and_query(
+        _response = self.__raw_client.get_with_inline_path_and_query(
             param=param, query=query, request_options=request_options
         )
         return _response.data
@@ -265,7 +265,7 @@ class ParamsClient:
             request="string",
         )
         """
-        _response = self._raw_client.modify_with_path(param=param, request=request, request_options=request_options)
+        _response = self.__raw_client.modify_with_path(param=param, request=request, request_options=request_options)
         return _response.data
 
     def modify_with_inline_path(
@@ -300,7 +300,7 @@ class ParamsClient:
             request="string",
         )
         """
-        _response = self._raw_client.modify_with_inline_path(
+        _response = self.__raw_client.modify_with_inline_path(
             param=param, request=request, request_options=request_options
         )
         return _response.data
@@ -308,7 +308,7 @@ class ParamsClient:
 
 class AsyncParamsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawParamsClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawParamsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawParamsClient:
@@ -319,7 +319,7 @@ class AsyncParamsClient:
         -------
         AsyncRawParamsClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_with_path(self, *, param: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -356,7 +356,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_path(param=param, request_options=request_options)
+        _response = await self.__raw_client.get_with_path(param=param, request_options=request_options)
         return _response.data
 
     async def get_with_inline_path(self, *, param: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -394,7 +394,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_inline_path(param=param, request_options=request_options)
+        _response = await self.__raw_client.get_with_inline_path(param=param, request_options=request_options)
         return _response.data
 
     async def get_with_query(
@@ -437,7 +437,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_query(query=query, number=number, request_options=request_options)
+        _response = await self.__raw_client.get_with_query(query=query, number=number, request_options=request_options)
         return _response.data
 
     async def get_with_allow_multiple_query(
@@ -484,7 +484,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_allow_multiple_query(
+        _response = await self.__raw_client.get_with_allow_multiple_query(
             query=query, number=number, request_options=request_options
         )
         return _response.data
@@ -529,7 +529,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_path_and_query(
+        _response = await self.__raw_client.get_with_path_and_query(
             param=param, query=query, request_options=request_options
         )
         return _response.data
@@ -574,7 +574,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_inline_path_and_query(
+        _response = await self.__raw_client.get_with_inline_path_and_query(
             param=param, query=query, request_options=request_options
         )
         return _response.data
@@ -619,7 +619,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.modify_with_path(
+        _response = await self.__raw_client.modify_with_path(
             param=param, request=request, request_options=request_options
         )
         return _response.data
@@ -664,7 +664,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.modify_with_inline_path(
+        _response = await self.__raw_client.modify_with_inline_path(
             param=param, request=request, request_options=request_options
         )
         return _response.data

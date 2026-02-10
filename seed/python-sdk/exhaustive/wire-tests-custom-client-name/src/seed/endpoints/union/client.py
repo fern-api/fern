@@ -13,7 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class UnionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawUnionClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawUnionClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawUnionClient:
@@ -24,7 +24,7 @@ class UnionClient:
         -------
         RawUnionClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_and_return_union(
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
@@ -57,13 +57,13 @@ class UnionClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_union(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_union(request=request, request_options=request_options)
         return _response.data
 
 
 class AsyncUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawUnionClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawUnionClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawUnionClient:
@@ -74,7 +74,7 @@ class AsyncUnionClient:
         -------
         AsyncRawUnionClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_and_return_union(
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
@@ -115,5 +115,5 @@ class AsyncUnionClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_union(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_union(request=request, request_options=request_options)
         return _response.data

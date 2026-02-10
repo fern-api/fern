@@ -10,7 +10,7 @@ from .types.put_response import PutResponse
 
 class PutClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawPutClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawPutClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawPutClient:
@@ -21,7 +21,7 @@ class PutClient:
         -------
         RawPutClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PutResponse:
         """
@@ -48,13 +48,13 @@ class PutClient:
             id="id",
         )
         """
-        _response = self._raw_client.add(id, request_options=request_options)
+        _response = self.__raw_client.add(id, request_options=request_options)
         return _response.data
 
 
 class AsyncPutClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawPutClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawPutClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawPutClient:
@@ -65,7 +65,7 @@ class AsyncPutClient:
         -------
         AsyncRawPutClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PutResponse:
         """
@@ -100,5 +100,5 @@ class AsyncPutClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.add(id, request_options=request_options)
+        _response = await self.__raw_client.add(id, request_options=request_options)
         return _response.data

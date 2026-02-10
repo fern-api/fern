@@ -13,7 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class EnumClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawEnumClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawEnumClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawEnumClient:
@@ -24,7 +24,7 @@ class EnumClient:
         -------
         RawEnumClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_and_return_enum(
         self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
@@ -53,13 +53,13 @@ class EnumClient:
             request="SUNNY",
         )
         """
-        _response = self._raw_client.get_and_return_enum(request=request, request_options=request_options)
+        _response = self.__raw_client.get_and_return_enum(request=request, request_options=request_options)
         return _response.data
 
 
 class AsyncEnumClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawEnumClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawEnumClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawEnumClient:
@@ -70,7 +70,7 @@ class AsyncEnumClient:
         -------
         AsyncRawEnumClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_and_return_enum(
         self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
@@ -107,5 +107,5 @@ class AsyncEnumClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_enum(request=request, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_enum(request=request, request_options=request_options)
         return _response.data

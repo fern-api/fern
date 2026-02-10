@@ -158,7 +158,7 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         )
 
     def _get_raw_client_member_name(self) -> str:
-        return "_raw_client"
+        return "__raw_client"
 
     def _get_client_wrapper_member_name(self) -> str:
         return "_client_wrapper"

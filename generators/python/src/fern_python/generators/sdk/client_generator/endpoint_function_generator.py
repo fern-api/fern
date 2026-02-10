@@ -1684,12 +1684,14 @@ class EndpointFunctionGenerator:
             [f"{param.name}={param.name}" for param in function.signature.named_parameters if param.name != "self"]
         )
 
+        raw_client_member = self._client_wrapper_member_name.rsplit(".", 1)[0]
+
         def write_method_body(writer: AST.NodeWriter) -> None:
             raw_client_method_name = get_endpoint_name(self._endpoint)
             func_invocation_expr = AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
-                        qualified_name_excluding_import=(f"self._raw_client.{raw_client_method_name}",),
+                        qualified_name_excluding_import=(f"self.{raw_client_member}.{raw_client_method_name}",),
                     ),
                     args=[AST.Expression(param) for param in parameters],
                 )

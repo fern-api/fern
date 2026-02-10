@@ -12,7 +12,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ReqWithHeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawReqWithHeadersClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawReqWithHeadersClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawReqWithHeadersClient:
@@ -23,7 +23,7 @@ class ReqWithHeadersClient:
         -------
         RawReqWithHeadersClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_with_custom_header(
         self,
@@ -63,7 +63,7 @@ class ReqWithHeadersClient:
             request="string",
         )
         """
-        _response = self._raw_client.get_with_custom_header(
+        _response = self.__raw_client.get_with_custom_header(
             x_test_service_header=x_test_service_header,
             x_test_endpoint_header=x_test_endpoint_header,
             request=request,
@@ -74,7 +74,7 @@ class ReqWithHeadersClient:
 
 class AsyncReqWithHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawReqWithHeadersClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawReqWithHeadersClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawReqWithHeadersClient:
@@ -85,7 +85,7 @@ class AsyncReqWithHeadersClient:
         -------
         AsyncRawReqWithHeadersClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_with_custom_header(
         self,
@@ -133,7 +133,7 @@ class AsyncReqWithHeadersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_custom_header(
+        _response = await self.__raw_client.get_with_custom_header(
             x_test_service_header=x_test_service_header,
             x_test_endpoint_header=x_test_endpoint_header,
             request=request,

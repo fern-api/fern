@@ -20,7 +20,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ObjectClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawObjectClient(client_wrapper=client_wrapper)
+        self.__raw_client = RawObjectClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawObjectClient:
@@ -31,7 +31,7 @@ class ObjectClient:
         -------
         RawObjectClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     def get_and_return_with_optional_field(
         self,
@@ -121,7 +121,7 @@ class ObjectClient:
             bigint=1000000,
         )
         """
-        _response = self._raw_client.get_and_return_with_optional_field(
+        _response = self.__raw_client.get_and_return_with_optional_field(
             string=string,
             integer=integer,
             long_=long_,
@@ -166,7 +166,7 @@ class ObjectClient:
             string="string",
         )
         """
-        _response = self._raw_client.get_and_return_with_required_field(string=string, request_options=request_options)
+        _response = self.__raw_client.get_and_return_with_required_field(string=string, request_options=request_options)
         return _response.data
 
     def get_and_return_with_map_of_map(
@@ -196,7 +196,7 @@ class ObjectClient:
             map_={"map": {"map": "map"}},
         )
         """
-        _response = self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
+        _response = self.__raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
         return _response.data
 
     def get_and_return_nested_with_optional_field(
@@ -257,7 +257,7 @@ class ObjectClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_nested_with_optional_field(
+        _response = self.__raw_client.get_and_return_nested_with_optional_field(
             string=string, nested_object=nested_object, request_options=request_options
         )
         return _response.data
@@ -324,7 +324,7 @@ class ObjectClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_nested_with_required_field(
+        _response = self.__raw_client.get_and_return_nested_with_required_field(
             string_, string=string, nested_object=nested_object, request_options=request_options
         )
         return _response.data
@@ -415,7 +415,7 @@ class ObjectClient:
             ],
         )
         """
-        _response = self._raw_client.get_and_return_nested_with_required_field_as_list(
+        _response = self.__raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
         )
         return _response.data
@@ -464,7 +464,7 @@ class ObjectClient:
             ),
         )
         """
-        _response = self._raw_client.get_and_return_with_datetime_like_string(
+        _response = self.__raw_client.get_and_return_with_datetime_like_string(
             datetime_like_string=datetime_like_string, actual_datetime=actual_datetime, request_options=request_options
         )
         return _response.data
@@ -472,7 +472,7 @@ class ObjectClient:
 
 class AsyncObjectClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawObjectClient(client_wrapper=client_wrapper)
+        self.__raw_client = AsyncRawObjectClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawObjectClient:
@@ -483,7 +483,7 @@ class AsyncObjectClient:
         -------
         AsyncRawObjectClient
         """
-        return self._raw_client
+        return self.__raw_client
 
     async def get_and_return_with_optional_field(
         self,
@@ -580,7 +580,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_with_optional_field(
+        _response = await self.__raw_client.get_and_return_with_optional_field(
             string=string,
             integer=integer,
             long_=long_,
@@ -633,7 +633,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_with_required_field(
+        _response = await self.__raw_client.get_and_return_with_required_field(
             string=string, request_options=request_options
         )
         return _response.data
@@ -673,7 +673,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
+        _response = await self.__raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
         return _response.data
 
     async def get_and_return_nested_with_optional_field(
@@ -741,7 +741,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_nested_with_optional_field(
+        _response = await self.__raw_client.get_and_return_nested_with_optional_field(
             string=string, nested_object=nested_object, request_options=request_options
         )
         return _response.data
@@ -815,7 +815,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_nested_with_required_field(
+        _response = await self.__raw_client.get_and_return_nested_with_required_field(
             string_, string=string, nested_object=nested_object, request_options=request_options
         )
         return _response.data
@@ -913,7 +913,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
+        _response = await self.__raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
         )
         return _response.data
@@ -969,7 +969,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_with_datetime_like_string(
+        _response = await self.__raw_client.get_and_return_with_datetime_like_string(
             datetime_like_string=datetime_like_string, actual_datetime=actual_datetime, request_options=request_options
         )
         return _response.data
