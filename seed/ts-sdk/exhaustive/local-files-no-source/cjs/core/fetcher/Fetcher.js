@@ -156,7 +156,13 @@ function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         const newHeaders = new Headers_js_1.Headers();
-        newHeaders.set("Accept", args.responseType === "json" ? "application/json" : args.responseType === "text" ? "text/plain" : "*/*");
+        newHeaders.set("Accept", args.responseType === "json"
+            ? "application/json"
+            : args.responseType === "text"
+                ? "text/plain"
+                : args.responseType === "sse"
+                    ? "text/event-stream"
+                    : "*/*");
         if (args.body !== undefined && args.contentType != null) {
             newHeaders.set("Content-Type", args.contentType);
         }
