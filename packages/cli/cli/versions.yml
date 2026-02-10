@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.2
+  changelogEntry:
+    - summary: |
+        Add accent scale color override support (accent-1 through accent-12) to docs configuration. Fixes compatibility with updated fdr-sdk.
+      type: feat
+  createdAt: "2026-02-10"
+  irVersion: 65
+
 - version: 3.72.1
   changelogEntry:
     - summary: |
