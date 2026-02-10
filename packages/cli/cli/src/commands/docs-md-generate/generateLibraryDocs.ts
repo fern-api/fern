@@ -170,7 +170,16 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
                 );
             }
 
-            const ir = await irFetchResponse.json();
+            // The Lambda stores the IR wrapped in { ir: { rootModule: ... } }
+            const irWrapper = await irFetchResponse.json();
+            const ir = irWrapper.ir;
+
+            if (ir == null) {
+                return context.failAndThrow(`IR is empty for library '${name}'`);
+            }
+            if (ir.rootModule == null) {
+                return context.failAndThrow(`IR has no rootModule for library '${name}'`);
+            }
 
             // 4. Generate MDX files + _navigation.yml
             context.logger.info("Generating MDX files...");
