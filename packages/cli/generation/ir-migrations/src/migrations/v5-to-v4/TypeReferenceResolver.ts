@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { IrVersions } from "../../ir-versions";
-import { convertContainerType } from "./convertContainerType";
-import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
+import { IrVersions } from "../../ir-versions/index.js";
+import { convertContainerType } from "./convertContainerType.js";
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName.js";
 
 export interface TypeReferenceResolver {
     resolveTypeReference: (

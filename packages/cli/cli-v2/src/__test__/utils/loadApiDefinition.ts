@@ -1,10 +1,10 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { join } from "path";
-import { ApiDefinition } from "../../api/config/ApiDefinition";
-import { loadFernYml } from "../../config/fern-yml/loadFernYml";
-import { WorkspaceLoader } from "../../workspace/WorkspaceLoader";
-import { FIXTURES_DIR } from "./constants";
+import { ApiDefinition } from "../../api/config/ApiDefinition.js";
+import { loadFernYml } from "../../config/fern-yml/loadFernYml.js";
+import { WorkspaceLoader } from "../../workspace/WorkspaceLoader.js";
+import { FIXTURES_DIR } from "./constants.js";
 /**
  * Loads an workspace from a fixture directory and returns the ApiDefinition.
  */

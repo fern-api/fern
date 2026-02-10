@@ -1,4 +1,4 @@
-import type { TaskGroup } from "./TaskGroup";
+import type { TaskGroup } from "./TaskGroup.js";
 
 /**
  * Controls a single task stage's status.

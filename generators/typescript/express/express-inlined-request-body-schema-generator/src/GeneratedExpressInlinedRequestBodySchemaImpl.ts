@@ -1,4 +1,4 @@
-import { HttpEndpoint, InlinedRequestBody } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressInlinedRequestBodySchema } from "@fern-typescript/contexts";
@@ -7,8 +7,8 @@ import { ModuleDeclaration, ts } from "ts-morph";
 export declare namespace GeneratedExpressInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
-        inlinedRequestBody: InlinedRequestBody;
+        endpoint: FernIr.HttpEndpoint;
+        inlinedRequestBody: FernIr.InlinedRequestBody;
         includeSerdeLayer: boolean;
         skipRequestValidation: boolean;
     }
@@ -19,8 +19,8 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     implements GeneratedExpressInlinedRequestBodySchema
 {
     private packageId: PackageId;
-    private endpoint: HttpEndpoint;
-    private inlinedRequestBody: InlinedRequestBody;
+    private endpoint: FernIr.HttpEndpoint;
+    private inlinedRequestBody: FernIr.InlinedRequestBody;
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
 

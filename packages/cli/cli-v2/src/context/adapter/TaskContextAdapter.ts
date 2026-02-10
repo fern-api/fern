@@ -8,9 +8,9 @@ import type {
     TaskContext
 } from "@fern-api/task-context";
 import { FernCliError, TaskResult } from "@fern-api/task-context";
-import type { Task } from "../../ui/Task";
-import type { Context } from "../Context";
-import { TaskContextLogger } from "./TaskContextLogger";
+import type { Task } from "../../ui/Task.js";
+import type { Context } from "../Context.js";
+import { TaskContextLogger } from "./TaskContextLogger.js";
 
 /**
  * Adapts the CLI context to the legacy TaskContext interface.

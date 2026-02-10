@@ -421,6 +421,31 @@ class ServiceClient:
         _response = self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
         return _response.data
 
+    def with_json_property(
+        self,
+        *,
+        file: core.File,
+        json: typing.Optional[MyObjectParams] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        json : typing.Optional[MyObjectParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
+        return _response.data
+
     def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
@@ -899,6 +924,31 @@ class AsyncServiceClient:
         str
         """
         _response = await self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
+        return _response.data
+
+    async def with_json_property(
+        self,
+        *,
+        file: core.File,
+        json: typing.Optional[MyObjectParams] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        json : typing.Optional[MyObjectParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = await self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
         return _response.data
 
     async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:

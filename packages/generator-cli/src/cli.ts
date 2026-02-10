@@ -4,12 +4,11 @@ import { mkdir, readFile } from "fs/promises";
 import path from "path";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-
-import { generateReadmeToStream, generateReferenceToStream, githubPr, githubPush } from "./api";
-import { githubRelease } from "./api/github-release";
-import { loadGitHubConfig } from "./configuration/loadGitHubConfig";
-import { loadReadmeConfig } from "./configuration/loadReadmeConfig";
-import { loadReferenceConfig } from "./configuration/loadReferenceConfig";
+import { githubRelease } from "./api/github-release.js";
+import { generateReadmeToStream, generateReferenceToStream, githubPr, githubPush } from "./api.js";
+import { loadGitHubConfig } from "./configuration/loadGitHubConfig.js";
+import { loadReadmeConfig } from "./configuration/loadReadmeConfig.js";
+import { loadReferenceConfig } from "./configuration/loadReferenceConfig.js";
 
 void yargs(hideBin(process.argv))
     // eslint-disable-next-line turbo/no-undeclared-env-vars

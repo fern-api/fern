@@ -1,12 +1,16 @@
 import { GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
-import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator";
-import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
-import { RawClient } from "./http/RawClient";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator.js";
+import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator.js";
+import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator.js";
+import { RawClient } from "./http/RawClient.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
 export class EndpointGenerator extends AbstractEndpointGenerator {
     private http: HttpEndpointGenerator;

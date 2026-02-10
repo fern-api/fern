@@ -1,6 +1,6 @@
-import { AbstractExtension } from "../AbstractExtension";
-import { FernEnumConfigSchema } from "../schemas/EnumSchema";
-import { FernEnumConfig } from "../types/FernEnumConfig";
+import { AbstractExtension } from "../AbstractExtension.js";
+import { FernEnumConfigSchema } from "../schemas/EnumSchema.js";
+import { FernEnumConfig } from "../types/FernEnumConfig.js";
 
 export declare namespace FernEnumExtension {
     export interface Args extends AbstractExtension.Args {

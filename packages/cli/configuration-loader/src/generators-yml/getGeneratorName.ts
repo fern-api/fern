@@ -1,6 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
 
-import { GeneratorName } from "./GeneratorName";
+import { GeneratorName } from "./GeneratorName.js";
 
 export const DEFAULT_DOCKER_ORG = "fernapi";
 

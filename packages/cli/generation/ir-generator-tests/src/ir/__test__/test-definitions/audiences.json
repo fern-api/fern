@@ -4552,6 +4552,9 @@
                         }
                     },
                     "url": "https://api.example.a.com",
+                    "audiences": [
+                        "public"
+                    ],
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,
@@ -4579,6 +4582,9 @@
                         }
                     },
                     "url": "https://api.example.b.com",
+                    "audiences": [
+                        "private"
+                    ],
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,

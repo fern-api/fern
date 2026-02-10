@@ -1,4 +1,4 @@
-import { Expression } from "./Expression";
+import { Expression } from "./Expression.js";
 
 export declare namespace RaiseException {
     export type Init = Omit<Expression, "leftSide" | "isAssignment">;

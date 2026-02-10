@@ -21,15 +21,15 @@ import {
 } from "@fern-api/ir-sdk";
 import { IdGenerator, isReferencedWebhookPayloadSchema } from "@fern-api/ir-utils";
 
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { parseTypeName } from "../utils/parseTypeName";
-import { convertAvailability } from "./convertDeclaration";
-import { convertHttpHeader } from "./services/convertHttpService";
-import { getObjectPropertyFromResolvedType } from "./services/getObjectPropertyFromResolvedType";
-import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
-import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
+import { FernFileContext } from "../FernFileContext.js";
+import { ExampleResolver } from "../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { parseTypeName } from "../utils/parseTypeName.js";
+import { convertAvailability } from "./convertDeclaration.js";
+import { convertHttpHeader } from "./services/convertHttpService.js";
+import { getObjectPropertyFromResolvedType } from "./services/getObjectPropertyFromResolvedType.js";
+import { convertTypeReferenceExample } from "./type-declarations/convertExampleType.js";
+import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration.js";
 
 export function convertWebhookGroup({
     webhooks,

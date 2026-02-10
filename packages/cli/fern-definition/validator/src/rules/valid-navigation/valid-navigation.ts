@@ -4,7 +4,7 @@ import { keys } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import path from "path";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ValidNavigationRule: Rule = {
     name: "valid-navigation",

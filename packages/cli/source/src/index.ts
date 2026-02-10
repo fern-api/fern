@@ -1,7 +1,7 @@
-export { createSourcedArray } from "./createSourcedArray";
-export { createSourcedObject } from "./createSourcedObject";
-export { isNullish } from "./isNullish";
-export { type Locatable } from "./Locatable";
+export { createSourcedArray } from "./createSourcedArray.js";
+export { createSourcedObject } from "./createSourcedObject.js";
+export { isNullish } from "./isNullish.js";
+export { type Locatable } from "./Locatable.js";
 export {
     type Sourced,
     type SourcedArray,
@@ -10,6 +10,6 @@ export {
     SourcedNumber,
     type SourcedObject,
     SourcedString
-} from "./Sourced";
-export { SourceLocation } from "./SourceLocation";
-export { type SourceNodeWrapper } from "./SourceNodeWrapper";
+} from "./Sourced.js";
+export { SourceLocation } from "./SourceLocation.js";
+export { type SourceNodeWrapper } from "./SourceNodeWrapper.js";

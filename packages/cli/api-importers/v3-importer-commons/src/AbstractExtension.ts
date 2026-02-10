@@ -1,4 +1,4 @@
-import { AbstractConverterContext } from "./AbstractConverterContext";
+import { AbstractConverterContext } from "./AbstractConverterContext.js";
 
 export declare namespace AbstractExtension {
     export interface Args {

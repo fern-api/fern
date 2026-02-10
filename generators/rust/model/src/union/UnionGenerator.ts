@@ -1,9 +1,9 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
-import { SingleUnionType, TypeDeclaration, TypeReference, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import {
     getInnerTypeFromOptional,
     isCollectionType,
@@ -17,18 +17,18 @@ import {
     namedTypeSupportsPartialEq,
     typeSupportsHashAndEq,
     typeSupportsPartialEq
-} from "../utils/primitiveTypeUtils";
-import { isFieldRecursive } from "../utils/recursiveTypeUtils";
-import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils";
+} from "../utils/primitiveTypeUtils.js";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
+import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils.js";
 
 export class UnionGenerator {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly unionTypeDeclaration: UnionTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly unionTypeDeclaration: FernIr.UnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
     public constructor(
-        typeDeclaration: TypeDeclaration,
-        unionTypeDeclaration: UnionTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration,
+        unionTypeDeclaration: FernIr.UnionTypeDeclaration,
         context: ModelGeneratorContext
     ) {
         this.typeDeclaration = typeDeclaration;
@@ -227,7 +227,7 @@ export class UnionGenerator {
         return isNamedTypeSupportsHashAndEq && isTypeSupportsHashAndEq;
     }
 
-    private generateUnionVariant(writer: rust.Writer, unionType: SingleUnionType): void {
+    private generateUnionVariant(writer: rust.Writer, unionType: FernIr.SingleUnionType): void {
         const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
         const variantName = this.context.escapeRustReservedType(rawVariantName); // Escape reserved types with r#
         const discriminantValue = unionType.discriminantValue.wireValue;
@@ -334,7 +334,7 @@ export class UnionGenerator {
         });
     }
 
-    private generateVariantAttributes(unionType: SingleUnionType, escapedVariantName: string): rust.Attribute[] {
+    private generateVariantAttributes(unionType: FernIr.SingleUnionType, escapedVariantName: string): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
         const discriminantValue = unionType.discriminantValue.wireValue;
         const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
@@ -452,7 +452,7 @@ export class UnionGenerator {
         return this.hasFieldsOfType(isUnknownType);
     }
 
-    private hasFieldsOfType(predicate: (typeRef: TypeReference) => boolean): boolean {
+    private hasFieldsOfType(predicate: (typeRef: FernIr.TypeReference) => boolean): boolean {
         // Check base properties
         if (this.unionTypeDeclaration.baseProperties.some((prop) => predicate(prop.valueType))) {
             return true;

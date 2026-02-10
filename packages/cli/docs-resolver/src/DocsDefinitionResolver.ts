@@ -24,15 +24,14 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { camelCase, kebabCase } from "lodash-es";
-import { Target } from "../../configuration/src/docs-yml/schemas";
-import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
-import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
-import { NodeIdGenerator } from "./NodeIdGenerator";
-import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
-import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
-import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
-import { visitNavigationAst } from "./visitNavigationAst";
-import { wrapWithHttps } from "./wrapWithHttps";
+import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
+import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
+import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
+import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { visitNavigationAst } from "./visitNavigationAst.js";
+import { wrapWithHttps } from "./wrapWithHttps.js";
 
 dayjs.extend(utc);
 
@@ -1529,34 +1528,34 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
-        // Get pre-processed GraphQL data from workspaces and build namespace mapping
+        // Process GraphQL specs directly (not relying on workspace pre-processing)
         for (const ossWorkspace of this.ossWorkspaces) {
-            // Merge processed GraphQL data from workspace
-            Object.assign(graphqlOperations, ossWorkspace.getGraphqlOperations());
-            Object.assign(graphqlTypes, ossWorkspace.getGraphqlTypes());
-
-            // Build namespace mapping by processing individual specs
             const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
-            for (const spec of graphqlSpecs) {
-                if (spec.namespace != null) {
-                    try {
-                        // Process each spec individually to map operations to namespaces
-                        const converter = new GraphQLConverter({
-                            context: this.taskContext,
-                            filePath: spec.absoluteFilepath
-                        });
-                        const graphqlResult = await converter.convert();
 
-                        // Map operations from this spec to its namespace
+            for (const spec of graphqlSpecs) {
+                try {
+                    const converter = new GraphQLConverter({
+                        context: this.taskContext,
+                        filePath: spec.absoluteFilepath,
+                        namespace: spec.namespace
+                    });
+                    const graphqlResult = await converter.convert();
+
+                    // GraphQL converter handles namespacing internally - just merge the results
+                    Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
+                    Object.assign(graphqlTypes, graphqlResult.types);
+
+                    // Track namespaces for operations if namespace exists
+                    if (spec.namespace) {
                         for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
                             namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
                         }
-                    } catch (error) {
-                        this.taskContext.logger.error(
-                            `Failed to process GraphQL spec for namespace mapping ${spec.absoluteFilepath}:`,
-                            String(error)
-                        );
                     }
+                } catch (error) {
+                    this.taskContext.logger.error(
+                        `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                        String(error)
+                    );
                 }
             }
         }
@@ -1752,7 +1751,7 @@ export class DocsDefinitionResolver {
     private async toTabLinkNode(
         item: docsYml.TabbedNavigation,
         href: string,
-        target?: Target
+        target?: docsYml.RawSchemas.Target
     ): Promise<FernNavigation.V1.LinkNode> {
         return {
             type: "link",

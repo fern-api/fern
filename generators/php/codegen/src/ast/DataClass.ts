@@ -1,15 +1,15 @@
-import { php } from "..";
-import { Access, ClassReference } from "../php";
-import { Class } from "./Class";
-import { CodeBlock } from "./CodeBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Field } from "./Field";
-import { Method } from "./Method";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
-import { convertFromPhpVariableName } from "./utils/convertFromPhpVariableName";
-import { orderByAccess } from "./utils/orderByAccess";
+import { php } from "../index.js";
+import { Access, ClassReference } from "../php.js";
+import { Class } from "./Class.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Field } from "./Field.js";
+import { Method } from "./Method.js";
+import { Parameter } from "./Parameter.js";
+import { Type } from "./Type.js";
+import { convertFromPhpVariableName } from "./utils/convertFromPhpVariableName.js";
+import { orderByAccess } from "./utils/orderByAccess.js";
 
 const CONSTRUCTOR_PARAMETER_NAME = "values";
 

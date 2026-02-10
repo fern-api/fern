@@ -2,26 +2,17 @@ import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, FileLocation, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    FileProperty,
-    HttpEndpoint,
-    InlinedRequestBodyProperty,
-    Name,
-    QueryParameter,
-    SdkRequestWrapper,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace WrappedEndpointRequestGenerator {
     export interface Args {
-        serviceId: ServiceId;
-        wrapper: SdkRequestWrapper;
+        serviceId: FernIr.ServiceId;
+        wrapper: FernIr.SdkRequestWrapper;
         context: SdkGeneratorContext;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 
@@ -30,9 +21,9 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     SdkCustomConfigSchema,
     SdkGeneratorContext
 > {
-    private wrapper: SdkRequestWrapper;
-    private serviceId: ServiceId;
-    private endpoint: HttpEndpoint;
+    private wrapper: FernIr.SdkRequestWrapper;
+    private serviceId: FernIr.ServiceId;
+    private endpoint: FernIr.HttpEndpoint;
     private classReference: php.ClassReference;
     private location: FileLocation;
 
@@ -181,7 +172,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
     }
 
-    private filePropertyToField(fileProperty: FileProperty): php.Field {
+    private filePropertyToField(fileProperty: FernIr.FileProperty): php.Field {
         let type;
         switch (fileProperty.type) {
             case "file": {
@@ -207,7 +198,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         property,
         inherited
     }: {
-        property: InlinedRequestBodyProperty;
+        property: FernIr.InlinedRequestBodyProperty;
         inherited?: boolean;
     }): php.Field {
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
@@ -224,7 +215,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
     }
 
-    private getQueryParameterType(query: QueryParameter): php.Type {
+    private getQueryParameterType(query: FernIr.QueryParameter): php.Type {
         if (query.allowMultiple) {
             if (this.context.isOptional(query.valueType)) {
                 return php.Type.optional(
@@ -252,7 +243,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         includeSetters
     }: {
         clazz: php.DataClass;
-        name: Name;
+        name: FernIr.Name;
         field: php.Field;
         includeGetters: boolean;
         includeSetters: boolean;

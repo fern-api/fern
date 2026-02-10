@@ -1,16 +1,8 @@
-import {
-    HttpService,
-    IntermediateRepresentation,
-    Package,
-    Subpackage,
-    SubpackageId,
-    WebSocketChannel,
-    WebSocketChannelId
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 
 export class PackageResolver {
-    constructor(private readonly intermediateRepresentation: IntermediateRepresentation) {}
+    constructor(private readonly intermediateRepresentation: FernIr.IntermediateRepresentation) {}
 
     public getAllPackageIds(): PackageId[] {
         return [
@@ -24,7 +16,7 @@ export class PackageResolver {
         ];
     }
 
-    public resolvePackage(packageId: PackageId): Package {
+    public resolvePackage(packageId: PackageId): FernIr.Package {
         if (packageId.isRoot) {
             return this.intermediateRepresentation.rootPackage;
         } else {
@@ -32,7 +24,7 @@ export class PackageResolver {
         }
     }
 
-    public resolveSubpackage(subpackageId: SubpackageId): Subpackage {
+    public resolveSubpackage(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.intermediateRepresentation.subpackages[subpackageId];
         if (subpackage == null) {
             throw new Error("Subpackage does not exist: " + subpackageId);
@@ -40,7 +32,7 @@ export class PackageResolver {
         return subpackage;
     }
 
-    public resolveWebSocketChannel(channelId: WebSocketChannelId): WebSocketChannel {
+    public resolveWebSocketChannel(channelId: FernIr.WebSocketChannelId): FernIr.WebSocketChannel {
         const channel = this.intermediateRepresentation.websocketChannels?.[channelId];
         if (channel == null) {
             throw new Error("Channel does not exist: " + channelId);
@@ -48,7 +40,7 @@ export class PackageResolver {
         return channel;
     }
 
-    public getServiceDeclarationOrThrow(packageId: PackageId): HttpService {
+    public getServiceDeclarationOrThrow(packageId: PackageId): FernIr.HttpService {
         const service = this.getServiceDeclaration(packageId);
         if (service == null) {
             throw new Error(
@@ -58,7 +50,7 @@ export class PackageResolver {
         return service;
     }
 
-    public getChannelDeclaration(packageId: PackageId): WebSocketChannel | undefined {
+    public getChannelDeclaration(packageId: PackageId): FernIr.WebSocketChannel | undefined {
         const package_ = this.resolvePackage(packageId);
         if (package_.websocket == null) {
             return undefined;
@@ -66,7 +58,7 @@ export class PackageResolver {
         return this.resolveWebSocketChannel(package_.websocket);
     }
 
-    public getServiceDeclaration(packageId: PackageId): HttpService | undefined {
+    public getServiceDeclaration(packageId: PackageId): FernIr.HttpService | undefined {
         const package_ = this.resolvePackage(packageId);
         if (package_.service == null) {
             return undefined;
@@ -78,7 +70,7 @@ export class PackageResolver {
         return service;
     }
 
-    public getWebSocketChannelDeclaration(packageId: PackageId): WebSocketChannel | undefined {
+    public getWebSocketChannelDeclaration(packageId: PackageId): FernIr.WebSocketChannel | undefined {
         const package_ = this.resolvePackage(packageId);
         if (package_.websocket == null) {
             return undefined;

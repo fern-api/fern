@@ -1,22 +1,16 @@
-import {
-    NamedType,
-    ObjectProperty,
-    PrimitiveTypeV1,
-    TypeReference,
-    UndiscriminatedUnionMember
-} from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 /**
  * Utility functions to check primitive types without repeating the visitor pattern
  */
 
-export function isDateTimeType(typeRef: TypeReference): boolean {
+export function isDateTimeType(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
 
-    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -34,12 +28,12 @@ export function isDateTimeType(typeRef: TypeReference): boolean {
     });
 }
 
-export function isDateType(typeRef: TypeReference): boolean {
+export function isDateType(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
 
-    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -57,12 +51,12 @@ export function isDateType(typeRef: TypeReference): boolean {
     });
 }
 
-export function isDateTimeOnlyType(typeRef: TypeReference): boolean {
+export function isDateTimeOnlyType(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
 
-    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -80,12 +74,12 @@ export function isDateTimeOnlyType(typeRef: TypeReference): boolean {
     });
 }
 
-export function isUuidType(typeRef: TypeReference): boolean {
+export function isUuidType(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
 
-    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -103,12 +97,12 @@ export function isUuidType(typeRef: TypeReference): boolean {
     });
 }
 
-export function isBase64Type(typeRef: TypeReference): boolean {
+export function isBase64Type(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
 
-    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -126,12 +120,12 @@ export function isBase64Type(typeRef: TypeReference): boolean {
     });
 }
 
-export function isBigIntType(typeRef: TypeReference): boolean {
+export function isBigIntType(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
 
-    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -149,12 +143,12 @@ export function isBigIntType(typeRef: TypeReference): boolean {
     });
 }
 
-export function isChronoType(typeRef: TypeReference): boolean {
+export function isChronoType(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
 
-    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
         integer: () => false,
@@ -172,7 +166,7 @@ export function isChronoType(typeRef: TypeReference): boolean {
     });
 }
 
-export function isCollectionType(typeRef: TypeReference): boolean {
+export function isCollectionType(typeRef: FernIr.TypeReference): boolean {
     if (typeRef.type === "container") {
         return typeRef.container._visit({
             map: () => true,
@@ -187,11 +181,11 @@ export function isCollectionType(typeRef: TypeReference): boolean {
     return false;
 }
 
-export function isUnknownType(typeRef: TypeReference): boolean {
+export function isUnknownType(typeRef: FernIr.TypeReference): boolean {
     return typeRef.type === "unknown";
 }
 
-export function isOptionalType(typeReference: TypeReference): boolean {
+export function isOptionalType(typeReference: FernIr.TypeReference): boolean {
     return typeReference._visit<boolean>({
         container: (container) => {
             return container._visit<boolean>({
@@ -211,10 +205,10 @@ export function isOptionalType(typeReference: TypeReference): boolean {
     });
 }
 
-export function getInnerTypeFromOptional(typeReference: TypeReference): TypeReference {
-    return typeReference._visit<TypeReference>({
+export function getInnerTypeFromOptional(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+    return typeReference._visit<FernIr.TypeReference>({
         container: (container) => {
-            return container._visit<TypeReference>({
+            return container._visit<FernIr.TypeReference>({
                 optional: (optional) => optional,
                 nullable: (nullable) => nullable,
                 list: () => {
@@ -252,8 +246,8 @@ export function getInnerTypeFromOptional(typeReference: TypeReference): TypeRefe
 /**
  * Check if a primitive type supports PartialEq trait in Rust
  */
-export function primitiveSupportsPartialEq(primitive: PrimitiveTypeV1): boolean {
-    return PrimitiveTypeV1._visit(primitive, {
+export function primitiveSupportsPartialEq(primitive: FernIr.PrimitiveTypeV1): boolean {
+    return FernIr.PrimitiveTypeV1._visit(primitive, {
         string: () => true,
         boolean: () => true,
         integer: () => true,
@@ -274,8 +268,8 @@ export function primitiveSupportsPartialEq(primitive: PrimitiveTypeV1): boolean 
 /**
  * Check if a primitive type supports Hash and Eq traits in Rust
  */
-export function primitiveSupportsHashAndEq(primitive: PrimitiveTypeV1): boolean {
-    return PrimitiveTypeV1._visit(primitive, {
+export function primitiveSupportsHashAndEq(primitive: FernIr.PrimitiveTypeV1): boolean {
+    return FernIr.PrimitiveTypeV1._visit(primitive, {
         string: () => true,
         boolean: () => true,
         integer: () => true,
@@ -293,11 +287,11 @@ export function primitiveSupportsHashAndEq(primitive: PrimitiveTypeV1): boolean 
     });
 }
 
-export function isFloatingPointType(typeReference: TypeReference): boolean {
+export function isFloatingPointType(typeReference: FernIr.TypeReference): boolean {
     if (typeReference.type !== "primitive") {
         return false;
     }
-    return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
+    return FernIr.PrimitiveTypeV1._visit(typeReference.primitive.v1, {
         float: () => true,
         double: () => true,
         string: () => false,
@@ -320,11 +314,11 @@ export function isFloatingPointType(typeReference: TypeReference): boolean {
  */
 
 export function typeSupportsHashAndEq(
-    typeRef: TypeReference,
+    typeRef: FernIr.TypeReference,
     context: ModelGeneratorContext,
     analysisStack?: Set<string>
 ): boolean {
-    return TypeReference._visit(typeRef, {
+    return FernIr.TypeReference._visit(typeRef, {
         primitive: (primitive) => primitiveSupportsHashAndEq(primitive.v1), // Check each primitive individually
         named: (namedType) => {
             // Check if this named type is likely to support Hash and Eq
@@ -350,11 +344,11 @@ export function typeSupportsHashAndEq(
  * Check if a type supports PartialEq trait in Rust (more permissive than Hash/Eq)
  */
 export function typeSupportsPartialEq(
-    typeRef: TypeReference,
+    typeRef: FernIr.TypeReference,
     context: ModelGeneratorContext,
     analysisStack?: Set<string>
 ): boolean {
-    return TypeReference._visit(typeRef, {
+    return FernIr.TypeReference._visit(typeRef, {
         primitive: (primitive) => primitiveSupportsPartialEq(primitive.v1),
         named: (namedType) => {
             return namedTypeSupportsPartialEq(namedType, context, analysisStack);
@@ -378,7 +372,7 @@ export function typeSupportsPartialEq(
 }
 
 export function namedTypeSupportsPartialEq(
-    namedType: NamedType,
+    namedType: FernIr.NamedType,
     context: ModelGeneratorContext,
     analysisStack: Set<string> = new Set()
 ): boolean {
@@ -397,12 +391,12 @@ export function namedTypeSupportsPartialEq(
     if (typeDeclaration.shape.type === "enum") {
         result = true; // Enums always support PartialEq
     } else if (typeDeclaration.shape.type === "undiscriminatedUnion") {
-        result = typeDeclaration.shape.members.every((member: UndiscriminatedUnionMember) =>
+        result = typeDeclaration.shape.members.every((member: FernIr.UndiscriminatedUnionMember) =>
             typeSupportsPartialEq(member.type, context, analysisStack)
         );
     } else if (typeDeclaration.shape.type === "object") {
         // Check both properties and extended types
-        const propertiesSupport = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
+        const propertiesSupport = typeDeclaration.shape.properties.every((property: FernIr.ObjectProperty) =>
             typeSupportsPartialEq(property.valueType, context, analysisStack)
         );
         const extendsSupport = typeDeclaration.shape.extends.every((parentType) =>
@@ -429,7 +423,7 @@ export function namedTypeSupportsPartialEq(
 }
 
 export function namedTypeSupportsHashAndEq(
-    namedType: NamedType,
+    namedType: FernIr.NamedType,
     context: ModelGeneratorContext,
     analysisStack: Set<string> = new Set()
 ): boolean {
@@ -448,7 +442,7 @@ export function namedTypeSupportsHashAndEq(
             return false; // Prevent infinite recursion
         }
         analysisStack.add(namedType.typeId);
-        const result = typeDeclaration.shape.members.every((member: UndiscriminatedUnionMember) =>
+        const result = typeDeclaration.shape.members.every((member: FernIr.UndiscriminatedUnionMember) =>
             typeSupportsHashAndEq(member.type, context, analysisStack)
         );
         analysisStack.delete(namedType.typeId);
@@ -460,7 +454,7 @@ export function namedTypeSupportsHashAndEq(
         }
         analysisStack.add(namedType.typeId);
         // Check both properties and extended types
-        const propertiesSupport = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
+        const propertiesSupport = typeDeclaration.shape.properties.every((property: FernIr.ObjectProperty) =>
             typeSupportsHashAndEq(property.valueType, context, analysisStack)
         );
         const extendsSupport = typeDeclaration.shape.extends.every((parentType) =>
@@ -495,7 +489,7 @@ export function namedTypeSupportsHashAndEq(
 }
 
 export function extractNamedTypesFromTypeReference(
-    typeRef: TypeReference,
+    typeRef: FernIr.TypeReference,
     typeNames: {
         snakeCase: { unsafeName: string };
         pascalCase: { unsafeName: string };

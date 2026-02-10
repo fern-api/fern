@@ -1,7 +1,7 @@
 /* eslint-disable jest/expect-expect */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { AbsoluteFilePath } from "../AbsoluteFilePath";
-import { join } from "../join";
+import { AbsoluteFilePath } from "../AbsoluteFilePath.js";
+import { join } from "../join.js";
 
 describe("join", () => {
     it("should not compile when first path is absolute and non-first path is absolute", () => {

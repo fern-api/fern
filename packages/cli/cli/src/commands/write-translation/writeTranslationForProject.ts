@@ -9,18 +9,18 @@ import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
 import IS_CI from "is-ci";
 import path from "path";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { isAssetFile, shouldProcessFile, transformContentForLanguage } from "./content-transformer";
-import { createLanguageSpecificDocsConfig } from "./docs-config-utils";
-import { collectFiles } from "./file-collection-utils";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { isAssetFile, shouldProcessFile, transformContentForLanguage } from "./content-transformer.js";
+import { createLanguageSpecificDocsConfig } from "./docs-config-utils.js";
+import { collectFiles } from "./file-collection-utils.js";
 import {
     cleanupHashMappings,
     hasFileChanged,
     loadHashMappings,
     saveHashMappings,
     updateAndSaveHashForFile
-} from "./hash-utils";
-import { ContentTransformation, ProcessingStats } from "./types";
+} from "./hash-utils.js";
+import { ContentTransformation, ProcessingStats } from "./types.js";
 
 type Language = docsYml.RawSchemas.Language;
 

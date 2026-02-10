@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Writable } from "stream";
-import { Context } from "../../context/Context";
+import { Context } from "../../context/Context.js";
 
 /**
  * Create a Context for testing.

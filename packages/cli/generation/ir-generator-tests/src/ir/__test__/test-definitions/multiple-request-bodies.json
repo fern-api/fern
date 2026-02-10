@@ -2277,6 +2277,7 @@
                         }
                     },
                     "url": "https://api.example.com/v1",
+                    "audiences": null,
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,

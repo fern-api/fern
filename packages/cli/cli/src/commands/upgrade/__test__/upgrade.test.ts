@@ -6,9 +6,9 @@ import { isVersionAhead } from "@fern-api/semver-utils";
 import { writeFile } from "fs/promises";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { CliContext } from "../../../cli-context/CliContext";
-import { RerunCliError, rerunFernCliAtVersion } from "../../../rerunFernCliAtVersion";
-import { PREVIOUS_VERSION_ENV_VAR, upgrade } from "../upgrade";
+import { CliContext } from "../../../cli-context/CliContext.js";
+import { RerunCliError, rerunFernCliAtVersion } from "../../../rerunFernCliAtVersion.js";
+import { PREVIOUS_VERSION_ENV_VAR, upgrade } from "../upgrade.js";
 
 vi.mock("@fern-api/cli-migrations");
 vi.mock("@fern-api/configuration-loader");

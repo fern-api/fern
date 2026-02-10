@@ -1,4 +1,4 @@
-import { RawContainerTypes } from "../RawContainerType";
+import { RawContainerTypes } from "../RawContainerType.js";
 
 export declare namespace ParseGeneric {
     interface Return {

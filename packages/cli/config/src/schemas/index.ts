@@ -1,34 +1,34 @@
-export { AiConfigSchema } from "./AiConfigSchema";
-export { AiProviderSchema } from "./AiProviderSchema";
-export { ApiDefinitionSchema } from "./ApiDefinitionSchema";
-export { ApiSpecSchema } from "./ApiSpecSchema";
-export { ApisSchema } from "./ApisSchema";
-export { AuthSchemesSchema } from "./AuthSchemesSchema";
-export { CliSchema } from "./CliSchema";
-export { CratesPublishSchema } from "./CratesPublishSchema";
-export { EnvironmentSchema } from "./EnvironmentSchema";
-export { FernYmlSchema } from "./FernYmlSchema";
-export { createEmptyFernRcSchema, FernRcAccountSchema, FernRcAuthSchema, FernRcSchema } from "./fernrc";
-export { GitOutputModeSchema } from "./GitOutputModeSchema";
-export { GitOutputSchema } from "./GitOutputSchema";
-export { HeaderConfigSchema } from "./HeaderConfigSchema";
-export { HeaderSchema } from "./HeaderSchema";
-export { isWellKnownLicense, LicenseSchema } from "./LicenseSchema";
-export { MavenPublishSchema, MavenSignatureSchema } from "./MavenPublishSchema";
-export { AuthorSchema, MetadataSchema } from "./MetadataSchema";
-export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlEnvironmentSchema";
-export { NpmPublishSchema } from "./NpmPublishSchema";
-export { NugetPublishSchema } from "./NugetPublishSchema";
-export { OutputSchema } from "./OutputSchema";
-export { PublishSchema } from "./PublishSchema";
-export { PypiMetadataSchema, PypiPublishSchema } from "./PypiPublishSchema";
-export { ReadmeSchema } from "./ReadmeSchema";
-export { ReviewersSchema } from "./ReviewersSchema";
-export { RubygemsPublishSchema } from "./RubygemsPublishSchema";
-export { SdksSchema } from "./SdksSchema";
-export { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema";
-export { SdkTargetSchema } from "./SdkTargetSchema";
-export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema";
+export { AiConfigSchema } from "./AiConfigSchema.js";
+export { AiProviderSchema } from "./AiProviderSchema.js";
+export { ApiDefinitionSchema } from "./ApiDefinitionSchema.js";
+export { ApiSpecSchema } from "./ApiSpecSchema.js";
+export { ApisSchema } from "./ApisSchema.js";
+export { AuthSchemesSchema } from "./AuthSchemesSchema.js";
+export { CliSchema } from "./CliSchema.js";
+export { CratesPublishSchema } from "./CratesPublishSchema.js";
+export { EnvironmentSchema } from "./EnvironmentSchema.js";
+export { FernYmlSchema } from "./FernYmlSchema.js";
+export { createEmptyFernRcSchema, FernRcAccountSchema, FernRcAuthSchema, FernRcSchema } from "./fernrc/index.js";
+export { GitOutputModeSchema } from "./GitOutputModeSchema.js";
+export { GitOutputSchema } from "./GitOutputSchema.js";
+export { HeaderConfigSchema } from "./HeaderConfigSchema.js";
+export { HeaderSchema } from "./HeaderSchema.js";
+export { isWellKnownLicense, LicenseSchema } from "./LicenseSchema.js";
+export { MavenPublishSchema, MavenSignatureSchema } from "./MavenPublishSchema.js";
+export { AuthorSchema, MetadataSchema } from "./MetadataSchema.js";
+export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlEnvironmentSchema.js";
+export { NpmPublishSchema } from "./NpmPublishSchema.js";
+export { NugetPublishSchema } from "./NugetPublishSchema.js";
+export { OutputSchema } from "./OutputSchema.js";
+export { PublishSchema } from "./PublishSchema.js";
+export { PypiMetadataSchema, PypiPublishSchema } from "./PypiPublishSchema.js";
+export { ReadmeSchema } from "./ReadmeSchema.js";
+export { ReviewersSchema } from "./ReviewersSchema.js";
+export { RubygemsPublishSchema } from "./RubygemsPublishSchema.js";
+export { SdksSchema } from "./SdksSchema.js";
+export { SdkTargetLanguageSchema } from "./SdkTargetLanguageSchema.js";
+export { SdkTargetSchema } from "./SdkTargetSchema.js";
+export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema.js";
 
 export {
     AsyncApiSettingsSchema,
@@ -43,7 +43,7 @@ export {
     PathParameterOrderSchema,
     RemoveDiscriminantsFromSchemasSchema,
     ResolveAliasesSchema
-} from "./settings";
+} from "./settings/index.js";
 
 export {
     AsyncApiSpecSchema,
@@ -57,4 +57,4 @@ export {
     ProtobufDefinitionSchema,
     ProtobufSettingsSchema,
     ProtobufSpecSchema
-} from "./specs";
+} from "./specs/index.js";

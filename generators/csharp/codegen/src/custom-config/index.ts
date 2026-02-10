@@ -1,1 +1,1 @@
-export { CsharpConfigSchema } from "./CsharpConfigSchema";
+export { CsharpConfigSchema } from "./CsharpConfigSchema.js";

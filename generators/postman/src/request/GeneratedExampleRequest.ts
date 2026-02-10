@@ -1,22 +1,15 @@
-import {
-    ExampleEndpointCall,
-    ExampleHeader,
-    ExamplePathParameter,
-    HttpHeader,
-    PathParameter
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/api";
-
-import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest";
+import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest.js";
 
 export declare namespace GeneratedExampleRequest {
     export interface Init extends AbstractGeneratedRequest.Init {
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
     }
 }
 
 export class GeneratedExampleRequest extends AbstractGeneratedRequest {
-    private example: ExampleEndpointCall;
+    private example: FernIr.ExampleEndpointCall;
 
     constructor({ example, ...superInit }: GeneratedExampleRequest.Init) {
         super(superInit);
@@ -70,8 +63,8 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
         pathParameters,
         examples
     }: {
-        pathParameters: PathParameter[];
-        examples: ExamplePathParameter[];
+        pathParameters: FernIr.PathParameter[];
+        examples: FernIr.ExamplePathParameter[];
     }) {
         return examples.map((examplePathParameter) => {
             const pathParameterDeclaration = pathParameters.find(
@@ -115,8 +108,8 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
         headers,
         examples
     }: {
-        headers: HttpHeader[];
-        examples: ExampleHeader[];
+        headers: FernIr.HttpHeader[];
+        examples: FernIr.ExampleHeader[];
     }): PostmanHeader[] {
         return examples.map((exampleHeader) => {
             const headerDeclaration = headers.find((header) => header.name.wireValue === exampleHeader.name.wireValue);

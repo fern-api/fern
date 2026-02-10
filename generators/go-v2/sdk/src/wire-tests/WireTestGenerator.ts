@@ -3,24 +3,16 @@ import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { WireMockMapping } from "@fern-api/mock-utils";
-import {
-    dynamic,
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    HttpService,
-    PrimitiveTypeV1,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
-    private dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
@@ -28,7 +20,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = this.context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -100,8 +92,8 @@ export class WireTestGenerator {
 
     private async generateServiceTestFile(
         serviceName: string,
-        endpoints: HttpEndpoint[],
-        filePath: FernFilepath
+        endpoints: FernIr.HttpEndpoint[],
+        filePath: FernIr.FernFilepath
     ): Promise<GoFile> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
@@ -317,7 +309,7 @@ export class WireTestGenerator {
         );
     }
 
-    private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
+    private async generateSnippetForExample(example: FernIr.dynamic.EndpointExample): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
         // Generate a wiremock test snippet with the test function wrapper
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
@@ -330,7 +322,7 @@ export class WireTestGenerator {
     }
 
     private generateEndpointTestMethod(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         snippet: string,
         testFunctionName: string
     ): [go.CodeBlock, Map<string, string>] {
@@ -597,7 +589,7 @@ export class WireTestGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         snippet: string;
     }): go.CodeBlock {
         // Generate the client constructor directly with WireMockBaseURL instead of parsing from snippet
@@ -631,7 +623,7 @@ export class WireTestGenerator {
         snippet,
         testFunctionName
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         snippet: string;
         testFunctionName: string;
     }): go.CodeBlock {
@@ -689,7 +681,7 @@ export class WireTestGenerator {
         });
     }
 
-    private buildBasePath(endpoint: HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
         let basePath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
@@ -732,7 +724,7 @@ export class WireTestGenerator {
         return basePath;
     }
 
-    private buildQueryParamsMap(endpoint: HttpEndpoint): string {
+    private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
 
         if (!dynamicEndpointExample?.queryParameters) {
@@ -755,7 +747,7 @@ export class WireTestGenerator {
         return `map[string]string{${queryParamEntries.join(", ")}}`;
     }
 
-    private getDynamicEndpointExample(endpoint: HttpEndpoint): dynamic.EndpointExample | null {
+    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
         const example = this.dynamicIr.endpoints[endpoint.id];
         if (!example) {
             return null;
@@ -764,7 +756,7 @@ export class WireTestGenerator {
         return example.examples?.[0] ?? null;
     }
 
-    private getEndpointExample(endpoint: HttpEndpoint): ExampleEndpointCall | null {
+    private getEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | null {
         const firstUserSpecifiedExample = endpoint.userSpecifiedExamples?.[0]?.example;
         const firstAutogeneratedExample = endpoint.autogeneratedExamples?.[0]?.example;
         const firstExample = firstUserSpecifiedExample ?? firstAutogeneratedExample;
@@ -776,28 +768,28 @@ export class WireTestGenerator {
         return firstExample;
     }
 
-    private getJsonSchemaType(valueType: TypeReference): string {
+    private getJsonSchemaType(valueType: FernIr.TypeReference): string {
         // Check if it's a primitive type
         const primitive = this.context.maybePrimitive(valueType);
         if (primitive != null) {
             switch (primitive) {
-                case PrimitiveTypeV1.Integer:
-                case PrimitiveTypeV1.Uint:
+                case FernIr.PrimitiveTypeV1.Integer:
+                case FernIr.PrimitiveTypeV1.Uint:
                     return '{"type": "integer"}';
-                case PrimitiveTypeV1.Long:
-                case PrimitiveTypeV1.Uint64:
+                case FernIr.PrimitiveTypeV1.Long:
+                case FernIr.PrimitiveTypeV1.Uint64:
                     return '{"type": "integer", "format": "int64"}';
-                case PrimitiveTypeV1.Float:
-                case PrimitiveTypeV1.Double:
+                case FernIr.PrimitiveTypeV1.Float:
+                case FernIr.PrimitiveTypeV1.Double:
                     return '{"type": "number"}';
-                case PrimitiveTypeV1.Boolean:
+                case FernIr.PrimitiveTypeV1.Boolean:
                     return '{"type": "boolean"}';
-                case PrimitiveTypeV1.String:
-                case PrimitiveTypeV1.Date:
-                case PrimitiveTypeV1.DateTime:
-                case PrimitiveTypeV1.Uuid:
-                case PrimitiveTypeV1.Base64:
-                case PrimitiveTypeV1.BigInteger:
+                case FernIr.PrimitiveTypeV1.String:
+                case FernIr.PrimitiveTypeV1.Date:
+                case FernIr.PrimitiveTypeV1.DateTime:
+                case FernIr.PrimitiveTypeV1.Uuid:
+                case FernIr.PrimitiveTypeV1.Base64:
+                case FernIr.PrimitiveTypeV1.BigInteger:
                     return '{"type": "string"}';
                 default:
                     return '{"type": "string"}';
@@ -852,7 +844,7 @@ export class WireTestGenerator {
         return '{"type": "string"}';
     }
 
-    private buildFullPath(endpoint: HttpEndpoint): string {
+    private buildFullPath(endpoint: FernIr.HttpEndpoint): string {
         const parts = endpoint.fullPath.parts;
         let fullPath = endpoint.fullPath.head.startsWith("/") ? endpoint.fullPath.head : "/" + endpoint.fullPath.head;
 
@@ -866,8 +858,8 @@ export class WireTestGenerator {
         return fullPath;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName = this.getFormattedServiceName(service);
@@ -878,8 +870,8 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private getFilePathsByServiceName(): Map<string, FernFilepath> {
-        const filePathsByServiceName = new Map<string, FernFilepath>();
+    private getFilePathsByServiceName(): Map<string, FernIr.FernFilepath> {
+        const filePathsByServiceName = new Map<string, FernIr.FernFilepath>();
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName = this.getFormattedServiceName(service);
             filePathsByServiceName.set(serviceName, service.name?.fernFilepath);
@@ -887,7 +879,7 @@ export class WireTestGenerator {
         return filePathsByServiceName;
     }
 
-    private getFormattedServiceName(service: HttpService): string {
+    private getFormattedServiceName(service: FernIr.HttpService): string {
         return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
     }
 
@@ -897,7 +889,7 @@ export class WireTestGenerator {
      * but Go's standard library expects RFC3339 format (datetime) for JSON unmarshaling.
      * This causes wire tests to fail when the mock server returns date-only strings.
      */
-    private endpointReturnsPrimitiveDate(endpoint: HttpEndpoint): boolean {
+    private endpointReturnsPrimitiveDate(endpoint: FernIr.HttpEndpoint): boolean {
         const response = endpoint.response;
         if (response == null) {
             return false;
@@ -907,7 +899,7 @@ export class WireTestGenerator {
             if (responseType.type === "response") {
                 const bodyType = responseType.responseBodyType;
                 const primitive = this.context.maybePrimitive(bodyType);
-                if (primitive === PrimitiveTypeV1.Date) {
+                if (primitive === FernIr.PrimitiveTypeV1.Date) {
                     return true;
                 }
             }

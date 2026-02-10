@@ -5034,6 +5034,9 @@
                         }
                     },
                     "url": "https://www.yoursite.com",
+                    "audiences": [
+                        "external"
+                    ],
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,
@@ -5061,6 +5064,10 @@
                         }
                     },
                     "url": "https://www.staging.yoursite.com",
+                    "audiences": [
+                        "internal",
+                        "development"
+                    ],
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,

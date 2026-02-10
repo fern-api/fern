@@ -1,14 +1,13 @@
-import { dynamic, EndpointId } from "@fern-fern/ir-sdk/api";
-
-export interface Endpoint extends Omit<dynamic.Endpoint, "id"> {
+import { FernIr } from "@fern-fern/ir-sdk";
+export interface Endpoint extends Omit<FernIr.dynamic.Endpoint, "id"> {
     id: string;
 }
 
 /**
- * Convert endpoints from the IR dynamic format to the format expected by DynamicSnippetsGenerator
+ * Convert endpoints from the IR FernIr.dynamic format to the format expected by DynamicSnippetsGenerator
  */
-export function convertEndpoints(endpoints: Record<EndpointId, dynamic.Endpoint>): Record<EndpointId, Endpoint> {
-    const convertedEndpoints: Record<EndpointId, Endpoint> = {};
+export function convertEndpoints(endpoints: Record<FernIr.EndpointId, FernIr.dynamic.Endpoint>): Record<FernIr.EndpointId, Endpoint> {
+    const convertedEndpoints: Record<FernIr.EndpointId, Endpoint> = {};
 
     for (const [endpointId, endpoint] of Object.entries(endpoints)) {
         convertedEndpoints[endpointId] = {

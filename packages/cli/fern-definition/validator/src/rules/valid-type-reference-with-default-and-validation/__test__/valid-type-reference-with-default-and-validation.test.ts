@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidTypeReferenceWithDefaultAndValidationRule } from "../valid-type-reference-with-default-and-validation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidTypeReferenceWithDefaultAndValidationRule } from "../valid-type-reference-with-default-and-validation.js";
 
 describe("valid-default-and-validation-type-reference", () => {
     it("simple", async () => {

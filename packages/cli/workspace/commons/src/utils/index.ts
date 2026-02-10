@@ -1,6 +1,6 @@
-export { getAllDefinitionFiles } from "./getAllDefinitionFiles";
-export { getAllNamedDefinitionFiles } from "./getAllNamedDefinitionFiles";
-export { getAllPackageMarkers } from "./getAllPackageMarkers";
-export { getDefinitionFile } from "./getDefinitionFile";
-export { visitAllDefinitionFiles } from "./visitAllDefinitionFiles";
-export { visitAllPackageMarkers } from "./visitAllPackageMarkers";
+export { getAllDefinitionFiles } from "./getAllDefinitionFiles.js";
+export { getAllNamedDefinitionFiles } from "./getAllNamedDefinitionFiles.js";
+export { getAllPackageMarkers } from "./getAllPackageMarkers.js";
+export { getDefinitionFile } from "./getDefinitionFile.js";
+export { visitAllDefinitionFiles } from "./visitAllDefinitionFiles.js";
+export { visitAllPackageMarkers } from "./visitAllPackageMarkers.js";

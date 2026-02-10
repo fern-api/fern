@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 
-import { GeneratorName } from "./GeneratorName";
+import { GeneratorName } from "./GeneratorName.js";
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {

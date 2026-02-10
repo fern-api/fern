@@ -1,8 +1,13 @@
 import { CSharpFile } from "@fern-api/csharp-base";
 import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Subpackage, TypeReference, WebSocketChannel } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type Subpackage = FernIr.Subpackage;
+type TypeReference = FernIr.TypeReference;
+type WebSocketChannel = FernIr.WebSocketChannel;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Arguments for creating a WebSocket client generator.
@@ -196,7 +201,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             }
 
             if (!this.hasEnvironments) {
-                // if they only have one environment, resolve the url of the default environment (since we're not maning the Environments inner class)
+                // if they only have one environment, resolve the url of the default environment (since we're not naming the Environments inner class)
                 this.defaultEnvironment =
                     this.environments.filter((env) => env.environment === this.defaultEnvironment)[0]?.url ??
                     this.environments[0]?.url;

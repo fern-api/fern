@@ -3,9 +3,9 @@ import yaml from "js-yaml";
 import { join } from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { CliContext } from "../../../cli-context/CliContext";
-import { writeTranslationForProject } from "../writeTranslationForProject";
-import { setupTestProjectFromFixture } from "./test-utils";
+import { CliContext } from "../../../cli-context/CliContext.js";
+import { writeTranslationForProject } from "../writeTranslationForProject.js";
+import { setupTestProjectFromFixture } from "./test-utils.js";
 
 // Mock the translation service to avoid real API calls in most tests
 vi.mock("../translation-service", () => ({

@@ -1,10 +1,9 @@
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
-import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator.js";
+import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator.js";
 
 export class EndpointGenerator extends AbstractEndpointGenerator {
     private http: HttpEndpointGenerator;
@@ -20,10 +19,10 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        subpackage: Subpackage | undefined;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        subpackage: FernIr.Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
     }): go.Method | undefined {
         return this.http.generate({
             serviceId,
@@ -39,10 +38,10 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         subpackage,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        subpackage: Subpackage | undefined;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        subpackage: FernIr.Subpackage | undefined;
+        endpoint: FernIr.HttpEndpoint;
     }): go.Method | undefined {
         return this.http.generateRaw({
             serviceId,

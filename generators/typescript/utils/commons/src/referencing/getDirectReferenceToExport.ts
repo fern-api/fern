@@ -1,9 +1,9 @@
 import { SourceFile, ts } from "ts-morph";
 
-import { ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager";
-import { ImportsManager } from "../imports-manager/ImportsManager";
-import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
-import { GetReferenceOpts, Reference } from "./Reference";
+import { ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager/index.js";
+import { ImportsManager } from "../imports-manager/ImportsManager.js";
+import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo.js";
+import { GetReferenceOpts, Reference } from "./Reference.js";
 
 export function getDirectReferenceToExport({
     exportedName,

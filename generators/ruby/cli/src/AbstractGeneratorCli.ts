@@ -1,3 +1,4 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
@@ -7,11 +8,10 @@ import {
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp, readdir } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
+import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation.js";
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
     public async runCli(): Promise<void> {
@@ -96,20 +96,20 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: FernIr.IntermediateRepresentation
     ): Promise<void>;
     protected abstract writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
+        intermediateRepresentation: FernIr.IntermediateRepresentation,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void>;
     protected abstract writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
         generatorContext: AbstractGeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: FernIr.IntermediateRepresentation
     ): Promise<void>;
 
     async zipDirectoryContents({

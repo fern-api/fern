@@ -1,7 +1,7 @@
-import { ClassReference } from "./ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { KeywordArgument } from "./KeywordArgument";
+import { ClassReference } from "./ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { KeywordArgument } from "./KeywordArgument.js";
 
 export declare namespace ClassInstantiation {
     interface Args {

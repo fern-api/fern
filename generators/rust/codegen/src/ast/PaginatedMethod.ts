@@ -1,6 +1,6 @@
-import { AstNode } from "./AstNode";
-import { Type } from "./Type";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Type } from "./Type.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace PaginatedMethod {
     interface Args {

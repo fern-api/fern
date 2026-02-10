@@ -60,6 +60,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
           "defaultUrl": undefined,
           "docs": "Production server",
           "id": "Production server",

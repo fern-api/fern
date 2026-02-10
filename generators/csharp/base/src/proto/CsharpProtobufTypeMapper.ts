@@ -1,16 +1,19 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CSharp, Generation, WithGeneration } from "@fern-api/csharp-codegen";
-import {
-    ContainerType,
-    EnumTypeDeclaration,
-    EnumValue,
-    Literal,
-    MapType,
-    NamedType,
-    PrimitiveType,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { GeneratorContext } from "../cli";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ContainerType = FernIr.ContainerType;
+const ContainerType = FernIr.ContainerType;
+type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
+type EnumValue = FernIr.EnumValue;
+type Literal = FernIr.Literal;
+type MapType = FernIr.MapType;
+type NamedType = FernIr.NamedType;
+type PrimitiveType = FernIr.PrimitiveType;
+type TypeReference = FernIr.TypeReference;
+const TypeReference = FernIr.TypeReference;
+
+import { GeneratorContext } from "../cli/index.js";
 
 type WrapperType = "optional" | "list" | "map";
 
@@ -509,7 +512,10 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.writeNode(this.context.getDefaultValueForPrimitive({ primitive }));
             });
         }
-        if (wrapperType === WrapperType.List && this.context.isReadOnlyMemoryType(TypeReference.primitive(primitive))) {
+        if (
+            wrapperType === WrapperType.List &&
+            this.context.isReadOnlyMemoryType(FernIr.TypeReference.primitive(primitive))
+        ) {
             return this.csharp.codeblock((writer) => {
                 writer.writeNode(
                     this.csharp.invokeMethod({
@@ -812,7 +818,7 @@ class FromProtoPropertyMapper extends WithGeneration {
         wrapperType
     }: {
         propertyName: string;
-        listType: ContainerType.List["list"] | ContainerType.Set["set"];
+        listType: FernIr.ContainerType.List["list"] | FernIr.ContainerType.Set["set"];
         wrapperType?: WrapperType;
     }): ast.CodeBlock {
         const on = this.csharp.codeblock(`${propertyName}?`);
@@ -913,7 +919,7 @@ class FromProtoPropertyMapper extends WithGeneration {
                 writer.write(" ?? new ");
                 writer.writeNode(
                     this.context.csharpTypeMapper.convert({
-                        reference: TypeReference.container(ContainerType.map(map))
+                        reference: FernIr.TypeReference.container(FernIr.ContainerType.map(map))
                     })
                 );
                 writer.write("()");

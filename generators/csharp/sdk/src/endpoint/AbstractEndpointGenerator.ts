@@ -1,12 +1,18 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
-import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
-import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type PathParameter = FernIr.PathParameter;
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { getEndpointRequest } from "./utils/getEndpointRequest.js";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
 type PagingEndpoint = HttpEndpoint & {
     pagination: NonNullable<HttpEndpoint["pagination"]>;
@@ -329,7 +335,10 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         );
     }
 
-    private getJustRequestBodySnippet(exampleRequestBody: ExampleRequestBody, parseDatetimes: boolean): ast.CodeBlock {
+    private getJustRequestBodySnippet(
+        exampleRequestBody: FernIr.ExampleRequestBody,
+        parseDatetimes: boolean
+    ): ast.CodeBlock {
         if (exampleRequestBody.type === "inlinedRequestBody") {
             throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }

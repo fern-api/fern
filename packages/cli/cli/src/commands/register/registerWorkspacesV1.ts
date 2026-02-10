@@ -10,7 +10,7 @@ import path from "path";
 import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function registerWorkspacesV1({
     project,

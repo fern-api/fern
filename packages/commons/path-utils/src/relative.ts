@@ -1,4 +1,4 @@
-import { sep } from "./sep";
+import { sep } from "./sep.js";
 
 export function relative(from: string, to: string): string {
     const fromParts = from.split(sep).filter(Boolean);

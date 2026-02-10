@@ -23,8 +23,8 @@ import {
     SEED_REMOTE_LOCAL_OUTPUT_DIR,
     TestFixture,
     TS_SDK_PACKAGE_NAME
-} from "./constants";
-import type { RemoteLocalSeedConfig, RemoteVsLocalTestCase } from "./types";
+} from "./constants.js";
+import type { RemoteLocalSeedConfig, RemoteVsLocalTestCase } from "./types.js";
 
 export async function writeGeneratorsYml(
     fernDirectory: string,
