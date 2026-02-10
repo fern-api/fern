@@ -477,18 +477,29 @@ class HttpClient:
             )
         )
 
+        _request_url = _build_url(base_url, path)
+        _request_headers = jsonable_encoder(
+            remove_none_from_dict(
+                {
+                    **self.base_headers(),
+                    **(headers if headers is not None else {}),
+                    **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                }
+            )
+        )
+
+        if self.logger.is_debug():
+            self.logger.debug(
+                "Making streaming HTTP request",
+                method=method,
+                url=_request_url,
+                headers=_redact_headers(_request_headers),
+            )
+
         with self.httpx_client.stream(
             method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self.base_headers(),
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
+            url=_request_url,
+            headers=_request_headers,
             params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
@@ -732,18 +743,29 @@ class AsyncHttpClient:
             )
         )
 
+        _request_url = _build_url(base_url, path)
+        _request_headers = jsonable_encoder(
+            remove_none_from_dict(
+                {
+                    **_headers,
+                    **(headers if headers is not None else {}),
+                    **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                }
+            )
+        )
+
+        if self.logger.is_debug():
+            self.logger.debug(
+                "Making streaming HTTP request",
+                method=method,
+                url=_request_url,
+                headers=_redact_headers(_request_headers),
+            )
+
         async with self.httpx_client.stream(
             method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **_headers,
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
+            url=_request_url,
+            headers=_request_headers,
             params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
