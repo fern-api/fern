@@ -171,7 +171,8 @@ export class Stream<T> implements AsyncIterable<T> {
                 if (line.startsWith(EVENT_PREFIX)) {
                     eventType = line.slice(EVENT_PREFIX.length).trim();
                 } else if (line.startsWith(DATA_PREFIX)) {
-                    dataValue = line.slice(DATA_PREFIX.length).trim();
+                    const val = line.slice(DATA_PREFIX.length).trim();
+                    dataValue = dataValue != null ? dataValue + "\n" + val : val;
                 } else if (line.startsWith(ID_PREFIX)) {
                     idValue = line.slice(ID_PREFIX.length).trim();
                 }

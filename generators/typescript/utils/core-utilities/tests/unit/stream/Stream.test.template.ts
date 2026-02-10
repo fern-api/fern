@@ -293,6 +293,42 @@ describe("Stream", () => {
             expect(messages).toEqual([{ event: "message", value: 1 }]);
         });
 
+        it("should concatenate multiline data fields per SSE spec", async () => {
+            const mockStream = createReadableStream([
+                'event: message\ndata: {"delta":\ndata: "hello"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", discriminated: true },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ event: "message", delta: "hello" }]);
+        });
+
+        it("should concatenate multiple data lines with newline separator", async () => {
+            const mockStream = createReadableStream([
+                'event: log\ndata: line one\ndata: line two\ndata: line three\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", discriminated: true },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ event: "log", data: "line one\nline two\nline three" }]);
+        });
+
         it("should handle events split across chunks", async () => {
             const mockStream = createReadableStream([
                 'event: mes',
