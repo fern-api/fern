@@ -9,7 +9,7 @@ import {
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 
 export function buildWebsocketSessionExample({
     websocketExample,

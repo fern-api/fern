@@ -10,16 +10,16 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../../getExtension";
-import { convertAvailability } from "../../../../schema/convertAvailability";
-import { convertSchema } from "../../../../schema/convertSchemas";
-import { getExamplesString } from "../../../../schema/examples/getExample";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getParameterName } from "../../extensions/getParameterName";
-import { getVariableReference } from "../../extensions/getVariableReference";
+import { getExtension } from "../../../../getExtension.js";
+import { convertAvailability } from "../../../../schema/convertAvailability.js";
+import { convertSchema } from "../../../../schema/convertSchemas.js";
+import { getExamplesString } from "../../../../schema/examples/getExample.js";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getParameterName } from "../../extensions/getParameterName.js";
+import { getVariableReference } from "../../extensions/getVariableReference.js";
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[];

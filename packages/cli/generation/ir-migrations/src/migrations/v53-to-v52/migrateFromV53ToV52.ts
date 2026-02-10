@@ -2,13 +2,13 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { mapValues } from "lodash-es";
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
+import { IrSerialization } from "../../ir-serialization/index.js";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
+} from "../../types/IrMigration.js";
 
 export const V53_TO_V52_MIGRATION: IrMigration<
     IrVersions.V53.ir.IntermediateRepresentation,

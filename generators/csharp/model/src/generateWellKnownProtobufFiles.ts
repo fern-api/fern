@@ -1,10 +1,13 @@
 import { CSharpFile } from "@fern-api/csharp-base";
 
-import { WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { WellKnownProtoStructGenerator } from "./proto/WellKnownProtoStructGenerator";
-import { WellKnownProtoValueGenerator } from "./proto/WellKnownProtoValueGenerator";
+type WellKnownProtobufType = FernIr.WellKnownProtobufType;
+const WellKnownProtobufType = FernIr.WellKnownProtobufType;
+
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { WellKnownProtoStructGenerator } from "./proto/WellKnownProtoStructGenerator.js";
+import { WellKnownProtoValueGenerator } from "./proto/WellKnownProtoValueGenerator.js";
 
 export function generateWellKnownProtobufFiles(context: ModelGeneratorContext): CSharpFile[] | undefined {
     const resolvedProtoStructType = context.protobufResolver.resolveWellKnownProtobufType(

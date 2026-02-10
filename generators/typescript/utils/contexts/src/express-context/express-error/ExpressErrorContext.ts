@@ -1,11 +1,11 @@
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
 
-import { GeneratedExpressError } from "./GeneratedExpressError";
+import { GeneratedExpressError } from "./GeneratedExpressError.js";
 
 export interface ExpressErrorContext {
-    getReferenceToError: (errorName: DeclaredErrorName) => Reference;
-    getErrorClassName: (errorName: DeclaredErrorName) => string;
-    getGeneratedExpressError: (errorName: DeclaredErrorName) => GeneratedExpressError;
-    getErrorDeclaration: (errorName: DeclaredErrorName) => ErrorDeclaration;
+    getReferenceToError: (errorName: FernIr.DeclaredErrorName) => Reference;
+    getErrorClassName: (errorName: FernIr.DeclaredErrorName) => string;
+    getGeneratedExpressError: (errorName: FernIr.DeclaredErrorName) => GeneratedExpressError;
+    getErrorDeclaration: (errorName: FernIr.DeclaredErrorName) => FernIr.ErrorDeclaration;
 }

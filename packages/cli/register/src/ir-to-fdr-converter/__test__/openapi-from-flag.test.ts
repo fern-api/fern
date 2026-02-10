@@ -13,7 +13,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import assert from "assert";
 
-import { convertIrToFdrApi } from "../convertIrToFdrApi";
+import { convertIrToFdrApi } from "../convertIrToFdrApi.js";
 
 const hasBuf = spawnSync("buf", ["--version"], { stdio: "ignore" }).status === 0;
 

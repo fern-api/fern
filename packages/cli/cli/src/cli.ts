@@ -12,7 +12,14 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import {
+    initializeAPI,
+    initializeDocs,
+    initializeWithMintlify,
+    initializeWithReadme,
+    LoadOpenAPIStatus,
+    loadOpenAPIFromUrl
+} from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
@@ -21,48 +28,47 @@ import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
-import { CliContext } from "./cli-context/CliContext";
-import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
-import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
-import { diff } from "./commands/diff/diff";
-import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
-import { docsDiff } from "./commands/docs-diff/docsDiff";
-import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs";
-import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
-import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
-import { downgrade } from "./commands/downgrade/downgrade";
-import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
-import { formatWorkspaces } from "./commands/format/formatWorkspaces";
-import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
-import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
-import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
-import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
-import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
-import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
-import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
-import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs";
-import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
-import { mockServer } from "./commands/mock/mockServer";
-import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
-import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
-import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
-import { selfUpdate } from "./commands/self-update/selfUpdate";
-import { testOutput } from "./commands/test/testOutput";
-import { generateToken } from "./commands/token/token";
-import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
-import { upgrade } from "./commands/upgrade/upgrade";
-import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks";
-import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
-import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
-import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject";
-import { FERN_CWD_ENV_VAR } from "./cwd";
-import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-import { RUNTIME } from "./runtime";
+import { CliContext } from "./cli-context/CliContext.js";
+import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli.js";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
+import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
+import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { diff } from "./commands/diff/diff.js";
+import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
+import { docsDiff } from "./commands/docs-diff/docsDiff.js";
+import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
+import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
+import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { downgrade } from "./commands/downgrade/downgrade.js";
+import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
+import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
+import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
+import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
+import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
+import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
+import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces.js";
+import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces.js";
+import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
+import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
+import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { mockServer } from "./commands/mock/mockServer.js";
+import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
+import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
+import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { selfUpdate } from "./commands/self-update/selfUpdate.js";
+import { testOutput } from "./commands/test/testOutput.js";
+import { generateToken } from "./commands/token/token.js";
+import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
+import { upgrade } from "./commands/upgrade/upgrade.js";
+import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
+import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
+import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
+import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
+import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
+import { RUNTIME } from "./runtime.js";
 
 void runCli();
 

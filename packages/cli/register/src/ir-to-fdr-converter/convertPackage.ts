@@ -11,12 +11,13 @@ import {
 import { generateEndpointV1Example as generateEndpointExample } from "@fern-api/ir-utils";
 import { noop, startCase } from "lodash-es";
 
-import { convertTypeReference } from "./convertTypeShape";
+import { convertTypeReference } from "./convertTypeShape.js";
 
 export function convertPackage(
     irPackage: Ir.ir.Package,
     ir: Ir.ir.IntermediateRepresentation,
-    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>
+    graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>,
+    graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>
 ): FdrCjsSdk.api.v1.register.ApiDefinitionPackage {
     const service = irPackage.service != null ? ir.services[irPackage.service] : undefined;
     const webhooks = irPackage.webhooks != null ? ir.webhookGroups[irPackage.webhooks] : undefined;
@@ -32,7 +33,10 @@ export function convertPackage(
         endpoints: restEndpoints,
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
         websockets: websocket != null ? [convertWebSocketChannel(websocket, ir)] : [],
-        types: irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
+        types: [
+            ...irPackage.types.map((typeId) => FdrCjsSdk.TypeId(typeId)),
+            ...Object.keys(graphqlTypes ?? {}).map((typeId) => FdrCjsSdk.TypeId(typeId))
+        ],
         subpackages: irPackage.subpackages.map((subpackageId) => FdrCjsSdk.api.v1.SubpackageId(subpackageId)),
         pointsTo:
             irPackage.navigationConfig != null
@@ -495,7 +499,8 @@ function convertIrEnvironments({
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: singleBaseUrlEnvironment.url
+                    baseUrl: singleBaseUrlEnvironment.url,
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         case "multipleBaseUrls":
@@ -510,7 +515,8 @@ function convertIrEnvironments({
                         }
                         return {
                             id: FdrCjsSdk.EnvironmentId(baseUrlId),
-                            baseUrl: endpointBaseUrl
+                            baseUrl: endpointBaseUrl,
+                            audiences: singleBaseUrlEnvironment.audiences
                         };
                     });
                 });
@@ -531,7 +537,8 @@ function convertIrEnvironments({
                 }
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: endpointBaseUrl
+                    baseUrl: endpointBaseUrl,
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         default:
@@ -553,7 +560,8 @@ function convertIrWebSocketEnvironments({
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: replaceProtocol(singleBaseUrlEnvironment.url, "wss")
+                    baseUrl: replaceProtocol(singleBaseUrlEnvironment.url, "wss"),
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         case "multipleBaseUrls":
@@ -569,7 +577,8 @@ function convertIrWebSocketEnvironments({
                 }
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
-                    baseUrl: channelBaseUrl
+                    baseUrl: channelBaseUrl,
+                    audiences: singleBaseUrlEnvironment.audiences
                 };
             });
         default:

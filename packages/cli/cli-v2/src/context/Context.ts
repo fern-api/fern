@@ -5,16 +5,16 @@ import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { KeyringStore, TokenService } from "../auth";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { CliError } from "../errors/CliError";
-import { ValidationError } from "../errors/ValidationError";
-import { Target } from "../sdk/config/Target";
-import { Icons } from "../ui/format";
-import type { Workspace } from "../workspace/Workspace";
-import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
-import { TaskContextAdapter } from "./adapter/TaskContextAdapter";
-import { LogFileWriter } from "./LogFileWriter";
+import { CredentialStore, TokenService } from "../auth/index.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { CliError } from "../errors/CliError.js";
+import { ValidationError } from "../errors/ValidationError.js";
+import { Target } from "../sdk/config/Target.js";
+import { Icons } from "../ui/format.js";
+import type { Workspace } from "../workspace/Workspace.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
+import { TaskContextAdapter } from "./adapter/TaskContextAdapter.js";
+import { LogFileWriter } from "./LogFileWriter.js";
 
 export class Context {
     private ttyAwareLogger: TtyAwareLogger;
@@ -40,12 +40,10 @@ export class Context {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.logFileWriter = new LogFileWriter({ cwd: this.cwd });
+        this.logFileWriter = new LogFileWriter();
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
-
-        const keyring = new KeyringStore();
-        this.tokenService = new TokenService({ keyring });
+        this.tokenService = new TokenService({ credential: new CredentialStore() });
     }
 
     public async loadWorkspaceOrThrow(): Promise<Workspace> {

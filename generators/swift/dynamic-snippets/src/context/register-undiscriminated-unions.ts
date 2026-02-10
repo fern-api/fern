@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { NameRegistry, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
-import type { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import type { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export function registerUndiscriminatedUnionVariants({
     parentSymbol,

@@ -11,13 +11,13 @@ import {
     StringValidationRules
 } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { ResolvedType } from "../resolvers/ResolvedType";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { ExampleViolation } from "./exampleViolation";
-import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
-import { validateTypeExample } from "./validateTypeExample";
+import { FernFileContext } from "../FernFileContext.js";
+import { ExampleResolver } from "../resolvers/ExampleResolver.js";
+import { ResolvedType } from "../resolvers/ResolvedType.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { ExampleViolation } from "./exampleViolation.js";
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample.js";
+import { validateTypeExample } from "./validateTypeExample.js";
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX =

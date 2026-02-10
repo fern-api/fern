@@ -2,13 +2,12 @@ import { cloneRepository } from "@fern-api/github";
 import { template } from "es-toolkit/compat";
 import { camelCase, upperFirst } from "es-toolkit/string";
 import type fs from "fs";
-
-import { FernGeneratorCli } from "../configuration/sdk";
-import type { ReadmeFeature } from "../configuration/sdk/api";
-import { StreamWriter, StringWriter, type Writer } from "../utils/Writer";
-import { Block } from "./Block";
-import { BlockMerger } from "./BlockMerger";
-import type { ReadmeParser } from "./ReadmeParser";
+import type { ReadmeFeature } from "../configuration/sdk/api/index.js";
+import { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { StreamWriter, StringWriter, type Writer } from "../utils/Writer.js";
+import { Block } from "./Block.js";
+import { BlockMerger } from "./BlockMerger.js";
+import type { ReadmeParser } from "./ReadmeParser.js";
 
 export class ReadmeGenerator {
     private ADVANCED_FEATURE_ID = "ADVANCED";

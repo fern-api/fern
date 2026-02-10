@@ -1,6 +1,6 @@
-export { convertOpenAPIV2ToV3 } from "./convertOpenAPIV2ToV3";
-export { getAllOpenAPISpecs } from "./getAllOpenAPISpecs";
-export { loadAsyncAPI } from "./loadAsyncAPI";
-export { loadDependency } from "./loadDependency";
-export { loadOpenAPI } from "./loadOpenAPI";
-export { type WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
+export { convertOpenAPIV2ToV3 } from "./convertOpenAPIV2ToV3.js";
+export { getAllOpenAPISpecs } from "./getAllOpenAPISpecs.js";
+export { loadAsyncAPI } from "./loadAsyncAPI.js";
+export { loadDependency } from "./loadDependency.js";
+export { loadOpenAPI } from "./loadOpenAPI.js";
+export { type WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";

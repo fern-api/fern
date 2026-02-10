@@ -1,10 +1,10 @@
-import { type Generation } from "../../context/generation-info";
-import { Node } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { Access } from "../language/Access";
-import { CodeBlock } from "../language/CodeBlock";
-import { Class } from "./Class";
-import { type ClassReference } from "./ClassReference";
+import { type Generation } from "../../context/generation-info.js";
+import { Node } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { Access } from "../language/Access.js";
+import { CodeBlock } from "../language/CodeBlock.js";
+import { Class } from "./Class.js";
+import { type ClassReference } from "./ClassReference.js";
 
 export declare namespace TestClass {
     interface Args extends Node.Args {

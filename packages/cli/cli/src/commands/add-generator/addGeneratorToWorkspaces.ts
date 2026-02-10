@@ -8,7 +8,7 @@ import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function addGeneratorToWorkspaces({
     project: { apiWorkspaces },

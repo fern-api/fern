@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidationViolation } from "../../../ValidationViolation";
-import { ValidNavigationRule } from "../valid-navigation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { ValidNavigationRule } from "../valid-navigation.js";
 
 describe("valid-navigation", () => {
     it("simple", async () => {

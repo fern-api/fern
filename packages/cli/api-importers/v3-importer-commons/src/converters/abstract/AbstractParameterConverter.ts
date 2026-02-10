@@ -1,9 +1,9 @@
 import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { ExampleConverter } from "../ExampleConverter";
-import { SchemaConverter } from "../schema/SchemaConverter";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { ExampleConverter } from "../ExampleConverter.js";
+import { SchemaConverter } from "../schema/SchemaConverter.js";
 
 export declare namespace AbstractParameterConverter {
     export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.AbstractArgs {

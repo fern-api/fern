@@ -6,7 +6,7 @@ import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { TaskContext } from "@fern-api/task-context";
 import validatePackageName from "validate-npm-package-name";
 
-import { logViolations } from "./logViolations";
+import { logViolations } from "./logViolations.js";
 
 export interface CollectedApiViolations {
     apiName: string;

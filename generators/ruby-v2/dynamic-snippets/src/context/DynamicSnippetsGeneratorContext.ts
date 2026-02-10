@@ -6,7 +6,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { upperFirst } from "lodash-es";
 
-import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper.js";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;

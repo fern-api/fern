@@ -1,3 +1,4 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import {
     Class_,
     ClassReferenceFactory,
@@ -9,22 +10,10 @@ import {
     UndiscriminatedUnion
 } from "@fern-api/ruby-codegen";
 
-import {
-    AliasTypeDeclaration,
-    EnumTypeDeclaration,
-    ObjectProperty,
-    ObjectTypeDeclaration,
-    TypeDeclaration,
-    TypeId,
-    TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-
 export function generateAliasDefinitionFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
-    aliasTypeDeclaration: AliasTypeDeclaration,
-    typeDeclaration: TypeDeclaration
+    aliasTypeDeclaration: FernIr.AliasTypeDeclaration,
+    typeDeclaration: FernIr.TypeDeclaration
 ): Expression {
     const name = typeDeclaration.name.name.screamingSnakeCase.safeName;
     const rightSide = classReferenceFactory.fromTypeReference(aliasTypeDeclaration.aliasOf);
@@ -33,14 +22,14 @@ export function generateAliasDefinitionFromTypeDeclaration(
 
 export function generateEnumDefinitionFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
-    enumTypeDeclaration: EnumTypeDeclaration,
-    typeDeclaration: TypeDeclaration
+    enumTypeDeclaration: FernIr.EnumTypeDeclaration,
+    typeDeclaration: FernIr.TypeDeclaration
 ): Class_ {
     const classReference = classReferenceFactory.fromTypeDeclaration(typeDeclaration);
     return new Enum({ enumTypeDeclaration, classReference, documentation: typeDeclaration.docs });
 }
 
-function isTypeOptional(typeReference: TypeReference): boolean {
+function isTypeOptional(typeReference: FernIr.TypeReference): boolean {
     return typeReference._visit<boolean>({
         container: (ct) => {
             return ct._visit<boolean>({
@@ -61,10 +50,10 @@ function isTypeOptional(typeReference: TypeReference): boolean {
 
 export function generateSerializableObjectFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
-    propertyOverrides: Map<TypeId, ObjectProperty[]>,
-    typeId: TypeId,
-    objectTypeDeclaration: ObjectTypeDeclaration,
-    typeDeclaration: TypeDeclaration
+    propertyOverrides: Map<FernIr.TypeId, FernIr.ObjectProperty[]>,
+    typeId: FernIr.TypeId,
+    objectTypeDeclaration: FernIr.ObjectTypeDeclaration,
+    typeDeclaration: FernIr.TypeDeclaration
 ): SerializableObject {
     const properties = (propertyOverrides.get(typeId) ?? objectTypeDeclaration.properties).map(
         (property) =>
@@ -87,10 +76,10 @@ export function generateSerializableObjectFromTypeDeclaration(
 
 export function generateUnionFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
-    propertyOverrides: Map<TypeId, ObjectProperty[]>,
-    typeId: TypeId,
-    unionTypeDeclaration: UnionTypeDeclaration,
-    typeDeclaration: TypeDeclaration
+    propertyOverrides: Map<FernIr.TypeId, FernIr.ObjectProperty[]>,
+    typeId: FernIr.TypeId,
+    unionTypeDeclaration: FernIr.UnionTypeDeclaration,
+    typeDeclaration: FernIr.TypeDeclaration
 ): DiscriminatedUnion {
     const properties = (propertyOverrides.get(typeId) ?? unionTypeDeclaration.baseProperties).map(
         (property) =>
@@ -123,8 +112,8 @@ export function generateUnionFromTypeDeclaration(
 
 export function generateUndiscriminatedUnionFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
-    unionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
-    typeDeclaration: TypeDeclaration
+    unionTypeDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration,
+    typeDeclaration: FernIr.TypeDeclaration
 ): UndiscriminatedUnion {
     const memberClasses = unionTypeDeclaration.members.map((member) =>
         classReferenceFactory.fromTypeReference(member.type)

@@ -5,9 +5,9 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { isOpenApiSpec } from "../api/config/OpenApiSpec";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
+import { isOpenApiSpec } from "../api/config/OpenApiSpec.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 
 describe("WorkspaceLoader", () => {
     let testDir: AbsoluteFilePath;

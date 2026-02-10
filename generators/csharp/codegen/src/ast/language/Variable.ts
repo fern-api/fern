@@ -1,9 +1,9 @@
-import { type Generation } from "../../context/generation-info";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { type Expression } from "../language/Expression";
-import { type ClassReference } from "../types/ClassReference";
-import { type Type } from "../types/IType";
+import { type Generation } from "../../context/generation-info.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { type Expression } from "../language/Expression.js";
+import { type ClassReference } from "../types/ClassReference.js";
+import { type Type } from "../types/IType.js";
 
 export declare namespace Variable {
     interface Args {

@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { KeywordArgument } from "./KeywordArgument";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { KeywordArgument } from "./KeywordArgument.js";
 
 export declare namespace MethodInvocation {
     interface Args {

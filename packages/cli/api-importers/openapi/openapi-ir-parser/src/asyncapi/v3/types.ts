@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { ChannelId } from "../sharedTypes";
+import { ChannelId } from "../sharedTypes.js";
 
 export interface DocumentV3 {
     asyncapi: string;

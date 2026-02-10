@@ -1,8 +1,8 @@
 import { readFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 // Pretty trivial command, but adding tests in case this breaks down the line
 describe("fern organization", () => {

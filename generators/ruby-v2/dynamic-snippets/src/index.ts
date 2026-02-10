@@ -1,1 +1,1 @@
-export { DynamicSnippetsGenerator } from "./DynamicSnippetsGenerator";
+export { DynamicSnippetsGenerator } from "./DynamicSnippetsGenerator.js";

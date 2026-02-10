@@ -1,6 +1,6 @@
 import { parseFileUploadRequest } from "@fern-api/fern-definition-schema";
 
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const NoExtensionsWithFileUploadRule: Rule = {
     name: "no-extensions-with-file-upload",

@@ -1,6 +1,5 @@
-import { dynamic } from "@fern-fern/ir-sdk/api";
-
-export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
+import { FernIr } from "@fern-fern/ir-sdk";
+export type EndpointSnippetRequest = Omit<FernIr.dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined;
 };
 
@@ -8,7 +7,9 @@ export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseU
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
  * convention doesn't match.
  */
-export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSnippetRequest): EndpointSnippetRequest {
+export function convertDynamicEndpointSnippetRequest(
+    request: FernIr.dynamic.EndpointSnippetRequest
+): EndpointSnippetRequest {
     return {
         ...request,
         baseURL: request.baseUrl

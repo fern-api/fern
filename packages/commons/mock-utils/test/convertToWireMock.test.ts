@@ -1,11 +1,10 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { IntermediateRepresentation as IRSerializer } from "@fern-fern/ir-sdk/serialization";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { WireMock } from "../index";
+import { WireMock } from "../index.js";
 
-const loadIr = (irPath: string): IntermediateRepresentation => {
+const loadIr = (irPath: string): FernIr.IntermediateRepresentation => {
     const irJson = JSON.parse(readFileSync(irPath, "utf-8"));
     const ir = IRSerializer.parse(irJson);
     if (!ir.ok) {

@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { generateFdrApiDefinitionAsString } from "./generateFdrApiDefinitionAsString";
+import { generateFdrApiDefinitionAsString } from "./generateFdrApiDefinitionAsString.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 

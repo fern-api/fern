@@ -9,33 +9,33 @@ import {
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";
-import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
-import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
-import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
-import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
-import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
-import { CustomExceptionInterceptorGenerator } from "./error/CustomExceptionInterceptorGenerator";
-import { ErrorGenerator } from "./error/ErrorGenerator";
-import { generateSdkTests } from "./generateSdkTests";
-import { InferredAuthTokenProviderGenerator } from "./inferred-auth/InferredAuthTokenProviderGenerator";
-import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
-import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
-import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
-import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator";
-import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator";
-import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
-import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
-import { buildReference } from "./reference/buildReference";
-import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
-import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator";
-import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator";
-import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
+import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator.js";
+import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
+import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
+import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator.js";
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator.js";
+import { CustomExceptionInterceptorGenerator } from "./error/CustomExceptionInterceptorGenerator.js";
+import { ErrorGenerator } from "./error/ErrorGenerator.js";
+import { generateSdkTests } from "./generateSdkTests.js";
+import { InferredAuthTokenProviderGenerator } from "./inferred-auth/InferredAuthTokenProviderGenerator.js";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
+import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator.js";
+import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator.js";
+import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator.js";
+import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator.js";
+import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator.js";
+import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator.js";
+import { buildReference } from "./reference/buildReference.js";
+import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
+import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
+import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
+import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator.js";
+import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
     protected constructContext({
@@ -44,7 +44,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: CsharpConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -86,7 +86,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         await this.generate(context);
     }
 
-    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+    private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 const wrappedRequestGenerator = new WrappedRequestGenerator({

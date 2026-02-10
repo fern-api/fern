@@ -3,11 +3,11 @@ import { getPosthogManager } from "@fern-api/posthog-manager";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
-import { doAuth0DeviceAuthorizationFlow } from "./auth0-login/doAuth0DeviceAuthorizationFlow";
-import { type Auth0TokenResponse, doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow";
-import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, VENUS_AUDIENCE } from "./constants";
+import { doAuth0DeviceAuthorizationFlow } from "./auth0-login/doAuth0DeviceAuthorizationFlow.js";
+import { type Auth0TokenResponse, doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow.js";
+import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, VENUS_AUDIENCE } from "./constants.js";
 
-export type { Auth0TokenResponse } from "./auth0-login/doAuth0LoginFlow";
+export type { Auth0TokenResponse } from "./auth0-login/doAuth0LoginFlow.js";
 
 export async function login(
     context: TaskContext,

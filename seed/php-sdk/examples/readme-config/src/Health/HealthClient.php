@@ -3,7 +3,7 @@
 namespace Seed\Health;
 
 use Seed\Health\Service\ServiceClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class HealthClient

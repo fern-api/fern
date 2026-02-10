@@ -14,10 +14,10 @@ import {
     InlinedRequestBodyProperty
 } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { convertAvailability } from "../convertDeclaration";
-import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { parseTypeName } from "../../utils/parseTypeName.js";
+import { convertAvailability } from "../convertDeclaration.js";
+import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration.js";
 
 export function convertHttpRequestBody({
     request,

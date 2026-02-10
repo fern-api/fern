@@ -1,22 +1,27 @@
 export type Namespace = string;
 
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { FernFilepath, IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
-import { join } from "path";
-import { is, text } from "..";
-import * as ast from "../ast";
-import { ClassReference } from "../ast/types/ClassReference";
-import { Type } from "../ast/types/IType";
-import { Collection, Primitive, Value } from "../ast/types/Type";
-import { CSharp } from "../csharp";
-import { type CsharpConfigSchema } from "../custom-config";
-import { lazy } from "../utils/lazy";
-import { camelCase, upperFirst } from "../utils/text";
+import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common";
-import { Extern } from "./extern";
-import { ModelNavigator } from "./model-navigator";
-import { NameRegistry } from "./name-registry";
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+type TypeId = FernIr.TypeId;
+type FernFilepath = FernIr.FernFilepath;
+
+import { join } from "path";
+import * as ast from "../ast/index.js";
+import { ClassReference } from "../ast/types/ClassReference.js";
+import { Type } from "../ast/types/IType.js";
+import { Collection, Primitive, Value } from "../ast/types/Type.js";
+import { CSharp } from "../csharp.js";
+import { type CsharpConfigSchema } from "../custom-config/index.js";
+import { is, text } from "../index.js";
+import { lazy } from "../utils/lazy.js";
+import { camelCase, upperFirst } from "../utils/text.js";
+
+import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common.js";
+import { Extern } from "./extern.js";
+import { ModelNavigator } from "./model-navigator.js";
+import { NameRegistry } from "./name-registry.js";
 
 /**
  * Central configuration and code generation context for C# SDK generation.
@@ -61,7 +66,7 @@ export class Generation {
     constructor(
         public readonly intermediateRepresentation:
             | IntermediateRepresentation
-            | FernIr.dynamic.DynamicIntermediateRepresentation,
+            | DynamicFernIr.dynamic.DynamicIntermediateRepresentation,
         private readonly apiName: string,
         private readonly customConfig: CsharpConfigSchema,
         private readonly generatorConfig: MinimalGeneratorConfig,
@@ -85,11 +90,11 @@ export class Generation {
             : ({} as IntermediateRepresentation);
         this.dir = is.DynamicIR.DynamicIntermediateRepresentation(intermediateRepresentation)
             ? intermediateRepresentation
-            : ({} as FernIr.dynamic.DynamicIntermediateRepresentation);
+            : ({} as DynamicFernIr.dynamic.DynamicIntermediateRepresentation);
     }
 
     public readonly ir: IntermediateRepresentation;
-    public readonly dir: FernIr.dynamic.DynamicIntermediateRepresentation;
+    public readonly dir: DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Utility for generating C# AST nodes and type references.
@@ -476,7 +481,7 @@ export class Generation {
      * the NameRegistry to ensure correct imports in generated code.
      */
     public readonly Types = lazy({
-        Arbitrary: (name: string) => new Primitive.AribitraryType(name, this),
+        Arbitrary: (name: string) => new Primitive.ArbitraryType(name, this),
         HttpMethodExtensions: () =>
             this.csharp.classReference({
                 namespace: this.namespaces.core,
@@ -1146,7 +1151,7 @@ export class Generation {
     /** One-time initializers that are called before any generator actually starts to generate code. */
     public readonly initializers = lazy({
         implicitNamespaces: () => {
-            // add all the implict namespaces
+            // add all the implicit namespaces
             for (const namespace of this.namespaces.implicit) {
                 this.registry.addImplicitNamespace(namespace);
             }

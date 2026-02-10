@@ -1,6 +1,6 @@
 import semverDiff from "semver-diff";
 
-import { ParsedVersion, parseVersion } from "./parseVersion";
+import { ParsedVersion, parseVersion } from "./parseVersion.js";
 
 /**
  * returns whether version a came after version b
@@ -8,6 +8,14 @@ import { ParsedVersion, parseVersion } from "./parseVersion";
 export function isVersionAhead(a: string, b: string): boolean {
     if (a === b) {
         return false;
+    }
+
+    // "latest" is treated as always being the most recent version.
+    if (b === "latest") {
+        return false;
+    }
+    if (a === "latest") {
+        return true;
     }
 
     const aVersion = parseVersion(a);

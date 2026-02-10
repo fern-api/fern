@@ -1,4 +1,4 @@
-import { FernGeneratorCli } from "../../../configuration/sdk";
+import { FernGeneratorCli } from "../../../configuration/sdk/index.js";
 
 const baseConfig: FernGeneratorCli.ReadmeConfig = {
     language: FernGeneratorCli.LanguageInfo.csharp({

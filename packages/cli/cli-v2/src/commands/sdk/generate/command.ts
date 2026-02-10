@@ -1,19 +1,19 @@
+import type { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { resolve } from "@fern-api/fs-utils";
 import type { Argv } from "yargs";
-import { GitOutputModeSchema } from "../../../../../config/lib/schemas";
-import { ApiChecker } from "../../../api/checker/ApiChecker";
-import type { Context } from "../../../context/Context";
-import type { GlobalArgs } from "../../../context/GlobalArgs";
-import { CliError } from "../../../errors/CliError";
-import type { Target } from "../../../sdk/config/Target";
-import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline";
-import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup";
-import type { TaskStageLabels } from "../../../ui/TaskStageLabels";
-import type { Workspace } from "../../../workspace/Workspace";
-import { command } from "../../_internal/command";
+import { ApiChecker } from "../../../api/checker/ApiChecker.js";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import type { Target } from "../../../sdk/config/Target.js";
+import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
+import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup.js";
+import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
+import type { Workspace } from "../../../workspace/Workspace.js";
+import { command } from "../../_internal/command.js";
 
 export declare namespace GenerateCommand {
     export interface Args extends GlobalArgs {
@@ -51,12 +51,12 @@ export declare namespace GenerateCommand {
 
 export class GenerateCommand {
     public async handle(context: Context, args: GenerateCommand.Args): Promise<void> {
-        this.validateArgs(args);
-
         const workspace = await context.loadWorkspaceOrThrow();
         if (workspace.sdks == null) {
             throw new Error("No SDKs configured in fern.yml");
         }
+
+        this.validateArgs({ workspace, args });
 
         const targets = this.getTargets({
             workspace,
@@ -169,7 +169,7 @@ export class GenerateCommand {
         }
     }
 
-    private validateArgs(args: GenerateCommand.Args): void {
+    private validateArgs({ workspace, args }: { workspace: Workspace; args: GenerateCommand.Args }): void {
         if (args.output != null && !args.preview) {
             throw new Error("The --output flag can only be used with --preview");
         }
@@ -179,7 +179,8 @@ export class GenerateCommand {
         if (args.group != null && args.target != null) {
             throw new Error("The --group and --target flags cannot be used together");
         }
-        if (args.group == null && args.target == null) {
+        const defaultGroup = workspace.sdks?.defaultGroup;
+        if (defaultGroup == null && args.group == null && args.target == null) {
             throw new Error("A --target or --group must be specified");
         }
     }
@@ -231,7 +232,7 @@ export class GenerateCommand {
         return targets.length === 1 ? "SDK" : "SDKs";
     }
 
-    private getGitOutputStageLabels(mode: GitOutputModeSchema): Partial<TaskStageLabels> {
+    private getGitOutputStageLabels(mode: schemas.GitOutputModeSchema): Partial<TaskStageLabels> {
         switch (mode) {
             case "push":
                 return {

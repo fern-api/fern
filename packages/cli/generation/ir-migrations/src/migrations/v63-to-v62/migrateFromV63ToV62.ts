@@ -1,8 +1,8 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { mapValues } from "lodash-es";
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
+import { IrSerialization } from "../../ir-serialization/index.js";
+import { IrVersions } from "../../ir-versions/index.js";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration.js";
 
 export const V63_TO_V62_MIGRATION: IrMigration<
     IrVersions.V63.ir.IntermediateRepresentation,

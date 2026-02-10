@@ -357,6 +357,10 @@ type InlineTypeRequest struct {
 	Request *MyInlineType `json:"request" url:"-"`
 }
 
+type WithJsonPropertyRequest struct {
+	Json *MyObject `json:"json,omitempty" url:"-"`
+}
+
 type LiteralEnumRequest struct {
 	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
 	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`

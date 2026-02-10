@@ -1,0 +1,38 @@
+type Query {
+  getUserProfile(id: ID!): User
+  getSystemInfo: SystemInfo
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+  updateUserProfile(id: ID!, input: UpdateUserInput!): User
+  resetSystem: Boolean
+}
+
+type Subscription {
+  userUpdates(userId: ID!): User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type SystemInfo {
+  version: String!
+  uptime: String!
+  status: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+}

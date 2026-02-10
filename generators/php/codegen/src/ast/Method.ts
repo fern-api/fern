@@ -1,12 +1,12 @@
-import { Access } from "./Access";
-import { ClassReference } from "./ClassReference";
-import { CodeBlock } from "./CodeBlock";
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { SELF, STATIC } from "./core/Constant";
-import { Writer } from "./core/Writer";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
+import { Access } from "./Access.js";
+import { ClassReference } from "./ClassReference.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { SELF, STATIC } from "./core/Constant.js";
+import { Writer } from "./core/Writer.js";
+import { Parameter } from "./Parameter.js";
+import { Type } from "./Type.js";
 
 export declare namespace Method {
     interface Args {

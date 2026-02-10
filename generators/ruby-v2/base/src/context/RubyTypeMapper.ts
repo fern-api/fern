@@ -1,19 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { AbstractRubyGeneratorContext } from "./AbstractRubyGeneratorContext";
+import { AbstractRubyGeneratorContext } from "./AbstractRubyGeneratorContext.js";
 
 export declare namespace RubyTypeMapper {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
         /* Defaults to false */
         unboxOptionals?: boolean;
         /* Defaults to false */
@@ -62,7 +54,7 @@ export class RubyTypeMapper {
     }
 
     public convertToClassReference(
-        declaredTypeName: DeclaredTypeName,
+        declaredTypeName: FernIr.DeclaredTypeName,
         { fullyQualified }: { fullyQualified?: boolean } = {}
     ): ruby.ClassReference {
         // In Ruby, modules are used for namespaces.
@@ -77,7 +69,7 @@ export class RubyTypeMapper {
         container,
         unboxOptionals
     }: {
-        container: ContainerType;
+        container: FernIr.ContainerType;
         unboxOptionals: boolean;
     }): ruby.Type {
         switch (container.type) {
@@ -105,8 +97,8 @@ export class RubyTypeMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): ruby.Type {
-        return PrimitiveTypeV1._visit<ruby.Type>(primitive.v1, {
+    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): ruby.Type {
+        return FernIr.PrimitiveTypeV1._visit<ruby.Type>(primitive.v1, {
             integer: () => ruby.Type.integer(),
             long: () => ruby.Type.integer(),
             uint: () => ruby.Type.integer(),
@@ -124,7 +116,7 @@ export class RubyTypeMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): ruby.Type {
+    private convertLiteral({ literal }: { literal: FernIr.Literal }): ruby.Type {
         switch (literal.type) {
             case "boolean":
                 return ruby.Type.boolean();
@@ -135,7 +127,13 @@ export class RubyTypeMapper {
         }
     }
 
-    private convertNamed({ named, fullyQualified }: { named: DeclaredTypeName; fullyQualified?: boolean }): ruby.Type {
+    private convertNamed({
+        named,
+        fullyQualified
+    }: {
+        named: FernIr.DeclaredTypeName;
+        fullyQualified?: boolean;
+    }): ruby.Type {
         const classReference = this.convertToClassReference(named, { fullyQualified });
         // Ruby doesn't have protobuf, but if you want to support special types, add here.
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);

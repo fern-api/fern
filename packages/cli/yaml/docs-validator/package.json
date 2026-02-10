@@ -48,6 +48,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/v3-importer-commons": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/cli-source-resolver": "workspace:*",
     "@types/estree": "^1.0.6",
     "@types/tinycolor2": "^1.4.6",
     "chalk": "^5.3.0",
