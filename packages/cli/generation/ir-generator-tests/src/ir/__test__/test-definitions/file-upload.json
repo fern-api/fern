@@ -6461,7 +6461,8 @@
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
-                                        }
+                                        },
+                                        "validation": null
                                     }
                                 },
                                 "v2Examples": {

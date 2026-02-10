@@ -399,7 +399,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "fields"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -3409,7 +3410,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "points"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -3537,7 +3539,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "points"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -3665,7 +3668,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "points"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -9012,7 +9016,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "positions"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -9140,7 +9145,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "rings"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -9875,7 +9881,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "positions"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -11914,7 +11921,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "messages"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -12240,7 +12248,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "components"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -12384,7 +12393,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "active_alerts"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -12736,7 +12746,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "active_conditions"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -13363,7 +13374,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "file"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -13757,7 +13769,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "message_type"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -13835,7 +13848,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "enum_type"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -13913,7 +13927,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "service"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -13991,7 +14006,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "extension"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -14759,7 +14775,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "field"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -14837,7 +14854,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "extension"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -14915,7 +14933,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "nested_type"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -14993,7 +15012,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "enum_type"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -15071,7 +15091,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "extension_range"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -15149,7 +15170,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "oneof_decl"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -15293,7 +15315,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "reserved_range"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -15854,7 +15877,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -15932,7 +15956,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "declaration"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -17793,7 +17818,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "value"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -17937,7 +17963,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "reserved_range"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -18377,7 +18404,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "method"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -19993,7 +20021,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -20415,7 +20444,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -22141,7 +22171,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "targets"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -22219,7 +22250,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "edition_defaults"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -22429,7 +22461,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -22623,7 +22656,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -22955,7 +22989,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -23305,7 +23340,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -23544,7 +23580,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -23972,7 +24009,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "uninterpreted_option"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -24241,7 +24279,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "name"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -26095,7 +26134,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "defaults"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -26671,7 +26711,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "location"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -27234,7 +27275,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "annotation"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -35198,7 +35240,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "payload_configurations"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -35534,7 +35577,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "effective_environment"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -36286,7 +36330,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "source_id_to_state"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -38087,7 +38132,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "emitter_notations"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -40673,7 +40719,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "sensors"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -41157,7 +41204,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "fields_of_view"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -42163,7 +42211,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "frequency_range_hz"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -42241,7 +42290,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "bandwidth_range_hz"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -42667,7 +42717,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "relationships"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -43992,7 +44043,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "schedules"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -44120,7 +44172,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "windows"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -44502,7 +44555,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "fuel"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -45361,7 +45415,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "target_matches"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -46656,7 +46711,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "task_definitions"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -49821,7 +49877,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "alternate_ids"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -51187,7 +51244,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "override"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -53485,7 +53543,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "decorrelated_entities"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -55845,7 +55904,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "predicates"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -55973,7 +56033,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "statements"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -57352,7 +57413,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "values"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -62803,7 +62865,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "initial_entities"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -65650,7 +65713,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "active_agents"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -65824,7 +65888,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "members"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -66964,7 +67029,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "initial_entities"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -67714,7 +67780,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "status"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -68371,7 +68438,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "tasks"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -71870,7 +71938,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "path"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -74671,7 +74740,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "priors"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -74749,7 +74819,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "participants"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -74827,7 +74898,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "control_areas"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -75021,7 +75093,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "priors"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -75099,7 +75172,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "participants"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -75177,7 +75251,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "control_areas"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -78658,7 +78733,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "path"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -80117,7 +80193,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "payloads_to_employ"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
@@ -80626,7 +80703,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                           "displayName": "payloads"
                         }
                       }
-                    }
+                    },
+                    "validation": null
                   }
                 },
                 "validation": null
