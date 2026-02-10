@@ -1,4 +1,4 @@
-import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, ContainerTypeValidation, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
@@ -56,8 +56,13 @@ export class ArraySchemaConverter extends AbstractConverter<
                         });
                     });
                 }
+                const containerType = ContainerType.list(convertedSchema.type);
+                const listValidation = this.getListValidation();
+                if (listValidation != null) {
+                    containerType.validation = ContainerTypeValidation.list(listValidation);
+                }
                 return {
-                    typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
+                    typeReference: TypeReference.container(containerType),
                     referencedTypes,
                     inlinedTypes: convertedSchema.inlinedTypes
                 };
@@ -65,5 +70,17 @@ export class ArraySchemaConverter extends AbstractConverter<
         }
 
         return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, referencedTypes: new Set(), inlinedTypes: {} };
+    }
+
+    private getListValidation():
+        | { minItems: number | undefined; maxItems: number | undefined; uniqueItems: boolean | undefined }
+        | undefined {
+        const minItems = this.schema.minItems;
+        const maxItems = this.schema.maxItems;
+        const uniqueItems = this.schema.uniqueItems;
+        if (minItems == null && maxItems == null && uniqueItems == null) {
+            return undefined;
+        }
+        return { minItems, maxItems, uniqueItems };
     }
 }

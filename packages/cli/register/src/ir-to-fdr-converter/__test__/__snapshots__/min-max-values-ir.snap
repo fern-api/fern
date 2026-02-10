@@ -1515,7 +1515,13 @@
                       "type": "primitive",
                     },
                     "type": "list",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 10,
+                      "minItems": 1,
+                      "type": "list",
+                      "uniqueItems": undefined,
+                    },
                   },
                   "type": "container",
                 },
@@ -1586,7 +1592,13 @@
                       "type": "primitive",
                     },
                     "type": "list",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 5,
+                      "minItems": 1,
+                      "type": "list",
+                      "uniqueItems": undefined,
+                    },
                   },
                   "type": "container",
                 },
@@ -1650,7 +1662,12 @@
                       "type": "primitive",
                     },
                     "type": "map",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 20,
+                      "minItems": 1,
+                      "type": "map",
+                    },
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
@@ -1732,7 +1749,12 @@
                       "type": "primitive",
                     },
                     "type": "map",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 50,
+                      "minItems": 0,
+                      "type": "map",
+                    },
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
@@ -1980,7 +2002,13 @@
                       "type": "primitive",
                     },
                     "type": "list",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 100,
+                      "minItems": 0,
+                      "type": "list",
+                      "uniqueItems": undefined,
+                    },
                   },
                   "type": "container",
                 },
@@ -2556,7 +2584,13 @@
                       "type": "primitive",
                     },
                     "type": "list",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 10,
+                      "minItems": 0,
+                      "type": "list",
+                      "uniqueItems": undefined,
+                    },
                   },
                   "type": "container",
                 },
@@ -2627,7 +2661,13 @@
                       "type": "primitive",
                     },
                     "type": "list",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 5,
+                      "minItems": 0,
+                      "type": "list",
+                      "uniqueItems": undefined,
+                    },
                   },
                   "type": "container",
                 },
@@ -2691,7 +2731,12 @@
                       "type": "primitive",
                     },
                     "type": "map",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 20,
+                      "minItems": 0,
+                      "type": "map",
+                    },
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
@@ -2773,7 +2818,12 @@
                       "type": "primitive",
                     },
                     "type": "map",
-                    "validation": undefined,
+                    "validation": {
+                      "_visit": [Function],
+                      "maxItems": 50,
+                      "minItems": 0,
+                      "type": "map",
+                    },
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
