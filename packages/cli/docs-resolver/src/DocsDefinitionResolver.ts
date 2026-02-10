@@ -1716,8 +1716,14 @@ export class DocsDefinitionResolver {
                     overviewPageId = FernNavigation.PageId(relPath);
                 }
 
+                // Filter out child pages whose slug matches the section's slug
+                // (they're already represented by the section's overview page)
+                const filteredChildren = (node.children ?? []).filter(
+                    (child) => !(child.type === "page" && child.slug === node.slug)
+                );
+
                 const sectionChildren = await this.convertLibraryNavNodes(
-                    node.children ?? [],
+                    filteredChildren,
                     outputDir,
                     sectionSlug
                 );
