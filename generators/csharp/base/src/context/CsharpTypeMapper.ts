@@ -1,17 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    NamedType,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { GeneratorContext } from "./GeneratorContext";
+
+type ContainerType = FernIr.ContainerType;
+type DeclaredTypeName = FernIr.DeclaredTypeName;
+type Literal = FernIr.Literal;
+type NamedType = FernIr.NamedType;
+type PrimitiveType = FernIr.PrimitiveType;
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type TypeReference = FernIr.TypeReference;
+
+import { GeneratorContext } from "./GeneratorContext.js";
 
 export declare namespace CsharpTypeMapper {
     interface Args {
@@ -169,7 +169,7 @@ export class CsharpTypeMapper extends WithGeneration {
     }
 
     private convertPrimitive({ primitive }: { primitive: PrimitiveType }): ast.Type {
-        return PrimitiveTypeV1._visit<ast.Type>(primitive.v1, {
+        return FernIr.PrimitiveTypeV1._visit<ast.Type>(primitive.v1, {
             integer: () => this.Primitive.integer,
             long: () => this.Primitive.long,
             uint: () => this.Primitive.uint,

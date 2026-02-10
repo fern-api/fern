@@ -41369,6 +41369,10 @@
                         }
                     },
                     "url": "https://production.com/api",
+                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 },
                 {
@@ -41393,6 +41397,10 @@
                         }
                     },
                     "url": "https://staging.com/api",
+                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
                     "docs": null
                 }
             ]

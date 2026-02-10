@@ -1,7 +1,7 @@
 import { ts, WriterFunction } from "ts-morph";
 
-import { getTextOfTsKeyword } from "../codegen-utils/getTextOfTsKeyword";
-import { getTextOfTsNode } from "../codegen-utils/getTextOfTsNode";
+import { getTextOfTsKeyword } from "../codegen-utils/getTextOfTsKeyword.js";
+import { getTextOfTsNode } from "../codegen-utils/getTextOfTsNode.js";
 
 export interface TsNodeMaybeWithDocs {
     node: ts.Node;

@@ -14,6 +14,7 @@
         "description": "Tests path parameter with explode=true (non-default)",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -148,6 +149,7 @@
         "description": "Tests query parameters with various explode settings",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },
@@ -395,6 +397,7 @@
         "description": "Tests path parameter with default explode (should be omitted)",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },

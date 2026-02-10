@@ -1,10 +1,10 @@
 import type { Element } from "hast";
 import { CONTINUE, EXIT, SKIP, visit } from "unist-util-visit";
 
-import { getFirstChild } from "../extract/firstChild";
-import { getText } from "../extract/text";
-import { findTitle } from "../extract/title";
-import { scrapedNavigationEntry, scrapedNavigationPage, scrapedNavigationSection } from "../types/scrapedNavigation";
+import { getFirstChild } from "../extract/firstChild.js";
+import { getText } from "../extract/text.js";
+import { findTitle } from "../extract/title.js";
+import { scrapedNavigationEntry, scrapedNavigationPage, scrapedNavigationSection } from "../types/scrapedNavigation.js";
 
 export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection> {
     const result: Array<scrapedNavigationSection> = [];

@@ -1,6 +1,6 @@
-import { Literal } from "../code/Literal";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { Literal } from "../code/Literal.js";
+import { AstNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
 
 export interface Type extends AstNode {
     /**

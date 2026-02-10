@@ -1,2 +1,2 @@
-export * from "./SdkCustomConfig";
-export * from "./schema/index";
+export * from "./SdkCustomConfig.js";
+export * from "./schema/index.js";

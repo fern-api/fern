@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidationViolation } from "../../../ValidationViolation";
-import { NoObjectSinglePropertyKeyRule } from "../no-missing-union-variant-key";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { NoObjectSinglePropertyKeyRule } from "../no-missing-union-variant-key.js";
 
 describe("valid-field-names", () => {
     it("simple", async () => {

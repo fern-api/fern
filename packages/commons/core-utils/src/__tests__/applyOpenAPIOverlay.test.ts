@@ -1,4 +1,4 @@
-import { applyOpenAPIOverlay } from "../applyOpenAPIOverlay";
+import { applyOpenAPIOverlay } from "../applyOpenAPIOverlay.js";
 
 describe("applyOpenAPIOverlay", () => {
     it("should merge updates into a schema at a JSONPath target", () => {

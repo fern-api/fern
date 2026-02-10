@@ -45,6 +45,27 @@ func (p *PostSubmitRequest) SetEmail(email string) {
 	p.require(postSubmitRequestFieldEmail)
 }
 
+func (p *PostSubmitRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler PostSubmitRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PostSubmitRequest(body)
+	return nil
+}
+
+func (p *PostSubmitRequest) MarshalJSON() ([]byte, error) {
+	type embed PostSubmitRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	postSubmitResponseFieldStatus  = big.NewInt(1 << 0)
 	postSubmitResponseFieldMessage = big.NewInt(1 << 1)

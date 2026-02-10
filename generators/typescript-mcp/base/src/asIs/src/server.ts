@@ -2,7 +2,7 @@ import { ServerOptions } from "@modelcontextprotocol/sdk/server/index.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { Implementation } from "@modelcontextprotocol/sdk/types.js";
 
-import * as tools from "./tools";
+import * as tools from "./tools.js";
 
 const packageJson = require("../package.json") as any;
 if (!packageJson.name || !packageJson.version) {

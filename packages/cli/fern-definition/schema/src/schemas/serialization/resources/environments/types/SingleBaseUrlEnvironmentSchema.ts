@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithAudiences } from "../../commons/types/WithAudiences.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
+import { ServerVariableSchema } from "./ServerVariableSchema.js";
 
 export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
     serializers.SingleBaseUrlEnvironmentSchema.Raw,
@@ -12,6 +13,9 @@ export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         url: core.serialization.string(),
+        "default-url": core.serialization.string().optional(),
+        "url-template": core.serialization.string().optional(),
+        variables: core.serialization.list(ServerVariableSchema).optional(),
     })
     .extend(WithAudiences)
     .extend(WithDocsSchema);
@@ -19,5 +23,8 @@ export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
 export declare namespace SingleBaseUrlEnvironmentSchema {
     export interface Raw extends WithAudiences.Raw, WithDocsSchema.Raw {
         url: string;
+        "default-url"?: string | null;
+        "url-template"?: string | null;
+        variables?: ServerVariableSchema.Raw[] | null;
     }
 }

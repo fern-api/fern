@@ -1,5 +1,65 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.3
+  changelogEntry:
+    - summary: |
+        Fix body property named `json` clashing with the `json` module import when generating
+        `json.dumps(jsonable_encoder(...))` for multipart file upload requests. The `json` module
+        is now aliased as `_json` when a body property named `json` is detected.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 4.55.2
+  changelogEntry:
+    - summary: |
+        Add websocket compatibility shim for websockets library v14. The generated SDK now
+        uses a `core/websocket_compat.py` module that abstracts the `InvalidStatusCode` vs
+        `InvalidStatus` exception difference, ensuring compatibility with both websockets
+        v12-13 and v14+.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 4.55.1
+  changelogEntry:
+    - summary: |
+        Adds back intermediate raw_clients which were removed in 4.51.2.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 4.55.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL templating. Server variables defined in OpenAPI specs are
+        now exposed as optional constructor parameters (e.g., `region`, `city`) with runtime
+        URL template interpolation. When `x-fern-default-url` is present, the generated SDK
+        uses that as the environment default. Works for both single and multiple base URL
+        environments.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 4.54.4
+  changelogEntry:
+    - summary: |
+        The `use_provided_defaults` config option no longer applies defaults to
+        inlined request body properties.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 62
+- version: 4.54.3
+  changelogEntry:
+    - summary: |
+        Fix mypy type checking compatibility with pydantic field aliases. When fields have aliases
+        (e.g., `bucket_id` with alias `bucketId`), the pydantic.Field(alias=...) is now placed inside
+        the Annotated type hint instead of as the default value. This makes mypy see the Python field
+        name in the constructor signature while Pydantic still uses the alias for JSON serialization.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 62
+
 - version: 4.54.2
   changelogEntry:
     - summary: |

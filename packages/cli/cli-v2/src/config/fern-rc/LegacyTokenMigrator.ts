@@ -4,7 +4,7 @@ import { createVenusService } from "@fern-api/core";
 import { doesPathExist } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { FernRcSchemaLoader } from "./FernRcSchemaLoader";
+import { FernRcSchemaLoader } from "./FernRcSchemaLoader.js";
 
 // Legacy access tokens do not contain an email address in the JWT claims.
 // We attempt to fetch the user's email via the Venus API, but fall back

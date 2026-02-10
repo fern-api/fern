@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../index.js";
 
 export interface WorkspaceRunDetails {
-    exceptionV2?: SeedTrace.ExceptionV2;
-    exception?: SeedTrace.ExceptionInfo;
+    exceptionV2?: SeedTrace.ExceptionV2 | undefined;
+    exception?: SeedTrace.ExceptionInfo | undefined;
     stdout: string;
 }

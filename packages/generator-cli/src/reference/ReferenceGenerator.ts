@@ -1,6 +1,4 @@
 import type fs from "fs";
-
-import type { FernGeneratorCli } from "../configuration/sdk";
 import type {
     EndpointReference,
     LinkedText,
@@ -8,8 +6,9 @@ import type {
     ReferenceSection,
     RelativeLocation,
     RootPackageReferenceSection
-} from "../configuration/sdk/api";
-import { StreamWriter, StringWriter, type Writer } from "../utils/Writer";
+} from "../configuration/sdk/api/index.js";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { StreamWriter, StringWriter, type Writer } from "../utils/Writer.js";
 
 export class ReferenceGenerator {
     private referenceConfig: FernGeneratorCli.ReferenceConfig;

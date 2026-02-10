@@ -20,11 +20,11 @@ $ pnpm add @boundaryml/baml
 
 import type { BamlRuntime, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Video, Collector } from "@boundaryml/baml"
 import { toBamlError } from "@boundaryml/baml"
-import type { Checked, Check } from "./types"
-import type { partial_types } from "./partial_types"
-import type * as types from "./types"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
-import type TypeBuilder from "./type_builder"
+import type { Checked, Check } from "./types.js"
+import type { partial_types } from "./partial_types.js"
+import type * as types from "./types.js"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types.js"
+import type TypeBuilder from "./type_builder.js"
 
 export class LlmResponseParser {
   constructor(private runtime: BamlRuntime, private ctxManager: BamlCtxManager) {}

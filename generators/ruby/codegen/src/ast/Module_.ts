@@ -1,11 +1,10 @@
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
-
-import { LocationGenerator } from "../utils/LocationGenerator";
-import { BLOCK_END } from "../utils/RubyConstants";
-import { Class_ } from "./classes/Class_";
-import { ClassReference } from "./classes/ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Import } from "./Import";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
+import { LocationGenerator } from "../utils/LocationGenerator.js";
+import { BLOCK_END } from "../utils/RubyConstants.js";
+import { Class_ } from "./classes/Class_.js";
+import { ClassReference } from "./classes/ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { Import } from "./Import.js";
 
 export declare namespace Module_ {
     export interface Init extends AstNode.Init {
@@ -45,7 +44,7 @@ export class Module_ extends AstNode {
     }: {
         locationGenerator: LocationGenerator;
         child: T;
-        path?: FernFilepath;
+        path?: FernIr.FernFilepath;
         arbitraryImports?: Import[];
         includeFilename?: boolean;
         isType?: boolean;

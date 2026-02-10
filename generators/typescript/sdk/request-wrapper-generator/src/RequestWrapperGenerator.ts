@@ -1,14 +1,14 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
 
-import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
+import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl.js";
 
 export declare namespace RequestWrapperGenerator {
     export namespace generateRequestWrapper {
         export interface Args {
-            service: HttpService;
-            endpoint: HttpEndpoint;
+            service: FernIr.HttpService;
+            endpoint: FernIr.HttpEndpoint;
             wrapperName: string;
             packageId: PackageId;
             includeSerdeLayer: boolean;

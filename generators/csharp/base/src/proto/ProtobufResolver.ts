@@ -1,16 +1,18 @@
 import { fail } from "node:assert";
 import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
-import {
-    ProtobufFile,
-    ProtobufService,
-    ProtobufType,
-    ServiceId,
-    TypeId,
-    WellKnownProtobufType
-} from "@fern-fern/ir-sdk/api";
-import { GeneratorContext } from "../cli";
-import { CsharpTypeMapper } from "../context/CsharpTypeMapper";
-import { ResolvedWellKnownProtobufType } from "./ResolvedWellKnownProtobufType";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ProtobufFile = FernIr.ProtobufFile;
+type ProtobufService = FernIr.ProtobufService;
+type ProtobufType = FernIr.ProtobufType;
+type ServiceId = FernIr.ServiceId;
+type TypeId = FernIr.TypeId;
+type WellKnownProtobufType = FernIr.WellKnownProtobufType;
+const WellKnownProtobufType = FernIr.WellKnownProtobufType;
+
+import { GeneratorContext } from "../cli/index.js";
+import { CsharpTypeMapper } from "../context/CsharpTypeMapper.js";
+import { ResolvedWellKnownProtobufType } from "./ResolvedWellKnownProtobufType.js";
 
 export class ProtobufResolver extends WithGeneration {
     private csharpTypeMapper: CsharpTypeMapper;

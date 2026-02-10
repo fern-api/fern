@@ -8,8 +8,8 @@ import { python } from "@fern-api/python-ast";
 import { BasePythonCustomConfigSchema } from "@fern-api/python-browser-compatible-base";
 import { camelCase, snakeCase } from "lodash-es";
 
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];
 

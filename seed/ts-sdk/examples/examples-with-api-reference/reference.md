@@ -597,15 +597,7 @@ await client.service.createBigEntity({
         name: "name",
         nodes: [{
                 name: "name",
-                nodes: [{
-                        name: "name",
-                        nodes: [],
-                        trees: []
-                    }, {
-                        name: "name",
-                        nodes: [],
-                        trees: []
-                    }],
+                nodes: [],
                 trees: [{
                         nodes: []
                     }, {
@@ -613,15 +605,7 @@ await client.service.createBigEntity({
                     }]
             }, {
                 name: "name",
-                nodes: [{
-                        name: "name",
-                        nodes: [],
-                        trees: []
-                    }, {
-                        name: "name",
-                        nodes: [],
-                        trees: []
-                    }],
+                nodes: [],
                 trees: [{
                         nodes: []
                     }, {
@@ -668,15 +652,7 @@ await client.service.createBigEntity({
                         name: "name",
                         contents: "contents"
                     }],
-                directories: [{
-                        name: "name",
-                        files: [],
-                        directories: []
-                    }, {
-                        name: "name",
-                        files: [],
-                        directories: []
-                    }]
+                directories: []
             }, {
                 name: "name",
                 files: [{
@@ -686,15 +662,7 @@ await client.service.createBigEntity({
                         name: "name",
                         contents: "contents"
                     }],
-                directories: [{
-                        name: "name",
-                        files: [],
-                        directories: []
-                    }, {
-                        name: "name",
-                        files: [],
-                        directories: []
-                    }]
+                directories: []
             }]
     },
     moment: {

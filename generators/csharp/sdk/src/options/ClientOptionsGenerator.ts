@@ -2,10 +2,10 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator.js";
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
@@ -89,7 +89,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
 
     private createBaseUrlField(classOrInterface: ast.Interface | ast.Class): ast.Field | undefined {
         const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
-        let defaultEnvironment: Name | undefined = undefined;
+        let defaultEnvironment: FernIr.Name | undefined = undefined;
         if (defaultEnvironmentId != null) {
             defaultEnvironment = this.context.ir.environments?.environments._visit({
                 singleBaseUrl: (value) => {

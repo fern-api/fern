@@ -1,22 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
-import {
-    ContainerType,
-    DeclaredTypeName,
-    Literal,
-    Name,
-    PrimitiveType,
-    PrimitiveTypeV1,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { isEqual, uniqWith } from "lodash-es";
 
-import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
+import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext.js";
 
 export declare namespace PhpTypeMapper {
     interface Args {
-        reference: TypeReference;
+        reference: FernIr.TypeReference;
         /*
          * By default, we represent enums as strings, with a phpstan phpdoc referencing the generated enum. If this flag is
          * is true, then we reference the enum type directly.
@@ -50,7 +41,7 @@ export class PhpTypeMapper {
         }
     }
 
-    public convertLiteral({ literal }: { literal: Literal }): php.Type {
+    public convertLiteral({ literal }: { literal: FernIr.Literal }): php.Type {
         switch (literal.type) {
             case "boolean":
                 return php.Type.literalBoolean(literal.boolean);
@@ -59,14 +50,17 @@ export class PhpTypeMapper {
         }
     }
 
-    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): php.ClassReference {
+    public convertToClassReference(declaredTypeName: { typeId: FernIr.TypeId; name: FernIr.Name }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getLocationForTypeId(declaredTypeName.typeId).namespace
         });
     }
 
-    public convertToTraitClassReference(declaredTypeName: { typeId: TypeId; name: Name }): php.ClassReference {
+    public convertToTraitClassReference(declaredTypeName: {
+        typeId: FernIr.TypeId;
+        name: FernIr.Name;
+    }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getTraitLocationForTypeId(declaredTypeName.typeId).namespace
@@ -77,7 +71,7 @@ export class PhpTypeMapper {
         container,
         preserveEnums
     }: {
-        container: ContainerType;
+        container: FernIr.ContainerType;
         preserveEnums: boolean;
     }): php.Type {
         switch (container.type) {
@@ -101,8 +95,8 @@ export class PhpTypeMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): php.Type {
-        return PrimitiveTypeV1._visit<php.Type>(primitive.v1, {
+    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): php.Type {
+        return FernIr.PrimitiveTypeV1._visit<php.Type>(primitive.v1, {
             integer: () => php.Type.int(),
             long: () => php.Type.int(),
             uint: () => php.Type.int(),
@@ -120,7 +114,13 @@ export class PhpTypeMapper {
         });
     }
 
-    private convertNamed({ named, preserveEnums }: { named: DeclaredTypeName; preserveEnums: boolean }): php.Type {
+    private convertNamed({
+        named,
+        preserveEnums
+    }: {
+        named: FernIr.DeclaredTypeName;
+        preserveEnums: boolean;
+    }): php.Type {
         const classReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {

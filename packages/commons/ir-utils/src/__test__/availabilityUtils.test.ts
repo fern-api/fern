@@ -1,6 +1,6 @@
 import { AvailabilityStatus } from "@fern-api/ir-sdk";
 
-import { isMarkedUnstable } from "../utils/availabilityUtils";
+import { isMarkedUnstable } from "../utils/availabilityUtils.js";
 
 describe("isMarkedUnstable", () => {
     it("should return false if the availability is undefined", () => {

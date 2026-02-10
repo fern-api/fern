@@ -2,6 +2,17 @@
     "endpoints": [
         {
             "id": {
+                "path": "/stream-no-terminator",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamWithoutTerminator"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tssego \"github.com/fern-api/sse-go\"\n\tssegoclient \"github.com/fern-api/sse-go/client\"\n)\n\nclient := ssegoclient.NewClient()\nresponse, err := client.Completions.StreamWithoutTerminator(\n\tcontext.TODO(),\n\t\u0026ssego.StreamCompletionRequestWithoutTerminator{\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/stream",
                 "method": "POST",
                 "identifier_override": "endpoint_completions.stream"

@@ -1,4 +1,4 @@
-import { SdkGeneratorCli } from "./SdkGeneratorCli";
+import { SdkGeneratorCli } from "./SdkGeneratorCli.js";
 
 void runCli();
 

@@ -1,8 +1,8 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
-import { Semaphore } from "../../../Semaphore";
+import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
+import { Semaphore } from "../../../Semaphore.js";
 
 export declare namespace ScriptRunner {
     interface RunArgs {

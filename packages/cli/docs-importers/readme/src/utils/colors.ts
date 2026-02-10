@@ -2,7 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import type { Root as HastRoot } from "hast";
 import { CONTINUE, visit } from "unist-util-visit";
 
-import { defaultColors } from "../constants";
+import { defaultColors } from "../constants.js";
 
 function rgbToHex(color: string): string | undefined {
     if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {

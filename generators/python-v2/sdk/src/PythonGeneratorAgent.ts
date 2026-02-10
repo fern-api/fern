@@ -3,12 +3,11 @@ import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
-    private publishConfig: PublishingConfig | undefined;
+    private publishConfig: FernIr.PublishingConfig | undefined;
 
     public constructor({
         logger,
@@ -17,7 +16,7 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
     }) {
         super({ logger, config, selfHosted: ir.selfHosted });
         this.publishConfig = ir.publishConfig;

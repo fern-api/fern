@@ -6,8 +6,8 @@ export interface TraceResponseV2 {
     submissionId: SeedTrace.SubmissionId;
     lineNumber: number;
     file: SeedTrace.TracedFile;
-    returnValue?: SeedTrace.DebugVariableValue;
-    expressionLocation?: SeedTrace.ExpressionLocation;
+    returnValue?: SeedTrace.DebugVariableValue | undefined;
+    expressionLocation?: SeedTrace.ExpressionLocation | undefined;
     stack: SeedTrace.StackInformation;
-    stdout?: string;
+    stdout?: string | undefined;
 }

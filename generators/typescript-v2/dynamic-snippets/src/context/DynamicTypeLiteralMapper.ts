@@ -1,9 +1,8 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { ObjectPropertyAccess } from "@fern-api/dynamic-ir-sdk/api";
 import { ts } from "@fern-api/typescript-ast";
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 const UNION_VALUE_KEY = "value";
 
@@ -488,10 +487,14 @@ export class DynamicTypeLiteralMapper {
             return properties;
         }
         if (convertOpts.isForRequest) {
-            properties = properties.filter((prop) => prop.propertyAccess !== ObjectPropertyAccess.ReadOnly);
+            properties = properties.filter(
+                (prop) => prop.propertyAccess !== FernIr.dynamic.ObjectPropertyAccess.ReadOnly
+            );
         }
         if (convertOpts.isForResponse) {
-            properties = properties.filter((prop) => prop.propertyAccess !== ObjectPropertyAccess.WriteOnly);
+            properties = properties.filter(
+                (prop) => prop.propertyAccess !== FernIr.dynamic.ObjectPropertyAccess.WriteOnly
+            );
         }
         return properties;
     }
@@ -589,7 +592,7 @@ export class DynamicTypeLiteralMapper {
         as,
         convertOpts
     }: {
-        primitive: FernIr.PrimitiveTypeV1;
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
         convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;

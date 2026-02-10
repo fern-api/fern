@@ -1,14 +1,13 @@
 import { assertDefined } from "@fern-api/core-utils";
-import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
-
+import { FernIr } from "@fern-fern/ir-sdk";
 export class CycleDetector {
-    public constructor(private readonly ir: IntermediateRepresentation) {}
+    public constructor(private readonly ir: FernIr.IntermediateRepresentation) {}
 
     public detectIllegalCycles() {
         const dependencyGraph = this.buildRequiredDependencyGraph();
-        const visited = new Set<TypeId>();
-        const visiting = new Set<TypeId>();
-        const stack: TypeId[] = [];
+        const visited = new Set<FernIr.TypeId>();
+        const visiting = new Set<FernIr.TypeId>();
+        const stack: FernIr.TypeId[] = [];
 
         const typeIds = Object.keys(this.ir.types);
 
@@ -35,8 +34,8 @@ export class CycleDetector {
      * wrappers are intentionally ignored, because those provide a finite base case
      * (e.g. empty collection or null), which makes such cycles representable in JSON.
      */
-    private buildRequiredDependencyGraph(): Map<TypeId, TypeId[]> {
-        const graph = new Map<TypeId, TypeId[]>();
+    private buildRequiredDependencyGraph(): Map<FernIr.TypeId, FernIr.TypeId[]> {
+        const graph = new Map<FernIr.TypeId, FernIr.TypeId[]>();
 
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
             const deps = this.getRequiredDependenciesForType(typeDeclaration);
@@ -46,8 +45,8 @@ export class CycleDetector {
         return graph;
     }
 
-    private getRequiredDependenciesForType(typeDeclaration: TypeDeclaration): TypeId[] {
-        const dependencies = new Set<TypeId>();
+    private getRequiredDependenciesForType(typeDeclaration: FernIr.TypeDeclaration): FernIr.TypeId[] {
+        const dependencies = new Set<FernIr.TypeId>();
 
         typeDeclaration.shape._visit({
             alias: (aliasShape) => {
@@ -107,15 +106,15 @@ export class CycleDetector {
         return Array.from(dependencies);
     }
 
-    private getRequiredNamedDependencyForType(typeReference: TypeReference): TypeId | null {
+    private getRequiredNamedDependencyForType(typeReference: FernIr.TypeReference): FernIr.TypeId | null {
         const unaliased = this.resolveAlias(typeReference);
         return unaliased.type === "named" ? unaliased.typeId : null;
     }
 
-    private resolveAlias(typeReference: TypeReference): TypeReference {
-        const visitedAliases = new Set<TypeId>();
+    private resolveAlias(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        const visitedAliases = new Set<FernIr.TypeId>();
 
-        const unwrapAlias = (ref: TypeReference): TypeReference => {
+        const unwrapAlias = (ref: FernIr.TypeReference): FernIr.TypeReference => {
             if (ref.type === "named") {
                 const typeDeclaration = this.ir.types[ref.typeId];
                 if (
@@ -134,12 +133,12 @@ export class CycleDetector {
     }
 
     private dfsFindCycle(
-        typeId: TypeId,
-        graph: Map<TypeId, TypeId[]>,
-        visited: Set<TypeId>,
-        visiting: Set<TypeId>,
-        stack: TypeId[]
-    ): TypeId[] | undefined {
+        typeId: FernIr.TypeId,
+        graph: Map<FernIr.TypeId, FernIr.TypeId[]>,
+        visited: Set<FernIr.TypeId>,
+        visiting: Set<FernIr.TypeId>,
+        stack: FernIr.TypeId[]
+    ): FernIr.TypeId[] | undefined {
         visiting.add(typeId);
         stack.push(typeId);
 
@@ -168,7 +167,7 @@ export class CycleDetector {
         return undefined;
     }
 
-    private formatCycleError(cycle: TypeId[]): string {
+    private formatCycleError(cycle: FernIr.TypeId[]): string {
         const prettyPath = cycle
             .map((typeId) => {
                 const typeDeclaration = this.ir.types[typeId];
@@ -193,9 +192,9 @@ export class CycleDetector {
      * Swift enums (generated for unions / undiscriminated unions) should be
      * marked as `indirect`.
      */
-    public computeRecursiveTypeIdsForSwiftEnums(): Set<TypeId> {
-        const nodes = new Set<TypeId>(Object.keys(this.ir.types));
-        const adjacency = new Map<TypeId, TypeId[]>();
+    public computeRecursiveTypeIdsForSwiftEnums(): Set<FernIr.TypeId> {
+        const nodes = new Set<FernIr.TypeId>(Object.keys(this.ir.types));
+        const adjacency = new Map<FernIr.TypeId, FernIr.TypeId[]>();
 
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
             const referenced = typeDeclaration.referencedTypes ? Array.from(typeDeclaration.referencedTypes) : [];
@@ -203,7 +202,7 @@ export class CycleDetector {
         }
 
         const sccs = this.computeStronglyConnectedComponents(nodes, adjacency);
-        const recursiveTypeIds = new Set<TypeId>();
+        const recursiveTypeIds = new Set<FernIr.TypeId>();
 
         for (const scc of sccs) {
             if (scc.length > 1) {
@@ -226,16 +225,16 @@ export class CycleDetector {
      * generated as `Indirect<...>` in Swift in order to break legal recursive
      * value-type cycles.
      */
-    public computeIndirectPropertiesMapping(): Map<TypeId, Set<string>> {
+    public computeIndirectPropertiesMapping(): Map<FernIr.TypeId, Set<string>> {
         type Edge = {
-            from: TypeId;
-            to: TypeId;
+            from: FernIr.TypeId;
+            to: FernIr.TypeId;
             isOptionalLike: boolean;
             propertyWireValue: string;
         };
 
-        const edgesByFrom = new Map<TypeId, Edge[]>();
-        const nodes = new Set<TypeId>();
+        const edgesByFrom = new Map<FernIr.TypeId, Edge[]>();
+        const nodes = new Set<FernIr.TypeId>();
 
         // 1) Build edges for the Swift recursion graph
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
@@ -279,9 +278,9 @@ export class CycleDetector {
         }
 
         // Build adjacency list for SCC computation
-        const adjacency = new Map<TypeId, TypeId[]>();
+        const adjacency = new Map<FernIr.TypeId, FernIr.TypeId[]>();
         for (const [from, edges] of edgesByFrom.entries()) {
-            const neighbors = new Set<TypeId>();
+            const neighbors = new Set<FernIr.TypeId>();
             for (const edge of edges) {
                 neighbors.add(edge.to);
             }
@@ -291,7 +290,7 @@ export class CycleDetector {
         // 2) Compute strongly-connected components
         const sccs = this.computeStronglyConnectedComponents(nodes, adjacency);
 
-        const indirectPropertiesMapping = new Map<TypeId, Set<string>>();
+        const indirectPropertiesMapping = new Map<FernIr.TypeId, Set<string>>();
 
         // 3) Decide which edges inside each SCC should be boxed as Indirect
         for (const scc of sccs) {
@@ -299,7 +298,7 @@ export class CycleDetector {
                 continue;
             }
 
-            const sccSet = new Set<TypeId>(scc);
+            const sccSet = new Set<FernIr.TypeId>(scc);
 
             const edgesInScc: Edge[] = [];
             for (const typeId of scc) {
@@ -353,8 +352,8 @@ export class CycleDetector {
      * an edge in the Swift recursion graph.
      */
     private getSwiftRecursionEdgeForProperty(
-        propertyTypeReference: TypeReference
-    ): { targetTypeId: TypeId; isOptionalLike: boolean } | null {
+        propertyTypeReference: FernIr.TypeReference
+    ): { targetTypeId: FernIr.TypeId; isOptionalLike: boolean } | null {
         const resolved = this.resolveAlias(propertyTypeReference);
 
         if (resolved.type === "named") {
@@ -398,15 +397,18 @@ export class CycleDetector {
     /**
      * Tarjan's strongly connected components algorithm.
      */
-    private computeStronglyConnectedComponents(nodes: Iterable<TypeId>, adjacency: Map<TypeId, TypeId[]>): TypeId[][] {
-        const indexForNode = new Map<TypeId, number>();
-        const lowlinkForNode = new Map<TypeId, number>();
-        const onStack = new Set<TypeId>();
-        const stack: TypeId[] = [];
-        const result: TypeId[][] = [];
+    private computeStronglyConnectedComponents(
+        nodes: Iterable<FernIr.TypeId>,
+        adjacency: Map<FernIr.TypeId, FernIr.TypeId[]>
+    ): FernIr.TypeId[][] {
+        const indexForNode = new Map<FernIr.TypeId, number>();
+        const lowlinkForNode = new Map<FernIr.TypeId, number>();
+        const onStack = new Set<FernIr.TypeId>();
+        const stack: FernIr.TypeId[] = [];
+        const result: FernIr.TypeId[][] = [];
         let index = 0;
 
-        const strongConnect = (v: TypeId) => {
+        const strongConnect = (v: FernIr.TypeId) => {
             indexForNode.set(v, index);
             lowlinkForNode.set(v, index);
             index += 1;
@@ -432,7 +434,7 @@ export class CycleDetector {
             }
 
             if (lowlinkForNode.get(v) === indexForNode.get(v)) {
-                const scc: TypeId[] = [];
+                const scc: FernIr.TypeId[] = [];
                 while (true) {
                     const w = stack.pop();
                     if (w == null) {

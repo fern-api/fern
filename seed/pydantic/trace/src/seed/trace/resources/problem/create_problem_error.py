@@ -5,11 +5,15 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 
 
 class CreateProblemError_Generic(UniversalBaseModel):
-    error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
+    error_type: typing_extensions.Annotated[
+        typing.Literal["generic"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+    ] = "generic"
     message: str
     type: str
     stacktrace: str

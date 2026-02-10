@@ -1,20 +1,6 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorContext } from "@fern-api/base-generator";
 import { Class_, ClassReferenceFactory, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
-
-import {
-    AliasTypeDeclaration,
-    DeclaredTypeName,
-    EnumTypeDeclaration,
-    IntermediateRepresentation,
-    ObjectProperty,
-    ObjectTypeDeclaration,
-    ResolvedNamedType,
-    Type,
-    TypeDeclaration,
-    TypeId,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
 
 import {
     generateAliasDefinitionFromTypeDeclaration,
@@ -22,18 +8,18 @@ import {
     generateSerializableObjectFromTypeDeclaration,
     generateUndiscriminatedUnionFromTypeDeclaration,
     generateUnionFromTypeDeclaration
-} from "./AbstractionUtilities";
-import { RootFile } from "./RootFile";
+} from "./AbstractionUtilities.js";
+import { RootFile } from "./RootFile.js";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
-    public generatedClasses: Map<TypeId, Class_>;
-    public resolvedReferences: Map<TypeId, TypeId>;
-    public flattenedProperties: Map<TypeId, ObjectProperty[]>;
+    public generatedClasses: Map<FernIr.TypeId, Class_>;
+    public resolvedReferences: Map<FernIr.TypeId, FernIr.TypeId>;
+    public flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>;
     public classReferenceFactory: ClassReferenceFactory;
     public locationGenerator: LocationGenerator;
 
-    private types: Map<TypeId, TypeDeclaration>;
+    private types: Map<FernIr.TypeId, FernIr.TypeDeclaration>;
     private gc: AbstractGeneratorContext;
     private gemName: string;
     private clientName: string;
@@ -48,7 +34,7 @@ export class TypesGenerator {
         gemName: string;
         clientName: string;
         generatorContext: AbstractGeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         shouldFlattenModules: boolean;
     }) {
         this.types = new Map();
@@ -82,16 +68,16 @@ export class TypesGenerator {
     // does not allow for multiple inheritance of classes, and does not
     // have a concept of interfaces. We could leverage Modules, however inheriting
     // properties from Modules appears non-standard (functions is the more common usecase)
-    private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
+    private getFlattenedProperties(typeId: FernIr.TypeId): FernIr.ObjectProperty[] {
         const td = this.types.get(typeId);
         return td === undefined
             ? []
             : (this.flattenedProperties.get(typeId) ??
-                  td.shape._visit<ObjectProperty[]>({
-                      alias: (atd: AliasTypeDeclaration) => {
-                          return atd.aliasOf._visit<ObjectProperty[]>({
+                  td.shape._visit<FernIr.ObjectProperty[]>({
+                      alias: (atd: FernIr.AliasTypeDeclaration) => {
+                          return atd.aliasOf._visit<FernIr.ObjectProperty[]>({
                               container: () => [],
-                              named: (dtn: DeclaredTypeName) => this.getFlattenedProperties(dtn.typeId),
+                              named: (dtn: FernIr.DeclaredTypeName) => this.getFlattenedProperties(dtn.typeId),
                               primitive: () => [],
                               unknown: () => [],
                               _other: () => []
@@ -101,7 +87,7 @@ export class TypesGenerator {
                           this.flattenedProperties.set(typeId, []);
                           return [];
                       },
-                      object: (otd: ObjectTypeDeclaration) => {
+                      object: (otd: FernIr.ObjectTypeDeclaration) => {
                           const props = [
                               ...otd.properties,
                               ...otd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
@@ -109,7 +95,7 @@ export class TypesGenerator {
                           this.flattenedProperties.set(typeId, props);
                           return props;
                       },
-                      union: (utd: UnionTypeDeclaration) => {
+                      union: (utd: FernIr.UnionTypeDeclaration) => {
                           const props = [
                               ...utd.baseProperties,
                               ...utd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
@@ -136,9 +122,9 @@ export class TypesGenerator {
     }
 
     private generateAliasFile(
-        typeId: TypeId,
-        aliasTypeDeclaration: AliasTypeDeclaration,
-        typeDeclaration: TypeDeclaration
+        typeId: FernIr.TypeId,
+        aliasTypeDeclaration: FernIr.AliasTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const aliasExpression = generateAliasDefinitionFromTypeDeclaration(
             this.classReferenceFactory,
@@ -151,7 +137,7 @@ export class TypesGenerator {
             container: () => {
                 return true;
             },
-            named: (rnt: ResolvedNamedType) => {
+            named: (rnt: FernIr.ResolvedNamedType) => {
                 this.resolvedReferences.set(typeId, rnt.name.typeId);
                 return true;
             },
@@ -181,8 +167,8 @@ export class TypesGenerator {
         return;
     }
     private generateEnumFile(
-        enumTypeDeclaration: EnumTypeDeclaration,
-        typeDeclaration: TypeDeclaration
+        enumTypeDeclaration: FernIr.EnumTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const enumExpression = generateEnumDefinitionFromTypeDeclaration(
             this.classReferenceFactory,
@@ -201,9 +187,9 @@ export class TypesGenerator {
         });
     }
     private generateObjectFile(
-        typeId: TypeId,
-        objectTypeDeclaration: ObjectTypeDeclaration,
-        typeDeclaration: TypeDeclaration
+        typeId: FernIr.TypeId,
+        objectTypeDeclaration: FernIr.ObjectTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const serializableObject = generateSerializableObjectFromTypeDeclaration(
             this.classReferenceFactory,
@@ -225,9 +211,9 @@ export class TypesGenerator {
         });
     }
     private generateUnionFile(
-        typeId: TypeId,
-        unionTypeDeclaration: UnionTypeDeclaration,
-        typeDeclaration: TypeDeclaration
+        typeId: FernIr.TypeId,
+        unionTypeDeclaration: FernIr.UnionTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const unionObject = generateUnionFromTypeDeclaration(
             this.classReferenceFactory,
@@ -249,9 +235,9 @@ export class TypesGenerator {
         });
     }
     private generateUndiscriminatedUnionFile(
-        typeId: TypeId,
-        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
-        typeDeclaration: TypeDeclaration
+        typeId: FernIr.TypeId,
+        undiscriminatedUnionTypeDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const unionObject = generateUndiscriminatedUnionFromTypeDeclaration(
             this.classReferenceFactory,
@@ -271,7 +257,7 @@ export class TypesGenerator {
             fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
-    private generateUnknownFile(shape: Type): GeneratedRubyFile | undefined {
+    private generateUnknownFile(shape: FernIr.Type): GeneratedRubyFile | undefined {
         throw new Error("Unknown type declaration shape: " + shape.type);
     }
 
@@ -280,11 +266,11 @@ export class TypesGenerator {
         for (const [typeId, typeDeclaration] of this.types.entries()) {
             this.gc.logger.debug(`[Ruby] Generating class file for type: ${typeId}`);
             const generatedFile = typeDeclaration.shape._visit<GeneratedRubyFile | undefined>({
-                alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(typeId, atd, typeDeclaration),
-                enum: (etd: EnumTypeDeclaration) => this.generateEnumFile(etd, typeDeclaration),
-                object: (otd: ObjectTypeDeclaration) => this.generateObjectFile(typeId, otd, typeDeclaration),
-                union: (utd: UnionTypeDeclaration) => this.generateUnionFile(typeId, utd, typeDeclaration),
-                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
+                alias: (atd: FernIr.AliasTypeDeclaration) => this.generateAliasFile(typeId, atd, typeDeclaration),
+                enum: (etd: FernIr.EnumTypeDeclaration) => this.generateEnumFile(etd, typeDeclaration),
+                object: (otd: FernIr.ObjectTypeDeclaration) => this.generateObjectFile(typeId, otd, typeDeclaration),
+                union: (utd: FernIr.UnionTypeDeclaration) => this.generateUnionFile(typeId, utd, typeDeclaration),
+                undiscriminatedUnion: (uutd: FernIr.UndiscriminatedUnionTypeDeclaration) =>
                     this.generateUndiscriminatedUnionFile(typeId, uutd, typeDeclaration),
                 _other: () => this.generateUnknownFile(typeDeclaration.shape)
             });
@@ -302,7 +288,7 @@ export class TypesGenerator {
         return typeFiles;
     }
 
-    public getResolvedClasses(): Map<TypeId, Class_> {
+    public getResolvedClasses(): Map<FernIr.TypeId, Class_> {
         this.gc.logger.debug("[Ruby] Gathering resolved types.");
         this.resolvedReferences.forEach((typeId, resolvedTypeId) => {
             const resolvedClass = this.generatedClasses.get(resolvedTypeId);

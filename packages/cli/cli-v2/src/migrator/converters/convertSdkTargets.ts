@@ -1,7 +1,7 @@
 import type { schemas } from "@fern-api/config";
 import type { generatorsYml } from "@fern-api/configuration";
-import type { MigratorWarning } from "../types";
-import { convertGitOutput } from "./convertGitOutput";
+import type { MigratorWarning } from "../types/index.js";
+import { convertGitOutput } from "./convertGitOutput.js";
 
 /**
  * Raw output configuration that supports both old (location discriminant)

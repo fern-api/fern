@@ -1,4 +1,4 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ValidAliasGroupReferencesRule: Rule = {
     name: "valid-alias-group-references",

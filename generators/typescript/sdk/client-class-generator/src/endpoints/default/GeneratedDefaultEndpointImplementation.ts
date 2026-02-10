@@ -1,23 +1,23 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
-import { buildUrl } from "../utils/buildUrl";
-import { generateEndpointMetadata } from "../utils/generateEndpointMetadata";
+import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest.js";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { buildUrl } from "../utils/buildUrl.js";
+import { generateEndpointMetadata } from "../utils/generateEndpointMetadata.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression,
     REQUEST_OPTIONS_PARAMETER_NAME
-} from "../utils/requestOptionsParameter";
-import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
+} from "../utils/requestOptionsParameter.js";
+import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
@@ -34,7 +34,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
 const EXAMPLE_PREFIX = "    ";
 
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
-    public readonly endpoint: HttpEndpoint;
+    public readonly endpoint: FernIr.HttpEndpoint;
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly includeCredentialsOnCrossOriginRequests: boolean;
@@ -179,7 +179,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getExample(args: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }): EndpointSampleCode | undefined {

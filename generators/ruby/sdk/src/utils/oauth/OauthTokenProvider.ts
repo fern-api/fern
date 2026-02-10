@@ -1,3 +1,4 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import {
     Argument,
     AstNode,
@@ -13,10 +14,8 @@ import {
     StringClassReference
 } from "@fern-api/ruby-codegen";
 
-import { OAuthAccessTokenProperties, ResponseProperty } from "@fern-fern/ir-sdk/api";
-
 export interface OauthFunction {
-    tokenResponseProperty: OAuthAccessTokenProperties;
+    tokenResponseProperty: FernIr.OAuthAccessTokenProperties;
     tokenFunctionClientClassReference: ClassReference;
     tokenFunction: Function_;
 }
@@ -266,14 +265,14 @@ export class OauthTokenProvider extends Class_ {
         }
     }
 
-    private static responsePropertyToObjectAccess(responseProperty: ResponseProperty): string {
+    private static responsePropertyToObjectAccess(responseProperty: FernIr.ResponseProperty): string {
         const path = responseProperty.property.name.name.snakeCase.safeName;
         return [...(responseProperty.propertyPath ?? []).map((p) => p.snakeCase.safeName), path].join(".");
     }
 
     private static getAccessTokenInstantiation(
         responseVariableName: string,
-        tokenResponseProperty: OAuthAccessTokenProperties,
+        tokenResponseProperty: FernIr.OAuthAccessTokenProperties,
         accessTokenReference: ClassReference
     ): FunctionInvocation {
         const accessTokenArguments = [

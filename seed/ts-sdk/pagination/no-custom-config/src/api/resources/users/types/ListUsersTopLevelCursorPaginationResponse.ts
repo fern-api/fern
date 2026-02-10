@@ -3,6 +3,6 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface ListUsersTopLevelCursorPaginationResponse {
-    next_cursor?: string;
+    next_cursor?: string | undefined;
     data: SeedPagination.User[];
 }

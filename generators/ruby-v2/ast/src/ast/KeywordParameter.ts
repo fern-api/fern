@@ -1,6 +1,6 @@
-import { AstNode } from "../ruby";
-import { Writer } from "./core/Writer";
-import { Parameter } from "./Parameter";
+import { AstNode } from "../ruby.js";
+import { Writer } from "./core/Writer.js";
+import { Parameter } from "./Parameter.js";
 
 export declare namespace KeywordParameter {
     interface Args extends Parameter.Args {

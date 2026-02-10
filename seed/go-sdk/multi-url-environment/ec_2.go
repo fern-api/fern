@@ -3,6 +3,8 @@
 package multiurlenvironment
 
 import (
+	json "encoding/json"
+	internal "github.com/multi-url-environment/fern/internal"
 	big "math/big"
 )
 
@@ -29,4 +31,25 @@ func (b *BootInstanceRequest) require(field *big.Int) {
 func (b *BootInstanceRequest) SetSize(size string) {
 	b.Size = size
 	b.require(bootInstanceRequestFieldSize)
+}
+
+func (b *BootInstanceRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler BootInstanceRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*b = BootInstanceRequest(body)
+	return nil
+}
+
+func (b *BootInstanceRequest) MarshalJSON() ([]byte, error) {
+	type embed BootInstanceRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

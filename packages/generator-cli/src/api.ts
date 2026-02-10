@@ -3,13 +3,13 @@ export {
     type GenerateReadmeToStreamParams,
     generateReadme,
     generateReadmeToStream
-} from "./api/generate-readme";
+} from "./api/generate-readme.js";
 export {
     type GenerateReferenceParams,
     type GenerateReferenceToStreamParams,
     generateReference,
     generateReferenceToStream
-} from "./api/generate-reference";
-export { type GithubPrParams, githubPr } from "./api/github-pr";
-export { type GithubPushParams, githubPush } from "./api/github-push";
-export { type GithubReleaseParams, githubRelease } from "./api/github-release";
+} from "./api/generate-reference.js";
+export { type GithubPrParams, githubPr } from "./api/github-pr.js";
+export { type GithubPushParams, githubPush } from "./api/github-push.js";
+export { type GithubReleaseParams, githubRelease } from "./api/github-release.js";

@@ -56,6 +56,7 @@
  Create a comment on a resource",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://test.com/api",
               "id": "Production",
             },

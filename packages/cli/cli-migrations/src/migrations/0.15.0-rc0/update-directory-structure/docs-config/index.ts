@@ -6,4 +6,4 @@ export {
     getAbsolutePathToDocsFolder,
     getAbsolutePathToDocsYaml,
     loadRawDocsConfiguration
-} from "./loadRawDocsConfiguration";
+} from "./loadRawDocsConfiguration.js";

@@ -130,6 +130,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setLimit(int $value): self
     {
         $this->limit = $value;
+        $this->_setField('limit');
         return $this;
     }
 
@@ -147,6 +148,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setId(string $value): self
     {
         $this->id = $value;
+        $this->_setField('id');
         return $this;
     }
 
@@ -164,6 +166,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setDate(DateTime $value): self
     {
         $this->date = $value;
+        $this->_setField('date');
         return $this;
     }
 
@@ -181,6 +184,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setDeadline(DateTime $value): self
     {
         $this->deadline = $value;
+        $this->_setField('deadline');
         return $this;
     }
 
@@ -198,6 +202,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setBytes(string $value): self
     {
         $this->bytes = $value;
+        $this->_setField('bytes');
         return $this;
     }
 
@@ -215,6 +220,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setUser(User $value): self
     {
         $this->user = $value;
+        $this->_setField('user');
         return $this;
     }
 
@@ -232,6 +238,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setUserList(array $value): self
     {
         $this->userList = $value;
+        $this->_setField('userList');
         return $this;
     }
 
@@ -249,6 +256,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setOptionalDeadline(?DateTime $value = null): self
     {
         $this->optionalDeadline = $value;
+        $this->_setField('optionalDeadline');
         return $this;
     }
 
@@ -266,6 +274,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setKeyValue(array $value): self
     {
         $this->keyValue = $value;
+        $this->_setField('keyValue');
         return $this;
     }
 
@@ -283,6 +292,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setOptionalString(?string $value = null): self
     {
         $this->optionalString = $value;
+        $this->_setField('optionalString');
         return $this;
     }
 
@@ -300,6 +310,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setNestedUser(NestedUser $value): self
     {
         $this->nestedUser = $value;
+        $this->_setField('nestedUser');
         return $this;
     }
 
@@ -317,6 +328,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setOptionalUser(?User $value = null): self
     {
         $this->optionalUser = $value;
+        $this->_setField('optionalUser');
         return $this;
     }
 
@@ -334,6 +346,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setExcludeUser(array $value): self
     {
         $this->excludeUser = $value;
+        $this->_setField('excludeUser');
         return $this;
     }
 
@@ -351,6 +364,7 @@ class GetUsersRequest extends JsonSerializableType
     public function setFilter(array $value): self
     {
         $this->filter = $value;
+        $this->_setField('filter');
         return $this;
     }
 }

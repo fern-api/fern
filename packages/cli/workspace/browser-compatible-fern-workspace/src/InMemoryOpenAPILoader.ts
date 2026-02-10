@@ -3,7 +3,7 @@ import { applyOpenAPIOverlay, mergeWithOverrides as coreMergeWithOverrides, type
 import { getParseOptions, OpenAPIDocument } from "@fern-api/openapi-ir-parser";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
 
-import { OpenAPIWorkspace } from "./OpenAPIWorkspace";
+import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
 
 export class InMemoryOpenAPILoader {
     public loadDocument(spec: OpenAPIWorkspace.Spec): OpenAPIDocument {

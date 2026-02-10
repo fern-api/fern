@@ -7,7 +7,7 @@ import {
     parseIR
 } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
 import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
@@ -15,10 +15,10 @@ import { writeFile } from "fs/promises";
 import { startCase } from "lodash";
 import path from "path";
 
-import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
-import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
-import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
+import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema.js";
+import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema.js";
+import { convertToPostmanCollection } from "./convertToPostmanCollection.js";
+import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows.js";
 
 const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
 
@@ -214,8 +214,8 @@ async function publishCollection({
     }
 }
 
-async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    return await parseIR<IntermediateRepresentation>({
+async function loadIntermediateRepresentation(pathToFile: string): Promise<FernIr.IntermediateRepresentation> {
+    return await parseIR<FernIr.IntermediateRepresentation>({
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
     });

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FernRcAuthSchema } from "./FernRcAuthSchema";
+import { FernRcAuthSchema } from "./FernRcAuthSchema.js";
 
 export const FernRcSchema = z.object({
     /** Config file version for migrations */

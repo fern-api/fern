@@ -74,6 +74,20 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
 
+    _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
+        "base_url",
+        "environment",
+        "headers",
+        "timeout",
+        "_timeout",
+        "follow_redirects",
+        "httpx_client",
+        "client_id",
+        "client_secret",
+        "token",
+        "_token_getter_override",
+    }
+
     def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
         """
         Returns the kwarg name for the bearer token parameter on the generated ClientWrapper.
@@ -505,6 +519,21 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
             )
 
+        server_variables = self._get_server_variables()
+        for var in server_variables:
+            param_name = self._get_server_variable_param_name(var)
+            default_value = var.default or ""
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=param_name,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    private_member_name=None,
+                    initializer=AST.Expression("None"),
+                    exclude_from_wrapper_construction=True,
+                    docs=f"Server URL variable for '{var.id}'. Defaults to '{default_value}'.",
+                )
+            )
+
         client_wrapper_generator = ClientWrapperGenerator(
             context=self._context,
             generated_environment=self._generated_environment,
@@ -858,6 +887,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             for param in constructor_parameters:
                 if param.validation_check is not None:
                     writer.write_node(param.validation_check)
+
+            self._write_url_template_interpolation(writer)
 
             client_wrapper_generator = ClientWrapperGenerator(
                 context=self._context,
@@ -1389,6 +1420,91 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if param == "timeout":
                 return "_timeout"
         return "timeout"
+
+    def _get_server_variables(self) -> typing.List[ir_types.ServerVariable]:
+        environments_config = self._environments_config
+        if environments_config is None:
+            return []
+
+        env_union = environments_config.environments.get_as_union()
+        seen_ids: typing.Set[str] = set()
+        variables: typing.List[ir_types.ServerVariable] = []
+
+        if env_union.type == "singleBaseUrl":
+            for env in env_union.environments:
+                if env.url_variables is not None:
+                    for var in env.url_variables:
+                        if var.id not in seen_ids:
+                            seen_ids.add(var.id)
+                            variables.append(var)
+                break
+        elif env_union.type == "multipleBaseUrls":
+            for multi_env in env_union.environments:
+                if multi_env.url_variables is not None:
+                    for _url_id, vars_list in multi_env.url_variables.items():
+                        for var in vars_list:
+                            if var.id not in seen_ids:
+                                seen_ids.add(var.id)
+                                variables.append(var)
+                break
+
+        return variables
+
+    def _get_server_variable_param_name(self, var: ir_types.ServerVariable) -> str:
+        name = var.name.snake_case.safe_name
+        if name in self._RESERVED_CONSTRUCTOR_PARAM_NAMES:
+            return f"server_url_{name}"
+        return name
+
+    def _write_url_template_interpolation(self, writer: AST.NodeWriter) -> None:
+        server_variables = self._get_server_variables()
+        if not server_variables:
+            return
+
+        environments_config = self._environments_config
+        if environments_config is None:
+            return
+
+        env_union = environments_config.environments.get_as_union()
+        var_params = [(var, self._get_server_variable_param_name(var)) for var in server_variables]
+
+        condition = " or ".join(f"{param_name} is not None" for _, param_name in var_params)
+        writer.write_line(f"if {condition}:")
+        with writer.indent():
+            for var, param_name in var_params:
+                local_name = f"_{param_name}"
+                default = var.default or ""
+                writer.write_line(f'{local_name} = {param_name} if {param_name} is not None else "{default}"')
+
+            format_kwargs = ", ".join(f"{var.id}=_{param_name}" for var, param_name in var_params)
+
+            if env_union.type == "singleBaseUrl":
+                if len(env_union.environments) > 0:
+                    first_env = env_union.environments[0]
+                    if first_env.url_template is not None:
+                        writer.write_line(f'base_url = "{first_env.url_template}".format({format_kwargs})')
+            elif env_union.type == "multipleBaseUrls":
+                if len(env_union.environments) > 0:
+                    first_multi_env = env_union.environments[0]
+                    if first_multi_env.url_templates is not None:
+                        env_class_name = self._context.get_class_name_of_environments()
+                        kwargs_lines = []
+                        for base_url in env_union.base_urls:
+                            prop_name = base_url.name.snake_case.safe_name
+                            template = first_multi_env.url_templates.get(base_url.id)
+                            if template is not None:
+                                kwargs_lines.append(f'{prop_name}="{template}".format({format_kwargs})')
+                            else:
+                                url = first_multi_env.urls.get(base_url.id, "")
+                                kwargs_lines.append(f'{prop_name}="{url}"')
+                        if len(kwargs_lines) == 1:
+                            writer.write_line(f"environment = {env_class_name}({kwargs_lines[0]})")
+                        else:
+                            writer.write_line(f"environment = {env_class_name}(")
+                            with writer.indent():
+                                for kwarg_line in kwargs_lines:
+                                    writer.write_line(f"{kwarg_line},")
+                            writer.write_line(")")
 
     class GeneratedRootClientBuilder:
         def __init__(

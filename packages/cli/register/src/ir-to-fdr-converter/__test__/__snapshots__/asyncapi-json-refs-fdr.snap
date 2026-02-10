@@ -47,6 +47,7 @@
           "description": "Receive order status notifications",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "wss://events.plantstore.dev",
               "id": "production",
             },
@@ -123,6 +124,7 @@
           "description": "Receive real-time plant inventory updates",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "wss://events.plantstore.dev",
               "id": "production",
             },

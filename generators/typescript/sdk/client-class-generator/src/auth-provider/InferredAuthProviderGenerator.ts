@@ -19,7 +19,7 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 
 export declare namespace InferredAuthProviderGenerator {
     export interface Init {

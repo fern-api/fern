@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidationViolation } from "../../../ValidationViolation";
-import { ValidServiceUrlsRule } from "../valid-service-url";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { ValidServiceUrlsRule } from "../valid-service-url.js";
 
 describe("valid-service-urls", () => {
     it("single-environment-url", async () => {
