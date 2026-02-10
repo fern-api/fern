@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/repro",
+                "method": "POST",
+                "identifier_override": "endpoint_.repro"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof-anyof-duplicate-properties/fern\"\n\tfernclient \"github.com/allof-anyof-duplicate-properties/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Repro(\n\tcontext.TODO(),\n\t\u0026fern.Root{},\n)\n"
+            }
+        }
+    ]
+}

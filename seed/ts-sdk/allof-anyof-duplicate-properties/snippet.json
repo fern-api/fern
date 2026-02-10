@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/repro",
+                "method": "POST",
+                "identifier_override": "endpoint_.repro"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/allof-anyof-duplicate-properties\";\n\nconst client = new SeedApiClient;\nawait client.repro({});\n"
+            }
+        }
+    ],
+    "types": {}
+}

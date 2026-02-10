@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: AllOf AnyOf Duplicate Properties Test
+  version: 1.0.0
+  description: Test for duplicate properties when allOf combines a base schema with anyOf branches that redefine the same property (Issue #11092)
+servers:
+  - url: https://api.example.com
+paths:
+  /repro:
+    post:
+      operationId: repro
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Root"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Root"
+components:
+  schemas:
+    Root:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - $ref: "#/components/schemas/UnionWrapper"
+      type: object
+
+    Base:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "ID from Base schema"
+
+    UnionWrapper:
+      anyOf:
+        - $ref: "#/components/schemas/BranchWithSameId"
+        - $ref: "#/components/schemas/BranchWithDifferentId"
+      type: object
+
+    BranchWithSameId:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "ID from Branch (Same Type)"
+        other_field:
+          type: string
+
+    BranchWithDifferentId:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "ID from Branch (Different Type)"
+        unique_field:
+          type: string

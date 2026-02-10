@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "67e6defb",
+            "id": {
+                "method": "POST",
+                "path": "/repro",
+                "identifier_override": "endpoint_.repro"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Root;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.repro(\n            Root\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Root;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.repro(\n            Root\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5ad7afb3",
+            "id": {
+                "method": "POST",
+                "path": "/repro",
+                "identifier_override": "endpoint_.repro"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Root;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.repro(\n            Root\n                .builder()\n                .id(1)\n                .otherField(\"other_field\")\n                .uniqueField(\"unique_field\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Root;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.repro(\n            Root\n                .builder()\n                .id(1)\n                .otherField(\"other_field\")\n                .uniqueField(\"unique_field\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

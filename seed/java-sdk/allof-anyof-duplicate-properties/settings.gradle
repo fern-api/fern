@@ -1,0 +1,3 @@
+rootProject.name = 'allof-anyof-duplicate-properties'
+
+include 'sample-app'

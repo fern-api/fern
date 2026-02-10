@@ -273,8 +273,18 @@ export function convertObject({
         }
     );
 
+    const seenInlinedKeys = new Set<string>();
+    const existingPropertyKeys = new Set(convertedProperties.map((p) => p.key));
+    const deduplicatedInlinedParentProperties = inlinedParentProperties.filter((property) => {
+        if (seenInlinedKeys.has(property.key) || existingPropertyKeys.has(property.key)) {
+            return false;
+        }
+        seenInlinedKeys.add(property.key);
+        return true;
+    });
+
     convertedProperties.push(
-        ...inlinedParentProperties.map((property) => {
+        ...deduplicatedInlinedParentProperties.map((property) => {
             const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = property.conflict;
             for (const parent of parents) {
                 const parentPropertySchema = parent.properties[property.key];
