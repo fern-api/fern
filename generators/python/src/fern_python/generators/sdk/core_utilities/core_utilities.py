@@ -44,6 +44,7 @@ class CoreUtilities:
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
+        self._pkcv = custom_config.pkcv
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -255,6 +256,19 @@ class CoreUtilities:
                 if not self._exclude_types_from_init_exports
                 else set(),
             )
+
+        if self._pkcv:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="pkcv.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="pkcv"),
+                ),
+                exports={"PKCVTransport", "AsyncPKCVTransport"} if not self._exclude_types_from_init_exports else set(),
+            )
+            project.add_dependency(AST.Dependency(name="PyJWT", version=">=2.0.0"))
+            project.add_dependency(AST.Dependency(name="cryptography", version=">=41.0.0"))
 
         if self._should_generate_websocket_clients:
             self._copy_file_to_project(
@@ -934,3 +948,24 @@ class CoreUtilities:
     def get_import_paths(self) -> Optional[list[str]]:
         """Get the list of import paths for auto-loading user-defined files."""
         return self._import_paths
+
+    def is_pkcv_enabled(self) -> bool:
+        return self._pkcv
+
+    def get_pkcv_transport(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pkcv"),
+                named_import="PKCVTransport",
+            ),
+        )
+
+    def get_async_pkcv_transport(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pkcv"),
+                named_import="AsyncPKCVTransport",
+            ),
+        )

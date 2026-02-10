@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.56.0
+  changelogEntry:
+    - summary: |
+        Add PKCV (Public Key Client Validation) support. When `pkcv: true` is set in the
+        generator config, the SDK generates a `core/pkcv.py` utility with `PKCVTransport` and
+        `AsyncPKCVTransport` classes that sign every outgoing request with a JWT using RS256.
+        The root client accepts optional `account_sid`, `api_key_sid`, `credential_sid`, and
+        `private_key` parameters. When all are provided, the httpx transport is wrapped to
+        automatically attach a `Twilio-Client-Validation` header. Dependencies `PyJWT` and
+        `cryptography` are auto-added. No changes when `pkcv` is not enabled.
+      type: feat
+  createdAt: "2026-02-10"
+  irVersion: 63
+
 - version: 4.55.3
   changelogEntry:
     - summary: |

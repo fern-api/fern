@@ -152,6 +152,8 @@ class SDKCustomConfig(pydantic.BaseModel):
     # and <package>/sentry_integration.py if they exist)
     import_paths: Optional[List[str]] = None
 
+    pkcv: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 

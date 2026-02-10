@@ -359,6 +359,7 @@ class ClientWrapperGenerator:
         literal_headers: List[LiteralHeader],
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
+        pkcv_enabled = self._context.custom_config.pkcv
 
         def _write_async_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
             # Avoid repeating parameters by tracking names
@@ -387,10 +388,16 @@ class ClientWrapperGenerator:
                 writer.write_line(
                     f"self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} = {ClientWrapperGenerator.ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME}"
                 )
+
+            if pkcv_enabled:
+                _write_async_pkcv_transport_wrapping(writer)
+
             writer.write(f"self.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME} = ")
             writer.write_node(
                 self._context.core_utilities.http_client(
-                    base_client=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME),
+                    base_client=AST.Expression(
+                        "_pkcv_httpx_client" if pkcv_enabled else ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME
+                    ),
                     base_url=(
                         AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}")
                         if has_base_url
@@ -403,6 +410,51 @@ class ClientWrapperGenerator:
                 )
             )
 
+        def _write_async_pkcv_transport_wrapping(writer: AST.NodeWriter) -> None:
+            writer.write_line(
+                "if self._pkcv_account_sid is not None and self._pkcv_api_key_sid is not None "
+                "and self._pkcv_credential_sid is not None and self._pkcv_private_key is not None:"
+            )
+            with writer.indent():
+                pkcv_transport_ref = self._context.core_utilities.get_async_pkcv_transport()
+                httpx_client_ref = httpx.HttpX.ASYNC_CLIENT
+                writer.write("_pkcv_httpx_client = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=httpx_client_ref,
+                        kwargs=[
+                            (
+                                "transport",
+                                AST.Expression(
+                                    AST.ClassInstantiation(
+                                        class_=pkcv_transport_ref,
+                                        kwargs=[
+                                            (
+                                                "transport",
+                                                AST.Expression(
+                                                    f"{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}._transport"
+                                                ),
+                                            ),
+                                            ("account_sid", AST.Expression("self._pkcv_account_sid")),
+                                            ("api_key_sid", AST.Expression("self._pkcv_api_key_sid")),
+                                            ("credential_sid", AST.Expression("self._pkcv_credential_sid")),
+                                            ("private_key", AST.Expression("self._pkcv_private_key")),
+                                        ],
+                                    )
+                                ),
+                            ),
+                            (
+                                "timeout",
+                                AST.Expression(f"{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}.timeout"),
+                            ),
+                        ],
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write_line(f"_pkcv_httpx_client = {ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}")
+
         return _write_async_client_wrapper_constructor_body
 
     def _get_write_derived_client_wrapper_constructor_body(
@@ -413,6 +465,7 @@ class ClientWrapperGenerator:
         is_async: bool,
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
+        pkcv_enabled = self._context.custom_config.pkcv
 
         def _write_derived_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
             # Avoid repeating parameters by tracking names
@@ -433,10 +486,16 @@ class ClientWrapperGenerator:
                 )
                 + ")"
             )
+
+            if pkcv_enabled:
+                _write_pkcv_transport_wrapping(writer, is_async=is_async)
+
             writer.write(f"self.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME} = ")
             writer.write_node(
                 self._context.core_utilities.http_client(
-                    base_client=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME),
+                    base_client=AST.Expression(
+                        "_pkcv_httpx_client" if pkcv_enabled else ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME
+                    ),
                     base_url=(
                         AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}")
                         if has_base_url
@@ -447,6 +506,55 @@ class ClientWrapperGenerator:
                     is_async=is_async,
                 )
             )
+
+        def _write_pkcv_transport_wrapping(writer: AST.NodeWriter, *, is_async: bool) -> None:
+            writer.write_line(
+                "if self._pkcv_account_sid is not None and self._pkcv_api_key_sid is not None "
+                "and self._pkcv_credential_sid is not None and self._pkcv_private_key is not None:"
+            )
+            with writer.indent():
+                pkcv_transport_ref = (
+                    self._context.core_utilities.get_async_pkcv_transport()
+                    if is_async
+                    else self._context.core_utilities.get_pkcv_transport()
+                )
+                httpx_client_ref = httpx.HttpX.ASYNC_CLIENT if is_async else httpx.HttpX.CLIENT
+                writer.write("_pkcv_httpx_client = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=httpx_client_ref,
+                        kwargs=[
+                            (
+                                "transport",
+                                AST.Expression(
+                                    AST.ClassInstantiation(
+                                        class_=pkcv_transport_ref,
+                                        kwargs=[
+                                            (
+                                                "transport",
+                                                AST.Expression(
+                                                    f"{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}._transport"
+                                                ),
+                                            ),
+                                            ("account_sid", AST.Expression("self._pkcv_account_sid")),
+                                            ("api_key_sid", AST.Expression("self._pkcv_api_key_sid")),
+                                            ("credential_sid", AST.Expression("self._pkcv_credential_sid")),
+                                            ("private_key", AST.Expression("self._pkcv_private_key")),
+                                        ],
+                                    )
+                                ),
+                            ),
+                            (
+                                "timeout",
+                                AST.Expression(f"{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}.timeout"),
+                            ),
+                        ],
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write_line(f"_pkcv_httpx_client = {ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}")
 
         return _write_derived_client_wrapper_constructor_body
 
@@ -882,6 +990,40 @@ class ClientWrapperGenerator:
                     username_constructor_parameter,
                     password_constructor_parameter,
                 ]
+            )
+
+        if self._context.custom_config.pkcv:
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name="account_sid",
+                    private_member_name="_pkcv_account_sid",
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    docs="The Account SID used as the JWT subject for PKCV request signing.",
+                )
+            )
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name="api_key_sid",
+                    private_member_name="_pkcv_api_key_sid",
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    docs="A Twilio API Key SID starting with 'SK', used for PKCV request signing.",
+                )
+            )
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name="credential_sid",
+                    private_member_name="_pkcv_credential_sid",
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    docs="A Credential SID starting with 'CR', corresponds to the public key uploaded to Twilio.",
+                )
+            )
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name="private_key",
+                    private_member_name="_pkcv_private_key",
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    docs="The RSA private key used to sign PKCV request JWTs.",
+                )
             )
 
         # Add generic headers parameter
