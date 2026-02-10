@@ -431,7 +431,11 @@ export class DynamicTypeLiteralMapper {
     }): php.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                return this.convert({ typeReference, value });
+                const result = this.convert({ typeReference, value });
+                if (php.TypeLiteral.isNop(result)) {
+                    continue;
+                }
+                return result;
             } catch (e) {
                 continue;
             }

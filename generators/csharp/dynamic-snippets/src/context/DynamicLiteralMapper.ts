@@ -502,6 +502,9 @@ export class DynamicLiteralMapper extends WithGeneration {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const typeLiteral = this.convert({ typeReference, value });
+                if (typeLiteral instanceof ast.Literal.Nop) {
+                    continue;
+                }
                 return { valueTypeReference: typeReference, typeLiteral };
             } catch (e) {
                 continue;

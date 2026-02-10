@@ -469,6 +469,9 @@ export class DynamicTypeLiteralMapper {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const converted = this.convert({ fromSymbol, typeReference, value });
+                if (converted.isNop()) {
+                    continue;
+                }
                 const swiftType = this.context.getSwiftTypeReferenceFromScope(typeReference, fromSymbol);
                 const matchingVariant = variants.find((v) => v.swiftType.equals(swiftType));
                 if (matchingVariant == null) {

@@ -507,6 +507,9 @@ export class DynamicTypeLiteralMapper {
                     inUndiscriminatedUnion: true
                 });
 
+                if (java.TypeLiteral.isNop(typeInstantiation)) {
+                    continue;
+                }
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 variantErrors.push(

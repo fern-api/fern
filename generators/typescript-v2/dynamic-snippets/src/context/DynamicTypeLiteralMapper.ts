@@ -564,7 +564,11 @@ export class DynamicTypeLiteralMapper {
     }): ts.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                return this.convert({ typeReference, value, convertOpts });
+                const result = this.convert({ typeReference, value, convertOpts });
+                if (ts.TypeLiteral.isNop(result)) {
+                    continue;
+                }
+                return result;
             } catch (e) {
                 continue;
             }
