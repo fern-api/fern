@@ -48,17 +48,21 @@ export function convertParameters({
         headers: []
     };
     for (const parameter of parameters) {
-        const shouldIgnore = getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE);
+        const resolvedParameter = isReferenceObject(parameter)
+            ? context.resolveParameterReference(parameter)
+            : parameter;
+
+        // Avoid direct access to 'type' that may be missing on ReferenceObject
+        // (schemaType logic removed because only used for logging)
+        const shouldIgnore =
+            getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE) ??
+            getExtension<boolean>(resolvedParameter, FernOpenAPIExtension.IGNORE);
         if (shouldIgnore != null && shouldIgnore) {
             context.logger.debug(
                 `${httpMethod.toUpperCase()} ${path} has a parameter marked with x-fern-ignore. Skipping.`
             );
             continue;
         }
-
-        const resolvedParameter = isReferenceObject(parameter)
-            ? context.resolveParameterReference(parameter)
-            : parameter;
 
         const isRequired = resolvedParameter.required ?? false;
         const availability = convertAvailability(resolvedParameter);
@@ -138,6 +142,7 @@ export function convertParameters({
                         groupName: undefined,
                         inline: undefined
                     });
+
         if (
             resolvedParameter.in === "header" &&
             resolvedParameter.schema != null &&
@@ -148,6 +153,9 @@ export function convertParameters({
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             const defaultValue = (resolvedParameter.schema as any).default;
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
+                context.logger.debug(
+                    `Header parameter "${resolvedParameter.name}" in ${httpMethod.toUpperCase()} ${path} uses string default value: "${defaultValue}"`
+                );
                 schema = SchemaWithExample.literal({
                     nameOverride: undefined,
                     generatedName,
@@ -170,11 +178,17 @@ export function convertParameters({
             source
         };
         if (resolvedParameter.in === "query") {
+            context.logger.debug(
+                `Adding parameter "${resolvedParameter.name}" as query parameter for ${httpMethod.toUpperCase()} ${path}.`
+            );
             convertedParameters.queryParameters.push({
                 ...convertedParameter,
                 explode: getExplodeForQueryParameter(resolvedParameter)
             });
         } else if (resolvedParameter.in === "path") {
+            context.logger.debug(
+                `Adding parameter "${resolvedParameter.name}" as path parameter for ${httpMethod.toUpperCase()} ${path}.`
+            );
             convertedParameters.pathParameters.push({
                 ...convertedParameter,
                 variableReference: getVariableReference(resolvedParameter),
@@ -185,6 +199,9 @@ export function convertParameters({
                 !HEADERS_TO_SKIP.has(resolvedParameter.name.toLowerCase()) &&
                 !context.authHeaders.has(resolvedParameter.name)
             ) {
+                context.logger.debug(
+                    `Adding parameter "${resolvedParameter.name}" as header for ${httpMethod.toUpperCase()} ${path}.`
+                );
                 convertedParameters.headers.push({ ...convertedParameter, env: undefined });
             } else {
                 context.logger.debug(
@@ -199,6 +216,10 @@ export function convertParameters({
             );
         }
     }
+
+    context.logger.debug(
+        `Finished parameter conversion for ${httpMethod.toUpperCase()} ${path}. Found: ${convertedParameters.pathParameters.length} path, ${convertedParameters.queryParameters.length} query, and ${convertedParameters.headers.length} header parameters.`
+    );
 
     return convertedParameters;
 }
