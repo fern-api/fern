@@ -934,24 +934,20 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 tw_class = transport_wrapper.async_class if is_async else transport_wrapper.sync_class
                 tw_param_names = [p.name for p in transport_wrapper.params]
                 tw_condition = " or ".join(f"{n} is not None" for n in tw_param_names)
-                writer.write_line(f"{transport_var_name} = {RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME}")
+                writer.write_line(
+                    f"{transport_var_name} = {RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME}"
+                )
                 if tw_param_names:
                     writer.write_line(f"if {tw_condition}:")
                     with writer.indent():
-                        tw_kwargs = ", ".join(
-                            f"{n}={n}" for n in tw_param_names
-                        )
+                        tw_kwargs = ", ".join(f"{n}={n}" for n in tw_param_names)
                         writer.write_line(f"from .{tw_module} import {tw_class}")
                         writer.write_line(
-                            f"{transport_var_name} = {tw_class}("
-                            f"wrapped_transport={transport_var_name}, {tw_kwargs})"
+                            f"{transport_var_name} = {tw_class}(wrapped_transport={transport_var_name}, {tw_kwargs})"
                         )
                 else:
                     writer.write_line(f"from .{tw_module} import {tw_class}")
-                    writer.write_line(
-                        f"{transport_var_name} = {tw_class}("
-                        f"wrapped_transport={transport_var_name})"
-                    )
+                    writer.write_line(f"{transport_var_name} = {tw_class}(wrapped_transport={transport_var_name})")
 
             client_wrapper_generator = ClientWrapperGenerator(
                 context=self._context,
