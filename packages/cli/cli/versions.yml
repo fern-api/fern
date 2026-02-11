@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.73.1
+  changelogEntry:
+    - summary: |
+        Add support for basepath-aware documentation generation.
+      type: chore
+  createdAt: "2026-02-10"
+  irVersion: 65
+
 - version: 3.73.0
   changelogEntry:
     - summary: |
