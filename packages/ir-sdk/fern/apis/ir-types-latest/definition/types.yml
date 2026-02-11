@@ -172,10 +172,10 @@ types:
       context:
         docs: |
           Where the discriminator is located relative to the union type.
-          Internal: discriminator is a field within the union type itself
-          External: discriminator is outside the union type (e.g., SSE event field)
+          Data: discriminator is within the union data itself
+          Protocol: discriminator is at the protocol level (e.g., SSE event field)
         type: UnionDiscriminatorContext
-        default: internal
+        default: data
       discriminatorField:
         docs: |
           Name of the field used for discrimination (e.g., "type", "event", "kind")
@@ -189,10 +189,10 @@ types:
   UnionDiscriminatorContext:
     docs: Location of the discriminator relative to the union type
     enum:
-      - value: internal
-        docs: Look inside the union type to determine which variant it is
-      - value: external
-        docs: Look outside the union type to determine which variant it is
+      - value: data
+        docs: Discriminator is within the union data itself (e.g., data.type field)
+      - value: protocol
+        docs: Discriminator is at the protocol level (e.g., SSE event field, HTTP path)
 
   UnionMemberTypeInfo:
     docs: Information about a specific union member type

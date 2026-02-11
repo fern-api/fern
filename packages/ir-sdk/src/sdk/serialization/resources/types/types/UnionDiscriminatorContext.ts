@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const UnionDiscriminatorContext: core.serialization.Schema<
     serializers.UnionDiscriminatorContext.Raw,
     FernIr.UnionDiscriminatorContext
-> = core.serialization.enum_(["internal", "external"]);
+> = core.serialization.enum_(["data", "protocol"]);
 
 export declare namespace UnionDiscriminatorContext {
-    export type Raw = "internal" | "external";
+    export type Raw = "data" | "protocol";
 }

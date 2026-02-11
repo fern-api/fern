@@ -10,8 +10,8 @@ import type * as FernIr from "../../../index.js";
 export interface UnionDiscriminatorMapping {
     /**
      * Where the discriminator is located relative to the union type.
-     * Internal: discriminator is a field within the union type itself
-     * External: discriminator is outside the union type (e.g., SSE event field)
+     * Data: discriminator is within the union data itself
+     * Protocol: discriminator is at the protocol level (e.g., SSE event field)
      */
     context: FernIr.UnionDiscriminatorContext;
     /** Name of the field used for discrimination (e.g., "type", "event", "kind") */

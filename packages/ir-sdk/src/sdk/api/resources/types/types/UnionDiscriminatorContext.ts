@@ -3,11 +3,11 @@
 /** Location of the discriminator relative to the union type */
 const UnionDiscriminatorContextValues = {
     /**
-     * Look inside the union type to determine which variant it is */
-    Internal: "internal",
+     * Discriminator is within the union data itself (e.g., data.type field) */
+    Data: "data",
     /**
-     * Look outside the union type to determine which variant it is */
-    External: "external",
+     * Discriminator is at the protocol level (e.g., SSE event field, HTTP path) */
+    Protocol: "protocol",
 } as const;
 export type UnionDiscriminatorContext =
     (typeof UnionDiscriminatorContextValues)[keyof typeof UnionDiscriminatorContextValues];
@@ -17,10 +17,10 @@ export const UnionDiscriminatorContext: typeof UnionDiscriminatorContextValues &
     ...UnionDiscriminatorContextValues,
     _visit: <R>(value: UnionDiscriminatorContext, visitor: UnionDiscriminatorContext.Visitor<R>): R => {
         switch (value) {
-            case UnionDiscriminatorContext.Internal:
-                return visitor.internal();
-            case UnionDiscriminatorContext.External:
-                return visitor.external();
+            case UnionDiscriminatorContext.Data:
+                return visitor.data();
+            case UnionDiscriminatorContext.Protocol:
+                return visitor.protocol();
             default:
                 return visitor._other();
         }
@@ -29,8 +29,8 @@ export const UnionDiscriminatorContext: typeof UnionDiscriminatorContextValues &
 
 export namespace UnionDiscriminatorContext {
     export interface Visitor<R> {
-        internal: () => R;
-        external: () => R;
+        data: () => R;
+        protocol: () => R;
         _other: () => R;
     }
 }
