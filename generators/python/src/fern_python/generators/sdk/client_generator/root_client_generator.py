@@ -74,6 +74,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
 
+    HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME = "httpx_transport"
+    HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_DOCS = (
+        "The transport to use for making requests, this is passed directly to the httpx client "
+        "constructed by default. This is ignored if a custom httpx client is passed in."
+    )
+
     _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
         "base_url",
         "environment",
@@ -82,6 +88,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "_timeout",
         "follow_redirects",
         "httpx_client",
+        "httpx_transport",
         "client_id",
         "client_secret",
         "token",
@@ -723,6 +730,22 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 docs=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS,
             )
         )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=(
+                    AST.TypeHint.optional(AST.TypeHint(HttpX.BASE_TRANSPORT))
+                    if not is_async
+                    else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_BASE_TRANSPORT))
+                ),
+                private_member_name=None,
+                initializer=AST.Expression(AST.TypeHint.none()),
+                docs=RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_DOCS,
+                exclude_from_wrapper_construction=True,
+            )
+        )
+
         parameters.extend(self._get_literal_header_parameters())
 
         return parameters
@@ -1312,6 +1335,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 )
 
+        transport_param_name = RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME
+
         if ignore_httpx_constructor_parameter:
             client_wrapper_constructor_kwargs.append(
                 (
@@ -1329,6 +1354,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                         "follow_redirects",
                                         AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
                                     ),
+                                    (
+                                        "transport",
+                                        AST.Expression(f"{transport_param_name}"),
+                                    ),
                                 ],
                             ),
                             right=AST.ClassInstantiation(
@@ -1337,6 +1366,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                     (
                                         "timeout",
                                         AST.Expression(f"{timeout_local_variable}"),
+                                    ),
+                                    (
+                                        "transport",
+                                        AST.Expression(f"{transport_param_name}"),
                                     ),
                                 ],
                             ),
@@ -1364,6 +1397,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                             "follow_redirects",
                                             AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
                                         ),
+                                        (
+                                            "transport",
+                                            AST.Expression(f"{transport_param_name}"),
+                                        ),
                                     ],
                                 ),
                                 right=AST.ClassInstantiation(
@@ -1372,6 +1409,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                         (
                                             "timeout",
                                             AST.Expression(f"{timeout_local_variable}"),
+                                        ),
+                                        (
+                                            "transport",
+                                            AST.Expression(f"{transport_param_name}"),
                                         ),
                                     ],
                                 ),

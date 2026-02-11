@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.56.0
+  changelogEntry:
+    - summary: |
+        Add `httpx_transport` constructor parameter to generated SDK clients. This allows users to
+        provide a custom `httpx.BaseTransport` (sync) or `httpx.AsyncBaseTransport` (async) that is
+        passed to the default httpx client construction, enabling custom transport wrapping (e.g.,
+        request signing, logging, metrics) without needing to construct the full httpx client manually.
+        The parameter is ignored when a custom `httpx_client` is provided.
+      type: feat
+  createdAt: "2026-02-11"
+  irVersion: 63
+
 - version: 4.55.5
   changelogEntry:
     - summary: |
