@@ -4101,6 +4101,16 @@
               "type": "null"
             }
           ]
+        },
+        "basepath-aware": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
