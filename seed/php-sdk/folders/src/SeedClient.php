@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class SeedClient
+class SeedClient implements SeedClientInterface
 {
     /**
      * @var AClient $a

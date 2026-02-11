@@ -10,7 +10,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class CClient
+class CClient implements CClientInterface
 {
     /**
      * @var array{

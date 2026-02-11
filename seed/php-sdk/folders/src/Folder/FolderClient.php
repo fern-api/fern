@@ -11,7 +11,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class FolderClient
+class FolderClient implements FolderClientInterface
 {
     /**
      * @var ServiceClient $service
