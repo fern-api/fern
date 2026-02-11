@@ -433,6 +433,7 @@ allowedFailures:
   - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
+  - exhaustive:transport-wrapper # build expects custom_transport module which is SDK-developer-provided code
   - oauth-client-credentials-custom
   - pagination-custom
   - response-property
