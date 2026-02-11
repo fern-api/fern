@@ -443,7 +443,12 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     });
 }
 
-function getUniqueSubTypeNames({
+export function getRefSchemaName(ref: string): string {
+    const parts = ref.split("/");
+    return parts[parts.length - 1] ?? ref;
+}
+
+export function getUniqueSubTypeNames({
     schemas
 }: {
     schemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
@@ -470,7 +475,8 @@ function getUniqueSubTypeNames({
     }
 
     // generates prefix for subtype
-    const prefixes = schemas.map((_, i) => {
+    const prefixes = schemas.map((schema, i) => {
+        // 1. Use unique object property name if available
         const propertySet = uniquePropertySets[i];
         if (propertySet != null && propertySet.length > 0) {
             const sortedProperties = propertySet.sort();
@@ -478,10 +484,29 @@ function getUniqueSubTypeNames({
                 return sortedProperties[0];
             }
         }
+        // 2. Use $ref schema name for reference variants
+        if (isReferenceObject(schema)) {
+            return getRefSchemaName(schema.$ref);
+        }
+        // 3. Use primitive type name for typed variants
+        if (schema.type != null && typeof schema.type === "string") {
+            return schema.type;
+        }
+        // 4. Fallback to numeric
         return convertNumberToSnakeCase(i) ?? `${i}`;
     });
 
-    return prefixes;
+    // Deduplicate: if multiple variants got the same name, fall back to numeric for duplicates
+    const nameCounts: Record<string, number> = {};
+    for (const prefix of prefixes) {
+        nameCounts[prefix] = (nameCounts[prefix] ?? 0) + 1;
+    }
+    return prefixes.map((prefix, i) => {
+        if ((nameCounts[prefix] ?? 0) > 1) {
+            return convertNumberToSnakeCase(i) ?? `${i}`;
+        }
+        return prefix;
+    });
 }
 
 export function wrapUndiscriminatedOneOf({
