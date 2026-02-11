@@ -191,21 +191,21 @@ fixtures:
           extra_fields: "ignore"
       outputFolder: pydantic-ignore-fields
     - customConfig:
-        pyproject_python_version: "^3.10"
+        pyproject_python_version: "^3.8.1"
         extra_dependencies:
           boto3: 1.28.57
-          langchain:
-            version: "^1.0"
+          requests:
+            version: "^2.31.0"
             optional: true
         extras:
-          telemetry: ["langchain", "boto3"]
+          telemetry: ["requests", "boto3"]
       outputFolder: extra_dependencies
     - customConfig:
-        pyproject_python_version: "^3.10"
+        pyproject_python_version: "^3.8.1"
         extra_dev_dependencies:
-          langchain: "^1.0"
-          openai: "^1.58.0"
-          langchain-openai: "^1.0"
+          requests: "^2.31.0"
+          python-dotenv: "^1.0.0"
+          click: "^8.0.0"
           covcheck:
             version: "^0.4.3"
             extras: ["toml"]
