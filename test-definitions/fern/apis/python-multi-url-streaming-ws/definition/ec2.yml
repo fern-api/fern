@@ -1,0 +1,34 @@
+service:
+  auth: true
+  url: ec2
+  base-path: /ec2
+  endpoints:
+    bootInstance:
+      auth: true
+      path: /boot
+      method: POST
+      request:
+        name: BootInstanceRequest
+        body:
+          properties:
+            size: string
+
+channel:
+  path: /ec2/events
+  auth: false
+  url: ws
+  messages:
+    send:
+      origin: client
+      body: SendEvent
+    receive:
+      origin: server
+      body: ReceiveEvent
+
+types:
+  SendEvent:
+    properties:
+      command: string
+  ReceiveEvent:
+    properties:
+      status: string
