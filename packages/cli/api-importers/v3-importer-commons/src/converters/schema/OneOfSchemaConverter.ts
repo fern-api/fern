@@ -147,11 +147,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     wireValue: discriminant
                 });
 
+                const variantDisplayName =
+                    (resolvedSchema.resolved ? resolvedSchema.value.title : undefined) ?? discriminant;
+
                 unionTypes.push({
                     docs: undefined,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
-                    displayName: discriminant,
+                    displayName: variantDisplayName,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
                         name: this.context.casingsGenerator.generateName(typeId),
@@ -160,7 +163,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             packagePath: [],
                             file: undefined
                         },
-                        displayName: discriminant
+                        displayName: variantDisplayName
                     })
                 });
                 inlinedTypes = {

@@ -281,7 +281,7 @@
               },
               "wireValue": "request"
             },
-            "displayName": "request",
+            "displayName": "A simple request title",
             "shape": {
               "typeId": "Request",
               "name": {
@@ -307,7 +307,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "request",
+              "displayName": "A simple request title",
               "propertiesType": "samePropertiesAsObject"
             }
           },
@@ -334,7 +334,7 @@
               },
               "wireValue": "response"
             },
-            "displayName": "response",
+            "displayName": "A simple response title",
             "shape": {
               "typeId": "Response",
               "name": {
@@ -360,7 +360,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "displayName": "response",
+              "displayName": "A simple response title",
               "propertiesType": "samePropertiesAsObject"
             }
           }
