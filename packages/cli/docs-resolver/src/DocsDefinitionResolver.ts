@@ -1616,20 +1616,10 @@ export class DocsDefinitionResolver {
         }
 
         const outputDir = resolve(this.docsWorkspace.absoluteFilePath, libraryConfig.output.path);
-        const navFilePath = join(outputDir, RelativeFilePath.of("_navigation.yml"));
-
-        if (!existsSync(navFilePath)) {
-            this.taskContext.logger.warn(
-                `No _navigation.yml found for library '${item.libraryName}' at ${navFilePath}. ` +
-                    `Run 'fern docs md generate' first.`
-            );
+        const navNodes = await this.loadLibraryNavNodes(item.libraryName, outputDir);
+        if (navNodes == null) {
             return null;
         }
-
-        const navContent = await readFile(navFilePath, "utf-8");
-        // Skip the auto-generated header comment line
-        const yamlBody = navContent.split("\n").slice(1).join("\n");
-        const navNodes = (jsYaml.load(yamlBody) as LibraryNavNode[] | null) ?? [];
 
         const sectionTitle = item.title ?? item.libraryName;
         const sectionSlug = parentSlug.apply({
@@ -1641,12 +1631,8 @@ export class DocsDefinitionResolver {
         let overviewPageId: FernNavigation.PageId | undefined;
         if (navNodes.length > 0) {
             const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
-            const rootPagePath = join(outputDir, RelativeFilePath.of(`${rootSlug}.mdx`));
-            if (existsSync(rootPagePath)) {
-                const relPath = relative(this.docsWorkspace.absoluteFilePath, rootPagePath);
-                const content = await readFile(rootPagePath, "utf-8");
-                this.parsedDocsConfig.pages[relPath] = content;
-                overviewPageId = FernNavigation.PageId(relPath);
+            if (rootSlug) {
+                overviewPageId = await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`);
             }
         }
 
@@ -1673,6 +1659,60 @@ export class DocsDefinitionResolver {
     }
 
     /**
+     * Load and parse the _navigation.yml for a library.
+     * Returns null (with a warning) if the file is missing or unparseable.
+     */
+    private async loadLibraryNavNodes(
+        libraryName: string,
+        outputDir: AbsoluteFilePath
+    ): Promise<LibraryNavNode[] | null> {
+        const navFilePath = join(outputDir, RelativeFilePath.of("_navigation.yml"));
+
+        if (!existsSync(navFilePath)) {
+            this.taskContext.logger.warn(
+                `No _navigation.yml found for library '${libraryName}' at ${navFilePath}. ` +
+                    `Run 'fern docs md generate' first.`
+            );
+            return null;
+        }
+
+        const navContent = await readFile(navFilePath, "utf-8");
+        // Strip comment lines (starting with #) from the auto-generated header
+        const yamlBody = navContent
+            .split("\n")
+            .filter((line) => !line.startsWith("#"))
+            .join("\n");
+
+        try {
+            return (jsYaml.load(yamlBody) as LibraryNavNode[] | null) ?? [];
+        } catch (e) {
+            this.taskContext.logger.warn(
+                `Failed to parse _navigation.yml for library '${libraryName}': ${e instanceof Error ? e.message : String(e)}`
+            );
+            return null;
+        }
+    }
+
+    /**
+     * Read an MDX file from the library output directory, register its content,
+     * and return its PageId. Returns undefined if the file doesn't exist.
+     */
+    private async registerLibraryMdxPage(
+        outputDir: AbsoluteFilePath,
+        relativeMdxPath: string
+    ): Promise<FernNavigation.PageId | undefined> {
+        const absolutePath = join(outputDir, RelativeFilePath.of(relativeMdxPath));
+        if (!existsSync(absolutePath)) {
+            this.taskContext.logger.warn(`Library MDX file not found: ${absolutePath}`);
+            return undefined;
+        }
+        const relPath = relative(this.docsWorkspace.absoluteFilePath, absolutePath);
+        const content = await readFile(absolutePath, "utf-8");
+        this.parsedDocsConfig.pages[relPath] = content;
+        return FernNavigation.PageId(relPath);
+    }
+
+    /**
      * Recursively convert library NavNodes to FernNavigation nodes,
      * reading and registering MDX page content along the way.
      */
@@ -1685,18 +1725,11 @@ export class DocsDefinitionResolver {
 
         for (const node of nodes) {
             if (node.type === "page" && node.pageId != null) {
-                const absolutePath = join(outputDir, RelativeFilePath.of(node.pageId));
-                const relPath = relative(this.docsWorkspace.absoluteFilePath, absolutePath);
-
-                // Read and register the MDX file
-                if (existsSync(absolutePath)) {
-                    const content = await readFile(absolutePath, "utf-8");
-                    this.parsedDocsConfig.pages[relPath] = content;
+                const pageId = await this.registerLibraryMdxPage(outputDir, node.pageId);
+                if (pageId == null) {
+                    continue;
                 }
 
-                const pageId = FernNavigation.PageId(relPath);
-                // Use the _navigation.yml slug as the full URL path so that
-                // MDX cross-links work regardless of where the library is nested
                 const slug = parentSlug.apply({
                     fullSlug: node.slug.split("/"),
                     urlSlug: kebabCase(node.title)
@@ -1718,24 +1751,13 @@ export class DocsDefinitionResolver {
                     availability: undefined
                 });
             } else if (node.type === "section") {
-                // Use the _navigation.yml slug as the full URL path
                 const sectionSlug = parentSlug.apply({
                     fullSlug: node.slug.split("/"),
                     urlSlug: kebabCase(node.title)
                 });
                 const sectionId = this.#idgen.get(`library-section/${node.slug}`);
 
-                // The section itself may have an overview page (the module page)
-                // Look for an MDX file matching the section's slug
-                const sectionPagePath = join(outputDir, RelativeFilePath.of(`${node.slug}.mdx`));
-                let overviewPageId: FernNavigation.PageId | undefined;
-
-                if (existsSync(sectionPagePath)) {
-                    const relPath = relative(this.docsWorkspace.absoluteFilePath, sectionPagePath);
-                    const content = await readFile(sectionPagePath, "utf-8");
-                    this.parsedDocsConfig.pages[relPath] = content;
-                    overviewPageId = FernNavigation.PageId(relPath);
-                }
+                const overviewPageId = await this.registerLibraryMdxPage(outputDir, `${node.slug}.mdx`);
 
                 // Filter out child pages whose slug matches the section's slug
                 // (they're already represented by the section's overview page)
