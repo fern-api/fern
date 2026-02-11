@@ -59,8 +59,7 @@ export class DefaultValueExtractor {
                 }
 
                 return v2._visit<ExtractedDefault | undefined>({
-                    integer: (t) =>
-                        t.default != null ? { value: `${t.default}`, phpType: "int" } : undefined,
+                    integer: (t) => (t.default != null ? { value: `${t.default}`, phpType: "int" } : undefined),
                     long: (t) =>
                         t.default != null && this.isSafeInteger(t.default)
                             ? { value: `${t.default}`, phpType: "int" }
@@ -68,22 +67,14 @@ export class DefaultValueExtractor {
                     uint: () => undefined,
                     uint64: () => undefined,
                     double: (t) =>
-                        t.default != null
-                            ? { value: this.formatFloat(t.default), phpType: "float" }
-                            : undefined,
+                        t.default != null ? { value: this.formatFloat(t.default), phpType: "float" } : undefined,
                     float: () => undefined,
                     boolean: (t) =>
-                        t.default != null
-                            ? { value: t.default ? "true" : "false", phpType: "bool" }
-                            : undefined,
+                        t.default != null ? { value: t.default ? "true" : "false", phpType: "bool" } : undefined,
                     string: (t) =>
-                        t.default != null
-                            ? { value: this.escapeString(t.default), phpType: "string" }
-                            : undefined,
+                        t.default != null ? { value: this.escapeString(t.default), phpType: "string" } : undefined,
                     bigInteger: (t) =>
-                        t.default != null
-                            ? { value: this.escapeString(t.default), phpType: "string" }
-                            : undefined,
+                        t.default != null ? { value: this.escapeString(t.default), phpType: "string" } : undefined,
                     date: () => undefined,
                     dateTime: () => undefined,
                     uuid: () => undefined,
