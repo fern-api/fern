@@ -3,7 +3,6 @@ import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
-import { ts } from "ts-morph";
 
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError.js";
 import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType.js";
@@ -49,11 +48,6 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         });
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
         const includeUtilsOnUnionMembers = includeSerdeLayer;
-        const discriminantValueKeyword = FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
-            property: () => ts.SyntaxKind.StringKeyword as const,
-            statusCode: () => ts.SyntaxKind.NumberKeyword as const,
-            _other: () => ts.SyntaxKind.StringKeyword as const
-        });
         this.errorUnion = new GeneratedUnionImpl<SdkContext>({
             shape: undefined,
             typeName: GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME,
@@ -82,8 +76,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                 ),
             unknownSingleUnionType: new UnknownErrorSingleUnionType({
                 singleUnionType: unknownErrorSingleUnionTypeGenerator,
-                includeUtilsOnUnionMembers,
-                discriminantValueKeyword
+                includeUtilsOnUnionMembers
             }),
             includeOtherInUnionTypes: true,
             includeSerdeLayer,

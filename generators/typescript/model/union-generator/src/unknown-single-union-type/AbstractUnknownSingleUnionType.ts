@@ -10,17 +10,6 @@ export abstract class AbstractUnknownSingleUnionType<
     protected static BUILDER_NAME = "_unknown";
     protected static VISITOR_KEY = "_other";
 
-    private discriminantValueKeyword: ts.SyntaxKind.StringKeyword | ts.SyntaxKind.NumberKeyword;
-
-    constructor(
-        init: AbstractParsedSingleUnionType.Init<Context> & {
-            discriminantValueKeyword?: ts.SyntaxKind.StringKeyword | ts.SyntaxKind.NumberKeyword;
-        }
-    ) {
-        super(init);
-        this.discriminantValueKeyword = init.discriminantValueKeyword ?? ts.SyntaxKind.StringKeyword;
-    }
-
     public getDiscriminantValue(): string | undefined {
         return undefined;
     }
@@ -30,7 +19,7 @@ export abstract class AbstractUnknownSingleUnionType<
     }
 
     public getDiscriminantValueType(): ts.TypeNode {
-        return ts.factory.createKeywordTypeNode(this.discriminantValueKeyword);
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }
 
     public getTypeName(): string {

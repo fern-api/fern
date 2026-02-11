@@ -4,33 +4,40 @@ import { SeedTraceClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("MigrationClient", () => {
-    
     test("getAttemptedMigrations", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ "maxRetries" : 0 , "token" : "test" , "xRandomHeader" : "test" , "environment" : server.baseUrl });
-        
-        const rawResponseBody = [ { "name" : "name" , "status" : "RUNNING" } , { "name" : "name" , "status" : "RUNNING" } ];
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = [
+            { name: "name", status: "RUNNING" },
+            { name: "name", status: "RUNNING" },
+        ];
         server
             .mockEndpoint()
-            .get("/migration-info/all").header("admin-key-header", "admin-key-header")
-                    .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .get("/migration-info/all")
+            .header("admin-key-header", "admin-key-header")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.migration.getAttemptedMigrations({
-    "admin-key-header": "admin-key-header"
-});
-                            expect(response).toEqual([{
-        name: "name",
-        status: "RUNNING"
-    }, {
-        name: "name",
-        status: "RUNNING"
-    }]);
-                          
-                
+        const response = await client.migration.getAttemptedMigrations({
+            "admin-key-header": "admin-key-header",
+        });
+        expect(response).toEqual([
+            {
+                name: "name",
+                status: "RUNNING",
+            },
+            {
+                name: "name",
+                status: "RUNNING",
+            },
+        ]);
     });
-          
 });
