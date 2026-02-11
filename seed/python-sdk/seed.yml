@@ -353,6 +353,12 @@ fixtures:
           union_naming: v1
         use_inheritance_for_extended_models: false
       outputFolder: union-naming-v1
+  multi-url-environment:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        should_generate_websocket_clients: true
+      outputFolder: with-websocket
   websocket:
     - outputFolder: websocket-base
     - customConfig:

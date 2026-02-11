@@ -15,3 +15,34 @@ service:
           properties:
             s3Key: string
       response: string
+    downloadFile:
+      auth: true
+      path: /file
+      method: POST
+      request:
+        name: DownloadFileRequest
+        body:
+          properties:
+            fileKey: string
+      response:
+        type: file
+
+channel:
+  path: /s3/events
+  auth: false
+  url: ws
+  messages:
+    send:
+      origin: client
+      body: SendRequest
+    receive:
+      origin: server
+      body: ReceiveEvent
+
+types:
+  SendRequest:
+    properties:
+      data: string
+  ReceiveEvent:
+    properties:
+      payload: string
