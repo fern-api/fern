@@ -101,6 +101,12 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         propertyAccess: private
+  request-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-defaults
+      customConfig:
+        useDefaultRequestParameterValues: true
   query-parameters:
     - outputFolder: no-custom-config
       customConfig: null
