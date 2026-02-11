@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager, contextmanager
-from typing import Any, Dict
+from typing import Any, AsyncIterator, Dict, Iterator
 from unittest.mock import MagicMock, patch
 
 import httpx
@@ -313,7 +313,7 @@ class _ConnectErrorSyncClient:
         return _DummyResponse()
 
     @contextmanager
-    def stream(self, **kwargs: Any):
+    def stream(self, **kwargs: Any) -> Iterator[_DummyResponse]:
         self.attempt += 1
         if self.attempt <= self.fail_count:
             raise httpx.ConnectError("All connection attempts failed")
@@ -332,7 +332,7 @@ class _ConnectErrorAsyncClient:
         return _DummyResponse()
 
     @asynccontextmanager
-    async def stream(self, **kwargs: Any):
+    async def stream(self, **kwargs: Any) -> AsyncIterator[_DummyResponse]:
         self.attempt += 1
         if self.attempt <= self.fail_count:
             raise httpx.ConnectError("All connection attempts failed")
