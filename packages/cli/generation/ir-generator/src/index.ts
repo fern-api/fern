@@ -4,6 +4,7 @@ export {
     doesRequestHaveNonBodyProperties
 } from "./converters/services/convertHttpSdkRequest.js";
 export { getHeaderName, resolvePathParameter } from "./converters/services/convertHttpService.js";
+export { isRawPathPaginationSchema, isRawUriPaginationSchema } from "./converters/services/convertPaginationUtils.js";
 export { getQueryParameterName } from "./converters/services/convertQueryParameter.js";
 export { convertResponseErrors } from "./converters/services/convertResponseErrors.js";
 export {
@@ -24,7 +25,6 @@ export { type ResolvedEndpoint } from "./resolvers/ResolvedEndpoint.js";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType.js";
 export { type TypeResolver, TypeResolverImpl } from "./resolvers/TypeResolver.js";
 export { type VariableResolver, VariableResolverImpl } from "./resolvers/VariableResolver.js";
-export { isRawPathPaginationSchema, isRawUriPaginationSchema } from "./converters/services/convertPaginationUtils.js";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath.js";
 export {
     convertObjectPropertyWithPathToString,

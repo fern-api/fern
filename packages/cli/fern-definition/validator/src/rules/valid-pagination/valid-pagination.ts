@@ -1,5 +1,10 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { constructFernFileContext, isRawPathPaginationSchema, isRawUriPaginationSchema, TypeResolverImpl } from "@fern-api/ir-generator";
+import {
+    constructFernFileContext,
+    isRawPathPaginationSchema,
+    isRawUriPaginationSchema,
+    TypeResolverImpl
+} from "@fern-api/ir-generator";
 
 import { Rule } from "../../Rule.js";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
