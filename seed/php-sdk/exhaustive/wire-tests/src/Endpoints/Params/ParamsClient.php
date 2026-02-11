@@ -17,7 +17,7 @@ use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
 use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
 use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
 
-class ParamsClient implements ParamsClientInterface
+class ParamsClient
 {
     /**
      * @var array{

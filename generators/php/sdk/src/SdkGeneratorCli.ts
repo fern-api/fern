@@ -60,8 +60,10 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         generateTraits(context);
         this.generateRootClient(context);
         this.generateSubpackages(context);
-        this.generateRootClientInterface(context);
-        this.generateSubpackageInterfaces(context);
+        if (context.customConfig.generateClientInterfaces) {
+            this.generateRootClientInterface(context);
+            this.generateSubpackageInterfaces(context);
+        }
         this.generateEnvironment(context);
         this.generateErrors(context);
         this.generateOauthTokenProvider(context);

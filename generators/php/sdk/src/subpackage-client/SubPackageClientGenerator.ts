@@ -33,7 +33,9 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         const class_ = php.class_({
             ...this.classReference,
             interfaceReferences:
-                this.service != null ? [this.context.getSubpackageInterfaceClassReference(this.subpackage)] : undefined
+                this.context.customConfig.generateClientInterfaces && this.service != null
+                    ? [this.context.getSubpackageInterfaceClassReference(this.subpackage)]
+                    : undefined
         });
 
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";

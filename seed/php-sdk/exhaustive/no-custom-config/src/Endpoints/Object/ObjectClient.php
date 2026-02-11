@@ -18,7 +18,7 @@ use Seed\Types\Object\Types\NestedObjectWithRequiredField;
 use Seed\Core\Json\JsonSerializer;
 use Seed\Types\Object\Types\ObjectWithDatetimeLikeString;
 
-class ObjectClient implements ObjectClientInterface
+class ObjectClient
 {
     /**
      * @var array{

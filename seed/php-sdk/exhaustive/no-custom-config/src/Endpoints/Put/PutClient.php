@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class PutClient implements PutClientInterface
+class PutClient
 {
     /**
      * @var array{

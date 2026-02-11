@@ -14,7 +14,7 @@ use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 
-class ContainerClient implements ContainerClientInterface
+class ContainerClient
 {
     /**
      * @var array{

@@ -14,7 +14,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use DateTime;
 use Seed\Core\Json\JsonSerializer;
 
-class PrimitiveClient implements PrimitiveClientInterface
+class PrimitiveClient
 {
     /**
      * @var array{

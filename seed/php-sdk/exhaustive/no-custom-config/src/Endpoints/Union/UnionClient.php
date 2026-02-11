@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class UnionClient implements UnionClientInterface
+class UnionClient
 {
     /**
      * @var array{
