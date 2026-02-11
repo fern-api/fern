@@ -13,9 +13,7 @@ from .types.list_users_extended_response import ListUsersExtendedResponse
 from .types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
 from .types.list_users_optional_data_pagination_response import ListUsersOptionalDataPaginationResponse
 from .types.list_users_pagination_response import ListUsersPaginationResponse
-from .types.list_users_path_pagination_response import ListUsersPathPaginationResponse
 from .types.list_users_top_level_cursor_pagination_response import ListUsersTopLevelCursorPaginationResponse
-from .types.list_users_uri_pagination_response import ListUsersUriPaginationResponse
 from .types.order import Order
 from .types.user import User
 from .types.username_container import UsernameContainer
@@ -690,66 +688,6 @@ class UsersClient:
             yield page
         """
         return self._raw_client.list_with_optional_data(page=page, request_options=request_options)
-
-    def list_with_uri_pagination(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User, ListUsersUriPaginationResponse]:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[User, ListUsersUriPaginationResponse]
-
-        Examples
-        --------
-        from seed import SeedPagination
-
-        client = SeedPagination(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.users.list_with_uri_pagination()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list_with_uri_pagination(request_options=request_options)
-
-    def list_with_path_pagination(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User, ListUsersPathPaginationResponse]:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[User, ListUsersPathPaginationResponse]
-
-        Examples
-        --------
-        from seed import SeedPagination
-
-        client = SeedPagination(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.users.list_with_path_pagination()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list_with_path_pagination(request_options=request_options)
 
 
 class AsyncUsersClient:
@@ -1555,81 +1493,3 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         return await self._raw_client.list_with_optional_data(page=page, request_options=request_options)
-
-    async def list_with_uri_pagination(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User, ListUsersUriPaginationResponse]:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[User, ListUsersUriPaginationResponse]
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedPagination
-
-        client = AsyncSeedPagination(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.users.list_with_uri_pagination()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list_with_uri_pagination(request_options=request_options)
-
-    async def list_with_path_pagination(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User, ListUsersPathPaginationResponse]:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[User, ListUsersPathPaginationResponse]
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedPagination
-
-        client = AsyncSeedPagination(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            response = await client.users.list_with_path_pagination()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list_with_path_pagination(request_options=request_options)

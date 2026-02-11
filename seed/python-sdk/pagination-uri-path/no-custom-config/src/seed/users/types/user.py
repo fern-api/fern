@@ -4,12 +4,11 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .user import User
 
 
-class ListUsersPathPaginationResponse(UniversalBaseModel):
-    data: typing.List[User]
-    next: typing.Optional[str] = None
+class User(UniversalBaseModel):
+    name: str
+    id: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
