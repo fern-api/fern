@@ -59,6 +59,15 @@ service:
       request: list<objects.NestedObjectWithRequiredField>
       response: objects.NestedObjectWithRequiredField
 
+    getAndReturnEmbeddings:
+      docs: |
+        Tests that construct_type handles object types with nested embedding-like
+        properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+      path: /get-and-return-embeddings
+      method: POST
+      request: objects.EmbeddingsResponse
+      response: objects.EmbeddingsResponse
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.

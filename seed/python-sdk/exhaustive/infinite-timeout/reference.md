@@ -1839,6 +1839,93 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_embeddings</a>(...) -&gt; AsyncHttpResponse[EmbeddingsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that construct_type handles object types with nested embedding-like
+properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+from seed.types.object import EmbeddingsByModel
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_embeddings(
+    embeddings=EmbeddingsByModel(
+        float_=[[1.1, 1.1], [1.1, 1.1]],
+        int_8=[[1, 1], [1, 1]],
+        uint_8=[[1, 1], [1, 1]],
+        base_64=["base64", "base64"],
+    ),
+    texts=["texts", "texts"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**embeddings:** `EmbeddingsByModel` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**texts:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_datetime_like_string</a>(...) -&gt; AsyncHttpResponse[ObjectWithDatetimeLikeString]</code></summary>
 <dl>
 <dd>

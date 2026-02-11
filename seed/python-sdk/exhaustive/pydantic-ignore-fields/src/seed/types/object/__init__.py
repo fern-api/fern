@@ -8,6 +8,8 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         DoubleOptional,
+        EmbeddingsByModel,
+        EmbeddingsResponse,
         NestedObjectWithOptionalField,
         NestedObjectWithRequiredField,
         ObjectWithDatetimeLikeString,
@@ -24,6 +26,8 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "DoubleOptional": ".types",
+    "EmbeddingsByModel": ".types",
+    "EmbeddingsResponse": ".types",
     "NestedObjectWithOptionalField": ".types",
     "NestedObjectWithOptionalFieldError": ".errors",
     "NestedObjectWithRequiredField": ".types",
@@ -61,6 +65,8 @@ def __dir__():
 
 __all__ = [
     "DoubleOptional",
+    "EmbeddingsByModel",
+    "EmbeddingsResponse",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",

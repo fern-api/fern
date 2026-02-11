@@ -7,6 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .double_optional import DoubleOptional
+    from .embeddings_by_model import EmbeddingsByModel
+    from .embeddings_response import EmbeddingsResponse
     from .nested_object_with_optional_field import NestedObjectWithOptionalField
     from .nested_object_with_required_field import NestedObjectWithRequiredField
     from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
@@ -16,6 +18,8 @@ if typing.TYPE_CHECKING:
     from .optional_alias import OptionalAlias
 _dynamic_imports: typing.Dict[str, str] = {
     "DoubleOptional": ".double_optional",
+    "EmbeddingsByModel": ".embeddings_by_model",
+    "EmbeddingsResponse": ".embeddings_response",
     "NestedObjectWithOptionalField": ".nested_object_with_optional_field",
     "NestedObjectWithRequiredField": ".nested_object_with_required_field",
     "ObjectWithDatetimeLikeString": ".object_with_datetime_like_string",
@@ -49,6 +53,8 @@ def __dir__():
 
 __all__ = [
     "DoubleOptional",
+    "EmbeddingsByModel",
+    "EmbeddingsResponse",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
     "ObjectWithDatetimeLikeString",

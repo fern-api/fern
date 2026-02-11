@@ -11,6 +11,8 @@ if typing.TYPE_CHECKING:
     from .enum import ErrorWithEnumBody, WeatherReport
     from .object import (
         DoubleOptional,
+        EmbeddingsByModel,
+        EmbeddingsResponse,
         NestedObjectWithOptionalField,
         NestedObjectWithOptionalFieldError,
         NestedObjectWithRequiredField,
@@ -31,6 +33,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Cat": ".union",
     "Dog": ".union",
     "DoubleOptional": ".object",
+    "EmbeddingsByModel": ".object",
+    "EmbeddingsResponse": ".object",
     "ErrorWithEnumBody": ".enum",
     "ErrorWithUnionBody": ".union",
     "NestedObjectWithOptionalField": ".object",
@@ -81,6 +85,8 @@ __all__ = [
     "Cat",
     "Dog",
     "DoubleOptional",
+    "EmbeddingsByModel",
+    "EmbeddingsResponse",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
     "NestedObjectWithOptionalField",

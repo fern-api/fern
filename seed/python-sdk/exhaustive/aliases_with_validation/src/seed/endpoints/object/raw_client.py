@@ -11,6 +11,8 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
+from ...types.object.types.embeddings_by_model import EmbeddingsByModel
+from ...types.object.types.embeddings_response import EmbeddingsResponse
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
@@ -321,6 +323,55 @@ class RawObjectClient:
                     NestedObjectWithRequiredField,
                     parse_obj_as(
                         type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_and_return_embeddings(
+        self,
+        *,
+        embeddings: EmbeddingsByModel,
+        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[EmbeddingsResponse]:
+        """
+        Tests that construct_type handles object types with nested embedding-like
+        properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+
+        Parameters
+        ----------
+        embeddings : EmbeddingsByModel
+
+        texts : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[EmbeddingsResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-embeddings",
+            method="POST",
+            json={
+                "embeddings": embeddings,
+                "texts": texts,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmbeddingsResponse,
+                    parse_obj_as(
+                        type_=EmbeddingsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -682,6 +733,55 @@ class AsyncRawObjectClient:
                     NestedObjectWithRequiredField,
                     parse_obj_as(
                         type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_embeddings(
+        self,
+        *,
+        embeddings: EmbeddingsByModel,
+        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[EmbeddingsResponse]:
+        """
+        Tests that construct_type handles object types with nested embedding-like
+        properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+
+        Parameters
+        ----------
+        embeddings : EmbeddingsByModel
+
+        texts : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[EmbeddingsResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-embeddings",
+            method="POST",
+            json={
+                "embeddings": embeddings,
+                "texts": texts,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EmbeddingsResponse,
+                    parse_obj_as(
+                        type_=EmbeddingsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

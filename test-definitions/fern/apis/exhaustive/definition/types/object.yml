@@ -41,6 +41,24 @@ types:
 
   OptionalAlias: optional<string>
 
+  EmbeddingsResponse:
+    docs: |
+      An object with typed embedding properties. Tests that construct_type
+      handles non-mapping data gracefully when the expected type is an object.
+    properties:
+      embeddings: EmbeddingsByModel
+      texts: optional<list<string>>
+
+  EmbeddingsByModel:
+    docs: |
+      An object where each property contains embedding arrays.
+      Similar to schemas that define both object properties and array items.
+    properties:
+      float: optional<list<list<double>>>
+      int8: optional<list<list<integer>>>
+      uint8: optional<list<list<integer>>>
+      base64: optional<list<string>>
+
   ObjectWithDatetimeLikeString:
     docs: |
       This type tests that string fields containing datetime-like values

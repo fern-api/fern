@@ -7,6 +7,8 @@ from .docs import ObjectWithDocs
 from .enum import ErrorWithEnumBody, WeatherReport
 from .object import (
     DoubleOptional,
+    EmbeddingsByModel,
+    EmbeddingsResponse,
     NestedObjectWithOptionalField,
     NestedObjectWithOptionalFieldError,
     NestedObjectWithRequiredField,
@@ -28,6 +30,8 @@ __all__ = [
     "Cat",
     "Dog",
     "DoubleOptional",
+    "EmbeddingsByModel",
+    "EmbeddingsResponse",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
     "NestedObjectWithOptionalField",

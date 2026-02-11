@@ -6,6 +6,8 @@ import uuid
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.object.types.embeddings_by_model import EmbeddingsByModel
+from ...types.object.types.embeddings_response import EmbeddingsResponse
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
@@ -417,6 +419,54 @@ class ObjectClient:
         """
         _response = self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    def get_and_return_embeddings(
+        self,
+        *,
+        embeddings: EmbeddingsByModel,
+        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmbeddingsResponse:
+        """
+        Tests that construct_type handles object types with nested embedding-like
+        properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+
+        Parameters
+        ----------
+        embeddings : EmbeddingsByModel
+
+        texts : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmbeddingsResponse
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+        from seed.types.object import EmbeddingsByModel
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_embeddings(
+            embeddings=EmbeddingsByModel(
+                float_=[[1.1, 1.1], [1.1, 1.1]],
+                int_8=[[1, 1], [1, 1]],
+                uint_8=[[1, 1], [1, 1]],
+                base_64=["base64", "base64"],
+            ),
+            texts=["texts", "texts"],
+        )
+        """
+        _response = self._raw_client.get_and_return_embeddings(
+            embeddings=embeddings, texts=texts, request_options=request_options
         )
         return _response.data
 
@@ -915,6 +965,62 @@ class AsyncObjectClient:
         """
         _response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_embeddings(
+        self,
+        *,
+        embeddings: EmbeddingsByModel,
+        texts: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EmbeddingsResponse:
+        """
+        Tests that construct_type handles object types with nested embedding-like
+        properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+
+        Parameters
+        ----------
+        embeddings : EmbeddingsByModel
+
+        texts : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EmbeddingsResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+        from seed.types.object import EmbeddingsByModel
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_embeddings(
+                embeddings=EmbeddingsByModel(
+                    float_=[[1.1, 1.1], [1.1, 1.1]],
+                    int_8=[[1, 1], [1, 1]],
+                    uint_8=[[1, 1], [1, 1]],
+                    base_64=["base64", "base64"],
+                ),
+                texts=["texts", "texts"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_embeddings(
+            embeddings=embeddings, texts=texts, request_options=request_options
         )
         return _response.data
 

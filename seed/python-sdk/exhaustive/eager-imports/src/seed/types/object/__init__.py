@@ -4,6 +4,8 @@
 
 from .types import (
     DoubleOptional,
+    EmbeddingsByModel,
+    EmbeddingsResponse,
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
     ObjectWithDatetimeLikeString,
@@ -21,6 +23,8 @@ from .errors import (
 
 __all__ = [
     "DoubleOptional",
+    "EmbeddingsByModel",
+    "EmbeddingsResponse",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",
