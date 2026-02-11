@@ -26,7 +26,8 @@ import {
     buildPrimitiveTypeReference,
     buildReferenceTypeReference,
     buildTypeReference,
-    buildUnknownTypeReference
+    buildUnknownTypeReference,
+    getDisplayName
 } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { State } from "./State.js";
@@ -661,13 +662,28 @@ export function buildOneOfTypeDeclaration({
         }
         const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {};
         for (const [discriminantValue, subSchema] of Object.entries(schema.schemas)) {
-            union[discriminantValue] = buildTypeReference({
+            const typeRef = buildTypeReference({
                 schema: subSchema,
                 context,
                 fileContainingReference: declarationFile,
                 namespace,
                 declarationDepth: declarationDepth + 1
             });
+            let variantTitle: string | undefined = getDisplayName(subSchema);
+            if (variantTitle == null && subSchema.type === "reference") {
+                const resolvedSchema = context.getSchema(subSchema.schema, subSchema.namespace);
+                if (resolvedSchema != null) {
+                    variantTitle = getDisplayName(resolvedSchema);
+                }
+            }
+            if (variantTitle != null) {
+                union[discriminantValue] =
+                    typeof typeRef === "string"
+                        ? { type: typeRef, "display-name": variantTitle }
+                        : { ...typeRef, "display-name": variantTitle };
+            } else {
+                union[discriminantValue] = typeRef;
+            }
         }
         return {
             name: schema.nameOverride ?? schema.generatedName,

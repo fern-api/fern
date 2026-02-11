@@ -2376,9 +2376,11 @@ service:
             },
             "union": {
               "error": {
+                "display-name": "Event error",
                 "type": "SessionsEventsResponseError",
               },
               "status": {
+                "display-name": "Event status",
                 "type": "SessionsEventsResponseStatus",
               },
             },
@@ -2478,8 +2480,10 @@ service:
     union:
       status:
         type: SessionsEventsResponseStatus
+        display-name: Event status
       error:
         type: SessionsEventsResponseError
+        display-name: Event error
     source:
       openapi: ../openapi.yml
 imports:

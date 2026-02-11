@@ -886,7 +886,7 @@ function getSchemaName(schema: Schema): string | undefined {
     });
 }
 
-function getDisplayName(schema: Schema): string | undefined {
+export function getDisplayName(schema: Schema): string | undefined {
     return Schema._visit(schema, {
         primitive: (s) => s.title,
         object: (s) => s.title,

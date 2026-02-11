@@ -82,9 +82,11 @@
             },
             "union": {
               "request": {
+                "display-name": "A simple request title",
                 "type": "Request",
               },
               "response": {
+                "display-name": "A simple response title",
                 "type": "Response",
               },
             },
@@ -137,8 +139,10 @@ types:
     union:
       request:
         type: Request
+        display-name: A simple request title
       response:
         type: Response
+        display-name: A simple response title
     source:
       openapi: ../openapi.yml
 ",
