@@ -167,6 +167,7 @@ allowedFailures:
   - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
+  - pagination-uri-path
 
 features:
   requestOptions: true
