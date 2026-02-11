@@ -8,8 +8,7 @@ import * as core from "./core/index.js";
 export declare namespace SeedServerSentEventsClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedServerSentEventsClient {
@@ -17,7 +16,6 @@ export class SeedServerSentEventsClient {
     protected _completions: CompletionsClient | undefined;
 
     constructor(options: SeedServerSentEventsClient.Options) {
-
         this._options = normalizeClientOptions(options);
     }
 

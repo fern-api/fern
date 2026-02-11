@@ -1,5 +1,3 @@
-
-
 import { RUNTIME } from "../runtime/index.js";
 
 export declare namespace Stream {
@@ -7,9 +5,9 @@ export declare namespace Stream {
         /**
          * The HTTP response stream to read from.
          */
-        
+
         stream: ReadableStream;
-        
+
         /**
          * The event shape to use for parsing the stream data.
          */
@@ -37,9 +35,8 @@ const EVENT_PREFIX = "event:";
 const ID_PREFIX = "id:";
 
 export class Stream<T> implements AsyncIterable<T> {
-    
     private stream: ReadableStream;
-    
+
     private parse: (val: unknown) => Promise<T>;
     /**
      * The prefix to use for each message. For example,
@@ -243,6 +240,6 @@ export function readableStreamAsyncIterable<T>(stream: any): AsyncIterableIterat
         },
         [Symbol.asyncIterator]() {
             return this;
-        }
+        },
     };
 }
