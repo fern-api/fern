@@ -133,6 +133,13 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+      discriminatorMapping:
+        docs: |
+          Optional mapping from discriminant values to union member types.
+          Enables generators to create compile-time discrimination logic
+          instead of runtime reflection. Maps wireValue to the corresponding
+          union member's type information.
+        type: optional<UnionDiscriminatorMapping>
 
   SingleUnionType:
     extends: commons.WithDocs
@@ -155,6 +162,39 @@ types:
     properties:
       name: commons.NameAndWireValue
       type: TypeReference
+
+  UnionDiscriminatorMapping:
+    docs: |
+      Provides compile-time mapping from discriminant values to union member types.
+      This enables generators to create type-safe discrimination logic without
+      runtime reflection or type introspection.
+    properties:
+      strategy:
+        docs: The discrimination strategy used for this union
+        type: UnionDiscriminationStrategy
+        default: property
+      mapping:
+        docs: |
+          Maps discriminant wire values to their corresponding union member information.
+          For example: {"completion" -> CompletionEvent, "chat" -> ChatEvent}
+        type: map<string, UnionMemberTypeInfo>
+
+  UnionDiscriminationStrategy:
+    docs: The strategy used to discriminate between union members
+    enum:
+      - value: property
+        docs: Discrimination based on a property value (most common)
+      - value: wrapper
+        docs: Discrimination based on wrapper object structure
+
+  UnionMemberTypeInfo:
+    docs: Information about a specific union member type
+    properties:
+      typeReference: TypeReference
+      discriminantValue: commons.NameAndWireValue
+      memberIndex:
+        docs: Zero-based index of this member in the union types list
+        type: integer
 
   UndiscriminatedUnionTypeDeclaration:
     properties:

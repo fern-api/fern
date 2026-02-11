@@ -8,4 +8,11 @@ export interface UnionTypeDeclaration {
     extends: FernIr.DeclaredTypeName[];
     types: FernIr.SingleUnionType[];
     baseProperties: FernIr.ObjectProperty[];
+    /**
+     * Optional mapping from discriminant values to union member types.
+     * Enables generators to create compile-time discrimination logic
+     * instead of runtime reflection. Maps wireValue to the corresponding
+     * union member's type information.
+     */
+    discriminatorMapping: FernIr.UnionDiscriminatorMapping | undefined;
 }
