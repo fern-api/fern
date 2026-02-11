@@ -1,5 +1,8 @@
+from contextlib import asynccontextmanager, contextmanager
 from typing import Any, Dict
+from unittest.mock import MagicMock, patch
 
+import httpx
 import pytest
 
 from core_utilities.shared.http_client import (
@@ -296,3 +299,163 @@ def test_preserves_base_url_path_prefix_trailing_slash() -> None:
     """Test that path prefixes in base URL are preserved."""
     result = _build_url("https://cloud.example.com/org/tenant/api/", "/users")
     assert result == "https://cloud.example.com/org/tenant/api/users"
+
+
+class _ConnectErrorSyncClient:
+    def __init__(self, fail_count: int) -> None:
+        self.fail_count = fail_count
+        self.attempt = 0
+
+    def request(self, **kwargs: Any) -> _DummyResponse:
+        self.attempt += 1
+        if self.attempt <= self.fail_count:
+            raise httpx.ConnectError("All connection attempts failed")
+        return _DummyResponse()
+
+    @contextmanager
+    def stream(self, **kwargs: Any):
+        self.attempt += 1
+        if self.attempt <= self.fail_count:
+            raise httpx.ConnectError("All connection attempts failed")
+        yield _DummyResponse()
+
+
+class _ConnectErrorAsyncClient:
+    def __init__(self, fail_count: int) -> None:
+        self.fail_count = fail_count
+        self.attempt = 0
+
+    async def request(self, **kwargs: Any) -> _DummyResponse:
+        self.attempt += 1
+        if self.attempt <= self.fail_count:
+            raise httpx.ConnectError("All connection attempts failed")
+        return _DummyResponse()
+
+    @asynccontextmanager
+    async def stream(self, **kwargs: Any):
+        self.attempt += 1
+        if self.attempt <= self.fail_count:
+            raise httpx.ConnectError("All connection attempts failed")
+        yield _DummyResponse()
+
+
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+def test_sync_request_retries_on_connect_error(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorSyncClient(fail_count=1)
+    http_client = HttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+    )
+    response = http_client.request(path="/test", method="GET", request_options={"max_retries": 2})
+    assert response.status_code == 200
+    assert dummy_client.attempt == 2
+
+
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+def test_sync_request_raises_after_max_retries(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorSyncClient(fail_count=10)
+    http_client = HttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+    )
+    with pytest.raises(httpx.ConnectError):
+        http_client.request(path="/test", method="GET", request_options={"max_retries": 2})
+    assert dummy_client.attempt == 3
+
+
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+def test_sync_stream_retries_on_connect_error(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorSyncClient(fail_count=1)
+    http_client = HttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+    )
+    with http_client.stream(path="/test", method="GET", request_options={"max_retries": 2}) as response:
+        assert response.status_code == 200
+    assert dummy_client.attempt == 2
+
+
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+def test_sync_stream_raises_after_max_retries(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorSyncClient(fail_count=10)
+    http_client = HttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+    )
+    with pytest.raises(httpx.ConnectError):
+        with http_client.stream(path="/test", method="GET", request_options={"max_retries": 2}) as response:
+            pass
+    assert dummy_client.attempt == 3
+
+
+@pytest.mark.asyncio
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+async def test_async_request_retries_on_connect_error(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorAsyncClient(fail_count=1)
+    http_client = AsyncHttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        async_base_headers=None,
+    )
+    response = await http_client.request(path="/test", method="GET", request_options={"max_retries": 2})
+    assert response.status_code == 200
+    assert dummy_client.attempt == 2
+
+
+@pytest.mark.asyncio
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+async def test_async_request_raises_after_max_retries(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorAsyncClient(fail_count=10)
+    http_client = AsyncHttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        async_base_headers=None,
+    )
+    with pytest.raises(httpx.ConnectError):
+        await http_client.request(path="/test", method="GET", request_options={"max_retries": 2})
+    assert dummy_client.attempt == 3
+
+
+@pytest.mark.asyncio
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+async def test_async_stream_retries_on_connect_error(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorAsyncClient(fail_count=1)
+    http_client = AsyncHttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        async_base_headers=None,
+    )
+    async with http_client.stream(path="/test", method="GET", request_options={"max_retries": 2}) as response:
+        assert response.status_code == 200
+    assert dummy_client.attempt == 2
+
+
+@pytest.mark.asyncio
+@patch("core_utilities.shared.http_client._retry_timeout_for_transport_error", return_value=0.0)
+async def test_async_stream_raises_after_max_retries(mock_timeout: MagicMock) -> None:
+    dummy_client = _ConnectErrorAsyncClient(fail_count=10)
+    http_client = AsyncHttpClient(
+        httpx_client=dummy_client,  # type: ignore[arg-type]
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        async_base_headers=None,
+    )
+    with pytest.raises(httpx.ConnectError):
+        async with http_client.stream(path="/test", method="GET", request_options={"max_retries": 2}) as response:
+            pass
+    assert dummy_client.attempt == 3

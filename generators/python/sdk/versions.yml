@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.56.1
+  changelogEntry:
+    - summary: |
+        Add transport-error retry handling for `httpx.ConnectError` and `httpx.TimeoutException`.
+        Both `request()` and `stream()` methods (sync and async) now retry on connection failures
+        and timeouts using exponential backoff, matching the idiomatic pattern used by OpenAI and
+        other major SDKs. Previously, transport-level exceptions bypassed retry logic entirely.
+      type: fix
+  createdAt: "2026-02-11"
+  irVersion: 65
+
 - version: 4.56.0
   changelogEntry:
     - summary: |

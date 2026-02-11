@@ -120,6 +120,11 @@ def _should_retry(response: httpx.Response) -> bool:
     return response.status_code >= 500 or response.status_code in retryable_400s
 
 
+def _retry_timeout_for_transport_error(retries: int) -> float:
+    backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+    return _add_symmetric_jitter(backoff)
+
+
 def _build_url(base_url: str, path: typing.Optional[str]) -> str:
     """
     Build a full URL by joining a base URL with a path.
@@ -313,27 +318,46 @@ class HttpClient:
             )
         )
 
-        response = self.httpx_client.request(
-            method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self.base_headers(),
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
-                    }
-                )
-            ),
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        )
-
         max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+
+        try:
+            response = self.httpx_client.request(
+                method=method,
+                url=_build_url(base_url, path),
+                headers=jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **self.base_headers(),
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                        }
+                    )
+                ),
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            )
+        except (httpx.ConnectError, httpx.TimeoutException):
+            if retries < max_retries:
+                time.sleep(_retry_timeout_for_transport_error(retries=retries))
+                return self.request(
+                    path=path,
+                    method=method,
+                    base_url=base_url,
+                    params=params,
+                    json=json,
+                    content=content,
+                    files=files,
+                    headers=headers,
+                    request_options=request_options,
+                    retries=retries + 1,
+                    omit=omit,
+                )
+            raise
+
         if _should_retry(response=response):
             if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
@@ -416,26 +440,51 @@ class HttpClient:
             )
         )
 
-        with self.httpx_client.stream(
-            method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self.base_headers(),
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+
+        response_started = False
+        try:
+            with self.httpx_client.stream(
+                method=method,
+                url=_build_url(base_url, path),
+                headers=jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **self.base_headers(),
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        }
+                    )
+                ),
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            ) as stream:
+                response_started = True
+                yield stream
+        except (httpx.ConnectError, httpx.TimeoutException):
+            if response_started or retries >= max_retries:
+                raise
+            time.sleep(_retry_timeout_for_transport_error(retries=retries))
+            with self.stream(
+                path=path,
+                method=method,
+                base_url=base_url,
+                params=params,
+                json=json,
+                data=data,
+                content=content,
+                files=files,
+                headers=headers,
+                request_options=request_options,
+                retries=retries + 1,
+                omit=omit,
+                force_multipart=force_multipart,
+            ) as retried_stream:
+                yield retried_stream
 
 
 class AsyncHttpClient:
@@ -533,28 +582,46 @@ class AsyncHttpClient:
             )
         )
 
-        # Add the input to each of these and do None-safety checks
-        response = await self.httpx_client.request(
-            method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **_headers,
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
-                    }
-                )
-            ),
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        )
-
         max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+
+        try:
+            response = await self.httpx_client.request(
+                method=method,
+                url=_build_url(base_url, path),
+                headers=jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **_headers,
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                        }
+                    )
+                ),
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            )
+        except (httpx.ConnectError, httpx.TimeoutException):
+            if retries < max_retries:
+                await asyncio.sleep(_retry_timeout_for_transport_error(retries=retries))
+                return await self.request(
+                    path=path,
+                    method=method,
+                    base_url=base_url,
+                    params=params,
+                    json=json,
+                    content=content,
+                    files=files,
+                    headers=headers,
+                    request_options=request_options,
+                    retries=retries + 1,
+                    omit=omit,
+                )
+            raise
+
         if _should_retry(response=response):
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
@@ -639,23 +706,48 @@ class AsyncHttpClient:
             )
         )
 
-        async with self.httpx_client.stream(
-            method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **_headers,
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+
+        response_started = False
+        try:
+            async with self.httpx_client.stream(
+                method=method,
+                url=_build_url(base_url, path),
+                headers=jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            **_headers,
+                            **(headers if headers is not None else {}),
+                            **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                        }
+                    )
+                ),
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            ) as stream:
+                response_started = True
+                yield stream
+        except (httpx.ConnectError, httpx.TimeoutException):
+            if response_started or retries >= max_retries:
+                raise
+            await asyncio.sleep(_retry_timeout_for_transport_error(retries=retries))
+            async with self.stream(
+                path=path,
+                method=method,
+                base_url=base_url,
+                params=params,
+                json=json,
+                data=data,
+                content=content,
+                files=files,
+                headers=headers,
+                request_options=request_options,
+                retries=retries + 1,
+                omit=omit,
+                force_multipart=force_multipart,
+            ) as retried_stream:
+                yield retried_stream
