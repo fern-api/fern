@@ -79,6 +79,7 @@
     "definition:generate": "pnpm fern generate --local --api fern-definition",
     "generators:generate": "pnpm fern generate --local --api generators-yml",
     "update:generators": "pnpm generators:generate && pnpm generators-yml:jsonschema",
+    "update:docs": "pnpm docs:generate && pnpm docs-yml:jsonschema",
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
     "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false",
