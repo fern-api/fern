@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.5
+  changelogEntry:
+    - summary: |
+        Compute Docker Compose project name during generation to avoid invalid characters from runtime directory names (e.g. `.seed`).
+      type: fix
+    - summary: |
+        Cache client constructor signature check at module level and use httpx instead of requests for WireMock admin calls in generated wire test conftest.
+      type: chore
+  createdAt: "2026-02-11"
+  irVersion: 63
+
 - version: 4.55.4
   changelogEntry:
     - summary: |

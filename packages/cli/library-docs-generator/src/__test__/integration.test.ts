@@ -11,10 +11,6 @@ const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.par
     readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
 );
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrAPI.libraryDocs.PythonModuleIr {
     return {
         name: "mod",
@@ -82,10 +78,6 @@ function flattenNav(nodes: NavNode[]): NavNode[] {
     return result;
 }
 
-// ---------------------------------------------------------------------------
-// Build test IR
-// ---------------------------------------------------------------------------
-
 /**
  * Compose a realistic IR from NeMo fixture modules.
  *
@@ -118,10 +110,6 @@ function buildTestIr(): FdrAPI.libraryDocs.PythonLibraryDocsIr {
 
     return { rootModule } as FdrAPI.libraryDocs.PythonLibraryDocsIr;
 }
-
-// ===========================================================================
-// Integration Tests
-// ===========================================================================
 
 describe("generate() — full pipeline integration", () => {
     let tmpDir: string;
@@ -321,10 +309,6 @@ describe("generate() — full pipeline integration", () => {
     });
 });
 
-// ===========================================================================
-// Edge case: minimal IR
-// ===========================================================================
-
 describe("generate() — edge cases", () => {
     let tmpDir: string;
 
@@ -406,10 +390,6 @@ describe("generate() — edge cases", () => {
         expect(existsSync(result.navigationFilePath)).toBe(true);
     });
 });
-
-// ===========================================================================
-// Navigation YAML — auto-written by generate()
-// ===========================================================================
 
 describe("generate() writes _navigation.yml automatically", () => {
     let tmpDir: string;

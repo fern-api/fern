@@ -5,10 +5,6 @@ import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { generate } from "../PythonDocsGenerator";
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrAPI.libraryDocs.PythonModuleIr {
     return {
         name: "mod",
@@ -74,10 +70,6 @@ function makeIr(rootModule: FdrAPI.libraryDocs.PythonModuleIr): FdrAPI.libraryDo
     return { rootModule } as FdrAPI.libraryDocs.PythonLibraryDocsIr;
 }
 
-// ===========================================================================
-// PythonDocsGenerator — generate()
-// ===========================================================================
-
 describe("generate()", () => {
     let tmpDir: string;
 
@@ -88,10 +80,6 @@ describe("generate()", () => {
     afterEach(() => {
         rmSync(tmpDir, { recursive: true, force: true });
     });
-
-    // -----------------------------------------------------------------------
-    // Basic behavior
-    // -----------------------------------------------------------------------
 
     it("generates a single page for root with content and no submodules", () => {
         const ir = makeIr(
@@ -135,10 +123,6 @@ describe("generate()", () => {
         expect(result.rootPageId).toBe("reference/python/nemo_rl.mdx");
     });
 
-    // -----------------------------------------------------------------------
-    // File writing
-    // -----------------------------------------------------------------------
-
     it("writes files to correct directory structure", () => {
         const ir = makeIr(
             makeModule({
@@ -178,10 +162,6 @@ describe("generate()", () => {
             expect(existsSync(f)).toBe(true);
         }
     });
-
-    // -----------------------------------------------------------------------
-    // Page content
-    // -----------------------------------------------------------------------
 
     it("every page starts with frontmatter", () => {
         const ir = makeIr(
@@ -258,10 +238,6 @@ describe("generate()", () => {
         expect(content).toContain("## Module Contents");
     });
 
-    // -----------------------------------------------------------------------
-    // Navigation
-    // -----------------------------------------------------------------------
-
     it("builds navigation for submodules", () => {
         const ir = makeIr(
             makeModule({
@@ -316,10 +292,6 @@ describe("generate()", () => {
         expect(result.navigation[0]?.title).toBe("filled");
     });
 
-    // -----------------------------------------------------------------------
-    // Type link resolution
-    // -----------------------------------------------------------------------
-
     it("resolves cross-module type links in signatures", () => {
         const ir = makeIr(
             makeModule({
@@ -365,10 +337,6 @@ describe("generate()", () => {
         expect(corePage).toContain("pkg.types.Config");
         expect(corePage).toContain("<CodeBlock");
     });
-
-    // -----------------------------------------------------------------------
-    // Deep nesting
-    // -----------------------------------------------------------------------
 
     it("handles deeply nested module tree", () => {
         const leaf = makeModule({

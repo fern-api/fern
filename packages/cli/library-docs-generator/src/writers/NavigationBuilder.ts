@@ -15,10 +15,6 @@ import { mkdirSync, writeFileSync } from "fs";
 import jsYaml from "js-yaml";
 import { dirname, join } from "path";
 
-// ============================================================================
-// Navigation Node Types
-// ============================================================================
-
 /** A navigation node — either a page or a section. */
 export type NavNode = NavPageNode | NavSectionNode;
 
@@ -44,10 +40,6 @@ export interface NavSectionNode {
     children: NavNode[];
 }
 
-// ============================================================================
-// Public API
-// ============================================================================
-
 /**
  * Build a navigation tree from the module IR.
  *
@@ -62,10 +54,6 @@ export interface NavSectionNode {
 export function buildNavigation(rootModule: FdrAPI.libraryDocs.PythonModuleIr, baseSlug: string): NavNode[] {
     return generateModuleNav(rootModule, "", baseSlug);
 }
-
-// ============================================================================
-// Internal
-// ============================================================================
 
 /**
  * Recursively generate navigation for a module and its children.
@@ -109,10 +97,6 @@ function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath
 
     return items;
 }
-
-// ============================================================================
-// YAML Writer
-// ============================================================================
 
 export const NAVIGATION_FILENAME = "_navigation.yml";
 

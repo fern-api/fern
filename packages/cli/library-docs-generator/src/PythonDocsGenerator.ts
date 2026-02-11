@@ -17,10 +17,6 @@ import { buildTypeLinkData, type RenderContext } from "./utils/TypeLinkResolver.
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
 
-// ============================================================================
-// Public Types
-// ============================================================================
-
 export interface GenerateOptions {
     /** Parsed Python library IR */
     ir: FdrAPI.libraryDocs.PythonLibraryDocsIr;
@@ -44,10 +40,6 @@ export interface GenerateResult {
     /** Absolute path to the _navigation.yml file */
     navigationFilePath: string;
 }
-
-// ============================================================================
-// Public API
-// ============================================================================
 
 /**
  * Generate MDX documentation from a Python library IR.
@@ -84,10 +76,6 @@ export function generate(options: GenerateOptions): GenerateResult {
         navigationFilePath
     };
 }
-
-// ============================================================================
-// Internal
-// ============================================================================
 
 /**
  * Recursively render modules and write pages to disk.

@@ -91,7 +91,7 @@ export class GenerateCommand {
         const taskGroup = new SdkTaskGroup({ context });
         for (const target of targets) {
             const stageOverrides: SdkStageOverrides | undefined =
-                target.output.git != null
+                target.output.git != null && target.output.path == null
                     ? {
                           output: this.getGitOutputStageLabels(target.output.git.mode ?? "pr")
                       }

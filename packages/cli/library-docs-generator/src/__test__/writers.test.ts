@@ -11,10 +11,6 @@ const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.par
     readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
 );
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrAPI.libraryDocs.PythonModuleIr {
     return {
         name: "mymod",
@@ -88,10 +84,6 @@ function flattenNav(nodes: NavNode[]): NavNode[] {
     return result;
 }
 
-// ===========================================================================
-// MdxFileWriter
-// ===========================================================================
-
 describe("MdxFileWriter", () => {
     let tmpDir: string;
 
@@ -164,10 +156,6 @@ describe("MdxFileWriter", () => {
         expect(readFileSync(join(tmpDir, "unicode.mdx"), "utf-8")).toBe(content);
     });
 });
-
-// ===========================================================================
-// NavigationBuilder — buildNavigation
-// ===========================================================================
 
 describe("buildNavigation", () => {
     it("returns empty array for root with no submodules and no leaf content", () => {
@@ -422,10 +410,6 @@ describe("buildNavigation", () => {
     });
 });
 
-// ===========================================================================
-// NavigationBuilder — NeMo fixture tests
-// ===========================================================================
-
 describe("buildNavigation (NeMo fixtures)", () => {
     it("package_with_content: stub submodules with empty descendants produce no nav", () => {
         // The fixture has 4 submodules, each with 1 empty stub grandchild
@@ -459,10 +443,6 @@ describe("buildNavigation (NeMo fixtures)", () => {
         expect(nav).toEqual([]);
     });
 });
-
-// ===========================================================================
-// writeNavigation — YAML serialization
-// ===========================================================================
 
 describe("writeNavigation", () => {
     let tmpDir: string;
