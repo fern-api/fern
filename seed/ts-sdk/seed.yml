@@ -417,6 +417,19 @@ fixtures:
             execa: false
           engines:
             node: '>=16.0.0'
+    - outputFolder: custom-subpath-exports
+      customConfig:
+        packageJson:
+          exports:
+            "./aws":
+              types: "./dist/cjs/aws/index.d.ts"
+              import:
+                types: "./dist/esm/aws/index.d.mts"
+                default: "./dist/esm/aws/index.mjs"
+              require:
+                types: "./dist/cjs/aws/index.d.ts"
+                default: "./dist/cjs/aws/index.js"
+              default: "./dist/cjs/aws/index.js"
     - outputFolder: allow-extra-fields
       customConfig:
         allowExtraFields: true
