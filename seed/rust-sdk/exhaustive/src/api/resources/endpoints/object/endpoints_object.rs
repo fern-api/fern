@@ -73,6 +73,26 @@ impl ObjectClient {
         ).await
     }
 
+    /// Tests that construct_type handles object types with nested embedding-like
+    /// properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_and_return_embeddings(&self, request: &EmbeddingsResponse, options: Option<RequestOptions>) -> Result<EmbeddingsResponse, ApiError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/object/get-and-return-embeddings",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
     /// Tests that string fields containing datetime-like values are NOT reformatted.
     /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
     /// without being converted to "2023-08-31T14:15:22.000Z".

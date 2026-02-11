@@ -1143,6 +1143,71 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_embeddings</a>(request: EmbeddingsResponse) -> Result&lt;EmbeddingsResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that construct_type handles object types with nested embedding-like
+properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_embeddings(
+            &EmbeddingsResponse {
+                embeddings: EmbeddingsByModel {
+                    float: Some(vec![vec![1.1, 1.1], vec![1.1, 1.1]]),
+                    int_8: Some(vec![vec![1, 1], vec![1, 1]]),
+                    uint_8: Some(vec![vec![1, 1], vec![1, 1]]),
+                    base_64: Some(vec!["base64".to_string(), "base64".to_string()]),
+                },
+                texts: Some(vec!["texts".to_string(), "texts".to_string()]),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_datetime_like_string</a>(request: ObjectWithDatetimeLikeString) -> Result&lt;ObjectWithDatetimeLikeString, ApiError&gt;</code></summary>
 <dl>
 <dd>

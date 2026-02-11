@@ -12,6 +12,8 @@ pub mod types_object_nested_object_with_optional_field;
 pub mod types_object_nested_object_with_required_field;
 pub mod types_object_double_optional;
 pub mod types_object_optional_alias;
+pub mod types_object_embeddings_response;
+pub mod types_object_embeddings_by_model;
 pub mod types_object_object_with_datetime_like_string;
 pub mod types_union_animal;
 pub mod types_union_dog;
@@ -36,6 +38,8 @@ pub use types_object_nested_object_with_optional_field::{NestedObjectWithOptiona
 pub use types_object_nested_object_with_required_field::{NestedObjectWithRequiredField};
 pub use types_object_double_optional::{DoubleOptional};
 pub use types_object_optional_alias::{OptionalAlias};
+pub use types_object_embeddings_response::{EmbeddingsResponse};
+pub use types_object_embeddings_by_model::{EmbeddingsByModel};
 pub use types_object_object_with_datetime_like_string::{ObjectWithDatetimeLikeString};
 pub use types_union_animal::{Animal};
 pub use types_union_dog::{Dog};

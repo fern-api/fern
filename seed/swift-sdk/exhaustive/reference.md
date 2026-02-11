@@ -1415,6 +1415,119 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnEmbeddings</a>(request: EmbeddingsResponse, requestOptions: RequestOptions?) -> EmbeddingsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that construct_type handles object types with nested embedding-like
+properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnEmbeddings(request: EmbeddingsResponse(
+        embeddings: EmbeddingsByModel(
+            float: [
+                [
+                    1.1,
+                    1.1
+                ],
+                [
+                    1.1,
+                    1.1
+                ]
+            ],
+            int8: [
+                [
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1
+                ]
+            ],
+            uint8: [
+                [
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1
+                ]
+            ],
+            base64: [
+                "base64",
+                "base64"
+            ]
+        ),
+        texts: [
+            "texts",
+            "texts"
+        ]
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EmbeddingsResponse` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithDatetimeLikeString</a>(request: ObjectWithDatetimeLikeString, requestOptions: RequestOptions?) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

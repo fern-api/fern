@@ -67,6 +67,20 @@ public final class ObjectClient: Sendable {
         )
     }
 
+    /// Tests that construct_type handles object types with nested embedding-like
+    /// properties, similar to the EmbedByTypeResponseEmbeddings pattern.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getAndReturnEmbeddings(request: EmbeddingsResponse, requestOptions: RequestOptions? = nil) async throws -> EmbeddingsResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/object/get-and-return-embeddings",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: EmbeddingsResponse.self
+        )
+    }
+
     /// Tests that string fields containing datetime-like values are NOT reformatted.
     /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
     /// without being converted to "2023-08-31T14:15:22.000Z".

@@ -438,6 +438,151 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
+    @Test func getAndReturnEmbeddings1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "embeddings": {
+                    "float": [
+                      [
+                        1.1,
+                        1.1
+                      ],
+                      [
+                        1.1,
+                        1.1
+                      ]
+                    ],
+                    "int8": [
+                      [
+                        1,
+                        1
+                      ],
+                      [
+                        1,
+                        1
+                      ]
+                    ],
+                    "uint8": [
+                      [
+                        1,
+                        1
+                      ],
+                      [
+                        1,
+                        1
+                      ]
+                    ],
+                    "base64": [
+                      "base64",
+                      "base64"
+                    ]
+                  },
+                  "texts": [
+                    "texts",
+                    "texts"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = EmbeddingsResponse(
+            embeddings: EmbeddingsByModel(
+                float: Optional([
+                    [
+                        1.1,
+                        1.1
+                    ],
+                    [
+                        1.1,
+                        1.1
+                    ]
+                ]),
+                int8: Optional([
+                    [
+                        1,
+                        1
+                    ],
+                    [
+                        1,
+                        1
+                    ]
+                ]),
+                uint8: Optional([
+                    [
+                        1,
+                        1
+                    ],
+                    [
+                        1,
+                        1
+                    ]
+                ]),
+                base64: Optional([
+                    "base64",
+                    "base64"
+                ])
+            ),
+            texts: Optional([
+                "texts",
+                "texts"
+            ])
+        )
+        let response = try await client.endpoints.object.getAndReturnEmbeddings(
+            request: EmbeddingsResponse(
+                embeddings: EmbeddingsByModel(
+                    float: [
+                        [
+                            1.1,
+                            1.1
+                        ],
+                        [
+                            1.1,
+                            1.1
+                        ]
+                    ],
+                    int8: [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1
+                        ]
+                    ],
+                    uint8: [
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1
+                        ]
+                    ],
+                    base64: [
+                        "base64",
+                        "base64"
+                    ]
+                ),
+                texts: [
+                    "texts",
+                    "texts"
+                ]
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getAndReturnWithDatetimeLikeString1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
