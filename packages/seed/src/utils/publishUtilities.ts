@@ -14,7 +14,7 @@ export async function runCommands(
     context: TaskContext,
     cwd: string,
     shouldPipeOutput: boolean = false
-) {
+): Promise<void> {
     for (const command of commands) {
         const splitCommand = command.split(" ");
         if (splitCommand[0] == null) {

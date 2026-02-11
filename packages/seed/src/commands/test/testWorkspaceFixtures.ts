@@ -8,9 +8,9 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { printTestCases } from "./printTestCases";
 import { TestRunner } from "./test-runner";
 
-export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
+export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"] as const;
 
-export const FIXTURES = readDirectories(
+export const FIXTURES: string[] = readDirectories(
     path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
 );
 

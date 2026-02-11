@@ -88,7 +88,7 @@ export const TS_SDK_PACKAGE_NAME = "@fern-fern/test-remote-local-sdk";
 // With organization=fern and api-name=api, this becomes com.fern.fern:api-sdk
 export const JAVA_SDK_MAVEN_COORDINATE = "com.fern.fern:api-sdk";
 export const PYTHON_SDK_PACKAGE_NAME = "test-remote-local-sdk";
-export const GO_SDK_MODULE_PATH = `github.com/${FERN_TEST_REPO_NAME}`;
+export const GO_SDK_MODULE_PATH: string = `github.com/${FERN_TEST_REPO_NAME}`;
 
 // ============================================================================
 // GitHub Configuration
@@ -124,17 +124,17 @@ export const LOCAL_BUILD_VERSION = "99.99.99";
 // ============================================================================
 
 // Semantic versioning pattern: X.Y.Z
-export const SEMVER_REGEX = /^\d+\.\d+\.\d+$/;
+export const SEMVER_REGEX: RegExp = /^\d+\.\d+\.\d+$/;
 
 // GitHub branch URL pattern in logs - flexible pattern to extract branch from any GitHub tree URL
-export const GITHUB_BRANCH_URL_REGEX = /https?:\/\/(?:www\.)?github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s]+)/;
+export const GITHUB_BRANCH_URL_REGEX: RegExp = /https?:\/\/(?:www\.)?github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s]+)/;
 
 // ============================================================================
 // Log Messages & Separators
 // ============================================================================
 
 // Log separators
-export const LOG_SEPARATOR = "=".repeat(80);
+export const LOG_SEPARATOR: string = "=".repeat(80);
 export const LOG_SECTION_SEPARATOR = "━━━";
 
 // Section headers

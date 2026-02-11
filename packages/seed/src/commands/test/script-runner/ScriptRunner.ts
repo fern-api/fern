@@ -33,7 +33,7 @@ export declare namespace ScriptRunner {
  * Abstract base class for running scripts on generated code to verify the output.
  */
 export abstract class ScriptRunner {
-    protected readonly lock = new Semaphore(1);
+    protected readonly lock: Semaphore = new Semaphore(1);
 
     constructor(
         protected readonly workspace: GeneratorWorkspace,

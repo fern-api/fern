@@ -1,7 +1,7 @@
 // HACKHACK: copied from cli folder
 
 import { addPrefixToString } from "@fern-api/core-utils";
-import { createLogger, LogLevel } from "@fern-api/logger";
+import { createLogger, Logger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
     FernCliError,
@@ -32,7 +32,7 @@ export declare namespace TaskContextImpl {
 }
 
 export class TaskContextImpl implements Startable<TaskContext>, Finishable, TaskContext {
-    protected result = TaskResult.Success;
+    protected result: TaskResult = TaskResult.Success;
     protected logImmediately: (logs: Log[]) => void;
     protected logPrefix: string;
     protected subtasks: InteractiveTaskContextImpl[] = [];
@@ -133,7 +133,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         this.bufferedLogs = [];
     }
 
-    public readonly logger = createLogger(this.logAtLevel.bind(this));
+    public readonly logger: Logger = createLogger(this.logAtLevel.bind(this));
 
     public addInteractiveTask({ name, subtitle }: CreateInteractiveTaskParams): Startable<InteractiveTaskContext> {
         const subtask = new InteractiveTaskContextImpl({

@@ -96,7 +96,7 @@ function writeAsBullet(entry: string): string {
 export async function writeChangelogsToFile(
     outputPath: AbsoluteFilePath,
     changelogs: Map<string, Map<string, string>>
-) {
+): Promise<void> {
     for (const [releaseDate, versions] of changelogs.entries()) {
         const changelogPath = join(outputPath, RelativeFilePath.of(`${releaseDate}.mdx`));
 
