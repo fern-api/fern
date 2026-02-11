@@ -15,9 +15,11 @@ import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProvi
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
+import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
+import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
@@ -58,6 +60,10 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         generateTraits(context);
         this.generateRootClient(context);
         this.generateSubpackages(context);
+        if (context.customConfig.generateClientInterfaces) {
+            this.generateRootClientInterface(context);
+            this.generateSubpackageInterfaces(context);
+        }
         this.generateEnvironment(context);
         this.generateErrors(context);
         this.generateOauthTokenProvider(context);
@@ -120,6 +126,31 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             if (subpackage.service != null && service != null) {
                 this.generateRequests(context, service, subpackage.service);
             }
+        }
+    }
+
+    private generateRootClientInterface(context: SdkGeneratorContext) {
+        const rootServiceId = context.ir.rootPackage.service;
+        if (rootServiceId == null) {
+            return;
+        }
+        const rootClientInterface = new RootClientInterfaceGenerator(context);
+        context.project.addSourceFiles(rootClientInterface.generate());
+    }
+
+    private generateSubpackageInterfaces(context: SdkGeneratorContext) {
+        for (const subpackage of Object.values(context.ir.subpackages)) {
+            if (subpackage.service == null) {
+                continue;
+            }
+            const service = context.getHttpServiceOrThrow(subpackage.service);
+            const subClientInterface = new SubPackageClientInterfaceGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service,
+                service
+            });
+            context.project.addSourceFiles(subClientInterface.generate());
         }
     }
 
