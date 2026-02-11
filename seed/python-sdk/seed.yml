@@ -273,6 +273,16 @@ fixtures:
           - custom_integration
           - sentry_integration
       outputFolder: import-paths
+    - customConfig:
+        transport_wrapper:
+          module: "core.custom_transport"
+          sync_class: "CustomTransport"
+          async_class: "AsyncCustomTransport"
+          params:
+            - name: "account_sid"
+            - name: "api_key_sid"
+            - name: "api_key_secret"
+      outputFolder: transport-wrapper
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

@@ -32,9 +32,6 @@ class SeedApi:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-    httpx_transport : typing.Optional[httpx.BaseTransport]
-        The transport to use for making requests, this is passed directly to the httpx client constructed by default. This is ignored if a custom httpx client is passed in.
-
     Examples
     --------
     from seed import SeedApi
@@ -52,7 +49,6 @@ class SeedApi:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
-        httpx_transport: typing.Optional[httpx.BaseTransport] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -62,9 +58,9 @@ class SeedApi:
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport)
+            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
-            else httpx.Client(timeout=_defaulted_timeout, transport=httpx_transport),
+            else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self._test_group: typing.Optional[TestGroupClient] = None
@@ -99,9 +95,6 @@ class AsyncSeedApi:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-    httpx_transport : typing.Optional[httpx.AsyncBaseTransport]
-        The transport to use for making requests, this is passed directly to the httpx client constructed by default. This is ignored if a custom httpx client is passed in.
-
     Examples
     --------
     from seed import AsyncSeedApi
@@ -119,7 +112,6 @@ class AsyncSeedApi:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
-        httpx_transport: typing.Optional[httpx.AsyncBaseTransport] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -129,11 +121,9 @@ class AsyncSeedApi:
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(
-                timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport
-            )
+            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, transport=httpx_transport),
+            else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self._test_group: typing.Optional[AsyncTestGroupClient] = None

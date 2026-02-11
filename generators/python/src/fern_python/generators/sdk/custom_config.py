@@ -58,7 +58,6 @@ class WireTestsConfig(pydantic.BaseModel):
 class TransportWrapperParam(pydantic.BaseModel):
     name: str
     type: str = "typing.Optional[str]"
-    env_var: Optional[str] = None
 
     class Config:
         extra = pydantic.Extra.forbid

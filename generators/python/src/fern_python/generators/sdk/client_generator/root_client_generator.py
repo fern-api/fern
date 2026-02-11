@@ -74,12 +74,6 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
 
-    HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME = "httpx_transport"
-    HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_DOCS = (
-        "The transport to use for making requests, this is passed directly to the httpx client "
-        "constructed by default. This is ignored if a custom httpx client is passed in."
-    )
-
     _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
         "base_url",
         "environment",
@@ -88,7 +82,6 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "_timeout",
         "follow_redirects",
         "httpx_client",
-        "httpx_transport",
         "client_id",
         "client_secret",
         "token",
@@ -731,21 +724,6 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         )
 
-        parameters.append(
-            RootClientConstructorParameter(
-                constructor_parameter_name=RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME,
-                type_hint=(
-                    AST.TypeHint.optional(AST.TypeHint(HttpX.BASE_TRANSPORT))
-                    if not is_async
-                    else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_BASE_TRANSPORT))
-                ),
-                private_member_name=None,
-                initializer=AST.Expression(AST.TypeHint.none()),
-                docs=RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_DOCS,
-                exclude_from_wrapper_construction=True,
-            )
-        )
-
         transport_wrapper = self._context.custom_config.transport_wrapper
         if transport_wrapper is not None:
             for tw_param in transport_wrapper.params:
@@ -933,21 +911,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 tw_module = transport_wrapper.module
                 tw_class = transport_wrapper.async_class if is_async else transport_wrapper.sync_class
                 tw_param_names = [p.name for p in transport_wrapper.params]
-                tw_condition = " or ".join(f"{n} is not None" for n in tw_param_names)
-                writer.write_line(
-                    f"{transport_var_name} = {RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME}"
-                )
                 if tw_param_names:
+                    tw_condition = " or ".join(f"{n} is not None" for n in tw_param_names)
+                    tw_kwargs = ", ".join(f"{n}={n}" for n in tw_param_names)
                     writer.write_line(f"if {tw_condition}:")
                     with writer.indent():
-                        tw_kwargs = ", ".join(f"{n}={n}" for n in tw_param_names)
                         writer.write_line(f"from .{tw_module} import {tw_class}")
-                        writer.write_line(
-                            f"{transport_var_name} = {tw_class}(wrapped_transport={transport_var_name}, {tw_kwargs})"
-                        )
+                        writer.write_line(f"{transport_var_name} = {tw_class}({tw_kwargs})")
+                    writer.write_line("else:")
+                    with writer.indent():
+                        writer.write_line(f"{transport_var_name} = None")
                 else:
                     writer.write_line(f"from .{tw_module} import {tw_class}")
-                    writer.write_line(f"{transport_var_name} = {tw_class}(wrapped_transport={transport_var_name})")
+                    writer.write_line(f"{transport_var_name} = {tw_class}()")
 
             client_wrapper_generator = ClientWrapperGenerator(
                 context=self._context,
@@ -1381,7 +1357,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 )
 
-        transport_param_name = transport_variable_name or RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME
+        httpx_client_kwargs_with_redirects: List[typing.Tuple[str, AST.Expression]] = [
+            ("timeout", AST.Expression(f"{timeout_local_variable}")),
+            ("follow_redirects", AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}")),
+        ]
+        httpx_client_kwargs_without_redirects: List[typing.Tuple[str, AST.Expression]] = [
+            ("timeout", AST.Expression(f"{timeout_local_variable}")),
+        ]
+        if transport_variable_name is not None:
+            httpx_client_kwargs_with_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
+            httpx_client_kwargs_without_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
 
         if ignore_httpx_constructor_parameter:
             client_wrapper_constructor_kwargs.append(
@@ -1391,33 +1376,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         AST.ConditionalExpression(
                             left=AST.ClassInstantiation(
                                 HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                kwargs=[
-                                    (
-                                        "timeout",
-                                        AST.Expression(f"{timeout_local_variable}"),
-                                    ),
-                                    (
-                                        "follow_redirects",
-                                        AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
-                                    ),
-                                    (
-                                        "transport",
-                                        AST.Expression(f"{transport_param_name}"),
-                                    ),
-                                ],
+                                kwargs=httpx_client_kwargs_with_redirects,
                             ),
                             right=AST.ClassInstantiation(
                                 HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                kwargs=[
-                                    (
-                                        "timeout",
-                                        AST.Expression(f"{timeout_local_variable}"),
-                                    ),
-                                    (
-                                        "transport",
-                                        AST.Expression(f"{transport_param_name}"),
-                                    ),
-                                ],
+                                kwargs=httpx_client_kwargs_without_redirects,
                             ),
                             test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                         ),
@@ -1434,33 +1397,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             right=AST.ConditionalExpression(
                                 left=AST.ClassInstantiation(
                                     HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                    kwargs=[
-                                        (
-                                            "timeout",
-                                            AST.Expression(f"{timeout_local_variable}"),
-                                        ),
-                                        (
-                                            "follow_redirects",
-                                            AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
-                                        ),
-                                        (
-                                            "transport",
-                                            AST.Expression(f"{transport_param_name}"),
-                                        ),
-                                    ],
+                                    kwargs=httpx_client_kwargs_with_redirects,
                                 ),
                                 right=AST.ClassInstantiation(
                                     HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                    kwargs=[
-                                        (
-                                            "timeout",
-                                            AST.Expression(f"{timeout_local_variable}"),
-                                        ),
-                                        (
-                                            "transport",
-                                            AST.Expression(f"{transport_param_name}"),
-                                        ),
-                                    ],
+                                    kwargs=httpx_client_kwargs_without_redirects,
                                 ),
                                 test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                             ),

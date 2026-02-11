@@ -1,0 +1,24 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "transport_wrapper": {
+      "module": "core.custom_transport",
+      "sync_class": "CustomTransport",
+      "async_class": "AsyncCustomTransport",
+      "params": [
+        {
+          "name": "account_sid"
+        },
+        {
+          "name": "api_key_sid"
+        },
+        {
+          "name": "api_key_secret"
+        }
+      ]
+    }
+  },
+  "sdkVersion": "0.0.1"
+}

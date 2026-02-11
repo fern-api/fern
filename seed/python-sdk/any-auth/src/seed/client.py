@@ -84,7 +84,6 @@ class SeedAnyAuth:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
-        httpx_transport: typing.Optional[httpx.BaseTransport] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
     ): ...
@@ -97,7 +96,6 @@ class SeedAnyAuth:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
-        httpx_transport: typing.Optional[httpx.BaseTransport] = None,
         token: typing.Callable[[], str],
     ): ...
     def __init__(
@@ -112,7 +110,6 @@ class SeedAnyAuth:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
-        httpx_transport: typing.Optional[httpx.BaseTransport] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -123,11 +120,9 @@ class SeedAnyAuth:
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
-                else httpx.Client(
-                    timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport
-                )
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                 if follow_redirects is not None
-                else httpx.Client(timeout=_defaulted_timeout, transport=httpx_transport),
+                else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
@@ -138,11 +133,9 @@ class SeedAnyAuth:
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
-                    httpx_client=httpx.Client(
-                        timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport
-                    )
+                    httpx_client=httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                     if follow_redirects is not None
-                    else httpx.Client(timeout=_defaulted_timeout, transport=httpx_transport),
+                    else httpx.Client(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                 ),
             )
@@ -152,11 +145,9 @@ class SeedAnyAuth:
                 token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
                 httpx_client=httpx_client
                 if httpx_client is not None
-                else httpx.Client(
-                    timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport
-                )
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                 if follow_redirects is not None
-                else httpx.Client(timeout=_defaulted_timeout, transport=httpx_transport),
+                else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
             )
         else:
@@ -252,7 +243,6 @@ class AsyncSeedAnyAuth:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
-        httpx_transport: typing.Optional[httpx.AsyncBaseTransport] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
     ): ...
@@ -265,7 +255,6 @@ class AsyncSeedAnyAuth:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
-        httpx_transport: typing.Optional[httpx.AsyncBaseTransport] = None,
         token: typing.Callable[[], str],
     ): ...
     def __init__(
@@ -280,7 +269,6 @@ class AsyncSeedAnyAuth:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
-        httpx_transport: typing.Optional[httpx.AsyncBaseTransport] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -291,11 +279,9 @@ class AsyncSeedAnyAuth:
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
-                else httpx.AsyncClient(
-                    timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport
-                )
+                else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                 if follow_redirects is not None
-                else httpx.AsyncClient(timeout=_defaulted_timeout, transport=httpx_transport),
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
@@ -306,11 +292,9 @@ class AsyncSeedAnyAuth:
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
-                    httpx_client=httpx.AsyncClient(
-                        timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport
-                    )
+                    httpx_client=httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                     if follow_redirects is not None
-                    else httpx.AsyncClient(timeout=_defaulted_timeout, transport=httpx_transport),
+                    else httpx.AsyncClient(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
                 ),
             )
@@ -321,11 +305,9 @@ class AsyncSeedAnyAuth:
                 async_token=oauth_token_provider.get_token,
                 httpx_client=httpx_client
                 if httpx_client is not None
-                else httpx.AsyncClient(
-                    timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=httpx_transport
-                )
+                else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                 if follow_redirects is not None
-                else httpx.AsyncClient(timeout=_defaulted_timeout, transport=httpx_transport),
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
             )
         else:
