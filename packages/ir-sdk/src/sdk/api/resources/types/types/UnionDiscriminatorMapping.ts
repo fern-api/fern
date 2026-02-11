@@ -8,8 +8,14 @@ import type * as FernIr from "../../../index.js";
  * runtime reflection or type introspection.
  */
 export interface UnionDiscriminatorMapping {
-    /** The discrimination strategy used for this union */
-    strategy: FernIr.UnionDiscriminationStrategy;
+    /**
+     * Where the discriminator is located relative to the union type.
+     * Internal: discriminator is a field within the union type itself
+     * External: discriminator is outside the union type (e.g., SSE event field)
+     */
+    context: FernIr.UnionDiscriminatorContext;
+    /** Name of the field used for discrimination (e.g., "type", "event", "kind") */
+    discriminatorField: string;
     /**
      * Maps discriminant wire values to their corresponding union member information.
      * For example: {"completion" -> CompletionEvent, "chat" -> ChatEvent}

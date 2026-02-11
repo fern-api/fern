@@ -169,23 +169,30 @@ types:
       This enables generators to create type-safe discrimination logic without
       runtime reflection or type introspection.
     properties:
-      strategy:
-        docs: The discrimination strategy used for this union
-        type: UnionDiscriminationStrategy
-        default: property
+      context:
+        docs: |
+          Where the discriminator is located relative to the union type.
+          Internal: discriminator is a field within the union type itself
+          External: discriminator is outside the union type (e.g., SSE event field)
+        type: UnionDiscriminatorContext
+        default: internal
+      discriminatorField:
+        docs: |
+          Name of the field used for discrimination (e.g., "type", "event", "kind")
+        type: string
       mapping:
         docs: |
           Maps discriminant wire values to their corresponding union member information.
           For example: {"completion" -> CompletionEvent, "chat" -> ChatEvent}
         type: map<string, UnionMemberTypeInfo>
 
-  UnionDiscriminationStrategy:
-    docs: The strategy used to discriminate between union members
+  UnionDiscriminatorContext:
+    docs: Location of the discriminator relative to the union type
     enum:
-      - value: property
-        docs: Discrimination based on a property value (most common)
-      - value: wrapper
-        docs: Discrimination based on wrapper object structure
+      - value: internal
+        docs: Look inside the union type to determine which variant it is
+      - value: external
+        docs: Look outside the union type to determine which variant it is
 
   UnionMemberTypeInfo:
     docs: Information about a specific union member type
