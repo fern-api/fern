@@ -233,7 +233,7 @@ export async function publishDocs({
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths,
                     images,
-                    ...(isBasepathAware && { basePath })
+                    ...(isBasepathAware && { basepathAware: true })
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
@@ -525,7 +525,7 @@ export async function publishDocs({
             docsDefinition,
             excludeApis,
             libraryDocs: libraryDocsConfig,
-            ...(isBasepathAware && { basePath })
+            ...(isBasepathAware && { basepathAware: true })
         }
     );
 
