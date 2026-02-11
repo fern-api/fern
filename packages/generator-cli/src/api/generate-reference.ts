@@ -9,7 +9,7 @@ export interface GenerateReferenceToStreamParams {
     outputStream: fs.WriteStream | NodeJS.Process["stdout"];
 }
 
-export async function generateReferenceToStream(params: GenerateReferenceToStreamParams) {
+export async function generateReferenceToStream(params: GenerateReferenceToStreamParams): Promise<express.Router> {
     const { referenceConfig, outputStream } = params;
     const generator = new ReferenceGenerator({
         referenceConfig

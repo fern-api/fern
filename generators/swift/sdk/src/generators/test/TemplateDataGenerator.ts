@@ -35,7 +35,7 @@ export class TemplateDataGenerator {
         return this.context.ir.dynamic;
     }
 
-    public generateSourceTemplateData(templateId: swift.SourceTemplateFileId) {
+    public generateSourceTemplateData(templateId: swift.SourceTemplateFileId): { errorEnumName: string } {
         switch (templateId) {
             case "ClientError":
                 return this.generateTemplateDataForClientError();
@@ -60,7 +60,7 @@ export class TemplateDataGenerator {
         };
     }
 
-    public generateTestTemplateData(templateId: TestTemplateFileId) {
+    public generateTestTemplateData(templateId: TestTemplateFileId): Record<string, string> | null {
         switch (templateId) {
             case "ClientErrorTests":
                 return this.generateTemplateDataForClientErrorTests();

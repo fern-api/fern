@@ -11,7 +11,33 @@ import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
  * - Simple: `outputPath: src`
  * - Object: `outputPath: { library: path/to/src/ApiLib, test: path/to/test/ApiLib.Test }`
  */
-export const OutputPathSchema = z.union([
+export const OutputPathSchema: z.ZodUnion<
+    [
+        z.ZodString,
+        z.ZodObject<
+            {
+                library: z.ZodOptional<z.ZodString>;
+                test: z.ZodOptional<z.ZodString>;
+                solution: z.ZodOptional<z.ZodString>;
+                other: z.ZodOptional<z.ZodString>;
+            },
+            "strip",
+            z.ZodTypeAny,
+            {
+                other?: string | undefined;
+                test?: string | undefined;
+                library?: string | undefined;
+                solution?: string | undefined;
+            },
+            {
+                other?: string | undefined;
+                test?: string | undefined;
+                library?: string | undefined;
+                solution?: string | undefined;
+            }
+        >
+    ]
+> = z.union([
     z.string(),
     z.object({
         /** Path for the library project (e.g., "src" or "path/to/src/ApiLib") */
@@ -27,7 +53,191 @@ export const OutputPathSchema = z.union([
 
 export type OutputPathSchema = z.infer<typeof OutputPathSchema>;
 
-export const CsharpConfigSchema = z.object({
+export const CsharpConfigSchema: z.ZodObject<
+    {
+        namespace: z.ZodOptional<z.ZodString>;
+        "base-api-exception-class-name": z.ZodOptional<z.ZodString>;
+        "simplify-object-dictionaries": z.ZodOptional<z.ZodBoolean>;
+        "base-exception-class-name": z.ZodOptional<z.ZodString>;
+        "client-class-name": z.ZodOptional<z.ZodString>;
+        "environment-class-name": z.ZodOptional<z.ZodString>;
+        "exported-client-class-name": z.ZodOptional<z.ZodString>;
+        "explicit-namespaces": z.ZodOptional<z.ZodBoolean>;
+        "inline-path-parameters": z.ZodOptional<z.ZodBoolean>;
+        "read-only-memory-types": z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        "root-namespace-for-core-classes": z.ZodOptional<z.ZodBoolean>;
+        "use-discriminated-unions": z.ZodOptional<z.ZodBoolean>;
+        "use-undiscriminated-unions": z.ZodOptional<z.ZodBoolean>;
+        "experimental-fully-qualified-namespaces": z.ZodOptional<z.ZodBoolean>;
+        "experimental-dotnet-format": z.ZodOptional<z.ZodBoolean>;
+        "experimental-enable-websockets": z.ZodOptional<z.ZodBoolean>;
+        "experimental-readonly-constants": z.ZodOptional<z.ZodBoolean>;
+        "experimental-explicit-nullable-optional": z.ZodOptional<z.ZodBoolean>;
+        "use-default-request-parameter-values": z.ZodOptional<z.ZodBoolean>;
+        "temporary-websocket-environments": z.ZodOptional<
+            z.ZodRecord<
+                z.ZodString,
+                z.ZodObject<
+                    {
+                        "default-environment": z.ZodOptional<z.ZodString>;
+                        environments: z.ZodRecord<z.ZodString, z.ZodString>;
+                    },
+                    "strip",
+                    z.ZodTypeAny,
+                    { environments: Record<string, string>; "default-environment"?: string | undefined },
+                    { environments: Record<string, string>; "default-environment"?: string | undefined }
+                >
+            >
+        >;
+        "output-path": z.ZodOptional<
+            z.ZodUnion<
+                [
+                    z.ZodString,
+                    z.ZodObject<
+                        {
+                            library: z.ZodOptional<z.ZodString>;
+                            test: z.ZodOptional<z.ZodString>;
+                            solution: z.ZodOptional<z.ZodString>;
+                            other: z.ZodOptional<z.ZodString>;
+                        },
+                        "strip",
+                        z.ZodTypeAny,
+                        {
+                            other?: string | undefined;
+                            test?: string | undefined;
+                            library?: string | undefined;
+                            solution?: string | undefined;
+                        },
+                        {
+                            other?: string | undefined;
+                            test?: string | undefined;
+                            library?: string | undefined;
+                            solution?: string | undefined;
+                        }
+                    >
+                ]
+            >
+        >;
+        "root-client-class-access": z.ZodOptional<z.ZodEnum<["public", "internal"]>>;
+        "custom-pager-name": z.ZodOptional<z.ZodString>;
+        "enable-forward-compatible-enums": z.ZodOptional<z.ZodBoolean>;
+        "generate-error-types": z.ZodOptional<z.ZodBoolean>;
+        "package-id": z.ZodOptional<z.ZodString>;
+        "generate-mock-server-tests": z.ZodOptional<z.ZodBoolean>;
+        "enable-wire-tests": z.ZodOptional<z.ZodBoolean>;
+        "include-exception-handler": z.ZodOptional<z.ZodBoolean>;
+        "exception-interceptor-class-name": z.ZodOptional<z.ZodString>;
+        "custom-readme-sections": z.ZodOptional<
+            z.ZodArray<
+                z.ZodObject<
+                    { title: z.ZodString; content: z.ZodString },
+                    "strict",
+                    z.ZodTypeAny,
+                    { title: string; content: string },
+                    { title: string; content: string }
+                >,
+                "many"
+            >
+        >;
+        "extra-dependencies": z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+        "pascal-case-environments": z.ZodOptional<z.ZodBoolean>;
+        "experimental-enable-forward-compatible-enums": z.ZodOptional<z.ZodBoolean>;
+    },
+    "strip",
+    z.ZodTypeAny,
+    {
+        namespace?: string | undefined;
+        "client-class-name"?: string | undefined;
+        "base-api-exception-class-name"?: string | undefined;
+        "base-exception-class-name"?: string | undefined;
+        "inline-path-parameters"?: boolean | undefined;
+        "enable-forward-compatible-enums"?: boolean | undefined;
+        "use-default-request-parameter-values"?: boolean | undefined;
+        "enable-wire-tests"?: boolean | undefined;
+        "custom-readme-sections"?: Array<{ title: string; content: string }> | undefined;
+        "custom-pager-name"?: string | undefined;
+        "simplify-object-dictionaries"?: boolean | undefined;
+        "environment-class-name"?: string | undefined;
+        "exported-client-class-name"?: string | undefined;
+        "explicit-namespaces"?: boolean | undefined;
+        "read-only-memory-types"?: Array<string> | undefined;
+        "root-namespace-for-core-classes"?: boolean | undefined;
+        "use-discriminated-unions"?: boolean | undefined;
+        "use-undiscriminated-unions"?: boolean | undefined;
+        "experimental-fully-qualified-namespaces"?: boolean | undefined;
+        "experimental-dotnet-format"?: boolean | undefined;
+        "experimental-enable-websockets"?: boolean | undefined;
+        "experimental-readonly-constants"?: boolean | undefined;
+        "experimental-explicit-nullable-optional"?: boolean | undefined;
+        "temporary-websocket-environments"?:
+            | Record<string, { environments: Record<string, string>; "default-environment"?: string | undefined }>
+            | undefined;
+        "output-path"?:
+            | string
+            | {
+                  other?: string | undefined;
+                  test?: string | undefined;
+                  library?: string | undefined;
+                  solution?: string | undefined;
+              }
+            | undefined;
+        "root-client-class-access"?: "public" | "internal" | undefined;
+        "generate-error-types"?: boolean | undefined;
+        "package-id"?: string | undefined;
+        "generate-mock-server-tests"?: boolean | undefined;
+        "include-exception-handler"?: boolean | undefined;
+        "exception-interceptor-class-name"?: string | undefined;
+        "extra-dependencies"?: Record<string, string> | undefined;
+        "pascal-case-environments"?: boolean | undefined;
+        "experimental-enable-forward-compatible-enums"?: boolean | undefined;
+    },
+    {
+        namespace?: string | undefined;
+        "client-class-name"?: string | undefined;
+        "base-api-exception-class-name"?: string | undefined;
+        "base-exception-class-name"?: string | undefined;
+        "inline-path-parameters"?: boolean | undefined;
+        "enable-forward-compatible-enums"?: boolean | undefined;
+        "use-default-request-parameter-values"?: boolean | undefined;
+        "enable-wire-tests"?: boolean | undefined;
+        "custom-readme-sections"?: Array<{ title: string; content: string }> | undefined;
+        "custom-pager-name"?: string | undefined;
+        "simplify-object-dictionaries"?: boolean | undefined;
+        "environment-class-name"?: string | undefined;
+        "exported-client-class-name"?: string | undefined;
+        "explicit-namespaces"?: boolean | undefined;
+        "read-only-memory-types"?: Array<string> | undefined;
+        "root-namespace-for-core-classes"?: boolean | undefined;
+        "use-discriminated-unions"?: boolean | undefined;
+        "use-undiscriminated-unions"?: boolean | undefined;
+        "experimental-fully-qualified-namespaces"?: boolean | undefined;
+        "experimental-dotnet-format"?: boolean | undefined;
+        "experimental-enable-websockets"?: boolean | undefined;
+        "experimental-readonly-constants"?: boolean | undefined;
+        "experimental-explicit-nullable-optional"?: boolean | undefined;
+        "temporary-websocket-environments"?:
+            | Record<string, { environments: Record<string, string>; "default-environment"?: string | undefined }>
+            | undefined;
+        "output-path"?:
+            | string
+            | {
+                  other?: string | undefined;
+                  test?: string | undefined;
+                  library?: string | undefined;
+                  solution?: string | undefined;
+              }
+            | undefined;
+        "root-client-class-access"?: "public" | "internal" | undefined;
+        "generate-error-types"?: boolean | undefined;
+        "package-id"?: string | undefined;
+        "generate-mock-server-tests"?: boolean | undefined;
+        "include-exception-handler"?: boolean | undefined;
+        "exception-interceptor-class-name"?: string | undefined;
+        "extra-dependencies"?: Record<string, string> | undefined;
+        "pascal-case-environments"?: boolean | undefined;
+        "experimental-enable-forward-compatible-enums"?: boolean | undefined;
+    }
+> = z.object({
     // Influence dynamic snippets.
     namespace: z.string().optional(),
     "base-api-exception-class-name": z.string().optional(),

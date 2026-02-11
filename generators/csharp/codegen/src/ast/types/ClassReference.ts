@@ -128,7 +128,7 @@ export class ClassReference extends Node implements Type {
         this.writeInternal(writer, true);
     }
 
-    public get scopedName() {
+    public get scopedName(): string {
         return this.enclosingType ? `${this.enclosingType.name}.${this.name}` : this.name;
     }
 
@@ -438,7 +438,7 @@ export class ClassReference extends Node implements Type {
     }
 
     /** returns this class reference as a fully qualified class reference */
-    public asFullyQualified() {
+    public asFullyQualified(): ClassReference {
         return this.csharp.classReferenceInternal({
             ...this,
             fullyQualified: true
@@ -446,7 +446,7 @@ export class ClassReference extends Node implements Type {
     }
 
     /** returns a class instantiation node for this class reference */
-    public new(args?: Omit<ClassInstantiation.Args, "classReference">) {
+    public new(args?: Omit<ClassInstantiation.Args, "classReference">): ClassInstantiation {
         args = args ?? { arguments_: [] };
         return this.csharp.instantiateClass({
             ...args,
@@ -454,7 +454,9 @@ export class ClassReference extends Node implements Type {
         });
     }
 
-    public explicit(name: string) {
+    public explicit(
+        name: string
+    ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/context/model-navigator").Provenance {
         if (!this.origin) {
             fail(
                 `Cannot create explicitly named member '${name}' on '${this.name}' because the class is not bound to an origin.`
@@ -494,7 +496,7 @@ export class ClassReference extends Node implements Type {
         return this.csharp.Literal.null();
     }
     /** returns true if this class reference is the IAsyncEnumerable class */
-    public get isAsyncEnumerable() {
+    public get isAsyncEnumerable(): boolean {
         return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
     }
 }

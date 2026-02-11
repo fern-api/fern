@@ -34,8 +34,8 @@ const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
 const DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
-    public static readonly CLASS_NAME = CLASS_NAME;
-    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
+    public static readonly CLASS_NAME: "OAuthAuthProvider" = CLASS_NAME;
+    public static readonly OPTIONS_TYPE_NAME: "Options" = OPTIONS_TYPE_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;

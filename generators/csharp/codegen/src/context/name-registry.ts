@@ -137,7 +137,7 @@ class Identifier {
     constructor(
         public readonly registry: NameRegistry,
         public readonly name: string,
-        public readonly jsonPath?: JsonPath
+        public readonly jsonPath?: JsonPath | undefined
     ) {}
 }
 
@@ -235,7 +235,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param member - The member to add
      * @throws Error if the member already exists by name or JSON path
      */
-    set(member: T) {
+    set(member: T): void {
         if (this.byName.has(member.name)) {
             fail(`set: ${member.name} in ${this.scope.fullyQualifiedName} already exists`);
         }
@@ -256,7 +256,7 @@ class Members<T extends Member> implements Iterable<T> {
      * @param newName - The redirected name
      * @throws Error if a redirection for this name already exists
      */
-    redirect(name: string, newName: string) {
+    redirect(name: string, newName: string): void {
         if (this.redirections.has(name)) {
             fail(`redirect: ${name} in ${this.scope.fullyQualifiedName} already has a redirect`);
         }
@@ -288,7 +288,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a C# keyword, `false` otherwise
      */
-    isKeyword(name: string) {
+    isKeyword(name: string): boolean {
         return keywords.has(name);
     }
 
@@ -297,7 +297,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a built-in member name, `false` otherwise
      */
-    isBuiltinMemberName(name: string) {
+    isBuiltinMemberName(name: string): boolean {
         return member_names.has(name);
     }
 
@@ -306,7 +306,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name matches this type's name, `false` otherwise
      */
-    isTypeName(name: string) {
+    isTypeName(name: string): boolean {
         return this.name === name;
     }
 
@@ -315,7 +315,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a registered field, `false` otherwise
      */
-    isField(name: string) {
+    isField(name: string): boolean {
         return this.fields.has(name);
     }
 
@@ -324,7 +324,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a registered method, `false` otherwise
      */
-    isMethod(name: string) {
+    isMethod(name: string): boolean {
         return this.methods.has(name);
     }
 
@@ -333,7 +333,7 @@ export class TypeScope extends Identifier {
      * @param name - The name to check
      * @returns `true` if the name is a registered member, `false` otherwise
      */
-    isMember(name: string) {
+    isMember(name: string): boolean {
         return this.isField(name) || this.isMethod(name);
     }
 
@@ -579,7 +579,7 @@ class Field extends Member {
         name: string,
         scope: TypeScope,
         jsonPath?: JsonPath,
-        readonly field?: AstField
+        readonly field?: AstField | undefined
     ) {
         super(registry, name, scope, jsonPath);
     }
@@ -694,7 +694,7 @@ export class NameRegistry {
      * Gets the CSharp generation context.
      * @returns The CSharp generation context
      */
-    get csharp() {
+    get csharp(): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/csharp").CSharp {
         return this.generation.csharp;
     }
 
@@ -702,7 +702,7 @@ export class NameRegistry {
      * Gets the model navigator for accessing the IR.
      * @returns The model navigator
      */
-    get model() {
+    get model(): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/context/model-navigator").ModelNavigator {
         return this.generation.model;
     }
 

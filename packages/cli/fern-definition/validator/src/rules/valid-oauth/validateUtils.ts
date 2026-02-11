@@ -15,10 +15,10 @@ import {
     resolvedTypeHasProperty
 } from "../../utils/propertyValidatorUtils";
 
-export const DEFAULT_CLIENT_ID = `${REQUEST_PREFIX}client_id`;
-export const DEFAULT_CLIENT_SECRET = `${REQUEST_PREFIX}client_secret`;
-export const DEFAULT_ACCESS_TOKEN = `${RESPONSE_PREFIX}access_token`;
-export const DEFAULT_REFRESH_TOKEN = `${REQUEST_PREFIX}refresh_token`;
+export const DEFAULT_CLIENT_ID: "$request.client_id" = `${REQUEST_PREFIX}client_id`;
+export const DEFAULT_CLIENT_SECRET: "$request.client_secret" = `${REQUEST_PREFIX}client_secret`;
+export const DEFAULT_ACCESS_TOKEN: "$response.access_token" = `${RESPONSE_PREFIX}access_token`;
+export const DEFAULT_REFRESH_TOKEN: "$request.refresh_token" = `${REQUEST_PREFIX}refresh_token`;
 
 export function validateClientIdRequestProperty({
     endpointId,

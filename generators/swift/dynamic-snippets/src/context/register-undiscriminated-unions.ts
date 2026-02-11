@@ -12,7 +12,7 @@ export function registerUndiscriminatedUnionVariants({
     registry: NameRegistry;
     namedType: FernIr.dynamic.NamedType;
     context: DynamicSnippetsGeneratorContext;
-}) {
+}): void {
     if (namedType.type === "undiscriminatedUnion") {
         const members = namedType.types.map((typeReference) => {
             const swiftType = context.getSwiftTypeReferenceFromScope(typeReference, parentSymbol);

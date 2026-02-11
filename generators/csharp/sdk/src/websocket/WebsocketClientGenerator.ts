@@ -217,7 +217,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      *
      * @returns True if there are multiple environments, false if only one (which will be used as BaseUrl)
      */
-    get hasEnvironments() {
+    get hasEnvironments(): boolean {
         // if it only has one environment, then we're just going to use that as the BaseUrl
         // without the over-head of the using an Environments class.
         return this.environments != null && this.environments.length > 1;

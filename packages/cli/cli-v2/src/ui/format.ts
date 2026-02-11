@@ -92,20 +92,31 @@ export function formatMultilineText({
 /**
  * Standard icons used across the CLI.
  */
-export const Icons = {
+export const Icons: {
+    readonly error: string;
+    readonly warning: string;
+    readonly success: string;
+    readonly info: string;
+} = {
     error: chalk.red("\u2717"),
     warning: chalk.yellow("\u26a0"),
     success: chalk.green("\u2713"),
     info: chalk.cyan("\u25c6")
-} as const;
+};
 
 /**
  * Standard color functions for severity levels.
  */
-export const Colors = {
+export const Colors: {
+    readonly error: ColorFunction;
+    readonly warning: ColorFunction;
+    readonly success: ColorFunction;
+    readonly info: ColorFunction;
+    readonly dim: ColorFunction;
+} = {
     error: chalk.red.bind(chalk),
     warning: chalk.yellow.bind(chalk),
     success: chalk.green.bind(chalk),
     info: chalk.cyan.bind(chalk),
     dim: chalk.dim.bind(chalk)
-} as const;
+};

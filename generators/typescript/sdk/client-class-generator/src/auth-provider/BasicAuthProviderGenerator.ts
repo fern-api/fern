@@ -28,8 +28,8 @@ const OPTIONS_TYPE_NAME = "Options";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class BasicAuthProviderGenerator implements AuthProviderGenerator {
-    public static readonly CLASS_NAME = CLASS_NAME;
-    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
+    public static readonly CLASS_NAME: "BasicAuthProvider" = CLASS_NAME;
+    public static readonly OPTIONS_TYPE_NAME: "Options" = OPTIONS_TYPE_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.BasicAuthScheme;
     private readonly neverThrowErrors: boolean;

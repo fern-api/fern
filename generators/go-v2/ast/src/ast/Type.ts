@@ -313,17 +313,17 @@ export class Type extends AstNode {
     }
 }
 
-export const TimeTypeReference = new GoTypeReference({
+export const TimeTypeReference: GoTypeReference = new GoTypeReference({
     importPath: "time",
     name: "Time"
 });
 
-export const UuidTypeReference = new GoTypeReference({
+export const UuidTypeReference: GoTypeReference = new GoTypeReference({
     importPath: "github.com/google/uuid",
     name: "UUID"
 });
 
-export const IoReaderTypeReference = new GoTypeReference({
+export const IoReaderTypeReference: GoTypeReference = new GoTypeReference({
     importPath: "io",
     name: "Reader"
 });

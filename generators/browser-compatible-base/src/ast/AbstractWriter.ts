@@ -19,7 +19,7 @@ export class AbstractWriter {
     protected readonly lineBuffer: string[] = [];
 
     /* The contents being written */
-    public get buffer() {
+    public get buffer(): string {
         if (enableStackTracking && this.nodeStackFrames.length > 0) {
             // if we're emitting tracking comments, let's ensure we get the last little bit of info.
             // by appending a newline to the buffer before returning it.
@@ -194,12 +194,12 @@ export class AbstractWriter {
         this.pushScope();
     }
 
-    public pushScope() {
+    public pushScope(): void {
         this.writeLine("{");
         this.indent();
     }
 
-    public popScope(withNewline = true) {
+    public popScope(withNewline = true): void {
         this.dedent();
         this.writeNewLineIfLastLineNot();
         if (withNewline) {
@@ -338,7 +338,7 @@ export class AbstractWriter {
      * @param prefix - The prefix to add to the stack trace
      * @returns The formatted stack trace
      */
-    protected formatStack(stack: StackTraceFrame[], prefix = "") {
+    protected formatStack(stack: StackTraceFrame[], prefix = ""): string[] {
         return stack.map((each) => `${prefix ? `(${prefix}) ` : ""} ${each.fn} - ${each.path} : ${each.position}`);
     }
 
@@ -351,14 +351,14 @@ export class AbstractWriter {
      * @param stack - The stack trace to filter
      * @returns The filtered stack trace
      */
-    protected filterStack(stack: StackTraceFrame[]) {
+    protected filterStack(stack: StackTraceFrame[]): StackTraceFrame[] {
         return stack.filter((each) => !each.fn.startsWith(`${this.constructor.name}.`));
     }
 
     /**
      * Prepares the stack trace and calls the appropriate tracking comment formatter
      */
-    protected appendTrackingComment() {
+    protected appendTrackingComment(): void {
         const stack = [
             // adds the stack frames of the current function call
             ...this.formatStack(this.filterStack(stacktrace({ maxFrames: 15, skip: 3 }))),
@@ -388,7 +388,7 @@ export class AbstractWriter {
      *
      * @param stack - The stack trace to add to the comment
      */
-    protected singleLineTrackingComment(stack: string[]) {
+    protected singleLineTrackingComment(stack: string[]): void {
         this.lastLine = `${this.lastLine} // ${stack.join(" ")}`;
     }
     /**
@@ -398,7 +398,7 @@ export class AbstractWriter {
      *
      * @param stack - The stack trace to add to the comment
      */
-    protected multiLineTrackingComment(stack: string[]) {
+    protected multiLineTrackingComment(stack: string[]): void {
         this.lineBuffer.push(...stack.map((each) => `    // ${each}`));
     }
     /**
@@ -408,7 +408,7 @@ export class AbstractWriter {
      *
      * @param stack - The stack trace to add to the comment
      */
-    protected boxTrackingComment(stack: string[]) {
+    protected boxTrackingComment(stack: string[]): void {
         this.lineBuffer.push("/*", ...stack.map((each) => `    ${each}`), "*/");
     }
 

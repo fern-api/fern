@@ -31,7 +31,7 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class PaginationImpl extends CoreUtility implements Pagination {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
     public readonly Page: Pagination["Page"];
 
     constructor(init: CoreUtility.Init) {

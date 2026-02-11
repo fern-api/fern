@@ -798,52 +798,52 @@ export class TypeLiteral extends AstNode {
     }
 }
 
-export const ArrayListClassReference = new ClassReference({
+export const ArrayListClassReference: java.ClassReference = new ClassReference({
     name: "ArrayList",
     packageName: "java.util"
 });
 
-export const BigIntegerClassReference = new ClassReference({
+export const BigIntegerClassReference: java.ClassReference = new ClassReference({
     name: "BigInteger",
     packageName: "java.math"
 });
 
-export const HashMapClassReference = new ClassReference({
+export const HashMapClassReference: java.ClassReference = new ClassReference({
     name: "HashMap",
     packageName: "java.util"
 });
 
-export const HashSetClassReference = new ClassReference({
+export const HashSetClassReference: java.ClassReference = new ClassReference({
     name: "HashSet",
     packageName: "java.util"
 });
 
-export const ListClassReference = new ClassReference({
+export const ListClassReference: java.ClassReference = new ClassReference({
     name: "List",
     packageName: "java.util"
 });
 
-export const LocalDateClassReference = new ClassReference({
+export const LocalDateClassReference: java.ClassReference = new ClassReference({
     name: "LocalDate",
     packageName: "java.time"
 });
 
-export const MapClassReference = new ClassReference({
+export const MapClassReference: java.ClassReference = new ClassReference({
     name: "Map",
     packageName: "java.util"
 });
 
-export const OffsetDateTimeClassReference = new ClassReference({
+export const OffsetDateTimeClassReference: java.ClassReference = new ClassReference({
     name: "OffsetDateTime",
     packageName: "java.time"
 });
 
-export const SetClassReference = new ClassReference({
+export const SetClassReference: java.ClassReference = new ClassReference({
     name: "Set",
     packageName: "java.util"
 });
 
-export const UUIDClassReference = new ClassReference({
+export const UUIDClassReference: java.ClassReference = new ClassReference({
     name: "UUID",
     packageName: "java.util"
 });

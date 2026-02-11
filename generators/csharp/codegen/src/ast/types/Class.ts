@@ -23,7 +23,12 @@ export class Class extends DefinedType {
         Struct: "struct",
         RecordStruct: "record struct"
     } as const;
-    public static readonly Access = Access;
+    public static readonly Access: {
+        readonly Public: "public";
+        readonly Private: "private";
+        readonly Protected: "protected";
+        readonly Internal: "internal";
+    } = Access;
 
     public readonly static_: boolean;
     public readonly abstract_: boolean;
@@ -380,7 +385,7 @@ export class Class extends DefinedType {
         }
     }
 
-    public addNamespaceReference(namespace: string) {
+    public addNamespaceReference(namespace: string): void {
         this.namespaceReferences.push(namespace);
     }
 }
@@ -450,7 +455,7 @@ export namespace Class {
             this.baseConstructorCall = baseConstructorCall;
         }
 
-        addParameter(args: Parameter.Args) {
+        addParameter(args: Parameter.Args): Parameter {
             const parameter = new Parameter(args, this.generation);
             this.parameters.push(parameter);
             return parameter;

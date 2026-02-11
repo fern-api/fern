@@ -60,9 +60,9 @@ export abstract class TypescriptProject {
     protected static readonly BUILD_SCRIPT_FILENAME = "build.js";
     protected static readonly NODE_DIST_DIRECTORY = "node";
     protected static readonly BROWSER_DIST_DIRECTORY = "browser";
-    protected static readonly BROWSER_ESM_DIST_DIRECTORY =
+    protected static readonly BROWSER_ESM_DIST_DIRECTORY: "browser/esm" =
         `${TypescriptProject.BROWSER_DIST_DIRECTORY}/${TypescriptProject.ESM_DIRECTORY}` as const;
-    protected static readonly BROWSER_CJS_DIST_DIRECTORY =
+    protected static readonly BROWSER_CJS_DIST_DIRECTORY: "browser/cjs" =
         `${TypescriptProject.BROWSER_DIST_DIRECTORY}/${TypescriptProject.CJS_DIRECTORY}` as const;
     protected static readonly API_BUNDLE_FILENAME = "index.js";
 
@@ -82,9 +82,9 @@ export abstract class TypescriptProject {
     protected static readonly LICENSE_FILENAME = "LICENSE";
     protected static readonly PNPM_WORKSPACE_FILENAME = "pnpm-workspace.yaml";
 
-    protected static readonly FORMAT_SCRIPT_NAME = COMMON_SCRIPTS.FORMAT;
-    protected static readonly CHECK_SCRIPT_NAME = COMMON_SCRIPTS.CHECK;
-    protected static readonly CHECK_FIX_SCRIPT_NAME = COMMON_SCRIPTS.CHECK_FIX;
+    protected static readonly FORMAT_SCRIPT_NAME: "format" = COMMON_SCRIPTS.FORMAT;
+    protected static readonly CHECK_SCRIPT_NAME: "check" = COMMON_SCRIPTS.CHECK;
+    protected static readonly CHECK_FIX_SCRIPT_NAME: "check:fix" = COMMON_SCRIPTS.CHECK_FIX;
     protected static readonly COMPILE_SCRIPT_NAME = "compile";
     protected static readonly BUNDLE_SCRIPT_NAME = "bundle";
     protected static readonly BUILD_SCRIPT_NAME = "build";
@@ -96,7 +96,7 @@ export abstract class TypescriptProject {
     protected readonly dependencies: PackageDependencies;
     protected readonly extraConfigs: Record<string, unknown> | undefined;
     protected readonly outputJsr: boolean;
-    protected readonly volume = new Volume();
+    protected readonly volume: Volume = new Volume();
     public readonly tsMorphProject: Project;
     public readonly extraFiles: Record<string, string>;
     protected readonly extraDependencies: Record<string, string>;

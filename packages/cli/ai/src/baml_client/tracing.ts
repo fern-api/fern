@@ -21,16 +21,16 @@ $ pnpm add @boundaryml/baml
 import type { BamlLogEvent } from '@boundaryml/baml';
 import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX } from './globals';
 
-const traceAsync =
+const traceAsync: <ReturnType, F extends (...args: any[]) => Promise<ReturnType>>(name: string, func: F) => F =
 DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX.traceFnAsync.bind(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX)
-const traceSync =
+const traceSync: <ReturnType, F extends (...args: any[]) => ReturnType>(name: string, func: F) => F =
 DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX.traceFnSync.bind(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX)
-const setTags =
+const setTags: (tags: Record<string, string>) => void =
 DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX.upsertTags.bind(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX)
-const flush = () => {
+const flush = (): void => {
   DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX.flush.bind(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX)()
 }
-const onLogEvent = (callback: undefined | ((event: BamlLogEvent) => void)) =>
+const onLogEvent = (callback: undefined | ((event: BamlLogEvent) => void)): void =>
 DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX.onLogEvent(callback)
 
 export { traceAsync, traceSync, setTags, flush, onLogEvent }

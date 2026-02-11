@@ -46,10 +46,13 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class AuthImpl extends CoreUtility implements Auth {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
 
-    public readonly BearerToken = {
-        _getReferenceToType: this.withExportedName("BearerToken", (BearerToken) => () => BearerToken.getTypeNode()),
+    public readonly BearerToken: Auth["BearerToken"] = {
+        _getReferenceToType: this.withExportedName(
+            "BearerToken",
+            (BearerToken) => (): ts.TypeNode => BearerToken.getTypeNode()
+        ),
         toAuthorizationHeader: this.withExportedName(
             "BearerToken",
             (BearerToken) =>
@@ -80,8 +83,11 @@ export class AuthImpl extends CoreUtility implements Auth {
         )
     };
 
-    public readonly BasicAuth = {
-        _getReferenceToType: this.withExportedName("BasicAuth", (BasicAuth) => () => BasicAuth.getTypeNode()),
+    public readonly BasicAuth: Auth["BasicAuth"] = {
+        _getReferenceToType: this.withExportedName(
+            "BasicAuth",
+            (BasicAuth) => (): ts.TypeNode => BasicAuth.getTypeNode()
+        ),
         toAuthorizationHeader: this.withExportedName(
             "BasicAuth",
             (BasicAuth) =>
@@ -126,8 +132,11 @@ export class AuthImpl extends CoreUtility implements Auth {
         )
     };
 
-    public readonly AuthRequest = {
-        _getReferenceToType: this.withExportedName("AuthRequest", (AuthRequest) => () => AuthRequest.getTypeNode()),
+    public readonly AuthRequest: Auth["AuthRequest"] = {
+        _getReferenceToType: this.withExportedName(
+            "AuthRequest",
+            (AuthRequest) => (): ts.TypeNode => AuthRequest.getTypeNode()
+        ),
         getHeaders: (instanceExpression: ts.Expression): ts.Expression => {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
@@ -142,10 +151,13 @@ export class AuthImpl extends CoreUtility implements Auth {
         }
     };
 
-    public readonly AuthProvider = {
-        _getReferenceToType: this.withExportedName("AuthProvider", (AuthProvider) => () => AuthProvider.getTypeNode()),
+    public readonly AuthProvider: Auth["AuthProvider"] = {
+        _getReferenceToType: this.withExportedName(
+            "AuthProvider",
+            (AuthProvider) => (): ts.TypeNode => AuthProvider.getTypeNode()
+        ),
         getAuthRequest: {
-            invoke: (instanceExpression: ts.Expression, metadata?: ts.Expression) => {
+            invoke: (instanceExpression: ts.Expression, metadata?: ts.Expression): ts.AwaitExpression => {
                 return ts.factory.createAwaitExpression(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
@@ -157,17 +169,17 @@ export class AuthImpl extends CoreUtility implements Auth {
                     )
                 );
             },
-            getReturnTypeNode: () =>
+            getReturnTypeNode: (): ts.TypeReferenceNode =>
                 ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
                     this.AuthRequest._getReferenceToType()
                 ])
         }
     };
 
-    public readonly NoOpAuthProvider = {
+    public readonly NoOpAuthProvider: Auth["NoOpAuthProvider"] = {
         _getReferenceTo: this.withExportedName(
             "NoOpAuthProvider",
-            (NoOpAuthProvider) => () => NoOpAuthProvider.getExpression()
+            (NoOpAuthProvider) => (): ts.Expression => NoOpAuthProvider.getExpression()
         )
     };
 }

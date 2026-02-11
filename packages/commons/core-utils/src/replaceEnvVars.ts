@@ -10,7 +10,7 @@ import { mapValues } from "./objects/mapValues";
  * "someContent".replace(ENV_VAR_REGEX, (substring, envVarName) => { ... });
  * ```
  */
-export const ENV_VAR_REGEX = /\$\{(\w+)\}/g;
+export const ENV_VAR_REGEX: RegExp = /\$\{(\w+)\}/g;
 
 /**
  * Captures escaped env var patterns: \$\{VAR_NAME\}

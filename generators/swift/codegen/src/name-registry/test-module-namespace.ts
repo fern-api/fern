@@ -17,7 +17,7 @@ export class TestModuleNamespace {
 
     // Setters
 
-    public addAsIsSymbol(symbolName: string) {
+    public addAsIsSymbol(symbolName: string): void {
         const nameId = this.asIsNameId(symbolName);
         this.namespace.registerSymbol(nameId, [symbolName]);
     }

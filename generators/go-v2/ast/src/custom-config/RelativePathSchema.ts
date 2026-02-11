@@ -1,7 +1,11 @@
 import path from "path";
 import { z } from "zod";
 
-export const relativePathSchema = z
+export const relativePathSchema: z.ZodEffects<
+    z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>,
+    string,
+    string
+> = z
     .string()
     .refine(
         (pathStr) => {

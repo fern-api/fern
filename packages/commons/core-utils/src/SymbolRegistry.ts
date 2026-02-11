@@ -31,13 +31,13 @@ export class SymbolRegistry {
             options?.conflictResolutionStrategy ?? SymbolRegistry.defaultOptions.conflictResolutionStrategy;
     }
 
-    public getSymbolNameByIdOrThrow(symbolId: SymbolId) {
+    public getSymbolNameByIdOrThrow(symbolId: SymbolId): string {
         const symbolName = this.getSymbolNameById(symbolId);
         assertDefined(symbolName, `Symbol with ID '${symbolId}' not found for in registry.`);
         return symbolName;
     }
 
-    public getSymbolNameById(symbolId: SymbolId) {
+    public getSymbolNameById(symbolId: SymbolId): string | undefined {
         return this.symbolMap.get(symbolId);
     }
 
@@ -46,7 +46,7 @@ export class SymbolRegistry {
      * Returns the first available name from candidates, or a conflict-resolved version.
      * @throws Error if the symbol ID is already registered
      */
-    public registerSymbol(symbolId: SymbolId, nameCandidates: [string, ...string[]]) {
+    public registerSymbol(symbolId: SymbolId, nameCandidates: [string, ...string[]]): string {
         const isAlreadyRegistered = this.isSymbolIdRegistered(symbolId);
         if (isAlreadyRegistered) {
             throw new Error(`Symbol with ID '${symbolId}' is already registered.`);
@@ -93,14 +93,14 @@ export class SymbolRegistry {
     /**
      * Checks whether a symbol ID is already registered.
      */
-    public isSymbolIdRegistered(symbolId: SymbolId) {
+    public isSymbolIdRegistered(symbolId: SymbolId): boolean {
         return this.symbolMap.has(symbolId);
     }
 
     /**
      * Returns all registered symbols with their IDs and names.
      */
-    public getAllSymbols() {
+    public getAllSymbols(): { id: string; name: string }[] {
         return Array.from(this.symbolMap.entries()).map(([id, name]) => ({ id, name }));
     }
 }

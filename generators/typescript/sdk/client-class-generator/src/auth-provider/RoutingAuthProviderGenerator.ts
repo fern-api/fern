@@ -20,8 +20,8 @@ const AUTH_PROVIDERS_FIELD_NAME = "authProviders";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
-    public static readonly CLASS_NAME = CLASS_NAME;
-    public static readonly AUTH_PROVIDERS_FIELD_NAME = AUTH_PROVIDERS_FIELD_NAME;
+    public static readonly CLASS_NAME: "RoutingAuthProvider" = CLASS_NAME;
+    public static readonly AUTH_PROVIDERS_FIELD_NAME: "authProviders" = AUTH_PROVIDERS_FIELD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
 
     constructor(init: RoutingAuthProviderGenerator.Init) {

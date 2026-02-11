@@ -211,7 +211,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    public createReferencer(fromSymbol: swift.Symbol) {
+    public createReferencer(fromSymbol: swift.Symbol): Referencer {
         return new Referencer(this.nameRegistry, fromSymbol);
     }
 

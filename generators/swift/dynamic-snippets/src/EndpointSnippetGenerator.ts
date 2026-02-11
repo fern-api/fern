@@ -110,7 +110,7 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.Auth | undefined;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         additionalArgs?: swift.FunctionArgument[];
-    }) {
+    }): swift.Statement {
         const rootClientArgs: swift.FunctionArgument[] = [];
         const baseUrlArg = this.getRootClientBaseURLArg({ snippet });
         if (baseUrlArg != null) {
@@ -273,7 +273,7 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         additionalArguments?: swift.FunctionArgument[];
-    }) {
+    }): swift.Expression {
         const nonNopArguments = this.getEndpointMethodArguments({ endpoint, snippet }).filter(
             (arg) => !arg.value.isNop()
         );

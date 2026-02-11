@@ -140,27 +140,31 @@ export const MANIFEST: CoreUtility.Manifest = {
     }
 };
 export class ZurgImpl extends CoreUtility implements Zurg {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
 
-    public object = this.withExportedName("object", (object) => (properties: Zurg.Property[]): Zurg.ObjectSchema => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(object.getExpression(), undefined, [
-                    this.constructObjectLiteralForProperties(properties)
-                ])
-        };
+    public object: (properties: Zurg.Property[]) => Zurg.ObjectSchema = this.withExportedName(
+        "object",
+        (object) =>
+            (properties: Zurg.Property[]): Zurg.ObjectSchema => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(object.getExpression(), undefined, [
+                            this.constructObjectLiteralForProperties(properties)
+                        ])
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
-            ...this.getObjectLikeUtils(baseSchema),
-            ...this.getObjectUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema),
+                    ...this.getObjectLikeUtils(baseSchema),
+                    ...this.getObjectUtils(baseSchema)
+                };
+            }
+    );
 
-    public objectWithoutOptionalProperties = this.withExportedName(
+    public objectWithoutOptionalProperties: (properties: Zurg.Property[]) => Zurg.ObjectSchema = this.withExportedName(
         "objectWithoutOptionalProperties",
         (objectWithoutOptionalProperties) =>
             (properties: Zurg.Property[]): Zurg.ObjectSchema => {
@@ -332,7 +336,11 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         };
     }
 
-    public union = this.withExportedName(
+    public union: ({
+        parsedDiscriminant,
+        rawDiscriminant,
+        singleUnionTypes
+    }: Zurg.union.Args) => Zurg.ObjectLikeSchema = this.withExportedName(
         "union",
         (union: Reference) =>
             ({ parsedDiscriminant, rawDiscriminant, singleUnionTypes }: Zurg.union.Args): Zurg.ObjectLikeSchema => {
@@ -384,57 +392,206 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             }
     );
 
-    public undiscriminatedUnion = this.withExportedName(
+    public undiscriminatedUnion: (schemas: Zurg.Schema[]) => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
         "undiscriminatedUnion",
-        (undiscriminatedUnion: Reference) => (schemas: Zurg.Schema[]) => {
-            const baseSchema: Zurg.BaseSchema = {
-                isOptional: false,
-                isNullable: false,
-                toExpression: () =>
-                    ts.factory.createCallExpression(undiscriminatedUnion.getExpression(), undefined, [
-                        ts.factory.createArrayLiteralExpression(schemas.map((schema) => schema.toExpression()))
-                    ])
-            };
+        (undiscriminatedUnion: Reference) =>
+            (
+                schemas: Zurg.Schema[]
+            ): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(undiscriminatedUnion.getExpression(), undefined, [
+                            ts.factory.createArrayLiteralExpression(schemas.map((schema) => schema.toExpression()))
+                        ])
+                };
 
-            return {
-                ...baseSchema,
-                ...this.getSchemaUtils(baseSchema)
-            };
-        }
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
     );
 
-    public list = this.withExportedName("list", (list: Reference) => (itemSchema: Zurg.Schema) => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(list.getExpression(), undefined, [itemSchema.toExpression()])
-        };
+    public list: (itemSchema: Zurg.Schema) => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "list",
+        (list: Reference) =>
+            (
+                itemSchema: Zurg.Schema
+            ): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(list.getExpression(), undefined, [itemSchema.toExpression()])
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public set = this.withExportedName("set", (set: Reference) => (itemSchema: Zurg.Schema) => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(set.getExpression(), undefined, [itemSchema.toExpression()])
-        };
+    public set: (itemSchema: Zurg.Schema) => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "set",
+        (set: Reference) =>
+            (
+                itemSchema: Zurg.Schema
+            ): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(set.getExpression(), undefined, [itemSchema.toExpression()])
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public record = this.withExportedName(
+    public record: ({ keySchema, valueSchema }: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
         "record",
         (record: Reference) =>
-            ({ keySchema, valueSchema }: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => {
+            ({
+                keySchema,
+                valueSchema
+            }: {
+                keySchema: Zurg.Schema;
+                valueSchema: Zurg.Schema;
+            }): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
                 const baseSchema: Zurg.BaseSchema = {
                     isOptional: false,
                     isNullable: false,
@@ -452,162 +609,561 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             }
     );
 
-    public enum = this.withExportedName("enum_", (enum_: Reference) => (values: string[]) => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(enum_.getExpression(), undefined, [
-                    ts.factory.createArrayLiteralExpression(
-                        values.map((value) => ts.factory.createStringLiteral(value))
-                    )
-                ])
-        };
+    public enum: (values: string[]) => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "enum_",
+        (enum_: Reference) =>
+            (
+                values: string[]
+            ): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(enum_.getExpression(), undefined, [
+                            ts.factory.createArrayLiteralExpression(
+                                values.map((value) => ts.factory.createStringLiteral(value))
+                            )
+                        ])
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
-
-    public string = this.withExportedName("string", (string: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(string.getExpression(), undefined, undefined)
-        };
-
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
-
-    public stringLiteral = this.withExportedName("stringLiteral", (stringLiteral: Reference) => (literal: string) => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(stringLiteral.getExpression(), undefined, [
-                    ts.factory.createStringLiteral(literal)
-                ])
-        };
-
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
-
-    public booleanLiteral = this.withExportedName(
-        "booleanLiteral",
-        (booleanLiteral: Reference) => (literal: boolean) => {
-            const baseSchema: Zurg.BaseSchema = {
-                isOptional: false,
-                isNullable: false,
-                toExpression: () =>
-                    ts.factory.createCallExpression(booleanLiteral.getExpression(), undefined, [
-                        literal ? ts.factory.createTrue() : ts.factory.createFalse()
-                    ])
-            };
-
-            return {
-                ...baseSchema,
-                ...this.getSchemaUtils(baseSchema)
-            };
-        }
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
     );
 
-    public number = this.withExportedName("number", (number: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(number.getExpression(), undefined, undefined)
-        };
+    public string: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "string",
+        (string: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () => ts.factory.createCallExpression(string.getExpression(), undefined, undefined)
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public bigint = this.withExportedName("bigint", (bigint: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(bigint.getExpression(), undefined, undefined)
-        };
+    public stringLiteral: (literal: string) => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "stringLiteral",
+        (stringLiteral: Reference) =>
+            (
+                literal: string
+            ): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(stringLiteral.getExpression(), undefined, [
+                            ts.factory.createStringLiteral(literal)
+                        ])
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public boolean = this.withExportedName("boolean", (boolean: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(boolean.getExpression(), undefined, undefined)
-        };
+    public booleanLiteral: (literal: boolean) => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "booleanLiteral",
+        (booleanLiteral: Reference) =>
+            (
+                literal: boolean
+            ): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(booleanLiteral.getExpression(), undefined, [
+                            literal ? ts.factory.createTrue() : ts.factory.createFalse()
+                        ])
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public date = this.withExportedName("date", (date: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(date.getExpression(), undefined, undefined)
-        };
+    public number: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "number",
+        (number: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () => ts.factory.createCallExpression(number.getExpression(), undefined, undefined)
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public any = this.withExportedName("any", (any: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: true,
-            toExpression: () => ts.factory.createCallExpression(any.getExpression(), undefined, undefined)
-        };
+    public bigint: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "bigint",
+        (bigint: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () => ts.factory.createCallExpression(bigint.getExpression(), undefined, undefined)
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public unknown = this.withExportedName("unknown", (unknown: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: true,
-            isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(unknown.getExpression(), undefined, undefined)
-        };
+    public boolean: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "boolean",
+        (boolean: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () => ts.factory.createCallExpression(boolean.getExpression(), undefined, undefined)
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public never = this.withExportedName("never", (never: Reference) => () => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: false,
-            isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(never.getExpression(), undefined, undefined)
-        };
+    public date: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "date",
+        (date: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () => ts.factory.createCallExpression(date.getExpression(), undefined, undefined)
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
+
+    public any: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "any",
+        (any: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: true,
+                    toExpression: () => ts.factory.createCallExpression(any.getExpression(), undefined, undefined)
+                };
+
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
+
+    public unknown: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "unknown",
+        (unknown: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: true,
+                    isNullable: false,
+                    toExpression: () => ts.factory.createCallExpression(unknown.getExpression(), undefined, undefined)
+                };
+
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
+
+    public never: () => {
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        nullable: () => Zurg.Schema;
+        optional: () => Zurg.Schema;
+        optionalNullable: () => Zurg.Schema;
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => Zurg.Schema;
+        toExpression: () => ts.Expression;
+        isOptional: boolean;
+        isNullable: boolean;
+    } = this.withExportedName(
+        "never",
+        (never: Reference) =>
+            (): {
+                parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+                nullable: () => Zurg.Schema;
+                optional: () => Zurg.Schema;
+                optionalNullable: () => Zurg.Schema;
+                transform: (args: {
+                    newShape: ts.TypeNode | undefined;
+                    transform: ts.Expression;
+                    untransform: ts.Expression;
+                }) => Zurg.Schema;
+                toExpression: () => ts.Expression;
+                isOptional: boolean;
+                isNullable: boolean;
+            } => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () => ts.factory.createCallExpression(never.getExpression(), undefined, undefined)
+                };
+
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
     private getSchemaUtils(baseSchema: Zurg.BaseSchema): Zurg.SchemaUtils {
         return {
@@ -802,23 +1358,34 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         };
     }
 
-    public lazy = this.withExportedName("lazy", (lazy) => (schema: Zurg.Schema): Zurg.Schema => {
-        const baseSchema: Zurg.BaseSchema = {
-            isOptional: schema.isOptional,
-            isNullable: schema.isNullable,
-            toExpression: () =>
-                ts.factory.createCallExpression(lazy.getExpression(), undefined, [
-                    ts.factory.createArrowFunction([], undefined, [], undefined, undefined, schema.toExpression())
-                ])
-        };
+    public lazy: (schema: Zurg.Schema) => Zurg.Schema = this.withExportedName(
+        "lazy",
+        (lazy) =>
+            (schema: Zurg.Schema): Zurg.Schema => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: schema.isOptional,
+                    isNullable: schema.isNullable,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(lazy.getExpression(), undefined, [
+                            ts.factory.createArrowFunction(
+                                [],
+                                undefined,
+                                [],
+                                undefined,
+                                undefined,
+                                schema.toExpression()
+                            )
+                        ])
+                };
 
-        return {
-            ...baseSchema,
-            ...this.getSchemaUtils(baseSchema)
-        };
-    });
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
 
-    public lazyObject = this.withExportedName(
+    public lazyObject: (schema: Zurg.Schema) => Zurg.ObjectSchema = this.withExportedName(
         "lazyObject",
         (lazyObject) =>
             (schema: Zurg.Schema): Zurg.ObjectSchema => {
@@ -847,11 +1414,17 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             }
     );
 
-    public Schema = {
+    public Schema: Zurg["Schema"] = {
         _getReferenceToType: this.withExportedName(
             "Schema",
             (Schema) =>
-                ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
+                ({
+                    rawShape,
+                    parsedShape
+                }: {
+                    rawShape: ts.TypeNode;
+                    parsedShape: ts.TypeNode;
+                }): ts.TypeReferenceNode =>
                     ts.factory.createTypeReferenceNode(Schema.getEntityName(), [rawShape, parsedShape])
         ),
 
@@ -926,11 +1499,17 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     };
 
-    public ObjectSchema = {
+    public ObjectSchema: Zurg["ObjectSchema"] = {
         _getReferenceToType: this.withExportedName(
             "ObjectSchema",
             (ObjectSchema) =>
-                ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
+                ({
+                    rawShape,
+                    parsedShape
+                }: {
+                    rawShape: ts.TypeNode;
+                    parsedShape: ts.TypeNode;
+                }): ts.TypeReferenceNode =>
                     ts.factory.createTypeReferenceNode(ObjectSchema.getEntityName(), [rawShape, parsedShape])
         )
     };

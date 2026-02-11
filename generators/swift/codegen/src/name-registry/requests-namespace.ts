@@ -7,7 +7,7 @@ export class RequestsNamespace {
         this.namespace = new Namespace();
     }
 
-    public getRequestTypeNameOrThrow(endpointId: string, requestNamePascalCase: string) {
+    public getRequestTypeNameOrThrow(endpointId: string, requestNamePascalCase: string): string {
         const nameId = this.requestTypeNameId(endpointId, requestNamePascalCase);
         return this.namespace.getSymbolNameByIdOrThrow(nameId);
     }
@@ -16,7 +16,7 @@ export class RequestsNamespace {
         endpointId: string,
         requestNamePascalCase: string,
         symbolNameCandidates: [string, ...string[]]
-    ) {
+    ): string {
         const nameId = this.requestTypeNameId(endpointId, requestNamePascalCase);
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }

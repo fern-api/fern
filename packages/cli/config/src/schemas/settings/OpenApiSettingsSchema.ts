@@ -10,7 +10,52 @@ import { ResolveAliasesSchema } from "./ResolveAliasesSchema";
 /**
  * OpenAPI-specific settings that extend the base API settings.
  */
-export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
+export const OpenApiSettingsSchema: z.ZodObject<
+    {
+        respectNullableSchemas: z.ZodOptional<z.ZodBoolean>;
+        wrapReferencesToNullableInOptional: z.ZodOptional<z.ZodBoolean>;
+        coerceOptionalSchemasToNullable: z.ZodOptional<z.ZodBoolean>;
+        titleAsSchemaName: z.ZodOptional<z.ZodBoolean>;
+        coerceEnumsToLiterals: z.ZodOptional<z.ZodBoolean>;
+        optionalAdditionalProperties: z.ZodOptional<z.ZodBoolean>;
+        idiomaticRequestNames: z.ZodOptional<z.ZodBoolean>;
+        groupEnvironmentsByHost: z.ZodOptional<z.ZodBoolean>;
+        removeDiscriminantsFromSchemas: z.ZodOptional<z.ZodEnum<{ always: "always"; never: "never" }>>;
+        pathParameterOrder: z.ZodOptional<z.ZodEnum<{ urlOrder: "urlOrder"; specOrder: "specOrder" }>>;
+        onlyIncludeReferencedSchemas: z.ZodOptional<z.ZodBoolean>;
+        inlinePathParameters: z.ZodOptional<z.ZodBoolean>;
+        preferUndiscriminatedUnionsWithLiterals: z.ZodOptional<z.ZodBoolean>;
+        objectQueryParameters: z.ZodOptional<z.ZodBoolean>;
+        respectReadonlySchemas: z.ZodOptional<z.ZodBoolean>;
+        respectForwardCompatibleEnums: z.ZodOptional<z.ZodBoolean>;
+        useBytesForBinaryResponse: z.ZodOptional<z.ZodBoolean>;
+        defaultFormParameterEncoding: z.ZodOptional<z.ZodEnum<{ form: "form"; json: "json" }>>;
+        filter: z.ZodOptional<z.ZodObject<{ endpoints: z.ZodOptional<z.ZodArray<z.ZodString>> }, z.core.$strip>>;
+        exampleGeneration: z.ZodOptional<
+            z.ZodObject<
+                {
+                    request: z.ZodOptional<z.ZodObject<{ maxDepth: z.ZodOptional<z.ZodNumber> }, z.core.$strip>>;
+                    response: z.ZodOptional<z.ZodObject<{ maxDepth: z.ZodOptional<z.ZodNumber> }, z.core.$strip>>;
+                },
+                z.core.$strip
+            >
+        >;
+        additionalPropertiesDefaultsTo: z.ZodOptional<z.ZodBoolean>;
+        typeDatesAsStrings: z.ZodOptional<z.ZodBoolean>;
+        preserveSingleSchemaOneof: z.ZodOptional<z.ZodBoolean>;
+        inlineAllOfSchemas: z.ZodOptional<z.ZodBoolean>;
+        resolveAliases: z.ZodOptional<
+            z.ZodUnion<
+                readonly [z.ZodBoolean, z.ZodObject<{ except: z.ZodOptional<z.ZodArray<z.ZodString>> }, z.core.$strip>]
+            >
+        >;
+        groupMultiApiEnvironments: z.ZodOptional<z.ZodBoolean>;
+        defaultIntegerFormat: z.ZodOptional<
+            z.ZodEnum<{ int32: "int32"; int64: "int64"; uint32: "uint32"; uint64: "uint64" }>
+        >;
+    },
+    z.core.$strip
+> = BaseApiSettingsSchema.extend({
     /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
     onlyIncludeReferencedSchemas: z.boolean().optional(),
 

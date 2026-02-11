@@ -1,5 +1,5 @@
-export const NUMERIC_REGEX = /^(\d+)/;
-export const VALID_ENUM_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
+export const NUMERIC_REGEX: RegExp = /^(\d+)/;
+export const VALID_ENUM_NAME_REGEX: RegExp = /^[a-zA-Z][a-zA-Z0-9_]*$/;
 
 export const HARDCODED_ENUM_NAMES: Record<string, string> = {
     "<": "LESS_THAN",

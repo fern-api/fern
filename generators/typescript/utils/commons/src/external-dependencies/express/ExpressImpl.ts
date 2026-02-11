@@ -7,9 +7,9 @@ export class ExpressImpl extends ExternalDependency implements Express {
     protected override PACKAGE = { name: "express", version: "4.18.2" };
     protected override TYPES_PACKAGE = { name: "@types/express", version: "4.17.16" };
 
-    public NextFunction = {
+    public NextFunction: Express["NextFunction"] = {
         _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
-            withImport(() => {
+            withImport((): ts.TypeReferenceNode => {
                 return ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "NextFunction"),
                     []
@@ -18,7 +18,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
         )
     };
 
-    public Request = {
+    public Request: Express["Request"] = {
         body: "body" as const,
         _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
             withImport(
@@ -32,7 +32,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
                     request: ts.TypeNode | undefined;
                     response: ts.TypeNode | undefined;
                     queryParameters: ts.TypeNode | undefined;
-                }) => {
+                }): ts.TypeReferenceNode => {
                     return ts.factory.createTypeReferenceNode(
                         ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Request"),
                         [
@@ -47,9 +47,9 @@ export class ExpressImpl extends ExternalDependency implements Express {
         )
     };
 
-    public readonly Response = {
+    public readonly Response: Express["Response"] = {
         _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
-            withImport(() => {
+            withImport((): ts.TypeReferenceNode => {
                 return ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Response"),
                     []
@@ -138,23 +138,25 @@ export class ExpressImpl extends ExternalDependency implements Express {
         }
     };
 
-    public readonly Express = this.withDefaultImport("express", (withImport, express) =>
-        withImport(() => {
+    public readonly Express: () => ts.TypeReferenceNode = this.withDefaultImport("express", (withImport, express) =>
+        withImport((): ts.TypeReferenceNode => {
             return ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Express")
             );
         })
     );
 
-    public readonly RequestHandler = this.withDefaultImport("express", (withImport, express) =>
-        withImport(() => {
-            return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "RequestHandler")
-            );
-        })
+    public readonly RequestHandler: () => ts.TypeReferenceNode = this.withDefaultImport(
+        "express",
+        (withImport, express) =>
+            withImport((): ts.TypeReferenceNode => {
+                return ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "RequestHandler")
+                );
+            })
     );
 
-    public readonly Router = {
+    public readonly Router: Express["Router"] = {
         use: ({
             referenceToRouter,
             handlers
@@ -170,7 +172,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
         },
 
         _instantiate: this.withDefaultImport("express", (withImport, express) =>
-            withImport(({ mergeParams }: { mergeParams?: boolean } = {}) => {
+            withImport(({ mergeParams }: { mergeParams?: boolean } = {}): ts.CallExpression => {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "Router"),
                     undefined,
@@ -192,7 +194,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
         ),
 
         _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
-            withImport(() => {
+            withImport((): ts.TypeReferenceNode => {
                 return ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Router")
                 );
@@ -264,25 +266,27 @@ export class ExpressImpl extends ExternalDependency implements Express {
         }
     };
 
-    public readonly json = this.withDefaultImport("express", (withImport, express) =>
-        withImport(({ strict = true }: { strict?: boolean } = {}) => {
-            const options: ts.ObjectLiteralElementLike[] = [];
+    public readonly json: ({ strict }?: { strict?: boolean }) => ts.CallExpression = this.withDefaultImport(
+        "express",
+        (withImport, express) =>
+            withImport(({ strict = true }: { strict?: boolean } = {}): ts.CallExpression => {
+                const options: ts.ObjectLiteralElementLike[] = [];
 
-            if (!strict) {
-                options.push(ts.factory.createPropertyAssignment("strict", ts.factory.createFalse()));
-            }
+                if (!strict) {
+                    options.push(ts.factory.createPropertyAssignment("strict", ts.factory.createFalse()));
+                }
 
-            return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "json"),
-                undefined,
-                options.length > 0 ? [ts.factory.createObjectLiteralExpression(options, true)] : undefined
-            );
-        })
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "json"),
+                    undefined,
+                    options.length > 0 ? [ts.factory.createObjectLiteralExpression(options, true)] : undefined
+                );
+            })
     );
 
-    public readonly CookieOptions = {
+    public readonly CookieOptions: Express["CookieOptions"] = {
         _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
-            withImport(() => {
+            withImport((): ts.TypeReferenceNode => {
                 return ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "CookieOptions")
                 );

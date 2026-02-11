@@ -24,17 +24,19 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class RuntimeImpl extends CoreUtility implements Runtime {
-    public readonly MANIFEST = MANIFEST;
-    public readonly type = {
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
+    public readonly type: Runtime["type"] = {
         _getReferenceTo: this.withExportedName(
             "RUNTIME",
-            (RUNTIME) => () => ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "type")
+            (RUNTIME) => (): ts.PropertyAccessExpression =>
+                ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "type")
         )
     };
-    public readonly version = {
+    public readonly version: Runtime["version"] = {
         _getReferenceTo: this.withExportedName(
             "RUNTIME",
-            (RUNTIME) => () => ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "version")
+            (RUNTIME) => (): ts.PropertyAccessExpression =>
+                ts.factory.createPropertyAccessExpression(RUNTIME.getExpression(), "version")
         )
     };
 }

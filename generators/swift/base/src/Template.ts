@@ -15,7 +15,7 @@ export type SourceTemplateDefinitionsById = {
     [K in swift.SourceTemplateFileId]: TemplateDefinition;
 };
 
-export const SourceTemplateFiles = createSourceTemplateFiles();
+export const SourceTemplateFiles: SourceTemplateDefinitionsById = createSourceTemplateFiles();
 
 function createSourceTemplateFiles(): SourceTemplateDefinitionsById {
     const result = {} as SourceTemplateDefinitionsById;
@@ -36,7 +36,11 @@ function createSourceTemplateFiles(): SourceTemplateDefinitionsById {
     return result;
 }
 
-const TestTemplateFileSpecs = {
+const TestTemplateFileSpecs: {
+    ClientErrorTests: swift.TemplateFileSpec;
+    ClientRetryTests: swift.TemplateFileSpec;
+    HTTPStub: swift.TemplateFileSpec;
+} = {
     // Core
     ClientErrorTests: {
         relativePath: "Core",
@@ -51,7 +55,7 @@ const TestTemplateFileSpecs = {
         relativePath: "Utilities",
         filenameWithoutExtension: () => "HTTPStub"
     }
-} satisfies Record<string, swift.TemplateFileSpec>;
+};
 
 export type TestTemplateFileId = keyof typeof TestTemplateFileSpecs;
 
@@ -59,7 +63,7 @@ export type TestTemplateDefinitionsById = {
     [K in TestTemplateFileId]: TemplateDefinition;
 };
 
-export const TestTemplateFiles = createTestTemplateFiles();
+export const TestTemplateFiles: TestTemplateDefinitionsById = createTestTemplateFiles();
 
 function createTestTemplateFiles(): TestTemplateDefinitionsById {
     const result = {} as TestTemplateDefinitionsById;

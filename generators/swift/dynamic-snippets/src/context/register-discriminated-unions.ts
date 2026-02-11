@@ -10,7 +10,7 @@ export function registerDiscriminatedUnionVariants({
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
     namedType: FernIr.dynamic.NamedType;
-}) {
+}): void {
     visitDiscriminatedUnion(namedType, "type")._visit({
         discriminatedUnion: (utd) => {
             const variants = Object.values(utd.types).map((singleUnionType) => {

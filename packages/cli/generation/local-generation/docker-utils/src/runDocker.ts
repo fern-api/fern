@@ -81,7 +81,17 @@ export declare namespace runDocker {
 /**
  * @deprecated Use runContainer instead. This function is maintained for backward compatibility.
  */
-export const runDocker = runContainer;
+export const runDocker: ({
+    logger,
+    imageName,
+    args,
+    binds,
+    envVars,
+    ports,
+    writeLogsToFile,
+    removeAfterCompletion,
+    runner
+}: runContainer.Args) => Promise<void> = runContainer;
 
 async function tryRunContainer({
     logger,

@@ -195,11 +195,11 @@ export class Expression extends AstNode {
         this.internalExpression = internalExpression;
     }
 
-    public isNop() {
+    public isNop(): boolean {
         return this.internalExpression.type === "nop";
     }
 
-    public isStructInitialization() {
+    public isStructInitialization(): boolean {
         return this.internalExpression.type === "struct-initialization";
     }
 

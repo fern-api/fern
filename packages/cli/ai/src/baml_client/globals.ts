@@ -24,17 +24,17 @@ import { getBamlFiles } from './inlinedbaml'
 // Create a copy of process.env to avoid mutations
 const env = { ...process.env }
 
-export const DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME = BamlRuntime.fromFiles(
+export const DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME: BamlRuntime = BamlRuntime.fromFiles(
   'baml_src',
   getBamlFiles(),
   env
 )
-export const DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX = new BamlCtxManager(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME)
+export const DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX: BamlCtxManager = new BamlCtxManager(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME)
 
 /**
  * @deprecated resetBamlEnvVars is deprecated and is safe to remove, since environment variables are now lazily loaded on each function call
  */
-export function resetBamlEnvVars(envVars: Record<string, string | undefined>) {
+export function resetBamlEnvVars(envVars: Record<string, string | undefined>): void {
   if (DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX.allowResets()) {
     const envVarsToReset = Object.fromEntries(Object.entries(envVars).filter((kv): kv is [string, string] => kv[1] !== undefined));
     DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME.reset('baml_src', getBamlFiles(), envVarsToReset)

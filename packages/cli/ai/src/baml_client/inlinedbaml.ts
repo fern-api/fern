@@ -24,6 +24,6 @@ const fileMap = {
   "generators.baml": "generator target {\n    output_type \"typescript\"\n\n    output_dir \"../src/\"\n\n    version \"0.211.2\"\n\n    default_client_mode async\n}\n",
   "main.baml": "// BAML client configuration for LLM providers\n\n// OpenAI client configuration\nclient<llm> OpenAI {\n  provider openai\n  options {\n    model gpt-4o\n    api_key env.OPENAI_API_KEY\n  }\n}\n\n// Anthropic client configuration\nclient<llm> Anthropic {\n  provider anthropic\n  options {\n    model claude-sonnet-4-5-20250929\n    api_key env.ANTHROPIC_API_KEY\n  }\n}\n\n// Bedrock client configuration\nclient<llm> Bedrock {\n    provider aws-bedrock\n    options {\n        model anthropic.claude-3-5-sonnet-20240620-v1:0\n    }\n}\n\n// Fallback client that tries multiple providers\n// TODO(tjb9dc): I wish we didn't have to specify this, we're only going to use one at runtime\nclient<llm> DefaultClient {\n  provider fallback\n  options {\n    strategy [\n      Anthropic\n      OpenAI\n      Bedrock\n    ]\n  }\n}\n",
 }
-export const getBamlFiles = () => {
+export const getBamlFiles = (): { "diff_analyzer.baml": string; "generators.baml": string; "main.baml": string; } => {
     return fileMap;
 }

@@ -17,55 +17,55 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public readonly generation: Generation;
 
-    public get namespaces() {
+    public get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
-    public get registry() {
+    public get registry(): Generation["registry"] {
         return this.generation.registry;
     }
-    public get settings() {
+    public get settings(): Generation["settings"] {
         return this.generation.settings;
     }
-    public get constants() {
+    public get constants(): Generation["constants"] {
         return this.generation.constants;
     }
-    public get names() {
+    public get names(): Generation["names"] {
         return this.generation.names;
     }
-    public get model() {
+    public get model(): Generation["model"] {
         return this.generation.model;
     }
-    public get format() {
+    public get format(): Generation["format"] {
         return this.generation.format;
     }
-    public get csharp() {
+    public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
     }
-    public get Types() {
+    public get Types(): Generation["Types"] {
         return this.generation.Types;
     }
-    public get System() {
+    public get System(): Generation["extern"]["System"] {
         return this.generation.extern.System;
     }
-    public get NUnit() {
+    public get NUnit(): Generation["extern"]["NUnit"] {
         return this.generation.extern.NUnit;
     }
-    public get OneOf() {
+    public get OneOf(): Generation["extern"]["OneOf"] {
         return this.generation.extern.OneOf;
     }
-    public get Google() {
+    public get Google(): Generation["extern"]["Google"] {
         return this.generation.extern.Google;
     }
-    public get WireMock() {
+    public get WireMock(): Generation["extern"]["WireMock"] {
         return this.generation.extern.WireMock;
     }
-    public get Primitive() {
+    public get Primitive(): Generation["Primitive"] {
         return this.generation.Primitive;
     }
-    public get Value() {
+    public get Value(): Generation["Value"] {
         return this.generation.Value;
     }
-    public get Collection() {
+    public get Collection(): Generation["Collection"] {
         return this.generation.Collection;
     }
 

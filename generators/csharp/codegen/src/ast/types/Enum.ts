@@ -33,10 +33,10 @@ export declare namespace Enum {
 }
 
 export class Enum extends Node {
-    public get name() {
+    public get name(): string {
         return this.reference.name;
     }
-    public get namespace() {
+    public get namespace(): string {
         return this.reference.namespace;
     }
 

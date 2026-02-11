@@ -48,7 +48,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             rawClientReference: string;
             rawClient: RawClient;
         }
-    ) {
+    ): void {
         if (this.hasPagination(endpoint)) {
             this.generatePagerMethod(cls, {
                 serviceId,
@@ -1080,7 +1080,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             rawClientReference: string;
             rawClient: RawClient;
         }
-    ) {
+    ): void {
         this.assertHasPagination(endpoint);
         const endpointSignatureInfo = this.getEndpointSignatureInfo({
             serviceId,

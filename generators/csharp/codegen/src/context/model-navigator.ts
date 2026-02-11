@@ -143,7 +143,7 @@ export class ModelNavigator {
      * Provides access to C# code generation utilities.
      * @returns The C# generation context from the generation info
      */
-    get csharp() {
+    get csharp(): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/csharp").CSharp {
         return this.generation.csharp;
     }
 
@@ -151,7 +151,7 @@ export class ModelNavigator {
      * Provides access to the type registry for looking up generated type names.
      * @returns The type registry from the generation info
      */
-    get registry() {
+    get registry(): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/index").NameRegistry {
         return this.generation.registry;
     }
 

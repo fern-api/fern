@@ -123,23 +123,23 @@ export class ClassReference extends AstNode {
 }
 
 // Basic or primitive class references for which we don't do much
-export const OpenStructClassReference = new ClassReference({
+export const OpenStructClassReference: ClassReference = new ClassReference({
     name: RubyClass.OPENSTRUCT,
     import_: new Import({ from: "ostruct", isExternal: true })
 });
-export const GenericClassReference = new ClassReference({ name: RubyClass.OBJECT });
-export const JsonClassReference = new ClassReference({
+export const GenericClassReference: ClassReference = new ClassReference({ name: RubyClass.OBJECT });
+export const JsonClassReference: ClassReference = new ClassReference({
     name: RubyClass.JSON,
     import_: new Import({ from: "json", isExternal: true })
 });
-export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
-export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
-export const StringClassReference = new ClassReference({ name: RubyClass.STRING });
-export const MethodClassReference = new ClassReference({ name: RubyClass.METHOD });
-export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
-export const FileClassReference = new ClassReference({ name: RubyClass.FILE });
-export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE64 });
-export const TimeClassReference = new ClassReference({ name: RubyClass.TIME });
+export const VoidClassReference: ClassReference = new ClassReference({ name: RubyClass.VOID });
+export const BooleanClassReference: ClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
+export const StringClassReference: ClassReference = new ClassReference({ name: RubyClass.STRING });
+export const MethodClassReference: ClassReference = new ClassReference({ name: RubyClass.METHOD });
+export const LongClassReference: ClassReference = new ClassReference({ name: RubyClass.LONG });
+export const FileClassReference: ClassReference = new ClassReference({ name: RubyClass.FILE });
+export const B64StringClassReference: ClassReference = new ClassReference({ name: RubyClass.BASE64 });
+export const TimeClassReference: ClassReference = new ClassReference({ name: RubyClass.TIME });
 export const NilValue = "nil";
 export const OmittedValue = "OMIT";
 

@@ -169,13 +169,19 @@ export class SymbolRegistry {
         return Symbol.create(typeSymbol.id, typeSymbol.name, shape);
     }
 
-    public reference({ fromSymbol, toSymbol }: { fromSymbol: Symbol | string; toSymbol: Symbol | string }) {
+    public reference({ fromSymbol, toSymbol }: { fromSymbol: Symbol | string; toSymbol: Symbol | string }): string {
         const fromSymbolId = typeof fromSymbol === "string" ? fromSymbol : fromSymbol.id;
         const toSymbolId = typeof toSymbol === "string" ? toSymbol : toSymbol.id;
         return this.graph.reference({ fromSymbolId, targetSymbolId: toSymbolId });
     }
 
-    public resolveReference({ fromSymbol, reference }: { fromSymbol: Symbol | string; reference: string }) {
+    public resolveReference({
+        fromSymbol,
+        reference
+    }: {
+        fromSymbol: Symbol | string;
+        reference: string;
+    }): Symbol | null {
         const fromSymbolId = typeof fromSymbol === "string" ? fromSymbol : fromSymbol.id;
         const symbol = this.graph.resolveReference({ fromSymbolId, reference });
         return symbol

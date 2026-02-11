@@ -7,7 +7,7 @@ export class SourceModuleNamespace {
         this.namespace = new Namespace();
     }
 
-    public addStaticSymbolName(symbolName: string) {
+    public addStaticSymbolName(symbolName: string): string {
         const nameId = this.staticSymbolNameId(symbolName);
         return this.namespace.registerSymbol(nameId, [symbolName]);
     }
@@ -16,12 +16,12 @@ export class SourceModuleNamespace {
         return `Static:${symbolName}`;
     }
 
-    public addRootClientSymbolName(symbolNameCandidates: [string, ...string[]]) {
+    public addRootClientSymbolName(symbolNameCandidates: [string, ...string[]]): string {
         const nameId = this.rootClientSymbolNameId();
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public getRootClientSymbolNameOrThrow() {
+    public getRootClientSymbolNameOrThrow(): string {
         return this.namespace.getSymbolNameByIdOrThrow(this.rootClientSymbolNameId());
     }
 
@@ -29,12 +29,12 @@ export class SourceModuleNamespace {
         return `RootClientClass`;
     }
 
-    public addEnvironmentSymbolName(symbolNameCandidates: [string, ...string[]]) {
+    public addEnvironmentSymbolName(symbolNameCandidates: [string, ...string[]]): string {
         const nameId = this.environmentSymbolNameId();
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public getEnvironmentSymbolNameOrThrow() {
+    public getEnvironmentSymbolNameOrThrow(): string {
         return this.namespace.getSymbolNameByIdOrThrow(this.environmentSymbolNameId());
     }
 
@@ -42,12 +42,12 @@ export class SourceModuleNamespace {
         return `EnvironmentEnum`;
     }
 
-    public addErrorEnumSymbolName(symbolNameCandidates: [string, ...string[]]) {
+    public addErrorEnumSymbolName(symbolNameCandidates: [string, ...string[]]): string {
         const nameId = this.errorEnumSymbolNameId();
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public getErrorEnumSymbolNameOrThrow() {
+    public getErrorEnumSymbolNameOrThrow(): string {
         return this.namespace.getSymbolNameByIdOrThrow(this.errorEnumSymbolNameId());
     }
 
@@ -55,12 +55,12 @@ export class SourceModuleNamespace {
         return `ErrorEnum`;
     }
 
-    public addRequestsContainerSymbolName(symbolNameCandidates: [string, ...string[]]) {
+    public addRequestsContainerSymbolName(symbolNameCandidates: [string, ...string[]]): string {
         const nameId = this.requestsContainerSymbolNameId();
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public getRequestsContainerSymbolNameOrThrow() {
+    public getRequestsContainerSymbolNameOrThrow(): string {
         return this.namespace.getSymbolNameByIdOrThrow(this.requestsContainerSymbolNameId());
     }
 
@@ -68,12 +68,12 @@ export class SourceModuleNamespace {
         return `RequestsContainer`;
     }
 
-    public addSubClientSymbolName(subpackageId: string, symbolNameCandidates: [string, ...string[]]) {
+    public addSubClientSymbolName(subpackageId: string, symbolNameCandidates: [string, ...string[]]): string {
         const nameId = this.subClientSymbolNameId(subpackageId);
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public getSubClientSymbolNameOrThrow(subpackageId: string) {
+    public getSubClientSymbolNameOrThrow(subpackageId: string): string {
         return this.namespace.getSymbolNameByIdOrThrow(this.subClientSymbolNameId(subpackageId));
     }
 
@@ -81,12 +81,12 @@ export class SourceModuleNamespace {
         return `SubClient:${subpackageId}`;
     }
 
-    public addSchemaTypeSymbolName(typeId: string, symbolNameCandidates: [string, ...string[]]) {
+    public addSchemaTypeSymbolName(typeId: string, symbolNameCandidates: [string, ...string[]]): string {
         const nameId = this.schemaTypeSymbolNameId(typeId);
         return this.namespace.registerSymbol(nameId, symbolNameCandidates);
     }
 
-    public getSchemaTypeSymbolNameOrThrow(typeId: string) {
+    public getSchemaTypeSymbolNameOrThrow(typeId: string): string {
         const nameId = this.schemaTypeSymbolNameId(typeId);
         return this.namespace.getSymbolNameByIdOrThrow(nameId);
     }

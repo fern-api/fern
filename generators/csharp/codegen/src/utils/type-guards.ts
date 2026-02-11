@@ -20,7 +20,7 @@ const ISO_8601_DATE_TIME_REGEX =
  *
  * @see https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-guards
  */
-export const is = {
+export const isImpl = {
     string: (value: unknown): value is string => typeof value === "string",
     boolean: (value: unknown): value is boolean => typeof value === "boolean",
     number: (value: unknown): value is number => typeof value === "number",
@@ -54,7 +54,7 @@ export const is = {
     },
 
     Ast: {
-        Node: (value: unknown) => value instanceof AstNode,
+        Node: (value: unknown): boolean => value instanceof AstNode,
         NamedNode: (value: unknown): value is AstNode & { name: string } =>
             is.Ast.Node(value) && "name" in value && typeof value.name === "string"
     },
@@ -66,58 +66,59 @@ export const is = {
     },
 
     Primitive: {
-        string: (value: Type | undefined) => value instanceof Primitive.String,
-        boolean: (value: Type | undefined) => value instanceof Primitive.Boolean,
-        int: (value: Type | undefined) => value instanceof Primitive.Integer,
-        long: (value: Type | undefined) => value instanceof Primitive.Long,
-        uint: (value: Type | undefined) => value instanceof Primitive.Uint,
-        ulong: (value: Type | undefined) => value instanceof Primitive.ULong,
-        float: (value: Type | undefined) => value instanceof Primitive.Float,
-        double: (value: Type | undefined) => value instanceof Primitive.Double,
-        object: (value: Type | undefined) => value instanceof Primitive.Object
+        string: (value: Type | undefined): boolean => value instanceof Primitive.String,
+        boolean: (value: Type | undefined): boolean => value instanceof Primitive.Boolean,
+        int: (value: Type | undefined): boolean => value instanceof Primitive.Integer,
+        long: (value: Type | undefined): boolean => value instanceof Primitive.Long,
+        uint: (value: Type | undefined): boolean => value instanceof Primitive.Uint,
+        ulong: (value: Type | undefined): boolean => value instanceof Primitive.ULong,
+        float: (value: Type | undefined): boolean => value instanceof Primitive.Float,
+        double: (value: Type | undefined): boolean => value instanceof Primitive.Double,
+        object: (value: Type | undefined): boolean => value instanceof Primitive.Object
     },
 
     Value: {
-        dateTime: (value: Type | undefined) => value instanceof Value.DateTime,
-        uuid: (value: Type | undefined) => value instanceof Value.Uuid,
-        byte: (value: Type | undefined) => value instanceof Value.Binary,
-        stringEnum: (value: Type | undefined) => value instanceof Value.StringEnum
+        dateTime: (value: Type | undefined): boolean => value instanceof Value.DateTime,
+        uuid: (value: Type | undefined): boolean => value instanceof Value.Uuid,
+        byte: (value: Type | undefined): boolean => value instanceof Value.Binary,
+        stringEnum: (value: Type | undefined): boolean => value instanceof Value.StringEnum
     },
 
     Collection: {
-        array: (value: Type | undefined) => value instanceof Collection.Array,
-        listType: (value: Type | undefined) => value instanceof Collection.ListType,
-        list: (value: Type | undefined) => value instanceof Collection.List,
-        set: (value: Type | undefined) => value instanceof Collection.Set,
-        map: (value: Type | undefined) => value instanceof Collection.Map,
-        idictionary: (value: Type | undefined) => value instanceof Collection.IDictionary,
-        keyValuePair: (value: Type | undefined) => value instanceof Collection.KeyValuePair
+        array: (value: Type | undefined): boolean => value instanceof Collection.Array,
+        listType: (value: Type | undefined): boolean => value instanceof Collection.ListType,
+        list: (value: Type | undefined): boolean => value instanceof Collection.List,
+        set: (value: Type | undefined): boolean => value instanceof Collection.Set,
+        map: (value: Type | undefined): boolean => value instanceof Collection.Map,
+        idictionary: (value: Type | undefined): boolean => value instanceof Collection.IDictionary,
+        keyValuePair: (value: Type | undefined): boolean => value instanceof Collection.KeyValuePair
     },
 
     Literal: {
-        string: (value: Literal | undefined) => value instanceof Literal.String,
-        boolean: (value: Literal | undefined) => value instanceof Literal.Boolean,
-        decimal: (value: Literal | undefined) => value instanceof Literal.Decimal,
-        double: (value: Literal | undefined) => value instanceof Literal.Double,
-        date: (value: Literal | undefined) => value instanceof Literal.Date,
-        dateTime: (value: Literal | undefined) => value instanceof Literal.DateTime,
-        float: (value: Literal | undefined) => value instanceof Literal.Float,
-        int: (value: Literal | undefined) => value instanceof Literal.Integer,
-        long: (value: Literal | undefined) => value instanceof Literal.Long,
-        uint: (value: Literal | undefined) => value instanceof Literal.Uint,
-        ulong: (value: Literal | undefined) => value instanceof Literal.Ulong,
-        class: (value: Literal | undefined) => value instanceof Literal.Class_,
-        list: (value: Literal | undefined) => value instanceof Literal.List,
-        set: (value: Literal | undefined) => value instanceof Literal.Set,
-        dictionary: (value: Literal | undefined) => value instanceof Literal.Dictionary,
-        nop: (value: Literal | undefined) => value instanceof Literal.Nop,
-        null: (value: Literal | undefined) => value instanceof Literal.Null,
-        unknown: (value: Literal | undefined) => value instanceof Literal.Unknown
+        string: (value: Literal | undefined): boolean => value instanceof Literal.String,
+        boolean: (value: Literal | undefined): boolean => value instanceof Literal.Boolean,
+        decimal: (value: Literal | undefined): boolean => value instanceof Literal.Decimal,
+        double: (value: Literal | undefined): boolean => value instanceof Literal.Double,
+        date: (value: Literal | undefined): boolean => value instanceof Literal.Date,
+        dateTime: (value: Literal | undefined): boolean => value instanceof Literal.DateTime,
+        float: (value: Literal | undefined): boolean => value instanceof Literal.Float,
+        int: (value: Literal | undefined): boolean => value instanceof Literal.Integer,
+        long: (value: Literal | undefined): boolean => value instanceof Literal.Long,
+        uint: (value: Literal | undefined): boolean => value instanceof Literal.Uint,
+        ulong: (value: Literal | undefined): boolean => value instanceof Literal.Ulong,
+        class: (value: Literal | undefined): boolean => value instanceof Literal.Class_,
+        list: (value: Literal | undefined): boolean => value instanceof Literal.List,
+        set: (value: Literal | undefined): boolean => value instanceof Literal.Set,
+        dictionary: (value: Literal | undefined): boolean => value instanceof Literal.Dictionary,
+        nop: (value: Literal | undefined): boolean => value instanceof Literal.Nop,
+        null: (value: Literal | undefined): boolean => value instanceof Literal.Null,
+        unknown: (value: Literal | undefined): boolean => value instanceof Literal.Unknown
     },
 
-    IR, // Intermediate Representation typeguards
-    DynamicIR // Dynamic IR typeguards
+    IR: IR as typeof IR, // Intermediate Representation typeguards
+    DynamicIR: DynamicIR as typeof DynamicIR // Dynamic IR typeguards
 };
+export const is: typeof isImpl = isImpl;
 
 export const assert = {
     object: (value: unknown): value is object => {

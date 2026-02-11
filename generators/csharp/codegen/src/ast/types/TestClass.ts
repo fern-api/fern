@@ -27,10 +27,10 @@ export declare namespace TestClass {
 }
 
 export class TestClass extends Node {
-    public get name() {
+    public get name(): string {
         return this.reference.name;
     }
-    public get namespace() {
+    public get namespace(): string {
         return this.reference.namespace;
     }
     public readonly reference: ClassReference;

@@ -18,7 +18,7 @@ export const SUPPORTED_MEDIA_EXTENSIONS = [
     "pjp",
     "svgz",
     "bmp"
-];
+] as const;
 
 export async function downloadImage(src: string): Promise<Result<[string, string]>> {
     if (!src) {

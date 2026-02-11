@@ -9,7 +9,7 @@ declare class ExampleClient {
     };
 }
 
-async function run() {
+async function run(): Promise<void> {
     const client = new ExampleClient({
         apiKey: "your-api-key"
     });

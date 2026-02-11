@@ -20,12 +20,12 @@ export const serverOptions: ServerOptions = {
     /* no-op */
 };
 
-export function createServer(implementation: Implementation, serverOptions?: ServerOptions) {
+export function createServer(implementation: Implementation, serverOptions?: ServerOptions): McpServer {
     return new McpServer(implementation, serverOptions);
 }
 
 // Default MCP tools.
-export function registerTools(server: McpServer) {
+export function registerTools(server: McpServer): void {
     for (const tool of Object.values(tools)) {
         tool.register(server);
     }

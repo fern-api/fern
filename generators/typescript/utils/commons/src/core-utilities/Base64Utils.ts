@@ -20,19 +20,21 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class Base64UtilsImpl extends CoreUtility implements Base64Utils {
-    public readonly MANIFEST = MANIFEST;
-    public readonly base64Encode = {
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
+    public readonly base64Encode: Base64Utils["base64Encode"] = {
         _invoke: this.withExportedName(
             "base64Encode",
-            (base64Encode) => (arg: ts.Expression) =>
-                ts.factory.createCallExpression(base64Encode.getExpression(), undefined, [arg])
+            (base64Encode) =>
+                (arg: ts.Expression): ts.CallExpression =>
+                    ts.factory.createCallExpression(base64Encode.getExpression(), undefined, [arg])
         )
     };
-    public readonly base64Decode = {
+    public readonly base64Decode: Base64Utils["base64Decode"] = {
         _invoke: this.withExportedName(
             "base64Decode",
-            (base64Decode) => (arg: ts.Expression) =>
-                ts.factory.createCallExpression(base64Decode.getExpression(), undefined, [arg])
+            (base64Decode) =>
+                (arg: ts.Expression): ts.CallExpression =>
+                    ts.factory.createCallExpression(base64Decode.getExpression(), undefined, [arg])
         )
     };
 }

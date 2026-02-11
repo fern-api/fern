@@ -68,13 +68,13 @@ export abstract class DefinedType extends Node implements Type {
 
     public abstract override write(writer: Writer): void;
 
-    public get name() {
+    public get name(): string {
         return this.reference.name;
     }
-    public get namespace() {
+    public get namespace(): string {
         return this.reference.namespace;
     }
-    public get enclosingType() {
+    public get enclosingType(): ClassReference | undefined {
         return this.reference.enclosingType;
     }
 

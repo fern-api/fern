@@ -49,9 +49,9 @@ export const cliV2 = {
     /**
      * Run the sdk generate command.
      */
-    generate: (fixture: string, target: string, args: string[] = []) =>
+    generate: (fixture: string, target: string, args?: string[]): Promise<CliV2.Result> =>
         runCliV2({
-            args: ["sdk", "generate", "--target", target, ...args],
+            args: ["sdk", "generate", "--target", target, ...(args ?? [])],
             fixture,
             timeout: 180_000
         }),
@@ -59,7 +59,7 @@ export const cliV2 = {
     /**
      * Run the sdk generate command with local output.
      */
-    generateLocal: (fixture: string, target: string) =>
+    generateLocal: (fixture: string, target: string): Promise<CliV2.Result> =>
         runCliV2({
             args: ["sdk", "generate", "--target", target, "--local"],
             fixture,
@@ -69,12 +69,12 @@ export const cliV2 = {
     /**
      * Run the version command.
      */
-    version: () => runCliV2({ args: ["--version"] }),
+    version: (): Promise<CliV2.Result> => runCliV2({ args: ["--version"] }),
 
     /**
      * Run the help command.
      */
-    help: (command?: string) => runCliV2({ args: command ? [command, "--help"] : ["--help"] })
+    help: (command?: string): Promise<CliV2.Result> => runCliV2({ args: command ? [command, "--help"] : ["--help"] })
 };
 
 /**

@@ -109,7 +109,7 @@ export const AsIsFiles = {
             "test/Pagination/NoRequestOffsetTest.Template.cs",
             "test/Pagination/StepOffsetTest.Template.cs",
             "test/Pagination/StringCursorTest.Template.cs"
-        ],
+        ] as const,
         Json: {
             AdditionalPropertiesTests: "test/Json/AdditionalPropertiesTests.Template.cs",
             DateOnlyJsonTests: "test/Json/DateOnlyJsonTests.Template.cs",

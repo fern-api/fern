@@ -92,7 +92,7 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
         return this.authProviderGenerator !== undefined;
     }
 
-    public writeToFile(context: SdkContext) {
+    public writeToFile(context: SdkContext): void {
         if (!this.shouldWriteFile()) {
             return;
         }

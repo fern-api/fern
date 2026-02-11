@@ -23,13 +23,13 @@ import { Property } from "../Property";
 import { Variable, VariableType } from "../Variable";
 import { ConditionalStatement } from "./ConditionalStatement";
 
-export const AdditionalPropertiesProperty = new Property({
+export const AdditionalPropertiesProperty: Property = new Property({
     name: "additional_properties",
     type: OpenStructClassReference,
     isOptional: true,
     documentation: "Additional properties unmapped to the current class definition"
 });
-export const FieldsetProperty = new Property({
+export const FieldsetProperty: Property = new Property({
     name: "_field_set",
     type: GenericClassReference,
     isOptional: true
@@ -39,7 +39,7 @@ export declare namespace SerializableObject {
     export type Init = Omit<Class_.Init, "functions" | "includeInitializer" | "expressions">;
 }
 export class SerializableObject extends Class_ {
-    public static INTERNAL_FIELDS = [AdditionalPropertiesProperty.name, FieldsetProperty.name];
+    public static INTERNAL_FIELDS: readonly [string, string] = [AdditionalPropertiesProperty.name, FieldsetProperty.name] as const;
 
     constructor(init: SerializableObject.Init) {
         super({

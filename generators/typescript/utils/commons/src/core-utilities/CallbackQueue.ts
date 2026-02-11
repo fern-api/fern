@@ -16,11 +16,12 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class CallbackQueueImpl extends CoreUtility implements CallbackQueue {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
 
-    public readonly _instantiate = this.withExportedName(
+    public readonly _instantiate: () => ts.NewExpression = this.withExportedName(
         "CallbackQueue",
-        (CallbackQueue) => () => ts.factory.createNewExpression(CallbackQueue.getExpression(), undefined, undefined)
+        (CallbackQueue) => (): ts.NewExpression =>
+            ts.factory.createNewExpression(CallbackQueue.getExpression(), undefined, undefined)
     );
 
     public readonly wrap = ({

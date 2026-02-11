@@ -11,7 +11,7 @@ export interface GenerateReadmeToStreamParams {
     outputStream: fs.WriteStream | NodeJS.Process["stdout"];
 }
 
-export async function generateReadmeToStream(params: GenerateReadmeToStreamParams) {
+export async function generateReadmeToStream(params: GenerateReadmeToStreamParams): Promise<express.Router> {
     const { originalReadmeContent, readmeConfig, outputStream } = params;
     const generator = new ReadmeGenerator({
         readmeParser: new ReadmeParser(),

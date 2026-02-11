@@ -95,13 +95,13 @@ export class Generation {
      * Utility for generating C# AST nodes and type references.
      * Provides methods for creating class references, type declarations, and other C# constructs.
      */
-    public readonly csharp = new CSharp(this);
+    public readonly csharp: CSharp = new CSharp(this);
 
     /**
      * Registry for tracking and managing generated names to prevent collisions.
      * Ensures unique naming across namespaces, classes, properties, and other identifiers.
      */
-    public readonly registry = new NameRegistry(this);
+    public readonly registry: NameRegistry = new NameRegistry(this);
 
     /**
      * Navigator for traversing the IR model and querying type information.
@@ -113,7 +113,7 @@ export class Generation {
      * Manager for external dependencies and imports.
      * Tracks which external packages and types are needed by the generated code.
      */
-    public readonly extern = new Extern(this);
+    public readonly extern: Extern = new Extern(this);
 
     /**
      * Lazily-initialized configuration settings for C# code generation.
@@ -129,7 +129,46 @@ export class Generation {
      * All settings are derived from the custom configuration with sensible defaults.
      * Each property is lazily evaluated and cached on first access.
      */
-    public readonly settings = lazy({
+    public readonly settings: {
+        namespace: string;
+        readOnlyMemoryTypes: Array<string>;
+        simplifyObjectDictionaries: boolean;
+        useFullyQualifiedNamespaces: boolean;
+        useDotnetFormat: boolean;
+        enableWebsockets: boolean;
+        enableReadonlyConstants: boolean;
+        enableExplicitNullableOptional: boolean;
+        useDefaultRequestParameterValues: boolean;
+        temporaryWebsocketEnvironments: Record<
+            string,
+            { environments: Record<string, string>; "default-environment"?: string | undefined }
+        >;
+        baseApiExceptionClassName: string;
+        baseExceptionClassName: string;
+        shouldGeneratedDiscriminatedUnions: boolean;
+        shouldGenerateUndiscriminatedUnions: boolean;
+        exportedClientClassName: string;
+        clientClassName: string;
+        rootNamespaceForCoreClasses: boolean;
+        packageId: string;
+        isForwardCompatibleEnumsEnabled: boolean;
+        websocketEnvironments: Record<
+            string,
+            { environments: Record<string, string>; "default-environment"?: string | undefined }
+        >;
+        customPagerName: string;
+        environmentClassName: string;
+        generateErrorTypes: boolean;
+        shouldInlinePathParameters: boolean;
+        includeExceptionHandler: boolean;
+        exceptionInterceptorClassName: string;
+        shouldGenerateMockServerTests: boolean;
+        rootClientAccess: "public" | "internal";
+        extraDependencies: Record<string, string>;
+        pascalCaseEnvironments: boolean;
+        explicitNamespaces: boolean;
+        outputPath: { library: string; test: string; solution: string; other: string };
+    } = lazy({
         /** The root namespace for all generated C# code (e.g., "Acme.MyApi"). Defaults to Organization_ApiName in camelCase. */
         namespace: () =>
             this.customConfig.namespace ??
@@ -233,30 +272,46 @@ export class Generation {
         }
     });
 
-    public readonly constants = {
+    public readonly constants: {
+        folders: {
+            mockServerTests: string;
+            types: string;
+            exceptions: string;
+            src: string;
+            protobuf: string;
+            serializationTests: string;
+            project: string;
+            sourceFiles: string;
+            coreFiles: string;
+            publicCoreFiles: string;
+            testFiles: string;
+        };
+        formatting: { indent: string };
+        defaults: { core: string; publicCore: string; version: string };
+    } = {
         folders: lazy({
-            mockServerTests: () => this.support.makeRelativeFilePath("Unit/MockServer"),
-            types: () => "Types",
-            exceptions: () => "Exceptions",
-            src: () => "src",
-            protobuf: () => "proto",
-            serializationTests: () => this.support.makeRelativeFilePath("Unit/Serialization"),
-            project: () =>
+            mockServerTests: (): string => this.support.makeRelativeFilePath("Unit/MockServer"),
+            types: (): string => "Types",
+            exceptions: (): string => "Exceptions",
+            src: (): string => "src",
+            protobuf: (): string => "proto",
+            serializationTests: (): string => this.support.makeRelativeFilePath("Unit/Serialization"),
+            project: (): string =>
                 this.support.makeRelativeFilePath(
                     join(
                         this.constants.folders.sourceFiles,
                         this.support.makeRelativeFilePath(this.names.files.project)
                     )
                 ),
-            sourceFiles: () => this.support.makeRelativeFilePath(this.constants.folders.src),
-            coreFiles: () =>
+            sourceFiles: (): string => this.support.makeRelativeFilePath(this.constants.folders.src),
+            coreFiles: (): string =>
                 this.support.makeRelativeFilePath(
                     join(
                         this.constants.folders.project,
                         this.support.makeRelativeFilePath(this.constants.defaults.core)
                     )
                 ),
-            publicCoreFiles: () =>
+            publicCoreFiles: (): string =>
                 this.support.makeRelativeFilePath(
                     join(
                         this.constants.folders.project,
@@ -264,7 +319,7 @@ export class Generation {
                         this.support.makeRelativeFilePath(this.constants.defaults.publicCore)
                     )
                 ),
-            testFiles: () =>
+            testFiles: (): string =>
                 this.support.makeRelativeFilePath(
                     join(
                         this.constants.folders.sourceFiles,
@@ -274,13 +329,13 @@ export class Generation {
         }),
 
         formatting: lazy({
-            indent: () => "    "
+            indent: (): string => "    "
         }),
 
         defaults: lazy({
-            core: () => "Core",
-            publicCore: () => "Public",
-            version: () => "0.0.0"
+            core: (): string => "Core",
+            publicCore: (): string => "Public",
+            version: (): string => "0.0.0"
         })
     };
 
@@ -302,7 +357,19 @@ export class Generation {
      * Namespaces are canonicalized through the NameRegistry to avoid conflicts with generated types.
      * All namespace paths are lazy-evaluated and cached on first access.
      */
-    public readonly namespaces = lazy({
+    public readonly namespaces: {
+        root: string;
+        core: string;
+        test: string;
+        testUtils: string;
+        mockServerTest: string;
+        publicCore: string;
+        webSocketsCore: string;
+        publicCoreTest: string;
+        asIsTestUtils: string;
+        publicCoreClasses: string;
+        implicit: Set<string>;
+    } = lazy({
         /** The top-level root namespace for all generated SDK code (e.g., "Acme.MyApi"). */
         root: (): string => this.settings.namespace,
         /** Internal Core namespace for SDK implementation details and utilities ({root}.Core). */
@@ -344,7 +411,35 @@ export class Generation {
      * Names are computed using naming conventions (camelCase, upperFirst) and can be
      * overridden via custom configuration. All names are lazy-evaluated and cached.
      */
-    public readonly names = {
+    public readonly names: {
+        classes: {
+            baseApiException: string;
+            baseException: string;
+            rootClient: string;
+            rootClientForSnippets: string;
+            customPager: string;
+            environment: string;
+            exceptionInterceptor: string;
+        };
+        project: { client: string; clientPrefix: string; packageId: string };
+        files: { project: string; testProject: string };
+        methods: {
+            mockOauth: string;
+            mockInferredAuth: string;
+            getAccessTokenAsync: string;
+            getAuthHeadersAsync: string;
+        };
+        variables: {
+            client: string;
+            response: string;
+            httpRequest: string;
+            sendRequest: string;
+            responseBody: string;
+            query: string;
+            headers: string;
+        };
+        parameters: { cancellationToken: string; requestOptions: string; idempotentOptions: string };
+    } = {
         classes: lazy({
             /** The name of the base API exception class (e.g., "AcmeWidgetsApiException"). */
             baseApiException: (): string =>
@@ -369,39 +464,39 @@ export class Generation {
         }),
         project: lazy({
             /** The computed client name derived from organization and workspace in camelCase (e.g., "AcmeWidgets"). */
-            client: () =>
+            client: (): string =>
                 upperFirst(camelCase(`${this.generatorConfig.organization}_${this.generatorConfig.workspaceName}`)),
             /** The prefix used for client-related classes, customizable via config or defaults to clientName. */
-            clientPrefix: () =>
+            clientPrefix: (): string =>
                 this.settings.exportedClientClassName || this.settings.clientClassName || this.names.project.client,
             /** The NuGet package identifier for the generated SDK, defaults to root namespace if not specified. */
-            packageId: () => this.settings.packageId || this.namespaces.root
+            packageId: (): string => this.settings.packageId || this.namespaces.root
         }),
         files: lazy({
             /* the name of the project */
-            project: () => this.namespaces.root,
+            project: (): string => this.namespaces.root,
             /* the name of the test project */
-            testProject: () => `${this.namespaces.root}.Test`
+            testProject: (): string => `${this.namespaces.root}.Test`
         }),
         methods: lazy({
-            mockOauth: () => "MockOAuthEndpoint",
-            mockInferredAuth: () => "MockInferredAuthEndpoint",
-            getAccessTokenAsync: () => "GetAccessTokenAsync",
-            getAuthHeadersAsync: () => "GetAuthHeadersAsync"
+            mockOauth: (): string => "MockOAuthEndpoint",
+            mockInferredAuth: (): string => "MockInferredAuthEndpoint",
+            getAccessTokenAsync: (): string => "GetAccessTokenAsync",
+            getAuthHeadersAsync: (): string => "GetAuthHeadersAsync"
         }),
         variables: lazy({
-            client: () => "client",
-            response: () => "response",
-            httpRequest: () => "httpRequest",
-            sendRequest: () => "sendRequest",
-            responseBody: () => "responseBody",
-            query: () => "_query",
-            headers: () => "_headers"
+            client: (): string => "client",
+            response: (): string => "response",
+            httpRequest: (): string => "httpRequest",
+            sendRequest: (): string => "sendRequest",
+            responseBody: (): string => "responseBody",
+            query: (): string => "_query",
+            headers: (): string => "_headers"
         }),
         parameters: lazy({
-            cancellationToken: () => "cancellationToken",
-            requestOptions: () => "options",
-            idempotentOptions: () => "options"
+            cancellationToken: (): string => "cancellationToken",
+            requestOptions: (): string => "options",
+            idempotentOptions: (): string => "options"
         })
     };
 
@@ -475,8 +570,95 @@ export class Generation {
      * All type references include proper namespace information and are registered with
      * the NameRegistry to ensure correct imports in generated code.
      */
-    public readonly Types = lazy({
-        Arbitrary: (name: string) => new Primitive.AribitraryType(name, this),
+    public readonly Types: {
+        Arbitrary: (name: string) => Primitive.AribitraryType;
+        HttpMethodExtensions: ast.ClassReference;
+        FormRequest: ast.ClassReference;
+        Optional: ast.ClassReference;
+        ClientOptions: ast.ClassReference;
+        RawClient: ast.ClassReference;
+        RequestOptions: ast.ClassReference;
+        RequestOptionsInterface: ast.ClassReference;
+        JsonRequest: ast.ClassReference;
+        Version: ast.ClassReference;
+        ValueConvert: ast.ClassReference;
+        FileParameter: ast.ClassReference;
+        Headers: ast.ClassReference;
+        HeaderValue: ast.ClassReference;
+        RootClient: ast.ClassReference;
+        RootClientForSnippets: ast.ClassReference;
+        BaseApiException: ast.ClassReference;
+        BaseException: ast.ClassReference;
+        ExceptionInterceptor: ast.ClassReference;
+        ExceptionHandler: ast.ClassReference;
+        CustomExceptionInterceptor: ast.ClassReference;
+        ProtoAnyMapper: ast.ClassReference;
+        Constants: ast.ClassReference;
+        EnumSerializer: ast.ClassReference;
+        DateTimeSerializer: ast.ClassReference;
+        JsonUtils: ast.ClassReference;
+        JsonAssert: ast.ClassReference;
+        CustomPagerFactory: ast.ClassReference;
+        CustomPagerContext: ast.ClassReference;
+        Environments: ast.ClassReference;
+        TestClient: ast.ClassReference;
+        BaseMockServerTest: ast.ClassReference;
+        IdempotentRequestOptions: ast.ClassReference;
+        IdempotentRequestOptionsInterface: ast.ClassReference;
+        IStringEnum: ast.ClassReference;
+        WebSocketClient: ast.ClassReference;
+        QueryBuilder: ast.ClassReference;
+        QueryStringBuilder: ast.ClassReference;
+        QueryStringBuilderBuilder: ast.ClassReference;
+        OAuthTokenProvider: ast.ClassReference;
+        InferredAuthTokenProvider: ast.ClassReference;
+        ProtoConverter: ast.ClassReference;
+        RawGrpcClient: ast.ClassReference;
+        Extensions: ast.ClassReference;
+        GrpcRequestOptions: ast.ClassReference;
+        GrpcChannelOptions: ast.ClassReference;
+        StringEnum: (genericType?: ast.Type | ast.ClassReference) => ast.ClassReference;
+        WebSocketEvent: (genericType: ast.Type | ast.ClassReference) => ast.ClassReference;
+        ConnectionStatus: ast.ClassReference;
+        WebSocketConnected: ast.ClassReference;
+        WebSocketClosed: ast.ClassReference;
+        StringEnumSerializer: (enumClassReference: ast.Type | ast.ClassReference) => ast.ClassReference;
+        CustomPagerClass: (itemType: ast.Type | ast.ClassReference) => ast.ClassReference;
+        Pager: (itemType: ast.Type | ast.ClassReference) => ast.ClassReference;
+        OffsetPager: ({
+            requestType,
+            requestOptionsType,
+            responseType,
+            offsetType,
+            stepType,
+            itemType
+        }: {
+            requestType: ast.Type;
+            requestOptionsType: ast.Type;
+            responseType: ast.Type;
+            offsetType: ast.Type;
+            stepType: ast.Type;
+            itemType: ast.Type;
+        }) => ast.ClassReference;
+        CursorPager: ({
+            requestType,
+            requestOptionsType,
+            responseType,
+            cursorType,
+            itemType
+        }: {
+            requestType: ast.Type;
+            requestOptionsType: ast.Type;
+            responseType: ast.Type;
+            cursorType: ast.Type;
+            itemType: ast.Type;
+        }) => ast.ClassReference;
+        CollectionItemSerializer: (itemType: ast.ClassReference, serializer: ast.ClassReference) => ast.ClassReference;
+        OneOfSerializer: (oneof: ast.Type | ast.ClassReference) => ast.ClassReference;
+        AdditionalProperties: (genericType?: ast.Type | ast.ClassReference) => ast.ClassReference;
+        ReadOnlyAdditionalProperties: (genericType?: ast.Type | ast.ClassReference) => ast.ClassReference;
+    } = lazy({
+        Arbitrary: (name: string): Primitive.AribitraryType => new Primitive.AribitraryType(name, this),
         HttpMethodExtensions: () =>
             this.csharp.classReference({
                 namespace: this.namespaces.core,
@@ -753,7 +935,7 @@ export class Generation {
          * Generic string-based enum wrapper type.
          * @param genericType - The specific enum type to wrap (optional)
          */
-        StringEnum: (genericType?: ast.Type | ast.ClassReference) =>
+        StringEnum: (genericType?: ast.Type | ast.ClassReference): ast.ClassReference =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("StringEnum"),
                 namespace: this.namespaces.core,
@@ -943,7 +1125,17 @@ export class Generation {
             });
         }
     });
-    public Primitive = lazy({
+    public Primitive: {
+        string: Primitive.String;
+        boolean: Primitive.Boolean;
+        integer: Primitive.Integer;
+        long: Primitive.Long;
+        uint: Primitive.Uint;
+        ulong: Primitive.ULong;
+        float: Primitive.Float;
+        double: Primitive.Double;
+        object: Primitive.Object;
+    } = lazy({
         /**
          * Creates a string type.
          *
@@ -1017,7 +1209,13 @@ export class Generation {
             return new Primitive.Object(this);
         }
     });
-    public Value = lazy({
+    public Value: {
+        binary: Value.Binary;
+        dateOnly: Value.DateOnly;
+        dateTime: Value.DateTime;
+        uuid: Value.Uuid;
+        stringEnum: (value: ClassReference) => Value.StringEnum;
+    } = lazy({
         /**
          * Creates a string type.
          *
@@ -1056,18 +1254,26 @@ export class Generation {
          * @param value - The class reference for the string enum
          * @returns A Type object representing the string enum type
          */
-        stringEnum: (value: ClassReference) => {
+        stringEnum: (value: ClassReference): Value.StringEnum => {
             return new Value.StringEnum(value, this);
         }
     });
-    public Collection = lazy({
+    public Collection: {
+        array: (value: Type) => Collection.Array;
+        listType: (value: Type) => Collection.ListType;
+        list: (value: Type) => Collection.List;
+        set: (value: Type) => Collection.Set;
+        map: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => Collection.Map;
+        idictionary: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => Collection.IDictionary;
+        keyValuePair: (keyType: Type, valueType: Type) => Collection.KeyValuePair;
+    } = lazy({
         /**
          * Creates an array type.
          *
          * @param value - The element type of the array
          * @returns A Type object representing the C# array type
          */
-        array: (value: Type) => {
+        array: (value: Type): Collection.Array => {
             return new Collection.Array(value, this);
         },
         /**
@@ -1076,7 +1282,7 @@ export class Generation {
          * @param value - The element type of the list
          * @returns A Type object representing the C# List<T> type
          */
-        listType: (value: Type) => {
+        listType: (value: Type): Collection.ListType => {
             return new Collection.ListType(value, this);
         },
         /**
@@ -1085,7 +1291,7 @@ export class Generation {
          * @param value - The element type of the list
          * @returns A Type object representing the C# List<T> type
          */
-        list: (value: Type) => {
+        list: (value: Type): Collection.List => {
             return new Collection.List(value, this);
         },
         /**
@@ -1094,7 +1300,7 @@ export class Generation {
          * @param value - The element type of the set
          * @returns A Type object representing the C# HashSet<T> type
          */
-        set: (value: Type) => {
+        set: (value: Type): Collection.Set => {
             return new Collection.Set(value, this);
         },
         /**
@@ -1105,7 +1311,7 @@ export class Generation {
          * @param options - Optional configuration for the map
          * @returns A Type object representing the C# Dictionary<TKey, TValue> type
          */
-        map: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
+        map: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }): Collection.Map => {
             return new Collection.Map(keyType, valueType, this, options);
         },
         /**
@@ -1116,7 +1322,7 @@ export class Generation {
          * @param options - Optional configuration for the dictionary
          * @returns A Type object representing the C# IDictionary<TKey, TValue> type
          */
-        idictionary: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
+        idictionary: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }): Collection.IDictionary => {
             return new Collection.IDictionary(keyType, valueType, this, options);
         },
         /**
@@ -1126,13 +1332,13 @@ export class Generation {
          * @param valueType - The value type of the pair
          * @returns A Type object representing the C# KeyValuePair<TKey, TValue> type
          */
-        keyValuePair: (keyType: Type, valueType: Type) => {
+        keyValuePair: (keyType: Type, valueType: Type): Collection.KeyValuePair => {
             return new Collection.KeyValuePair(keyType, valueType, this);
         }
     });
 
-    public readonly format = lazy({
-        private: (name: string) => `_${text.camelCase(name)}`
+    public readonly format: { private: (name: string) => string } = lazy({
+        private: (name: string): string => `_${text.camelCase(name)}`
     });
 
     /** This is called (once) before any generator actually starts to generate code.
@@ -1144,7 +1350,7 @@ export class Generation {
     }
 
     /** One-time initializers that are called before any generator actually starts to generate code. */
-    public readonly initializers = lazy({
+    public readonly initializers: { implicitNamespaces: boolean } = lazy({
         implicitNamespaces: () => {
             // add all the implict namespaces
             for (const namespace of this.namespaces.implicit) {
@@ -1155,29 +1361,122 @@ export class Generation {
     });
 
     /** Provides access to .NET System namespace types and utilities */
-    public get System() {
+    public get System(): {
+        Action: (typeParameters?: Type[]) => ast.ClassReference;
+        Func: (typeParameters?: Type[], returnType?: Type) => ast.ClassReference;
+        DateOnly: ast.ClassReference;
+        DateTime: ast.ClassReference;
+        Enum: ast.ClassReference;
+        Exception: ast.ClassReference;
+        ReadOnlyMemory: (type: Type) => ast.ClassReference;
+        Serializable: ast.ClassReference;
+        String: ast.ClassReference;
+        Type: ast.ClassReference;
+        TimeSpan: ast.ClassReference;
+        Uri: ast.ClassReference;
+        UriBuilder: ast.ClassReference;
+        Runtime: { Serialization: { EnumMember: ast.ClassReference } };
+        Collections: {
+            Generic: {
+                IAsyncEnumerable: (elementType?: Type) => ast.ClassReference;
+                IEnumerable: (elementType?: Type) => ast.ClassReference;
+                KeyValuePair: (keyType?: Type, valueType?: Type) => ast.ClassReference;
+                List: (elementType?: Type) => ast.ClassReference;
+                HashSet: (elementType?: Type) => ast.ClassReference;
+                Dictionary: (keyType?: Type, valueType?: Type) => ast.ClassReference;
+                IDictionary: (keyType: Type, valueType: Type) => ast.ClassReference;
+            };
+            Linq: { Enumerable: ast.ClassReference };
+        };
+        Globalization: { DateTimeStyles: ast.ClassReference };
+        Linq: { Enumerable: ast.ClassReference };
+        Net: {
+            Http: {
+                HttpClient: ast.ClassReference;
+                HttpMethod: ast.ClassReference;
+                HttpResponseHeaders: ast.ClassReference;
+            };
+            ServerSentEvents: { SseEvent: ast.ClassReference; SseParser: ast.ClassReference };
+            WebSockets: { ClientWebSocketOptions: ast.ClassReference };
+        };
+        IO: { MemoryStream: ast.ClassReference; Stream: ast.ClassReference; StreamReader: ast.ClassReference };
+        Text: {
+            Encoding: ast.ClassReference;
+            Encoding_UTF8: ast.ClassReference;
+            Json: {
+                JsonElement: ast.ClassReference;
+                JsonDocument: ast.ClassReference;
+                JsonException: ast.ClassReference;
+                Utf8JsonReader: ast.ClassReference;
+                JsonSerializerOptions: ast.ClassReference;
+                JsonSerializer: ast.ClassReference;
+                Utf8JsonWriter: ast.ClassReference;
+                Nodes: { JsonNode: ast.ClassReference; JsonObject: ast.ClassReference };
+                Serialization: {
+                    IJsonOnDeserialized: ast.ClassReference;
+                    IJsonOnSerializing: ast.ClassReference;
+                    JsonOnDeserializedAttribute: ast.ClassReference;
+                    JsonExtensionData: ast.ClassReference;
+                    JsonConverter: (typeToConvert?: Type) => ast.ClassReference;
+                    JsonIgnore: ast.ClassReference;
+                    JsonPropertyName: ast.ClassReference;
+                };
+            };
+        };
+        Threading: {
+            CancellationToken: ast.ClassReference;
+            Tasks: { Task: (ofType?: Type) => ast.ClassReference; ValueTask: (ofType?: Type) => ast.ClassReference };
+        };
+        ComponentModel: { INotifyPropertyChanged: ast.ClassReference; PropertyChangedEventHandler: ast.ClassReference };
+        IAsyncDisposable: ast.ClassReference;
+        IDisposable: ast.ClassReference;
+    } {
         return this.extern.System;
     }
 
     /** Provides access to NUnit testing framework types */
-    public get NUnit() {
+    public get NUnit(): {
+        Framework: {
+            TestFixture: ast.ClassReference;
+            Test: ast.ClassReference;
+            OneTimeTearDown: ast.ClassReference;
+            OneTimeSetUp: ast.ClassReference;
+            SetUpFixture: ast.ClassReference;
+        };
+    } {
         return this.extern.NUnit;
     }
 
     /** Provides access to OneOf discriminated union library types */
-    public get OneOf() {
+    public get OneOf(): {
+        OneOf: (generics?: Type[]) => ast.ClassReference;
+        OneOfBase: (generics?: Type[]) => ast.ClassReference;
+    } {
         return this.extern.OneOf;
     }
 
     /** Provides access to Google protocol buffer types */
-    public get Google() {
+    public get Google(): {
+        Protobuf: {
+            WellKnownTypes: {
+                Struct: ast.ClassReference;
+                Value: ast.ClassReference;
+                ListValue: ast.ClassReference;
+                Timestamp: ast.ClassReference;
+            };
+        };
+    } {
         return this.extern.Google;
     }
-    public get Grpc() {
+    public get Grpc(): { Core: { RpcException: ast.ClassReference } } {
         return this.extern.Grpc;
     }
     /** Provides access to WireMock.Net testing/mocking library types */
-    public get WireMock() {
+    public get WireMock(): {
+        Server: ast.ClassReference;
+        WireMockServerSettings: ast.ClassReference;
+        WireMockConsoleLogger: ast.ClassReference;
+    } {
         return this.extern.WireMock;
     }
 }

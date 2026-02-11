@@ -1,5 +1,5 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
-import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
@@ -205,8 +205,8 @@ export class CliContext {
         }
     }
 
-    public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
-    public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
+    public readonly logger: Logger = createLogger((level, ...args) => this.log(level, ...args));
+    public readonly stderr: Logger = createLogger((level, ...args) => this.logStderr(level, ...args));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(

@@ -12,7 +12,7 @@ export function registerUndiscriminatedUnionVariants({
     registry: NameRegistry;
     typeDeclaration: TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
-}) {
+}): void {
     if (typeDeclaration.shape.type === "undiscriminatedUnion") {
         const members = typeDeclaration.shape.members.map((member) => {
             const swiftType = context.getSwiftTypeReferenceFromScope(member.type, parentSymbol);

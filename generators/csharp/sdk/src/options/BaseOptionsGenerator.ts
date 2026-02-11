@@ -20,7 +20,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         super(context.generation);
     }
 
-    public readonly members = lazy({
+    public readonly members: { baseUrlSummary: string } = lazy({
         baseUrlSummary: () => "The Base URL for the API."
     });
 
@@ -38,7 +38,7 @@ export class BaseOptionsGenerator extends WithGeneration {
     public getHttpClientField(
         classOrInterface: ast.Interface | ast.Class,
         { optional, includeInitializer }: OptionArgs
-    ) {
+    ): void {
         const type = this.System.Net.Http.HttpClient;
         classOrInterface.addField({
             origin: classOrInterface.explicit("HttpClient"),
@@ -54,7 +54,7 @@ export class BaseOptionsGenerator extends WithGeneration {
     public getHttpHeadersField(
         classOrInterface: ast.Interface | ast.Class,
         { optional, includeInitializer, interfaceReference }: HttpHeadersFieldOptionArgs
-    ) {
+    ): void {
         const headersReference = this.Types.Headers;
         classOrInterface.addField({
             // Don't use explicit interface implementation so Headers is accessible via options?.Headers
@@ -73,7 +73,7 @@ export class BaseOptionsGenerator extends WithGeneration {
     public getMaxRetriesField(
         classOrInterface: ast.Interface | ast.Class,
         { optional, includeInitializer }: OptionArgs
-    ) {
+    ): void {
         const type = this.Primitive.integer;
         classOrInterface.addField({
             origin: classOrInterface.explicit("MaxRetries"),
@@ -86,7 +86,10 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
     }
 
-    public getTimeoutField(classOrInterface: ast.Interface | ast.Class, { optional, includeInitializer }: OptionArgs) {
+    public getTimeoutField(
+        classOrInterface: ast.Interface | ast.Class,
+        { optional, includeInitializer }: OptionArgs
+    ): void {
         const type = this.System.TimeSpan;
         classOrInterface.addField({
             origin: classOrInterface.explicit("Timeout"),
@@ -108,7 +111,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             summary: string;
             includeInitializer: boolean;
         }
-    ) {
+    ): void {
         const type = this.System.Collections.Generic.IEnumerable(
             this.System.Collections.Generic.KeyValuePair(this.Primitive.string, this.Primitive.string.asOptional())
         );
@@ -132,7 +135,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             header: HttpHeader;
             options: OptionArgs;
         }
-    ) {
+    ): void {
         if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
             return;
         }
@@ -149,7 +152,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
     }
 
-    public getRequestOptionFields(classOrInterface: ast.Interface | ast.Class) {
+    public getRequestOptionFields(classOrInterface: ast.Interface | ast.Class): void {
         const optionArgs: OptionArgs = {
             optional: true,
             includeInitializer: false
@@ -173,7 +176,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         this.getLiteralHeaderOptions(classOrInterface, optionArgs);
     }
 
-    public getRequestOptionInterfaceFields(iface: ast.Interface) {
+    public getRequestOptionInterfaceFields(iface: ast.Interface): void {
         const optionArgs: OptionArgs = {
             optional: true,
             includeInitializer: false
@@ -196,7 +199,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         this.getBodyPropertiesField(iface, optionArgs);
     }
 
-    public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs) {
+    public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs): void {
         for (const header of this.context.ir.headers) {
             this.maybeGetLiteralHeaderField(classOrInterface, {
                 header,

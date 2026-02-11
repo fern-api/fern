@@ -1,21 +1,21 @@
 import { z } from "zod";
 
-const RangeSchema = z.strictObject({
+const RangeSchema: z.ZodObject<{ version: z.ZodString; specifier: z.ZodOptional<z.ZodString>; }, "strict", z.ZodTypeAny, { version: string; specifier?: string | undefined; }, { version: string; specifier?: string | undefined; }> = z.strictObject({
     version: z.string(),
     specifier: z.optional(z.string())
 });
 
-const DependencySchema = z.strictObject({
+const DependencySchema: z.ZodObject<{ upperBound: z.ZodOptional<z.ZodObject<{ version: z.ZodString; specifier: z.ZodOptional<z.ZodString>; }, "strict", z.ZodTypeAny, { version: string; specifier?: string | undefined; }, { version: string; specifier?: string | undefined; }>>; lowerBound: z.ZodOptional<z.ZodObject<{ version: z.ZodString; specifier: z.ZodOptional<z.ZodString>; }, "strict", z.ZodTypeAny, { version: string; specifier?: string | undefined; }, { version: string; specifier?: string | undefined; }>>; }, "strict", z.ZodTypeAny, { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }, { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }> = z.strictObject({
     upperBound: z.optional(RangeSchema),
     lowerBound: z.optional(RangeSchema)
 });
 
 export type ExtraDependenciesSchema = z.infer<typeof ExtraDependenciesSchema>;
-export const ExtraDependenciesSchema = z.record(z.union([z.string(), DependencySchema]));
+export const ExtraDependenciesSchema: z.ZodRecord<z.ZodString, z.ZodUnion<[z.ZodString, z.ZodObject<{ upperBound: z.ZodOptional<z.ZodObject<{ version: z.ZodString; specifier: z.ZodOptional<z.ZodString>; }, "strict", z.ZodTypeAny, { version: string; specifier?: string | undefined; }, { version: string; specifier?: string | undefined; }>>; lowerBound: z.ZodOptional<z.ZodObject<{ version: z.ZodString; specifier: z.ZodOptional<z.ZodString>; }, "strict", z.ZodTypeAny, { version: string; specifier?: string | undefined; }, { version: string; specifier?: string | undefined; }>>; }, "strict", z.ZodTypeAny, { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }, { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }>]>> = z.record(z.union([z.string(), DependencySchema]));
 
 // Common per-generator configuration flags
 export type BaseGeneratorConfigSchema = z.infer<typeof BaseGeneratorConfigSchema>;
-export const BaseGeneratorConfigSchema = z.strictObject({
+export const BaseGeneratorConfigSchema: z.ZodObject<{ extraDependencies: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnion<[z.ZodString, z.ZodObject<{ upperBound: z.ZodOptional<z.ZodObject<{ version: z.ZodString; specifier: z.ZodOptional<z.ZodString>; }, "strict", z.ZodTypeAny, { version: string; specifier?: string | undefined; }, { version: string; specifier?: string | undefined; }>>; lowerBound: z.ZodOptional<z.ZodObject<{ version: z.ZodString; specifier: z.ZodOptional<z.ZodString>; }, "strict", z.ZodTypeAny, { version: string; specifier?: string | undefined; }, { version: string; specifier?: string | undefined; }>>; }, "strict", z.ZodTypeAny, { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }, { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }>]>>>; clientClassName: z.ZodOptional<z.ZodString>; useProvidedDefaults: z.ZodOptional<z.ZodBoolean>; }, "strict", z.ZodTypeAny, { extraDependencies?: Record<string, string | { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }> | undefined; clientClassName?: string | undefined; useProvidedDefaults?: boolean | undefined; }, { extraDependencies?: Record<string, string | { upperBound?: { version: string; specifier?: string | undefined; } | undefined; lowerBound?: { version: string; specifier?: string | undefined; } | undefined; }> | undefined; clientClassName?: string | undefined; useProvidedDefaults?: boolean | undefined; }> = z.strictObject({
     extraDependencies: z.optional(ExtraDependenciesSchema),
     clientClassName: z.optional(z.string()),
     useProvidedDefaults: z.optional(z.boolean())

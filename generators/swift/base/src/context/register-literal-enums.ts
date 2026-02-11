@@ -14,7 +14,7 @@ export function registerLiteralEnums({
     registry: NameRegistry;
     typeDeclaration: TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
-}) {
+}): void {
     typeDeclaration.shape._visit({
         object: (otd) => {
             const allProperties = [...(otd.extendedProperties ?? []), ...otd.properties];
@@ -78,7 +78,7 @@ export function registerLiteralEnumsForObjectProperties({
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
     properties: ObjectProperty[];
-}) {
+}): void {
     properties.forEach((property) => {
         registerLiteralEnumsForTypeReference({
             parentSymbol,
@@ -96,7 +96,7 @@ export function registerLiteralEnumsForTypeReference({
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
     typeReference: TypeReference;
-}) {
+}): void {
     typeReference._visit({
         container: (ct) => {
             ct._visit({

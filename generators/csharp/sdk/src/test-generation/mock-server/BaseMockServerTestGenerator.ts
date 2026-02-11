@@ -183,7 +183,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         });
     }
 
-    protected generateMockInferredAuthMethod(scheme: InferredAuthScheme, cls: ast.Class) {
+    protected generateMockInferredAuthMethod(scheme: InferredAuthScheme, cls: ast.Class): void {
         cls.addMethod({
             access: ast.Access.Private,
             name: this.names.methods.mockInferredAuth,
@@ -252,7 +252,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         });
     }
 
-    protected generateMockAuthMethod(scheme: OAuthScheme, cls: ast.Class) {
+    protected generateMockAuthMethod(scheme: OAuthScheme, cls: ast.Class): void {
         const shouldScope = !!scheme.configuration.refreshEndpoint;
         cls.addMethod({
             access: ast.Access.Private,

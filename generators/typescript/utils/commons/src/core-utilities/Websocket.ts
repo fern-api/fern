@@ -48,12 +48,12 @@ export const MANIFEST: CoreUtility.Manifest = {
     }
 };
 export class WebsocketImpl extends CoreUtility implements Websocket {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
 
-    public ReconnectingWebSocket = {
+    public ReconnectingWebSocket: Websocket["ReconnectingWebSocket"] = {
         _getReferenceToType: this.withExportedName(
             "ReconnectingWebSocket",
-            (ReconnectingWebSocket) => () => ReconnectingWebSocket.getTypeNode()
+            (ReconnectingWebSocket) => (): ts.TypeNode => ReconnectingWebSocket.getTypeNode()
         ),
         _connect: this.withExportedName(
             "ReconnectingWebSocket",
@@ -64,7 +64,7 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                     options: ts.ObjectLiteralExpression;
                     headers: ts.Expression;
                     queryParameters: ts.Expression;
-                }) =>
+                }): ts.NewExpression =>
                     ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
                         ts.factory.createObjectLiteralExpression([
                             ts.factory.createPropertyAssignment("url", args.url),
@@ -77,11 +77,17 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
         )
     };
 
-    public CloseEvent = {
-        _getReferenceToType: this.withExportedName("CloseEvent", (CloseEvent) => () => CloseEvent.getTypeNode())
+    public CloseEvent: Websocket["CloseEvent"] = {
+        _getReferenceToType: this.withExportedName(
+            "CloseEvent",
+            (CloseEvent) => (): ts.TypeNode => CloseEvent.getTypeNode()
+        )
     };
 
-    public ErrorEvent = {
-        _getReferenceToType: this.withExportedName("ErrorEvent", (ErrorEvent) => () => ErrorEvent.getTypeNode())
+    public ErrorEvent: Websocket["ErrorEvent"] = {
+        _getReferenceToType: this.withExportedName(
+            "ErrorEvent",
+            (ErrorEvent) => (): ts.TypeNode => ErrorEvent.getTypeNode()
+        )
     };
 }

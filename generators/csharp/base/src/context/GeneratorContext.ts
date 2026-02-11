@@ -78,84 +78,84 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
     /** Provides access to C# code generation utilities */
-    public get csharp() {
+    public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
     }
 
     /** Provides access to generation settings and configuration */
-    public get settings() {
+    public get settings(): Generation["settings"] {
         return this.generation.settings;
     }
 
     /** Provides access to generation constants */
-    public get constants() {
+    public get constants(): Generation["constants"] {
         return this.generation.constants;
     }
 
     /** Provides access to namespace management utilities */
-    public get namespaces() {
+    public get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
 
     /** Provides access to naming utilities for generating consistent identifiers */
-    public get names() {
+    public get names(): Generation["names"] {
         return this.generation.names;
     }
 
     /** Provides access to the model navigation and inspection utilities */
-    public get model() {
+    public get model(): Generation["model"] {
         return this.generation.model;
     }
     /** Provides access to text formatting utilities */
-    public get format() {
+    public get format(): Generation["format"] {
         return this.generation.format;
     }
 
     /** Provides access to the type registry for looking up generated types */
-    public get registry() {
+    public get registry(): Generation["registry"] {
         return this.generation.registry;
     }
     /** Provides access to type information and utilities */
-    public get Types() {
+    public get Types(): Generation["Types"] {
         return this.generation.Types;
     }
 
     /** Provides access to .NET System namespace types and utilities */
-    public get System() {
+    public get System(): Generation["extern"]["System"] {
         return this.generation.extern.System;
     }
 
     /** Provides access to NUnit testing framework types */
-    public get NUnit() {
+    public get NUnit(): Generation["extern"]["NUnit"] {
         return this.generation.extern.NUnit;
     }
 
     /** Provides access to OneOf discriminated union library types */
-    public get OneOf() {
+    public get OneOf(): Generation["extern"]["OneOf"] {
         return this.generation.extern.OneOf;
     }
 
     /** Provides access to Google protocol buffer types */
-    public get Google() {
+    public get Google(): Generation["extern"]["Google"] {
         return this.generation.extern.Google;
     }
-    public get Grpc() {
+    public get Grpc(): Generation["extern"]["Grpc"] {
         return this.generation.extern.Grpc;
     }
     /** Provides access to WireMock.Net testing/mocking library types */
-    public get WireMock() {
+    public get WireMock(): Generation["extern"]["WireMock"] {
         return this.generation.extern.WireMock;
     }
     /** Provides access to primitive types */
-    public get Primitive() {
+    public get Primitive(): Generation["Primitive"] {
         return this.generation.Primitive;
     }
     /** Provides access to value types */
-    public get Value() {
+    public get Value(): Generation["Value"] {
         return this.generation.Value;
     }
     /** Provides access to collection types */
-    public get Collection() {
+    public get Collection(): Generation["Collection"] {
         return this.generation.Collection;
     }
 
@@ -211,7 +211,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         }
     }
 
-    public getIdempotencyInitializers(writer: ast.Writer) {
+    public getIdempotencyInitializers(writer: ast.Writer): void {
         for (const header of this.getIdempotencyHeaders()) {
             const type = this.csharpTypeMapper.convert({ reference: header.valueType });
 
@@ -297,7 +297,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         );
     }
 
-    public getWebsocketChannel(name?: string) {
+    public getWebsocketChannel(name?: string): WebSocketChannel | undefined {
         return name ? this.ir.websocketChannels?.[name] : undefined;
     }
 
@@ -802,7 +802,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         };
     }
 
-    precalculate() {
+    precalculate(): void {
         this.System.Collections.Generic.KeyValuePair();
         this.System.Collections.Generic.IEnumerable();
         this.System.Collections.Generic.IAsyncEnumerable();

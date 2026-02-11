@@ -66,7 +66,7 @@ export class BamlSyncClient {
     this.bamlOptions = bamlOptions || {}
   }
 
-  withOptions(bamlOptions: BamlCallOptions) {
+  withOptions(bamlOptions: BamlCallOptions): BamlSyncClient {
     return new BamlSyncClient(this.runtime, this.ctxManager, bamlOptions)
   }
 
@@ -75,23 +75,23 @@ export class BamlSyncClient {
   * are not providing an async version as we want to reserve the
   * right to provide a sync version in the future.
   */
-  get stream() {
+  get stream(): void {
     throw new Error("stream is not available in BamlSyncClient. Use `import { b } from 'baml_client/async_client")
   }
 
-  get request() {
+  get request(): HttpRequest {
     return this.httpRequest
   }
 
-  get streamRequest() {
+  get streamRequest(): HttpStreamRequest {
     return this.httpStreamRequest
   }
 
-  get parse() {
+  get parse(): LlmResponseParser {
     return this.llmResponseParser
   }
 
-  get parseStream() {
+  get parseStream(): LlmStreamParser {
     return this.llmStreamParser
   }
 
@@ -140,4 +140,4 @@ export class BamlSyncClient {
   
 }
 
-export const b = new BamlSyncClient(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME, DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX)
+export const b: BamlSyncClient = new BamlSyncClient(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME, DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX)

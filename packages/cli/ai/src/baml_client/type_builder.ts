@@ -73,7 +73,7 @@ export default class TypeBuilder {
         
     }
 
-    __tb() {
+    __tb(): import("/home/ubuntu/repos/fern/node_modules/.pnpm/@boundaryml+baml@0.211.2/node_modules/@boundaryml/baml/native").TypeBuilder {
       return this.tb._tb();
     }
 

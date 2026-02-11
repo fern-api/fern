@@ -1,4 +1,4 @@
-export const TRANSLATABLE_YAML_KEYS = new Set([
+export const TRANSLATABLE_YAML_KEYS: Set<string> = new Set([
     "title",
     "display-name",
     "page",

@@ -1,4 +1,4 @@
-const SKIP_MARKER = Symbol.for("fern:skip");
+const SKIP_MARKER: typeof SKIP_MARKER = Symbol.for("fern:skip");
 
 /**
  * Recursively removes null/undefined values from an object/array structure.

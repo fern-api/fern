@@ -240,7 +240,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
-    public getDefaultEnvironmentClassReference() {
+    public getDefaultEnvironmentClassReference(): void {
         const defaultEnvironmentId = this.ir.environments?.defaultEnvironment;
         if (defaultEnvironmentId == null) {
             return undefined;

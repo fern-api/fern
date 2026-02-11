@@ -10,7 +10,7 @@ export class Referencer {
         this.fromSymbol = fromSymbol;
     }
 
-    public referenceSwiftType(symbolName: swift.SwiftTypeSymbolName) {
+    public referenceSwiftType(symbolName: swift.SwiftTypeSymbolName): swift.TypeReference {
         const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: swift.Symbol.swiftType(symbolName)
@@ -18,7 +18,7 @@ export class Referencer {
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    public referenceFoundationType(symbolName: swift.FoundationTypeSymbolName) {
+    public referenceFoundationType(symbolName: swift.FoundationTypeSymbolName): swift.TypeReference {
         const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: swift.Symbol.foundationType(symbolName)
@@ -26,7 +26,7 @@ export class Referencer {
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    public referenceAsIsType(symbolName: swift.AsIsSymbolName) {
+    public referenceAsIsType(symbolName: swift.AsIsSymbolName): swift.TypeReference {
         const symbol = this.nameRegistry.getAsIsSymbolOrThrow(symbolName);
         const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
@@ -35,7 +35,7 @@ export class Referencer {
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    public referenceSourceTemplateType(templateId: swift.SourceTemplateFileId) {
+    public referenceSourceTemplateType(templateId: swift.SourceTemplateFileId): swift.TypeReference {
         const symbol = this.nameRegistry.getSourceTemplateSymbolOrThrow(templateId);
         const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
@@ -44,7 +44,7 @@ export class Referencer {
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    public referenceType(symbol: swift.Symbol | string) {
+    public referenceType(symbol: swift.Symbol | string): swift.TypeReference {
         const symbolRef = this.nameRegistry.reference({
             fromSymbol: this.fromSymbol,
             toSymbol: symbol
@@ -52,7 +52,7 @@ export class Referencer {
         return swift.TypeReference.symbol(symbolRef);
     }
 
-    public resolveToSymbolIfSymbolType(typeReference: swift.TypeReference) {
+    public resolveToSymbolIfSymbolType(typeReference: swift.TypeReference): swift.Symbol | null {
         const reference = typeReference.getReferenceIfSymbolType();
         if (reference === null) {
             return null;
@@ -63,23 +63,26 @@ export class Referencer {
         });
     }
 
-    public resolvesToTheAsIsType(typeReference: swift.TypeReference, asIsSymbolName: swift.AsIsSymbolName) {
+    public resolvesToTheAsIsType(typeReference: swift.TypeReference, asIsSymbolName: swift.AsIsSymbolName): boolean {
         const resolvedSymbol = this.resolveToSymbolIfSymbolType(typeReference);
         const registeredSymbol = this.nameRegistry.getAsIsSymbolOrThrow(asIsSymbolName);
         return resolvedSymbol?.id === registeredSymbol.id;
     }
 
-    public resolvesToASwiftType(typeReference: swift.TypeReference) {
+    public resolvesToASwiftType(typeReference: swift.TypeReference): boolean {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.isSwiftSymbol ?? false;
     }
 
-    public resolvesToTheSwiftType(typeReference: swift.TypeReference, swiftSymbolName: swift.SwiftTypeSymbolName) {
+    public resolvesToTheSwiftType(
+        typeReference: swift.TypeReference,
+        swiftSymbolName: swift.SwiftTypeSymbolName
+    ): boolean {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.id === swift.Symbol.swiftType(swiftSymbolName).id;
     }
 
-    public resolvesToAFoundationType(typeReference: swift.TypeReference) {
+    public resolvesToAFoundationType(typeReference: swift.TypeReference): boolean {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.isFoundationSymbol ?? false;
     }
@@ -87,17 +90,17 @@ export class Referencer {
     public resolvesToTheFoundationType(
         typeReference: swift.TypeReference,
         foundationSymbolName: swift.FoundationTypeSymbolName
-    ) {
+    ): boolean {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.id === swift.Symbol.foundationType(foundationSymbolName).id;
     }
 
-    public resolvesToACustomType(typeReference: swift.TypeReference) {
+    public resolvesToACustomType(typeReference: swift.TypeReference): boolean {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.isCustomSymbol ?? false;
     }
 
-    public resolvesToAnEnumWithRawValues(typeReference: swift.TypeReference) {
+    public resolvesToAnEnumWithRawValues(typeReference: swift.TypeReference): boolean {
         const symbol = this.resolveToSymbolIfSymbolType(typeReference);
         return symbol?.shape.type === "enum-with-raw-values";
     }

@@ -19,7 +19,7 @@ export type FoundationTypeSymbolName = "Data" | "Date" | "UUID";
 
 export class Symbol {
     public static readonly SWIFT_SYMBOL_NAME = "Swift";
-    public static readonly SWIFT_SYMBOL_ID = Symbol.SWIFT_SYMBOL_NAME;
+    public static readonly SWIFT_SYMBOL_ID: "Swift" = Symbol.SWIFT_SYMBOL_NAME;
 
     private static swiftTypeSymbolsByName: Record<SwiftTypeSymbolName, Symbol> = {
         String: Symbol.swiftType("String"),
@@ -35,17 +35,17 @@ export class Symbol {
         Decoder: Symbol.swiftType("Decoder"),
         Any: Symbol.swiftType("Any")
     };
-    public static swiftTypeSymbols = Object.values(Symbol.swiftTypeSymbolsByName);
+    public static swiftTypeSymbols: Array<Symbol> = Object.values(Symbol.swiftTypeSymbolsByName);
 
     public static readonly FOUNDATION_SYMBOL_NAME = "Foundation";
-    public static readonly FOUNDATION_SYMBOL_ID = Symbol.FOUNDATION_SYMBOL_NAME;
+    public static readonly FOUNDATION_SYMBOL_ID: "Foundation" = Symbol.FOUNDATION_SYMBOL_NAME;
 
     private static foundationTypeSymbolsByName: Record<FoundationTypeSymbolName, Symbol> = {
         Data: Symbol.foundationType("Data"),
         Date: Symbol.foundationType("Date"),
         UUID: Symbol.foundationType("UUID")
     };
-    public static foundationTypeSymbols = Object.values(Symbol.foundationTypeSymbolsByName);
+    public static foundationTypeSymbols: Array<Symbol> = Object.values(Symbol.foundationTypeSymbolsByName);
 
     public static isSwiftSymbol(symbolId: string): boolean {
         return Symbol.SWIFT_SYMBOL_ID === symbolId || symbolId.startsWith(`${Symbol.SWIFT_SYMBOL_ID}.`);

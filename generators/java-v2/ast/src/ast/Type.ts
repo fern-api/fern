@@ -413,57 +413,57 @@ export class Type extends AstNode {
     }
 }
 
-export const ArraysClassReference = new ClassReference({
+export const ArraysClassReference: ClassReference = new ClassReference({
     name: "Arrays",
     packageName: "java.util"
 });
 
-export const BigIntegerClassReference = new ClassReference({
+export const BigIntegerClassReference: ClassReference = new ClassReference({
     name: "BigInteger",
     packageName: "java.math"
 });
 
-export const HashMapClassReference = new ClassReference({
+export const HashMapClassReference: ClassReference = new ClassReference({
     name: "HashMap",
     packageName: "java.util"
 });
 
-export const ListClassReference = new ClassReference({
+export const ListClassReference: ClassReference = new ClassReference({
     name: "List",
     packageName: "java.util"
 });
 
-export const MapClassReference = new ClassReference({
+export const MapClassReference: ClassReference = new ClassReference({
     name: "Map",
     packageName: "java.util"
 });
 
-export const OffsetDateTimeClassReference = new ClassReference({
+export const OffsetDateTimeClassReference: ClassReference = new ClassReference({
     name: "OffsetDateTime",
     packageName: "java.time"
 });
 
-export const OptionalClassReference = new ClassReference({
+export const OptionalClassReference: ClassReference = new ClassReference({
     name: "Optional",
     packageName: "java.util"
 });
 
-export const SetClassReference = new ClassReference({
+export const SetClassReference: ClassReference = new ClassReference({
     name: "Set",
     packageName: "java.util"
 });
 
-export const UUIDClassReference = new ClassReference({
+export const UUIDClassReference: ClassReference = new ClassReference({
     name: "UUID",
     packageName: "java.util"
 });
 
-export const InputStreamClassReference = new ClassReference({
+export const InputStreamClassReference: ClassReference = new ClassReference({
     name: "InputStream",
     packageName: "java.io"
 });
 
-export const IterableClassReference = new ClassReference({
+export const IterableClassReference: ClassReference = new ClassReference({
     name: "Iterable",
     packageName: "java.lang"
 });

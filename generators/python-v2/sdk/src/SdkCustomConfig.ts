@@ -46,7 +46,93 @@ const WireTestsConfigSchema = z.object({
     exclusions: z.array(z.string()).optional()
 });
 
-export const SdkCustomConfigSchema = z.object({
+export const SdkCustomConfigSchema: z.ZodObject<
+    {
+        enable_wire_tests: z.ZodOptional<z.ZodBoolean>;
+        package_path: z.ZodOptional<
+            z.ZodEffects<
+                z.ZodEffects<
+                    z.ZodEffects<
+                        z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>,
+                        string,
+                        string
+                    >,
+                    string,
+                    string
+                >,
+                string,
+                string
+            >
+        >;
+        client: z.ZodOptional<
+            z.ZodObject<
+                {
+                    filename: z.ZodOptional<z.ZodString>;
+                    class_name: z.ZodOptional<z.ZodString>;
+                    exported_filename: z.ZodOptional<z.ZodString>;
+                    exported_class_name: z.ZodOptional<z.ZodString>;
+                },
+                "strip",
+                z.ZodTypeAny,
+                {
+                    filename?: string | undefined;
+                    class_name?: string | undefined;
+                    exported_filename?: string | undefined;
+                    exported_class_name?: string | undefined;
+                },
+                {
+                    filename?: string | undefined;
+                    class_name?: string | undefined;
+                    exported_filename?: string | undefined;
+                    exported_class_name?: string | undefined;
+                }
+            >
+        >;
+        client_class_name: z.ZodOptional<z.ZodString>;
+        inline_request_params: z.ZodOptional<z.ZodBoolean>;
+        wire_tests: z.ZodOptional<
+            z.ZodObject<
+                { enabled: z.ZodOptional<z.ZodBoolean>; exclusions: z.ZodOptional<z.ZodArray<z.ZodString, "many">> },
+                "strip",
+                z.ZodTypeAny,
+                { enabled?: boolean | undefined; exclusions?: string[] | undefined },
+                { enabled?: boolean | undefined; exclusions?: string[] | undefined }
+            >
+        >;
+    },
+    "strip",
+    z.ZodTypeAny,
+    {
+        enable_wire_tests?: boolean | undefined;
+        package_path?: string | undefined;
+        client?:
+            | {
+                  filename?: string | undefined;
+                  class_name?: string | undefined;
+                  exported_filename?: string | undefined;
+                  exported_class_name?: string | undefined;
+              }
+            | undefined;
+        client_class_name?: string | undefined;
+        inline_request_params?: boolean | undefined;
+        wire_tests?: { enabled?: boolean | undefined; exclusions?: string[] | undefined } | undefined;
+    },
+    {
+        enable_wire_tests?: boolean | undefined;
+        package_path?: string | undefined;
+        client?:
+            | {
+                  filename?: string | undefined;
+                  class_name?: string | undefined;
+                  exported_filename?: string | undefined;
+                  exported_class_name?: string | undefined;
+              }
+            | undefined;
+        client_class_name?: string | undefined;
+        inline_request_params?: boolean | undefined;
+        wire_tests?: { enabled?: boolean | undefined; exclusions?: string[] | undefined } | undefined;
+    }
+> = z.object({
     /** @deprecated Use `wire_tests.enabled` instead */
     enable_wire_tests: z.boolean().optional(),
     package_path: relativePathSchema.optional(),

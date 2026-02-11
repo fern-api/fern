@@ -4,7 +4,7 @@ import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } fr
 export class CycleDetector {
     public constructor(private readonly ir: IntermediateRepresentation) {}
 
-    public detectIllegalCycles() {
+    public detectIllegalCycles(): void {
         const dependencyGraph = this.buildRequiredDependencyGraph();
         const visited = new Set<TypeId>();
         const visiting = new Set<TypeId>();

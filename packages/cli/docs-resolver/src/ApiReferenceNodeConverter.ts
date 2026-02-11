@@ -52,10 +52,10 @@ export class ApiReferenceNodeConverter {
         private markdownFilesToTags: Map<AbsoluteFilePath, string[]>,
         idgen: NodeIdGenerator,
         collectedFileIds: Map<AbsoluteFilePath, string>,
-        private workspace?: FernWorkspace,
-        private hideChildren?: boolean,
-        private parentAvailability?: docsYml.RawSchemas.Availability,
-        private openApiTags?: Record<string, { id: string; description: string | undefined }>,
+        private workspace?: FernWorkspace | undefined,
+        private hideChildren?: boolean | undefined,
+        private parentAvailability?: docsYml.RawSchemas.Availability | undefined,
+        private openApiTags?: Record<string, { id: string; description: string | undefined }> | undefined,
         graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>
     ) {
         this.#tagDescriptionContent = new Map();

@@ -29,7 +29,7 @@ export class WireTestSetupGenerator {
         this.generateWireTestPhpunitXml();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: IntermediateRepresentation): object {
         return new WireMock().convertToWireMock(ir);
     }
 

@@ -17,7 +17,7 @@ export declare namespace BaseClientTypeGenerator {
 const OPTIONS_PARAMETER_NAME = "options";
 
 export class BaseClientTypeGenerator {
-    public static readonly OPTIONS_PARAMETER_NAME = OPTIONS_PARAMETER_NAME;
+    public static readonly OPTIONS_PARAMETER_NAME: "options" = OPTIONS_PARAMETER_NAME;
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;

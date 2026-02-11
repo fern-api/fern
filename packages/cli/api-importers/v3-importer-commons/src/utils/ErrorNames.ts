@@ -51,4 +51,4 @@ export const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
     511: "NetworkAuthenticationRequiredError"
 };
 
-export const ERROR_NAMES = new Set<string>(Object.values(ERROR_NAMES_BY_STATUS_CODE));
+export const ERROR_NAMES: Set<string> = new Set<string>(Object.values(ERROR_NAMES_BY_STATUS_CODE));

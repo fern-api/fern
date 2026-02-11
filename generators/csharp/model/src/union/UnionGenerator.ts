@@ -453,7 +453,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
 // ReSharper disable InconsistentNaming`
         });
     }
-    getUnionType(type: FernIr.NameAndWireValue) {
+    getUnionType(type: FernIr.NameAndWireValue): void {
         return this.csharp.classReference({
             origin: type,
             enclosingType: this.classReference

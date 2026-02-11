@@ -214,7 +214,7 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class FetcherImpl extends CoreUtility implements Fetcher {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
     public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
             properties: {
@@ -270,8 +270,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         }
     };
 
-    public readonly fetcher = {
-        _getReferenceTo: this.withExportedName("fetcher", (fetcher) => () => fetcher.getExpression()),
+    public readonly fetcher: Fetcher["fetcher"] = {
+        _getReferenceTo: this.withExportedName("fetcher", (fetcher) => (): ts.Expression => fetcher.getExpression()),
         _invoke: (
             args: Fetcher.Args,
             { referenceToFetcher, cast }: { referenceToFetcher: ts.Expression; cast: ts.TypeNode | undefined }
@@ -369,11 +369,12 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         }
     };
 
-    public readonly APIResponse = {
+    public readonly APIResponse: Fetcher["APIResponse"] = {
         _getReferenceToType: this.withExportedName(
             "APIResponse",
-            (APIResponse) => (successResponse: ts.TypeNode, failureResponse: ts.TypeNode) =>
-                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [successResponse, failureResponse])
+            (APIResponse) =>
+                (successResponse: ts.TypeNode, failureResponse: ts.TypeNode): ts.TypeReferenceNode =>
+                    ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [successResponse, failureResponse])
         ),
 
         ok: "ok",
@@ -427,15 +428,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         }
     };
 
-    public readonly BinaryResponse = {
+    public readonly BinaryResponse: Fetcher["BinaryResponse"] = {
         _getReferenceToType: this.withExportedName(
             "BinaryResponse",
-            (BinaryResponse) => () => BinaryResponse.getTypeNode()
+            (BinaryResponse) => (): ts.TypeNode => BinaryResponse.getTypeNode()
         ),
         getBinaryResponse: this.withExportedName(
             "getBinaryResponse",
-            (getBinaryResponse) => (response: ts.Expression) =>
-                ts.factory.createCallExpression(getBinaryResponse.getExpression(), undefined, [response])
+            (getBinaryResponse) =>
+                (response: ts.Expression): ts.CallExpression =>
+                    ts.factory.createCallExpression(getBinaryResponse.getExpression(), undefined, [response])
         )
     };
 
@@ -454,12 +456,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         }
     };
 
-    public Supplier = {
-        _getReferenceToType: this.withExportedName("Supplier", (Supplier) => (suppliedType: ts.TypeNode) => {
-            return ts.factory.createTypeReferenceNode(Supplier.getEntityName(), [suppliedType]);
-        }),
+    public Supplier: Fetcher["Supplier"] = {
+        _getReferenceToType: this.withExportedName(
+            "Supplier",
+            (Supplier) =>
+                (suppliedType: ts.TypeNode): ts.TypeReferenceNode => {
+                    return ts.factory.createTypeReferenceNode(Supplier.getEntityName(), [suppliedType]);
+                }
+        ),
 
-        get: this.withExportedName("Supplier", (Supplier) => (supplier: ts.Expression) => {
+        get: this.withExportedName("Supplier", (Supplier) => (supplier: ts.Expression): ts.AwaitExpression => {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(Supplier.getExpression(), "get"),
@@ -470,41 +476,47 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         })
     };
 
-    public EndpointSupplier = {
+    public EndpointSupplier: Fetcher["EndpointSupplier"] = {
         _getReferenceToType: this.withExportedName(
             "EndpointSupplier",
-            (EndpointSupplier) => (suppliedType: ts.TypeNode) => {
-                return ts.factory.createTypeReferenceNode(EndpointSupplier.getEntityName(), [suppliedType]);
-            }
+            (EndpointSupplier) =>
+                (suppliedType: ts.TypeNode): ts.TypeReferenceNode => {
+                    return ts.factory.createTypeReferenceNode(EndpointSupplier.getEntityName(), [suppliedType]);
+                }
         ),
 
         get: this.withExportedName(
             "EndpointSupplier",
-            (EndpointSupplier) => (endpointSupplier: ts.Expression, metadata: ts.Expression) => {
-                return ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(EndpointSupplier.getExpression(), "get"),
-                        undefined,
-                        [endpointSupplier, metadata]
-                    )
-                );
-            }
+            (EndpointSupplier) =>
+                (endpointSupplier: ts.Expression, metadata: ts.Expression): ts.AwaitExpression => {
+                    return ts.factory.createAwaitExpression(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(EndpointSupplier.getExpression(), "get"),
+                            undefined,
+                            [endpointSupplier, metadata]
+                        )
+                    );
+                }
         )
     };
 
-    public EndpointMetadata = {
+    public EndpointMetadata: Fetcher["EndpointMetadata"] = {
         _getReferenceToType: this.withExportedName(
             "EndpointMetadata",
-            (EndpointMetadata) => () => EndpointMetadata.getTypeNode()
+            (EndpointMetadata) => (): ts.TypeNode => EndpointMetadata.getTypeNode()
         )
     };
 
-    public Websocket = {
-        _getReferenceToType: this.withExportedName("Websocket", (Websocket) => (suppliedType: ts.TypeNode) => {
-            return ts.factory.createTypeReferenceNode(Websocket.getEntityName(), [suppliedType]);
-        }),
+    public Websocket: Fetcher["Websocket"] = {
+        _getReferenceToType: this.withExportedName(
+            "Websocket",
+            (Websocket) =>
+                (suppliedType: ts.TypeNode): ts.TypeReferenceNode => {
+                    return ts.factory.createTypeReferenceNode(Websocket.getEntityName(), [suppliedType]);
+                }
+        ),
 
-        get: this.withExportedName("Websocket", (Websocket) => (websocket: ts.Expression) => {
+        get: this.withExportedName("Websocket", (Websocket) => (websocket: ts.Expression): ts.AwaitExpression => {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(Websocket.getExpression(), "get"),
@@ -515,14 +527,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         })
     };
 
-    public FetchFunction = {
+    public FetchFunction: Fetcher["FetchFunction"] = {
         _getReferenceToType: this.withExportedName(
             "FetchFunction",
-            (FetchFunction) => () => FetchFunction.getTypeNode()
+            (FetchFunction) => (): ts.TypeNode => FetchFunction.getTypeNode()
         )
     };
 
-    public getHeader = {
+    public getHeader: Fetcher["getHeader"] = {
         _invoke: this.withExportedName(
             "getHeader",
             (getHeader) =>
@@ -532,7 +544,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 }: {
                     referenceToResponseHeaders: ts.Expression;
                     header: string;
-                }) =>
+                }): ts.CallExpression =>
                     ts.factory.createCallExpression(getHeader.getExpression(), undefined, [
                         referenceToResponseHeaders,
                         ts.factory.createStringLiteral(header)
@@ -548,14 +560,17 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         );
     }
 
-    public readonly RawResponse = {
+    public readonly RawResponse: Fetcher["RawResponse"] = {
         RawResponse: {
-            _getReferenceToType: this.withExportedName("RawResponse", (RawResponse) => () => RawResponse.getTypeNode())
+            _getReferenceToType: this.withExportedName(
+                "RawResponse",
+                (RawResponse) => (): ts.TypeNode => RawResponse.getTypeNode()
+            )
         },
         toRawResponse: {
             _getReferenceToType: this.withExportedName(
                 "toRawResponse",
-                (RawResponse) => () => RawResponse.getTypeNode()
+                (RawResponse) => (): ts.TypeNode => RawResponse.getTypeNode()
             )
         },
         WithRawResponse: {

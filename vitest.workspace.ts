@@ -1,3 +1,7 @@
 import { defineWorkspace } from "vitest/config";
 
-export default defineWorkspace(["./generators/**/vitest.config.ts", "./packages/**/vitest.config.ts"]);
+const workspace: ReturnType<typeof defineWorkspace> = defineWorkspace([
+    "./generators/**/vitest.config.ts",
+    "./packages/**/vitest.config.ts"
+]);
+export default workspace;

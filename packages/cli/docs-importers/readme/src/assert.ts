@@ -2,7 +2,7 @@ import type { Element, Root } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 import { z } from "zod";
 
-export const StringArraySchema = z.array(z.string());
+export const StringArraySchema: z.ZodArray<z.ZodString, "many"> = z.array(z.string());
 
 export function assertIsNumber(val: unknown): asserts val is number {
     z.number().parse(val);

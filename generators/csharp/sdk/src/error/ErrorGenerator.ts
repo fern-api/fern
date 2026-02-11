@@ -7,7 +7,7 @@ import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class ErrorGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
-    readonly classReference;
+    readonly classReference: ast.ClassReference;
 
     constructor(
         context: SdkGeneratorContext,

@@ -359,7 +359,7 @@ export namespace Primitive {
      */
     export class Integer extends PrimitiveType {
         public override fullyQualifiedName = "int";
-        public override defaultValue = this.csharp.Literal.integer(0);
+        public override defaultValue: Literal.Integer = this.csharp.Literal.integer(0);
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
             return this.csharp.Literal.integer(hash(input) & 0x7fffffff);
@@ -371,7 +371,7 @@ export namespace Primitive {
      */
     export class Long extends PrimitiveType {
         public override fullyQualifiedName = "long";
-        public override defaultValue = this.csharp.Literal.long(0);
+        public override defaultValue: Literal.Long = this.csharp.Literal.long(0);
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
             return this.csharp.Literal.long(hash(input) & 0x7ffffffffffff);
@@ -383,7 +383,7 @@ export namespace Primitive {
      */
     export class Uint extends PrimitiveType {
         public override fullyQualifiedName = "uint";
-        public override defaultValue = this.csharp.Literal.uint(0);
+        public override defaultValue: Literal.Uint = this.csharp.Literal.uint(0);
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
             return this.csharp.Literal.uint(hash(input) & 0x7fffffff);
@@ -395,7 +395,7 @@ export namespace Primitive {
      */
     export class ULong extends PrimitiveType {
         public override fullyQualifiedName = "ulong";
-        public override defaultValue = this.csharp.Literal.ulong(0);
+        public override defaultValue: Literal.Ulong = this.csharp.Literal.ulong(0);
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
             return this.csharp.Literal.ulong(hash(input) & 0x7ffffffffffff);
@@ -408,7 +408,7 @@ export namespace Primitive {
      */
     export class String extends PrimitiveType {
         public override fullyQualifiedName = "string";
-        public override defaultValue = this.csharp.Literal.string("");
+        public override defaultValue: Literal.String = this.csharp.Literal.string("");
         public override readonly isReferenceType: boolean | undefined = true;
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique string using the defualtWith string as the seed.
@@ -421,7 +421,7 @@ export namespace Primitive {
      */
     export class Boolean extends PrimitiveType {
         public override fullyQualifiedName = "bool";
-        public override defaultValue = this.csharp.Literal.boolean(false);
+        public override defaultValue: Literal.Boolean = this.csharp.Literal.boolean(false);
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique boolean using the defualtWith string as the seed.
             return this.csharp.Literal.boolean(hash(input) % 2 === 0);
@@ -433,7 +433,7 @@ export namespace Primitive {
      */
     export class Float extends PrimitiveType {
         public override fullyQualifiedName = "float";
-        public override defaultValue = this.csharp.Literal.float(0);
+        public override defaultValue: Literal.Float = this.csharp.Literal.float(0);
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique float using the defualtWith string as the seed.
             return this.csharp.Literal.float((hash(input) & 0x7fffffff) / 100);
@@ -445,7 +445,7 @@ export namespace Primitive {
      */
     export class Double extends PrimitiveType {
         public override fullyQualifiedName = "double";
-        public override defaultValue = this.csharp.Literal.double(0);
+        public override defaultValue: Literal.Double = this.csharp.Literal.double(0);
         public override getDeterminsticDefault(input: string): Literal {
             // make a unique double using the defualtWith string as the seed.
             return this.csharp.Literal.double((hash(input) & 0x7ffffffffffff) / 100);
@@ -518,7 +518,7 @@ export namespace Value {
      */
     export class Uuid extends PrimitiveType {
         public override fullyQualifiedName = "string";
-        public override defaultValue = this.csharp.Literal.string("");
+        public override defaultValue: Literal.String = this.csharp.Literal.string("");
 
         // C# GUID is a value type, but we use string for UUID
         public override readonly isReferenceType: boolean | undefined = true;

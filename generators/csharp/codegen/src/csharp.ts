@@ -112,7 +112,7 @@ export class CSharp {
      * Keys are fully qualified class names, values are sets of stack traces showing
      * where these references were used.
      */
-    extraClassReferences = new Map<string, Set<string>>();
+    extraClassReferences: Map<string, Set<string>> = new Map<string, Set<string>>();
 
     /**
      * Creates a reference to a C# class with the specified name and namespace.
@@ -173,14 +173,14 @@ export class CSharp {
      * After freezing, any new class references will be tracked in extraClassReferences.
      * This is useful for identifying missing dependencies during code generation.
      */
-    freezeClassReferences() {
+    freezeClassReferences(): void {
         this.frozen = true;
     }
 
     getPropertyName(
         enclosingType: ClassReference,
         property: (IrNode & { name: Name | dynamic.Name }) | (IrNode & { name: NameAndWireValue })
-    ) {
+    ): string {
         const expectedName = this.model.getPropertyNameFor(property);
         const origin =
             this.model.origin(property) ??
@@ -443,7 +443,7 @@ export class CSharp {
          * @param value - The string value
          * @returns A PrimitiveInstantiation representing the string literal
          */
-        string: (value: string) => {
+        string: (value: string): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "string",
@@ -459,7 +459,7 @@ export class CSharp {
          * @param value - The boolean value
          * @returns A PrimitiveInstantiation representing the boolean literal
          */
-        boolean: (value: boolean) => {
+        boolean: (value: boolean): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "boolean",
@@ -475,7 +475,7 @@ export class CSharp {
          * @param value - The integer value
          * @returns A PrimitiveInstantiation representing the integer literal
          */
-        integer: (value: number) => {
+        integer: (value: number): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "integer",
@@ -491,7 +491,7 @@ export class CSharp {
          * @param value - The long value
          * @returns A PrimitiveInstantiation representing the long literal
          */
-        long: (value: number) => {
+        long: (value: number): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "long",
@@ -507,7 +507,7 @@ export class CSharp {
          * @param value - The unsigned integer value
          * @returns A PrimitiveInstantiation representing the uint literal
          */
-        uint: (value: number) => {
+        uint: (value: number): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "uint",
@@ -523,7 +523,7 @@ export class CSharp {
          * @param value - The unsigned long value
          * @returns A PrimitiveInstantiation representing the ulong literal
          */
-        ulong: (value: number) => {
+        ulong: (value: number): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "ulong",
@@ -539,7 +539,7 @@ export class CSharp {
          * @param value - The float value
          * @returns A PrimitiveInstantiation representing the float literal
          */
-        float: (value: number) => {
+        float: (value: number): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "float",
@@ -555,7 +555,7 @@ export class CSharp {
          * @param value - The double value
          * @returns A PrimitiveInstantiation representing the double literal
          */
-        double: (value: number) => {
+        double: (value: number): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "double",
@@ -571,7 +571,7 @@ export class CSharp {
          * @param value - The date value as a string
          * @returns A PrimitiveInstantiation representing the date literal
          */
-        date: (value: string) => {
+        date: (value: string): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "date",
@@ -588,7 +588,7 @@ export class CSharp {
          * @param parse - Whether to parse the DateTime value (default: true)
          * @returns A PrimitiveInstantiation representing the DateTime literal
          */
-        dateTime: (value: Date, parse = true) => {
+        dateTime: (value: Date, parse = true): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "dateTime",
@@ -605,7 +605,7 @@ export class CSharp {
          * @param value - The UUID value as a string
          * @returns A PrimitiveInstantiation representing the UUID literal
          */
-        uuid: (value: string) => {
+        uuid: (value: string): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "uuid",
@@ -620,7 +620,7 @@ export class CSharp {
          *
          * @returns A PrimitiveInstantiation representing the null literal
          */
-        null: () => {
+        null: (): PrimitiveInstantiation => {
             return new PrimitiveInstantiation(
                 {
                     type: "null"
@@ -643,7 +643,7 @@ export class CSharp {
          * @param fields - Array of constructor fields to initialize
          * @returns A Literal object representing the class initialization
          */
-        class_: ({ reference, fields }: { reference: ClassReference; fields: ConstructorField[] }) => {
+        class_: ({ reference, fields }: { reference: ClassReference; fields: ConstructorField[] }): Literal.Class_ => {
             return new Literal.Class_(reference, fields, this.generation);
         },
 
@@ -663,7 +663,7 @@ export class CSharp {
             keyType: Type;
             valueType: Type;
             entries: DictionaryEntry[];
-        }) => {
+        }): Literal.Dictionary => {
             return new Literal.Dictionary(keyType, valueType, entries, this.generation);
         },
 
@@ -674,7 +674,7 @@ export class CSharp {
          * @param values - Array of literal values
          * @returns A Literal object representing the list initialization
          */
-        list: ({ valueType, values }: { valueType: Type; values: Literal[] }) => {
+        list: ({ valueType, values }: { valueType: Type; values: Literal[] }): Literal.List => {
             return new Literal.List(valueType, values, this.generation);
         },
 
@@ -685,7 +685,7 @@ export class CSharp {
          * @param values - Array of literal values
          * @returns A Literal object representing the set initialization
          */
-        set: ({ valueType, values }: { valueType: Type; values: Literal[] }) => {
+        set: ({ valueType, values }: { valueType: Type; values: Literal[] }): Literal.Set => {
             return new Literal.Set(valueType, values, this.generation);
         },
 
@@ -695,7 +695,7 @@ export class CSharp {
          * @param value - The boolean value
          * @returns A Literal object representing the boolean literal
          */
-        boolean: (value: boolean) => {
+        boolean: (value: boolean): Literal.Boolean => {
             return new Literal.Boolean(value, this.generation);
         },
 
@@ -705,7 +705,7 @@ export class CSharp {
          * @param value - The float value
          * @returns A Literal object representing the float literal
          */
-        float: (value: number) => {
+        float: (value: number): Literal.Float => {
             return new Literal.Float(value, this.generation);
         },
 
@@ -715,7 +715,7 @@ export class CSharp {
          * @param value - The date value as a string
          * @returns A Literal object representing the date literal
          */
-        date: (value: string) => {
+        date: (value: string): Literal.Date => {
             return new Literal.Date(value, this.generation);
         },
 
@@ -725,7 +725,7 @@ export class CSharp {
          * @param value - The DateTime value as a string
          * @returns A Literal object representing the DateTime literal
          */
-        datetime: (value: string) => {
+        datetime: (value: string): Literal.DateTime => {
             return new Literal.DateTime(value, this.generation);
         },
 
@@ -735,7 +735,7 @@ export class CSharp {
          * @param value - The decimal value
          * @returns A Literal object representing the decimal literal
          */
-        decimal: (value: number) => {
+        decimal: (value: number): Literal.Decimal => {
             return new Literal.Decimal(value, this.generation);
         },
 
@@ -745,7 +745,7 @@ export class CSharp {
          * @param value - The double value
          * @returns A Literal object representing the double literal
          */
-        double: (value: number) => {
+        double: (value: number): Literal.Double => {
             return new Literal.Double(value, this.generation);
         },
 
@@ -755,7 +755,7 @@ export class CSharp {
          * @param value - The integer value
          * @returns A Literal object representing the integer literal
          */
-        integer: (value: number) => {
+        integer: (value: number): Literal.Integer => {
             return new Literal.Integer(value, this.generation);
         },
 
@@ -765,7 +765,7 @@ export class CSharp {
          * @param value - The long value
          * @returns A Literal object representing the long literal
          */
-        long: (value: number) => {
+        long: (value: number): Literal.Long => {
             return new Literal.Long(value, this.generation);
         },
 
@@ -775,7 +775,7 @@ export class CSharp {
          * @param value - The unsigned integer value
          * @returns A Literal object representing the uint literal
          */
-        uint: (value: number) => {
+        uint: (value: number): Literal.Uint => {
             return new Literal.Uint(value, this.generation);
         },
 
@@ -785,7 +785,7 @@ export class CSharp {
          * @param value - The unsigned long value
          * @returns A Literal object representing the ulong literal
          */
-        ulong: (value: number) => {
+        ulong: (value: number): Literal.Ulong => {
             return new Literal.Ulong(value, this.generation);
         },
 
@@ -795,7 +795,7 @@ export class CSharp {
          * @param value - The AST node reference
          * @returns A Literal object representing the reference literal
          */
-        reference: (value: AstNode) => {
+        reference: (value: AstNode): Literal.Reference => {
             return new Literal.Reference(value, this.generation);
         },
 
@@ -805,7 +805,7 @@ export class CSharp {
          * @param value - The string value
          * @returns A Literal object representing the string literal
          */
-        string: (value: string) => {
+        string: (value: string): Literal.String => {
             return new Literal.String(value, this.generation);
         },
 
@@ -814,7 +814,7 @@ export class CSharp {
          *
          * @returns A Literal object representing the null literal
          */
-        null: () => {
+        null: (): Literal.Null => {
             return new Literal.Null(this.generation);
         },
 
@@ -823,7 +823,7 @@ export class CSharp {
          *
          * @returns A Literal object representing a no-operation literal
          */
-        nop: () => {
+        nop: (): Literal.Nop => {
             return new Literal.Nop(this.generation);
         },
 
@@ -833,7 +833,7 @@ export class CSharp {
          * @param value - The unknown value
          * @returns A Literal object representing the unknown literal
          */
-        unknown: (value: unknown) => {
+        unknown: (value: unknown): Literal.Unknown => {
             return new Literal.Unknown(value, this.generation);
         }
     };
@@ -861,7 +861,7 @@ export class CSharp {
      * Also note that we use the InternalType's type property to determine the type of the Type
      * so that the two always remain in sync.
      */
-    readonly VALID_READ_ONLY_MEMORY_TYPES = new Set<string>([
+    readonly VALID_READ_ONLY_MEMORY_TYPES: Set<string> = new Set<string>([
         "int",
         "long",
         "uint",

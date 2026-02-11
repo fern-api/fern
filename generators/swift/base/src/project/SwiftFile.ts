@@ -11,21 +11,21 @@ export declare namespace SwiftFile {
 }
 
 export class SwiftFile extends File {
-    public static create(args: SwiftFile.Args) {
+    public static create(args: SwiftFile.Args): SwiftFile {
         return new SwiftFile(args);
     }
 
     /**
      * Creates a new Swift file with the Foundation framework imported.
      */
-    public static createWithFoundation(args: SwiftFile.Args) {
+    public static createWithFoundation(args: SwiftFile.Args): void {
         return new SwiftFile({
             ...args,
             contents: [swift.Statement.import("Foundation"), swift.LineBreak.single(), ...args.contents]
         });
     }
 
-    public static getRawContents(components: swift.FileComponent[]) {
+    public static getRawContents(components: swift.FileComponent[]): string {
         return components.map((component) => component.toString()).join("");
     }
 

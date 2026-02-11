@@ -64,7 +64,46 @@ interface MarkdownParseFailure {
     message: string | undefined;
 }
 
-export const FrontmatterSchema = z.object({
+export const FrontmatterSchema: z.ZodObject<
+    {
+        title: z.ZodOptional<z.ZodString>;
+        "og:title": z.ZodOptional<z.ZodString>;
+        "og:description": z.ZodOptional<z.ZodString>;
+        subtitle: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        image: z.ZodOptional<z.ZodString>;
+        slug: z.ZodOptional<z.ZodString>;
+        redirects: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        editThisPageUrl: z.ZodOptional<z.ZodString>;
+        excerpt: z.ZodOptional<z.ZodString>;
+    },
+    "strip",
+    z.ZodTypeAny,
+    {
+        description?: string | undefined;
+        title?: string | undefined;
+        "og:title"?: string | undefined;
+        "og:description"?: string | undefined;
+        subtitle?: string | undefined;
+        image?: string | undefined;
+        slug?: string | undefined;
+        redirects?: Array<string> | undefined;
+        editThisPageUrl?: string | undefined;
+        excerpt?: string | undefined;
+    },
+    {
+        description?: string | undefined;
+        title?: string | undefined;
+        "og:title"?: string | undefined;
+        "og:description"?: string | undefined;
+        subtitle?: string | undefined;
+        image?: string | undefined;
+        slug?: string | undefined;
+        redirects?: Array<string> | undefined;
+        editThisPageUrl?: string | undefined;
+        excerpt?: string | undefined;
+    }
+> = z.object({
     title: z.optional(z.string(), { description: "Renders as the page title." }),
     "og:title": z.optional(z.string(), { description: "Renders as the og:title tag." }),
     "og:description": z.optional(z.string(), { description: "Renders as the og:description tag." }),

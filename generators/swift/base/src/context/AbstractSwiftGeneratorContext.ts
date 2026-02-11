@@ -347,7 +347,12 @@ export abstract class AbstractSwiftGeneratorContext<
         );
     }
 
-    public getEndpointMethodDetails(endpoint: HttpEndpoint) {
+    public getEndpointMethodDetails(endpoint: HttpEndpoint): {
+        leadingParts: string[];
+        leadingPath: string;
+        methodName: string;
+        fullyQualifiedMethodName: string;
+    } {
         const endpointContainer = this.getEndpointContainer(endpoint);
         if (endpointContainer.type === "none") {
             throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
@@ -359,10 +364,10 @@ export abstract class AbstractSwiftGeneratorContext<
         const methodName = endpoint.name.camelCase.unsafeName;
         const fullyQualifiedMethodName = [...leadingParts, methodName].join(".");
         return {
-            leadingParts,
-            leadingPath,
-            methodName,
-            fullyQualifiedMethodName
+            leadingParts: leadingParts,
+            leadingPath: leadingPath,
+            methodName: methodName,
+            fullyQualifiedMethodName: fullyQualifiedMethodName
         };
     }
 
@@ -390,7 +395,7 @@ export abstract class AbstractSwiftGeneratorContext<
         return { type: "none" };
     }
 
-    public createReferencer(fromSymbol: swift.Symbol | string) {
+    public createReferencer(fromSymbol: swift.Symbol | string): Referencer {
         return new Referencer(this.project.nameRegistry, fromSymbol);
     }
 }

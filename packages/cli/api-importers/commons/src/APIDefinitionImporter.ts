@@ -11,7 +11,7 @@ export declare namespace APIDefinitionImporter {
 }
 
 export abstract class APIDefinitionImporter<T> {
-    public constructor(protected readonly context?: TaskContext) {}
+    public constructor(protected readonly context?: TaskContext | undefined) {}
 
     public abstract import(input: T): Promise<APIDefinitionImporter.Return>;
 }

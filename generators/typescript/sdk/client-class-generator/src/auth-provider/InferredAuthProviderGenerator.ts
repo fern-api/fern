@@ -46,9 +46,9 @@ const RESPONSE_VAR_NAME = "response";
 const EXPIRES_IN_SECONDS_PARAM_NAME = "expiresInSeconds";
 
 export class InferredAuthProviderGenerator implements AuthProviderGenerator {
-    public static readonly CLASS_NAME = CLASS_NAME;
-    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
-    public static readonly GET_AUTH_REQUEST_METHOD_NAME = GET_AUTH_REQUEST_METHOD_NAME;
+    public static readonly CLASS_NAME: "InferredAuthProvider" = CLASS_NAME;
+    public static readonly OPTIONS_TYPE_NAME: "Options" = OPTIONS_TYPE_NAME;
+    public static readonly GET_AUTH_REQUEST_METHOD_NAME: "getAuthRequest" = GET_AUTH_REQUEST_METHOD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.InferredAuthScheme;
     private readonly neverThrowErrors: boolean;

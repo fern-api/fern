@@ -17,7 +17,7 @@ export function titleCase(name: string): string {
     return versionedTitle;
 }
 
-export const SPECIAL_TOKENS = [
+export const SPECIAL_TOKENS: string[] = [
     // privacy
     "PII",
     "PHI",

@@ -5,10 +5,10 @@ export interface TemplateFileSpec {
     filenameWithoutExtension: (templateData: Record<string, unknown>) => string;
 }
 
-export const SourceTemplateFileSpecs = {
+export const SourceTemplateFileSpecs: { ClientError: { relativePath: string; filenameWithoutExtension: (templateData: Record<string, unknown>) => string; }; HTTPClient: { relativePath: string; filenameWithoutExtension: () => string; }; } = {
     ClientError: {
         relativePath: "",
-        filenameWithoutExtension: (templateData) => {
+        filenameWithoutExtension: (templateData:: string Record<string, unknown>) => {
             assertString(templateData.errorEnumName);
             return templateData.errorEnumName;
         }
@@ -16,7 +16,7 @@ export const SourceTemplateFileSpecs = {
     // Core/Networking
     HTTPClient: {
         relativePath: "Core/Networking",
-        filenameWithoutExtension: () => "HTTPClient"
+        filenameWithoutExtension: (): string => "HTTPClient"
     }
 } satisfies Record<string, TemplateFileSpec>;
 

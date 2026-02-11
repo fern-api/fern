@@ -139,7 +139,7 @@ export async function detectAirGappedModeForProtobuf(
 
 export const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 export const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
-export const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/ir.json`;
+export const PROTOBUF_GENERATOR_OUTPUT_FILEPATH: "output/ir.json" = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/ir.json`;
 export const PROTOBUF_SHELL_PROXY_FILENAME = "protoc-gen-fern";
 export const PROTOBUF_EXPORT_CONFIG_V1 = `version: v1
 `;

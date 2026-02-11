@@ -14,6 +14,6 @@ export function isWellKnownLicense(license: string): license is WellKnownLicense
  *  - "MIT" or "Apache-2.0" for well-known licenses
  *  - Any other string is treated as a file path (e.g., "./LICENSE")
  */
-export const LicenseSchema = z.string();
+export const LicenseSchema: z.ZodString = z.string();
 
 export type LicenseSchema = z.infer<typeof LicenseSchema>;

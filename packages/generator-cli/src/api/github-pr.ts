@@ -5,7 +5,7 @@ export interface GithubPrParams {
     githubConfig: FernGeneratorCli.GitHubConfig;
 }
 
-export async function githubPr(params: GithubPrParams) {
+export async function githubPr(params: GithubPrParams): Promise<express.Router> {
     const { githubConfig } = params;
     const github = new GitHub({ githubConfig });
     await github.pr();

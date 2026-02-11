@@ -1,6 +1,6 @@
 // PHP reserved keywords (case-insensitive) that cannot be used as class names
 // Source: https://www.php.net/manual/en/reserved.keywords.php
-export const PHP_RESERVED_KEYWORDS = new Set([
+export const PHP_RESERVED_KEYWORDS: Set<string> = new Set([
     "abstract",
     "and",
     "array",

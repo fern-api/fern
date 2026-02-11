@@ -21,7 +21,7 @@ interface AsIsFileSpec {
  * included in generated SDKs. Each entry maps a unique identifier to a file specification
  * containing the file's intended path.
  */
-const AsIsFileSpecs = {
+const AsIsFileSpecs: { ApiClientBuilder: { relativePathToDir: string; filename: string; }; Prelude: { relativePathToDir: string; filename: string; }; HttpClient: { relativePathToDir: string; filename: string; }; RequestOptions: { relativePathToDir: string; filename: string; }; Pagination: { relativePathToDir: string; filename: string; }; QueryParameterBuilder: { relativePathToDir: string; filename: string; }; Utils: { relativePathToDir: string; filename: string; }; SseStream: { relativePathToDir: string; filename: string; }; FlexibleDatetime: { relativePathToDir: string; filename: string; }; Base64Bytes: { relativePathToDir: string; filename: string; }; BigIntString: { relativePathToDir: string; filename: string; }; OAuthTokenProvider: { relativePathToDir: string; filename: string; }; CoreMod: { relativePathToDir: string; filename: string; }; CargoToml: { relativePathToDir: string; filename: string; }; Gitignore: { relativePathToDir: string; filename: string; }; RustfmtToml: { relativePathToDir: string; filename: string; }; CiYml: { relativePathToDir: string; filename: string; }; } = {
     // Core infrastructure templates
     ApiClientBuilder: {
         relativePathToDir: "src",
@@ -150,7 +150,7 @@ export type AsIsFileDefinitionsById = {
  * }
  * ```
  */
-export const AsIsFiles = createAsIsFiles();
+export const AsIsFiles: AsIsFileDefinitionsById = createAsIsFiles();
 
 /**
  * Transforms the raw file specifications into fully resolved file definitions.

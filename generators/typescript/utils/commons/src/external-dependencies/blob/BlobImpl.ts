@@ -7,9 +7,9 @@ export class BlobImpl extends ExternalDependency implements Blob_ {
     protected override PACKAGE = { name: "buffer" };
     protected override TYPES_PACKAGE = undefined;
 
-    public readonly Blob = {
+    public readonly Blob: Blob_["Blob"] = {
         _getReferenceToType: this.withNamedImport("Blob", (withImport, buffer) =>
-            withImport(() => {
+            withImport((): ts.TypeReferenceNode => {
                 return ts.factory.createTypeReferenceNode("Blob");
             })
         )

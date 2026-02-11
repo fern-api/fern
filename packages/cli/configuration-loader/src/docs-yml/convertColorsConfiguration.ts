@@ -5,7 +5,10 @@ import { TaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
 
 export function convertColorsConfiguration(
-    rawConfig: docsYml.RawSchemas.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
+    rawConfig: docsYml.RawSchemas.ColorsConfiguration | undefined | undefined = {
+        accentPrimary: undefined,
+        background: undefined
+    },
     context: TaskContext
 ): CjsFdrSdk.docs.v1.write.ColorsConfigV3 {
     rawConfig.accentPrimary = rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated;

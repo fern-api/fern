@@ -9,4 +9,4 @@ export const implementation: Partial<Implementation> = {};
 export const serverOptions: Partial<ServerOptions> = {};
 
 // Register custom MCP tools, resources, prompts, or other customizations.
-export function register(server: McpServer) {}
+export function register(server: McpServer): void {}

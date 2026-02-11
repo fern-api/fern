@@ -100,7 +100,7 @@ export class RootClientGenerator {
         });
     }
 
-    public generate() {
+    public generate(): void {
         return swift.class_({
             name: this.symbol.name,
             final: true,

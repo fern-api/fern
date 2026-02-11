@@ -1,4 +1,4 @@
-export const RUST_KEYWORDS = new Set([
+export const RUST_KEYWORDS: Set<string> = new Set([
     // Strict keywords
     "as",
     "break",
@@ -55,7 +55,7 @@ export const RUST_KEYWORDS = new Set([
     "yield"
 ]);
 
-export const RUST_RESERVED_TYPES = new Set([
+export const RUST_RESERVED_TYPES: Set<string> = new Set([
     "Box",
     "Option",
     "Result",

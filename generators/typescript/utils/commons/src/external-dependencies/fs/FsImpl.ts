@@ -7,9 +7,9 @@ export class FsImpl extends ExternalDependency implements Fs {
     protected override PACKAGE = { name: "fs" };
     protected override TYPES_PACKAGE = undefined;
 
-    public readonly ReadStream = {
+    public readonly ReadStream: Fs["ReadStream"] = {
         _getReferenceToType: this.withNamespaceImport("fs", (withImport, fs) =>
-            withImport(() => {
+            withImport((): ts.TypeReferenceNode => {
                 return ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(ts.factory.createIdentifier(fs), "ReadStream"),
                     []
@@ -18,13 +18,15 @@ export class FsImpl extends ExternalDependency implements Fs {
         )
     };
 
-    public readonly createReadStream = this.withNamespaceImport("fs", (withImport, fs) =>
-        withImport((filename: ts.Expression) => {
-            return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(fs), "createReadStream"),
-                undefined,
-                [filename]
-            );
-        })
+    public readonly createReadStream: (filename: ts.Expression) => ts.CallExpression = this.withNamespaceImport(
+        "fs",
+        (withImport, fs) =>
+            withImport((filename: ts.Expression): ts.CallExpression => {
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(fs), "createReadStream"),
+                    undefined,
+                    [filename]
+                );
+            })
     );
 }

@@ -103,4 +103,4 @@ class MockServerPool {
     }
 }
 
-export const mockServerPool = new MockServerPool();
+export const mockServerPool: MockServerPool = new MockServerPool();

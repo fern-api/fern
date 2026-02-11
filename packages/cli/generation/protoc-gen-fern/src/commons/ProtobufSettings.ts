@@ -6,7 +6,7 @@ export function getProtobufSettings(): ProtobufSettings {
     return undefined;
 }
 
-export const PRIMITIVE_TYPES = new Set([
+export const PRIMITIVE_TYPES: Set<FieldDescriptorProto_Type> = new Set([
     FieldDescriptorProto_Type.DOUBLE,
     FieldDescriptorProto_Type.FLOAT,
     FieldDescriptorProto_Type.INT64,

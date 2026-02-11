@@ -31,7 +31,7 @@ export class Block extends AstNode {
         }
     }
 
-    append(codeblock: CodeBlock) {
+    append(codeblock: CodeBlock): void {
         this.statements.push(codeblock);
     }
 
@@ -54,7 +54,7 @@ export class Block extends AstNode {
         }
     }
     */
-    if(condition: string, block: Block) {
+    if(condition: string, block: Block): void {
         //
     }
 }

@@ -37,4 +37,4 @@ export const SAMPLE_STRINGS = [
     "strawberry",
     "pomegranate",
     "blackcurrant"
-];
+] as const;

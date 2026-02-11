@@ -635,7 +635,7 @@ export class Type extends AstNode {
     }
 }
 
-export const DateTimeClassReference = new ClassReference({
+export const DateTimeClassReference: ClassReference = new ClassReference({
     namespace: GLOBAL_NAMESPACE,
     name: "DateTime"
 });

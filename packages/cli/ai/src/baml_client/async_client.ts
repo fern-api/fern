@@ -71,27 +71,27 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
         this.bamlOptions = bamlOptions || {}
         }
 
-        withOptions(bamlOptions: BamlCallOptions) {
+        withOptions(bamlOptions: BamlCallOptions): BamlAsyncClient {
         return new BamlAsyncClient(this.runtime, this.ctxManager, bamlOptions)
         }
 
-        get stream() {
+        get stream(): BamlStreamClient {
         return this.streamClient
         }
 
-        get request() {
+        get request(): AsyncHttpRequest {
         return this.httpRequest
         }
 
-        get streamRequest() {
+        get streamRequest(): AsyncHttpStreamRequest {
         return this.httpStreamRequest
         }
 
-        get parse() {
+        get parse(): LlmResponseParser {
         return this.llmResponseParser
         }
 
-        get parseStream() {
+        get parseStream(): LlmStreamParser {
         return this.llmStreamParser
         }
 
@@ -226,5 +226,5 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                   
                   }
 
-                  export const b = new BamlAsyncClient(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME,
+                  export const b: BamlAsyncClient = new BamlAsyncClient(DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME,
                   DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX)

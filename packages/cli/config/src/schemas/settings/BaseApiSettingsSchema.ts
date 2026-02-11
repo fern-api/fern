@@ -7,7 +7,21 @@ import { RemoveDiscriminantsFromSchemasSchema } from "./RemoveDiscriminantsFromS
  * Base API settings that are common across OpenAPI, AsyncAPI, and other API specs.
  * All settings use camelCase naming for v2 configuration format.
  */
-export const BaseApiSettingsSchema = z.object({
+export const BaseApiSettingsSchema: z.ZodObject<
+    {
+        respectNullableSchemas: z.ZodOptional<z.ZodBoolean>;
+        wrapReferencesToNullableInOptional: z.ZodOptional<z.ZodBoolean>;
+        coerceOptionalSchemasToNullable: z.ZodOptional<z.ZodBoolean>;
+        titleAsSchemaName: z.ZodOptional<z.ZodBoolean>;
+        coerceEnumsToLiterals: z.ZodOptional<z.ZodBoolean>;
+        optionalAdditionalProperties: z.ZodOptional<z.ZodBoolean>;
+        idiomaticRequestNames: z.ZodOptional<z.ZodBoolean>;
+        groupEnvironmentsByHost: z.ZodOptional<z.ZodBoolean>;
+        removeDiscriminantsFromSchemas: z.ZodOptional<z.ZodEnum<{ always: "always"; never: "never" }>>;
+        pathParameterOrder: z.ZodOptional<z.ZodEnum<{ urlOrder: "urlOrder"; specOrder: "specOrder" }>>;
+    },
+    z.core.$strip
+> = z.object({
     /** Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional. */
     respectNullableSchemas: z.boolean().optional(),
 

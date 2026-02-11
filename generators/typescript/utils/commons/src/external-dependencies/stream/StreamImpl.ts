@@ -7,9 +7,9 @@ export class StreamImpl extends ExternalDependency implements Stream {
     protected override PACKAGE = { name: "stream" };
     protected override TYPES_PACKAGE = undefined;
 
-    public readonly Readable = {
+    public readonly Readable: Stream["Readable"] = {
         _getReferenceToType: this.withNamespaceImport("stream", (withImport, fs) =>
-            withImport(() => {
+            withImport((): ts.TypeReferenceNode => {
                 return ts.factory.createTypeReferenceNode(
                     ts.factory.createQualifiedName(ts.factory.createIdentifier(fs), "Readable"),
                     []

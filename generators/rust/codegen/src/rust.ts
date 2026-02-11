@@ -110,39 +110,76 @@ export function writer(): Writer {
 }
 
 // Convenience object for common patterns
-export const rust = {
-    Type,
-    Reference,
-    Attribute,
-    Field,
-    Struct,
-    Enum,
-    EnumVariant,
-    NewtypeStruct,
-    Method,
-    StandaloneFunction,
-    ImplBlock,
-    Module,
-    Client,
-    DocComment,
-    Expression,
-    Statement,
-    CodeBlock,
-    Pattern,
-    MatchArm,
-    attribute,
-    field,
-    struct,
-    enum_,
-    enumVariant,
-    newtypeStruct,
-    method,
-    standaloneFunction,
-    implBlock,
-    module,
-    client,
-    docComment,
-    writer,
+export const rust: {
+    Type: typeof Type;
+    Reference: typeof Reference;
+    Attribute: typeof Attribute;
+    Field: typeof Field;
+    Struct: typeof Struct;
+    Enum: typeof Enum;
+    EnumVariant: typeof EnumVariant;
+    NewtypeStruct: typeof NewtypeStruct;
+    Method: typeof Method;
+    StandaloneFunction: typeof StandaloneFunction;
+    ImplBlock: typeof ImplBlock;
+    Module: typeof Module;
+    Client: typeof Client;
+    DocComment: typeof DocComment;
+    Expression: typeof Expression;
+    Statement: typeof Statement;
+    CodeBlock: typeof CodeBlock;
+    Pattern: typeof Pattern;
+    MatchArm: typeof MatchArm;
+    attribute: typeof attribute;
+    field: typeof field;
+    struct: typeof struct;
+    enum_: typeof enum_;
+    enumVariant: typeof enumVariant;
+    newtypeStruct: typeof newtypeStruct;
+    method: typeof method;
+    standaloneFunction: typeof standaloneFunction;
+    implBlock: typeof implBlock;
+    module: typeof module;
+    client: typeof client;
+    docComment: typeof docComment;
+    writer: typeof writer;
+    visibility: {
+        public: Visibility;
+        private: Visibility;
+    };
+} = {
+    Type: Type,
+    Reference: Reference,
+    Attribute: Attribute,
+    Field: Field,
+    Struct: Struct,
+    Enum: Enum,
+    EnumVariant: EnumVariant,
+    NewtypeStruct: NewtypeStruct,
+    Method: Method,
+    StandaloneFunction: StandaloneFunction,
+    ImplBlock: ImplBlock,
+    Module: Module,
+    Client: Client,
+    DocComment: DocComment,
+    Expression: Expression,
+    Statement: Statement,
+    CodeBlock: CodeBlock,
+    Pattern: Pattern,
+    MatchArm: MatchArm,
+    attribute: attribute,
+    field: field,
+    struct: struct,
+    enum_: enum_,
+    enumVariant: enumVariant,
+    newtypeStruct: newtypeStruct,
+    method: method,
+    standaloneFunction: standaloneFunction,
+    implBlock: implBlock,
+    module: module,
+    client: client,
+    docComment: docComment,
+    writer: writer,
     visibility: {
         public: PUBLIC as Visibility,
         private: { type: "private" } as Visibility

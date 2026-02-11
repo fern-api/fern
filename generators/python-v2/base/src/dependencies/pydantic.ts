@@ -1,11 +1,11 @@
 import { python } from "@fern-api/python-ast";
 
-export const BaseModel = python.reference({
+export const BaseModel: python.Reference = python.reference({
     name: "BaseModel",
     modulePath: ["pydantic"]
 });
 
-export const Field = python.reference({
+export const Field: python.Reference = python.reference({
     name: "Field",
     modulePath: ["pydantic"]
 });

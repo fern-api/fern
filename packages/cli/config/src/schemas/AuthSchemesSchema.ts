@@ -11,6 +11,6 @@ import { z } from "zod";
  * Plus, these configurations might change over time, so we don't want
  * to lock ourselves into a specific schema.
  */
-export const AuthSchemesSchema = z.record(z.string(), z.unknown());
+export const AuthSchemesSchema: z.ZodRecord<z.ZodString, z.ZodUnknown> = z.record(z.string(), z.unknown());
 
 export type AuthSchemesSchema = z.infer<typeof AuthSchemesSchema>;

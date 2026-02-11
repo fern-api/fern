@@ -1,7 +1,51 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
-export const BaseRubyCustomConfigSchema = z.object({
+export const BaseRubyCustomConfigSchema: z.ZodObject<
+    {
+        moduleName: z.ZodOptional<z.ZodString>;
+        clientModuleName: z.ZodOptional<z.ZodString>;
+        customReadmeSections: z.ZodOptional<
+            z.ZodArray<
+                z.ZodObject<
+                    { title: z.ZodString; content: z.ZodString },
+                    "strict",
+                    z.ZodTypeAny,
+                    { title: string; content: string },
+                    { title: string; content: string }
+                >,
+                "many"
+            >
+        >;
+        customPagerName: z.ZodOptional<z.ZodString>;
+        enableWireTests: z.ZodOptional<z.ZodBoolean>;
+        extraDependencies: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+        extraDevDependencies: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+        requirePaths: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    },
+    "strip",
+    z.ZodTypeAny,
+    {
+        extraDependencies?: Record<string, string> | undefined;
+        extraDevDependencies?: Record<string, string> | undefined;
+        customReadmeSections?: Array<{ title: string; content: string }> | undefined;
+        customPagerName?: string | undefined;
+        moduleName?: string | undefined;
+        enableWireTests?: boolean | undefined;
+        clientModuleName?: string | undefined;
+        requirePaths?: Array<string> | undefined;
+    },
+    {
+        extraDependencies?: Record<string, string> | undefined;
+        extraDevDependencies?: Record<string, string> | undefined;
+        customReadmeSections?: Array<{ title: string; content: string }> | undefined;
+        customPagerName?: string | undefined;
+        moduleName?: string | undefined;
+        enableWireTests?: boolean | undefined;
+        clientModuleName?: string | undefined;
+        requirePaths?: Array<string> | undefined;
+    }
+> = z.object({
     // The Ruby module name used for folder structure and module naming (e.g., "Square" -> lib/square/, module Square)
     moduleName: z.optional(z.string()),
     clientModuleName: z.optional(z.string()),

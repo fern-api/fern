@@ -43,17 +43,19 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
 
-    public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
+    public static readonly OPTIONS_INTERFACE_NAME: "BaseClientOptions" = OPTIONS_INTERFACE_NAME;
 
-    public static readonly REQUEST_OPTIONS_INTERFACE_NAME = REQUEST_OPTIONS_INTERFACE_NAME;
-    public static readonly TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME =
+    public static readonly REQUEST_OPTIONS_INTERFACE_NAME: "BaseRequestOptions" = REQUEST_OPTIONS_INTERFACE_NAME;
+    public static readonly TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME: "timeoutInSeconds" =
         TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME;
-    public static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME;
-    public static readonly ABORT_SIGNAL_PROPERTY_NAME = ABORT_SIGNAL_PROPERTY_NAME;
-    public static readonly CUSTOM_FETCHER_PROPERTY_NAME = CUSTOM_FETCHER_PROPERTY_NAME;
-    public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = ENVIRONMENT_OPTION_PROPERTY_NAME;
-    public static readonly BASE_URL_OPTION_PROPERTY_NAME = BASE_URL_OPTION_PROPERTY_NAME;
-    public static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME;
+    public static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME: "maxRetries" =
+        MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME;
+    public static readonly ABORT_SIGNAL_PROPERTY_NAME: "abortSignal" = ABORT_SIGNAL_PROPERTY_NAME;
+    public static readonly CUSTOM_FETCHER_PROPERTY_NAME: "fetcher" = CUSTOM_FETCHER_PROPERTY_NAME;
+    public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME: "environment" = ENVIRONMENT_OPTION_PROPERTY_NAME;
+    public static readonly BASE_URL_OPTION_PROPERTY_NAME: "baseUrl" = BASE_URL_OPTION_PROPERTY_NAME;
+    public static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME: "BaseIdempotentRequestOptions" =
+        IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME;
     private bearerAuthScheme: FernIr.BearerAuthScheme | undefined;
     private basicAuthScheme: FernIr.BasicAuthScheme | undefined;
     private inferredAuthScheme: FernIr.InferredAuthScheme | undefined;

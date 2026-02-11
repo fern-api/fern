@@ -40,14 +40,18 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
-    public readonly MANIFEST = MANIFEST;
-    public readonly newFormData = this.withExportedName(
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
+    public readonly newFormData: () => ts.AwaitExpression = this.withExportedName(
         "newFormData",
-        (fdw) => () =>
+        (fdw) => (): ts.AwaitExpression =>
             ts.factory.createAwaitExpression(ts.factory.createCallExpression(fdw.getExpression(), undefined, []))
     );
 
-    public readonly encodeAsFormParameter = this.withExportedName(
+    public readonly encodeAsFormParameter: ({
+        referenceToArgument
+    }: {
+        referenceToArgument: ts.Expression;
+    }) => ts.CallExpression = this.withExportedName(
         "encodeAsFormParameter",
         (encodeAsFormParameter) =>
             ({ referenceToArgument }: { referenceToArgument: ts.Expression }): ts.CallExpression =>

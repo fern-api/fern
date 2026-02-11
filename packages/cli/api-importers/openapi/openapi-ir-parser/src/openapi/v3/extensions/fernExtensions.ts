@@ -33,12 +33,14 @@ export const FERN_TYPE_EXTENSIONS: Plugin = {
     }
 };
 
-export const FernOpenAPIExtension = {
-    SOURCE: TypedExtensionId.of<string>("source"),
+export const FernOpenAPIExtensionImpl = {
+    SOURCE: TypedExtensionId.of<string>("source") as TypedExtensionId<string>,
 
-    SDK_NAMESPACE: TypedExtensionId.of<string>("x-fern-sdk-namespace"),
-    SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),
-    SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name"),
+    SDK_NAMESPACE: TypedExtensionId.of<string>("x-fern-sdk-namespace") as TypedExtensionId<string>,
+    SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name") as TypedExtensionId<string>,
+    SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name") as TypedExtensionId<
+        string | string[]
+    >,
 
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
@@ -72,7 +74,7 @@ export const FernOpenAPIExtension = {
      *    groups:
      *      group2 # add child groups
      */
-    GROUPS: TypedExtensionId.of<string | string[]>("x-fern-groups"),
+    GROUPS: TypedExtensionId.of<string | string[]>("x-fern-groups") as TypedExtensionId<string | string[]>,
 
     /**
      * Filepath that contains any OpenAPI overrides
@@ -502,5 +504,6 @@ export const FernOpenAPIExtension = {
      */
     EXPLORER_ENABLED: "x-fern-explorer-enabled"
 } as const;
+export const FernOpenAPIExtension: typeof FernOpenAPIExtensionImpl = FernOpenAPIExtensionImpl;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

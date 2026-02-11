@@ -23,25 +23,29 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class UrlUtilsImpl extends CoreUtility implements UrlUtils {
-    public readonly MANIFEST = MANIFEST;
-    public readonly join = {
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
+    public readonly join: UrlUtils["join"] = {
         _invoke: this.withExportedName(
             "join",
-            (join) => (args: ts.Expression[]) => ts.factory.createCallExpression(join.getExpression(), undefined, args)
+            (join) =>
+                (args: ts.Expression[]): ts.CallExpression =>
+                    ts.factory.createCallExpression(join.getExpression(), undefined, args)
         )
     };
-    public readonly toQueryString = {
+    public readonly toQueryString: UrlUtils["toQueryString"] = {
         _invoke: this.withExportedName(
             "toQueryString",
-            (toQueryString) => (args: ts.Expression[]) =>
-                ts.factory.createCallExpression(toQueryString.getExpression(), undefined, args)
+            (toQueryString) =>
+                (args: ts.Expression[]): ts.CallExpression =>
+                    ts.factory.createCallExpression(toQueryString.getExpression(), undefined, args)
         )
     };
-    public readonly encodePathParam = {
+    public readonly encodePathParam: UrlUtils["encodePathParam"] = {
         _invoke: this.withExportedName(
             "encodePathParam",
-            (encodePathParam) => (arg: ts.Expression) =>
-                ts.factory.createCallExpression(encodePathParam.getExpression(), undefined, [arg])
+            (encodePathParam) =>
+                (arg: ts.Expression): ts.CallExpression =>
+                    ts.factory.createCallExpression(encodePathParam.getExpression(), undefined, [arg])
         )
     };
 }

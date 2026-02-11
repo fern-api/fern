@@ -52,9 +52,9 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class StreamImpl extends CoreUtility implements Stream {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
 
-    public Stream = {
+    public Stream: Stream["Stream"] = {
         _construct: this.withExportedName(
             "Stream",
             (Stream) =>
@@ -118,8 +118,9 @@ export class StreamImpl extends CoreUtility implements Stream {
 
         _getReferenceToType: this.withExportedName(
             "Stream",
-            (APIResponse) => (response: ts.TypeNode) =>
-                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response])
+            (APIResponse) =>
+                (response: ts.TypeNode): ts.TypeReferenceNode =>
+                    ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response])
         )
     };
 }

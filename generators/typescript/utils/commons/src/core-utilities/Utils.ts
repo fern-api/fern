@@ -16,9 +16,9 @@ export const MANIFEST: CoreUtility.Manifest = {
     }
 };
 export class UtilsImpl extends CoreUtility implements Utils {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
 
-    public setObjectProperty = {
+    public setObjectProperty: Utils["setObjectProperty"] = {
         _invoke: this.withExportedName(
             "setObjectProperty",
             (setObjectProperty) =>
@@ -30,7 +30,7 @@ export class UtilsImpl extends CoreUtility implements Utils {
                     referenceToObject: ts.Expression;
                     path: string;
                     value: ts.Expression;
-                }) =>
+                }): ts.CallExpression =>
                     ts.factory.createCallExpression(setObjectProperty.getExpression(), undefined, [
                         referenceToObject,
                         ts.factory.createStringLiteral(path),

@@ -4,10 +4,10 @@ import { IrMigrationContext } from "../IrMigrationContext";
 
 export type GeneratorVersion = string | GeneratorWasNeverUpdatedToConsumeNewIR | GeneratorWasNotCreatedYet;
 
-export const GeneratorWasNeverUpdatedToConsumeNewIR = Symbol();
+export const GeneratorWasNeverUpdatedToConsumeNewIR: typeof GeneratorWasNeverUpdatedToConsumeNewIR = Symbol();
 export type GeneratorWasNeverUpdatedToConsumeNewIR = typeof GeneratorWasNeverUpdatedToConsumeNewIR;
 
-export const GeneratorWasNotCreatedYet = Symbol();
+export const GeneratorWasNotCreatedYet: typeof GeneratorWasNotCreatedYet = Symbol();
 export type GeneratorWasNotCreatedYet = typeof GeneratorWasNotCreatedYet;
 
 export interface IrMigration<LaterVersion, EarlierVersion> {

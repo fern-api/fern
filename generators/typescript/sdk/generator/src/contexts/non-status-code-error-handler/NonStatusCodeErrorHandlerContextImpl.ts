@@ -44,7 +44,7 @@ export class NonStatusCodeErrorHandlerContextImpl implements NonStatusCodeErrorH
         return this.nonStatusCodeErrorHandlerDeclarationReferencer.getReferenceToHandleNonStatusCodeError(args);
     }
 
-    public getGeneratedNonStatusCodeErrorHandler() {
+    public getGeneratedNonStatusCodeErrorHandler(): import("/home/ubuntu/repos/fern/generators/typescript/sdk/generator/src/non-status-code-error-handler/GeneratedNonStatusCodeErrorHandlerImpl").GeneratedNonStatusCodeErrorHandlerImpl {
         return this.nonStatusCodeErrorHandlerGenerator.generateNonStatusCodeErrorHandler();
     }
 }

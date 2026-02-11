@@ -10,4 +10,4 @@ export const LogLevel = {
 
 export type LogLevel = Values<typeof LogLevel>;
 
-export const LOG_LEVELS = Object.values(LogLevel);
+export const LOG_LEVELS: Array<"trace" | "debug" | "info" | "warn" | "error"> = Object.values(LogLevel);

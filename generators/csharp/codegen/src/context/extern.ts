@@ -9,7 +9,7 @@ import { lazy } from "../utils/lazy";
  */
 export class Extern {
     constructor(private readonly generation: Generation) {}
-    protected get csharp() {
+    protected get csharp(): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/csharp").CSharp {
         return this.generation.csharp;
     }
     /**
@@ -19,14 +19,141 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached, functions remain callable.
      */
-    readonly System = lazy({
+    readonly System: {
+        Action: (
+            typeParameters?: Type[]
+        ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        Func: (
+            typeParameters?: Type[],
+            returnType?: Type
+        ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        DateOnly: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        DateTime: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        Enum: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        Exception: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        ReadOnlyMemory: (
+            type: Type
+        ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        Serializable: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        String: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        Type: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        TimeSpan: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        Uri: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        UriBuilder: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        Runtime: {
+            Serialization: {
+                EnumMember: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+        };
+        Collections: {
+            Generic: {
+                IAsyncEnumerable: (
+                    elementType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                IEnumerable: (
+                    elementType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                KeyValuePair: (
+                    keyType?: Type,
+                    valueType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                List: (
+                    elementType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                HashSet: (
+                    elementType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                Dictionary: (
+                    keyType?: Type,
+                    valueType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                IDictionary: (
+                    keyType: Type,
+                    valueType: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+            Linq: {
+                Enumerable: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+        };
+        Globalization: {
+            DateTimeStyles: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        };
+        Linq: { Enumerable: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference };
+        Net: {
+            Http: {
+                HttpClient: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                HttpMethod: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                HttpResponseHeaders: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+            ServerSentEvents: {
+                SseEvent: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                SseParser: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+            WebSockets: {
+                ClientWebSocketOptions: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+        };
+        IO: {
+            MemoryStream: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            Stream: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            StreamReader: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        };
+        Text: {
+            Encoding: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            Encoding_UTF8: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            Json: {
+                JsonElement: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                JsonDocument: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                JsonException: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                Utf8JsonReader: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                JsonSerializerOptions: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                JsonSerializer: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                Utf8JsonWriter: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                Nodes: {
+                    JsonNode: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                    JsonObject: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                };
+                Serialization: {
+                    IJsonOnDeserialized: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                    IJsonOnSerializing: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                    JsonOnDeserializedAttribute: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                    JsonExtensionData: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                    JsonConverter: (
+                        typeToConvert?: Type
+                    ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                    JsonIgnore: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                    JsonPropertyName: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                };
+            };
+        };
+        Threading: {
+            CancellationToken: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            Tasks: {
+                Task: (
+                    ofType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                ValueTask: (
+                    ofType?: Type
+                ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+        };
+        ComponentModel: {
+            INotifyPropertyChanged: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            PropertyChangedEventHandler: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        };
+        IAsyncDisposable: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        IDisposable: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+    } = lazy({
         /**
          * Creates a reference to System.Action<T> delegate.
          *
          * @param typeParameters - The generic type parameters (optional)
          * @returns A ClassReference for Action<T>
          */
-        Action: (typeParameters?: Type[]) =>
+        Action: (
+            typeParameters?: Type[]
+        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference =>
             this.csharp.classReference({
                 name: "Action",
                 namespace: "System",
@@ -42,7 +169,10 @@ export class Extern {
          * @param returnType - The return type (optional)
          * @returns A ClassReference for Func<TArgs..., TResult>
          */
-        Func: (typeParameters?: Type[], returnType?: Type) =>
+        Func: (
+            typeParameters?: Type[],
+            returnType?: Type
+        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference =>
             this.csharp.classReference({
                 name: "Func",
                 namespace: "System",
@@ -97,7 +227,9 @@ export class Extern {
          * @param type - The element type
          * @returns A ClassReference for ReadOnlyMemory<T>
          */
-        ReadOnlyMemory: (type: Type) =>
+        ReadOnlyMemory: (
+            type: Type
+        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference =>
             this.csharp.classReference({
                 name: "ReadOnlyMemory",
                 namespace: "System",
@@ -195,7 +327,9 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for IAsyncEnumerable<T>
                          */
-                        IAsyncEnumerable: (elementType?: Type) => {
+                        IAsyncEnumerable: (
+                            elementType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "IAsyncEnumerable",
                                 namespace: "System.Collections.Generic",
@@ -209,7 +343,9 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for IEnumerable<T>
                          */
-                        IEnumerable: (elementType?: Type) => {
+                        IEnumerable: (
+                            elementType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "IEnumerable",
                                 namespace: "System.Collections.Generic",
@@ -224,7 +360,10 @@ export class Extern {
                          * @param valueType - The value type (optional)
                          * @returns A ClassReference for KeyValuePair<TKey, TValue>
                          */
-                        KeyValuePair: (keyType?: Type, valueType?: Type) => {
+                        KeyValuePair: (
+                            keyType?: Type,
+                            valueType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "KeyValuePair",
                                 namespace: "System.Collections.Generic",
@@ -238,7 +377,9 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for List<T>
                          */
-                        List: (elementType?: Type) => {
+                        List: (
+                            elementType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "List",
                                 namespace: "System.Collections.Generic",
@@ -253,7 +394,9 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for HashSet<T>
                          */
-                        HashSet: (elementType?: Type) => {
+                        HashSet: (
+                            elementType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "HashSet",
                                 namespace: "System.Collections.Generic",
@@ -269,7 +412,10 @@ export class Extern {
                          * @param valueType - The value type (optional)
                          * @returns A ClassReference for Dictionary<TKey, TValue>
                          */
-                        Dictionary: (keyType?: Type, valueType?: Type) => {
+                        Dictionary: (
+                            keyType?: Type,
+                            valueType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "Dictionary",
                                 namespace: "System.Collections.Generic",
@@ -284,7 +430,10 @@ export class Extern {
                          * @param valueType - The value type
                          * @returns A ClassReference for IDictionary<TKey, TValue>
                          */
-                        IDictionary: (keyType: Type, valueType: Type) =>
+                        IDictionary: (
+                            keyType: Type,
+                            valueType: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference =>
                             this.csharp.classReference({
                                 name: "IDictionary",
                                 namespace: "System.Collections.Generic",
@@ -603,7 +752,9 @@ export class Extern {
                                  * @param typeToConvert - The type to convert (optional)
                                  * @returns A ClassReference for JsonConverter<T>
                                  */
-                                JsonConverter: (typeToConvert?: Type) => {
+                                JsonConverter: (
+                                    typeToConvert?: Type
+                                ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                                     return this.csharp.classReference({
                                         name: "JsonConverter",
                                         namespace: "System.Text.Json.Serialization",
@@ -656,7 +807,9 @@ export class Extern {
                          * @param ofType - The result type (optional)
                          * @returns A ClassReference for Task<T>
                          */
-                        Task: (ofType?: Type) => {
+                        Task: (
+                            ofType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "Task",
                                 namespace: "System.Threading.Tasks",
@@ -669,7 +822,9 @@ export class Extern {
                          * @param ofType - The result type (optional)
                          * @returns A ClassReference for ValueTask<T>
                          */
-                        ValueTask: (ofType?: Type) => {
+                        ValueTask: (
+                            ofType?: Type
+                        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
                             return this.csharp.classReference({
                                 name: "ValueTask",
                                 namespace: "System.Threading.Tasks",
@@ -725,7 +880,15 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly NUnit = lazy({
+    readonly NUnit: {
+        Framework: {
+            TestFixture: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            Test: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            OneTimeTearDown: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            OneTimeSetUp: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            SetUpFixture: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        };
+    } = lazy({
         /**
          * NUnit Framework namespace references.
          */
@@ -782,14 +945,23 @@ export class Extern {
      *
      * Functions with parameters remain callable.
      */
-    readonly OneOf = lazy({
+    readonly OneOf: {
+        OneOf: (
+            generics?: Type[]
+        ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        OneOfBase: (
+            generics?: Type[]
+        ) => import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+    } = lazy({
         /**
          * Creates a reference to OneOf<T1, T2, ...>.
          *
          * @param generics - Array of generic type parameters (optional)
          * @returns A ClassReference for OneOf<T1, T2, ...>
          */
-        OneOf: (generics?: Type[]) => {
+        OneOf: (
+            generics?: Type[]
+        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
             return this.csharp.classReference({
                 name: "OneOf",
                 namespace: "OneOf",
@@ -803,7 +975,9 @@ export class Extern {
          * @param generics - Array of generic type parameters (optional)
          * @returns A ClassReference for OneOfBase<T1, T2, ...>
          */
-        OneOfBase: (generics?: Type[]) => {
+        OneOfBase: (
+            generics?: Type[]
+        ): import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference => {
             return this.csharp.classReference({
                 name: "OneOfBase",
                 namespace: "OneOf",
@@ -819,7 +993,16 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly Google = lazy({
+    readonly Google: {
+        Protobuf: {
+            WellKnownTypes: {
+                Struct: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                Value: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                ListValue: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+                Timestamp: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+            };
+        };
+    } = lazy({
         /**
          * Protocol Buffers namespace references.
          */
@@ -880,7 +1063,11 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly WireMock = lazy({
+    readonly WireMock: {
+        Server: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        WireMockServerSettings: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        WireMockConsoleLogger: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+    } = lazy({
         /**
          * Reference to WireMock.Server.WireMockServer class.
          */
@@ -914,7 +1101,11 @@ export class Extern {
      *
      * All values are lazy initialized - simple references are cached.
      */
-    readonly Grpc = lazy({
+    readonly Grpc: {
+        Core: {
+            RpcException: import("/home/ubuntu/repos/fern/generators/csharp/codegen/src/ast/index").ClassReference;
+        };
+    } = lazy({
         /**
          * Grpc.Core namespace references.
          */

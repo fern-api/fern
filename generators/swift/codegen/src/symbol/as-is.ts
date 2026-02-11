@@ -37,7 +37,120 @@ export interface AsIsFileSpec<SymbolName extends string> {
  * included in generated SDKs. Each entry maps a unique identifier to a file specification
  * containing the file's intended path and exported symbols.
  */
-export const SourceAsIsFileSpecs = {
+export const SourceAsIsFileSpecs: {
+    Http: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "HTTP"; shape: { type: "enum-container" } }>;
+    };
+    MultipartFormData: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "MultipartFormData"; shape: { type: "class" } }>;
+    };
+    MultipartFormDataConvertible: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "MultipartFormDataConvertible"; shape: { type: "protocol" } }>;
+    };
+    MultipartFormField: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "MultipartFormField"; shape: { type: "enum-with-associated-values" } }>;
+    };
+    QueryParameter: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "QueryParameter"; shape: { type: "enum-with-associated-values" } }>;
+    };
+    DecoderPlusAdditionalProperties: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<never>;
+    };
+    EncodableValue: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "EncodableValue"; shape: { type: "struct" } }>;
+    };
+    EncoderPlusAdditionalProperties: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<never>;
+    };
+    JSONEncoderPlusEncodableValue: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<never>;
+    };
+    KeyedDecodingContainerPlusNullable: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<never>;
+    };
+    KeyedEncodingContainerPlusNullable: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<never>;
+    };
+    Serde: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "Serde"; shape: { type: "class" } }>;
+    };
+    StringKey: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "StringKey"; shape: { type: "struct" } }>;
+    };
+    DataPlusString: { relativePathToDir: string; filenameWithoutExtension: string; symbols: Array<never> };
+    StringPlusUrlEncoding: { relativePathToDir: string; filenameWithoutExtension: string; symbols: Array<never> };
+    CalendarDate: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "CalendarDate"; shape: { type: "struct" } }>;
+    };
+    ClientConfig: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "ClientConfig"; shape: { type: "class" } }>;
+    };
+    FormFile: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "FormFile"; shape: { type: "struct" } }>;
+    };
+    HTTPError: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "HTTPError"; shape: { type: "struct" } }>;
+    };
+    Indirect: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "Indirect"; shape: { type: "class" } }>;
+    };
+    JsonValue: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "JSONValue"; shape: { type: "enum-with-associated-values" } }>;
+    };
+    Networking: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "Networking"; shape: { type: "enum-container" } }>;
+    };
+    Nullable: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "Nullable"; shape: { type: "enum-with-associated-values" } }>;
+    };
+    RequestOptions: {
+        relativePathToDir: string;
+        filenameWithoutExtension: string;
+        symbols: Array<{ name: "RequestOptions"; shape: { type: "struct" } }>;
+    };
+} = {
     // Core/Networking
     Http: {
         relativePathToDir: "Core/Networking",

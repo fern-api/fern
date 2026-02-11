@@ -12,11 +12,11 @@ abstract class AbstractSymbol {
         this.childrenByName = new Map();
     }
 
-    public get children() {
+    public get children(): Symbol[] {
         return Array.from(this.childrenByName.values());
     }
 
-    public addChild(child: Symbol) {
+    public addChild(child: Symbol): void {
         if (this.childrenByName.has(child.name)) {
             throw new Error(`A child with the name '${child.name}' already exists in module '${this.name}'.`);
         }
@@ -38,7 +38,7 @@ export class ModuleSymbol extends AbstractSymbol {
         this.imports = [];
     }
 
-    public addImport(moduleSymbol: ModuleSymbol) {
+    public addImport(moduleSymbol: ModuleSymbol): void {
         this.imports.push(moduleSymbol);
     }
 

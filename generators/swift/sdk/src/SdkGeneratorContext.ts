@@ -30,7 +30,7 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
         });
     }
 
-    public getSPMDetails() {
+    public getSPMDetails(): void {
         return this.config.output.mode._visit<SPMDetails>({
             downloadFiles: () => ({
                 gitUrl: null,

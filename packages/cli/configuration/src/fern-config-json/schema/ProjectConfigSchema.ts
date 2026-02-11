@@ -1,6 +1,12 @@
 import { z } from "zod";
 
-export const ProjectConfigSchema = z.strictObject({
+export const ProjectConfigSchema: z.ZodObject<
+    { organization: z.ZodString; version: z.ZodString },
+    "strict",
+    z.ZodTypeAny,
+    { version: string; organization: string },
+    { version: string; organization: string }
+> = z.strictObject({
     organization: z.string(),
     version: z.string()
 });

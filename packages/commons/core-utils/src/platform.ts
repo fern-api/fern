@@ -4,7 +4,7 @@ const uaParser = new UAParser();
 
 export type Platform = "mac" | "windows" | "other";
 
-export const PLATFORM = (function getPlatform(): Platform {
+export const PLATFORM: Platform = (function getPlatform(): Platform {
     const { name } = uaParser.getOS();
     if (typeof name === "string") {
         if (name.startsWith("Mac OS")) {

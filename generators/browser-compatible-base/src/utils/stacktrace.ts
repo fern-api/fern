@@ -12,14 +12,14 @@
  */
 const key = process.env["FERN_STACK_TRACK"]?.toLowerCase() ?? "";
 
-export const enableStackTracking = key !== "" && key !== "0" && key !== "false";
+export const enableStackTracking: boolean = key !== "" && key !== "0" && key !== "false";
 
 /** The style of comments desired for the stack tracking comments
  *
  * can be "single", "multiline", or "box".
  * if not set to one of those, defaults to "single".
  */
-export const trackingType = ["single", "multiline", "box"].includes(key) ? key : "single";
+export const trackingType: string = ["single", "multiline", "box"].includes(key) ? key : "single";
 
 if (enableStackTracking) {
     // we're going to put a hard max limit on the stack trace to prevent infinite recursion and excessive stack generation
@@ -428,7 +428,7 @@ export function startTracking({
     filterJs = true,
     multiline = false,
     formatFilename = (filename) => filename
-}: StackTraceOptions & { multiline?: boolean } = {}) {
+}: StackTraceOptions & { multiline?: boolean } = {}): void {
     if (!enableStackTracking) {
         return;
     }
@@ -453,7 +453,7 @@ export function startTracking({
  *
  * @param obj - The object to tag the stack trace with.
  */
-export function tag(obj: object) {
+export function tag(obj: object): void {
     stackTraces?.tag(obj);
 }
 
@@ -466,7 +466,7 @@ export function tag(obj: object) {
  * @param obj - The object to get the stack trace for.
  * @returns A formatted string containing the stack trace information.
  */
-export function trace(obj: object) {
+export function trace(obj: object): string {
     return stackTraces?.trace(obj) ?? "";
 }
 
@@ -478,7 +478,7 @@ export function trace(obj: object) {
  *
  * @param obj - The object to free the stack trace information for.
  */
-export function free(obj: object) {
+export function free(obj: object): void {
     stackTraces?.free(obj);
 }
 

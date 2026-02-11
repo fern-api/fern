@@ -24,21 +24,28 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class FileUtilsImpl extends CoreUtility implements FileUtils {
-    public readonly MANIFEST = MANIFEST;
-    public readonly FileLike = {
-        _getReferenceToType: this.withExportedName("Uploadable.FileLike", (FileLike) => () => FileLike.getTypeNode())
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
+    public readonly FileLike: FileUtils["FileLike"] = {
+        _getReferenceToType: this.withExportedName(
+            "Uploadable.FileLike",
+            (FileLike) => (): ts.TypeNode => FileLike.getTypeNode()
+        )
     };
-    public readonly Uploadable = {
-        _getReferenceToType: this.withExportedName("Uploadable", (Uploadable) => () => Uploadable.getTypeNode())
+    public readonly Uploadable: FileUtils["Uploadable"] = {
+        _getReferenceToType: this.withExportedName(
+            "Uploadable",
+            (Uploadable) => (): ts.TypeNode => Uploadable.getTypeNode()
+        )
     };
 
-    public readonly toBinaryUploadRequest = {
+    public readonly toBinaryUploadRequest: FileUtils["toBinaryUploadRequest"] = {
         _invoke: this.withExportedName(
             "toBinaryUploadRequest",
-            (toBinaryUploadRequest) => (arg: ts.Expression) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(toBinaryUploadRequest.getExpression(), undefined, [arg])
-                )
+            (toBinaryUploadRequest) =>
+                (arg: ts.Expression): ts.AwaitExpression =>
+                    ts.factory.createAwaitExpression(
+                        ts.factory.createCallExpression(toBinaryUploadRequest.getExpression(), undefined, [arg])
+                    )
         )
     };
 }

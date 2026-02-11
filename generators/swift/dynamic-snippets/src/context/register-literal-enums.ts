@@ -13,7 +13,7 @@ export function registerLiteralEnums({
     registry: NameRegistry;
     namedType: FernIr.dynamic.NamedType;
     context: DynamicSnippetsGeneratorContext;
-}) {
+}): void {
     visitDiscriminatedUnion(namedType, "type")._visit({
         object: (otd) => {
             registerLiteralEnumsForObjectProperties({
@@ -76,7 +76,7 @@ export function registerLiteralEnumsForObjectProperties({
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
     properties: FernIr.dynamic.NamedParameter[];
-}) {
+}): void {
     properties.forEach((property) => {
         registerLiteralEnumsForTypeReference({
             parentSymbol,
@@ -94,7 +94,7 @@ export function registerLiteralEnumsForTypeReference({
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
     typeReference: FernIr.dynamic.TypeReference;
-}) {
+}): void {
     visitDiscriminatedUnion(typeReference, "type")._visit({
         list: (lt) => {
             registerLiteralEnumsForTypeReference({

@@ -30,7 +30,7 @@ export class WireTestSetupGenerator {
         this.generatePytestPluginFile();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: IntermediateRepresentation): object {
         return new WireMock().convertToWireMock(ir);
     }
 

@@ -23,7 +23,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
     public generate(
         cls: ast.Class,
         { serviceId, endpoint, rawGrpcClientReference, grpcClientInfo }: GrpcEndpointGenerator.Args
-    ) {
+    ): void {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({
             serviceId,
             endpoint

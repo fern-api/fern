@@ -123,12 +123,12 @@ export declare namespace ExampleConverter {
 
 export class ExampleConverter extends AbstractConverter<AbstractConverterContext<object>, ExampleConverter.Output> {
     protected readonly MAX_DEPTH = 12;
-    protected readonly EXAMPLE_STRING = Examples.STRING;
-    protected readonly EXAMPLE_NUMBER = Examples.DOUBLE;
-    protected readonly EXAMPLE_BOOLEAN = Examples.BOOLEAN;
-    protected readonly EXAMPLE_INTEGER = Examples.INT;
-    protected readonly EXAMPLE_DATE = Examples.DATE;
-    protected readonly EXAMPLE_DATE_TIME = Examples.DATE_TIME;
+    protected readonly EXAMPLE_STRING: "string" = Examples.STRING;
+    protected readonly EXAMPLE_NUMBER: 1.1 = Examples.DOUBLE;
+    protected readonly EXAMPLE_BOOLEAN: true = Examples.BOOLEAN;
+    protected readonly EXAMPLE_INTEGER: 1 = Examples.INT;
+    protected readonly EXAMPLE_DATE: "2023-01-15" = Examples.DATE;
+    protected readonly EXAMPLE_DATE_TIME: "2024-01-15T09:30:00Z" = Examples.DATE_TIME;
 
     private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly example: unknown;

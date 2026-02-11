@@ -153,7 +153,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         return this.cli.pushToGitHub({ githubConfig, withPullRequest: githubConfig.mode === "pull-request" });
     }
 
-    protected resolveGitHubConfig({ context }: { context: GeneratorContext }) {
+    protected resolveGitHubConfig({
+        context
+    }: {
+        context: GeneratorContext;
+    }): import("/home/ubuntu/repos/fern/generators/base/src/utils/GitHubConfig").ResolvedGithubConfig {
         const rawGithubConfig = this.getGitHubConfig({ context });
         return resolveGitHubConfig({ rawGithubConfig, logger: this.logger });
     }

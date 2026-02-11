@@ -1,6 +1,6 @@
 import { python } from "@fern-api/python-ast";
 
-export const serialize_datetime = python.reference({
+export const serialize_datetime: python.Reference = python.reference({
     modulePath: ["core", "datetime_utils"],
     name: "serialize_datetime"
 });

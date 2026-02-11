@@ -64,7 +64,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     public readonly getReferenceToUnion: (context: Context) => Reference;
     public readonly discriminant: string;
-    public readonly visitPropertyName = GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME;
+    public readonly visitPropertyName: "_visit" = GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME;
 
     private readonly getDocs: ((context: Context) => string | null | undefined) | undefined;
     private readonly typeName: string;

@@ -179,7 +179,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             rawClient: RawClient;
             grpcClientInfo: GrpcClientInfo | undefined;
         }
-    ) {
+    ): void {
         if (this.isGrpcEndpoint(grpcClientInfo, endpoint)) {
             this.grpc.generate(cls, {
                 serviceId,

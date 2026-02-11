@@ -12,7 +12,7 @@ export function registerDiscriminatedUnionVariants({
     registry: NameRegistry;
     typeDeclaration: TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
-}) {
+}): void {
     typeDeclaration.shape._visit({
         union: (utd) => {
             const variants = utd.types.map((singleUnionType) => {

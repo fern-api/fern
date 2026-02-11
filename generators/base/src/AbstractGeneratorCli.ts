@@ -22,7 +22,7 @@ export abstract class AbstractGeneratorCli<
     IntermediateRepresentation,
     GeneratorContext extends AbstractGeneratorContext
 > {
-    protected readonly GENERATION_METADATA_FILEPATH = RelativeFilePath.of("./.fern");
+    protected readonly GENERATION_METADATA_FILEPATH: RelativeFilePath = RelativeFilePath.of("./.fern");
     protected readonly GENERATION_METADATA_FILENAME = "metadata.json";
 
     public async run(options: AbstractGeneratorCli.Options = {}): Promise<void> {

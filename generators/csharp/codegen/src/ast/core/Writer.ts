@@ -113,7 +113,7 @@ ${this.buffer}`;
 
     private inQuoteBlock = false;
 
-    public override shouldSkipTracking(lines: string[]) {
+    public override shouldSkipTracking(lines: string[]): boolean {
         lines.forEach((line) => (this.inQuoteBlock = line.includes('"""') ? !this.inQuoteBlock : this.inQuoteBlock));
         return this.inQuoteBlock;
     }

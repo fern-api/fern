@@ -38,32 +38,35 @@ export const MANIFEST: CoreUtility.Manifest = {
 };
 
 export class LoggingImpl extends CoreUtility implements Logging {
-    public readonly MANIFEST = MANIFEST;
+    public readonly MANIFEST: CoreUtility.Manifest = MANIFEST;
 
-    public readonly LogLevel = {
-        _getReferenceToType: this.withExportedName("LogLevel", (LogLevel) => () => LogLevel.getTypeNode())
+    public readonly LogLevel: Logging["LogLevel"] = {
+        _getReferenceToType: this.withExportedName("LogLevel", (LogLevel) => (): ts.TypeNode => LogLevel.getTypeNode())
     };
 
-    public readonly ILogger = {
-        _getReferenceToType: this.withExportedName("ILogger", (ILogger) => () => ILogger.getTypeNode())
+    public readonly ILogger: Logging["ILogger"] = {
+        _getReferenceToType: this.withExportedName("ILogger", (ILogger) => (): ts.TypeNode => ILogger.getTypeNode())
     };
 
-    public readonly LogConfig = {
-        _getReferenceToType: this.withExportedName("LogConfig", (LogConfig) => () => LogConfig.getTypeNode())
-    };
-
-    public readonly ConsoleLogger = {
+    public readonly LogConfig: Logging["LogConfig"] = {
         _getReferenceToType: this.withExportedName(
-            "ConsoleLogger",
-            (ConsoleLogger) => () => ConsoleLogger.getTypeNode()
+            "LogConfig",
+            (LogConfig) => (): ts.TypeNode => LogConfig.getTypeNode()
         )
     };
 
-    public readonly Logger = {
-        _getReferenceToType: this.withExportedName("Logger", (Logger) => () => Logger.getTypeNode())
+    public readonly ConsoleLogger: Logging["ConsoleLogger"] = {
+        _getReferenceToType: this.withExportedName(
+            "ConsoleLogger",
+            (ConsoleLogger) => (): ts.TypeNode => ConsoleLogger.getTypeNode()
+        )
     };
 
-    public readonly createLogger = {
+    public readonly Logger: Logging["Logger"] = {
+        _getReferenceToType: this.withExportedName("Logger", (Logger) => (): ts.TypeNode => Logger.getTypeNode())
+    };
+
+    public readonly createLogger: Logging["createLogger"] = {
         _invoke: this.withExportedName("createLogger", (createLogger) => (arg: ts.Expression): ts.Expression => {
             return ts.factory.createCallExpression(createLogger.getExpression(), undefined, [arg]);
         })

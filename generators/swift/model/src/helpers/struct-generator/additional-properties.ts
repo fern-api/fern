@@ -9,7 +9,10 @@ export interface AdditionalPropertiesMetadata {
     swiftType: swift.TypeReference;
 }
 
-export function computeAdditionalPropertiesMetadata(generatorArgs: StructGenerator.Args, referencer: Referencer) {
+export function computeAdditionalPropertiesMetadata(
+    generatorArgs: StructGenerator.Args,
+    referencer: Referencer
+): AdditionalPropertiesMetadata | null {
     const {
         constantPropertyDefinitions,
         dataPropertyDefinitions,

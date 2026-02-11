@@ -66,7 +66,7 @@ export type SourceAsIsFileDefinitionsById = {
  * }
  * ```
  */
-export const SourceAsIsFiles = createSourceAsIsFiles();
+export const SourceAsIsFiles: SourceAsIsFileDefinitionsById = createSourceAsIsFiles();
 
 /**
  * Transforms the raw file specifications into fully resolved file definitions.
@@ -99,7 +99,7 @@ export type TestAsIsFileDefinitionsById = {
     [K in TestAsIsFileId]: AsIsFileDefinition;
 };
 
-export const TestAsIsFiles = createTestAsIsFiles();
+export const TestAsIsFiles: TestAsIsFileDefinitionsById = createTestAsIsFiles();
 
 function createTestAsIsFiles(): TestAsIsFileDefinitionsById {
     const result = {} as TestAsIsFileDefinitionsById;

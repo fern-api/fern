@@ -7,7 +7,7 @@ import { version } from "../package.json";
 import { generateIr } from "./generateIr";
 import { Options, parseOptions } from "./parseOptions";
 
-export const protocGenFern = createPlugin({
+export const protocGenFern: Plugin = createPlugin({
     name: "protoc-gen-fern",
     version: `v${String(version)}`,
     run: generateIr
