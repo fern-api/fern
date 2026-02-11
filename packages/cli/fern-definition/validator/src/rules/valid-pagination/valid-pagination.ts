@@ -6,6 +6,8 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
 import { validateCursorPagination } from "./validateCursorPagination.js";
 import { validateCustomPagination } from "./validateCustomPagination.js";
 import { validateOffsetPagination } from "./validateOffsetPagination.js";
+import { validatePathPagination } from "./validatePathPagination.js";
+import { validateUriPagination } from "./validateUriPagination.js";
 
 export const ValidPaginationRule: Rule = {
     name: "valid-pagination",
@@ -54,9 +56,21 @@ export const ValidPaginationRule: Rule = {
                             customPagination: endpointPagination
                         });
                     } else if (isRawUriPaginationSchema(endpointPagination)) {
-                        return [];
+                        return validateUriPagination({
+                            endpointId,
+                            endpoint,
+                            typeResolver,
+                            file,
+                            uriPagination: endpointPagination
+                        });
                     } else if (isRawPathPaginationSchema(endpointPagination)) {
-                        return [];
+                        return validatePathPagination({
+                            endpointId,
+                            endpoint,
+                            typeResolver,
+                            file,
+                            pathPagination: endpointPagination
+                        });
                     }
                     throw new Error("Invalid pagination schema");
                 }
