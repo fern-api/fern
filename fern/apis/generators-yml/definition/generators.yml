@@ -1,5 +1,6 @@
 imports:
   ai: ./ai.yml
+  replay: ./replay.yml
   auth: ./fernDefinition/auth.yml
   file: ./fernDefinition/file.yml
   environments: ./fernDefinition/environments.yml
@@ -37,6 +38,7 @@ types:
       reviewers:
         type: optional<reviewers.ReviewersSchema>
       ai: optional<ai.AIServicesSchema>
+      replay: optional<replay.ReplayConfigSchema>
       autorelease:
         type: optional<boolean>
         docs: |

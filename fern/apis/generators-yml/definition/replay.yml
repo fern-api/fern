@@ -1,0 +1,36 @@
+types:
+  ReplayConfigSchema:
+    docs: Configuration for Fern Replay - automatic preservation of SDK customizations
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: Whether replay is enabled for this workspace. Defaults to false.
+      on-conflict: optional<ReplayOnConflictSchema>
+
+  ReplayOnConflictSchema:
+    docs: How to handle conflicts between user customizations and generator changes
+    properties:
+      ci:
+        type: optional<ReplayConflictCiStrategy>
+        docs: Conflict strategy in CI environments
+      local:
+        type: optional<ReplayConflictLocalStrategy>
+        docs: Conflict strategy in local environments
+
+  ReplayConflictCiStrategy:
+    enum:
+      - fail
+      - name: createPr
+        value: create-pr
+      - name: keepMine
+        value: keep-mine
+      - name: keepGenerated
+        value: keep-generated
+
+  ReplayConflictLocalStrategy:
+    enum:
+      - prompt
+      - name: keepMine
+        value: keep-mine
+      - name: keepGenerated
+        value: keep-generated

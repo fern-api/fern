@@ -34,6 +34,7 @@
   "dependencies": {
     "@boundaryml/baml": "^0.211.2",
     "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/replay": "file:../../../../../../fern-replay",
     "@fern-api/auth": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/cli-ai": "workspace:*",

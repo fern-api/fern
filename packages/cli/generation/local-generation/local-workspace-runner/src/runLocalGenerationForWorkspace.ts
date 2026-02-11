@@ -9,6 +9,7 @@ import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/gi
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
+import { type ReplayConfig, type ReplayReport, ReplayService } from "@fern-api/replay";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
@@ -35,7 +36,8 @@ export async function runLocalGenerationForWorkspace({
     context,
     absolutePathToPreview,
     runner,
-    ai
+    ai,
+    replay
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -48,6 +50,7 @@ export async function runLocalGenerationForWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     ai: generatorsYml.AiServicesSchema | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -279,12 +282,74 @@ export async function runLocalGenerationForWorkspace({
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
+                // --- REPLAY INTEGRATION ---
+                const replayConfig = convertReplayConfig(replay);
+                let replayReport: ReplayReport | undefined;
+
+                // Skip replay in preview mode (no persistent git history)
+                if (replayConfig != null && absolutePathToPreviewForGenerator == null) {
+                    try {
+                        const gitDir = join(absolutePathToLocalOutput, RelativeFilePath.of(".git"));
+                        const isGitRepo = await fs
+                            .access(gitDir)
+                            .then(() => true)
+                            .catch(() => false);
+
+                        if (isGitRepo) {
+                            interactiveTaskContext.logger.info("Running Fern Replay...");
+                            const replayService = new ReplayService(absolutePathToLocalOutput, replayConfig);
+                            replayReport = await replayService.runReplay({
+                                stageOnly: selfhostedGithubConfig == null,
+                                cliVersion: "unknown",
+                                generatorVersions: {
+                                    [generatorInvocation.name]: generatorInvocation.version
+                                }
+                            });
+
+                            if (replayReport.patchesDetected > 0) {
+                                interactiveTaskContext.logger.info(
+                                    `Replay: ${replayReport.patchesApplied}/${replayReport.patchesDetected} customizations applied`
+                                );
+                            }
+                            if (replayReport.patchesWithConflicts > 0) {
+                                interactiveTaskContext.logger.warn(
+                                    `Replay: ${replayReport.patchesWithConflicts} patch(es) had conflicts`
+                                );
+                                for (const conflict of replayReport.conflicts) {
+                                    interactiveTaskContext.logger.warn(`  Conflict in ${conflict.file}`);
+                                }
+                                const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
+                                if (isCI && replayConfig.on_conflict?.ci === "fail") {
+                                    interactiveTaskContext.failAndThrow(
+                                        `Replay: ${replayReport.patchesWithConflicts} conflict(s) detected in CI mode.`
+                                    );
+                                }
+                            }
+                            if (replayReport.warnings != null) {
+                                for (const warning of replayReport.warnings) {
+                                    interactiveTaskContext.logger.warn(`Replay: ${warning}`);
+                                }
+                            }
+
+                            // Ensure .fernignore has replay entries so the lockfile survives
+                            // future generation wipes. This handles first-generation without bootstrap.
+                            await ensureReplayFernignoreEntries(absolutePathToLocalOutput);
+                        }
+                    } catch (error) {
+                        interactiveTaskContext.logger.warn(
+                            `Replay: failed - ${error instanceof Error ? error.message : String(error)}`
+                        );
+                    }
+                }
+                // --- END REPLAY INTEGRATION ---
+
                 if (selfhostedGithubConfig != null && shouldCommit) {
                     await postProcessGithubSelfHosted(
                         interactiveTaskContext,
                         selfhostedGithubConfig,
                         absolutePathToLocalOutput,
-                        autoVersioningCommitMessage
+                        autoVersioningCommitMessage,
+                        replayReport != null
                     );
                 }
             });
@@ -375,15 +440,18 @@ async function findExistingUpdatablePR(
         });
 
         for (const pr of pulls) {
-            const prAuthor = pr.user?.login;
-            if (prAuthor !== FERN_BOT_LOGIN) {
-                context.logger.debug(`PR #${pr.number} skipped: author ${prAuthor} is not ${FERN_BOT_LOGIN}`);
-                continue;
-            }
-
             if (!pr.head.ref.startsWith("fern-bot/")) {
                 context.logger.debug(`PR #${pr.number} skipped: branch ${pr.head.ref} does not start with fern-bot/`);
                 continue;
+            }
+
+            const prAuthor = pr.user?.login;
+            if (prAuthor !== FERN_BOT_LOGIN) {
+                // In self-hosted mode, PRs are authored by the token owner, not fern-api[bot].
+                // The fern-bot/ branch prefix + generation-only commit check is sufficient.
+                context.logger.debug(
+                    `PR #${pr.number}: author ${prAuthor} is not ${FERN_BOT_LOGIN}, checking commits for fern-bot/ branch`
+                );
             }
 
             const hasOnlyGenerationCommits = await checkPRHasOnlyGenerationCommits(
@@ -428,19 +496,34 @@ async function checkPRHasOnlyGenerationCommits(
             per_page: 100
         });
 
+        // Check if all commits are Fern-managed (generation, replay, or replayed patches).
+        // When replay is active, the PR will contain:
+        //   [fern-generated] ... → replayed patch commits (original messages) → [fern-replay] ...
+        // The replayed patches between [fern-generated] and [fern-replay] are Fern-managed.
+        const hasGenerationCommit = commits.some((c) => (c.commit.message ?? "").startsWith("[fern-generated]"));
+        const hasReplayCommit = commits.some((c) => (c.commit.message ?? "").startsWith("[fern-replay]"));
+
         for (const commit of commits) {
             const authorLogin = commit.author?.login;
             const authorEmail = commit.commit.author?.email;
+            const commitMessage = commit.commit.message ?? "";
 
-            const isGenerationCommit =
+            const isFernAuthor =
                 authorLogin === FERN_BOT_LOGIN ||
                 authorEmail === FERN_BOT_EMAIL ||
                 commit.commit.author?.name === FERN_BOT_NAME;
 
-            if (!isGenerationCommit) {
+            const isFernCommitMessage =
+                commitMessage.startsWith("[fern-generated]") || commitMessage.startsWith("[fern-replay]");
+
+            // If the PR has both [fern-generated] and [fern-replay] commits,
+            // intermediate commits are replayed patches and are Fern-managed.
+            const isReplayedPatch = hasGenerationCommit && hasReplayCommit;
+
+            if (!isFernAuthor && !isFernCommitMessage && !isReplayedPatch) {
                 context.logger.debug(
                     `Commit ${commit.sha.substring(0, 7)} is not a generation commit: ` +
-                        `author=${authorLogin}, email=${authorEmail}`
+                        `author=${authorLogin}, email=${authorEmail}, message=${commitMessage.substring(0, 40)}`
                 );
                 return false;
             }
@@ -457,7 +540,8 @@ async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
     absolutePathToLocalOutput: AbsoluteFilePath,
-    commitMessage?: string
+    commitMessage?: string,
+    skipCommit?: boolean
 ): Promise<void> {
     try {
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
@@ -498,32 +582,50 @@ async function postProcessGithubSelfHosted(
                     );
                     prBranch = existingPR.headBranch;
                     isUpdatingExistingPR = true;
-                    await repository.checkoutRemoteBranch(prBranch);
+                    if (skipCommit) {
+                        // Replay already committed on the current branch.
+                        // Create a branch from HEAD with the PR's name to preserve replay commits.
+                        await repository.createBranchFromHead(prBranch);
+                    } else {
+                        await repository.checkoutRemoteBranch(prBranch);
+                    }
                 } else {
                     context.logger.debug(`No existing updatable PR found, creating new branch ${newPrBranch}`);
                     prBranch = newPrBranch;
                     await repository.checkout(prBranch);
                 }
 
-                context.logger.debug("Checking for .fernignore file...");
-                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
-                try {
-                    await fs.access(fernignorePath);
-                    context.logger.debug(".fernignore already exists");
-                } catch {
-                    context.logger.debug("Creating .fernignore file...");
-                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+                const finalCommitMessage = commitMessage ?? "SDK Generation";
+
+                if (!skipCommit) {
+                    context.logger.debug("Checking for .fernignore file...");
+                    const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+                    try {
+                        await fs.access(fernignorePath);
+                        context.logger.debug(".fernignore already exists");
+                    } catch {
+                        context.logger.debug("Creating .fernignore file...");
+                        await fs.writeFile(
+                            fernignorePath,
+                            "# Specify files that shouldn't be modified by Fern\n",
+                            "utf-8"
+                        );
+                    }
+
+                    context.logger.debug("Committing changes...");
+                    await repository.commitAllChanges(finalCommitMessage);
+                    context.logger.debug(
+                        `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
+                    );
                 }
 
-                context.logger.debug("Committing changes...");
-                const finalCommitMessage = commitMessage ?? "SDK Generation";
-                await repository.commitAllChanges(finalCommitMessage);
-                context.logger.debug(
-                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
-                );
-
                 if (!selfhostedGithubConfig.previewMode) {
-                    await repository.push();
+                    if (skipCommit && isUpdatingExistingPR) {
+                        // Replay created commits from HEAD on a new branch; force-push to update the existing PR
+                        await repository.forcePush();
+                    } else {
+                        await repository.push();
+                    }
                     const pushedBranch = await repository.getCurrentBranch();
                     context.logger.info(
                         `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
@@ -581,22 +683,27 @@ async function postProcessGithubSelfHosted(
                     await repository.checkout(selfhostedGithubConfig.branch);
                 }
 
-                context.logger.debug("Checking for .fernignore file...");
-                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
-                try {
-                    await fs.access(fernignorePath);
-                    context.logger.debug(".fernignore already exists");
-                } catch {
-                    context.logger.debug("Creating .fernignore file...");
-                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
-                }
+                if (!skipCommit) {
+                    context.logger.debug("Checking for .fernignore file...");
+                    const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+                    try {
+                        await fs.access(fernignorePath);
+                        context.logger.debug(".fernignore already exists");
+                    } catch {
+                        context.logger.debug("Creating .fernignore file...");
+                        await fs.writeFile(
+                            fernignorePath,
+                            "# Specify files that shouldn't be modified by Fern\n",
+                            "utf-8"
+                        );
+                    }
 
-                context.logger.debug("Committing changes...");
-                const finalCommitMessage = commitMessage ?? "SDK Generation";
-                await repository.commitAllChanges(finalCommitMessage);
-                context.logger.debug(
-                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
-                );
+                    context.logger.debug("Committing changes...");
+                    await repository.commitAllChanges(commitMessage ?? "SDK Generation");
+                    context.logger.debug(
+                        `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
+                    );
+                }
 
                 if (!selfhostedGithubConfig.previewMode) {
                     await repository.pushWithRebasingRemote();
@@ -838,4 +945,38 @@ function getSelfhostedGithubConfig(
         };
     }
     return undefined;
+}
+
+const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock", ".fern/replay.yml"];
+
+async function ensureReplayFernignoreEntries(outputDir: AbsoluteFilePath): Promise<void> {
+    const fernignorePath = join(outputDir, RelativeFilePath.of(".fernignore"));
+    let content = "";
+    try {
+        content = await fs.readFile(fernignorePath, "utf-8");
+    } catch {
+        // .fernignore doesn't exist yet
+    }
+    const lines = content.split("\n");
+    const toAdd = REPLAY_FERNIGNORE_ENTRIES.filter((entry) => !lines.some((line) => line.trim() === entry));
+    if (toAdd.length > 0) {
+        const suffix = content.length > 0 && !content.endsWith("\n") ? "\n" : "";
+        await fs.writeFile(fernignorePath, content + suffix + toAdd.join("\n") + "\n", "utf-8");
+    }
+}
+
+function convertReplayConfig(schema: generatorsYml.ReplayConfigSchema | undefined): ReplayConfig | undefined {
+    if (schema == null || !schema.enabled) {
+        return undefined;
+    }
+    return {
+        enabled: true,
+        on_conflict:
+            schema["on-conflict"] != null
+                ? {
+                      ci: schema["on-conflict"].ci,
+                      local: schema["on-conflict"].local
+                  }
+                : undefined
+    };
 }

@@ -211,6 +211,25 @@ export class ClonedRepository {
         }
     }
 
+    /**
+     * Force-create a branch from current HEAD, discarding any existing local branch with the same name.
+     * Useful when replay has committed on the current branch and we need to rename it to match an existing PR branch.
+     */
+    public async createBranchFromHead(branch: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.raw(["checkout", "-B", branch]);
+    }
+
+    /**
+     * Force-push the current branch to the remote.
+     * Used when updating an existing PR branch with new generation + replay commits.
+     */
+    public async forcePush(): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        const currentBranch = await this.getCurrentBranch();
+        await this.git.push("origin", currentBranch, { "--force": null, "--set-upstream": null });
+    }
+
     public async checkoutRemoteBranch(branch: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         try {

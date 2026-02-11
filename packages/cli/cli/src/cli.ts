@@ -209,6 +209,7 @@ async function tryRunCli(cliContext: CliContext) {
     addDocsCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addOverridesCommand(cli, cliContext);
+    addReplayCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext); // Deprecated: use `fern overrides write` instead
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
@@ -668,6 +669,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("output", {
                     type: "string",
                     description: "Custom output directory (currently only supported with --preview for SDK generation)"
+                })
+                .option("replay", {
+                    type: "boolean",
+                    description: "Enable or disable replay (overrides generators.yml)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -726,7 +731,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
                     dynamicIrOnly: argv["dynamic-ir-only"],
-                    outputDir: argv.output
+                    outputDir: argv.output,
+                    replayOverride: argv.replay
                 });
             }
             if (argv.docs != null) {
@@ -779,7 +785,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
-                outputDir: argv.output
+                outputDir: argv.output,
+                replayOverride: argv.replay
             });
         }
     );
@@ -1433,6 +1440,277 @@ function addOverridesCompareCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                 outputPath: outputPath != null ? AbsoluteFilePath.of(outputPath) : undefined,
                 cliContext
             });
+        }
+    );
+}
+
+function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "replay",
+        "Manage SDK customization replay",
+        (yargs) => {
+            addReplayBootstrapCommand(yargs, cliContext);
+            addReplayStatusCommand(yargs, cliContext);
+            addReplayForgetCommand(yargs, cliContext);
+            addReplayResetCommand(yargs, cliContext);
+            return yargs.demandCommand();
+        },
+        () => {
+            /* show help */
+        }
+    );
+}
+
+function addReplayBootstrapCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "bootstrap",
+        "Initialize Replay for an existing SDK repository",
+        (yargs) =>
+            yargs
+                .option("path", {
+                    type: "string",
+                    description: "Path to the SDK output directory",
+                    demandOption: true
+                })
+                .option("dry-run", {
+                    boolean: true,
+                    default: false,
+                    description: "Show what would happen without making changes"
+                })
+                .option("fernignore", {
+                    choices: ["migrate", "delete", "skip"] as const,
+                    default: "skip" as const,
+                    description: "How to handle existing .fernignore file"
+                })
+                .option("push", {
+                    boolean: true,
+                    default: true,
+                    description: "Create a PR in the SDK repo with the lockfile (requires GITHUB_TOKEN)"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({ command: "fern replay bootstrap" });
+            const { bootstrap } = await import("@fern-api/replay");
+            const outputDir = resolve(cwd(), argv.path);
+            const result = await bootstrap(outputDir, {
+                dryRun: argv.dryRun,
+                fernignoreAction: argv.fernignore
+            });
+            if (result.generationCommit) {
+                cliContext.logger.info(
+                    `Found generation commit: ${result.generationCommit.sha.slice(0, 7)} "${result.generationCommit.message}"`
+                );
+            }
+            cliContext.logger.info(`Patches detected: ${result.patchesDetected}, created: ${result.patchesCreated}`);
+            for (const warning of result.warnings) {
+                cliContext.logger.warn(warning);
+            }
+
+            // Create a PR in the SDK repo with the lockfile
+            if (!argv.dryRun && argv.push) {
+                await createReplayBootstrapPR(outputDir, cliContext);
+            }
+        }
+    );
+}
+
+async function createReplayBootstrapPR(outputDir: string, cliContext: CliContext): Promise<void> {
+    const { execSync } = await import("child_process");
+
+    // Check if the output dir is a git repo with a remote
+    let remoteUrl: string;
+    try {
+        remoteUrl = execSync("git remote get-url origin", { cwd: outputDir, encoding: "utf-8" }).trim();
+    } catch {
+        cliContext.logger.info("Not a git repo with a remote — lockfile created locally. Commit and push manually.");
+        return;
+    }
+
+    // Parse owner/repo from the remote URL
+    // Handles: https://github.com/owner/repo.git, git@github.com:owner/repo.git
+    const match = remoteUrl.match(/github\.com[:/]([^/]+)\/([^/.]+)/);
+    if (match == null) {
+        cliContext.logger.info("Remote is not a GitHub repo — lockfile created locally. Commit and push manually.");
+        return;
+    }
+    const owner = match[1];
+    const repo = match[2];
+
+    const token = process.env.GITHUB_TOKEN;
+    if (token == null) {
+        cliContext.logger.info(
+            `Lockfile created locally. To create a PR, set GITHUB_TOKEN and re-run, or push manually.`
+        );
+        return;
+    }
+
+    const branchName = "fern-bot/replay-bootstrap";
+
+    try {
+        // Create branch, commit lockfile, push
+        execSync(`git checkout -B ${branchName}`, { cwd: outputDir, stdio: "pipe" });
+        execSync("git add .fern/replay.lock .fernignore", { cwd: outputDir, stdio: "pipe" });
+
+        const commitMessage = "[fern-replay] Initialize replay lockfile";
+        execSync(`git commit -m "${commitMessage}"`, { cwd: outputDir, stdio: "pipe" });
+
+        // Push using token-authenticated URL
+        const pushUrl = `https://x-access-token:${token}@github.com/${owner}/${repo}.git`;
+        execSync(`git push "${pushUrl}" ${branchName} --force`, { cwd: outputDir, stdio: "pipe" });
+
+        cliContext.logger.info(`Pushed branch: ${branchName}`);
+
+        // Create PR via GitHub API
+        const defaultBranch = execSync(
+            "git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo main",
+            { cwd: outputDir, encoding: "utf-8" }
+        ).trim();
+
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/pulls`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/vnd.github+json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: "[fern-replay] Initialize replay lockfile",
+                body: "Adds `.fern/replay.lock` to track SDK customizations for Fern Replay.\n\nMerge this PR so that `fern generate` can preserve your customizations across regenerations.",
+                head: branchName,
+                base: defaultBranch || "main"
+            })
+        });
+
+        if (response.ok) {
+            const data = (await response.json()) as { html_url: string };
+            cliContext.logger.info(`Created PR: ${data.html_url}`);
+        } else {
+            const errorBody = await response.text();
+            if (errorBody.includes("A pull request already exists")) {
+                cliContext.logger.info(`PR already exists for ${branchName}. Updated branch with latest lockfile.`);
+            } else {
+                cliContext.logger.warn(`Failed to create PR (${response.status}): ${errorBody}`);
+            }
+        }
+
+        // Switch back to the original branch
+        execSync("git checkout -", { cwd: outputDir, stdio: "pipe" });
+    } catch (error) {
+        cliContext.logger.warn(`Failed to create PR: ${error instanceof Error ? error.message : String(error)}`);
+        cliContext.logger.info("Lockfile created locally. Push manually to your SDK repo.");
+        try {
+            execSync("git checkout -", { cwd: outputDir, stdio: "pipe" });
+        } catch {
+            // Best effort to restore branch
+        }
+    }
+}
+
+function addReplayStatusCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "status",
+        "Show Replay status for an SDK repository",
+        (yargs) =>
+            yargs.option("path", {
+                type: "string",
+                description: "Path to the SDK output directory",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({ command: "fern replay status" });
+            const { status } = await import("@fern-api/replay");
+            const outputDir = resolve(cwd(), argv.path);
+            const result = status(outputDir);
+
+            if (!result.initialized) {
+                cliContext.logger.info("Replay is not initialized. Run 'fern replay bootstrap' first.");
+                return;
+            }
+            if (result.patches.length === 0) {
+                cliContext.logger.info("No customizations tracked.");
+                return;
+            }
+            cliContext.logger.info(`Tracked customizations (${result.patches.length}):\n`);
+            for (const patch of result.patches) {
+                const files = patch.files.join(", ");
+                cliContext.logger.info(`  ${patch.sha} | ${patch.author} | ${files}`);
+                cliContext.logger.info(`    "${patch.message}"\n`);
+            }
+            if (result.lastGeneration) {
+                cliContext.logger.info(`Last generation: ${result.lastGeneration.timestamp}`);
+            }
+        }
+    );
+}
+
+function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "forget <pattern>",
+        "Remove patches matching a file pattern from Replay tracking",
+        (yargs) =>
+            yargs
+                .positional("pattern", {
+                    type: "string",
+                    description: "File path or glob pattern to forget",
+                    demandOption: true
+                })
+                .option("path", {
+                    type: "string",
+                    description: "Path to the SDK output directory",
+                    demandOption: true
+                })
+                .option("dry-run", {
+                    boolean: true,
+                    default: false,
+                    description: "Show what would be removed without making changes"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({ command: "fern replay forget" });
+            const { forget } = await import("@fern-api/replay");
+            const outputDir = resolve(cwd(), argv.path);
+            const result = forget(outputDir, argv.pattern as string, {
+                dryRun: argv.dryRun
+            });
+            if (result.notFound) {
+                cliContext.logger.info(`No patches found matching "${argv.pattern}"`);
+            } else {
+                const verb = argv.dryRun ? "Would remove" : "Removed";
+                for (const removed of result.removed) {
+                    cliContext.logger.info(`${verb}: "${removed.message}" (${removed.files.join(", ")})`);
+                }
+            }
+        }
+    );
+}
+
+function addReplayResetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "reset",
+        "Remove the Replay lockfile entirely",
+        (yargs) =>
+            yargs
+                .option("path", {
+                    type: "string",
+                    description: "Path to the SDK output directory",
+                    demandOption: true
+                })
+                .option("dry-run", {
+                    boolean: true,
+                    default: false,
+                    description: "Show what would happen without making changes"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({ command: "fern replay reset" });
+            const { reset } = await import("@fern-api/replay");
+            const outputDir = resolve(cwd(), argv.path);
+            const result = reset(outputDir, { dryRun: argv.dryRun });
+            if (result.nothingToReset) {
+                cliContext.logger.info("No Replay lockfile found. Nothing to reset.");
+            } else {
+                const verb = argv.dryRun ? "Would remove" : "Removed";
+                cliContext.logger.info(
+                    `${verb} ${result.patchesRemoved} patch(es). Lockfile ${argv.dryRun ? "would be" : "was"} deleted.`
+                );
+            }
         }
     );
 }

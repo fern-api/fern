@@ -22,6 +22,7 @@ export interface GeneratorsConfigurationSchema {
     groups?: Record<string, GeneratorsYml.GeneratorGroupSchema>;
     reviewers?: GeneratorsYml.ReviewersSchema;
     ai?: GeneratorsYml.AiServicesSchema;
+    replay?: GeneratorsYml.ReplayConfigSchema;
     /**
      * If true, automatically release SDKs when changes are detected.
      * Can be overridden at the individual generator level.

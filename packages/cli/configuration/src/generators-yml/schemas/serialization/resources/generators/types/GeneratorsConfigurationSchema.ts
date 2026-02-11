@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { AiServicesSchema } from "../../ai/types/AiServicesSchema.js";
 import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema.js";
 import { GeneratorGroupSchema } from "../../group/types/GeneratorGroupSchema.js";
+import { ReplayConfigSchema } from "../../replay/types/ReplayConfigSchema.js";
 import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema.js";
 import { ApiConfigurationSchema } from "./ApiConfigurationSchema.js";
 import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema.js";
@@ -30,6 +31,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     groups: core.serialization.record(core.serialization.string(), GeneratorGroupSchema).optional(),
     reviewers: ReviewersSchema.optional(),
     ai: AiServicesSchema.optional(),
+    replay: ReplayConfigSchema.optional(),
     autorelease: core.serialization.boolean().optional(),
     openapi: GeneratorsOpenApiSchema.optional(),
     "openapi-overrides": core.serialization.string().optional(),
@@ -50,6 +52,7 @@ export declare namespace GeneratorsConfigurationSchema {
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;
         ai?: AiServicesSchema.Raw | null;
+        replay?: ReplayConfigSchema.Raw | null;
         autorelease?: boolean | null;
         openapi?: GeneratorsOpenApiSchema.Raw | null;
         "openapi-overrides"?: string | null;

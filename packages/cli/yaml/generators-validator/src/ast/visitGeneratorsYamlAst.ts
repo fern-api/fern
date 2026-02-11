@@ -25,6 +25,7 @@ export async function visitGeneratorsYamlAst(
         "async-api": noop,
         "api-settings": noop,
         ai: noop,
+        replay: noop,
         autorelease: noop,
         groups: async (groups) => {
             await visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });
