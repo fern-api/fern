@@ -35,12 +35,12 @@ channel:
       body: SendRequest
     receive:
       origin: server
-      body: ReceiveEvent
+      body: S3ReceiveEvent
 
 types:
   SendRequest:
     properties:
       data: string
-  ReceiveEvent:
+  S3ReceiveEvent:
     properties:
       payload: string

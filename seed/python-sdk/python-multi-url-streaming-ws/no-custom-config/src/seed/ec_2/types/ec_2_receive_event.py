@@ -6,8 +6,8 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ReceiveEvent(UniversalBaseModel):
-    payload: str
+class Ec2ReceiveEvent(UniversalBaseModel):
+    status: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

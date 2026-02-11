@@ -8,7 +8,7 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.pydantic_utilities import parse_obj_as
-from .types.receive_event import ReceiveEvent
+from .types.ec_2_receive_event import Ec2ReceiveEvent
 from .types.send_event import SendEvent
 
 try:
@@ -16,7 +16,7 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
-Ec2SocketClientResponse = typing.Union[ReceiveEvent]
+Ec2SocketClientResponse = typing.Union[Ec2ReceiveEvent]
 
 
 class AsyncEc2SocketClient(EventEmitterMixin):

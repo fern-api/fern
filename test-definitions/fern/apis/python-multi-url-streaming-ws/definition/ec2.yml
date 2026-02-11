@@ -23,12 +23,12 @@ channel:
       body: SendEvent
     receive:
       origin: server
-      body: ReceiveEvent
+      body: Ec2ReceiveEvent
 
 types:
   SendEvent:
     properties:
       command: string
-  ReceiveEvent:
+  Ec2ReceiveEvent:
     properties:
       status: string

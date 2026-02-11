@@ -8,13 +8,14 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import ec_2, s_3
     from .client import AsyncSeedPythonMultiUrlStreamingWs, SeedPythonMultiUrlStreamingWs
-    from .ec_2 import SendEvent
+    from .ec_2 import Ec2ReceiveEvent, SendEvent
     from .environment import SeedPythonMultiUrlStreamingWsEnvironment
-    from .s_3 import ReceiveEvent, SendRequest
+    from .s_3 import S3ReceiveEvent, SendRequest
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPythonMultiUrlStreamingWs": ".client",
-    "ReceiveEvent": ".s_3",
+    "Ec2ReceiveEvent": ".ec_2",
+    "S3ReceiveEvent": ".s_3",
     "SeedPythonMultiUrlStreamingWs": ".client",
     "SeedPythonMultiUrlStreamingWsEnvironment": ".environment",
     "SendEvent": ".ec_2",
@@ -48,7 +49,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedPythonMultiUrlStreamingWs",
-    "ReceiveEvent",
+    "Ec2ReceiveEvent",
+    "S3ReceiveEvent",
     "SeedPythonMultiUrlStreamingWs",
     "SeedPythonMultiUrlStreamingWsEnvironment",
     "SendEvent",

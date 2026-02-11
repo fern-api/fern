@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ReceiveEvent, SendEvent
-_dynamic_imports: typing.Dict[str, str] = {"ReceiveEvent": ".types", "SendEvent": ".types"}
+    from .types import Ec2ReceiveEvent, SendEvent
+_dynamic_imports: typing.Dict[str, str] = {"Ec2ReceiveEvent": ".types", "SendEvent": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveEvent", "SendEvent"]
+__all__ = ["Ec2ReceiveEvent", "SendEvent"]

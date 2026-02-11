@@ -8,7 +8,7 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.pydantic_utilities import parse_obj_as
-from .types.receive_event import ReceiveEvent
+from .types.s_3_receive_event import S3ReceiveEvent
 from .types.send_request import SendRequest
 
 try:
@@ -16,7 +16,7 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
-S3SocketClientResponse = typing.Union[ReceiveEvent]
+S3SocketClientResponse = typing.Union[S3ReceiveEvent]
 
 
 class AsyncS3SocketClient(EventEmitterMixin):
