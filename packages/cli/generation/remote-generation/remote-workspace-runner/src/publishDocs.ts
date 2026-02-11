@@ -524,7 +524,8 @@ export async function publishDocs({
         {
             docsDefinition,
             excludeApis,
-            libraryDocs: libraryDocsConfig
+            libraryDocs: libraryDocsConfig,
+            ...(isBasepathAware && { basePath })
         }
     );
 
