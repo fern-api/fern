@@ -8,7 +8,13 @@ export { CliSchema } from "./CliSchema.js";
 export { CratesPublishSchema } from "./CratesPublishSchema.js";
 export { EnvironmentSchema } from "./EnvironmentSchema.js";
 export { FernYmlSchema } from "./FernYmlSchema.js";
-export { createEmptyFernRcSchema, FernRcAccountSchema, FernRcAuthSchema, FernRcSchema } from "./fernrc/index.js";
+export {
+    createEmptyFernRcSchema,
+    FernRcAccountSchema,
+    FernRcAuthSchema,
+    FernRcCacheSchema,
+    FernRcSchema
+} from "./fernrc/index.js";
 export { GitOutputModeSchema } from "./GitOutputModeSchema.js";
 export { GitOutputSchema } from "./GitOutputSchema.js";
 export { HeaderConfigSchema } from "./HeaderConfigSchema.js";

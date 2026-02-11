@@ -31,7 +31,7 @@
     "test:update": "vitest --run -u --passWithNoTests"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.144.7-efc9f5ccf",
+    "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "graphql": "^16.8.1"

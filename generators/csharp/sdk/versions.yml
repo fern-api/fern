@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.4
+  changelogEntry:
+    - summary: |
+        Fix query string parameters not being included in HTTP requests for custom pagination endpoints.
+      type: fix
+  createdAt: "2026-02-10"
+  irVersion: 62
+
 - version: 2.20.3
   changelogEntry:
     - summary: |

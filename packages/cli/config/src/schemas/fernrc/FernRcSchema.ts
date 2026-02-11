@@ -1,11 +1,14 @@
 import { z } from "zod";
 import { FernRcAuthSchema } from "./FernRcAuthSchema.js";
+import { FernRcCacheSchema } from "./FernRcCacheSchema.js";
 
 export const FernRcSchema = z.object({
     /** Config file version for migrations */
     version: z.literal("v1").default("v1"),
     /** Authentication settings */
-    auth: FernRcAuthSchema.default({ accounts: [] })
+    auth: FernRcAuthSchema.default({ accounts: [] }),
+    /** Cache settings */
+    cache: FernRcCacheSchema.optional()
 });
 
 export type FernRcSchema = z.infer<typeof FernRcSchema>;

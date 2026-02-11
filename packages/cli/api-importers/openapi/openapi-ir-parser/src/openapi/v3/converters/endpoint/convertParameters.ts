@@ -48,17 +48,19 @@ export function convertParameters({
         headers: []
     };
     for (const parameter of parameters) {
-        const shouldIgnore = getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE);
+        const resolvedParameter = isReferenceObject(parameter)
+            ? context.resolveParameterReference(parameter)
+            : parameter;
+
+        const shouldIgnore =
+            getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE) ??
+            getExtension<boolean>(resolvedParameter, FernOpenAPIExtension.IGNORE);
         if (shouldIgnore != null && shouldIgnore) {
             context.logger.debug(
                 `${httpMethod.toUpperCase()} ${path} has a parameter marked with x-fern-ignore. Skipping.`
             );
             continue;
         }
-
-        const resolvedParameter = isReferenceObject(parameter)
-            ? context.resolveParameterReference(parameter)
-            : parameter;
 
         const isRequired = resolvedParameter.required ?? false;
         const availability = convertAvailability(resolvedParameter);

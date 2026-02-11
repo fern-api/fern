@@ -35,7 +35,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-importer-commons": "workspace:*",
-    "@fern-api/fdr-sdk": "0.145.4-0ea6e08bf",
+    "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",

@@ -5,7 +5,12 @@ import { getExtension } from "../../../getExtension.js";
 import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 declare namespace Raw {
-    export type PaginationExtensionSchema = boolean | CursorPaginationExtensionSchema | OffsetPaginationExtensionSchema;
+    export type PaginationExtensionSchema =
+        | boolean
+        | CursorPaginationExtensionSchema
+        | OffsetPaginationExtensionSchema
+        | UriPaginationExtensionSchema
+        | PathPaginationExtensionSchema;
 
     export interface CursorPaginationExtensionSchema {
         cursor: string;
@@ -20,6 +25,16 @@ declare namespace Raw {
         "has-next-page": string | undefined;
     }
 
+    export interface UriPaginationExtensionSchema {
+        next_uri: string;
+        results: string;
+    }
+
+    export interface PathPaginationExtensionSchema {
+        next_path: string;
+        results: string;
+    }
+
     export interface CustomPaginationExtensionSchema {
         type: "custom";
         results: string;
@@ -27,7 +42,11 @@ declare namespace Raw {
 }
 
 export function convertPaginationExtension(
-    pagination: Raw.CursorPaginationExtensionSchema | Raw.OffsetPaginationExtensionSchema
+    pagination:
+        | Raw.CursorPaginationExtensionSchema
+        | Raw.OffsetPaginationExtensionSchema
+        | Raw.UriPaginationExtensionSchema
+        | Raw.PathPaginationExtensionSchema
 ): Pagination {
     const maybeCursorPagination = pagination as Raw.CursorPaginationExtensionSchema;
     if (maybeCursorPagination.cursor != null) {
@@ -37,6 +56,23 @@ export function convertPaginationExtension(
             results: maybeCursorPagination.results
         });
     }
+
+    const maybeUriPagination = pagination as Raw.UriPaginationExtensionSchema;
+    if ("next_uri" in maybeUriPagination) {
+        return Pagination.uri({
+            nextUri: maybeUriPagination.next_uri,
+            results: maybeUriPagination.results
+        });
+    }
+
+    const maybePathPagination = pagination as Raw.PathPaginationExtensionSchema;
+    if ("next_path" in maybePathPagination) {
+        return Pagination.path({
+            nextPath: maybePathPagination.next_path,
+            results: maybePathPagination.results
+        });
+    }
+
     if ("offset" in pagination) {
         const offsetPagination = pagination as Raw.OffsetPaginationExtensionSchema;
         return Pagination.offset({

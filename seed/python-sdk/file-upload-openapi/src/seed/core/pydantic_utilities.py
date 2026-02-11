@@ -35,14 +35,31 @@ if TYPE_CHECKING:
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    from pydantic.v1.datetime_parse import parse_date as parse_date
-    from pydantic.v1.datetime_parse import parse_datetime as parse_datetime
-    from pydantic.v1.fields import ModelField as ModelField
-    from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-    from pydantic.v1.typing import get_args as get_args
-    from pydantic.v1.typing import get_origin as get_origin
-    from pydantic.v1.typing import is_literal_type as is_literal_type
-    from pydantic.v1.typing import is_union as is_union
+    import warnings
+
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+
+    def parse_datetime(value: Any) -> dt.datetime:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value
+        return _datetime_adapter.validate_python(value)
+
+    def parse_date(value: Any) -> dt.date:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value.date()
+        if isinstance(value, dt.date):
+            return value
+        return _date_adapter.validate_python(value)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        from pydantic.v1.fields import ModelField as ModelField
+        from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
+        from pydantic.v1.typing import get_args as get_args
+        from pydantic.v1.typing import get_origin as get_origin
+        from pydantic.v1.typing import is_literal_type as is_literal_type
+        from pydantic.v1.typing import is_union as is_union
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
