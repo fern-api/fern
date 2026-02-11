@@ -953,11 +953,13 @@ channel:
       openapi: openapi/trains/openapi.yml
     union:
       bank_account:
+        display-name: Bank Account
         docs: >-
           A bank account to take payment from. Must be able to make payments in
           the currency specified in the payment.
         type: BookingPaymentSourceBankAccount
       card:
+        display-name: Card
         docs: A card (debit or credit) to take payment from.
         type: BookingPaymentSourceCard
   BookingPaymentSourceBankAccount:
