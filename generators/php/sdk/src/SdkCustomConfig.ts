@@ -8,13 +8,16 @@ export const SdkCustomConfigSchema = z
         // Enable WireMock-based wire tests generation
         "enable-wire-tests": z.boolean().optional(),
         // Custom class name for the CustomPager class (used for custom pagination)
-        "custom-pager-classname": z.string().optional()
+        "custom-pager-classname": z.string().optional(),
+        // Apply IR-defined default values to query parameters and headers in request wrappers
+        useDefaultRequestParameterValues: z.boolean().optional()
     })
     .extend(BasePhpCustomConfigSchema.shape)
     .transform((config) => ({
         ...config,
         enableWireTests: config["enable-wire-tests"] ?? false,
-        customPagerClassname: config["custom-pager-classname"] ?? "CustomPager"
+        customPagerClassname: config["custom-pager-classname"] ?? "CustomPager",
+        useDefaultRequestParameterValues: config.useDefaultRequestParameterValues ?? false
     }));
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

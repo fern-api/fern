@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export interface QueryParameterCodeBlock {
@@ -42,14 +43,21 @@ export abstract class EndpointRequest {
                 return false;
             }
         }
+        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
+            ? new DefaultValueExtractor(this.context)
+            : undefined;
         for (const queryParameter of this.endpoint.queryParameters) {
             if (!this.context.isOptional(queryParameter.valueType)) {
-                return false;
+                if (defaultExtractor == null || !defaultExtractor.hasDefault(queryParameter.valueType)) {
+                    return false;
+                }
             }
         }
         for (const headerParameter of [...this.service.headers, ...this.endpoint.headers]) {
             if (!this.context.isOptional(headerParameter.valueType)) {
-                return false;
+                if (defaultExtractor == null || !defaultExtractor.hasDefault(headerParameter.valueType)) {
+                    return false;
+                }
             }
         }
         const requestBody = this.endpoint.requestBody;

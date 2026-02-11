@@ -4,6 +4,7 @@ import { FileGenerator, FileLocation, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
@@ -47,6 +48,9 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             includeGetters: this.context.shouldGenerateGetterMethods(),
             includeSetters: this.context.shouldGenerateSetterMethods()
         };
+        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
+            ? new DefaultValueExtractor(this.context)
+            : undefined;
 
         const includePathParameters = this.context.includePathParametersInWrappedRequest({
             endpoint: this.endpoint,
@@ -70,6 +74,10 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const query of this.endpoint.queryParameters) {
+            const initializer =
+                defaultExtractor != null && !query.allowMultiple
+                    ? defaultExtractor.extractDefaultCodeBlock(query.valueType)
+                    : undefined;
             this.addFieldWithMethods({
                 clazz,
                 name: query.name.name,
@@ -77,7 +85,8 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     name: this.context.getPropertyName(query.name.name),
                     type: this.getQueryParameterType(query),
                     access: this.context.getPropertyAccess(),
-                    docs: query.docs
+                    docs: query.docs,
+                    initializer
                 }),
                 includeGetters,
                 includeSetters
@@ -85,6 +94,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const header of [...service.headers, ...this.endpoint.headers]) {
+            const initializer = defaultExtractor?.extractDefaultCodeBlock(header.valueType);
             this.addFieldWithMethods({
                 clazz,
                 name: header.name.name,
@@ -92,7 +102,8 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     name: this.context.getPropertyName(header.name.name),
                     type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
                     access: this.context.getPropertyAccess(),
-                    docs: header.docs
+                    docs: header.docs,
+                    initializer
                 }),
                 includeGetters,
                 includeSetters
