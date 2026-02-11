@@ -1,7 +1,11 @@
 import { LogLevel } from "@fern-api/logger";
-import { ValidationError } from "../errors/ValidationError";
-import { Context } from "./Context";
-import type { GlobalArgs } from "./GlobalArgs";
+import chalk from "chalk";
+import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
+import { CliError } from "../errors/CliError.js";
+import { ValidationError } from "../errors/ValidationError.js";
+import { Icons } from "../ui/format.js";
+import { Context } from "./Context.js";
+import type { GlobalArgs } from "./GlobalArgs.js";
 
 /**
  * Wraps a command handler with context creation and error handling.
@@ -16,9 +20,11 @@ export function withContext<T extends GlobalArgs>(
         const context = createContext(args);
         try {
             await handler(context, args);
+            context.finish();
             process.exit(0);
         } catch (error) {
             handleError(context, error);
+            context.finish();
             process.exit(1);
         }
     };
@@ -39,20 +45,32 @@ function createContext(options: GlobalArgs): Context {
 function handleError(context: Context, error: unknown): void {
     if (error instanceof ValidationError) {
         for (const issue of error.issues) {
-            context.stderr.info(issue.toString());
+            process.stderr.write(`${chalk.red(issue.toString())}\n`);
+        }
+        return;
+    }
+
+    if (error instanceof KeyringUnavailableError) {
+        context.stdout.error(`${Icons.error} ${error.message}`);
+        return;
+    }
+
+    if (error instanceof CliError) {
+        if (error.message.length > 0) {
+            process.stderr.write(`${chalk.red(error.message)}\n`);
         }
         return;
     }
 
     if (error instanceof Error) {
-        context.stderr.error(error.message);
-        if (error.stack != null) {
-            context.stderr.debug(error.stack);
+        process.stderr.write(`${chalk.red(error.message)}\n`);
+        if (error.stack != null && context.logLevel === LogLevel.Debug) {
+            process.stderr.write(`${chalk.dim(error.stack)}\n`);
         }
         return;
     }
 
-    context.stderr.error(String(error));
+    process.stderr.write(`${chalk.red(String(error))}\n`);
 }
 
 function parseLogLevel(level: string): LogLevel {

@@ -2,19 +2,18 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { AliasTypeDeclaration, PrimitiveTypeV1, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class WrappedAliasGenerator {
     private readonly className: string;
 
     constructor(
-        private readonly typeId: TypeId,
+        private readonly typeId: FernIr.TypeId,
         private readonly context: PydanticModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly aliasDeclaration: AliasTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly aliasDeclaration: FernIr.AliasTypeDeclaration
     ) {
         this.className = this.context.getClassName(this.typeDeclaration.name.name);
     }
@@ -99,7 +98,7 @@ export class WrappedAliasGenerator {
         return method;
     }
 
-    private getGetterName(typeReference: TypeReference): string {
+    private getGetterName(typeReference: FernIr.TypeReference): string {
         return typeReference._visit({
             container: (container) =>
                 container._visit({
@@ -132,31 +131,31 @@ export class WrappedAliasGenerator {
                     });
                 }
                 switch (primitive.v1) {
-                    case PrimitiveTypeV1.Integer:
+                    case FernIr.PrimitiveTypeV1.Integer:
                         return "get_as_int";
-                    case PrimitiveTypeV1.Double:
+                    case FernIr.PrimitiveTypeV1.Double:
                         return "get_as_float";
-                    case PrimitiveTypeV1.String:
+                    case FernIr.PrimitiveTypeV1.String:
                         return "get_as_str";
-                    case PrimitiveTypeV1.Boolean:
+                    case FernIr.PrimitiveTypeV1.Boolean:
                         return "get_as_bool";
-                    case PrimitiveTypeV1.Long:
+                    case FernIr.PrimitiveTypeV1.Long:
                         return "get_as_int";
-                    case PrimitiveTypeV1.DateTime:
+                    case FernIr.PrimitiveTypeV1.DateTime:
                         return "get_as_datetime";
-                    case PrimitiveTypeV1.Date:
+                    case FernIr.PrimitiveTypeV1.Date:
                         return "get_as_date";
-                    case PrimitiveTypeV1.Uuid:
+                    case FernIr.PrimitiveTypeV1.Uuid:
                         return "get_as_uuid";
-                    case PrimitiveTypeV1.Base64:
+                    case FernIr.PrimitiveTypeV1.Base64:
                         return "get_as_str";
-                    case PrimitiveTypeV1.BigInteger:
+                    case FernIr.PrimitiveTypeV1.BigInteger:
                         return "get_as_str";
-                    case PrimitiveTypeV1.Uint:
+                    case FernIr.PrimitiveTypeV1.Uint:
                         return "get_as_int";
-                    case PrimitiveTypeV1.Uint64:
+                    case FernIr.PrimitiveTypeV1.Uint64:
                         return "get_as_int";
-                    case PrimitiveTypeV1.Float:
+                    case FernIr.PrimitiveTypeV1.Float:
                         return "get_as_float";
                     default:
                         assertNever(primitive.v1);
@@ -191,7 +190,7 @@ export class WrappedAliasGenerator {
         return method;
     }
 
-    private getBuilderName(typeReference: TypeReference): string {
+    private getBuilderName(typeReference: FernIr.TypeReference): string {
         return typeReference._visit({
             container: (container) =>
                 container._visit({
@@ -224,31 +223,31 @@ export class WrappedAliasGenerator {
                     });
                 }
                 switch (primitive.v1) {
-                    case PrimitiveTypeV1.Integer:
+                    case FernIr.PrimitiveTypeV1.Integer:
                         return "from_int";
-                    case PrimitiveTypeV1.Double:
+                    case FernIr.PrimitiveTypeV1.Double:
                         return "from_float";
-                    case PrimitiveTypeV1.String:
+                    case FernIr.PrimitiveTypeV1.String:
                         return "from_str";
-                    case PrimitiveTypeV1.Boolean:
+                    case FernIr.PrimitiveTypeV1.Boolean:
                         return "from_bool";
-                    case PrimitiveTypeV1.Long:
+                    case FernIr.PrimitiveTypeV1.Long:
                         return "from_int";
-                    case PrimitiveTypeV1.DateTime:
+                    case FernIr.PrimitiveTypeV1.DateTime:
                         return "from_datetime";
-                    case PrimitiveTypeV1.Date:
+                    case FernIr.PrimitiveTypeV1.Date:
                         return "from_date";
-                    case PrimitiveTypeV1.Uuid:
+                    case FernIr.PrimitiveTypeV1.Uuid:
                         return "from_uuid";
-                    case PrimitiveTypeV1.Base64:
+                    case FernIr.PrimitiveTypeV1.Base64:
                         return "from_str";
-                    case PrimitiveTypeV1.BigInteger:
+                    case FernIr.PrimitiveTypeV1.BigInteger:
                         return "from_str";
-                    case PrimitiveTypeV1.Uint:
+                    case FernIr.PrimitiveTypeV1.Uint:
                         return "from_int";
-                    case PrimitiveTypeV1.Uint64:
+                    case FernIr.PrimitiveTypeV1.Uint64:
                         return "from_int";
-                    case PrimitiveTypeV1.Float:
+                    case FernIr.PrimitiveTypeV1.Float:
                         return "from_float";
                     default:
                         assertNever(primitive.v1);

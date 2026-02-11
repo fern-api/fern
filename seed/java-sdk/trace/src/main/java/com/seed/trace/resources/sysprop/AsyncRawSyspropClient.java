@@ -45,8 +45,8 @@ public class AsyncRawSyspropClient {
                 .addPathSegment(language.toString())
                 .addPathSegment(Integer.toString(numWarmInstances));
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -96,8 +96,8 @@ public class AsyncRawSyspropClient {
                 .addPathSegments("sysprop")
                 .addPathSegments("num-warm-instances");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

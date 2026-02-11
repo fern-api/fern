@@ -91,6 +91,12 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  folders:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-interfaces
+      customConfig:
+        generateClientInterfaces: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -101,6 +107,12 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         propertyAccess: private
+  request-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-defaults
+      customConfig:
+        useDefaultRequestParameterValues: true
   query-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -133,12 +145,6 @@ fixtures:
           license:
           - "LGPL-2.1-only"
           - "GPL-3.0-or-later"
-          require:
-            guzzlehttp/guzzle: "7.9.2"
-            guzzlehttp/promises: "2.0.4"
-          require-dev:
-            phpunit/phpunit: "12.0.2"
-            phpunit/php-timer: "8.0.0"
           scripts:
             build:
             - "@php -l src"
@@ -146,7 +152,7 @@ fixtures:
             analyze: echo skip
             hello: echo hello
 scripts:
-  - image: composer:2.7.9
+  - image: fernapi/php-seed
     commands:
       build:
         # Retry composer install up to 3 times to handle intermittent network failures
@@ -167,10 +173,6 @@ allowedFailures:
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples:no-custom-config
   - examples:readme-config
-  # Enums don't support the fromJson method yet.
-  - exhaustive
-  # Wire tests have a bug where tests extend TestCase instead of WireMockTestCase
-  - exhaustive:wire-tests
   - trace
   - circular-references
   - circular-references-advanced

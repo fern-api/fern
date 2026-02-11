@@ -1,6 +1,6 @@
 // ReSharper disable All
 #pragma warning disable
-using System.Net.WebSockets;
+using global::System.Net.WebSockets;
 
 namespace <%= namespace%>.WebSockets;
 

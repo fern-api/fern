@@ -17,6 +17,12 @@ public partial class DummyClient : IDummyClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedSingleUrlEnvironmentDefault.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -24,6 +30,7 @@ public partial class DummyClient : IDummyClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "dummy",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

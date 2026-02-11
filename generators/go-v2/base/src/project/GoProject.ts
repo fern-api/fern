@@ -6,10 +6,10 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
-import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
-import { ModuleConfig } from "../module/ModuleConfig";
-import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
-import { GoFile } from "./GoFile";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";
+import { ModuleConfig } from "../module/ModuleConfig.js";
+import { ModuleConfigWriter } from "../module/ModuleConfigWriter.js";
+import { GoFile } from "./GoFile.js";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 

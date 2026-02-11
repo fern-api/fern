@@ -303,6 +303,31 @@ $client->service->withInlineType($request): string;
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;service-&gt;withJsonProperty($request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->withJsonProperty($request): string;
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;service-&gt;simple()</code></summary>
 <dl>
 <dd>
@@ -317,6 +342,31 @@ $client->service->withInlineType($request): string;
 
 ```php
 $client->service->simple();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;service-&gt;withLiteralAndEnumTypes($request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->withLiteralAndEnumTypes($request): string;
 ```
 </dd>
 </dl>

@@ -1,10 +1,13 @@
 import { WithGeneration } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+
 import urlJoin from "url-join";
-import { RootClientGenerator } from "../../root-client/RootClientGenerator";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 
 export class SnippetJsonGenerator extends WithGeneration {
     private readonly context: SdkGeneratorContext;
@@ -17,7 +20,7 @@ export class SnippetJsonGenerator extends WithGeneration {
 
     public async generate(): Promise<FernGeneratorExec.Snippets> {
         const rootClientSnippet = await this.rootClientGenerator
-            .generateExampleClientInstantiationSnippet({ asSnippet: true })
+            .generateExampleClientInstantiationSnippet({ asSnippet: true, includeEnvVarArguments: true })
             .toFormattedSnippetAsync({
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),

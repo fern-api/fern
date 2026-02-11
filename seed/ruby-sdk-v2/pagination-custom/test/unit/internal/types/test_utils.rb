@@ -2,26 +2,26 @@
 
 require "test_helper"
 
-describe FernPaginationCustom::Internal::Types::Utils do
-  Utils = FernPaginationCustom::Internal::Types::Utils
+describe Seed::Internal::Types::Utils do
+  Utils = Seed::Internal::Types::Utils
 
   module TestUtils
-    class M < FernPaginationCustom::Internal::Types::Model
+    class M < Seed::Internal::Types::Model
       field :value, String
     end
 
-    class UnionMemberA < FernPaginationCustom::Internal::Types::Model
+    class UnionMemberA < Seed::Internal::Types::Model
       literal :type, "A"
       field :only_on_a, String
     end
 
-    class UnionMemberB < FernPaginationCustom::Internal::Types::Model
+    class UnionMemberB < Seed::Internal::Types::Model
       literal :type, "B"
       field :only_on_b, String
     end
 
     module U
-      extend FernPaginationCustom::Internal::Types::Union
+      extend Seed::Internal::Types::Union
 
       discriminant :type
 
@@ -29,8 +29,8 @@ describe FernPaginationCustom::Internal::Types::Utils do
       member -> { UnionMemberB }, key: "B"
     end
 
-    SymbolStringHash = FernPaginationCustom::Internal::Types::Hash[Symbol, String]
-    SymbolModelHash = -> { FernPaginationCustom::Internal::Types::Hash[Symbol, TestUtils::M] }
+    SymbolStringHash = Seed::Internal::Types::Hash[Symbol, String]
+    SymbolModelHash = -> { Seed::Internal::Types::Hash[Symbol, TestUtils::M] }
   end
 
   describe ".coerce" do
@@ -58,7 +58,7 @@ describe FernPaginationCustom::Internal::Types::Utils do
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernPaginationCustom::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(String, Object.new, strict: true)
         end
       end
@@ -77,7 +77,7 @@ describe FernPaginationCustom::Internal::Types::Utils do
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernPaginationCustom::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(Symbol, Object.new, strict: true)
         end
       end
@@ -100,7 +100,7 @@ describe FernPaginationCustom::Internal::Types::Utils do
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernPaginationCustom::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(Integer, Object.new, strict: true)
         end
       end
@@ -122,7 +122,7 @@ describe FernPaginationCustom::Internal::Types::Utils do
       end
 
       it "raises an error if value cannot be coerced and strict" do
-        assert_raises FernPaginationCustom::Internal::Errors::TypeError do
+        assert_raises Seed::Internal::Errors::TypeError do
           Utils.coerce(Float, Object.new, strict: true)
         end
       end
@@ -150,7 +150,7 @@ describe FernPaginationCustom::Internal::Types::Utils do
 
     describe "Enum" do
       module ExampleEnum
-        extend FernPaginationCustom::Internal::Types::Enum
+        extend Seed::Internal::Types::Enum
 
         FOO = :FOO
         BAR = :BAR
@@ -168,9 +168,9 @@ describe FernPaginationCustom::Internal::Types::Utils do
     end
 
     describe "Array" do
-      StringArray = FernPaginationCustom::Internal::Types::Array[String]
-      ModelArray = -> { FernPaginationCustom::Internal::Types::Array[TestUtils::M] }
-      UnionArray = -> { FernPaginationCustom::Internal::Types::Array[TestUtils::U] }
+      StringArray = Seed::Internal::Types::Array[String]
+      ModelArray = -> { Seed::Internal::Types::Array[TestUtils::M] }
+      UnionArray = -> { Seed::Internal::Types::Array[TestUtils::U] }
 
       it "coerces an array of literals" do
         assert_equal %w[a b c], Utils.coerce(StringArray, %w[a b c])

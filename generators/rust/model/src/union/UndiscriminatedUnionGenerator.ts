@@ -1,24 +1,20 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
-import {
-    TypeDeclaration,
-    UndiscriminatedUnionMember,
-    UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
-import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isDateTimeOnlyType, typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils";
-import { isFieldRecursive } from "../utils/recursiveTypeUtils";
+import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { isDateTimeOnlyType, typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 
 export class UndiscriminatedUnionGenerator {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
+    private readonly undiscriminatedUnionTypeDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
     public constructor(
-        typeDeclaration: TypeDeclaration,
-        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
+        typeDeclaration: FernIr.TypeDeclaration,
+        undiscriminatedUnionTypeDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration,
         context: ModelGeneratorContext
     ) {
         this.typeDeclaration = typeDeclaration;
@@ -100,7 +96,7 @@ export class UndiscriminatedUnionGenerator {
         return attributes;
     }
 
-    private generateUnionMember(writer: rust.Writer, member: UndiscriminatedUnionMember, index: number): void {
+    private generateUnionMember(writer: rust.Writer, member: FernIr.UndiscriminatedUnionMember, index: number): void {
         // Find the typeId for this union to detect recursive fields
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
@@ -132,7 +128,7 @@ export class UndiscriminatedUnionGenerator {
         }
     }
 
-    private getVariantNameForMember(member: UndiscriminatedUnionMember, index: number): string {
+    private getVariantNameForMember(member: FernIr.UndiscriminatedUnionMember, index: number): string {
         // Try to extract a meaningful name from the type reference
         const memberType = member.type;
 

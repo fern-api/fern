@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoCircularImportsRule } from "../no-circular-imports";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoCircularImportsRule } from "../no-circular-imports.js";
 
 describe("no-circular-imports", () => {
     it("simple", async () => {

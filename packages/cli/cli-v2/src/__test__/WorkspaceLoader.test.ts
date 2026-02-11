@@ -5,9 +5,9 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { isOpenApiSpec } from "../api/config/OpenApiSpec";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
+import { isOpenApiSpec } from "../api/config/OpenApiSpec.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 
 describe("WorkspaceLoader", () => {
     let testDir: AbsoluteFilePath;
@@ -213,7 +213,7 @@ sdks:
                 expect(pythonTarget?.version).toBe("1.0.0");
 
                 const tsTarget = result.workspace.sdks?.targets.find((t) => t.name === "typescript");
-                expect(tsTarget?.image).toBe("fernapi/fern-typescript-node-sdk");
+                expect(tsTarget?.image).toBe("fernapi/fern-typescript-sdk");
                 expect(tsTarget?.version).toBe("2.0.0");
             }
         });

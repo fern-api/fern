@@ -1,5 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
+using global::System.Diagnostics.CodeAnalysis;
+using global::System.Runtime.Serialization;
 
 namespace SeedPagination.Core;
 
@@ -8,7 +8,7 @@ internal static class Extensions
     public static string Stringify(this Enum value)
     {
         var field = value.GetType().GetField(value.ToString());
-        if (field != null)
+        if (field is not null)
         {
             var attribute = (EnumMemberAttribute?)
                 global::System.Attribute.GetCustomAttribute(field, typeof(EnumMemberAttribute));
@@ -46,7 +46,7 @@ internal static class Extensions
     )
         where TValue : class
     {
-        if (value == null)
+        if (value is null)
         {
             throw new global::System.Exception(message);
         }

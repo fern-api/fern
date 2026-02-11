@@ -245,3 +245,24 @@ func (u *UpdateFooRequest) SetNonNullableText(nonNullableText *string) {
 	u.NonNullableText = nonNullableText
 	u.require(updateFooRequestFieldNonNullableText)
 }
+
+func (u *UpdateFooRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateFooRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateFooRequest(body)
+	return nil
+}
+
+func (u *UpdateFooRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateFooRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}

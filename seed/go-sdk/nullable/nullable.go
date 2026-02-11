@@ -62,6 +62,27 @@ func (c *CreateUserRequest) SetAvatar(avatar *string) {
 	c.require(createUserRequestFieldAvatar)
 }
 
+func (c *CreateUserRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateUserRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateUserRequest(body)
+	return nil
+}
+
+func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	deleteUserRequestFieldUsername = big.NewInt(1 << 0)
 )
@@ -86,6 +107,27 @@ func (d *DeleteUserRequest) require(field *big.Int) {
 func (d *DeleteUserRequest) SetUsername(username *string) {
 	d.Username = username
 	d.require(deleteUserRequestFieldUsername)
+}
+
+func (d *DeleteUserRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteUserRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*d = DeleteUserRequest(body)
+	return nil
+}
+
+func (d *DeleteUserRequest) MarshalJSON() ([]byte, error) {
+	type embed DeleteUserRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (

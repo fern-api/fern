@@ -1,6 +1,6 @@
 import { createVenusService } from "@fern-api/core";
 
-import { FernOrganizationToken } from "../FernToken";
+import { FernOrganizationToken } from "../FernToken.js";
 
 export async function verifyAccessToken(token: FernOrganizationToken): Promise<boolean> {
     const venus = createVenusService({ token: token.value });

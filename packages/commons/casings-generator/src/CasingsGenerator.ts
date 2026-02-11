@@ -3,7 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 
-import { RESERVED_KEYWORDS } from "./reserved";
+import { RESERVED_KEYWORDS } from "./reserved.js";
 
 export interface CasingsGenerator {
     generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;

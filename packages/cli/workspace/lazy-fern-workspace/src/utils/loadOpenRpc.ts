@@ -4,7 +4,7 @@ import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
+import { mergeWithOverrides } from "../loaders/mergeWithOverrides.js";
 
 export async function loadOpenRpc({
     context,

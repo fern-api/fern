@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { MANIFEST as Base64Manifest } from "./Base64Utils";
-import { CoreUtility } from "./CoreUtility";
+import { MANIFEST as Base64Manifest } from "./Base64Utils.js";
+import { CoreUtility } from "./CoreUtility.js";
 
 export interface Auth {
     BearerToken: {

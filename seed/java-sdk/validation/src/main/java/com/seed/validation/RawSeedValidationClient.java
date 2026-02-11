@@ -40,8 +40,8 @@ public class RawSeedValidationClient {
                 .newBuilder()
                 .addPathSegments("create");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -89,8 +89,8 @@ public class RawSeedValidationClient {
         QueryStringMapper.addQueryParameter(httpUrl, "even", request.getEven(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "name", request.getName(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()

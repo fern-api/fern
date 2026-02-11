@@ -93,7 +93,7 @@ All types (`Migration`, `MigrationModule`, `MigrationContext`, etc.) are defined
 Re-exports core types from `@fern-api/migrations-base`:
 - `Migration` - Contract for individual migrations
 - `MigrationModule` - Contract for migration packages (with `migrations` array)
-- `MigrationResult` - Return type with metadata
+- `MigratorResult` - Return type with metadata
 - `MigrationContext` - Context passed to migrations (includes logger)
 - `GeneratorsYmlDocument` - Structure for document-level migrations
 

@@ -223,9 +223,9 @@ public final class HttpUrlBuilder {
             codeBlock.beginControlFlow(
                     "if ($L != null)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
             codeBlock.beginControlFlow(
-                    "$L.getQueryParameters().forEach((key, value) ->",
+                    "$L.getQueryParameters().forEach((_key, _value) ->",
                     AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-            codeBlock.addStatement("$L.addQueryParameter(key, value)", httpUrlname);
+            codeBlock.addStatement("$L.addQueryParameter(_key, _value)", httpUrlname);
             codeBlock.endControlFlow(")");
             codeBlock.endControlFlow();
         }

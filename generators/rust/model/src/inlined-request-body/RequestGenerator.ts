@@ -1,19 +1,19 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
     generateFieldType
-} from "../utils/structUtils";
+} from "../utils/structUtils.js";
 
 export declare namespace RequestGenerator {
     interface Args {
         name: string;
-        properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-        extendedProperties?: ObjectProperty[];
+        properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+        extendedProperties?: FernIr.ObjectProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -21,8 +21,8 @@ export declare namespace RequestGenerator {
 
 export class RequestGenerator {
     private readonly name: string;
-    private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-    private readonly extendedProperties: ObjectProperty[];
+    private readonly properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
+    private readonly extendedProperties: FernIr.ObjectProperty[];
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
@@ -44,7 +44,7 @@ export class RequestGenerator {
         // Add inheritance fields first (with serde flatten)
         fields.push(...this.generateInheritanceFields());
 
-        // Add regular properties (mix of ObjectProperty and InlinedRequestBodyProperty)
+        // Add regular properties (mix of FernIr.ObjectProperty and FernIr.InlinedRequestBodyProperty)
         fields.push(...this.properties.map((property) => this.generateRustFieldForProperty(property)));
 
         // Build documentation for the request type
@@ -153,7 +153,7 @@ export class RequestGenerator {
         return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
     }
 
-    private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
+    private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
         const fieldAttributes = generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);

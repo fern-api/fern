@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_primitives</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_primitives</a>(...) -&gt; AsyncHttpResponse[typing.List[str]]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_objects</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_objects</a>(...) -&gt; AsyncHttpResponse[typing.List[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -122,7 +122,7 @@ client.endpoints.container.get_and_return_list_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_primitives</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_primitives</a>(...) -&gt; AsyncHttpResponse[typing.Set[str]]</code></summary>
 <dl>
 <dd>
 
@@ -179,7 +179,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_objects</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_objects</a>(...) -&gt; AsyncHttpResponse[typing.List[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -241,7 +241,7 @@ client.endpoints.container.get_and_return_set_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_prim_to_prim</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_prim_to_prim</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, str]]</code></summary>
 <dl>
 <dd>
 
@@ -298,7 +298,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_of_prim_to_object</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_of_prim_to_object</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -360,7 +360,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_optional</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_optional</a>(...) -&gt; AsyncHttpResponse[typing.Optional[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -421,7 +421,7 @@ client.endpoints.container.get_and_return_optional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_type</a>(...)</code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_type</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -595,7 +595,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...)</code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -770,7 +770,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.<a href="src/seed/endpoints/enum/client.py">get_and_return_enum</a>(...)</code></summary>
+<details><summary><code>client.endpoints.enum.<a href="src/seed/endpoints/enum/client.py">get_and_return_enum</a>(...) -&gt; AsyncHttpResponse[WeatherReport]</code></summary>
 <dl>
 <dd>
 
@@ -828,7 +828,7 @@ client.endpoints.enum.get_and_return_enum(
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_get</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_get</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -885,7 +885,7 @@ client.endpoints.http_methods.test_get(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_post</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_post</a>(...) -&gt; AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -942,7 +942,7 @@ client.endpoints.http_methods.test_post(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_put</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_put</a>(...) -&gt; AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1008,7 +1008,7 @@ client.endpoints.http_methods.test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_patch</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_patch</a>(...) -&gt; AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1191,7 +1191,7 @@ client.endpoints.http_methods.test_patch(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_delete</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_delete</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -1249,7 +1249,7 @@ client.endpoints.http_methods.test_delete(
 </details>
 
 ## Endpoints Object
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_optional_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_optional_field</a>(...) -&gt; AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1423,7 +1423,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_required_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_required_field</a>(...) -&gt; AsyncHttpResponse[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -1480,7 +1480,7 @@ client.endpoints.object.get_and_return_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_map_of_map</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_map_of_map</a>(...) -&gt; AsyncHttpResponse[ObjectWithMapOfMap]</code></summary>
 <dl>
 <dd>
 
@@ -1537,7 +1537,7 @@ client.endpoints.object.get_and_return_with_map_of_map(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_optional_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_optional_field</a>(...) -&gt; AsyncHttpResponse[NestedObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1627,7 +1627,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field</a>(...) -&gt; AsyncHttpResponse[NestedObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -1726,7 +1726,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field_as_list</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field_as_list</a>(...) -&gt; AsyncHttpResponse[NestedObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -1839,8 +1839,94 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_datetime_like_string</a>(...) -&gt; AsyncHttpResponse[ObjectWithDatetimeLikeString]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_with_datetime_like_string(
+    datetime_like_string="2023-08-31T14:15:22Z",
+    actual_datetime=datetime.datetime.fromisoformat(
+        "2023-08-31 14:15:22+00:00",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**datetime_like_string:** `str` — A string field that happens to contain a datetime-like value
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**actual_datetime:** `dt.datetime` — An actual datetime field for comparison
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -1911,7 +1997,7 @@ client.endpoints.params.get_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -1982,7 +2068,7 @@ client.endpoints.params.get_with_inline_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_query</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2062,7 +2148,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_allow_multiple_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_allow_multiple_query</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2142,7 +2228,7 @@ client.endpoints.params.get_with_allow_multiple_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path_and_query</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2222,7 +2308,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path_and_query</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2302,7 +2388,7 @@ client.endpoints.params.get_with_inline_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_path</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2382,7 +2468,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_inline_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_inline_path</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2463,7 +2549,7 @@ client.endpoints.params.modify_with_inline_path(
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_string</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_string</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2520,7 +2606,7 @@ client.endpoints.primitive.get_and_return_string(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_int</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_int</a>(...) -&gt; AsyncHttpResponse[int]</code></summary>
 <dl>
 <dd>
 
@@ -2577,7 +2663,7 @@ client.endpoints.primitive.get_and_return_int(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_long</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_long</a>(...) -&gt; AsyncHttpResponse[int]</code></summary>
 <dl>
 <dd>
 
@@ -2634,7 +2720,7 @@ client.endpoints.primitive.get_and_return_long(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_double</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_double</a>(...) -&gt; AsyncHttpResponse[float]</code></summary>
 <dl>
 <dd>
 
@@ -2691,7 +2777,7 @@ client.endpoints.primitive.get_and_return_double(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_bool</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_bool</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -2748,7 +2834,7 @@ client.endpoints.primitive.get_and_return_bool(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_datetime</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_datetime</a>(...) -&gt; AsyncHttpResponse[dt.datetime]</code></summary>
 <dl>
 <dd>
 
@@ -2809,7 +2895,7 @@ client.endpoints.primitive.get_and_return_datetime(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_date</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_date</a>(...) -&gt; AsyncHttpResponse[dt.date]</code></summary>
 <dl>
 <dd>
 
@@ -2870,7 +2956,7 @@ client.endpoints.primitive.get_and_return_date(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_uuid</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_uuid</a>(...) -&gt; AsyncHttpResponse[uuid.UUID]</code></summary>
 <dl>
 <dd>
 
@@ -2931,7 +3017,7 @@ client.endpoints.primitive.get_and_return_uuid(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base_64</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base_64</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2989,7 +3075,7 @@ client.endpoints.primitive.get_and_return_base_64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="src/seed/endpoints/put/client.py">add</a>(...)</code></summary>
+<details><summary><code>client.endpoints.put.<a href="src/seed/endpoints/put/client.py">add</a>(...) -&gt; AsyncHttpResponse[PutResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3047,7 +3133,7 @@ client.endpoints.put.add(
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.<a href="src/seed/endpoints/union/client.py">get_and_return_union</a>(...)</code></summary>
+<details><summary><code>client.endpoints.union.<a href="src/seed/endpoints/union/client.py">get_and_return_union</a>(...) -&gt; AsyncHttpResponse[Animal]</code></summary>
 <dl>
 <dd>
 
@@ -3109,7 +3195,7 @@ client.endpoints.union.get_and_return_union(
 </details>
 
 ## Endpoints Urls
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_mixed_case</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_mixed_case</a>() -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3156,7 +3242,7 @@ client.endpoints.urls.with_mixed_case()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">no_ending_slash</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">no_ending_slash</a>() -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3203,7 +3289,7 @@ client.endpoints.urls.no_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_ending_slash</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_ending_slash</a>() -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3250,7 +3336,7 @@ client.endpoints.urls.with_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_underscores</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_underscores</a>() -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3298,7 +3384,7 @@ client.endpoints.urls.with_underscores()
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.inlined_requests.<a href="src/seed/inlined_requests/client.py">post_with_object_bodyand_response</a>(...)</code></summary>
+<details><summary><code>client.inlined_requests.<a href="src/seed/inlined_requests/client.py">post_with_object_bodyand_response</a>(...) -&gt; AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -3412,7 +3498,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 </details>
 
 ## NoAuth
-<details><summary><code>client.no_auth.<a href="src/seed/no_auth/client.py">post_with_no_auth</a>(...)</code></summary>
+<details><summary><code>client.no_auth.<a href="src/seed/no_auth/client.py">post_with_no_auth</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -3463,7 +3549,7 @@ client.no_auth.post_with_no_auth(
 <dl>
 <dd>
 
-**request:** `typing.Optional[typing.Any]` 
+**request:** `typing.Any` 
     
 </dd>
 </dl>
@@ -3484,7 +3570,7 @@ client.no_auth.post_with_no_auth(
 </details>
 
 ## NoReqBody
-<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">get_with_no_request_body</a>()</code></summary>
+<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">get_with_no_request_body</a>() -&gt; AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -3531,7 +3617,7 @@ client.no_req_body.get_with_no_request_body()
 </dl>
 </details>
 
-<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">post_with_no_request_body</a>()</code></summary>
+<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">post_with_no_request_body</a>() -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3579,7 +3665,7 @@ client.no_req_body.post_with_no_request_body()
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.req_with_headers.<a href="src/seed/req_with_headers/client.py">get_with_custom_header</a>(...)</code></summary>
+<details><summary><code>client.req_with_headers.<a href="src/seed/req_with_headers/client.py">get_with_custom_header</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

@@ -1,7 +1,7 @@
 // ReSharper disable All
 #pragma warning disable
-using System.Net.WebSockets;
-using System.Text;
+using global::System.Net.WebSockets;
+using global::System.Text;
 
 namespace SeedWebsocket.Core.WebSockets;
 
@@ -14,7 +14,7 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public Task SendInstant(string message)
+    public global::System.Threading.Tasks.Task SendInstant(string message)
     {
         return SendInternalSynchronized(new RequestTextMessage(message));
     }
@@ -26,7 +26,7 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public Task SendInstant(Memory<byte> message)
+    public global::System.Threading.Tasks.Task SendInstant(Memory<byte> message)
     {
         return SendInternalSynchronized(message);
     }
@@ -38,7 +38,7 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public Task SendInstant(ArraySegment<byte> message)
+    public global::System.Threading.Tasks.Task SendInstant(ArraySegment<byte> message)
     {
         return SendInternalSynchronized(message);
     }
@@ -50,12 +50,14 @@ internal partial class WebSocketConnection
     /// on the full .NET Framework platform
     /// </summary>
     /// <param name="message">Message to be sent</param>
-    public Task SendInstant(byte[] message)
+    public global::System.Threading.Tasks.Task SendInstant(byte[] message)
     {
         return SendInternalSynchronized(new ArraySegment<byte>(message));
     }
 
-    private async Task SendInternalSynchronized(RequestMessage message)
+    private async global::System.Threading.Tasks.Task SendInternalSynchronized(
+        RequestMessage message
+    )
     {
         using (await _locker.LockAsync())
         {
@@ -63,7 +65,7 @@ internal partial class WebSocketConnection
         }
     }
 
-    private async Task SendInternal(RequestMessage message)
+    private async global::System.Threading.Tasks.Task SendInternal(RequestMessage message)
     {
         if (!IsClientConnected())
         {
@@ -97,7 +99,9 @@ internal partial class WebSocketConnection
             .ConfigureAwait(false);
     }
 
-    private async Task SendInternalSynchronized(ArraySegment<byte> message)
+    private async global::System.Threading.Tasks.Task SendInternalSynchronized(
+        ArraySegment<byte> message
+    )
     {
         using (await _locker.LockAsync())
         {
@@ -105,7 +109,7 @@ internal partial class WebSocketConnection
         }
     }
 
-    private async Task SendInternalSynchronized(Memory<byte> message)
+    private async global::System.Threading.Tasks.Task SendInternalSynchronized(Memory<byte> message)
     {
         using (await _locker.LockAsync())
         {
@@ -113,7 +117,7 @@ internal partial class WebSocketConnection
         }
     }
 
-    private async Task SendInternal(ArraySegment<byte> payload)
+    private async global::System.Threading.Tasks.Task SendInternal(ArraySegment<byte> payload)
     {
         if (!IsClientConnected())
         {
@@ -130,7 +134,7 @@ internal partial class WebSocketConnection
             .ConfigureAwait(false);
     }
 
-    private async Task SendInternal(ReadOnlyMemory<byte> payload)
+    private async global::System.Threading.Tasks.Task SendInternal(ReadOnlyMemory<byte> payload)
     {
         if (!IsClientConnected())
         {

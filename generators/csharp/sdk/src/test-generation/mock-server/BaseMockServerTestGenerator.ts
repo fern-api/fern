@@ -2,12 +2,18 @@ import { NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleEndpointCall, InferredAuthScheme, Name, OAuthScheme } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type InferredAuthScheme = FernIr.InferredAuthScheme;
+type Name = FernIr.Name;
+type OAuthScheme = FernIr.OAuthScheme;
+
 import { fail } from "assert";
-import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator";
-import { RootClientGenerator } from "../../root-client/RootClientGenerator";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { MockEndpointGenerator } from "./MockEndpointGenerator";
+import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator.js";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
@@ -98,6 +104,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeNodeStatement(
                     this.rootClientGenerator.generateExampleClientInstantiationSnippet({
                         includeEnvVarArguments: true,
+                        asSnippet: false,
                         clientOptionsArgument: this.csharp.instantiateClass({
                             classReference: this.Types.ClientOptions,
                             arguments_: [
@@ -301,8 +308,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         "CLIENT_SECRET"
                     );
                 });
+                // Skip body matching for OAuth endpoints because the OAuthTokenProvider only sends
+                // required fields (client_id, client_secret), while the example may include optional
+                // fields (scope, audience, grant_type) that won't be in the actual request
                 writer.writeNode(
-                    this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples)
+                    this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples, {
+                        skipBodyMatch: true
+                    })
                 );
                 if (shouldScope) {
                     writer.popScope();
@@ -332,8 +344,11 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                             return response?.type === "ok" && response.value.type === "body";
                         }
                     );
+                    // Skip body matching for refresh endpoint as well
                     writer.writeNode(
-                        this.mockEndpointGenerator.generateForExamples(refreshHttpEndpoint, refreshUseableExamples)
+                        this.mockEndpointGenerator.generateForExamples(refreshHttpEndpoint, refreshUseableExamples, {
+                            skipBodyMatch: true
+                        })
                     );
                 }
                 if (shouldScope) {

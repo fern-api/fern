@@ -1,5 +1,6 @@
-import type { ApiDefinition } from "../api/config/ApiDefinition";
-import type { SdkConfig } from "../sdk/config/SdkConfig";
+import type { AiConfig } from "../ai/config/AiConfig.js";
+import type { ApiDefinition } from "../api/config/ApiDefinition.js";
+import type { SdkConfig } from "../sdk/config/SdkConfig.js";
 
 /**
  * Top-level workspace defined by fern.yml.
@@ -9,6 +10,9 @@ import type { SdkConfig } from "../sdk/config/SdkConfig";
  * and/or docs.
  */
 export interface Workspace {
+    ai?: AiConfig;
     apis: Record<string, ApiDefinition>;
+    cliVersion: string;
+    org: string;
     sdks?: SdkConfig;
 }

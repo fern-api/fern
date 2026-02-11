@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require_relative "../lib/fern_simple_api"
+require_relative "../lib/seed"

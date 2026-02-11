@@ -12,6 +12,7 @@ from fern_python.codegen.ast.dependency.dependency import (
     DependencyCompatibility,
 )
 from fern_python.codegen.dependency_manager import DependencyManager
+from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 
 from fern.generator_exec import (
     BasicLicense,
@@ -51,6 +52,10 @@ class PyProjectToml:
             name=name,
             version=version,
             package=package,
+            classifiers=PyPIClassifierMetadataGenerator.create_classifiers(
+                python_version=python_version,
+                license_=license_,
+            ),
             pypi_metadata=pypi_metadata,
             github_output_mode=github_output_mode,
             license_=license_,
@@ -109,6 +114,7 @@ dynamic = ["version"]
         name: str
         version: Optional[str]
         package: PyProjectTomlPackageConfig
+        classifiers: List[str]
         pypi_metadata: Optional[PypiMetadata]
         github_output_mode: Optional[GithubOutputMode]
         license_: Optional[LicenseConfig]
@@ -123,23 +129,7 @@ name = "{self.name}"'''
             authors: List[str] = []
             keywords: List[str] = []
             project_urls: List[str] = []
-            classifiers = [
-                "Intended Audience :: Developers",
-                "Programming Language :: Python",
-                "Programming Language :: Python :: 3",
-                "Programming Language :: Python :: 3.8",
-                "Programming Language :: Python :: 3.9",
-                "Programming Language :: Python :: 3.10",
-                "Programming Language :: Python :: 3.11",
-                "Programming Language :: Python :: 3.12",
-                "Operating System :: OS Independent",
-                "Operating System :: POSIX",
-                "Operating System :: MacOS",
-                "Operating System :: POSIX :: Linux",
-                "Operating System :: Microsoft :: Windows",
-                "Topic :: Software Development :: Libraries :: Python Modules",
-                "Typing :: Typed",
-            ]
+
             license_evaluated = ""
             if self.pypi_metadata is not None:
                 description = (
@@ -157,15 +147,13 @@ name = "{self.name}"'''
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
             if self.license_ is not None:
-                # TODO(armandobelardo): verify poetry handles custom licenses on it's side
+                # TODO(armandobelardo): verify poetry handles custom licenses on its side
                 if self.license_.get_as_union().type == "basic":
                     license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:
                         license_evaluated = 'license = "MIT"'
-                        classifiers.append("License :: OSI Approved :: MIT License")
                     elif license_id == LicenseId.APACHE_2:
                         license_evaluated = 'license = "Apache-2.0"'
-                        classifiers.append("License :: OSI Approved :: Apache Software License")
 
             if self.github_output_mode is not None:
                 project_urls.append(f"Repository = '{self.github_output_mode.repo_url}'")
@@ -180,7 +168,7 @@ readme = "README.md"
 authors = {json.dumps(authors, indent=4)}
 keywords = {json.dumps(keywords, indent=4)}
 {license_evaluated}
-classifiers = {json.dumps(classifiers, indent=4)}"""
+classifiers = {json.dumps(self.classifiers, indent=4)}"""
             if self.package._from is not None:
                 s += f"""
 packages = [

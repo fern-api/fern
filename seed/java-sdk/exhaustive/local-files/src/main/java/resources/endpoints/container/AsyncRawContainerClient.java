@@ -51,8 +51,8 @@ public class AsyncRawContainerClient {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("container")
       .addPathSegments("list-of-primitives");if (requestOptions != null) {
-        requestOptions.getQueryParameters().forEach((key, value) -> {
-          httpUrl.addQueryParameter(key, value);
+        requestOptions.getQueryParameters().forEach((_key, _value) -> {
+          httpUrl.addQueryParameter(_key, _value);
         } );
       }
       RequestBody body;
@@ -110,8 +110,8 @@ public class AsyncRawContainerClient {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegments("container")
         .addPathSegments("list-of-objects");if (requestOptions != null) {
-          requestOptions.getQueryParameters().forEach((key, value) -> {
-            httpUrl.addQueryParameter(key, value);
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
           } );
         }
         RequestBody body;
@@ -169,8 +169,8 @@ public class AsyncRawContainerClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
           .addPathSegments("container")
           .addPathSegments("set-of-primitives");if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-              httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+              httpUrl.addQueryParameter(_key, _value);
             } );
           }
           RequestBody body;
@@ -228,8 +228,8 @@ public class AsyncRawContainerClient {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
             .addPathSegments("container")
             .addPathSegments("set-of-objects");if (requestOptions != null) {
-              requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+              requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
               } );
             }
             RequestBody body;
@@ -287,8 +287,8 @@ public class AsyncRawContainerClient {
             HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
               .addPathSegments("container")
               .addPathSegments("map-prim-to-prim");if (requestOptions != null) {
-                requestOptions.getQueryParameters().forEach((key, value) -> {
-                  httpUrl.addQueryParameter(key, value);
+                requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                  httpUrl.addQueryParameter(_key, _value);
                 } );
               }
               RequestBody body;
@@ -346,8 +346,8 @@ public class AsyncRawContainerClient {
               HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                 .addPathSegments("container")
                 .addPathSegments("map-prim-to-object");if (requestOptions != null) {
-                  requestOptions.getQueryParameters().forEach((key, value) -> {
-                    httpUrl.addQueryParameter(key, value);
+                  requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                    httpUrl.addQueryParameter(_key, _value);
                   } );
                 }
                 RequestBody body;
@@ -415,8 +415,8 @@ public class AsyncRawContainerClient {
                 HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                   .addPathSegments("container")
                   .addPathSegments("opt-objects");if (requestOptions != null) {
-                    requestOptions.getQueryParameters().forEach((key, value) -> {
-                      httpUrl.addQueryParameter(key, value);
+                    requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                      httpUrl.addQueryParameter(_key, _value);
                     } );
                   }
                   RequestBody body;

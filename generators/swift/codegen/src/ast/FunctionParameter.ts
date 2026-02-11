@@ -1,6 +1,6 @@
-import { AstNode, Writer } from "./core";
-import { Expression } from "./Expression";
-import { TypeReference } from "./TypeReference";
+import { AstNode, Writer } from "./core/index.js";
+import { Expression } from "./Expression.js";
+import { TypeReference } from "./TypeReference.js";
 
 export declare namespace FunctionParameter {
     interface Args {

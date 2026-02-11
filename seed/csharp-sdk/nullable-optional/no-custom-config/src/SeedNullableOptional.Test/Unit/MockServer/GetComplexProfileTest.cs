@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedNullableOptional;
-using SeedNullableOptional.Core;
+using SeedNullableOptional.Test.Utils;
 
 namespace SeedNullableOptional.Test.Unit.MockServer;
 
@@ -135,9 +134,6 @@ public class GetComplexProfileTest : BaseMockServerTest
             );
 
         var response = await Client.NullableOptional.GetComplexProfileAsync("profileId");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ComplexProfile>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

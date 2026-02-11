@@ -74,9 +74,9 @@ class UnionWithDiscriminant(UniversalRootModel):
 
 class _UnionWithDiscriminant:
     class Foo(UniversalBaseModel):
-        type: typing_extensions.Annotated[typing.Literal["foo"], FieldMetadata(alias="_type")] = pydantic.Field(
-            alias="_type", default="foo"
-        )
+        type: typing_extensions.Annotated[
+            typing.Literal["foo"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+        ] = "foo"
         foo: types_types_foo_Foo
 
         if IS_PYDANTIC_V2:
@@ -88,9 +88,9 @@ class _UnionWithDiscriminant:
                 smart_union = True
 
     class Bar(UniversalBaseModel):
-        type: typing_extensions.Annotated[typing.Literal["bar"], FieldMetadata(alias="_type")] = pydantic.Field(
-            alias="_type", default="bar"
-        )
+        type: typing_extensions.Annotated[
+            typing.Literal["bar"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+        ] = "bar"
         bar: types_types_bar_Bar
 
         if IS_PYDANTIC_V2:

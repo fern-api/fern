@@ -445,4 +445,28 @@ describe("ObjectClient", () => {
             },
         });
     });
+
+    test("getAndReturnWithDatetimeLikeString", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { datetimeLikeString: "2023-08-31T14:15:22Z", actualDatetime: "2023-08-31T14:15:22Z" };
+        const rawResponseBody = { datetimeLikeString: "2023-08-31T14:15:22Z", actualDatetime: "2023-08-31T14:15:22Z" };
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-datetime-like-string")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithDatetimeLikeString({
+            datetimeLikeString: "2023-08-31T14:15:22Z",
+            actualDatetime: new Date("2023-08-31T14:15:22.000Z"),
+        });
+        expect(response).toEqual({
+            datetimeLikeString: "2023-08-31T14:15:22Z",
+            actualDatetime: new Date("2023-08-31T14:15:22.000Z"),
+        });
+    });
 });

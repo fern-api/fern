@@ -1,9 +1,9 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -11,9 +11,9 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
  */
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
     }
@@ -29,7 +29,7 @@ export class WireTestSetupGenerator {
         this.generateWireTestScript();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
         return new WireMock().convertToWireMock(ir);
     }
 
@@ -79,7 +79,7 @@ export class WireTestSetupGenerator {
     /**
      * Check if an endpoint returns a unit type ()
      */
-    private isUnitTypeResponse(endpoint: HttpEndpoint): boolean {
+    private isUnitTypeResponse(endpoint: FernIr.HttpEndpoint): boolean {
         // If there's no response field at all, it's not a unit type endpoint
         if (!endpoint.response) {
             return false;
@@ -129,7 +129,7 @@ export class WireTestSetupGenerator {
     /**
      * Build the URL path for an endpoint to match against WireMock mappings
      */
-    private buildEndpointPath(endpoint: HttpEndpoint): string {
+    private buildEndpointPath(endpoint: FernIr.HttpEndpoint): string {
         let path = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts || []) {
             path += `{${part.pathParameter}}${part.tail}`;

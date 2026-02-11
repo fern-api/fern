@@ -28,11 +28,15 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                        base_64: Some(
+                            base64::engine::general_purpose::STANDARD
+                                .decode("SGVsbG8gd29ybGQh")
+                                .unwrap(),
+                        ),
                         list: Some(vec!["list".to_string(), "list".to_string()]),
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
-                        bigint: Some("1000000".to_string()),
+                        bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                     },
                 },
                 NestedObjectWithRequiredField {
@@ -50,11 +54,15 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+                        base_64: Some(
+                            base64::engine::general_purpose::STANDARD
+                                .decode("SGVsbG8gd29ybGQh")
+                                .unwrap(),
+                        ),
                         list: Some(vec!["list".to_string(), "list".to_string()]),
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
-                        bigint: Some("1000000".to_string()),
+                        bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                     },
                 },
             ],

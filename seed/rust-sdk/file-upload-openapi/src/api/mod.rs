@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ApiClient, FileUploadExampleClient};
-pub use types::*;
+pub use resources::{FileUploadExampleClient, ApiClient};
+pub use types::{*};
+

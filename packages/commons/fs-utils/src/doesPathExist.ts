@@ -1,7 +1,7 @@
 import { lstatSync } from "fs";
 import { lstat, readdir } from "fs/promises";
 
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
+import { AbsoluteFilePath } from "./AbsoluteFilePath.js";
 
 export async function isPathEmpty(filepath: AbsoluteFilePath): Promise<boolean> {
     try {

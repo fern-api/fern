@@ -2,6 +2,6 @@ namespace SeedPathParameters;
 
 public partial interface ISeedPathParametersClient
 {
-    public OrganizationsClient Organizations { get; }
-    public UserClient User { get; }
+    public IOrganizationsClient Organizations { get; }
+    public IUserClient User { get; }
 }

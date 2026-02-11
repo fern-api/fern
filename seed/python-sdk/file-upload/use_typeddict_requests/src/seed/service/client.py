@@ -12,7 +12,9 @@ from .requests.my_inline_type import MyInlineTypeParams
 from .requests.my_object import MyObjectParams
 from .requests.my_object_with_optional import MyObjectWithOptionalParams
 from .types.id import Id
+from .types.model_type import ModelType
 from .types.object_type import ObjectType
+from .types.open_enum_type import OpenEnumType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -419,6 +421,31 @@ class ServiceClient:
         _response = self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
         return _response.data
 
+    def with_json_property(
+        self,
+        *,
+        file: core.File,
+        json: typing.Optional[MyObjectParams] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        json : typing.Optional[MyObjectParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
+        return _response.data
+
     def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
@@ -440,6 +467,43 @@ class ServiceClient:
         client.service.simple()
         """
         _response = self._raw_client.simple(request_options=request_options)
+        return _response.data
+
+    def with_literal_and_enum_types(
+        self,
+        *,
+        file: core.File,
+        model_type: typing.Optional[ModelType] = OMIT,
+        open_enum: typing.Optional[OpenEnumType] = OMIT,
+        maybe_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        model_type : typing.Optional[ModelType]
+
+        open_enum : typing.Optional[OpenEnumType]
+
+        maybe_name : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = self._raw_client.with_literal_and_enum_types(
+            file=file,
+            model_type=model_type,
+            open_enum=open_enum,
+            maybe_name=maybe_name,
+            request_options=request_options,
+        )
         return _response.data
 
 
@@ -862,6 +926,31 @@ class AsyncServiceClient:
         _response = await self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
         return _response.data
 
+    async def with_json_property(
+        self,
+        *,
+        file: core.File,
+        json: typing.Optional[MyObjectParams] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        json : typing.Optional[MyObjectParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = await self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
+        return _response.data
+
     async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
@@ -891,4 +980,41 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.simple(request_options=request_options)
+        return _response.data
+
+    async def with_literal_and_enum_types(
+        self,
+        *,
+        file: core.File,
+        model_type: typing.Optional[ModelType] = OMIT,
+        open_enum: typing.Optional[OpenEnumType] = OMIT,
+        maybe_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        model_type : typing.Optional[ModelType]
+
+        open_enum : typing.Optional[OpenEnumType]
+
+        maybe_name : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = await self._raw_client.with_literal_and_enum_types(
+            file=file,
+            model_type=model_type,
+            open_enum=open_enum,
+            maybe_name=maybe_name,
+            request_options=request_options,
+        )
         return _response.data

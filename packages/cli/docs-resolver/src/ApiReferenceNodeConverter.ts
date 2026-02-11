@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
-import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
@@ -8,18 +8,21 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 
-import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
-import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
-import { NodeIdGenerator } from "./NodeIdGenerator";
-import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings";
-import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
-import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages";
-import { isSubpackage } from "./utils/isSubpackage";
-import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
-import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
-import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
-import { toPageNode } from "./utils/toPageNode";
-import { toRelativeFilepath } from "./utils/toRelativeFilepath";
+import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
+import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings.js";
+import { enrichApiPackageChild } from "./utils/enrichApiPackageChild.js";
+import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages.js";
+import { isSubpackage } from "./utils/isSubpackage.js";
+import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
+import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
+import {
+    stringifyEndpointPathParts,
+    stringifyEndpointPathPartsWithMethod
+} from "./utils/stringifyEndpointPathParts.js";
+import { toPageNode } from "./utils/toPageNode.js";
+import { toRelativeFilepath } from "./utils/toRelativeFilepath.js";
 
 const NUM_NEAREST_SUBPACKAGES = 1;
 
@@ -30,6 +33,7 @@ export class ApiReferenceNodeConverter {
     #visitedWebSockets = new Set<FernNavigation.V1.WebSocketId>();
     #visitedWebhooks = new Set<FernNavigation.V1.WebhookId>();
     #visitedGrpcs = new Set<FernNavigation.V1.GrpcId>();
+    #visitedGraphqlOperations = new Set<APIV1Read.GraphQlOperationId>();
     #visitedSubpackages = new Set<string>();
     #nodeIdToSubpackageId = new Map<string, string[]>();
     #children: FernNavigation.V1.ApiPackageChild[] = [];
@@ -39,6 +43,7 @@ export class ApiReferenceNodeConverter {
     private disableEndpointPairs;
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     #tagDescriptionContent: Map<AbsoluteFilePath, string>;
+    #graphqlNamespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -53,9 +58,11 @@ export class ApiReferenceNodeConverter {
         private workspace?: FernWorkspace,
         private hideChildren?: boolean,
         private parentAvailability?: docsYml.RawSchemas.Availability,
-        private openApiTags?: Record<string, { id: string; description: string | undefined }>
+        private openApiTags?: Record<string, { id: string; description: string | undefined }>,
+        graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>
     ) {
         this.#tagDescriptionContent = new Map();
+        this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
@@ -110,12 +117,30 @@ export class ApiReferenceNodeConverter {
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();
+
+        // When no explicit overview is set, inherit the first apiPackage child's overview page (e.g., tag description).
+        // This works for both flattened and non-flattened cases:
+        // - Flattened: The section will inherit this overview page via DocsDefinitionResolver.toSectionNode()
+        // - Non-flattened: The API Reference itself will show the tag description when clicked
+        // We search through all children to find an apiPackage with an overviewPageId, rather than assuming
+        // the first child is an apiPackage (which may not be true when endpoints are explicitly listed in the layout).
+        let overviewPageId = this.#overviewPageId;
+        if (overviewPageId == null) {
+            const apiPackageWithOverview = this.#children.find(
+                (child): child is FernNavigation.V1.ApiPackageNode =>
+                    child.type === "apiPackage" && child.overviewPageId != null
+            );
+            if (apiPackageWithOverview != null) {
+                overviewPageId = apiPackageWithOverview.overviewPageId;
+            }
+        }
+
         return {
             id: this.#idgen.get(this.apiDefinitionId),
             type: "apiReference",
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
-            overviewPageId: this.#overviewPageId,
+            overviewPageId,
             paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
             icon: this.resolveIconFileId(this.apiSection.icon),
@@ -169,8 +194,17 @@ export class ApiReferenceNodeConverter {
         const virtualAbsolutePath = AbsoluteFilePath.of(`/${relativeFilePath}`);
         const pageId = FernNavigation.V1.PageId(relativeFilePath);
 
+        // Escape special characters in the description to prevent MDX parsing errors:
+        // - Curly braces {} are interpreted as JSX expressions
+        // - Angle brackets <> are interpreted as HTML/JSX tags
+        const escapedDescription = tagInfo.description
+            .replace(/\{/g, "\\{")
+            .replace(/\}/g, "\\}")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
         // Store the tag description content
-        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${tagInfo.description}`;
+        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${escapedDescription}`;
         this.#tagDescriptionContent.set(virtualAbsolutePath, markdownContent);
 
         // Add to markdown files collections for processing
@@ -213,7 +247,9 @@ export class ApiReferenceNodeConverter {
                             parentAvailability
                         ),
                     endpoint: (endpoint) =>
-                        this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, parentAvailability)
+                        this.#convertEndpoint(endpoint, apiDefinitionPackageId, parentSlug, parentAvailability),
+                    operation: (operation) =>
+                        this.#convertOperation(operation, apiDefinitionPackageId, parentSlug, parentAvailability)
                 })
             )
             .filter(isNonNullish);
@@ -573,7 +609,10 @@ export class ApiReferenceNodeConverter {
                     icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? parentAvailability,
+                    availability:
+                        endpointItem.availability ??
+                        FernNavigation.V1.convertAvailability(webSocket.availability) ??
+                        parentAvailability,
                     playground: this.#convertPlaygroundSettings(endpointItem.playground),
                     authed: undefined,
                     viewers: endpointItem.viewers,
@@ -612,7 +651,10 @@ export class ApiReferenceNodeConverter {
                     icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: parentAvailability,
+                    availability:
+                        endpointItem.availability ??
+                        FernNavigation.V1.convertAvailability(webhook.availability) ??
+                        parentAvailability,
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,
@@ -621,9 +663,194 @@ export class ApiReferenceNodeConverter {
             }
         }
 
+        // Check if it's a GraphQL operation
+        const graphqlOperation = this.#holder.api.rootPackage.graphqlOperations?.find(
+            (op) => op.id === endpointItem.endpoint || op.name === endpointItem.endpoint
+        );
+
+        if (graphqlOperation != null) {
+            const operationId = APIV1Read.GraphQlOperationId(graphqlOperation.id);
+            if (this.#visitedGraphqlOperations.has(operationId)) {
+                this.taskContext.logger.error(
+                    `Duplicate GraphQL operation found in the API Reference layout: ${operationId}`
+                );
+                return;
+            }
+            this.#visitedGraphqlOperations.add(operationId);
+
+            const operationSlug =
+                endpointItem.slug != null
+                    ? parentSlug.append(endpointItem.slug)
+                    : parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
+
+            return {
+                id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
+                type: "graphql" as const,
+                operationType: graphqlOperation.operationType,
+                graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
+                apiDefinitionId: this.apiDefinitionId,
+                availability: endpointItem.availability ?? parentAvailability,
+                title:
+                    endpointItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
+                slug: operationSlug.get(),
+                icon: this.resolveIconFileId(endpointItem.icon),
+                hidden: this.hideChildren || endpointItem.hidden,
+                playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                authed: undefined,
+                viewers: endpointItem.viewers,
+                orphaned: endpointItem.orphaned,
+                featureFlags: endpointItem.featureFlags
+            };
+        }
+
         this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint);
 
         return;
+    }
+
+    #convertOperation(
+        operationItem: docsYml.ParsedApiReferenceLayoutItem.Operation,
+        apiDefinitionPackageIdRaw: string | undefined,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild | undefined {
+        // Parse the operation string (e.g., "QUERY account" or "QUERY namespace.createUser")
+        const operationParts = operationItem.operation.trim().split(/\s+/, 2);
+        if (operationParts.length !== 2) {
+            this.taskContext.logger.error(
+                `Invalid operation format in the API Reference layout: ${operationItem.operation}. Expected format: "OPERATION_TYPE operationName" (e.g., "QUERY account")`
+            );
+            return;
+        }
+
+        const [operationType, operationName] = operationParts;
+
+        if (!operationName) {
+            this.taskContext.logger.error(
+                `Invalid operation format in the API Reference layout: ${operationItem.operation}. Expected format: "OPERATION_TYPE operationName" (e.g., "QUERY account")`
+            );
+            return;
+        }
+
+        // First, find all matching operations by type and name/id
+        const allOperations = this.#holder.api.rootPackage.graphqlOperations ?? [];
+        const matchingOperations = allOperations.filter((op) => {
+            if (op.operationType !== operationType) {
+                return false;
+            }
+
+            // For namespaced operations (e.g., "admin.getSystemInfo")
+            if (operationName.includes(".")) {
+                // Try exact match on full ID first
+                if (op.id === operationName) {
+                    return true;
+                }
+
+                // Try exact match on full name
+                if (op.name === operationName) {
+                    return true;
+                }
+
+                // For legacy support, check if the namespace from the operation name matches
+                const namespacedParts = operationName.split(".");
+                const opName = namespacedParts[namespacedParts.length - 1];
+                const namespace = namespacedParts.slice(0, -1).join(".");
+
+                // Check if operation name matches and is in the expected namespace context
+                if (op.name === opName || op.id === opName) {
+                    // Check if the operation's ID contains the namespace
+                    return (
+                        op.id.startsWith(namespace + ".") ||
+                        this.#graphqlNamespacesByOperationId.get(FdrAPI.GraphQlOperationId(op.id)) === namespace
+                    );
+                }
+            } else {
+                // For non-namespaced operations, exact match on name or id
+                return op.name === operationName || op.id === operationName;
+            }
+
+            return false;
+        });
+
+        // Check for ambiguity - multiple operations with same name/type
+        if (!operationName.includes(".")) {
+            // Only check for ambiguity on non-namespaced operations
+            const sameNameOperations = allOperations.filter(
+                (op) => op.operationType === operationType && (op.name === operationName || op.id === operationName)
+            );
+
+            if (sameNameOperations.length > 1) {
+                const suggestions = sameNameOperations
+                    .map((op) => {
+                        // Try to get the clean namespace from the GraphQL namespaces map
+                        const namespace = this.#graphqlNamespacesByOperationId.get(FdrAPI.GraphQlOperationId(op.id));
+                        if (namespace) {
+                            return `"${operationType} ${namespace}.${operationName}"`;
+                        }
+
+                        // Fallback: try to extract namespace from operation ID
+                        // If ID is like "accounts_query_node", extract "accounts"
+                        const idParts = op.id.split("_");
+                        if (idParts.length >= 3) {
+                            const extractedNamespace = idParts[0];
+                            return `"${operationType} ${extractedNamespace}.${operationName}"`;
+                        }
+
+                        // Last fallback: use the full ID
+                        return `"${operationType} ${op.id}"`;
+                    })
+                    .join(", ");
+
+                this.taskContext.logger.warn(
+                    `Ambiguous operation reference: "${operationItem.operation}". ` +
+                        `Found ${sameNameOperations.length} operations with name "${operationName}". ` +
+                        `Using first match: "${suggestions.split(", ")[0]}". ` +
+                        `Please use the full namespaced format for clarity. Available options: ${suggestions}`
+                );
+                // Continue with first match instead of returning
+            }
+        }
+
+        const graphqlOperation = matchingOperations[0];
+
+        if (graphqlOperation == null) {
+            this.taskContext.logger.error(
+                `GraphQL operation not found in the API Reference layout: ${operationItem.operation}`
+            );
+            return;
+        }
+
+        const operationId = APIV1Read.GraphQlOperationId(graphqlOperation.id);
+        if (this.#visitedGraphqlOperations.has(operationId)) {
+            this.taskContext.logger.error(
+                `Duplicate GraphQL operation found in the API Reference layout: ${operationId}`
+            );
+            return;
+        }
+        this.#visitedGraphqlOperations.add(operationId);
+
+        const operationSlug =
+            operationItem.slug != null
+                ? parentSlug.append(operationItem.slug)
+                : parentSlug.append(graphqlOperation.name ?? graphqlOperation.id);
+
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
+            type: "graphql" as const,
+            operationType: graphqlOperation.operationType,
+            graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
+            apiDefinitionId: this.apiDefinitionId,
+            availability: operationItem.availability ?? parentAvailability,
+            title: operationItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
+            slug: operationSlug.get(),
+            icon: undefined,
+            hidden: this.hideChildren || operationItem.hidden,
+            playground: undefined,
+            authed: undefined,
+            viewers: operationItem.viewers,
+            orphaned: operationItem.orphaned,
+            featureFlags: operationItem.featureFlags
+        };
     }
 
     // Step 2
@@ -774,7 +1001,7 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: parentAvailability,
+                availability: FernNavigation.V1.convertAvailability(webhook.availability) ?? parentAvailability,
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
@@ -798,7 +1025,23 @@ export class ApiReferenceNodeConverter {
 
             const slug = isSubpackage(subpackage) ? parentSlug.apply(subpackage) : parentSlug;
             const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug, parentAvailability);
-            if (subpackageChildren.length > 0) {
+            const tagDescriptionPageId = this.createTagDescriptionPageId(subpackage);
+
+            // Check if any endpoints from this subpackage were visited (explicitly listed in the layout).
+            // This determines if the subpackage is relevant to the current API section.
+            const subpackageHolder = this.#holder.subpackages.get(APIV1Read.SubpackageId(subpackageId));
+            const hasVisitedEndpoints = subpackageHolder
+                ? Array.from(subpackageHolder.endpoints.values()).some((endpoint) => {
+                      const endpointId = this.#holder.getEndpointId(endpoint);
+                      return endpointId != null && this.#visitedEndpoints.has(endpointId);
+                  })
+                : false;
+
+            // Add subpackage if:
+            // 1. It has children (unvisited endpoints/subpackages), OR
+            // 2. It has a tag description page AND some of its endpoints were visited (relevant to this API section)
+            // This prevents adding tag description pages for subpackages that are not relevant to the current API section.
+            if (subpackageChildren.length > 0 || (tagDescriptionPageId != null && hasVisitedEndpoints)) {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
                     type: "apiPackage",
@@ -809,7 +1052,7 @@ export class ApiReferenceNodeConverter {
                     slug: slug.get(),
                     icon: undefined,
                     hidden: this.hideChildren,
-                    overviewPageId: this.createTagDescriptionPageId(subpackage),
+                    overviewPageId: tagDescriptionPageId,
                     availability: parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
@@ -823,6 +1066,17 @@ export class ApiReferenceNodeConverter {
             }
         });
 
+        // Add GraphQL operations if they exist in the rootPackage
+        // Group them by operation type (Queries, Mutations, Subscriptions)
+        if (pkg.graphqlOperations != null && pkg.graphqlOperations.length > 0) {
+            const graphqlSections = this.#convertGraphQLOperationsToSections(
+                pkg.graphqlOperations,
+                parentSlug,
+                parentAvailability
+            );
+            additionalChildren.push(...graphqlSections);
+        }
+
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
 
         if (this.apiSection.alphabetized) {
@@ -834,6 +1088,188 @@ export class ApiReferenceNodeConverter {
         }
 
         return additionalChildren;
+    }
+
+    #convertGraphQLOperationsToSections(
+        graphqlOperations: APIV1Read.GraphQlOperation[],
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild[] {
+        // First, group operations by namespace, then by type
+        const operationsByNamespace: Record<string, Record<string, APIV1Read.GraphQlOperation[]>> = {};
+        const operationsWithoutNamespace: Record<string, APIV1Read.GraphQlOperation[]> = {};
+
+        for (const operation of graphqlOperations) {
+            const operationId = APIV1Read.GraphQlOperationId(operation.id);
+            if (this.#visitedGraphqlOperations.has(operationId)) {
+                continue;
+            }
+            this.#visitedGraphqlOperations.add(operationId);
+
+            const namespace = this.#graphqlNamespacesByOperationId.get(FdrAPI.GraphQlOperationId(operation.id));
+            const operationType = operation.operationType;
+
+            if (namespace != null) {
+                if (operationsByNamespace[namespace] == null) {
+                    operationsByNamespace[namespace] = {};
+                }
+                if (operationsByNamespace[namespace][operationType] == null) {
+                    operationsByNamespace[namespace][operationType] = [];
+                }
+                operationsByNamespace[namespace][operationType].push(operation);
+            } else {
+                if (operationsWithoutNamespace[operationType] == null) {
+                    operationsWithoutNamespace[operationType] = [];
+                }
+                operationsWithoutNamespace[operationType].push(operation);
+            }
+        }
+
+        const sections: FernNavigation.V1.ApiPackageChild[] = [];
+        const operationTypeOrder: APIV1Read.GraphQlOperationType[] = ["QUERY", "MUTATION", "SUBSCRIPTION"];
+        const operationTypeLabels: Record<APIV1Read.GraphQlOperationType, string> = {
+            QUERY: "Queries",
+            MUTATION: "Mutations",
+            SUBSCRIPTION: "Subscriptions"
+        };
+
+        // Create sections for operations grouped by namespace
+        for (const [namespace, operationsByType] of Object.entries(operationsByNamespace)) {
+            const namespaceSlug = parentSlug.append(kebabCase(namespace));
+            const namespaceChildren: FernNavigation.V1.ApiPackageChild[] = [];
+
+            for (const operationType of operationTypeOrder) {
+                const operations = operationsByType[operationType];
+                if (operations == null || operations.length === 0) {
+                    continue;
+                }
+
+                const sectionTitle = operationTypeLabels[operationType];
+                const sectionSlug = namespaceSlug.append(kebabCase(sectionTitle));
+
+                const children: FernNavigation.V1.ApiPackageChild[] = operations.map((operation) => {
+                    const operationSlug = sectionSlug.append(operation.name ?? operation.id);
+                    return {
+                        id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
+                        type: "graphql" as const,
+                        operationType: operation.operationType,
+                        graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
+                        apiDefinitionId: this.apiDefinitionId,
+                        availability: parentAvailability,
+                        title: operation.displayName ?? operation.name ?? operation.id,
+                        slug: operationSlug.get(),
+                        icon: undefined,
+                        hidden: this.hideChildren,
+                        playground: undefined,
+                        authed: undefined,
+                        viewers: undefined,
+                        orphaned: undefined,
+                        featureFlags: undefined
+                    };
+                });
+
+                const sectionNode: FernNavigation.V1.ApiPackageNode = {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
+                    type: "apiPackage",
+                    children,
+                    title: sectionTitle,
+                    slug: sectionSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    overviewPageId: undefined,
+                    availability: parentAvailability,
+                    apiDefinitionId: this.apiDefinitionId,
+                    pointsTo: undefined,
+                    noindex: undefined,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                };
+
+                namespaceChildren.push(sectionNode);
+            }
+
+            // Create the namespace section containing the operation type sections
+            const namespaceNode: FernNavigation.V1.ApiPackageNode = {
+                id: this.#idgen.get(`${this.apiDefinitionId}:graphql:namespace:${namespace}`),
+                type: "apiPackage",
+                children: namespaceChildren,
+                title: titleCase(namespace),
+                slug: namespaceSlug.get(),
+                icon: undefined,
+                hidden: this.hideChildren,
+                overviewPageId: undefined,
+                availability: parentAvailability,
+                apiDefinitionId: this.apiDefinitionId,
+                pointsTo: undefined,
+                noindex: undefined,
+                playground: undefined,
+                authed: undefined,
+                viewers: undefined,
+                orphaned: undefined,
+                featureFlags: undefined
+            };
+
+            sections.push(namespaceNode);
+        }
+
+        // Create sections for operations without namespace (grouped by type only)
+        for (const operationType of operationTypeOrder) {
+            const operations = operationsWithoutNamespace[operationType];
+            if (operations == null || operations.length === 0) {
+                continue;
+            }
+
+            const sectionTitle = operationTypeLabels[operationType];
+            const sectionSlug = parentSlug.append(kebabCase(sectionTitle));
+
+            const children: FernNavigation.V1.ApiPackageChild[] = operations.map((operation) => {
+                const operationSlug = sectionSlug.append(operation.name ?? operation.id);
+                return {
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
+                    type: "graphql" as const,
+                    operationType: operation.operationType,
+                    graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: parentAvailability,
+                    title: operation.displayName ?? operation.name ?? operation.id,
+                    slug: operationSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                };
+            });
+
+            const sectionNode: FernNavigation.V1.ApiPackageNode = {
+                id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
+                type: "apiPackage",
+                children,
+                title: sectionTitle,
+                slug: sectionSlug.get(),
+                icon: undefined,
+                hidden: this.hideChildren,
+                overviewPageId: undefined,
+                availability: parentAvailability,
+                apiDefinitionId: this.apiDefinitionId,
+                pointsTo: undefined,
+                noindex: undefined,
+                playground: undefined,
+                authed: undefined,
+                viewers: undefined,
+                orphaned: undefined,
+                featureFlags: undefined
+            };
+
+            sections.push(sectionNode);
+        }
+
+        return sections;
     }
 
     #convertApiDefinitionPackageId(

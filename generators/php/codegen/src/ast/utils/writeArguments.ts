@@ -1,6 +1,6 @@
 import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
 
-import { Writer } from "../core/Writer";
+import { Writer } from "../core/Writer.js";
 
 export function writeArguments({
     writer,

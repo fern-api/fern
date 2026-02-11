@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeInstantiationMapper {
     interface Args {
@@ -578,6 +578,10 @@ export class DynamicTypeInstantiationMapper {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const typeInstantiation = this.convert({ typeReference, value });
+                // Skip types that result in nop() - this means the value didn't match the type
+                if (go.TypeInstantiation.isNop(typeInstantiation)) {
+                    continue;
+                }
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 continue;

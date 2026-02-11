@@ -9,7 +9,7 @@ import {
 } from "@fern-api/ir-generator";
 import chalk from "chalk";
 
-import { RuleViolation } from "../../Rule";
+import { RuleViolation } from "../../Rule.js";
 
 export function validateResponse({
     example,

@@ -1,12 +1,12 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace SdkEndpointTypeSchemasContextImpl {
     export interface Init {
@@ -43,7 +43,10 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
         this.sdkEndpointSchemaDeclarationReferencer = sdkEndpointSchemaDeclarationReferencer;
     }
 
-    public getGeneratedEndpointTypeSchemas(packageId: PackageId, endpointName: Name): GeneratedSdkEndpointTypeSchemas {
+    public getGeneratedEndpointTypeSchemas(
+        packageId: PackageId,
+        endpointName: FernIr.Name
+    ): GeneratedSdkEndpointTypeSchemas {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
@@ -60,7 +63,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
 
     public getReferenceToEndpointTypeSchemaExport(
         packageId: PackageId,
-        endpointName: Name,
+        endpointName: FernIr.Name,
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);

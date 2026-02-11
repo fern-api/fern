@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DocsURL } from "../docs-config";
-import { LegacyGenerators, MigratedGenerators } from ".";
-import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "./legacy/GeneratorsConfigurationSchema";
+import { DocsURL } from "../docs-config/index.js";
+import { LegacyGenerators, MigratedGenerators } from "./index.js";
+import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "./legacy/GeneratorsConfigurationSchema.js";
 
 export interface ConvertedGeneratorsConfiguration {
     value: MigratedGenerators.GeneratorsConfigurationSchema;

@@ -1,18 +1,17 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string;
 
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
-        private readonly enumDeclaration: EnumTypeDeclaration
+        private readonly typeDeclaration: FernIr.TypeDeclaration,
+        private readonly enumDeclaration: FernIr.EnumTypeDeclaration
     ) {
         super(context);
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(

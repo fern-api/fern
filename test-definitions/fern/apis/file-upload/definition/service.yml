@@ -199,9 +199,40 @@ service:
 
         # add one non-file endpoint to force snippet generation
 
+    withJsonProperty:
+      path: /with-json-property
+      method: POST
+      request:
+        name: WithJsonPropertyRequest
+        body:
+          properties:
+            file: file
+            json: optional<MyObject>
+        content-type: multipart/form-data
+      response:
+        status-code: 200
+        type: string
+
     simple:
       path: "/snippet"
       method: POST
+
+    withLiteralAndEnumTypes:
+      path: /with-literal-enum
+      method: POST
+      request:
+        body:
+          properties:
+            file: file
+            model_type: optional<ModelType>
+            open_enum: optional<OpenEnumType>
+            maybe_name: optional<string>
+        content-type: multipart/form-data
+        name: LiteralEnumRequest
+      response:
+        status-code: 200
+        type: string
+
 types:
   Id: string
 
@@ -227,3 +258,11 @@ types:
     inline: true
     properties:
       bar: string
+
+  ModelType: literal<"model_v1">
+
+  OpenEnumType:
+    enum:
+      - OPTION_A
+      - OPTION_B
+      - OPTION_C

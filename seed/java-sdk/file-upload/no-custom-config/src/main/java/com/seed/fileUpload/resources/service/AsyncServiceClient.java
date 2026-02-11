@@ -9,11 +9,13 @@ import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithOptionalQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
+import com.seed.fileUpload.resources.service.requests.LiteralEnumRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Optional;
@@ -257,11 +259,75 @@ public class AsyncServiceClient {
                 .thenApply(response -> response.body());
     }
 
+    public CompletableFuture<String> withJsonProperty(File file, WithJsonPropertyRequest request) {
+        return this.rawClient.withJsonProperty(file, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withJsonProperty(file, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(InputStream stream, String filename) {
+        return this.rawClient.withJsonProperty(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withJsonProperty(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withJsonProperty(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withJsonProperty(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> simple() {
         return this.rawClient.simple().thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> simple(RequestOptions requestOptions) {
         return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(File file, LiteralEnumRequest request) {
+        return this.rawClient.withLiteralAndEnumTypes(file, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            File file, LiteralEnumRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(file, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(InputStream stream, String filename) {
+        return this.rawClient.withLiteralAndEnumTypes(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, mediaType)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withLiteralAndEnumTypes(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

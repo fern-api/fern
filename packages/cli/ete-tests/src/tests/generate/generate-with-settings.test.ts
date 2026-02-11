@@ -2,7 +2,7 @@ import { AbsoluteFilePath, getDirectoryContentsForSnapshot, join, RelativeFilePa
 import { cp } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli } from "../../utils/runFernCli.js";
 
 describe("fern generate with settings", () => {
     it("single api", async () => {

@@ -1,5 +1,5 @@
-import { VersionMigrations } from "../../types/VersionMigrations";
-import AddGeneratorGroupsMigration from "./add-generator-groups";
+import { VersionMigrations } from "../../types/VersionMigrations.js";
+import AddGeneratorGroupsMigration from "./add-generator-groups/index.js";
 
 const versionMigrations: VersionMigrations = {
     version: "0.0.241",

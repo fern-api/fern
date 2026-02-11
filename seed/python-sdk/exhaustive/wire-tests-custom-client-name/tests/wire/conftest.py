@@ -5,17 +5,23 @@ This module provides helpers for creating a configured client that talks to
 WireMock and for verifying requests in WireMock.
 
 The WireMock container lifecycle itself is managed by a top-level pytest
-plugin (wiremock_pytest_plugin.py) so that the container is started exactly
-once per test run, even when using pytest-xdist.
+plugin (tests/conftest.py) so that the container is started exactly once
+per test run, even when using pytest-xdist.
 """
 
 import inspect
 import os
 from typing import Any, Dict, Optional
 
-import requests
+import httpx
 
 from seed.client import Exhaustive
+
+# Check once at import time whether the client constructor accepts a headers kwarg.
+try:
+    _CLIENT_SUPPORTS_HEADERS: bool = "headers" in inspect.signature(Exhaustive).parameters
+except (TypeError, ValueError):
+    _CLIENT_SUPPORTS_HEADERS = False
 
 
 def _get_wiremock_base_url() -> str:
@@ -37,18 +43,12 @@ def get_client(test_id: str) -> Exhaustive:
     test_headers = {"X-Test-Id": test_id}
     base_url = _get_wiremock_base_url()
 
-    # Prefer passing headers directly if the client constructor supports it.
-    try:
-        if "headers" in inspect.signature(Exhaustive).parameters:
-            return Exhaustive(
-                base_url=base_url,
-                headers=test_headers,
-                token="test_token",
-            )
-    except (TypeError, ValueError):
-        pass
-
-    import httpx
+    if _CLIENT_SUPPORTS_HEADERS:
+        return Exhaustive(
+            base_url=base_url,
+            headers=test_headers,
+            token="test_token",
+        )
 
     return Exhaustive(
         base_url=base_url,
@@ -64,7 +64,7 @@ def verify_request_count(
     query_params: Optional[Dict[str, str]],
     expected: int,
 ) -> None:
-    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety"""
+    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety."""
     wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
     request_body: Dict[str, Any] = {
         "method": method,
@@ -74,7 +74,7 @@ def verify_request_count(
     if query_params:
         query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
         request_body["queryParameters"] = query_parameters
-    response = requests.post(f"{wiremock_admin_url}/requests/find", json=request_body)
+    response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
     assert response.status_code == 200, "Failed to query WireMock requests"
     result = response.json()
     requests_found = len(result.get("requests", []))

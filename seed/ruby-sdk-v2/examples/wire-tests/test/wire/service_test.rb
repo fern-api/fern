@@ -6,7 +6,7 @@ class ServiceWireTest < WireMockTestCase
   def setup
     super
 
-    @client = FernExamples::Client.new(
+    @client = Seed::Client.new(
       token: "<token>",
       base_url: WIREMOCK_BASE_URL
     )
@@ -127,15 +127,7 @@ class ServiceWireTest < WireMockTestCase
         name: "name",
         nodes: [{
           name: "name",
-          nodes: [{
-            name: "name",
-            nodes: [],
-            trees: []
-          }, {
-            name: "name",
-            nodes: [],
-            trees: []
-          }],
+          nodes: [],
           trees: [{
             nodes: []
           }, {
@@ -143,15 +135,7 @@ class ServiceWireTest < WireMockTestCase
           }]
         }, {
           name: "name",
-          nodes: [{
-            name: "name",
-            nodes: [],
-            trees: []
-          }, {
-            name: "name",
-            nodes: [],
-            trees: []
-          }],
+          nodes: [],
           trees: [{
             nodes: []
           }, {
@@ -198,15 +182,7 @@ class ServiceWireTest < WireMockTestCase
             name: "name",
             contents: "contents"
           }],
-          directories: [{
-            name: "name",
-            files: [],
-            directories: []
-          }, {
-            name: "name",
-            files: [],
-            directories: []
-          }]
+          directories: []
         }, {
           name: "name",
           files: [{
@@ -216,15 +192,7 @@ class ServiceWireTest < WireMockTestCase
             name: "name",
             contents: "contents"
           }],
-          directories: [{
-            name: "name",
-            files: [],
-            directories: []
-          }, {
-            name: "name",
-            files: [],
-            directories: []
-          }]
+          directories: []
         }]
       },
       moment: {

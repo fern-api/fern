@@ -10,16 +10,16 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../../getExtension";
-import { convertAvailability } from "../../../../schema/convertAvailability";
-import { convertSchema } from "../../../../schema/convertSchemas";
-import { getExamplesString } from "../../../../schema/examples/getExample";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getParameterName } from "../../extensions/getParameterName";
-import { getVariableReference } from "../../extensions/getVariableReference";
+import { getExtension } from "../../../../getExtension.js";
+import { convertAvailability } from "../../../../schema/convertAvailability.js";
+import { convertSchema } from "../../../../schema/convertSchemas.js";
+import { getExamplesString } from "../../../../schema/examples/getExample.js";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getParameterName } from "../../extensions/getParameterName.js";
+import { getVariableReference } from "../../extensions/getVariableReference.js";
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[];
@@ -48,17 +48,19 @@ export function convertParameters({
         headers: []
     };
     for (const parameter of parameters) {
-        const shouldIgnore = getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE);
+        const resolvedParameter = isReferenceObject(parameter)
+            ? context.resolveParameterReference(parameter)
+            : parameter;
+
+        const shouldIgnore =
+            getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE) ??
+            getExtension<boolean>(resolvedParameter, FernOpenAPIExtension.IGNORE);
         if (shouldIgnore != null && shouldIgnore) {
             context.logger.debug(
                 `${httpMethod.toUpperCase()} ${path} has a parameter marked with x-fern-ignore. Skipping.`
             );
             continue;
         }
-
-        const resolvedParameter = isReferenceObject(parameter)
-            ? context.resolveParameterReference(parameter)
-            : parameter;
 
         const isRequired = resolvedParameter.required ?? false;
         const availability = convertAvailability(resolvedParameter);

@@ -93,7 +93,7 @@ func do() {
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &fern.Entity{
             Type: &fern.Type{
@@ -147,18 +147,7 @@ func do() {
             Nodes: []*fern.Node{
                 &fern.Node{
                     Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
+                    Nodes: []*fern.Node{},
                     Trees: []*fern.Tree{
                         &fern.Tree{
                             Nodes: []*fern.Node{},
@@ -170,18 +159,7 @@ func do() {
                 },
                 &fern.Node{
                     Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
+                    Nodes: []*fern.Node{},
                     Trees: []*fern.Tree{
                         &fern.Tree{
                             Nodes: []*fern.Node{},
@@ -248,18 +226,7 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                    },
+                    Directories: []*fern.Directory{},
                 },
                 &fern.Directory{
                     Name: "name",
@@ -273,18 +240,7 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
-                        },
-                    },
+                    Directories: []*fern.Directory{},
                 },
             },
         },

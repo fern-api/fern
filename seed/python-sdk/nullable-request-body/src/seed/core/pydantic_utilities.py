@@ -3,22 +3,63 @@
 # nopycln: file
 import datetime as dt
 import inspect
+import json
+import logging
 from collections import defaultdict
-from typing import Any, Callable, ClassVar, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
+from dataclasses import asdict
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import pydantic
+import typing_extensions
+
+_logger = logging.getLogger(__name__)
+
+if TYPE_CHECKING:
+    from .http_sse._models import ServerSentEvent
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    from pydantic.v1.datetime_parse import parse_date as parse_date
-    from pydantic.v1.datetime_parse import parse_datetime as parse_datetime
-    from pydantic.v1.fields import ModelField as ModelField
-    from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-    from pydantic.v1.typing import get_args as get_args
-    from pydantic.v1.typing import get_origin as get_origin
-    from pydantic.v1.typing import is_literal_type as is_literal_type
-    from pydantic.v1.typing import is_union as is_union
+    import warnings
+
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+
+    def parse_datetime(value: Any) -> dt.datetime:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value
+        return _datetime_adapter.validate_python(value)
+
+    def parse_date(value: Any) -> dt.date:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value.date()
+        if isinstance(value, dt.date):
+            return value
+        return _date_adapter.validate_python(value)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        from pydantic.v1.fields import ModelField as ModelField
+        from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
+        from pydantic.v1.typing import get_args as get_args
+        from pydantic.v1.typing import get_origin as get_origin
+        from pydantic.v1.typing import is_literal_type as is_literal_type
+        from pydantic.v1.typing import is_union as is_union
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
@@ -35,6 +76,181 @@ from typing_extensions import TypeAlias
 
 T = TypeVar("T")
 Model = TypeVar("Model", bound=pydantic.BaseModel)
+
+
+def _get_discriminator_and_variants(type_: Type[Any]) -> Tuple[Optional[str], Optional[List[Type[Any]]]]:
+    """
+    Extract the discriminator field name and union variants from a discriminated union type.
+    Supports Annotated[Union[...], Field(discriminator=...)] patterns.
+    Returns (discriminator, variants) or (None, None) if not a discriminated union.
+    """
+    origin = typing_extensions.get_origin(type_)
+
+    if origin is typing_extensions.Annotated:
+        args = typing_extensions.get_args(type_)
+        if len(args) >= 2:
+            inner_type = args[0]
+            # Check annotations for discriminator
+            discriminator = None
+            for annotation in args[1:]:
+                if hasattr(annotation, "discriminator"):
+                    discriminator = getattr(annotation, "discriminator", None)
+                    break
+
+            if discriminator:
+                inner_origin = typing_extensions.get_origin(inner_type)
+                if inner_origin is Union:
+                    variants = list(typing_extensions.get_args(inner_type))
+                    return discriminator, variants
+    return None, None
+
+
+def _get_field_annotation(model: Type[Any], field_name: str) -> Optional[Type[Any]]:
+    """Get the type annotation of a field from a Pydantic model."""
+    if IS_PYDANTIC_V2:
+        fields = getattr(model, "model_fields", {})
+        field_info = fields.get(field_name)
+        if field_info:
+            return cast(Optional[Type[Any]], field_info.annotation)
+    else:
+        fields = getattr(model, "__fields__", {})
+        field_info = fields.get(field_name)
+        if field_info:
+            return cast(Optional[Type[Any]], field_info.outer_type_)
+    return None
+
+
+def _find_variant_by_discriminator(
+    variants: List[Type[Any]],
+    discriminator: str,
+    discriminator_value: Any,
+) -> Optional[Type[Any]]:
+    """Find the union variant that matches the discriminator value."""
+    for variant in variants:
+        if not (inspect.isclass(variant) and issubclass(variant, pydantic.BaseModel)):
+            continue
+
+        disc_annotation = _get_field_annotation(variant, discriminator)
+        if disc_annotation and is_literal_type(disc_annotation):
+            literal_args = get_args(disc_annotation)
+            if literal_args and literal_args[0] == discriminator_value:
+                return variant
+    return None
+
+
+def _is_string_type(type_: Type[Any]) -> bool:
+    """Check if a type is str or Optional[str]."""
+    if type_ is str:
+        return True
+
+    origin = typing_extensions.get_origin(type_)
+    if origin is Union:
+        args = typing_extensions.get_args(type_)
+        # Optional[str] = Union[str, None]
+        non_none_args = [a for a in args if a is not type(None)]
+        if len(non_none_args) == 1 and non_none_args[0] is str:
+            return True
+
+    return False
+
+
+def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
+    """
+    Parse a ServerSentEvent into the appropriate type.
+
+    Handles two scenarios based on where the discriminator field is located:
+
+    1. Data-level discrimination: The discriminator (e.g., 'type') is inside the 'data' payload.
+       The union describes the data content, not the SSE envelope.
+       -> Returns: json.loads(data) parsed into the type
+
+       Example: ChatStreamResponse with discriminator='type'
+       Input:  ServerSentEvent(event="message", data='{"type": "content-delta", ...}', id="")
+       Output: ContentDeltaEvent (parsed from data, SSE envelope stripped)
+
+    2. Event-level discrimination: The discriminator (e.g., 'event') is at the SSE event level.
+       The union describes the full SSE event structure.
+       -> Returns: SSE envelope with 'data' field JSON-parsed only if the variant expects non-string
+
+       Example: JobStreamResponse with discriminator='event'
+       Input:  ServerSentEvent(event="ERROR", data='{"code": "FAILED", ...}', id="123")
+       Output: JobStreamResponse_Error with data as ErrorData object
+
+       But for variants where data is str (like STATUS_UPDATE):
+       Input:  ServerSentEvent(event="STATUS_UPDATE", data='{"status": "processing"}', id="1")
+       Output: JobStreamResponse_StatusUpdate with data as string (not parsed)
+
+    Args:
+        sse: The ServerSentEvent object to parse
+        type_: The target discriminated union type
+
+    Returns:
+        The parsed object of type T
+
+    Note:
+        This function is only available in SDK contexts where http_sse module exists.
+    """
+    sse_event = asdict(sse)
+    discriminator, variants = _get_discriminator_and_variants(type_)
+
+    if discriminator is None or variants is None:
+        # Not a discriminated union - parse the data field as JSON
+        data_value = sse_event.get("data")
+        if isinstance(data_value, str) and data_value:
+            try:
+                parsed_data = json.loads(data_value)
+                return parse_obj_as(type_, parsed_data)
+            except json.JSONDecodeError as e:
+                _logger.warning(
+                    "Failed to parse SSE data field as JSON: %s, data: %s",
+                    e,
+                    data_value[:100] if len(data_value) > 100 else data_value,
+                )
+        return parse_obj_as(type_, sse_event)
+
+    data_value = sse_event.get("data")
+
+    # Check if discriminator is at the top level (event-level discrimination)
+    if discriminator in sse_event:
+        # Case 2: Event-level discrimination
+        # Find the matching variant to check if 'data' field needs JSON parsing
+        disc_value = sse_event.get(discriminator)
+        matching_variant = _find_variant_by_discriminator(variants, discriminator, disc_value)
+
+        if matching_variant is not None:
+            # Check what type the variant expects for 'data'
+            data_type = _get_field_annotation(matching_variant, "data")
+            if data_type is not None and not _is_string_type(data_type):
+                # Variant expects non-string data - parse JSON
+                if isinstance(data_value, str) and data_value:
+                    try:
+                        parsed_data = json.loads(data_value)
+                        new_object = dict(sse_event)
+                        new_object["data"] = parsed_data
+                        return parse_obj_as(type_, new_object)
+                    except json.JSONDecodeError as e:
+                        _logger.warning(
+                            "Failed to parse SSE data field as JSON for event-level discrimination: %s, data: %s",
+                            e,
+                            data_value[:100] if len(data_value) > 100 else data_value,
+                        )
+        # Either no matching variant, data is string type, or JSON parse failed
+        return parse_obj_as(type_, sse_event)
+
+    else:
+        # Case 1: Data-level discrimination
+        # The discriminator is inside the data payload - extract and parse data only
+        if isinstance(data_value, str) and data_value:
+            try:
+                parsed_data = json.loads(data_value)
+                return parse_obj_as(type_, parsed_data)
+            except json.JSONDecodeError as e:
+                _logger.warning(
+                    "Failed to parse SSE data field as JSON for data-level discrimination: %s, data: %s",
+                    e,
+                    data_value[:100] if len(data_value) > 100 else data_value,
+                )
+        return parse_obj_as(type_, sse_event)
 
 
 def parse_obj_as(type_: Type[T], object_: Any) -> T:

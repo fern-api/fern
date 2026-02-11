@@ -2,12 +2,12 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
-import { AuthProviderGenerator } from "./AuthProviderGenerator";
-import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
-import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator";
-import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator";
-import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator";
-import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator";
+import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator.js";
+import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator.js";
+import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator.js";
+import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator.js";
+import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator.js";
 
 export declare namespace RoutingAuthProviderGenerator {
     export interface Init {

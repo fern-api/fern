@@ -17,6 +17,18 @@ type Union struct {
 	Bar  *Bar
 }
 
+type UnionWithOptionalReference struct {
+	Type string
+	Foo  *Foo
+	Bar  *Bar
+}
+
+type UnionWithNullableReference struct {
+	Type string
+	Foo  *Foo
+	Bar  *Bar
+}
+
 type UnionWithDiscriminant struct {
 	Type string
 	Foo  *Foo

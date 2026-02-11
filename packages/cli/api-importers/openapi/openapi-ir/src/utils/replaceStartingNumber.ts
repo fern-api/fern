@@ -1,5 +1,5 @@
-import { convertNumberToSnakeCase } from "./convertNumberToSnakeCase";
-import { NUMERIC_REGEX } from "./constants";
+import { convertNumberToSnakeCase } from "./convertNumberToSnakeCase.js";
+import { NUMERIC_REGEX } from "./constants.js";
 
 export function replaceStartingNumber(input: string): string | undefined {
     const matches = input.match(NUMERIC_REGEX);

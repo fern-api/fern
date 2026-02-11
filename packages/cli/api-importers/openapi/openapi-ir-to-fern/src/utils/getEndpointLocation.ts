@@ -3,7 +3,7 @@ import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase, compact, isEqual } from "lodash-es";
 
-import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName";
+import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName.js";
 
 export interface EndpointLocation {
     file: RelativeFilePath;

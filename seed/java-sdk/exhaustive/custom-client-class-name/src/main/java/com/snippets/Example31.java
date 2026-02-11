@@ -7,6 +7,6 @@ public class Example31 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().primitive().getAndReturnLong(1000000L);
+        client.endpoints().primitive().getAndReturnString("string");
     }
 }

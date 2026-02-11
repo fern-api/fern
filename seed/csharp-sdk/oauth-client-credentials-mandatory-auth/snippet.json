@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"read:users\",\n    }\n);\n"
+                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"read:users\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"read:users\",\n    }\n);\n"
+                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"read:users\",\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Nested.Api.GetSomethingAsync();\n"
+                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Nested.Api.GetSomethingAsync();\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Simple.GetSomethingAsync();\n"
+                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Simple.GetSomethingAsync();\n"
             }
         }
     ]

@@ -43,8 +43,8 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("upload-content");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);

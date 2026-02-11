@@ -3,7 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum Test {
-    And { value: bool },
+        #[serde(rename = "and")]
+        And {
+            value: bool,
+        },
 
-    Or { value: bool },
+        #[serde(rename = "or")]
+        Or {
+            value: bool,
+        },
 }

@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{MultiLineDocsClient, UserClient};
-pub use types::*;
+pub use resources::{UserClient, MultiLineDocsClient};
+pub use types::{*};
+

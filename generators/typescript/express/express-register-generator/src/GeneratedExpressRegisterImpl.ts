@@ -1,4 +1,4 @@
-import { IntermediateRepresentation, Name, Package } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
@@ -7,7 +7,7 @@ import { ts } from "ts-morph";
 
 export declare namespace GeneratedExpressRegisterImpl {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         registerFunctionName: string;
         areImplementationsOptional: boolean;
         packageResolver: PackageResolver;
@@ -18,7 +18,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     private static EXPRESS_APP_PARAMETER_NAME = "expressApp";
     private static EXPRESS_SERVICES_PARAMETER_NAME = "services";
 
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private registerFunctionName: string;
     private areImplementationsOptional: boolean;
     private packageResolver: PackageResolver;
@@ -129,13 +129,13 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
         return subpackage.fernFilepath.file != null ? subpackage.fernFilepath.file.camelCase.unsafeName : "_root";
     }
 
-    private getPackagePathKey(part: Name): string {
+    private getPackagePathKey(part: FernIr.Name): string {
         return part.camelCase.unsafeName;
     }
 
     private constructLiteralTypeNodeForServicesTree(
         rootId: PackageId,
-        root: Package,
+        root: FernIr.Package,
         context: ExpressContext
     ): ts.TypeLiteralNode {
         const [leaves, otherChildren] = partition(

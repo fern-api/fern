@@ -11,5 +11,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ObjectsWithImportsClient, OptionalClient};
-pub use types::*;
+pub use resources::{OptionalClient, ObjectsWithImportsClient};
+pub use types::{*};
+

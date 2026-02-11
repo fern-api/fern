@@ -1,24 +1,24 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { getReadableTypeNode } from "../getReadableTypeNode";
-import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
-import { buildUrl } from "./utils/buildUrl";
-import { generateEndpointMetadata } from "./utils/generateEndpointMetadata";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
+import { getReadableTypeNode } from "../getReadableTypeNode.js";
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
+import { buildUrl } from "./utils/buildUrl.js";
+import { generateEndpointMetadata } from "./utils/generateEndpointMetadata.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from "./utils/requestOptionsParameter";
+} from "./utils/requestOptionsParameter.js";
 
 export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         response: GeneratedEndpointResponse;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
@@ -36,7 +36,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
     public static readonly DATA_PARAMETER_NAME = "data";
 
-    public readonly endpoint: HttpEndpoint;
+    public readonly endpoint: FernIr.HttpEndpoint;
 
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -84,7 +84,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getExample(args: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }): EndpointSampleCode | undefined {
@@ -239,6 +239,17 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }
     }
 
+    private getResponseTypeForStreaming(): Fetcher.Args["responseType"] {
+        const responseBody = this.endpoint.response?.body;
+        if (responseBody?.type === "streaming" && responseBody.value.type === "sse") {
+            return "sse";
+        }
+        if (responseBody?.type === "streamParameter" && responseBody.streamResponse.type === "sse") {
+            return "sse";
+        }
+        return "streaming";
+    }
+
     public invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
@@ -264,7 +275,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
             logging: this.generatedSdkClientClass.getReferenceToLogger(context),
-            responseType: "sse",
+            responseType: this.getResponseTypeForStreaming(),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()

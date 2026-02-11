@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedInferredAuthImplicit;
-using SeedInferredAuthImplicit.Core;
+using SeedInferredAuthImplicit.Test.Utils;
 
 namespace SeedInferredAuthImplicit.Test.Unit.MockServer;
 
@@ -55,9 +55,6 @@ public class RefreshTokenTest : BaseMockServerTest
                 Scope = "scope",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

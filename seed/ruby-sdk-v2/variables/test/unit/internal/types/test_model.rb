@@ -2,15 +2,15 @@
 
 require "test_helper"
 
-describe FernVariables::Internal::Types::Model do
+describe Seed::Internal::Types::Model do
   module StringInteger
-    extend FernVariables::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     member String
     member Integer
   end
 
-  class ExampleModel < FernVariables::Internal::Types::Model
+  class ExampleModel < Seed::Internal::Types::Model
     field :name, String
     field :rating, StringInteger, optional: true
     field :year, Integer, optional: true, nullable: true, api_name: "yearOfRelease"
@@ -24,11 +24,11 @@ describe FernVariables::Internal::Types::Model do
     field :type, String, default: "example"
   end
 
-  class ExampleChild < FernVariables::Internal::Types::Model
+  class ExampleChild < Seed::Internal::Types::Model
     field :value, String
   end
 
-  class ExampleParent < FernVariables::Internal::Types::Model
+  class ExampleParent < Seed::Internal::Types::Model
     field :child, ExampleChild
   end
 
@@ -113,7 +113,7 @@ describe FernVariables::Internal::Types::Model do
   end
 
   describe "#inspect" do
-    class SensitiveModel < FernVariables::Internal::Types::Model
+    class SensitiveModel < Seed::Internal::Types::Model
       field :username, String
       field :password, String
       field :client_secret, String

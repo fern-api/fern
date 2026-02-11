@@ -23,6 +23,26 @@ paths:
                   type: string
               required:
                 - query
+  /stream-no-terminator:
+    post:
+      operationId: completions_streamWithoutTerminator
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+              required:
+                - query
 components:
   schemas:
     StreamedCompletion:

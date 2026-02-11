@@ -1,4 +1,4 @@
-import { createPythonClassName } from "../../core/utils";
+import { createPythonClassName } from "../../core/utils.js";
 
 describe("Casing", () => {
     describe("createPythonClassName", () => {

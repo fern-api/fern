@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct JustFileRequest {
+    #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
 }
 impl JustFileRequest {

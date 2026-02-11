@@ -3,8 +3,13 @@ package com.seed.exhaustive;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
+import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import java.util.Arrays;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -79,7 +84,9 @@ public class EndpointsParamsWireTest {
     @Test
     public void testGetWithInlinePath() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
-        String response = client.endpoints().params().getWithPath("param");
+        String response = client.endpoints()
+                .params()
+                .getWithInlinePath("param", GetWithInlinePath.builder().build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -135,7 +142,10 @@ public class EndpointsParamsWireTest {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.endpoints()
                 .params()
-                .getWithQuery(GetWithQuery.builder().query("query").number(1).build());
+                .getWithAllowMultipleQuery(GetWithMultipleQuery.builder()
+                        .query(Arrays.asList("query"))
+                        .number(Arrays.asList(1))
+                        .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -158,8 +168,9 @@ public class EndpointsParamsWireTest {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.endpoints()
                 .params()
-                .getWithPathAndQuery(
-                        "param", GetWithPathAndQuery.builder().query("query").build());
+                .getWithInlinePathAndQuery(
+                        "param",
+                        GetWithInlinePathAndQuery.builder().query("query").build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -240,7 +251,11 @@ public class EndpointsParamsWireTest {
     @Test
     public void testModifyWithInlinePath() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
-        String response = client.endpoints().params().modifyWithPath("param", "string");
+        String response = client.endpoints()
+                .params()
+                .modifyWithInlinePath(
+                        "param",
+                        ModifyResourceAtInlinedPath.builder().body("string").build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PUT", request.getMethod());

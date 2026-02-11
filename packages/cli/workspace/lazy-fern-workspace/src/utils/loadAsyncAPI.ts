@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
+import { mergeWithOverrides } from "../loaders/mergeWithOverrides.js";
 
 export async function loadAsyncAPI({
     context,

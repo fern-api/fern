@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedCsharpNamespaceCollision.Core;
+using SeedCsharpNamespaceCollision.Test.Utils;
 
 namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.System;
 
@@ -67,12 +67,6 @@ public class CreateTaskTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<SeedCsharpNamespaceCollision.System.Task>(mockResponse)
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

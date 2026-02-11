@@ -1415,6 +1415,82 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithDatetimeLikeString</a>(request: ObjectWithDatetimeLikeString, requestOptions: RequestOptions?) -> ObjectWithDatetimeLikeString</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
+        datetimeLikeString: "2023-08-31T14:15:22Z",
+        actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithPath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
@@ -3149,7 +3225,7 @@ try await main()
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.reqWithHeaders.<a href="/Sources/Resources/ReqWithHeaders/ReqWithHeadersClient.swift">getWithCustomHeader</a>(xTestEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.reqWithHeaders.<a href="/Sources/Resources/ReqWithHeaders/ReqWithHeadersClient.swift">getWithCustomHeader</a>(xTestServiceHeader: String, xTestEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -3182,6 +3258,14 @@ try await main()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**xTestServiceHeader:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

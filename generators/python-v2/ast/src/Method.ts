@@ -1,10 +1,10 @@
-import { python } from ".";
-import { CodeBlock } from "./CodeBlock";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Decorator } from "./Decorator";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
+import { CodeBlock } from "./CodeBlock.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Decorator } from "./Decorator.js";
+import { python } from "./index.js";
+import { Parameter } from "./Parameter.js";
+import { Type } from "./Type.js";
 
 export enum ClassMethodType {
     STATIC,

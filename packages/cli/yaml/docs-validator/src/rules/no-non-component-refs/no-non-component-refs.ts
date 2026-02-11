@@ -1,7 +1,7 @@
 import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const NoNonComponentRefsRule: Rule = {
     name: "no-non-component-refs",
@@ -38,7 +38,9 @@ export const NoNonComponentRefsRule: Rule = {
                                     }
 
                                     // Skip AsyncAPI files - they have different reference patterns than OpenAPI
-                                    const isAsyncAPI = contents.includes("asyncapi:");
+                                    // Check for both YAML format (asyncapi:) and JSON format ("asyncapi":)
+                                    const isAsyncAPI =
+                                        contents.includes("asyncapi:") || contents.includes('"asyncapi":');
                                     if (isAsyncAPI) {
                                         continue; // Skip AsyncAPI files
                                     }

@@ -1,7 +1,7 @@
 import { keys } from "@fern-api/core-utils";
 import path from "path";
 
-import { ExportedDirectory, ExportsManager } from "../exports-manager";
+import { ExportedDirectory, ExportsManager } from "../exports-manager/index.js";
 
 const DEFAULT_SRC_DIRECTORY = "src";
 

@@ -1,5 +1,5 @@
-using System.Net;
-using System.Net.Http.Headers;
+using global::System.Net;
+using global::System.Net.Http.Headers;
 using NUnit.Framework;
 using SeedBytesUpload;
 using SeedBytesUpload.Core;

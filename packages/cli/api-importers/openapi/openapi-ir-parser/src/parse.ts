@@ -10,12 +10,13 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
-import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
-import { parseAsyncAPI } from "./asyncapi/parse";
-import { AsyncAPIV2 } from "./asyncapi/v2";
-import { AsyncAPIV3 } from "./asyncapi/v3";
-import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
-import { getParseOptions, ParseOpenAPIOptions } from "./options";
+import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options.js";
+import { parseAsyncAPI } from "./asyncapi/parse.js";
+import { AsyncAPIV2 } from "./asyncapi/v2/index.js";
+import { AsyncAPIV3 } from "./asyncapi/v3/index.js";
+import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr.js";
+import { getParseOptions, ParseOpenAPIOptions } from "./options.js";
+import { createSchemaCollisionTracker } from "./utils/schemaCollision.js";
 
 export type Document = OpenAPIDocument | AsyncAPIDocument;
 
@@ -103,7 +104,10 @@ export function parse({
                             ...parsedAsyncAPI.servers.map((server) => ({
                                 ...server,
                                 audiences: undefined,
-                                description: undefined
+                                description: undefined,
+                                defaultUrl: undefined,
+                                urlTemplate: undefined,
+                                variables: undefined
                             }))
                         ];
                     }
@@ -114,7 +118,7 @@ export function parse({
                         };
                     }
                     if (parsedAsyncAPI.groupedSchemas != null) {
-                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
+                        ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas, options);
                     }
                     if (parsedAsyncAPI.basePath != null) {
                         ir.basePath = parsedAsyncAPI.basePath;
@@ -126,11 +130,11 @@ export function parse({
                     assertNever(document);
             }
         } catch (error) {
-            context.logger.debug(
-                `Skipping parsing document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
+            context.logger.error(
+                `Failed to parse ${document.type} document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
             );
             if (error instanceof Error) {
-                context.logger.debug(error.message, error.stack ? "\n" + error.stack : "");
+                context.logger.error(error.message, error.stack ? "\n" + error.stack : "");
             }
         }
     }
@@ -149,9 +153,18 @@ function getParseAsyncOptions({
     };
 }
 
+interface ServerVariableConfig {
+    id: string;
+    default?: string;
+    values?: string[];
+}
+
 interface ApiServerConfig {
     url: string;
     audiences: string[] | undefined;
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariableConfig[];
 }
 
 /**
@@ -164,6 +177,9 @@ interface SingleServerInput {
     name: string | undefined;
     audiences: string[] | undefined;
     "x-fern-server-name"?: string;
+    defaultUrl?: string;
+    urlTemplate?: string;
+    variables?: ServerVariableConfig[];
 }
 
 /**
@@ -327,6 +343,10 @@ function detectMultipleBaseUrls(servers1: AnyServerInput[], servers2: AnyServerI
     return allMatch && allDifferent;
 }
 
+function getPreferredUrlForNameExtraction(server: SingleServerInput): string {
+    return server.defaultUrl ?? server.url;
+}
+
 function extractApiNameFromServers(servers: AnyServerInput[]): string {
     if (servers.length === 0 || !servers[0]) {
         return "api";
@@ -339,7 +359,7 @@ function extractApiNameFromServers(servers: AnyServerInput[]): string {
         return firstUrlName ?? "api";
     }
 
-    return extractApiNameFromUrl(firstServer.url);
+    return extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer));
 }
 
 function hasGroupedServers(servers: AnyServerInput[]): boolean {
@@ -380,7 +400,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -432,7 +452,7 @@ function merge(
                 }
             } else {
                 // Handle single server (first merge case)
-                const api1Name = extractApiNameFromUrl(server.url);
+                const api1Name = extractApiNameFromUrl(getPreferredUrlForNameExtraction(server));
                 const envName = getEnvironmentName(server);
                 if (!environmentMap.has(envName)) {
                     environmentMap.set(envName, {});
@@ -441,7 +461,10 @@ function merge(
                 if (envUrls) {
                     envUrls[api1Name] = {
                         url: server.url,
-                        audiences: server.audiences
+                        audiences: server.audiences,
+                        defaultUrl: server.defaultUrl,
+                        urlTemplate: server.urlTemplate,
+                        variables: server.variables
                     };
                 }
             }
@@ -457,7 +480,10 @@ function merge(
             if (envUrls) {
                 envUrls[api2Name] = {
                     url: server.url,
-                    audiences: server.audiences
+                    audiences: server.audiences,
+                    defaultUrl: server.defaultUrl,
+                    urlTemplate: server.urlTemplate,
+                    variables: server.variables
                 };
             }
         }
@@ -488,7 +514,9 @@ function merge(
             // First merge - derive API name from the first server
             const firstServer = ir1.servers[0] as AnyServerInput | undefined;
             const api1Name =
-                firstServer != null && firstServer.type !== "grouped" ? extractApiNameFromUrl(firstServer.url) : "api";
+                firstServer != null && firstServer.type !== "grouped"
+                    ? extractApiNameFromUrl(getPreferredUrlForNameExtraction(firstServer))
+                    : "api";
             return {
                 ...endpoint,
                 type: "multi-api" as const,
@@ -540,7 +568,7 @@ function merge(
                 ...ir1.channels,
                 ...ir2.channels
             },
-            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+            groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
                 ...ir2.variables
@@ -591,7 +619,7 @@ function merge(
             ...ir1.channels,
             ...ir2.channels
         },
-        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
+        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
         variables: {
             ...ir1.variables,
             ...ir2.variables
@@ -612,12 +640,26 @@ function merge(
     };
 }
 
-function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
-    schemas1.rootSchemas = { ...schemas1.rootSchemas, ...schemas2.rootSchemas };
+function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial<ParseOpenAPIOptions>): Schemas {
+    const collisionTracker = createSchemaCollisionTracker();
+    const shouldWarn = options?.resolveSchemaCollisions ?? false;
 
+    // Merge root schemas with collision detection
+    const mergedRootSchemas = { ...schemas1.rootSchemas };
+    for (const [key, schema] of Object.entries(schemas2.rootSchemas)) {
+        const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
+        mergedRootSchemas[uniqueKey] = schema;
+    }
+    schemas1.rootSchemas = mergedRootSchemas;
+
+    // Merge namespaced schemas with collision detection
     for (const [namespace, namespaceSchemas] of Object.entries(schemas2.namespacedSchemas)) {
         if (schemas1.namespacedSchemas[namespace] != null) {
-            schemas1.namespacedSchemas[namespace] = { ...schemas1.namespacedSchemas[namespace], ...namespaceSchemas };
+            const existingSchemas = schemas1.namespacedSchemas[namespace];
+            for (const [key, schema] of Object.entries(namespaceSchemas)) {
+                const uniqueKey = collisionTracker.getUniqueSchemaId(key, undefined, shouldWarn);
+                existingSchemas[uniqueKey] = schema;
+            }
         } else {
             schemas1.namespacedSchemas[namespace] = namespaceSchemas;
         }

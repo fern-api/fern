@@ -17,6 +17,12 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedAnyAuth.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -24,6 +30,7 @@ public partial class UserClient : IUserClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "users",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -71,6 +78,12 @@ public partial class UserClient : IUserClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = await new SeedAnyAuth.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -78,6 +91,7 @@ public partial class UserClient : IUserClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "admins",
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken

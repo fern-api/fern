@@ -1,14 +1,14 @@
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { WithGeneration } from "@fern-api/csharp-codegen";
+import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
-import { AsIsFiles } from "../AsIs";
-import { GeneratorContext } from "../context/GeneratorContext";
-import { findDotnetToolPath } from "../findDotNetToolPath";
-import { CSharpFile } from "./CSharpFile";
+import { AsIsFiles } from "../AsIs.js";
+import { GeneratorContext } from "../context/GeneratorContext.js";
+import { findDotnetToolPath } from "../findDotNetToolPath.js";
+import { CSharpFile } from "./CSharpFile.js";
 
 export const CORE_DIRECTORY_NAME = "Core";
 export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
@@ -40,58 +40,58 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             sourceConfig: this.context.ir.sourceConfig
         });
     }
-    protected get generation() {
+    protected get generation(): Generation {
         return this.context.generation;
     }
-    protected get namespaces() {
+    protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
-    protected get registry() {
+    protected get registry(): Generation["registry"] {
         return this.generation.registry;
     }
-    protected get settings() {
+    protected get settings(): Generation["settings"] {
         return this.generation.settings;
     }
-    protected get constants() {
+    protected get constants(): Generation["constants"] {
         return this.generation.constants;
     }
-    protected get names() {
+    protected get names(): Generation["names"] {
         return this.generation.names;
     }
-    protected get model() {
+    protected get model(): Generation["model"] {
         return this.generation.model;
     }
-    protected get format() {
+    protected get format(): Generation["format"] {
         return this.generation.format;
     }
-    protected get csharp() {
+    protected get csharp(): Generation["csharp"] {
         return this.generation.csharp;
     }
-    protected get Types() {
+    protected get Types(): Generation["Types"] {
         return this.generation.Types;
     }
-    protected get System() {
+    protected get System(): Generation["extern"]["System"] {
         return this.generation.extern.System;
     }
-    protected get NUnit() {
+    protected get NUnit(): Generation["extern"]["NUnit"] {
         return this.generation.extern.NUnit;
     }
-    protected get OneOf() {
+    protected get OneOf(): Generation["extern"]["OneOf"] {
         return this.generation.extern.OneOf;
     }
-    protected get Google() {
+    protected get Google(): Generation["extern"]["Google"] {
         return this.generation.extern.Google;
     }
-    protected get WireMock() {
+    protected get WireMock(): Generation["extern"]["WireMock"] {
         return this.generation.extern.WireMock;
     }
-    protected get Primitive() {
+    protected get Primitive(): Generation["Primitive"] {
         return this.generation.Primitive;
     }
-    protected get Value() {
+    protected get Value(): Generation["Value"] {
         return this.generation.Value;
     }
-    protected get Collection() {
+    protected get Collection(): Generation["Collection"] {
         return this.generation.Collection;
     }
 
@@ -579,7 +579,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     testNamespace: this.namespaces.test,
-                    additionalProperties: this.settings.generateNewAdditionalProperties,
+                    additionalProperties: true,
                     context: this.context,
                     namespaces: this.namespaces
                 }
@@ -598,7 +598,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
-                    additionalProperties: this.settings.generateNewAdditionalProperties,
+                    additionalProperties: true,
                     context: this.context,
                     namespaces: this.namespaces
                 }
@@ -626,7 +626,7 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.namespaces.core,
-                        additionalProperties: this.settings.generateNewAdditionalProperties,
+                        additionalProperties: true,
                         context: this.context,
                         namespaces: this.namespaces
                     }
@@ -641,7 +641,7 @@ dotnet_diagnostic.IDE0005.severity = error
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.namespaces.core,
-                        additionalProperties: this.settings.generateNewAdditionalProperties,
+                        additionalProperties: true,
                         context: this.context,
                         namespaces: this.namespaces
                     }
@@ -662,7 +662,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace: this.namespaces.testUtils,
                     testNamespace: this.namespaces.test,
-                    additionalProperties: this.settings.generateNewAdditionalProperties,
+                    additionalProperties: true,
                     context: this.context,
                     namespaces: this.namespaces
                 }
@@ -787,8 +787,11 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         );
         result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
-        result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
-        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+        // When use-undiscriminated-unions is false, we need the OneOf package
+        if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
+            result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
+            result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+        }
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
         result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
         result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
@@ -863,7 +866,7 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
             );
         }
         result.push(
-            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;netstandard2.0</TargetFrameworks>`
         );
         result.push(
             `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`

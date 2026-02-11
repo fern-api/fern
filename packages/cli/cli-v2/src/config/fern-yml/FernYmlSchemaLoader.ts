@@ -1,7 +1,7 @@
 import { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { YamlConfigLoader } from "@fern-api/yaml-loader";
-import { FileFinder } from "../FileFinder";
+import { FileFinder } from "../FileFinder.js";
 
 const FILENAME = "fern.yml";
 
@@ -36,7 +36,10 @@ export class FernYmlSchemaLoader {
      * @throws Error if fern.yml is not found.
      */
     public async load(): Promise<FernYmlSchemaLoader.Result> {
-        const absoluteFilePath = await this.finder.findOrThrow(FILENAME);
+        const absoluteFilePath = await this.finder.find({ filename: FILENAME });
+        if (absoluteFilePath == null) {
+            throw new Error(`${FILENAME} file not found in any parent directory; did you forget to run \`fern init\`?`);
+        }
         return await this.loader.load({
             absoluteFilePath,
             schema: FernYmlSchema

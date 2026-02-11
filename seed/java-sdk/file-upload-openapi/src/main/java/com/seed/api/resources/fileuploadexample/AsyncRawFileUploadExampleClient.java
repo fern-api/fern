@@ -53,8 +53,8 @@ public class AsyncRawFileUploadExampleClient {
                 .newBuilder()
                 .addPathSegments("upload-file");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -200,8 +200,8 @@ public class AsyncRawFileUploadExampleClient {
                 .newBuilder()
                 .addPathSegments("upload-file");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, null);
@@ -255,8 +255,8 @@ public class AsyncRawFileUploadExampleClient {
                 .newBuilder()
                 .addPathSegments("upload-file");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         FileStream fs = new FileStream(stream, filename, mediaType);

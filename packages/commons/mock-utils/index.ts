@@ -1,5 +1,4 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { createHash } from "crypto";
 
 // TODO: Use generated examples from ir-utils
@@ -42,7 +41,7 @@ export interface WireMockMapping {
 }
 
 export class WireMock {
-    public convertToWireMock(ir: IntermediateRepresentation): WireMockStubMapping {
+    public convertToWireMock(ir: FernIr.IntermediateRepresentation): WireMockStubMapping {
         const mappings: WireMockMapping[] = [];
 
         // First pass: identify endpoints that share the same URL path and method
@@ -134,7 +133,7 @@ export class WireMock {
     }
 
     private convertExampleToMapping(
-        ir: IntermediateRepresentation,
+        ir: FernIr.IntermediateRepresentation,
         service: FernIr.HttpService,
         endpoint: FernIr.HttpEndpoint,
         example: FernIr.ExampleEndpointCall | undefined,

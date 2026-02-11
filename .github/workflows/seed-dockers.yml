@@ -29,6 +29,10 @@ on:
         description: Rebuild C# seed container
         type: boolean
         default: false
+      php:
+        description: Rebuild PHP seed container
+        type: boolean
+        default: false
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -46,6 +50,7 @@ jobs:
       java: ${{ steps.set-output.outputs.java }}
       python: ${{ steps.set-output.outputs.python }}
       csharp: ${{ steps.set-output.outputs.csharp }}
+      php: ${{ steps.set-output.outputs.php }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -75,6 +80,12 @@ jobs:
         with:
           files: docker/seed/Dockerfile.csharp
 
+      - name: Check for php changes
+        id: php
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: docker/seed/Dockerfile.php
+
       - name: Check for workflow changes
         id: workflow
         uses: ./.github/actions/check-for-changed-files
@@ -91,12 +102,14 @@ jobs:
               echo "java=true" >> $GITHUB_OUTPUT
               echo "python=true" >> $GITHUB_OUTPUT
               echo "csharp=true" >> $GITHUB_OUTPUT
+              echo "php=true" >> $GITHUB_OUTPUT
               echo "Manual run: rebuilding all images"
             else
               echo "ts=${{ inputs.ts }}" >> $GITHUB_OUTPUT
               echo "java=${{ inputs.java }}" >> $GITHUB_OUTPUT
               echo "python=${{ inputs.python }}" >> $GITHUB_OUTPUT
               echo "csharp=${{ inputs.csharp }}" >> $GITHUB_OUTPUT
+              echo "php=${{ inputs.php }}" >> $GITHUB_OUTPUT
               echo "Manual run: selected images set from inputs"
             fi
           else
@@ -106,12 +119,14 @@ jobs:
               echo "java=true" >> $GITHUB_OUTPUT
               echo "python=true" >> $GITHUB_OUTPUT
               echo "csharp=true" >> $GITHUB_OUTPUT
+              echo "php=true" >> $GITHUB_OUTPUT
               echo "Workflow changed, rebuilding all images"
             else
               echo "ts=${{ steps.ts.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "java=${{ steps.java.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "python=${{ steps.python.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "csharp=${{ steps.csharp.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "php=${{ steps.php.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "Set outputs based on individual file changes"
             fi
           fi
@@ -322,9 +337,58 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+  build-php:
+    if: ${{ needs.changes.outputs.php == 'true' }}
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        arch: [amd64, arm64]
+        exclude:
+          - runner: ubuntu-latest
+            arch: arm64
+          - runner: ubuntu-24.04-arm
+            arch: amd64
+    runs-on: ${{ matrix.runner }}
+    needs: [changes, generate-sha]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: fernapi/php-seed
+          tags: |
+            type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
+            type=raw,value=latest-${{ matrix.arch }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./docker/seed/Dockerfile.php
+          platforms: linux/${{ matrix.arch }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
   merge-manifests:
-    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true') }}
-    needs: [changes, build-ts, build-java, build-python, build-csharp, generate-sha]
+    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true' || needs.changes.outputs.php == 'true') }}
+    needs: [changes, build-ts, build-java, build-python, build-csharp, build-php, generate-sha]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
@@ -351,6 +415,9 @@ jobs:
           fi
           if [[ "${{ needs.changes.outputs.csharp }}" == "true" ]]; then
             packages+="csharp "
+          fi
+          if [[ "${{ needs.changes.outputs.php }}" == "true" ]]; then
+            packages+="php "
           fi
           echo "packages=${packages% }" >> $GITHUB_OUTPUT
           echo "Building manifests for: ${packages% }"

@@ -4,8 +4,8 @@ import { FernDocsBuilder } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
-import { convertMarkdown } from "./convertMarkdown";
-import { MintNavigationItem } from "./mintlify";
+import { convertMarkdown } from "./convertMarkdown.js";
+import { MintNavigationItem } from "./mintlify.js";
 
 export declare namespace convertNavigationItem {
     interface Args {

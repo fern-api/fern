@@ -5,6 +5,7 @@ from ..custom_config import SDKCustomConfig
 from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
     ErrorDeclarationReferencer,
+    InferredAuthTokenProviderDeclarationReferencer,
     OAuthTokenProviderDeclarationReferencer,
     RootAsyncRawClientDeclarationReferencer,
     RootClientDeclarationReferencer,
@@ -100,6 +101,11 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             skip_resources_module=custom_config.improved_imports
         )
         self._oauth_generated_client_declaration_referencer = OAuthTokenProviderDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+        self._inferred_auth_generated_client_declaration_referencer = InferredAuthTokenProviderDeclarationReferencer(
             client_class_name=client_class_name,
             client_filename=client_filename,
             skip_resources_module=custom_config.improved_imports,
@@ -213,6 +219,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_filepath_for_generated_oauth_token_provider(self) -> Filepath:
         return self._oauth_generated_client_declaration_referencer.get_filepath(name=None)
+
+    def get_filepath_for_generated_inferred_auth_token_provider(self) -> Filepath:
+        return self._inferred_auth_generated_client_declaration_referencer.get_filepath(name=None)
 
     def get_filepath_for_generated_root_client(self) -> Filepath:
         return self._root_generated_client_declaration_referencer.get_filepath(name=None)

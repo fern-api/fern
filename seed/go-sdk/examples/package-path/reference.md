@@ -375,7 +375,7 @@ request := &pleaseinhere.Movie{
                 "imdb": 7.6,
             },
         },
-        Revenue: 1000000,
+        Revenue: int64(1000000),
     }
 client.Service.CreateMovie(
         context.TODO(),
@@ -520,7 +520,7 @@ request := &pleaseinhere.BigEntity{
                     "key": "value",
                 },
             },
-            Revenue: 1000000,
+            Revenue: int64(1000000),
         },
         Entity: &pleaseinhere.Entity{
             Type: &pleaseinhere.Type{
@@ -574,18 +574,7 @@ request := &pleaseinhere.BigEntity{
             Nodes: []*pleaseinhere.Node{
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                    },
+                    Nodes: []*pleaseinhere.Node{},
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -597,18 +586,7 @@ request := &pleaseinhere.BigEntity{
                 },
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                    },
+                    Nodes: []*pleaseinhere.Node{},
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -675,18 +653,7 @@ request := &pleaseinhere.BigEntity{
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                    },
+                    Directories: []*pleaseinhere.Directory{},
                 },
                 &pleaseinhere.Directory{
                     Name: "name",
@@ -700,18 +667,7 @@ request := &pleaseinhere.BigEntity{
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                    },
+                    Directories: []*pleaseinhere.Directory{},
                 },
             },
         },

@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { ResolvedSource } from "./ResolvedSource";
-import { SourceResolver } from "./SourceResolver";
+import { ResolvedSource } from "./ResolvedSource.js";
+import { SourceResolver } from "./SourceResolver.js";
 
 export class NopSourceResolver implements SourceResolver {
     public resolveSource({ source }: { source: RawSchemas.SourceSchema }): ResolvedSource | undefined {

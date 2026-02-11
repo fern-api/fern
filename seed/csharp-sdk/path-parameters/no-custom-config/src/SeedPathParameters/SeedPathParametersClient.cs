@@ -8,7 +8,8 @@ public partial class SeedPathParametersClient : ISeedPathParametersClient
 
     public SeedPathParametersClient(ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
@@ -17,8 +18,7 @@ public partial class SeedPathParametersClient : ISeedPathParametersClient
                 { "User-Agent", "Fernpath-parameters/0.0.1" },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
@@ -30,7 +30,7 @@ public partial class SeedPathParametersClient : ISeedPathParametersClient
         User = new UserClient(_client);
     }
 
-    public OrganizationsClient Organizations { get; }
+    public IOrganizationsClient Organizations { get; }
 
-    public UserClient User { get; }
+    public IUserClient User { get; }
 }

@@ -97,6 +97,7 @@ client = SeedNurseryApi(
 )
 response = client.package.with_raw_response.test()
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

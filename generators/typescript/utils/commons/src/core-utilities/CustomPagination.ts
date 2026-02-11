@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as FetcherManifest } from "./Fetcher";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as FetcherManifest } from "./Fetcher.js";
 
 export interface CustomPagination {
     readonly CustomPager: {

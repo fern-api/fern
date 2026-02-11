@@ -53,8 +53,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("store-test-submission-status")
                 .addPathSegment(submissionId.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -114,8 +114,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("store-test-submission-status-v2")
                 .addPathSegment(submissionId.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -175,8 +175,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("store-workspace-submission-status")
                 .addPathSegment(submissionId.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -236,8 +236,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("store-workspace-submission-status-v2")
                 .addPathSegment(submissionId.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -299,8 +299,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("testCase")
                 .addPathSegment(testCaseId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -362,8 +362,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("testCase")
                 .addPathSegment(testCaseId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -423,8 +423,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("store-workspace-trace/submission")
                 .addPathSegment(submissionId.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -484,8 +484,8 @@ public class AsyncRawAdminClient {
                 .addPathSegments("store-workspace-trace-v2/submission")
                 .addPathSegment(submissionId.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;

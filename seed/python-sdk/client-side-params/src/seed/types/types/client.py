@@ -33,13 +33,11 @@ class Client(UniversalBaseModel):
     Free text description of the client
     """
 
-    global_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="global")] = pydantic.Field(
-        alias="global", default=None
-    )
-    """
-    Whether this is a global client
-    """
-
+    global_: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="global"),
+        pydantic.Field(alias="global", description="Whether this is a global client"),
+    ] = None
     client_secret: typing.Optional[str] = pydantic.Field(default=None)
     """
     The client secret (only for non-public clients)

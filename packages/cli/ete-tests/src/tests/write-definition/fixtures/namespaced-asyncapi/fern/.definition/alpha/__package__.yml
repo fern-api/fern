@@ -12,4 +12,4 @@ types:
       tag: optional<string>
     source:
       openapi: alpha_one.yml
-  Pets: list<Pet>
+  Pets: list<unknown>

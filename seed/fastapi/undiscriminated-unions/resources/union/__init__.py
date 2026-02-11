@@ -10,6 +10,7 @@ from .types import (
     Metadata,
     MetadataUnion,
     MyUnion,
+    Name,
     NamedMetadata,
     NestedUnionL1,
     NestedUnionL2,
@@ -22,6 +23,9 @@ from .types import (
     UnionWithDuplicateTypes,
     UnionWithIdenticalPrimitives,
     UnionWithIdenticalStrings,
+    UnionWithReservedNames,
+    UnionWithTypeAliases,
+    UserId,
 )
 
 __all__ = [
@@ -31,6 +35,7 @@ __all__ = [
     "Metadata",
     "MetadataUnion",
     "MyUnion",
+    "Name",
     "NamedMetadata",
     "NestedUnionL1",
     "NestedUnionL2",
@@ -44,4 +49,7 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
     "UnionWithIdenticalStrings",
+    "UnionWithReservedNames",
+    "UnionWithTypeAliases",
+    "UserId",
 ]

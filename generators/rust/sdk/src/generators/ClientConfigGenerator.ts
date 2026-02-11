@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, CodeBlock, Expression, PrimitiveType, PUBLIC, rust, UseStatement } from "@fern-api/rust-codegen";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class ClientConfigGenerator {
     private readonly context: SdkGeneratorContext;
@@ -64,6 +64,16 @@ export class ClientConfigGenerator {
             }),
             rust.field({
                 name: "password",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
+                name: "client_id",
+                type: rust.Type.option(rust.Type.string()),
+                visibility: PUBLIC
+            }),
+            rust.field({
+                name: "client_secret",
                 type: rust.Type.option(rust.Type.string()),
                 visibility: PUBLIC
             }),
@@ -141,6 +151,14 @@ export class ClientConfigGenerator {
                     },
                     {
                         name: "password",
+                        value: Expression.none()
+                    },
+                    {
+                        name: "client_id",
+                        value: Expression.none()
+                    },
+                    {
+                        name: "client_secret",
                         value: Expression.none()
                     },
                     {

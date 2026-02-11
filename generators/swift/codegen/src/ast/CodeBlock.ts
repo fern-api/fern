@@ -1,8 +1,8 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator";
 import { noop } from "@fern-api/core-utils";
-import { AstNode, Writer } from "./core";
-import { LineBreak } from "./LineBreak";
-import { Statement } from "./Statement";
+import { AstNode, Writer } from "./core/index.js";
+import { LineBreak } from "./LineBreak.js";
+import { Statement } from "./Statement.js";
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */

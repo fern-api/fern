@@ -110,11 +110,33 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    public func withJsonProperty(request: Requests.WithJsonPropertyRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/with-json-property",
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
     public func simple(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/snippet",
             requestOptions: requestOptions
+        )
+    }
+
+    public func withLiteralAndEnumTypes(request: Requests.LiteralEnumRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/with-literal-enum",
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
+            requestOptions: requestOptions,
+            responseType: String.self
         )
     }
 }

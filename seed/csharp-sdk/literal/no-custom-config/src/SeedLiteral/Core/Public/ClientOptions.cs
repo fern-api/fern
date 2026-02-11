@@ -94,6 +94,7 @@ public partial class ClientOptions
             MaxRetries = MaxRetries,
             Timeout = Timeout,
             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+            AdditionalHeaders = AdditionalHeaders,
         };
     }
 }

@@ -70,9 +70,7 @@ func TestSimpleGetSomethingWithWireMock(
 	}
 	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewClient(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	invocationErr := client.Simple.GetSomething(
 		context.TODO(),

@@ -7,10 +7,10 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
-import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
-import { ExecutionEnvironment } from "./ExecutionEnvironment";
-import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
-import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
+import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
+import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
 
 export declare namespace GenerationRunner {
     interface RunArgs {
@@ -19,7 +19,7 @@ export declare namespace GenerationRunner {
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         generatorGroup: generatorsYml.GeneratorGroup;
         context: TaskContext;
-        irVersionOverride: string;
+        irVersionOverride: string | undefined;
         outputVersionOverride: string | undefined;
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         skipUnstableDynamicSnippetTests?: boolean;
@@ -119,7 +119,7 @@ export class GenerationRunner {
         context: TaskContext;
         workspace: FernWorkspace;
         organization: string;
-        irVersionOverride: string;
+        irVersionOverride: string | undefined;
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;

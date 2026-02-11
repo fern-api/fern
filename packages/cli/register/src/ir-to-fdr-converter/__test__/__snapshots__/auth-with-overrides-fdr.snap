@@ -16,7 +16,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_users",
@@ -53,6 +53,7 @@
           "description": undefined,
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -193,6 +194,7 @@
           "description": undefined,
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -322,7 +324,7 @@
           "slug": undefined,
         },
       ],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "users",
       "pointsTo": undefined,
       "subpackageId": "subpackage_users",

@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, listFiles, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { FernFile } from "./types/FernFile";
+import { FernFile } from "./types/FernFile.js";
 
 export async function listFernFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<FernFile[]> {
     const files: FernFile[] = [];

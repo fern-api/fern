@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.ObjectModel;
+using global::System.Collections;
+using global::System.Collections.ObjectModel;
 
 namespace SeedPagination.Core;
 

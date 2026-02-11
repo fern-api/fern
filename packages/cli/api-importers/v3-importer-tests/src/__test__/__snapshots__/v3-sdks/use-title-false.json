@@ -33,8 +33,245 @@
         }
       },
       "shape": {
-        "members": [],
-        "type": "undiscriminatedUnion"
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "originalName": "type",
+            "camelCase": {
+              "unsafeName": "type",
+              "safeName": "type_"
+            },
+            "snakeCase": {
+              "unsafeName": "type",
+              "safeName": "type_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TYPE",
+              "safeName": "TYPE"
+            },
+            "pascalCase": {
+              "unsafeName": "Type",
+              "safeName": "Type"
+            }
+          },
+          "wireValue": "type"
+        },
+        "extends": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "EMBEDDING_GENERATION",
+                "camelCase": {
+                  "unsafeName": "embeddingGeneration",
+                  "safeName": "embeddingGeneration"
+                },
+                "snakeCase": {
+                  "unsafeName": "embedding_generation",
+                  "safeName": "embedding_generation"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMBEDDING_GENERATION",
+                  "safeName": "EMBEDDING_GENERATION"
+                },
+                "pascalCase": {
+                  "unsafeName": "EmbeddingGeneration",
+                  "safeName": "EmbeddingGeneration"
+                }
+              },
+              "wireValue": "EMBEDDING_GENERATION"
+            },
+            "displayName": "EMBEDDING_GENERATION",
+            "shape": {
+              "typeId": "UnionJob_Job<EmbeddingGeneration>",
+              "name": {
+                "originalName": "UnionJob_Job<EmbeddingGeneration>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobEmbeddingGeneration",
+                  "safeName": "unionJobJobEmbeddingGeneration"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_embedding_generation",
+                  "safeName": "union_job_job_embedding_generation"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_EMBEDDING_GENERATION",
+                  "safeName": "UNION_JOB_JOB_EMBEDDING_GENERATION"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobEmbeddingGeneration",
+                  "safeName": "UnionJobJobEmbeddingGeneration"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "displayName": "EMBEDDING_GENERATION",
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "INFERENCE",
+                "camelCase": {
+                  "unsafeName": "inference",
+                  "safeName": "inference"
+                },
+                "snakeCase": {
+                  "unsafeName": "inference",
+                  "safeName": "inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INFERENCE",
+                  "safeName": "INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Inference",
+                  "safeName": "Inference"
+                }
+              },
+              "wireValue": "INFERENCE"
+            },
+            "displayName": "INFERENCE",
+            "shape": {
+              "typeId": "UnionJob_Job<Inference>",
+              "name": {
+                "originalName": "UnionJob_Job<Inference>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobInference",
+                  "safeName": "unionJobJobInference"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_inference",
+                  "safeName": "union_job_job_inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_INFERENCE",
+                  "safeName": "UNION_JOB_JOB_INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobInference",
+                  "safeName": "UnionJobJobInference"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "displayName": "INFERENCE",
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "TL_INFERENCE",
+                "camelCase": {
+                  "unsafeName": "tlInference",
+                  "safeName": "tlInference"
+                },
+                "snakeCase": {
+                  "unsafeName": "tl_inference",
+                  "safeName": "tl_inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TL_INFERENCE",
+                  "safeName": "TL_INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "TlInference",
+                  "safeName": "TlInference"
+                }
+              },
+              "wireValue": "TL_INFERENCE"
+            },
+            "displayName": "TL_INFERENCE",
+            "shape": {
+              "typeId": "UnionJob_Job<TlInference>",
+              "name": {
+                "originalName": "UnionJob_Job<TlInference>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobTlInference",
+                  "safeName": "unionJobJobTlInference"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_tl_inference",
+                  "safeName": "union_job_job_tl_inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_TL_INFERENCE",
+                  "safeName": "UNION_JOB_JOB_TL_INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobTlInference",
+                  "safeName": "UnionJobJobTlInference"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "displayName": "TL_INFERENCE",
+              "propertiesType": "samePropertiesAsObject"
+            }
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "originalName": "TRAINING",
+                "camelCase": {
+                  "unsafeName": "training",
+                  "safeName": "training"
+                },
+                "snakeCase": {
+                  "unsafeName": "training",
+                  "safeName": "training"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRAINING",
+                  "safeName": "TRAINING"
+                },
+                "pascalCase": {
+                  "unsafeName": "Training",
+                  "safeName": "Training"
+                }
+              },
+              "wireValue": "TRAINING"
+            },
+            "displayName": "TRAINING",
+            "shape": {
+              "typeId": "UnionJob_Job<Training>",
+              "name": {
+                "originalName": "UnionJob_Job<Training>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobTraining",
+                  "safeName": "unionJobJobTraining"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_training",
+                  "safeName": "union_job_job_training"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_TRAINING",
+                  "safeName": "UNION_JOB_JOB_TRAINING"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobTraining",
+                  "safeName": "UnionJobJobTraining"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "displayName": "TRAINING",
+              "propertiesType": "samePropertiesAsObject"
+            }
+          }
+        ],
+        "type": "union"
       },
       "autogeneratedExamples": [],
       "userProvidedExamples": [],

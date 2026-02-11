@@ -4,8 +4,7 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["node", "vitest/globals"],
-    "moduleResolution": "bundler"
+    "types": ["node", "vitest/globals"]
   },
   "include": ["./src/**/*"],
   "references": [
@@ -50,6 +49,9 @@
     },
     {
       "path": "../workspace/loader"
+    },
+    {
+      "path": "../api-importers/graphql"
     }
   ]
 }

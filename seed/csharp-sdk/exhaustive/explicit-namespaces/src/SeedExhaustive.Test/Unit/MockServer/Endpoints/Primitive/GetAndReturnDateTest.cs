@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedExhaustive.Core;
 using SeedExhaustive.Test.Unit.MockServer;
+using SeedExhaustive.Test.Utils;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
@@ -36,6 +36,6 @@ public class GetAndReturnDateTest : BaseMockServerTest
         var response = await Client.Endpoints.Primitive.GetAndReturnDateAsync(
             new DateOnly(2023, 1, 15)
         );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<DateOnly>(mockResponse)));
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

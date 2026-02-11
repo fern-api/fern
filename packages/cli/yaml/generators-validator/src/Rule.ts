@@ -3,7 +3,7 @@ import { generatorsYml } from "@fern-api/configuration-loader";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 
-import { GeneratorsYmlFileAstNodeTypes } from "./ast/GeneratorsYmlAstVisitor";
+import { GeneratorsYmlFileAstNodeTypes } from "./ast/GeneratorsYmlAstVisitor.js";
 
 export interface Rule {
     name: string;
