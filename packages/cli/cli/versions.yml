@@ -1,10 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.73.2
+- version: 3.74.1
   changelogEntry:
     - summary: |
         Add missing conversion for `nextUri` and `nextPath` pagination types.
       type: chore
   createdAt: "2026-02-11"
+  irVersion: 65
+
+- version: 3.74.0
+  changelogEntry:
+    - summary: |
+        [Beta] Library docs generated via `fern docs md generate` are now resolved as first-class
+        navigation sections in `fern docs dev`. The resolver reads `_navigation.yml` and MDX files
+        from the library output directory, wires stable cross-reference URLs, and sets the root
+        module page as the section overview.
+      type: feat
+  createdAt: "2026-02-10"
   irVersion: 65
 
 - version: 3.73.1

@@ -9,10 +9,6 @@ const NEMO_CLASSES: Record<string, FdrAPI.libraryDocs.PythonClassIr> = JSON.pars
     readFileSync(join(__dirname, "fixtures", "nemo-classes.json"), "utf-8")
 );
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 /** Minimal render context with no type linking. */
 function emptyCtx(): RenderContext {
     return { baseSlug: "reference/python", validPaths: new Set(), pathAliases: new Map() };
@@ -85,10 +81,6 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
         ...overrides
     } as FdrAPI.libraryDocs.AttributeIr;
 }
-
-// ---------------------------------------------------------------------------
-// renderClassDetailed — Regular class
-// ---------------------------------------------------------------------------
 
 describe("renderClassDetailed (regular class)", () => {
     it("renders anchor with correct ID", () => {
@@ -442,10 +434,6 @@ describe("renderClassDetailed (regular class)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderClassDetailed — TypedDict
-// ---------------------------------------------------------------------------
-
 describe("renderClassDetailed (TypedDict)", () => {
     it("renders anchor and signature", () => {
         const cls = makeClass({
@@ -563,10 +551,6 @@ describe("renderClassDetailed (TypedDict)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderClassDetailed — Enum
-// ---------------------------------------------------------------------------
-
 describe("renderClassDetailed (Enum)", () => {
     it("renders anchor and signature", () => {
         const cls = makeClass({
@@ -637,10 +621,6 @@ describe("renderClassDetailed (Enum)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderClassDetailed — dispatch
-// ---------------------------------------------------------------------------
-
 describe("renderClassDetailed (dispatch)", () => {
     it("dispatches TYPEDDICT to TypedDict renderer", () => {
         const cls = makeClass({ kind: "TYPEDDICT" as FdrAPI.libraryDocs.PythonClassKind });
@@ -681,10 +661,6 @@ describe("renderClassDetailed (dispatch)", () => {
         expect(result).toContain("<Badge>Dataclass</Badge>");
     });
 });
-
-// ---------------------------------------------------------------------------
-// NeMo IR fixture tests
-// ---------------------------------------------------------------------------
 
 describe("renderClassDetailed (NeMo fixtures)", () => {
     it("PackedTensor: regular CLASS with constructor params and methods", () => {

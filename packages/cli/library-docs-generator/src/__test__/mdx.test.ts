@@ -111,6 +111,30 @@ describe("escapeMdxPreservingCodeBlocks", () => {
         expect(result).not.toContain("{doctest}");
         expect(result).toMatch(/\n```$/);
     });
+
+    it("handles indented code blocks inside list items", () => {
+        const input = "1. Example:\n    ```python\n    x = <T>\n    ```\nMore text";
+        const result = escapeMdxPreservingCodeBlocks(input);
+        // Code block content should be preserved (not escaped)
+        expect(result).toContain("x = <T>");
+        // Text outside should be escaped
+        expect(result).not.toContain("<T>\nMore");
+    });
+
+    it("handles multiple indented code blocks in numbered list", () => {
+        const input =
+            "1. First:\n    ```python\n    a = 1\n    ```\n\n2. Second:\n    ```yaml\n    key: val\n    ```\nDone";
+        const result = escapeMdxPreservingCodeBlocks(input);
+        expect(result).toContain("a = 1");
+        expect(result).toContain("key: val");
+    });
+
+    it("normalizes indented {doctest} language tag", () => {
+        const input = "1. Example:\n    ```{doctest}\n    >>> print('hi')\n    ```";
+        const result = escapeMdxPreservingCodeBlocks(input);
+        expect(result).toContain("    ```python\n");
+        expect(result).not.toContain("{doctest}");
+    });
 });
 
 describe("generateAnchorId", () => {
@@ -177,5 +201,19 @@ describe("escapeTableCell", () => {
 
     it("handles empty string", () => {
         expect(escapeTableCell("")).toBe("");
+    });
+
+    it("escapes JSX/HTML characters", () => {
+        expect(escapeTableCell("Extract content between <answer> tags")).toBe(
+            "Extract content between &lt;answer&gt; tags"
+        );
+    });
+
+    it("escapes curly braces", () => {
+        expect(escapeTableCell("Use {value} here")).toBe("Use &#123;value&#125; here");
+    });
+
+    it("escapes pipes, newlines, and JSX chars together", () => {
+        expect(escapeTableCell("<a> | b\n{c}")).toBe("&lt;a&gt; \\| b &#123;c&#125;");
     });
 });
