@@ -309,9 +309,6 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
-  pagination-uri-path:
-    - customConfig: null
-      outputFolder: no-custom-config
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
