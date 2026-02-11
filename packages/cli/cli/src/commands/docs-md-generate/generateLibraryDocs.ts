@@ -1,10 +1,12 @@
 import { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { resolve } from "@fern-api/fs-utils";
 import { generate } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -15,6 +17,8 @@ export interface GenerateLibraryDocsOptions {
     /** If specified, only generate docs for this library */
     library: string | undefined;
 }
+
+type FdrService = ReturnType<typeof createFdrService>;
 
 function isGitLibraryInput(
     input: docsYml.RawSchemas.LibraryInputConfiguration
@@ -27,11 +31,9 @@ const POLL_INTERVAL_MS = 3000;
 /**
  * Generate library documentation from source code.
  *
- * 1. Authenticates with FDR
- * 2. Starts server-side parsing via FDR API
- * 3. Polls for completion
- * 4. Downloads the resulting IR from S3
- * 5. Runs the local MDX generator (which also writes _navigation.yml)
+ * Authenticates with FDR, starts server-side parsing, polls for completion,
+ * downloads the resulting IR from S3, and runs the local MDX generator
+ * (which also writes `_navigation.yml` — see NavigationBuilder.ts).
  */
 export async function generateLibraryDocs({ project, cliContext, library }: GenerateLibraryDocsOptions): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
@@ -51,7 +53,6 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
         return;
     }
 
-    // Filter to specific library if specified
     const librariesToGenerate = library != null ? { [library]: libraries[library] } : libraries;
 
     if (library != null && libraries[library] == null) {
@@ -61,7 +62,6 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
         return;
     }
 
-    // Authenticate
     const token: FernToken | null = await cliContext.runTask(async (context) => {
         return askToLogin(context);
     });
@@ -85,103 +85,25 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
         }
 
         const resolvedOutputPath = resolve(docsWorkspace.absoluteFilePath, config.output.path);
+        const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
 
         await cliContext.runTask(async (context) => {
             const fdr = createFdrService({ token: token.value });
-            const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
 
             context.logger.info(`Starting generation for library '${name}'...`);
 
-            // 1. Start server-side parsing
-            const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
-                orgId: orgId as Parameters<typeof fdr.docs.v2.write.startLibraryDocsGeneration>[0]["orgId"],
-                githubUrl: gitInput.git as Parameters<
-                    typeof fdr.docs.v2.write.startLibraryDocsGeneration
-                >[0]["githubUrl"],
+            const jobId = await startGeneration(fdr, context, {
+                orgId,
+                githubUrl: gitInput.git,
                 language: config.lang === "python" ? "PYTHON" : "CPP",
-                config: {
-                    branch: undefined, // TODO: make optional in FDR API definition
-                    packagePath: gitInput.subpath,
-                    title: name,
-                    slug: name
-                }
+                packagePath: gitInput.subpath,
+                name
             });
 
-            if (!startResponse.ok) {
-                return context.failAndThrow(
-                    `Failed to start generation for library '${name}': ${JSON.stringify(startResponse.error)}`
-                );
-            }
+            await pollForCompletion(fdr, jobId, name, context);
 
-            const jobId = startResponse.body.jobId;
-            context.logger.info(`Generation job started (${jobId}). Polling for completion...`);
+            const ir = await downloadIr(fdr, jobId, name, context);
 
-            // 2. Poll for completion
-            let completed = false;
-            while (!completed) {
-                await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
-
-                const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
-
-                if (!statusResponse.ok) {
-                    return context.failAndThrow(
-                        `Failed to check generation status for library '${name}': ${JSON.stringify(statusResponse.error)}`
-                    );
-                }
-
-                const status = statusResponse.body;
-
-                switch (status.status) {
-                    case "PENDING":
-                    case "PARSING":
-                        context.logger.info(
-                            `Status: ${status.status}${status.progress ? ` — ${status.progress}` : ""}`
-                        );
-                        break;
-                    case "COMPLETED":
-                        completed = true;
-                        break;
-                    case "FAILED":
-                        return context.failAndThrow(
-                            `Generation failed for library '${name}': ${status.error?.message ?? "Unknown error"} (${status.error?.code ?? "UNKNOWN"})`
-                        );
-                    default:
-                        return context.failAndThrow(
-                            `Unexpected generation status for library '${name}': ${status.status}`
-                        );
-                }
-            }
-
-            // 3. Fetch IR from S3
-            context.logger.info("Downloading generated IR...");
-
-            const resultResponse = await fdr.docs.v2.write.getLibraryDocsResult(jobId);
-
-            if (!resultResponse.ok) {
-                return context.failAndThrow(
-                    `Failed to fetch generation result for library '${name}': ${JSON.stringify(resultResponse.error)}`
-                );
-            }
-
-            const irFetchResponse = await fetch(resultResponse.body.resultUrl);
-            if (!irFetchResponse.ok) {
-                return context.failAndThrow(
-                    `Failed to download IR for library '${name}': HTTP ${irFetchResponse.status}`
-                );
-            }
-
-            // The Lambda stores the IR wrapped in { ir: { rootModule: ... } }
-            const irWrapper = await irFetchResponse.json();
-            const ir = irWrapper.ir;
-
-            if (ir == null) {
-                return context.failAndThrow(`IR is empty for library '${name}'`);
-            }
-            if (ir.rootModule == null) {
-                return context.failAndThrow(`IR has no rootModule for library '${name}'`);
-            }
-
-            // 4. Generate MDX files + _navigation.yml
             context.logger.info("Generating MDX files...");
 
             const generateResult = generate({
@@ -196,4 +118,106 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
             );
         });
     }
+}
+
+async function startGeneration(
+    fdr: FdrService,
+    context: TaskContext,
+    opts: { orgId: string; githubUrl: string; language: "PYTHON" | "CPP"; packagePath?: string; name: string }
+): Promise<FdrAPI.docs.v2.write.LibraryDocsJobId> {
+    const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
+        orgId: FdrAPI.OrgId(opts.orgId),
+        githubUrl: FdrAPI.Url(opts.githubUrl),
+        language: opts.language,
+        config: {
+            branch: undefined,
+            packagePath: opts.packagePath,
+            title: opts.name,
+            slug: opts.name
+        }
+    });
+
+    if (!startResponse.ok) {
+        return context.failAndThrow(
+            `Failed to start generation for library '${opts.name}': ${JSON.stringify(startResponse.error)}`
+        );
+    }
+
+    const jobId = startResponse.body.jobId;
+    context.logger.info(`Generation job started (${jobId}). Polling for completion...`);
+    return jobId;
+}
+
+async function pollForCompletion(
+    fdr: FdrService,
+    jobId: FdrAPI.docs.v2.write.LibraryDocsJobId,
+    libraryName: string,
+    context: TaskContext
+): Promise<void> {
+    while (true) {
+        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+
+        const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
+
+        if (!statusResponse.ok) {
+            return context.failAndThrow(
+                `Failed to check generation status for library '${libraryName}': ${JSON.stringify(statusResponse.error)}`
+            );
+        }
+
+        const status = statusResponse.body;
+
+        switch (status.status) {
+            case "PENDING":
+            case "PARSING":
+                context.logger.info(`Status: ${status.status}${status.progress ? ` — ${status.progress}` : ""}`);
+                break;
+            case "COMPLETED":
+                return;
+            case "FAILED":
+                return context.failAndThrow(
+                    `Generation failed for library '${libraryName}': ${status.error?.message ?? "Unknown error"} (${status.error?.code ?? "UNKNOWN"})`
+                );
+            default:
+                return context.failAndThrow(
+                    `Unexpected generation status for library '${libraryName}': ${status.status}`
+                );
+        }
+    }
+}
+
+async function downloadIr(
+    fdr: FdrService,
+    jobId: FdrAPI.docs.v2.write.LibraryDocsJobId,
+    libraryName: string,
+    context: TaskContext
+): Promise<FdrAPI.libraryDocs.PythonLibraryDocsIr> {
+    context.logger.info("Downloading generated IR...");
+
+    const resultResponse = await fdr.docs.v2.write.getLibraryDocsResult(jobId);
+
+    if (!resultResponse.ok) {
+        return context.failAndThrow(
+            `Failed to fetch generation result for library '${libraryName}': ${JSON.stringify(resultResponse.error)}`
+        );
+    }
+
+    const irFetchResponse = await fetch(resultResponse.body.resultUrl);
+    if (!irFetchResponse.ok) {
+        return context.failAndThrow(
+            `Failed to download IR for library '${libraryName}': HTTP ${irFetchResponse.status}`
+        );
+    }
+
+    const irWrapper = await irFetchResponse.json();
+    const ir = irWrapper.ir;
+
+    if (ir == null) {
+        return context.failAndThrow(`IR is empty for library '${libraryName}'`);
+    }
+    if (ir.rootModule == null) {
+        return context.failAndThrow(`IR has no rootModule for library '${libraryName}'`);
+    }
+
+    return ir;
 }

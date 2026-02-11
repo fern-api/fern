@@ -119,6 +119,11 @@ export const NAVIGATION_FILENAME = "_navigation.yml";
 /**
  * Serialize a navigation tree to `_navigation.yml` inside the output directory.
  *
+ * The resulting YAML file is consumed by `DocsDefinitionResolver.handleLibrarySection()`
+ * during docs resolution to build the sidebar navigation. The `_` prefix indicates
+ * this file is auto-generated and should not be edited by hand. There is exactly one
+ * `_navigation.yml` per library output directory.
+ *
  * @param outputDir - Directory where the YAML file will be written
  * @param navigation - Navigation tree to serialize
  * @returns Absolute path to the written file
