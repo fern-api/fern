@@ -14,7 +14,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 
-class HttpMethodsClient
+class HttpMethodsClient implements HttpMethodsClientInterface
 {
     /**
      * @var array{

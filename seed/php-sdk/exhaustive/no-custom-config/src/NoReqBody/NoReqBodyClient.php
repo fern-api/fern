@@ -13,7 +13,7 @@ use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Core\Json\JsonDecoder;
 
-class NoReqBodyClient
+class NoReqBodyClient implements NoReqBodyClientInterface
 {
     /**
      * @var array{

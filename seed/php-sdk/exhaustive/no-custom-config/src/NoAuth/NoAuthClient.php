@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class NoAuthClient
+class NoAuthClient implements NoAuthClientInterface
 {
     /**
      * @var array{

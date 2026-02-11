@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class UrlsClient
+class UrlsClient implements UrlsClientInterface
 {
     /**
      * @var array{

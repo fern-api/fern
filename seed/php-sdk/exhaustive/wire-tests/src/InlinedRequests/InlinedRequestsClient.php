@@ -13,7 +13,7 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class InlinedRequestsClient
+class InlinedRequestsClient implements InlinedRequestsClientInterface
 {
     /**
      * @var array{

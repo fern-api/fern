@@ -13,7 +13,7 @@ use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class EnumClient
+class EnumClient implements EnumClientInterface
 {
     /**
      * @var array{
