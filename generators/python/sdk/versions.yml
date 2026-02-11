@@ -9,6 +9,13 @@
         request signing, logging, metrics) without needing to construct the full httpx client manually.
         The parameter is ignored when a custom `httpx_client` is provided.
       type: feat
+    - summary: |
+        Add `transport_wrapper` custom config option for SDK developers to wire custom transport
+        classes into generated clients. Specify a module, sync/async class names, and extra
+        constructor parameters. The generator auto-imports the transport class and wraps the
+        default httpx transport, so end users see the feature as built-in (e.g., PKCV support)
+        without writing any custom transport code themselves.
+      type: feat
   createdAt: "2026-02-11"
   irVersion: 63
 

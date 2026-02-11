@@ -746,6 +746,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         )
 
+        transport_wrapper = self._context.custom_config.transport_wrapper
+        if transport_wrapper is not None:
+            for tw_param in transport_wrapper.params:
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=tw_param.name,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        private_member_name=None,
+                        initializer=AST.Expression(AST.TypeHint.none()),
+                        exclude_from_wrapper_construction=True,
+                    )
+                )
+
         parameters.extend(self._get_literal_header_parameters())
 
         return parameters
@@ -913,6 +926,33 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             self._write_url_template_interpolation(writer)
 
+            transport_wrapper = self._context.custom_config.transport_wrapper
+            transport_var_name: typing.Optional[str] = None
+            if transport_wrapper is not None:
+                transport_var_name = "_transport"
+                tw_module = transport_wrapper.module
+                tw_class = transport_wrapper.async_class if is_async else transport_wrapper.sync_class
+                tw_param_names = [p.name for p in transport_wrapper.params]
+                tw_condition = " or ".join(f"{n} is not None" for n in tw_param_names)
+                writer.write_line(f"{transport_var_name} = {RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME}")
+                if tw_param_names:
+                    writer.write_line(f"if {tw_condition}:")
+                    with writer.indent():
+                        tw_kwargs = ", ".join(
+                            f"{n}={n}" for n in tw_param_names
+                        )
+                        writer.write_line(f"from .{tw_module} import {tw_class}")
+                        writer.write_line(
+                            f"{transport_var_name} = {tw_class}("
+                            f"wrapped_transport={transport_var_name}, {tw_kwargs})"
+                        )
+                else:
+                    writer.write_line(f"from .{tw_module} import {tw_class}")
+                    writer.write_line(
+                        f"{transport_var_name} = {tw_class}("
+                        f"wrapped_transport={transport_var_name})"
+                    )
+
             client_wrapper_generator = ClientWrapperGenerator(
                 context=self._context,
                 generated_environment=self._generated_environment,
@@ -930,6 +970,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     timeout_local_variable=timeout_local_variable,
                     is_async=is_async,
                     constructor_parameters=constructor_parameters,
+                    transport_variable_name=transport_var_name,
                 )
             elif use_oauth_token_provider:
                 # Standard OAuth mode
@@ -940,6 +981,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     is_async=is_async,
                     ignore_httpx_constructor_parameter=True,
                     exclude_auth=True,
+                    transport_variable_name=transport_var_name,
                 )
                 writer.write("oauth_token_provider = ")
                 oauth_token_provider_class = (
@@ -980,6 +1022,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     timeout_local_variable=timeout_local_variable,
                     is_async=is_async,
                     use_oauth_token_provider=use_oauth_token_provider,
+                    transport_variable_name=transport_var_name,
                 )
                 for param in constructor_parameters:
                     if param.private_member_name is not None:
@@ -999,6 +1042,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     timeout_local_variable=timeout_local_variable,
                     is_async=is_async,
                     use_oauth_token_provider=use_oauth_token_provider,
+                    transport_variable_name=transport_var_name,
                 )
                 if inferred_auth_scheme is not None:
                     inferred_auth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
@@ -1007,6 +1051,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         timeout_local_variable=timeout_local_variable,
                         is_async=is_async,
                         exclude_auth=True,
+                        transport_variable_name=transport_var_name,
                     )
                     inferred_auth_provider_class = (
                         self._context.core_utilities.get_async_inferred_auth_token_provider()
@@ -1133,6 +1178,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         timeout_local_variable: str,
         is_async: bool,
         constructor_parameters: List[RootClientConstructorParameter],
+        transport_variable_name: Optional[str] = None,
     ) -> None:
         """
         Writes the constructor body for OAuth token override mode.
@@ -1153,6 +1199,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 timeout_local_variable=timeout_local_variable,
                 is_async=is_async,
                 exclude_auth=True,
+                transport_variable_name=transport_variable_name,
             )
             # Add token to kwargs - prefer the explicit override, otherwise use the provided callable
             wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
@@ -1186,6 +1233,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 is_async=is_async,
                 ignore_httpx_constructor_parameter=True,
                 exclude_auth=True,
+                transport_variable_name=transport_variable_name,
             )
             writer.write("oauth_token_provider = ")
             oauth_token_provider_class = (
@@ -1227,6 +1275,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 timeout_local_variable=timeout_local_variable,
                 is_async=is_async,
                 use_oauth_token_provider=True,
+                transport_variable_name=transport_variable_name,
             )
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
@@ -1261,6 +1310,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         exclude_auth: Optional[bool] = False,
         ignore_httpx_constructor_parameter: bool = False,
         use_oauth_token_provider: bool = False,
+        transport_variable_name: Optional[str] = None,
     ) -> List[typing.Tuple[str, AST.Expression]]:
         client_wrapper_constructor_kwargs = []
 
@@ -1335,7 +1385,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 )
 
-        transport_param_name = RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME
+        transport_param_name = transport_variable_name or RootClientGenerator.HTTPX_TRANSPORT_CONSTRUCTOR_PARAMETER_NAME
 
         if ignore_httpx_constructor_parameter:
             client_wrapper_constructor_kwargs.append(

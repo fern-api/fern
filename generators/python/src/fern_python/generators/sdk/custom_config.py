@@ -55,6 +55,25 @@ class WireTestsConfig(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class TransportWrapperParam(pydantic.BaseModel):
+    name: str
+    type: str = "typing.Optional[str]"
+    env_var: Optional[str] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
+class TransportWrapperConfig(pydantic.BaseModel):
+    module: str
+    sync_class: str
+    async_class: str
+    params: List[TransportWrapperParam] = []
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -151,6 +170,8 @@ class SDKCustomConfig(pydantic.BaseModel):
     # (e.g., ["custom_integration", "sentry_integration"] will import <package>/custom_integration.py
     # and <package>/sentry_integration.py if they exist)
     import_paths: Optional[List[str]] = None
+
+    transport_wrapper: Optional[TransportWrapperConfig] = None
 
     class Config:
         extra = pydantic.Extra.forbid
