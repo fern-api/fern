@@ -17,7 +17,7 @@ class EndpointsPaginationWireTest extends WireMockTestCase
      */
     public function testListItems(): void {
         $testId = 'endpoints.pagination.list_items.0';
-        $this->client->endpoints->pagination->listItems(
+        $response = $this->client->endpoints->pagination->listItems(
             new ListItemsRequest([
                 'cursor' => 'cursor',
                 'limit' => 1,
@@ -28,6 +28,9 @@ class EndpointsPaginationWireTest extends WireMockTestCase
                 ],
             ],
         );
+        foreach ($response as $item) {
+            break;
+        }
         $this->verifyRequestCount(
             $testId,
             "GET",
