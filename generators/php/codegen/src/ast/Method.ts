@@ -45,7 +45,18 @@ export class Method extends AstNode {
     public readonly static_: boolean;
     public readonly noBody: boolean;
 
-    constructor({ name, access, parameters, throws, return_, body, docs, classReference, static_, noBody }: Method.Args) {
+    constructor({
+        name,
+        access,
+        parameters,
+        throws,
+        return_,
+        body,
+        docs,
+        classReference,
+        static_,
+        noBody
+    }: Method.Args) {
         super();
         this.name = name;
         this.access = access;

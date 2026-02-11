@@ -57,9 +57,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const class_ = php.class_({
             name: this.context.getRootClientClassName(),
             namespace: this.context.getRootNamespace(),
-            interfaceReferences: this.context.ir.rootPackage.service != null
-                ? [this.context.getRootClientInterfaceClassReference()]
-                : undefined
+            interfaceReferences:
+                this.context.ir.rootPackage.service != null
+                    ? [this.context.getRootClientInterfaceClassReference()]
+                    : undefined
         });
 
         if (!this.context.ir.rootPackage.hasEndpointsInTree) {
