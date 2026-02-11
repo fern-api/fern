@@ -135,7 +135,7 @@ export class Context {
                 outputs.push(outputPath.toString());
             }
         }
-        if (target.output.git != null) {
+        if (target.output.git != null && target.output.path == null) {
             outputs.push(target.output.git.repository);
         }
         return outputs;
