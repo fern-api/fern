@@ -86,8 +86,9 @@ class SyncClientWrapper(BaseClientWrapper):
             base_url=base_url,
             timeout=timeout,
         )
+        _resolved_account_sid = self._pkcv_account_sid
         if (
-            self._pkcv_account_sid is not None
+            _resolved_account_sid is not None
             and self._pkcv_api_key_sid is not None
             and self._pkcv_credential_sid is not None
             and self._pkcv_private_key is not None
@@ -95,7 +96,7 @@ class SyncClientWrapper(BaseClientWrapper):
             _pkcv_httpx_client = httpx.Client(
                 transport=PKCVTransport(
                     transport=httpx_client._transport,
-                    account_sid=self._pkcv_account_sid,
+                    account_sid=_resolved_account_sid,
                     api_key_sid=self._pkcv_api_key_sid,
                     credential_sid=self._pkcv_credential_sid,
                     private_key=self._pkcv_private_key,
@@ -138,8 +139,9 @@ class AsyncClientWrapper(BaseClientWrapper):
             timeout=timeout,
         )
         self._async_token = async_token
+        _resolved_account_sid = self._pkcv_account_sid
         if (
-            self._pkcv_account_sid is not None
+            _resolved_account_sid is not None
             and self._pkcv_api_key_sid is not None
             and self._pkcv_credential_sid is not None
             and self._pkcv_private_key is not None
@@ -147,7 +149,7 @@ class AsyncClientWrapper(BaseClientWrapper):
             _pkcv_httpx_client = httpx.AsyncClient(
                 transport=AsyncPKCVTransport(
                     transport=httpx_client._transport,
-                    account_sid=self._pkcv_account_sid,
+                    account_sid=_resolved_account_sid,
                     api_key_sid=self._pkcv_api_key_sid,
                     credential_sid=self._pkcv_credential_sid,
                     private_key=self._pkcv_private_key,

@@ -360,6 +360,10 @@ class ClientWrapperGenerator:
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
         pkcv_enabled = self._context.custom_config.pkcv
+        basic_auth_scheme = self._get_basic_auth_scheme()
+        pkcv_account_sid_getter = (
+            names.get_username_getter_name(basic_auth_scheme) if basic_auth_scheme is not None else None
+        )
 
         def _write_async_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
             # Avoid repeating parameters by tracking names
@@ -411,8 +415,12 @@ class ClientWrapperGenerator:
             )
 
         def _write_async_pkcv_transport_wrapping(writer: AST.NodeWriter) -> None:
+            if pkcv_account_sid_getter is not None:
+                writer.write_line(f"_resolved_account_sid = self.{pkcv_account_sid_getter}()")
+            else:
+                writer.write_line("_resolved_account_sid = self._pkcv_account_sid")
             writer.write_line(
-                "if self._pkcv_account_sid is not None and self._pkcv_api_key_sid is not None "
+                "if _resolved_account_sid is not None and self._pkcv_api_key_sid is not None "
                 "and self._pkcv_credential_sid is not None and self._pkcv_private_key is not None:"
             )
             with writer.indent():
@@ -435,7 +443,7 @@ class ClientWrapperGenerator:
                                                     f"{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}._transport"
                                                 ),
                                             ),
-                                            ("account_sid", AST.Expression("self._pkcv_account_sid")),
+                                            ("account_sid", AST.Expression("_resolved_account_sid")),
                                             ("api_key_sid", AST.Expression("self._pkcv_api_key_sid")),
                                             ("credential_sid", AST.Expression("self._pkcv_credential_sid")),
                                             ("private_key", AST.Expression("self._pkcv_private_key")),
@@ -466,6 +474,10 @@ class ClientWrapperGenerator:
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
         pkcv_enabled = self._context.custom_config.pkcv
+        basic_auth_scheme = self._get_basic_auth_scheme()
+        pkcv_account_sid_getter = (
+            names.get_username_getter_name(basic_auth_scheme) if basic_auth_scheme is not None else None
+        )
 
         def _write_derived_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
             # Avoid repeating parameters by tracking names
@@ -508,8 +520,12 @@ class ClientWrapperGenerator:
             )
 
         def _write_pkcv_transport_wrapping(writer: AST.NodeWriter, *, is_async: bool) -> None:
+            if pkcv_account_sid_getter is not None:
+                writer.write_line(f"_resolved_account_sid = self.{pkcv_account_sid_getter}()")
+            else:
+                writer.write_line("_resolved_account_sid = self._pkcv_account_sid")
             writer.write_line(
-                "if self._pkcv_account_sid is not None and self._pkcv_api_key_sid is not None "
+                "if _resolved_account_sid is not None and self._pkcv_api_key_sid is not None "
                 "and self._pkcv_credential_sid is not None and self._pkcv_private_key is not None:"
             )
             with writer.indent():
@@ -536,7 +552,7 @@ class ClientWrapperGenerator:
                                                     f"{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}._transport"
                                                 ),
                                             ),
-                                            ("account_sid", AST.Expression("self._pkcv_account_sid")),
+                                            ("account_sid", AST.Expression("_resolved_account_sid")),
                                             ("api_key_sid", AST.Expression("self._pkcv_api_key_sid")),
                                             ("credential_sid", AST.Expression("self._pkcv_credential_sid")),
                                             ("private_key", AST.Expression("self._pkcv_private_key")),
