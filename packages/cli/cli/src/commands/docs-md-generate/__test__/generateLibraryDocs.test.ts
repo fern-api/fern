@@ -46,6 +46,8 @@ function makeMockCliContext() {
     };
 }
 
+// No real I/O occurs against this path — generate() is mocked,
+// so it's only used for path resolution in the function under test.
 function makeMockProject({
     libraries,
     absoluteFilePath = "/home/user/project/fern"

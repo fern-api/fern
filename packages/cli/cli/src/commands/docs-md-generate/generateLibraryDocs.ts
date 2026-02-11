@@ -27,6 +27,7 @@ function isGitLibraryInput(
 }
 
 const POLL_INTERVAL_MS = 3000;
+const POLL_TIMEOUT_MS = 3 * 60 * 1000; // 3 minutes
 
 /**
  * Generate library documentation from source code.
@@ -154,7 +155,9 @@ async function pollForCompletion(
     libraryName: string,
     context: TaskContext
 ): Promise<void> {
-    while (true) {
+    const deadline = Date.now() + POLL_TIMEOUT_MS;
+
+    while (Date.now() < deadline) {
         await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
 
         const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
@@ -184,6 +187,8 @@ async function pollForCompletion(
                 );
         }
     }
+
+    return context.failAndThrow(`Generation timed out for library '${libraryName}' after ${POLL_TIMEOUT_MS / 1000}s`);
 }
 
 async function downloadIr(
