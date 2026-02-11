@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.74.2
+  changelogEntry:
+    - summary: |
+        Inline alias types in undiscriminated union variants instead of creating unnecessary named types with numeric suffixes. For example, a `oneOf` with `string` and `array` items no longer generates a type like `UserMessageV2Content1` for the array variant.
+      type: fix
+  createdAt: "2026-02-11"
+  irVersion: 65
+
 - version: 3.74.1
   changelogEntry:
     - summary: |

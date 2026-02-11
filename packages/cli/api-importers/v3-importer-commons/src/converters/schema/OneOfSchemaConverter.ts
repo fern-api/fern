@@ -302,11 +302,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 const typeShape = convertedSchema.convertedSchema.typeDeclaration.shape;
-                if (typeShape.type === "alias" && this.typeReferenceIsWrappedPrimitive(typeShape.aliasOf)) {
+                if (typeShape.type === "alias") {
                     unionTypes.push({
                         type: typeShape.aliasOf,
                         docs: subSchema.description
                     });
+                    inlinedTypes = {
+                        ...inlinedTypes,
+                        ...convertedSchema.inlinedTypes
+                    };
                 } else if (
                     typeShape.type === "object" &&
                     typeShape.properties.length === 0 &&
