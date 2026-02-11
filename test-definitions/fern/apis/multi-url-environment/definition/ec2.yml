@@ -14,23 +14,3 @@ service:
         body:
           properties:
             size: string
-
-channel:
-  path: /ec2/events
-  auth: false
-  url: ws
-  messages:
-    send:
-      origin: client
-      body: SendEvent
-    receive:
-      origin: server
-      body: ReceiveEvent
-
-types:
-  SendEvent:
-    properties:
-      command: string
-  ReceiveEvent:
-    properties:
-      status: string
