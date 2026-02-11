@@ -60,7 +60,7 @@ class UnionPropertyTest extends TestCase
         $this->assertInstanceOf(UnionProperty::class, $object->complexUnion, 'complexUnion should be an instance of UnionPropertyType.');
         $this->assertEquals('Nested String', $object->complexUnion->complexUnion, 'Nested complexUnion should match the original value.');
 
-        $actualJson= $object->toJson();
+        $actualJson = $object->toJson();
         $this->assertJsonStringEqualsJsonString($expectedJson, $actualJson, 'Serialized JSON does not match the original JSON.');
     }
 
