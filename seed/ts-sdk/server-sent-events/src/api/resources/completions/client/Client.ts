@@ -11,34 +11,26 @@ import * as SeedServerSentEvents from "../../../index.js";
 export declare namespace CompletionsClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class CompletionsClient {
     protected readonly _options: NormalizedClientOptions<CompletionsClient.Options>;
 
     constructor(options: CompletionsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
-    public stream(
-        request: SeedServerSentEvents.StreamCompletionRequest,
-        requestOptions?: CompletionsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+    public stream(request: SeedServerSentEvents.StreamCompletionRequest, requestOptions?: CompletionsClient.RequestOptions): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
         return core.HttpResponsePromise.fromPromise(this.__stream(request, requestOptions));
     }
 
-    private async __stream(
-        request: SeedServerSentEvents.StreamCompletionRequest,
-        requestOptions?: CompletionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
+    private async __stream(request: SeedServerSentEvents.StreamCompletionRequest, requestOptions?: CompletionsClient.RequestOptions): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "stream",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "stream"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -50,52 +42,39 @@ export class CompletionsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
+            return { data: new core.Stream({
                     stream: _response.body,
-                    parse: (data) => data as any,
+                    parse: data => data as any,
                     signal: requestOptions?.abortSignal,
                     eventShape: {
                         type: "sse",
-                        streamTerminator: "[[DONE]]",
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+                        streamTerminator: "[[DONE]]"
+                    }
+                }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedServerSentEventsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream");
     }
 
-    public streamEvents(
-        request: SeedServerSentEvents.StreamEventRequest,
-        requestOptions?: CompletionsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedEvents>> {
+    public streamEvents(request: SeedServerSentEvents.StreamEventRequest, requestOptions?: CompletionsClient.RequestOptions): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedEvents>> {
         return core.HttpResponsePromise.fromPromise(this.__streamEvents(request, requestOptions));
     }
 
-    private async __streamEvents(
-        request: SeedServerSentEvents.StreamEventRequest,
-        requestOptions?: CompletionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedEvents>>> {
+    private async __streamEvents(request: SeedServerSentEvents.StreamEventRequest, requestOptions?: CompletionsClient.RequestOptions): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedEvents>>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "stream-events",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "stream-events"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -107,53 +86,40 @@ export class CompletionsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
+            return { data: new core.Stream({
                     stream: _response.body,
-                    parse: (data) => data as any,
+                    parse: data => data as any,
                     signal: requestOptions?.abortSignal,
                     eventShape: {
                         type: "sse",
                         streamTerminator: "[[DONE]]",
-                        discriminated: true,
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+                        discriminated: true
+                    }
+                }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedServerSentEventsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream-events");
     }
 
-    public streamWithoutTerminator(
-        request: SeedServerSentEvents.StreamCompletionRequestWithoutTerminator,
-        requestOptions?: CompletionsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+    public streamWithoutTerminator(request: SeedServerSentEvents.StreamCompletionRequestWithoutTerminator, requestOptions?: CompletionsClient.RequestOptions): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
         return core.HttpResponsePromise.fromPromise(this.__streamWithoutTerminator(request, requestOptions));
     }
 
-    private async __streamWithoutTerminator(
-        request: SeedServerSentEvents.StreamCompletionRequestWithoutTerminator,
-        requestOptions?: CompletionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
+    private async __streamWithoutTerminator(request: SeedServerSentEvents.StreamCompletionRequestWithoutTerminator, requestOptions?: CompletionsClient.RequestOptions): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "stream-no-terminator",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "stream-no-terminator"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -165,27 +131,24 @@ export class CompletionsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
+            return { data: new core.Stream({
                     stream: _response.body,
-                    parse: (data) => data as any,
+                    parse: data => data as any,
                     signal: requestOptions?.abortSignal,
                     eventShape: {
-                        type: "sse",
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+                        type: "sse"
+                    }
+                }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedServerSentEventsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 

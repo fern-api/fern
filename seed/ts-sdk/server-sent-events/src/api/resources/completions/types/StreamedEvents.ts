@@ -2,7 +2,7 @@
 
 import * as SeedServerSentEvents from "../../../index.js";
 
-export type StreamedEvents =
+export type StreamedEvents = 
     | SeedServerSentEvents.StreamedEvents.StatusUpdate
     | SeedServerSentEvents.StreamedEvents.Completion
     | SeedServerSentEvents.StreamedEvents.Heartbeat;

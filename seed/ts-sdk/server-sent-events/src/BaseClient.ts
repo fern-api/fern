@@ -34,21 +34,14 @@ export interface BaseRequestOptions {
 
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
-};
+}
 
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
-    options: T,
+    options: T
 ): NormalizedClientOptions<T> {
     const headers = mergeHeaders(
-        {
-            "X-Fern-Language": "JavaScript",
-            "X-Fern-SDK-Name": "@fern/server-sent-events",
-            "X-Fern-SDK-Version": "0.0.1",
-            "User-Agent": "@fern/server-sent-events/0.0.1",
-            "X-Fern-Runtime": core.RUNTIME.type,
-            "X-Fern-Runtime-Version": core.RUNTIME.version,
-        },
-        options?.headers,
+        { "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "@fern/server-sent-events", "X-Fern-SDK-Version": "0.0.1", "User-Agent": "@fern/server-sent-events/0.0.1", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version },
+        options?.headers
     );
 
     return {

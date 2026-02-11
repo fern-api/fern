@@ -1,4 +1,6 @@
-export function mergeHeaders(...headersArray: (Record<string, unknown> | null | undefined)[]): Record<string, unknown> {
+export function mergeHeaders(
+    ...headersArray: (Record<string, unknown> | null | undefined)[]
+): Record<string, unknown> {
     const result: Record<string, unknown> = {};
 
     for (const [key, value] of headersArray

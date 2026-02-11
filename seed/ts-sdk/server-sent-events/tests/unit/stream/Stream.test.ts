@@ -1,3 +1,4 @@
+
 import { Stream } from "../../../src/core/stream/Stream";
 
 describe("Stream", () => {
@@ -35,7 +36,7 @@ describe("Stream", () => {
         });
 
         it("should handle messages split across chunks", async () => {
-            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', " 2}\n"]);
+            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', ' 2}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -101,7 +102,9 @@ describe("Stream", () => {
         });
 
         it("should parse multiple SSE events", async () => {
-            const mockStream = createReadableStream(['data: {"value": 1}\ndata: {"value": 2}\ndata: {"value": 3}\n']);
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\ndata: {"value": 2}\ndata: {"value": 3}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -117,7 +120,9 @@ describe("Stream", () => {
         });
 
         it("should stop at stream terminator", async () => {
-            const mockStream = createReadableStream(['data: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n']);
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -195,7 +200,9 @@ describe("Stream", () => {
         });
 
         it("should handle events without id field", async () => {
-            const mockStream = createReadableStream(['event: message\ndata: {"value": 1}\n\n']);
+            const mockStream = createReadableStream([
+                'event: message\ndata: {"value": 1}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -211,7 +218,9 @@ describe("Stream", () => {
         });
 
         it("should handle events without event field", async () => {
-            const mockStream = createReadableStream(['data: {"value": 1}\nid: 1\n\n']);
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\nid: 1\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -245,7 +254,9 @@ describe("Stream", () => {
         });
 
         it("should handle string data that is not JSON", async () => {
-            const mockStream = createReadableStream(["event: status\ndata: Processing your request\nid: 1\n\n"]);
+            const mockStream = createReadableStream([
+                'event: status\ndata: Processing your request\nid: 1\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -257,11 +268,15 @@ describe("Stream", () => {
                 messages.push(message);
             }
 
-            expect(messages).toEqual([{ event: "status", data: "Processing your request", id: "1" }]);
+            expect(messages).toEqual([
+                { event: "status", data: "Processing your request", id: "1" },
+            ]);
         });
 
         it("should handle last event without trailing blank line", async () => {
-            const mockStream = createReadableStream(['event: message\ndata: {"value": 1}\n']);
+            const mockStream = createReadableStream([
+                'event: message\ndata: {"value": 1}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -277,7 +292,9 @@ describe("Stream", () => {
         });
 
         it("should concatenate multiline data fields per SSE spec", async () => {
-            const mockStream = createReadableStream(['event: message\ndata: {"delta":\ndata: "hello"}\n\n']);
+            const mockStream = createReadableStream([
+                'event: message\ndata: {"delta":\ndata: "hello"}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -294,7 +311,7 @@ describe("Stream", () => {
 
         it("should concatenate multiple data lines with newline separator", async () => {
             const mockStream = createReadableStream([
-                "event: log\ndata: line one\ndata: line two\ndata: line three\n\n",
+                'event: log\ndata: line one\ndata: line two\ndata: line three\n\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -311,7 +328,11 @@ describe("Stream", () => {
         });
 
         it("should handle events split across chunks", async () => {
-            const mockStream = createReadableStream(["event: mes", 'sage\ndata: {"val', 'ue": 1}\n\n']);
+            const mockStream = createReadableStream([
+                'event: mes',
+                'sage\ndata: {"val',
+                'ue": 1}\n\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val,
@@ -364,7 +385,10 @@ describe("Stream", () => {
 
         it("should handle binary data chunks", async () => {
             const encoder = new TextEncoder();
-            const mockStream = createReadableStream([encoder.encode('{"val'), encoder.encode('ue": 1}\n')]);
+            const mockStream = createReadableStream([
+                encoder.encode('{"val'),
+                encoder.encode('ue": 1}\n'),
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -474,7 +498,7 @@ describe("Stream", () => {
         });
 
         it("should handle stream with only whitespace", async () => {
-            const mockStream = createReadableStream(["   \n\n\t\n   "]);
+            const mockStream = createReadableStream(['   \n\n\t\n   ']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -509,6 +533,7 @@ describe("Stream", () => {
 
 // Helper function to create a ReadableStream from string chunks
 function createReadableStream(chunks: (string | Uint8Array)[]): ReadableStream {
+
     // For standard type, return ReadableStream
     let index = 0;
     return new ReadableStream({
@@ -521,4 +546,5 @@ function createReadableStream(chunks: (string | Uint8Array)[]): ReadableStream {
             }
         },
     });
+
 }
