@@ -1,6 +1,88 @@
 import { mergeWithOverrides } from "../mergeWithOverrides.js";
 
 describe("mergeWithOverrides", () => {
+    it("should merge OpenAPI parameters by identity (name + in), not by index", () => {
+        // Per OpenAPI spec, parameters are uniquely identified by name + in combination
+        // https://spec.openapis.org/oas/v3.0.3#operation-object
+        const data = {
+            parameters: [
+                { name: "internal", in: "query", description: "Internal param" },
+                { name: "token", in: "header", description: "Auth token" },
+                { name: "visible", in: "query", description: "Visibility param" }
+            ]
+        };
+
+        const overrides = {
+            parameters: [
+                { name: "internal", in: "query", "x-fern-ignore": true },
+                { name: "visible", in: "query", "x-fern-ignore": true }
+            ]
+        };
+
+        const result = mergeWithOverrides({
+            data,
+            overrides
+        });
+
+        // Expected: internal and visible get x-fern-ignore: true
+        // token should remain unchanged (NOT get x-fern-ignore from misaligned index)
+        expect(result).toEqual({
+            parameters: [
+                { name: "internal", in: "query", description: "Internal param", "x-fern-ignore": true },
+                { name: "token", in: "header", description: "Auth token" },
+                { name: "visible", in: "query", description: "Visibility param", "x-fern-ignore": true }
+            ]
+        });
+    });
+
+    it("should add new parameters from overrides", () => {
+        const data = {
+            parameters: [{ name: "existing", in: "query", description: "Existing param" }]
+        };
+
+        const overrides = {
+            parameters: [{ name: "new-param", in: "header", description: "New param from override" }]
+        };
+
+        const result = mergeWithOverrides({
+            data,
+            overrides
+        });
+
+        expect(result).toEqual({
+            parameters: [
+                { name: "existing", in: "query", description: "Existing param" },
+                { name: "new-param", in: "header", description: "New param from override" }
+            ]
+        });
+    });
+
+    it("should distinguish parameters with same name but different location", () => {
+        const data = {
+            parameters: [
+                { name: "id", in: "query", description: "Query ID" },
+                { name: "id", in: "header", description: "Header ID" }
+            ]
+        };
+
+        const overrides = {
+            parameters: [{ name: "id", in: "header", "x-fern-ignore": true }]
+        };
+
+        const result = mergeWithOverrides({
+            data,
+            overrides
+        });
+
+        // Only the header "id" should be ignored, not the query "id"
+        expect(result).toEqual({
+            parameters: [
+                { name: "id", in: "query", description: "Query ID" },
+                { name: "id", in: "header", description: "Header ID", "x-fern-ignore": true }
+            ]
+        });
+    });
+
     it("should handle schema with null examples", () => {
         const schema1 = {
             type: "object",
