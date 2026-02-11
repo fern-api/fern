@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.55.6
+  changelogEntry:
+    - summary: |
+        Fix TypeError crash in `construct_type` when a non-mapping value (e.g., a list) is passed
+        where a Pydantic model is expected. The function now checks `isinstance(object_, typing.Mapping)`
+        before attempting `**object_` unpacking, gracefully returning the raw value instead of crashing.
+      type: fix
+  createdAt: "2026-02-11"
+  irVersion: 63
+
 - version: 4.55.5
   changelogEntry:
     - summary: |

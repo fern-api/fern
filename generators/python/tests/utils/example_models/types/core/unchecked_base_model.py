@@ -263,6 +263,8 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
             )
         )
     ):
+        if not isinstance(object_, typing.Mapping):
+            return object_
         if IS_PYDANTIC_V2:
             return type_.model_construct(**object_)
         else:
