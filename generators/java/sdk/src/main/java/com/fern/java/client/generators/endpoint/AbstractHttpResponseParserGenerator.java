@@ -861,6 +861,44 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public CodeBlock visitSse(SseStreamChunk sse) {
+                    // Analyze SSE payload type for discrimination
+                    SseDiscriminationAnalyzer.SseDiscriminationInfo discriminationInfo =
+                            SseDiscriminationAnalyzer.analyze(
+                                    sse.getPayload(), clientGeneratorContext.getTypeDeclarations());
+
+                    if (discriminationInfo.getType() == SseDiscriminationAnalyzer.DiscriminationType.EVENT_LEVEL) {
+                        // Event-level discrimination: discriminator is at SSE envelope level
+                        String discriminatorProperty =
+                                discriminationInfo.getDiscriminatorProperty().orElse("event");
+                        if (terminator != null) {
+                            return CodeBlock.of(
+                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $S)",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getStreamClassName(),
+                                    bodyTypeName,
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getResponseBodyReaderClassName(),
+                                    variables.getResponseName(),
+                                    discriminatorProperty,
+                                    terminator);
+                        } else {
+                            return CodeBlock.of(
+                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S)",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getStreamClassName(),
+                                    bodyTypeName,
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getResponseBodyReaderClassName(),
+                                    variables.getResponseName(),
+                                    discriminatorProperty);
+                        }
+                    }
+
+                    // Data-level discrimination or non-union: use standard SSE parsing
                     if (terminator != null) {
                         return CodeBlock.of(
                                 "$T.fromSse($T.class, new $T($L), $S)",

@@ -101,6 +101,11 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
         docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
+    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
+
+    if (isBasepathAware) {
+        context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
+    }
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -227,7 +232,8 @@ export async function publishDocs({
                     apiId: CjsFdrSdk.ApiId(""),
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths,
-                    images
+                    images,
+                    ...(isBasepathAware && { basepathAware: true })
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
@@ -518,7 +524,8 @@ export async function publishDocs({
         {
             docsDefinition,
             excludeApis,
-            libraryDocs: libraryDocsConfig
+            libraryDocs: libraryDocsConfig,
+            ...(isBasepathAware && { basepathAware: true })
         }
     );
 
