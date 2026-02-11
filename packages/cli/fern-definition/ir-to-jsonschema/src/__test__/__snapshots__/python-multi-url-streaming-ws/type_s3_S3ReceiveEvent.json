@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "payload": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "payload"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
