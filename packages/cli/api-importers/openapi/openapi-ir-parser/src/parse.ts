@@ -10,13 +10,13 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
-import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
-import { parseAsyncAPI } from "./asyncapi/parse";
-import { AsyncAPIV2 } from "./asyncapi/v2";
-import { AsyncAPIV3 } from "./asyncapi/v3";
-import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
-import { getParseOptions, ParseOpenAPIOptions } from "./options";
-import { createSchemaCollisionTracker } from "./utils/schemaCollision";
+import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options.js";
+import { parseAsyncAPI } from "./asyncapi/parse.js";
+import { AsyncAPIV2 } from "./asyncapi/v2/index.js";
+import { AsyncAPIV3 } from "./asyncapi/v3/index.js";
+import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr.js";
+import { getParseOptions, ParseOpenAPIOptions } from "./options.js";
+import { createSchemaCollisionTracker } from "./utils/schemaCollision.js";
 
 export type Document = OpenAPIDocument | AsyncAPIDocument;
 
@@ -130,11 +130,11 @@ export function parse({
                     assertNever(document);
             }
         } catch (error) {
-            context.logger.debug(
-                `Skipping parsing document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
+            context.logger.error(
+                `Failed to parse ${document.type} document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
             );
             if (error instanceof Error) {
-                context.logger.debug(error.message, error.stack ? "\n" + error.stack : "");
+                context.logger.error(error.message, error.stack ? "\n" + error.stack : "");
             }
         }
     }

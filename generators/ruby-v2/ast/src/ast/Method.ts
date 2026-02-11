@@ -1,13 +1,13 @@
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { KeywordParameter } from "./KeywordParameter";
-import { KeywordSplatParameter } from "./KeywordSplatParameter";
-import { Parameter } from "./Parameter";
-import { PositionalParameter } from "./PositionalParameter";
-import { PositionalSplatParameter } from "./PositionalSplatParameter";
-import { Type } from "./Type";
-import { YieldParameter } from "./YieldParameter";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { KeywordParameter } from "./KeywordParameter.js";
+import { KeywordSplatParameter } from "./KeywordSplatParameter.js";
+import { Parameter } from "./Parameter.js";
+import { PositionalParameter } from "./PositionalParameter.js";
+import { PositionalSplatParameter } from "./PositionalSplatParameter.js";
+import { Type } from "./Type.js";
+import { YieldParameter } from "./YieldParameter.js";
 
 export type MethodKind = "instance" | "class";
 export const MethodKind = { Instance: "instance", Class_: "class" } as const;

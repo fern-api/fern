@@ -1,6 +1,6 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { LambdaParameter } from "./LambdaParameter";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { LambdaParameter } from "./LambdaParameter.js";
 
 export declare namespace Lambda {
     interface Args {

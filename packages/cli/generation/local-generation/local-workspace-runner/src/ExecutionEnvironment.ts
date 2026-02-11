@@ -1,4 +1,4 @@
-import { ContainerRunner } from "@fern-api/core-utils/src/types";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 

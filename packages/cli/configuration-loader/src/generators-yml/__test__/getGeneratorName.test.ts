@@ -1,13 +1,13 @@
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { GeneratorName } from "../GeneratorName";
+import { GeneratorName } from "../GeneratorName.js";
 import {
     addDefaultDockerOrgIfNotPresent,
     DEFAULT_DOCKER_ORG,
     getGeneratorNameOrThrow,
     normalizeGeneratorName,
     removeDefaultDockerOrgIfPresent
-} from "../getGeneratorName";
+} from "../getGeneratorName.js";
 
 describe("addDefaultDockerOrgIfNotPresent", () => {
     it("adds fernapi/ prefix to shorthand names", () => {

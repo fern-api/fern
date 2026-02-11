@@ -70,6 +70,25 @@ public final class StreamTest {
     }
 
     @Test
+    public void testSseEventDiscriminatedStream() {
+        List<String> sseStrings = Arrays.asList(
+                mapToSseWithEvent("start", createMap("status", "pending")),
+                mapToSseWithEvent("end", createMap("status", "complete")));
+        String input = String.join("\n" + "\n", sseStrings);
+        StringReader sseInput = new StringReader(input);
+        Stream<Map> sseStream = Stream.fromSseWithEventDiscrimination(Map.class, sseInput, "event");
+        int expectedEvents = 2;
+        int actualEvents = 0;
+        for (Map eventData : sseStream) {
+            actualEvents++;
+            // Event-level discrimination includes the event field in the parsed result
+            assertTrue(eventData.containsKey("event"));
+            assertTrue(eventData.containsKey("data"));
+        }
+        assertEquals(expectedEvents, actualEvents);
+    }
+
+    @Test
     public void testStreamResourceManagement() throws IOException {
         StringReader testInput = new StringReader("{\"test\":\"data\"}");
         Stream<Map> testStream = Stream.fromJson(Map.class, testInput);
@@ -87,6 +106,10 @@ public final class StreamTest {
 
     private static String mapToSse(Map map) {
         return "data: " + mapToJson(map);
+    }
+
+    private static String mapToSseWithEvent(String eventType, Map data) {
+        return "event: " + eventType + "\n" + "data: " + mapToJson(data);
     }
 
     private static Map<String, String> createMap(String key, String value) {

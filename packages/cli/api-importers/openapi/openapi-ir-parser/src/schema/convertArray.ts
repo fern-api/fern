@@ -1,7 +1,7 @@
 import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { convertSchema } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
+import { convertSchema } from "./convertSchemas.js";
+import { SchemaParserContext } from "./SchemaParserContext.js";
 
 export function convertArray({
     nameOverride,

@@ -14,7 +14,7 @@ import {
     saveHashMappings,
     updateAndSaveHashForFile,
     updateHashForFile
-} from "../hash-utils";
+} from "../hash-utils.js";
 
 describe("hash-utils", () => {
     let tempDir: tmp.DirectoryResult;

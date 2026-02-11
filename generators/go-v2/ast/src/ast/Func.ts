@@ -1,8 +1,8 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Method } from "./Method";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Method } from "./Method.js";
+import { Parameter } from "./Parameter.js";
+import { Type } from "./Type.js";
 
 export declare namespace Func {
     type Args = Omit<Method.Args, "typeReference">;

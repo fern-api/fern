@@ -1,19 +1,19 @@
-import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 
-import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
-import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
-import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";
+import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError.js";
+import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType.js";
+import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator.js";
 
 export declare namespace GeneratedEndpointErrorUnionImpl {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         errorResolver: ErrorResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
@@ -26,7 +26,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     private static ERROR_INTERFACE_NAME = "Error";
     private static STATUS_CODE_DISCRIMINANT = "statusCode";
 
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private errorUnion: GeneratedUnionImpl<SdkContext>;
 
     constructor({
@@ -93,10 +93,10 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         errorDiscriminationStrategy,
         retainOriginalCasing
     }: {
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         retainOriginalCasing: boolean;
     }): string {
-        return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+        return FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
             property: ({ discriminant }) =>
                 retainOriginalCasing ? discriminant.name.originalName : discriminant.name.camelCase.unsafeName,
             statusCode: () => GeneratedEndpointErrorUnionImpl.STATUS_CODE_DISCRIMINANT,

@@ -1,8 +1,13 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ServiceId = FernIr.ServiceId;
+type HttpService = FernIr.HttpService;
+type Subpackage = FernIr.Subpackage;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace SubPackageClientInterfaceGenerator {
     interface Args {

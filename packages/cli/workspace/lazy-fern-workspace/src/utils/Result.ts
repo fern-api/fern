@@ -2,9 +2,9 @@ import { validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ZodError } from "zod";
 
-import { ConjureWorkspace } from "../ConjureWorkspace";
-import { LazyFernWorkspace } from "../LazyFernWorkspace";
-import { OSSWorkspace } from "../OSSWorkspace";
+import { ConjureWorkspace } from "../ConjureWorkspace.js";
+import { LazyFernWorkspace } from "../LazyFernWorkspace.js";
+import { OSSWorkspace } from "../OSSWorkspace.js";
 
 export declare namespace WorkspaceLoader {
     export type Result = SuccessfulResult | FailedResult;

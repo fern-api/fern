@@ -10,7 +10,7 @@ import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { ReadableStream } from "stream/web";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 async function fetchAndWriteFile(url: string, path: string, logger: Logger, indent: number): Promise<void> {
     const resp = await fetch(url);

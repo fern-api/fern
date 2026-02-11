@@ -1,5 +1,5 @@
-import { VersionMigrations } from "../../types/VersionMigrations";
-import ChangeServicesKeyToServiceMigration from "./change-services-key-to-service";
+import { VersionMigrations } from "../../types/VersionMigrations.js";
+import ChangeServicesKeyToServiceMigration from "./change-services-key-to-service/index.js";
 
 const versionMigrations: VersionMigrations = {
     version: "0.3.23",

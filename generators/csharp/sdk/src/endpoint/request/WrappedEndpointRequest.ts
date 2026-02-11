@@ -1,23 +1,24 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
-import {
-    HttpEndpoint,
-    QueryParameter,
-    SdkRequest,
-    SdkRequestWrapper,
-    ServiceId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type QueryParameter = FernIr.QueryParameter;
+type SdkRequest = FernIr.SdkRequest;
+type SdkRequestWrapper = FernIr.SdkRequestWrapper;
+type ServiceId = FernIr.ServiceId;
+type TypeReference = FernIr.TypeReference;
+
 import { fail } from "assert";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {

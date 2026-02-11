@@ -5,8 +5,8 @@ import {
     VariableResolverImpl
 } from "@fern-api/ir-generator";
 
-import { Rule, RuleViolation } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { Rule, RuleViolation } from "../../Rule.js";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
 
 export const NoUndefinedVariableReferenceRule: Rule = {
     name: "no-undefined-variable-reference",

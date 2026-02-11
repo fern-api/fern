@@ -6,7 +6,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { loadRawGeneratorsConfiguration } from "../loadGeneratorsConfiguration";
+import { loadRawGeneratorsConfiguration } from "../loadGeneratorsConfiguration.js";
 
 describe("loadRawGeneratorsConfiguration", () => {
     const mockContext = createMockTaskContext();

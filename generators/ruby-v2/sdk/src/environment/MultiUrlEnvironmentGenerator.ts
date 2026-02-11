@@ -1,21 +1,20 @@
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace MultiUrlEnvironmentGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        multiUrlEnvironments: MultipleBaseUrlsEnvironments;
+        multiUrlEnvironments: FernIr.MultipleBaseUrlsEnvironments;
     }
 }
 
 export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private multiUrlEnvironments: MultipleBaseUrlsEnvironments;
+    private multiUrlEnvironments: FernIr.MultipleBaseUrlsEnvironments;
 
     constructor({ context, multiUrlEnvironments }: MultiUrlEnvironmentGenerator.Args) {
         super(context);

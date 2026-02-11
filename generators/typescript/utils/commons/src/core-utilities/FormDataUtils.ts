@@ -1,10 +1,10 @@
 import { ts } from "ts-morph";
 
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as FileManifest } from "./FileUtils";
-import { MANIFEST as RuntimeManifest } from "./Runtime";
-import { MANIFEST as UrlManifest } from "./UrlUtils";
+import { DependencyManager } from "../dependency-manager/DependencyManager.js";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as FileManifest } from "./FileUtils.js";
+import { MANIFEST as RuntimeManifest } from "./Runtime.js";
+import { MANIFEST as UrlManifest } from "./UrlUtils.js";
 
 export interface FormDataUtils {
     newFormData: () => ts.AwaitExpression;

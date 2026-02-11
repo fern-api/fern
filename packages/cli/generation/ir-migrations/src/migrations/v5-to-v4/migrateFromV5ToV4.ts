@@ -1,20 +1,20 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
-import { convertAuth } from "./convertAuth";
-import { convertEnvironment } from "./convertEnvironment";
-import { convertErrorDeclaration } from "./convertErrorDeclaration";
-import { convertHeader } from "./convertHeader";
-import { convertNameAndWireValueToV1, convertNameAndWireValueToV2, convertNameToV2 } from "./convertName";
-import { convertService } from "./convertService";
-import { convertTypeDeclaration } from "./convertTypeDeclaration";
-import { ErrorResolverImpl } from "./ErrorResolver";
-import { TypeReferenceResolverImpl } from "./TypeReferenceResolver";
+} from "../../types/IrMigration.js";
+import { convertAuth } from "./convertAuth.js";
+import { convertEnvironment } from "./convertEnvironment.js";
+import { convertErrorDeclaration } from "./convertErrorDeclaration.js";
+import { convertHeader } from "./convertHeader.js";
+import { convertNameAndWireValueToV1, convertNameAndWireValueToV2, convertNameToV2 } from "./convertName.js";
+import { convertService } from "./convertService.js";
+import { convertTypeDeclaration } from "./convertTypeDeclaration.js";
+import { ErrorResolverImpl } from "./ErrorResolver.js";
+import { TypeReferenceResolverImpl } from "./TypeReferenceResolver.js";
 
 export const V5_TO_V4_MIGRATION: IrMigration<
     IrVersions.V5.ir.IntermediateRepresentation,

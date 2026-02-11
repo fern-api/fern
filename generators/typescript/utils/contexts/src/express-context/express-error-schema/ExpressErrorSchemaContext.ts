@@ -1,10 +1,10 @@
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference, Zurg } from "@fern-typescript/commons";
 
-import { GeneratedExpressErrorSchema } from "./GeneratedExpressErrorSchema";
+import { GeneratedExpressErrorSchema } from "./GeneratedExpressErrorSchema.js";
 
 export interface ExpressErrorSchemaContext {
-    getGeneratedExpressErrorSchema: (errorName: DeclaredErrorName) => GeneratedExpressErrorSchema | undefined;
-    getSchemaOfError: (errorName: DeclaredErrorName) => Zurg.Schema;
-    getReferenceToExpressErrorSchema: (errorName: DeclaredErrorName) => Reference;
+    getGeneratedExpressErrorSchema: (errorName: FernIr.DeclaredErrorName) => GeneratedExpressErrorSchema | undefined;
+    getSchemaOfError: (errorName: FernIr.DeclaredErrorName) => Zurg.Schema;
+    getReferenceToExpressErrorSchema: (errorName: FernIr.DeclaredErrorName) => Reference;
 }

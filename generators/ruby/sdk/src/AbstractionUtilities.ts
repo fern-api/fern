@@ -1,3 +1,4 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import {
     Argument,
     AstNode,
@@ -23,58 +24,39 @@ import {
     Variable,
     VariableType
 } from "@fern-api/ruby-codegen";
-import {
-    EnvironmentId,
-    EnvironmentsConfig,
-    HttpEndpoint,
-    HttpPath,
-    HttpService,
-    MultipleBaseUrlsEnvironments,
-    Name,
-    OAuthRefreshEndpoint,
-    OAuthTokenEndpoint,
-    ObjectProperty,
-    Package,
-    PathParameter,
-    PlatformHeaders,
-    SdkConfig,
-    SingleBaseUrlEnvironments,
-    Subpackage,
-    TypeId
-} from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 
-import { ArtifactRegistry } from "./utils/ArtifactRegistry";
-import { EndpointGenerator } from "./utils/EndpointGenerator";
-import { FileUploadUtility } from "./utils/FileUploadUtility";
-import { HeadersGenerator } from "./utils/HeadersGenerator";
-import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
-import { RequestOptions } from "./utils/RequestOptionsClass";
+import { ArtifactRegistry } from "./utils/ArtifactRegistry.js";
+import { EndpointGenerator } from "./utils/EndpointGenerator.js";
+import { FileUploadUtility } from "./utils/FileUploadUtility.js";
+import { HeadersGenerator } from "./utils/HeadersGenerator.js";
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass.js";
+import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider.js";
+import { RequestOptions } from "./utils/RequestOptionsClass.js";
 
 export interface ClientClassPair {
-    subpackageName: Name;
+    subpackageName: FernIr.Name;
     syncClientClass: Class_;
     asyncClientClass: Class_;
 }
 
 // TODO: Move this to ConfigUtilities.ts
 // Note that these paths do not have leading or trailing slashes
-export function generateRubyPathTemplate(pathParameters: PathParameter[], basePath?: HttpPath): string {
+export function generateRubyPathTemplate(pathParameters: FernIr.PathParameter[], basePath?: FernIr.HttpPath): string {
     return generatePathTemplate("#{%s}", pathParameters, basePath);
 }
 export function generateEndpoints(
     crf: ClassReferenceFactory,
     eg: ExampleGenerator,
     requestClientVariable: Variable,
-    endpoints: HttpEndpoint[],
+    endpoints: FernIr.HttpEndpoint[],
     requestOptions: RequestOptions,
     idempotencyRequestOptions: IdempotencyRequestOptions,
     isAsync: boolean,
     irBasePath: string,
     serviceBasePath: string,
-    generatedClasses: Map<TypeId, Class_>,
-    flattenedProperties: Map<TypeId, ObjectProperty[]>,
+    generatedClasses: Map<FernIr.TypeId, Class_>,
+    flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
     packagePath: string[],
     packageClassReference: ClassReference | undefined,
@@ -188,11 +170,11 @@ export function generateRootPackage(
     idempotencyRequestOptions: IdempotencyRequestOptions,
     crf: ClassReferenceFactory,
     eg: ExampleGenerator,
-    syncSubpackages: Map<Name, Class_>,
-    asyncSubpackages: Map<Name, Class_>,
+    syncSubpackages: Map<FernIr.Name, Class_>,
+    asyncSubpackages: Map<FernIr.Name, Class_>,
     irBasePath: string,
-    generatedClasses: Map<TypeId, Class_>,
-    flattenedProperties: Map<TypeId, ObjectProperty[]>,
+    generatedClasses: Map<FernIr.TypeId, Class_>,
+    flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
     typeExporterLocation: string,
     headersGenerator: HeadersGenerator,
@@ -203,7 +185,7 @@ export function generateRootPackage(
     locationGenerator: LocationGenerator,
     environmentClass?: ClassReference,
     defaultEnvironment?: string,
-    rootService?: HttpService
+    rootService?: FernIr.HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
         name: "Client",
@@ -454,13 +436,13 @@ export function generateRootPackage(
 
 export function generateSubpackage(
     clientName: string,
-    subpackageName: Name,
-    package_: Package,
+    subpackageName: FernIr.Name,
+    package_: FernIr.Package,
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
     locationGenerator: LocationGenerator,
-    subpackages: Map<Name, Class_> = new Map(),
-    asyncSubpackages: Map<Name, Class_> = new Map()
+    subpackages: Map<FernIr.Name, Class_> = new Map(),
+    asyncSubpackages: Map<FernIr.Name, Class_> = new Map()
 ): ClientClassPair {
     const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client");
     const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath, clientName);
@@ -556,8 +538,8 @@ export function generateSubpackage(
 
 export function generateService(
     clientName: string,
-    service: HttpService,
-    subpackage: Subpackage,
+    service: FernIr.HttpService,
+    subpackage: FernIr.Subpackage,
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
     crf: ClassReferenceFactory,
@@ -565,8 +547,8 @@ export function generateService(
     requestOptions: RequestOptions,
     idempotencyRequestOptions: IdempotencyRequestOptions,
     irBasePath: string,
-    generatedClasses: Map<TypeId, Class_>,
-    flattenedProperties: Map<TypeId, ObjectProperty[]>,
+    generatedClasses: Map<FernIr.TypeId, Class_>,
+    flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
     locationGenerator: LocationGenerator,
     packagePath: string[],
@@ -650,10 +632,10 @@ export function generateService(
 // Need to create the environment file and then reference back to them via default_env@specified_url
 // where specified_url is the single URL or the one specified for the service in multi-url envs
 // TODO: This should also only be called once and stored for access
-export function getEnvironments(environmentsConfig: EnvironmentsConfig): Map<EnvironmentId, Name> {
-    return environmentsConfig.environments._visit<Map<EnvironmentId, Name>>({
-        singleBaseUrl: (sbue: SingleBaseUrlEnvironments) => new Map(sbue.environments.map((e) => [e.id, e.name])),
-        multipleBaseUrls: (mbue: MultipleBaseUrlsEnvironments) => new Map(mbue.environments.map((e) => [e.id, e.name])),
+export function getEnvironments(environmentsConfig: FernIr.EnvironmentsConfig): Map<FernIr.EnvironmentId, FernIr.Name> {
+    return environmentsConfig.environments._visit<Map<FernIr.EnvironmentId, FernIr.Name>>({
+        singleBaseUrl: (sbue: FernIr.SingleBaseUrlEnvironments) => new Map(sbue.environments.map((e) => [e.id, e.name])),
+        multipleBaseUrls: (mbue: FernIr.MultipleBaseUrlsEnvironments) => new Map(mbue.environments.map((e) => [e.id, e.name])),
         _other: () => {
             throw new Error("Unknown environments configuration has been provided.");
         }
@@ -662,7 +644,7 @@ export function getEnvironments(environmentsConfig: EnvironmentsConfig): Map<Env
 
 export function getDefaultEnvironmentUrl(
     clientName: string,
-    environmentsConfig?: EnvironmentsConfig
+    environmentsConfig?: FernIr.EnvironmentsConfig
 ): string | undefined {
     if (environmentsConfig !== undefined && environmentsConfig.defaultEnvironment !== undefined) {
         return `${clientName}::Environment::${
@@ -673,7 +655,7 @@ export function getDefaultEnvironmentUrl(
 }
 
 // Actually might just be: be able to reference the default + create the files, it looks like endpoints
-export function generateEnvironmentConstants(environmentsConfig: EnvironmentsConfig, clientName: string): Class_ {
+export function generateEnvironmentConstants(environmentsConfig: FernIr.EnvironmentsConfig, clientName: string): Class_ {
     return new Class_({
         classReference: new ClassReference({
             name: "Environment",
@@ -681,7 +663,7 @@ export function generateEnvironmentConstants(environmentsConfig: EnvironmentsCon
             moduleBreadcrumbs: [clientName]
         }),
         expressions: environmentsConfig.environments._visit<Expression[]>({
-            singleBaseUrl: (sbue: SingleBaseUrlEnvironments) =>
+            singleBaseUrl: (sbue: FernIr.SingleBaseUrlEnvironments) =>
                 sbue.environments.map(
                     (e) =>
                         new Expression({
@@ -690,7 +672,7 @@ export function generateEnvironmentConstants(environmentsConfig: EnvironmentsCon
                             isAssignment: true
                         })
                 ),
-            multipleBaseUrls: (mbue: MultipleBaseUrlsEnvironments) =>
+            multipleBaseUrls: (mbue: FernIr.MultipleBaseUrlsEnvironments) =>
                 mbue.environments.map(
                     (e) =>
                         new Expression({
@@ -975,7 +957,7 @@ function requestClientFunctions(
     baseUrlProperty: Property,
     environmentProperty: Property | undefined,
     isMultiBaseUrlEnvironments: boolean,
-    platformHeaders: PlatformHeaders,
+    platformHeaders: FernIr.PlatformHeaders,
     headersGenerator: HeadersGenerator,
     gemName: string,
     sdkVersion: string | undefined
@@ -1063,7 +1045,7 @@ function requestClientFunctions(
 
 export function generateRequestClients(
     clientName: string,
-    sdkConfig: SdkConfig,
+    sdkConfig: FernIr.SdkConfig,
     gemName: string,
     sdkVersion: string | undefined,
     headersGenerator: HeadersGenerator,
@@ -1168,7 +1150,7 @@ export function generateRequestClients(
     return [clientClass, asyncClientClass];
 }
 
-export function getSubpackagePropertyNameFromIr(name: Name): string {
+export function getSubpackagePropertyNameFromIr(name: FernIr.Name): string {
     return name.snakeCase.safeName;
 }
 
@@ -1176,7 +1158,7 @@ export function getOauthAccessTokenFunctionMetadata({
     tokenEndpoint,
     artifactRegistry
 }: {
-    tokenEndpoint: OAuthTokenEndpoint;
+    tokenEndpoint: FernIr.OAuthTokenEndpoint;
     artifactRegistry: ArtifactRegistry;
 }): OauthFunction {
     const endpointId = tokenEndpoint.endpointReference;
@@ -1198,7 +1180,7 @@ export function getOauthRefreshTokenFunctionMetadata({
     refreshEndpoint,
     artifactRegistry
 }: {
-    refreshEndpoint: OAuthRefreshEndpoint;
+    refreshEndpoint: FernIr.OAuthRefreshEndpoint;
     artifactRegistry: ArtifactRegistry;
 }): OauthFunction {
     const endpointId = refreshEndpoint.endpointReference;
@@ -1216,7 +1198,7 @@ export function getOauthRefreshTokenFunctionMetadata({
     };
 }
 
-function generatePathTemplate(templateString: string, pathParameters: PathParameter[], basePath?: HttpPath): string {
+function generatePathTemplate(templateString: string, pathParameters: FernIr.PathParameter[], basePath?: FernIr.HttpPath): string {
     if (basePath === undefined) {
         return "";
     }

@@ -10,6 +10,7 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -25,12 +26,11 @@ import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
-import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
-import { loadOpenRpc } from "./loaders";
-import { OpenAPILoader } from "./loaders/OpenAPILoader";
-import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator";
-import { MaybeValid } from "./protobuf/utils";
-import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
+import { loadOpenRpc } from "./loaders/index.js";
+import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
+import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator.js";
+import { MaybeValid } from "./protobuf/utils.js";
+import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs.js";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {

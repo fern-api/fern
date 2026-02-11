@@ -1,4 +1,4 @@
-import { EnumValue, ObjectSchema, OneOfSchema, PrimitiveSchemaValue, Schema } from "..";
+import { EnumValue, ObjectSchema, OneOfSchema, PrimitiveSchemaValue, Schema } from "../index.js";
 import { isEqual } from "lodash-es";
 
 export function isSchemaEqual(a: Schema, b: Schema): boolean {

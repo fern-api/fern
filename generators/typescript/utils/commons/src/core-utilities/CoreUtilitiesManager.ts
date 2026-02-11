@@ -4,26 +4,26 @@ import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
 
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { ExportsManager } from "../exports-manager";
-import { ImportsManager } from "../imports-manager";
-import { getReferenceToExportViaNamespaceImport } from "../referencing";
-import { AuthImpl } from "./Auth";
-import { CallbackQueueImpl } from "./CallbackQueue";
-import { CoreUtilities } from "./CoreUtilities";
-import { CoreUtility, CoreUtilityName } from "./CoreUtility";
-import { CustomPaginationImpl } from "./CustomPagination";
-import { FetcherImpl } from "./Fetcher";
-import { FileUtilsImpl } from "./FileUtils";
-import { FormDataUtilsImpl } from "./FormDataUtils";
-import { LoggingImpl } from "./Logging";
-import { PaginationImpl } from "./Pagination";
-import { RuntimeImpl } from "./Runtime";
-import { StreamImpl } from "./Stream";
-import { UrlUtilsImpl } from "./UrlUtils";
-import { UtilsImpl } from "./Utils";
-import { WebsocketImpl } from "./Websocket";
-import { ZurgImpl } from "./Zurg";
+import { DependencyManager } from "../dependency-manager/DependencyManager.js";
+import { ExportsManager } from "../exports-manager/index.js";
+import { ImportsManager } from "../imports-manager/index.js";
+import { getReferenceToExportViaNamespaceImport } from "../referencing/index.js";
+import { AuthImpl } from "./Auth.js";
+import { CallbackQueueImpl } from "./CallbackQueue.js";
+import { CoreUtilities } from "./CoreUtilities.js";
+import { CoreUtility, CoreUtilityName } from "./CoreUtility.js";
+import { CustomPaginationImpl } from "./CustomPagination.js";
+import { FetcherImpl } from "./Fetcher.js";
+import { FileUtilsImpl } from "./FileUtils.js";
+import { FormDataUtilsImpl } from "./FormDataUtils.js";
+import { LoggingImpl } from "./Logging.js";
+import { PaginationImpl } from "./Pagination.js";
+import { RuntimeImpl } from "./Runtime.js";
+import { StreamImpl } from "./Stream.js";
+import { UrlUtilsImpl } from "./UrlUtils.js";
+import { UtilsImpl } from "./Utils.js";
+import { WebsocketImpl } from "./Websocket.js";
+import { ZurgImpl } from "./Zurg.js";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {

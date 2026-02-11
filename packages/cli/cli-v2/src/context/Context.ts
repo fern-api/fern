@@ -5,16 +5,17 @@ import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { KeyringStore, TokenService } from "../auth";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { CliError } from "../errors/CliError";
-import { ValidationError } from "../errors/ValidationError";
-import { Target } from "../sdk/config/Target";
-import { Icons } from "../ui/format";
-import type { Workspace } from "../workspace/Workspace";
-import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
-import { TaskContextAdapter } from "./adapter/TaskContextAdapter";
-import { LogFileWriter } from "./LogFileWriter";
+import { CredentialStore, TokenService } from "../auth/index.js";
+import { Cache } from "../cache/index.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { CliError } from "../errors/CliError.js";
+import { ValidationError } from "../errors/ValidationError.js";
+import { Target } from "../sdk/config/Target.js";
+import { Icons } from "../ui/format.js";
+import type { Workspace } from "../workspace/Workspace.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
+import { TaskContextAdapter } from "./adapter/TaskContextAdapter.js";
+import { LogFileWriter } from "./LogFileWriter.js";
 
 export class Context {
     private ttyAwareLogger: TtyAwareLogger;
@@ -23,6 +24,7 @@ export class Context {
     public readonly logLevel: LogLevel;
     public readonly stdout: Logger;
     public readonly stderr: Logger;
+    public readonly cache: Cache;
     public readonly logFileWriter: LogFileWriter;
     public readonly tokenService: TokenService;
 
@@ -40,12 +42,18 @@ export class Context {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.logFileWriter = new LogFileWriter({ cwd: this.cwd });
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
+        this.cache = new Cache({ logger: this.stderr });
+        this.logFileWriter = new LogFileWriter(this.cache.logs.absoluteFilePath);
+        this.tokenService = new TokenService({ credential: new CredentialStore() });
+    }
 
-        const keyring = new KeyringStore();
-        this.tokenService = new TokenService({ keyring });
+    /**
+     * Returns true if running in an interactive TTY environment (not CI).
+     */
+    public get isTTY(): boolean {
+        return this.ttyAwareLogger.isTTY;
     }
 
     public async loadWorkspaceOrThrow(): Promise<Workspace> {
@@ -110,14 +118,6 @@ export class Context {
     }
 
     /**
-     * Returns true if running in an interactive TTY environment (not CI).
-     * Delegates to TtyAwareLogger which handles the is-ci check.
-     */
-    public get isTTY(): boolean {
-        return this.ttyAwareLogger.isTTY;
-    }
-
-    /**
      * Get the log file path if logs have been written.
      */
     public getLogFilePath(): AbsoluteFilePath | undefined {
@@ -135,8 +135,7 @@ export class Context {
                 outputs.push(outputPath.toString());
             }
         }
-        if (target.output.git != null) {
-            // TODO: Include a link to the branch, commit, or release that was created.
+        if (target.output.git != null && target.output.path == null) {
             outputs.push(target.output.git.repository);
         }
         return outputs;

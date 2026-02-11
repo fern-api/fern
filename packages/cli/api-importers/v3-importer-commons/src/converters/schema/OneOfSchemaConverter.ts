@@ -9,12 +9,11 @@ import {
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
-import { convertProperties } from "../../utils/ConvertProperties";
-import { SchemaConverter } from "./SchemaConverter";
-import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
+import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated.js";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { convertProperties } from "../../utils/ConvertProperties.js";
+import { SchemaConverter } from "./SchemaConverter.js";
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";
 
 export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {

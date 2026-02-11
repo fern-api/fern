@@ -45,9 +45,11 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                 .addMethod(createJsonStreamTest(streamClassName, testAnnotation))
                 .addMethod(createSseStreamTest(streamClassName, testAnnotation))
                 .addMethod(createSseStreamWithTerminatorTest(streamClassName, testAnnotation))
+                .addMethod(createSseEventDiscriminatedStreamTest(streamClassName, testAnnotation))
                 .addMethod(createStreamResourceTest(streamClassName, testAnnotation))
                 .addMethod(createMapToJsonHelperMethod())
                 .addMethod(createMapToSseHelperMethod())
+                .addMethod(createMapToSseWithEventHelperMethod())
                 .addMethod(createCreateMapHelperMethod())
                 .build();
 
@@ -203,6 +205,51 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private MethodSpec createSseEventDiscriminatedStreamTest(ClassName streamClassName, ClassName testAnnotation) {
+        // Test fromSseWithEventDiscrimination using generic Map type (works for all SDKs)
+        // This tests the SSE envelope parsing where discriminator is at event level
+        return MethodSpec.methodBuilder("testSseEventDiscriminatedStream")
+                .addAnnotation(testAnnotation)
+                .addModifiers(Modifier.PUBLIC)
+                .addStatement(
+                        "$T<$T> sseStrings = $T.asList(mapToSseWithEvent($S, createMap($S, $S)), mapToSseWithEvent($S, createMap($S, $S)))",
+                        ClassName.get("java.util", "List"),
+                        ClassName.get(String.class),
+                        ClassName.get("java.util", "Arrays"),
+                        "start",
+                        "status",
+                        "pending",
+                        "end",
+                        "status",
+                        "complete")
+                .addStatement(
+                        "$T input = $T.join($S, sseStrings)",
+                        ClassName.get(String.class),
+                        ClassName.get(String.class),
+                        "\n\n")
+                .addStatement(
+                        "$T sseInput = new $T(input)",
+                        ClassName.get("java.io", "StringReader"),
+                        ClassName.get("java.io", "StringReader"))
+                .addStatement(
+                        "$T<$T> sseStream = $T.fromSseWithEventDiscrimination($T.class, sseInput, $S)",
+                        streamClassName,
+                        ClassName.get("java.util", "Map"),
+                        streamClassName,
+                        ClassName.get("java.util", "Map"),
+                        "event")
+                .addStatement("int expectedEvents = 2")
+                .addStatement("int actualEvents = 0")
+                .beginControlFlow("for ($T eventData : sseStream)", ClassName.get("java.util", "Map"))
+                .addStatement("actualEvents++")
+                .addComment("Event-level discrimination includes the event field in the parsed result")
+                .addStatement("assertTrue(eventData.containsKey($S))", "event")
+                .addStatement("assertTrue(eventData.containsKey($S))", "data")
+                .endControlFlow()
+                .addStatement("assertEquals(expectedEvents, actualEvents)")
+                .build();
+    }
+
     private MethodSpec createStreamResourceTest(ClassName streamClassName, ClassName testAnnotation) {
         return MethodSpec.methodBuilder("testStreamResourceManagement")
                 .addAnnotation(testAnnotation)
@@ -245,6 +292,17 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                 .returns(String.class)
                 .addParameter(ClassName.get("java.util", "Map"), "map")
                 .addStatement("return $S + mapToJson(map)", "data: ")
+                .build();
+    }
+
+    private MethodSpec createMapToSseWithEventHelperMethod() {
+        // Helper for SSE with event: field (event-level discrimination)
+        return MethodSpec.methodBuilder("mapToSseWithEvent")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(String.class, "eventType")
+                .addParameter(ClassName.get("java.util", "Map"), "data")
+                .addStatement("return $S + eventType + $S + mapToJson(data)", "event: ", "\ndata: ")
                 .build();
     }
 

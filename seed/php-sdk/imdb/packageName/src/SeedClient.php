@@ -3,7 +3,7 @@
 namespace Seed;
 
 use Seed\Imdb\ImdbClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

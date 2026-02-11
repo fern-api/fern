@@ -1,15 +1,15 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
-import { ExternalDependency } from "../ast/ExternalDependency";
-import { Expression } from "../ast/expressions/Expression";
-import { Gemspec } from "../ast/gem/Gemspec";
-import { Module_ } from "../ast/Module_";
-import { GeneratedFile } from "./GeneratedFile";
-import { GeneratedRubyFile } from "./GeneratedRubyFile";
+import { ExternalDependency } from "../ast/ExternalDependency.js";
+import { Expression } from "../ast/expressions/Expression.js";
+import { Gemspec } from "../ast/gem/Gemspec.js";
+import { Module_ } from "../ast/Module_.js";
+import { GeneratedFile } from "./GeneratedFile.js";
+import { GeneratedRubyFile } from "./GeneratedRubyFile.js";
 
 export const MINIMUM_RUBY_VERSION = "2.7";
 
@@ -22,7 +22,7 @@ export function getClientName(organization: string, apiName: string, clientClass
 }
 
 export function getBreadcrumbsFromFilepath(
-    fernFilepath: FernFilepath,
+    fernFilepath: FernIr.FernFilepath,
     clientName: string,
     includeFullPath?: boolean
 ): string[] {

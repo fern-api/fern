@@ -1,8 +1,8 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
-import { runFernCli } from "../../utils/runFernCli";
-import { init } from "../init/init";
+import { runFernCli } from "../../utils/runFernCli.js";
+import { init } from "../init/init.js";
 
 describe("jsonschema", () => {
     it("works with latest version", async () => {

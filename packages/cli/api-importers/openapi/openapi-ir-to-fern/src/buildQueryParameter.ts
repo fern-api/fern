@@ -2,10 +2,10 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { generateEnumNameFromValue, QueryParameter, Schema, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { buildTypeReference } from "./buildTypeReference";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertAvailability } from "./utils/convertAvailability";
-import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { buildTypeReference } from "./buildTypeReference.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
 export function buildQueryParameter({
     queryParameter,

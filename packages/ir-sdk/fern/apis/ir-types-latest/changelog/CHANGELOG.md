@@ -5,8 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v64.0.0] - 2026-02-03
+## [v65.0.0] - 2026-02-03
 - Feature: Add new pagination types where the cursor is to be consumed as the full URI, or full path (HATEOS-style)
+
+## [v64.0.0] - 2026-02-06
+- Internal: Bump to the latest TypeScript SDK generator. While there are no changes in the IR, the way the generated SDK exports CJS and ESM is different, hence the major version bump.
+  We are not duplicating the IR to 63.x.x because there are no changes in the IR itself.
 
 ## [v63.2.0] - 2026-01-13
 - Feature: Add support for min and max validation keywords:

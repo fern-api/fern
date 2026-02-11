@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
-import { DependencyValueSchema } from "./RustDependencySpecSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
+import { DependencyValueSchema } from "./RustDependencySpecSchema.js";
 
 export const BaseRustCustomConfigSchema = z.object({
     // =========================================================================

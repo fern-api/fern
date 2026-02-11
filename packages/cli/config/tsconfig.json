@@ -3,13 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src",
-    "moduleResolution": "bundler"
+    "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../commons/core-utils"
-    }
-  ]
+  "references": []
 }

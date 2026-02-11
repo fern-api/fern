@@ -1,7 +1,7 @@
 import type { Element } from "hast";
 
-import { findTitle } from "../extract/title";
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
+import { findTitle } from "../extract/title.js";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes.js";
 
 export function scrapeFrame(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
     if (

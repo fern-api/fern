@@ -1,17 +1,19 @@
 import type { Audiences } from "@fern-api/configuration";
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ContainerExecutionEnvironment, GenerationRunner } from "@fern-api/local-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
-import type { AiConfig } from "../../ai/config/AiConfig";
-import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter";
-import type { ApiDefinition } from "../../api/config/ApiDefinition";
-import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
-import type { Context } from "../../context/Context";
-import type { Task } from "../../ui/Task";
-import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter";
-import type { Target } from "../config/Target";
+import { rm } from "fs/promises";
+import type { AiConfig } from "../../ai/config/AiConfig.js";
+import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter.js";
+import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
+import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
+import type { Context } from "../../context/Context.js";
+import type { Task } from "../../ui/Task.js";
+import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
+import type { Target } from "../config/Target.js";
 
 /**
  * Runs generation using the legacy local-generation infrastructure.
@@ -122,6 +124,20 @@ export class LegacyGenerationRunner {
                 skipUnstableDynamicSnippetTests: true,
                 inspect: false
             });
+
+            if (args.target.output.path != null && generatorInvocation.absolutePathToLocalOutput != null) {
+                // The local generator runner always writes snippet.json to the
+                // output directory. Remove it so that the user receives a clean
+                // full-project repository.
+                //
+                // TODO: Is this a bug in the local generator? Can we patch this
+                // in the @fern-api/local-generation package?
+                const snippetPath = join(
+                    generatorInvocation.absolutePathToLocalOutput,
+                    RelativeFilePath.of(SNIPPET_JSON_FILENAME)
+                );
+                await rm(snippetPath, { force: true });
+            }
 
             if (taskContext.getResult() === TaskResult.Failure) {
                 return {

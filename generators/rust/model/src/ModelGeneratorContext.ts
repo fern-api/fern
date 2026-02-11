@@ -1,6 +1,6 @@
 import { AbstractRustGeneratorContext, AsIsFileDefinition } from "@fern-api/rust-base";
 
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
 
 export class ModelGeneratorContext extends AbstractRustGeneratorContext<ModelCustomConfigSchema> {
     // Constructor removed as it was useless - just called super with same parameters

@@ -4,10 +4,10 @@ import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
-import { CliContext } from "../../cli-context/CliContext";
-import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport";
-import { collectAPIWorkspaceViolations } from "./validateAPIWorkspaceAndLogIssues";
-import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues";
+import { CliContext } from "../../cli-context/CliContext.js";
+import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
+import { collectAPIWorkspaceViolations } from "./validateAPIWorkspaceAndLogIssues.js";
+import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
 
 export async function validateWorkspaces({
     project,
