@@ -70,16 +70,6 @@ types:
         docs: The totall number of /users
       data: optional<list<User>>
 
-  ListUsersUriPaginationResponse:
-    properties:
-      data: list<User>
-      next: optional<string>
-
-  ListUsersPathPaginationResponse:
-    properties:
-      data: list<User>
-      next: optional<string>
-
   ListUsersMixedTypePaginationResponse:
     properties:
       next: string
@@ -443,18 +433,3 @@ service:
                 total_page: 1
               total_count: 0
 
-    listWithUriPagination:
-      pagination:
-        next_uri: $response.next
-        results: $response.data
-      method: GET
-      path: /uri
-      response: ListUsersUriPaginationResponse
-
-    listWithPathPagination:
-      pagination:
-        next_path: $response.next
-        results: $response.data
-      method: GET
-      path: /path
-      response: ListUsersPathPaginationResponse
