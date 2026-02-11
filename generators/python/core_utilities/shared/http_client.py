@@ -329,7 +329,11 @@ class HttpClient:
                         {
                             **self.base_headers(),
                             **(headers if headers is not None else {}),
-                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                            **(
+                                request_options.get("additional_headers", {}) or {}
+                                if request_options is not None
+                                else {}
+                            ),
                         }
                     )
                 ),
@@ -593,7 +597,11 @@ class AsyncHttpClient:
                         {
                             **_headers,
                             **(headers if headers is not None else {}),
-                            **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                            **(
+                                request_options.get("additional_headers", {}) or {}
+                                if request_options is not None
+                                else {}
+                            ),
                         }
                     )
                 ),
