@@ -775,9 +775,19 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                                             [
                                                 ts.factory.createReturnStatement(
                                                     parsedSingleUnionType.invokeVisitMethod({
-                                                        localReferenceToUnionValue: ts.factory.createIdentifier(
-                                                            GeneratedUnionImpl.VISITEE_PARAMETER_NAME
-                                                        ),
+                                                        localReferenceToUnionValue: this.includeOtherInUnionTypes
+                                                            ? ts.factory.createAsExpression(
+                                                                  ts.factory.createIdentifier(
+                                                                      GeneratedUnionImpl.VISITEE_PARAMETER_NAME
+                                                                  ),
+                                                                  this.getReferenceToSingleUnionType(
+                                                                      parsedSingleUnionType,
+                                                                      context
+                                                                  )
+                                                              )
+                                                            : ts.factory.createIdentifier(
+                                                                  GeneratedUnionImpl.VISITEE_PARAMETER_NAME
+                                                              ),
                                                         localReferenceToVisitor: ts.factory.createIdentifier(
                                                             GeneratedUnionImpl.VISITOR_PARAMETER_NAME
                                                         )

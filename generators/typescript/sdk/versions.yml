@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.1
+  changelogEntry:
+    - summary: |
+        Fix `_Unknown` union variant discriminant type from `void` to `string` when
+        `includeOtherInUnionTypes` is enabled. The `void` type was not assignable to the
+        `string` expected by the `_other` visitor callback, breaking the `_visit` function.
+        The `_unknown` factory function no longer uses an unnecessary `as any` cast, and
+        known case branches in `_visit` now include explicit casts to the specific variant
+        type to preserve type safety.
+      type: fix
+  createdAt: "2026-02-11"
+  irVersion: 63
+
 - version: 3.48.0
   changelogEntry:
     - summary: |

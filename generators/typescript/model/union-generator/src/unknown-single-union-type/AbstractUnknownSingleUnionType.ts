@@ -19,7 +19,7 @@ export abstract class AbstractUnknownSingleUnionType<
     }
 
     public getDiscriminantValueType(): ts.TypeNode {
-        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
     }
 
     public getTypeName(): string {

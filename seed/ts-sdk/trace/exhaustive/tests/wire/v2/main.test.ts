@@ -4,23 +4,28 @@ import { SeedTraceClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("V2Client", () => {
+    
     test("test", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            maxRetries: 0,
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ "maxRetries" : 0 , "token" : "test" , "xRandomHeader" : "test" , "environment" : server.baseUrl });
+        
+        
+        server
+            .mockEndpoint()
+            .get("").respondWith()
+            .statusCode(200).build();
 
-        server.mockEndpoint().get("").respondWith().statusCode(200).build();
-
-        const response = await client.v2.test();
-        expect(response).toEqual({
-            body: undefined,
-            ok: true,
-            headers: expect.any(Object),
-            rawResponse: expect.any(Object),
-        });
+        
+                    
+                            const response = await client.v2.test();
+                            expect(response).toEqual({
+                    body: undefined,
+                    ok: true,
+                    headers: expect.any(Object),
+                    rawResponse: expect.any(Object),
+                });
+                          
+                
     });
+          
 });
