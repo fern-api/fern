@@ -31,3 +31,5 @@
 "/users"
 "/users"
 "/users/optional-data"
+"/users/uri"
+"/users/path"

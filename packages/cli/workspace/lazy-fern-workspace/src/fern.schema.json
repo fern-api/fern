@@ -2674,38 +2674,6 @@
       ],
       "additionalProperties": false
     },
-    "pagination.UriPaginationSchema": {
-      "type": "object",
-      "properties": {
-        "next_uri": {
-          "type": "string"
-        },
-        "results": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "next_uri",
-        "results"
-      ],
-      "additionalProperties": false
-    },
-    "pagination.PathPaginationSchema": {
-      "type": "object",
-      "properties": {
-        "next_path": {
-          "type": "string"
-        },
-        "results": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "next_path",
-        "results"
-      ],
-      "additionalProperties": false
-    },
     "pagination.PaginationSchema": {
       "anyOf": [
         {
@@ -2716,12 +2684,6 @@
         },
         {
           "$ref": "#/definitions/pagination.CustomPaginationSchema"
-        },
-        {
-          "$ref": "#/definitions/pagination.UriPaginationSchema"
-        },
-        {
-          "$ref": "#/definitions/pagination.PathPaginationSchema"
         }
       ]
     },
