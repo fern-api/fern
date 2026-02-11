@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
+import { constructFernFileContext, isRawPathPaginationSchema, isRawUriPaginationSchema, TypeResolverImpl } from "@fern-api/ir-generator";
 
 import { Rule } from "../../Rule.js";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
@@ -53,6 +53,10 @@ export const ValidPaginationRule: Rule = {
                             file,
                             customPagination: endpointPagination
                         });
+                    } else if (isRawUriPaginationSchema(endpointPagination)) {
+                        return [];
+                    } else if (isRawPathPaginationSchema(endpointPagination)) {
+                        return [];
                     }
                     throw new Error("Invalid pagination schema");
                 }

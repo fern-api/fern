@@ -6,7 +6,7 @@
         Add support for URI and path-based pagination.
       type: feat
   createdAt: "2026-02-11"
-  irVersion: 63
+  irVersion: 65
 
 - version: 4.55.4
   changelogEntry:

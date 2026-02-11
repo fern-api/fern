@@ -24,6 +24,7 @@ export { type ResolvedEndpoint } from "./resolvers/ResolvedEndpoint.js";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType.js";
 export { type TypeResolver, TypeResolverImpl } from "./resolvers/TypeResolver.js";
 export { type VariableResolver, VariableResolverImpl } from "./resolvers/VariableResolver.js";
+export { isRawPathPaginationSchema, isRawUriPaginationSchema } from "./converters/services/convertPaginationUtils.js";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath.js";
 export {
     convertObjectPropertyWithPathToString,
