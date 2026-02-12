@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Add support for generating interfaces for all SDK client classes. When `generateClientInterfaces: true`
+        is configured, each client `{ClientName}` gets a corresponding `{ClientName}Interface` with public
+        method signatures. Concrete clients declare `implements {ClientName}Interface`. This enables standard
+        PHP mocking and DI patterns (`PHPUnit::createMock()`, Laravel/Symfony DI containers) without requiring
+        concrete class dependencies.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-php-sdk
+            config:
+              generateClientInterfaces: true
+        ```
+      type: feat
+  createdAt: "2026-02-11"
+  irVersion: 62
+
 - version: 1.28.0
   changelogEntry:
     - summary: |

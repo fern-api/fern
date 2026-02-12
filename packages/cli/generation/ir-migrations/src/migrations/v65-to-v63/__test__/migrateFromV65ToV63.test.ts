@@ -63,30 +63,29 @@ describe("migrateFromV65ToV63", () => {
         }
     });
 
-    it("throws error for nextUri pagination", () => {
+    it("removes nextUri pagination", () => {
         const nextUriPagination = IrVersions.V65.Pagination.uri({
             nextUri: mockResponseProperty,
             results: mockResponseProperty
         });
 
         const v65IR = createIRWithEndpoint(createEndpointWithPagination(nextUriPagination));
+        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
 
-        expect(() => {
-            V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
-        }).toThrow("CursorPagination with 'uri' locator cannot be migrated to IR v63");
+        const migratedEndpoint = migratedIR.services["service_test"]?.endpoints[0];
+        expect(migratedEndpoint?.pagination).toBeUndefined();
     });
 
-    it("throws error for nextPath pagination", () => {
+    it("removes nextPath pagination", () => {
         const nextPathPagination = IrVersions.V65.Pagination.path({
             nextPath: mockResponseProperty,
             results: mockResponseProperty
         });
 
         const v65IR = createIRWithEndpoint(createEndpointWithPagination(nextPathPagination));
-
-        expect(() => {
-            V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
-        }).toThrow("CursorPagination with 'path' locator cannot be migrated to IR v63");
+        const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
+        const migratedEndpoint = migratedIR.services["service_test"]?.endpoints[0];
+        expect(migratedEndpoint?.pagination).toBeUndefined();
     });
 
     it("passes through offset pagination unchanged", () => {

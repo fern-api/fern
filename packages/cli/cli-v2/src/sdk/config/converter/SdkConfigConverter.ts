@@ -129,6 +129,7 @@ export class SdkConfigConverter {
             image: generatorInfo.image,
             version: generatorInfo.version,
             api: this.resolveApi({ api: target.api }),
+            sourceLocation: sourced.$loc,
             config: target.config != null ? this.convertConfig(target.config) : undefined,
             output: target.output,
             publish: target.publish,

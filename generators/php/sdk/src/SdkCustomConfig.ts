@@ -10,14 +10,17 @@ export const SdkCustomConfigSchema = z
         // Custom class name for the CustomPager class (used for custom pagination)
         "custom-pager-classname": z.string().optional(),
         // Apply IR-defined default values to query parameters and headers in request wrappers
-        useDefaultRequestParameterValues: z.boolean().optional()
+        useDefaultRequestParameterValues: z.boolean().optional(),
+        // Generate interfaces for all SDK client classes to enable mocking and DI
+        generateClientInterfaces: z.boolean().optional()
     })
     .extend(BasePhpCustomConfigSchema.shape)
     .transform((config) => ({
         ...config,
         enableWireTests: config["enable-wire-tests"] ?? false,
         customPagerClassname: config["custom-pager-classname"] ?? "CustomPager",
-        useDefaultRequestParameterValues: config.useDefaultRequestParameterValues ?? false
+        useDefaultRequestParameterValues: config.useDefaultRequestParameterValues ?? false,
+        generateClientInterfaces: config.generateClientInterfaces ?? false
     }));
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

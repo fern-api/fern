@@ -20,17 +20,15 @@ export async function checkOrganizationMembership({
 
     // First check if the user is a member of the organization.
     const isMemberResponse = await venus.organization.isMember(FernVenusApi.OrganizationId(organization));
-    if (isMemberResponse.ok) {
-        if (isMemberResponse.body) {
-            return { type: "member" };
-        }
-        return { type: "no-access" };
+    if (isMemberResponse.ok && isMemberResponse.body) {
+        return { type: "member" };
     }
 
-    // If the isMember call failed, check whether the org exists at all.
+    // Either the isMember call failed or the user is not a member.
+    // Check whether the org exists at all.
     const getResponse = await venus.organization.get(FernVenusApi.OrganizationId(organization));
     if (getResponse.ok) {
-        // Org exists but isMember failed; treat as no access.
+        // Org exists but user is not a member.
         return { type: "no-access" };
     }
 
@@ -41,6 +39,8 @@ export async function checkOrganizationMembership({
             result = { type: "no-access" };
         },
         _other: () => {
+            // TODO: We should actually send a 404 to more clearly communicate a not-found error.
+            // Otherwise, internal server errors would be mistaken for not-found errors.
             result = { type: "not-found" };
         }
     });

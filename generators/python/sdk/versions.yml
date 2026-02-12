@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.56.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination.
+      type: feat
+  createdAt: "2026-02-11"
+  irVersion: 65
+
 - version: 4.55.5
   changelogEntry:
     - summary: |
