@@ -137,9 +137,10 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
-            fields.push(
-                ...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
-            );
+            const requiredHeaders = this.context.filterRequiredParameters(this.context.ir.headers);
+            if (requiredHeaders.length > 0) {
+                fields.push(...this.getConstructorHeaderArgs({ headers: requiredHeaders, values: snippet.headers }));
+            }
         }
         this.context.errors.unscope();
         return fields;
@@ -867,7 +868,7 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.Headers);
         const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
+            parameters: this.context.filterRequiredParameters(request.headers ?? []),
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) => ({

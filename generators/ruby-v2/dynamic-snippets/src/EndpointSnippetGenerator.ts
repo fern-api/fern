@@ -332,9 +332,12 @@ export class EndpointSnippetGenerator {
         // Headers
         this.context.errors.scope("Headers");
         if (this.context.ir.headers != null && snippet.headers != null) {
-            builderArgs.push(
-                ...this.getRootClientHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
-            );
+            const requiredHeaders = this.context.filterRequiredParameters(this.context.ir.headers);
+            if (requiredHeaders.length > 0) {
+                builderArgs.push(
+                    ...this.getRootClientHeaderArgs({ headers: requiredHeaders, values: snippet.headers })
+                );
+            }
         }
         this.context.errors.unscope();
 
@@ -511,7 +514,7 @@ export class EndpointSnippetGenerator {
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "Headers",
-                namedParameters: request.headers,
+                namedParameters: this.context.filterRequiredParameters(request.headers ?? []),
                 values: snippet.headers
             })
         );

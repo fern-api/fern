@@ -204,9 +204,12 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
-            builderArgs.push(
-                ...this.getRootClientHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
-            );
+            const requiredHeaders = this.context.filterRequiredParameters(this.context.ir.headers);
+            if (requiredHeaders.length > 0) {
+                builderArgs.push(
+                    ...this.getRootClientHeaderArgs({ headers: requiredHeaders, values: snippet.headers })
+                );
+            }
         }
         this.context.errors.unscope();
 
@@ -292,9 +295,12 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
-            builderArgs.push(
-                ...this.getRootClientHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
-            );
+            const requiredHeaders = this.context.filterRequiredParameters(this.context.ir.headers);
+            if (requiredHeaders.length > 0) {
+                builderArgs.push(
+                    ...this.getRootClientHeaderArgs({ headers: requiredHeaders, values: snippet.headers })
+                );
+            }
         }
         this.context.errors.unscope();
 
@@ -813,7 +819,7 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.Headers);
         const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
+            parameters: this.context.filterRequiredParameters(request.headers ?? []),
             values: snippet.headers ?? {}
         });
         const filteredHeaders = headers.filter((header) => !this.context.isDirectLiteral(header.typeReference));

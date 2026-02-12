@@ -369,7 +369,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         if (request.queryParameters != null && request.queryParameters.length > 0) {
             return true;
         }
-        if (request.headers != null && request.headers.length > 0) {
+        if (request.headers != null && this.filterRequiredParameters(request.headers).length > 0) {
             return true;
         }
         if (request.body != null) {
@@ -521,6 +521,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             return undefined;
         }
         return value;
+    }
+
+    public filterRequiredParameters(parameters: FernIr.dynamic.NamedParameter[]): FernIr.dynamic.NamedParameter[] {
+        return parameters.filter((p) => !this.isOptional(p.typeReference) && !this.isNullable(p.typeReference));
     }
 
     public isOptional(typeReference: FernIr.dynamic.TypeReference): boolean {
