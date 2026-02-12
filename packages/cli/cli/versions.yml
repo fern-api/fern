@@ -4,7 +4,7 @@
     - summary: |
         Add support for SSE discriminator context with `discriminatorContext` field in IR.
         Supports "data" (default) for discriminators within union data and "protocol" for
-        SSE event-level discriminators.
+        SSE protocol-level discriminators, such as `event`.
 
         "data"-context discrimination :
         ```
