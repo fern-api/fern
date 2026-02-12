@@ -33,6 +33,10 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { containerInit } from "./commands/container/containerInit.js";
+import { containerLatest } from "./commands/container/containerLatest.js";
+import { containerLogin } from "./commands/container/containerLogin.js";
+import { containerUpgrade } from "./commands/container/containerUpgrade.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
@@ -1550,6 +1554,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
+        addDocsContainerCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1789,6 +1794,91 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 project,
                 cliContext,
                 errorOnBrokenLinks: argv.strict
+            });
+        }
+    );
+}
+
+function addDocsContainerCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("container", "Commands for managing self-hosted containers", (yargs) => {
+        addDocsContainerLoginCommand(yargs, cliContext);
+        addDocsContainerLatestCommand(yargs, cliContext);
+        addDocsContainerInitCommand(yargs, cliContext);
+        addDocsContainerUpgradeCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsContainerLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "login",
+        "Authenticate with the Fern self-hosted container registry",
+        (yargs) =>
+            yargs.option("org", {
+                type: "string",
+                description: "The organization ID to authenticate with",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs container login"
+            });
+            await containerLogin({
+                cliContext,
+                orgId: argv.org
+            });
+        }
+    );
+}
+
+function addDocsContainerLatestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "latest",
+        "Get the latest self-hosted container tag",
+        (yargs) => yargs,
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs container latest"
+            });
+            await containerLatest({ cliContext });
+        }
+    );
+}
+
+function addDocsContainerInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "init",
+        "Scaffold a Dockerfile for the self-hosted docs container",
+        (yargs) => yargs,
+        async () => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs container init"
+            });
+            await containerInit({
+                cliContext,
+                outputDir: cwd()
+            });
+        }
+    );
+}
+
+function addDocsContainerUpgradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "upgrade",
+        "Update the container tag in your Dockerfile to the latest version",
+        (yargs) =>
+            yargs.option("dockerfile", {
+                type: "string",
+                description: "Path to the Dockerfile to update",
+                default: "Dockerfile"
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs container upgrade"
+            });
+            await containerUpgrade({
+                cliContext,
+                dockerfilePath: resolve(cwd(), argv.dockerfile)
             });
         }
     );

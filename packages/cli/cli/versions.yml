@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.76.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs container` commands for managing self-hosted deployments:
+        `login` (authenticate with container registry), `latest` (get latest container tag),
+        `init` (scaffold a Dockerfile), and `upgrade` (update Dockerfile to latest tag).
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 3.75.0
   changelogEntry:
     - summary: |
