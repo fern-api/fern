@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.8
+  changelogEntry:
+    - summary: |
+        Filter out optional headers when generating dynamic snippets.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 61
+
 - version: 1.23.7
   changelogEntry:
     - summary: |
