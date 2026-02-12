@@ -775,7 +775,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                                             [
                                                 ts.factory.createReturnStatement(
                                                     parsedSingleUnionType.invokeVisitMethod({
-                                                        localReferenceToUnionValue: this.includeOtherInUnionTypes
+                                                        localReferenceToUnionValue: this.needsCastInVisitBranches()
                                                             ? ts.factory.createAsExpression(
                                                                   ts.factory.createIdentifier(
                                                                       GeneratedUnionImpl.VISITEE_PARAMETER_NAME
@@ -816,6 +816,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 )
             )
         });
+    }
+
+    private needsCastInVisitBranches(): boolean {
+        if (!this.includeOtherInUnionTypes) {
+            return false;
+        }
+        const unknownDiscriminantType = this.unknownSingleUnionType.getDiscriminantValueType();
+        return unknownDiscriminantType.kind !== ts.SyntaxKind.VoidKeyword;
     }
 
     private getAllSingleUnionTypesForAlias(): ParsedSingleUnionType<Context>[] {

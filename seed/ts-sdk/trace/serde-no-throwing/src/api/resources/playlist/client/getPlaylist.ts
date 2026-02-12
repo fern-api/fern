@@ -81,9 +81,7 @@ export const Error = {
     ): _Result => {
         switch (value.errorName) {
             case "PlaylistIdNotFoundError":
-                return visitor.playlistIdNotFoundError(
-                    (value as SeedTrace.playlist.getPlaylist.Error.PlaylistIdNotFoundError).content,
-                );
+                return visitor.playlistIdNotFoundError(value.content);
             case "UnauthorizedError":
                 return visitor.unauthorizedError();
             default:
