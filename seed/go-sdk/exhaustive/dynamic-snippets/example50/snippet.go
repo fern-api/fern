@@ -15,7 +15,11 @@ func do() {
             "<token>",
         ),
     )
-    client.NoReqBody.GetWithNoRequestBody(
+    request := map[string]any{
+        "key": "value",
+    }
+    client.NoAuth.PostWithNoAuth(
         context.TODO(),
+        request,
     )
 }
