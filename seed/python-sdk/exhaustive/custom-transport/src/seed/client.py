@@ -37,8 +37,8 @@ class SeedExhaustive:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-    _transport : typing.Optional[httpx.BaseTransport]
-        Internal: override the httpx transport used by the client. This is intended for SDK developers via custom code (e.g., factory methods).
+    http_client : typing.Optional[httpx.BaseTransport]
+        Override the httpx transport used by the client. This is intended for SDK developers via custom code (e.g., factory methods).
 
     Examples
     --------
@@ -59,7 +59,7 @@ class SeedExhaustive:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
-        _transport: typing.Optional[httpx.BaseTransport] = None,
+        http_client: typing.Optional[httpx.BaseTransport] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -70,9 +70,9 @@ class SeedExhaustive:
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=_transport)
+            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=http_client)
             if follow_redirects is not None
-            else httpx.Client(timeout=_defaulted_timeout, transport=_transport),
+            else httpx.Client(timeout=_defaulted_timeout, transport=http_client),
             timeout=_defaulted_timeout,
         )
         self._endpoints: typing.Optional[EndpointsClient] = None
@@ -144,8 +144,8 @@ class AsyncSeedExhaustive:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-    _transport : typing.Optional[httpx.AsyncBaseTransport]
-        Internal: override the httpx transport used by the client. This is intended for SDK developers via custom code (e.g., factory methods).
+    http_client : typing.Optional[httpx.AsyncBaseTransport]
+        Override the httpx transport used by the client. This is intended for SDK developers via custom code (e.g., factory methods).
 
     Examples
     --------
@@ -166,7 +166,7 @@ class AsyncSeedExhaustive:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
-        _transport: typing.Optional[httpx.AsyncBaseTransport] = None,
+        http_client: typing.Optional[httpx.AsyncBaseTransport] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -177,9 +177,9 @@ class AsyncSeedExhaustive:
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=_transport)
+            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects, transport=http_client)
             if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, transport=_transport),
+            else httpx.AsyncClient(timeout=_defaulted_timeout, transport=http_client),
             timeout=_defaulted_timeout,
         )
         self._endpoints: typing.Optional[AsyncEndpointsClient] = None
