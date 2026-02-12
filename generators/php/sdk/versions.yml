@@ -28,6 +28,7 @@
       type: feat
   createdAt: "2026-02-11"
   irVersion: 62
+
 - version: 1.28.0
   changelogEntry:
     - summary: |

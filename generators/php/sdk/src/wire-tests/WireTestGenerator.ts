@@ -287,7 +287,7 @@ export class WireTestGenerator {
                 skipClientInstantiation: true
             });
 
-            const isPaginated = endpoint.pagination != null;
+            const isPaginated = endpoint.pagination != null && this.context.config.generatePaginatedClients === true;
 
             return php.method({
                 name: testName,
