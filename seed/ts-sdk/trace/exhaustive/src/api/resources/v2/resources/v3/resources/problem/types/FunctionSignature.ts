@@ -24,6 +24,6 @@ export namespace FunctionSignature {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

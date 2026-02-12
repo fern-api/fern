@@ -946,7 +946,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_imdb:Name"

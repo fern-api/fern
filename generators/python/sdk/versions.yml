@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.57.0
+  changelogEntry:
+    - summary: |
+        Add `custom_transport: true` config option for SDK developers to expose an `http_client`
+        override parameter on generated client constructors. This allows SDK developers to provide
+        custom httpx transports via custom code (e.g., factory methods like `ValidationClient`).
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 4.56.0
   changelogEntry:
     - summary: |
@@ -7,7 +17,6 @@
       type: feat
   createdAt: "2026-02-11"
   irVersion: 65
-
 - version: 4.55.5
   changelogEntry:
     - summary: |

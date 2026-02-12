@@ -1,9 +1,16 @@
+import type { FernWorkspace } from "@fern-api/api-workspace-commons";
+import type { FernToken } from "@fern-api/auth";
+import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
-import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ContainerExecutionEnvironment, GenerationRunner } from "@fern-api/local-workspace-runner";
+import {
+    ContainerExecutionEnvironment,
+    GenerationRunner,
+    runLocalGenerationForWorkspace
+} from "@fern-api/local-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
 import { rm } from "fs/promises";
 import type { AiConfig } from "../../ai/config/AiConfig.js";
@@ -60,6 +67,9 @@ export namespace LegacyGenerationRunner {
 
         /** Version override for the generated SDK */
         version?: string;
+
+        /** Authentication token (required for self-hosted git generation) */
+        token?: FernToken;
     }
 
     export interface Result {
@@ -95,14 +105,6 @@ export class LegacyGenerationRunner {
                 generators: [generatorInvocation],
                 reviewers: undefined
             };
-
-            const containerImage = `${args.target.image}:${args.target.version}`;
-            const executionEnvironment = new ContainerExecutionEnvironment({
-                containerImage,
-                keepContainer: args.keepContainer ?? false,
-                runner: args.containerEngine
-            });
-
             const workspaceAdapter = new LegacyFernWorkspaceAdapter({
                 context: this.context,
                 cliVersion: this.cliVersion,
@@ -110,50 +112,135 @@ export class LegacyGenerationRunner {
             });
             const fernWorkspace = await workspaceAdapter.adapt(args.apiDefinition);
 
-            const runner = new GenerationRunner(executionEnvironment);
-            await runner.run({
-                organization: args.organization,
-                workspace: fernWorkspace,
+            if (args.target.output.git != null && schemas.isGitOutputSelfHosted(args.target.output.git)) {
+                return await this.runSelfHostedGeneration({
+                    args,
+                    taskContext,
+                    fernWorkspace,
+                    generatorGroup
+                });
+            }
+
+            return await this.runLocalGeneration({
+                args,
+                taskContext,
+                fernWorkspace,
                 generatorGroup,
-                context: taskContext,
-                outputVersionOverride: args.version,
-                ai: args.ai,
-                absolutePathToFernConfig: undefined,
-                irVersionOverride: undefined,
-                shouldGenerateDynamicSnippetTests: false,
-                skipUnstableDynamicSnippetTests: true,
-                inspect: false
+                generatorInvocation
             });
-
-            if (args.target.output.path != null && generatorInvocation.absolutePathToLocalOutput != null) {
-                // The local generator runner always writes snippet.json to the
-                // output directory. Remove it so that the user receives a clean
-                // full-project repository.
-                //
-                // TODO: Is this a bug in the local generator? Can we patch this
-                // in the @fern-api/local-generation package?
-                const snippetPath = join(
-                    generatorInvocation.absolutePathToLocalOutput,
-                    RelativeFilePath.of(SNIPPET_JSON_FILENAME)
-                );
-                await rm(snippetPath, { force: true });
-            }
-
-            if (taskContext.getResult() === TaskResult.Failure) {
-                return {
-                    success: false
-                };
-            }
-
-            return {
-                success: true,
-                output: this.context.resolveTargetOutputs(args.target)
-            };
         } catch (error) {
             return {
                 success: false,
                 error: error instanceof Error ? error.message : String(error)
             };
         }
+    }
+
+    private async runSelfHostedGeneration({
+        args,
+        taskContext,
+        fernWorkspace,
+        generatorGroup
+    }: {
+        args: LegacyGenerationRunner.RunArgs;
+        taskContext: TaskContextAdapter;
+        fernWorkspace: FernWorkspace;
+        generatorGroup: generatorsYml.GeneratorGroup;
+    }): Promise<LegacyGenerationRunner.Result> {
+        const projectConfig: fernConfigJson.ProjectConfig = {
+            _absolutePath: join(this.context.cwd, RelativeFilePath.of("fern.config.json")),
+            rawConfig: {
+                organization: args.organization,
+                version: this.cliVersion
+            },
+            organization: args.organization,
+            version: this.cliVersion
+        };
+
+        await runLocalGenerationForWorkspace({
+            token: args.token,
+            projectConfig,
+            workspace: fernWorkspace,
+            generatorGroup,
+            version: args.version,
+            keepDocker: args.keepContainer ?? false,
+            context: taskContext,
+            runner: args.containerEngine,
+            absolutePathToPreview: undefined,
+            inspect: false,
+            ai: undefined
+        });
+
+        if (taskContext.getResult() === TaskResult.Failure) {
+            return {
+                success: false
+            };
+        }
+
+        return {
+            success: true,
+            output: this.context.resolveTargetOutputs(args.target)
+        };
+    }
+
+    private async runLocalGeneration({
+        args,
+        taskContext,
+        fernWorkspace,
+        generatorGroup,
+        generatorInvocation
+    }: {
+        args: LegacyGenerationRunner.RunArgs;
+        taskContext: TaskContextAdapter;
+        fernWorkspace: FernWorkspace;
+        generatorGroup: generatorsYml.GeneratorGroup;
+        generatorInvocation: generatorsYml.GeneratorInvocation;
+    }): Promise<LegacyGenerationRunner.Result> {
+        const containerImage = `${args.target.image}:${args.target.version}`;
+        const executionEnvironment = new ContainerExecutionEnvironment({
+            containerImage,
+            keepContainer: args.keepContainer ?? false,
+            runner: args.containerEngine
+        });
+
+        const runner = new GenerationRunner(executionEnvironment);
+        await runner.run({
+            organization: args.organization,
+            workspace: fernWorkspace,
+            generatorGroup,
+            context: taskContext,
+            outputVersionOverride: args.version,
+            ai: args.ai,
+            absolutePathToFernConfig: undefined,
+            irVersionOverride: undefined,
+            shouldGenerateDynamicSnippetTests: false,
+            skipUnstableDynamicSnippetTests: true,
+            inspect: false
+        });
+
+        if (args.target.output.path != null && generatorInvocation.absolutePathToLocalOutput != null) {
+            // The local generator runner always writes snippet.json to the
+            // output directory. Remove it so that the user receives a clean
+            // full-project repository.
+            //
+            // TODO: Is this a bug in the local generator? Can we patch this
+            // in the @fern-api/local-generation package?
+            const snippetPath = join(
+                generatorInvocation.absolutePathToLocalOutput,
+                RelativeFilePath.of(SNIPPET_JSON_FILENAME)
+            );
+            await rm(snippetPath, { force: true });
+        }
+
+        if (taskContext.getResult() === TaskResult.Failure) {
+            return {
+                success: false
+            };
+        }
+
+        return {
+            success: true,
+            output: this.context.resolveTargetOutputs(args.target)
+        };
     }
 }

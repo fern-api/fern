@@ -2226,7 +2226,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_commons/types:Metadata",
@@ -3124,7 +3125,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -17533,7 +17535,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -18051,7 +18054,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:ExceptionInfo"
@@ -21575,7 +21579,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {

@@ -27975,7 +27975,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": "i am docs"
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_imdb:ActorId",

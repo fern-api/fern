@@ -24,6 +24,7 @@ export class LegacyGeneratorInvocationAdapter {
 
     public async adapt(target: Target): Promise<generatorsYml.GeneratorInvocation> {
         return {
+            raw: this.buildRaw(target),
             name: target.image,
             version: target.version,
             config: target.config,
@@ -43,54 +44,136 @@ export class LegacyGeneratorInvocationAdapter {
         };
     }
 
+    private buildRaw(target: Target): generatorsYml.GeneratorInvocationSchema | undefined {
+        const git = target.output.git;
+        if (git == null || !schemas.isGitOutputSelfHosted(git)) {
+            return undefined;
+        }
+        return {
+            name: target.image,
+            version: target.version,
+            github: {
+                uri: git.uri,
+                token: git.token,
+                mode: this.mapSelfHostedMode(git.mode),
+                branch: git.branch
+            }
+        };
+    }
+
+    private mapSelfHostedMode(
+        mode: schemas.GitSelfHostedOutputModeSchema | undefined
+    ): generatorsYml.GithubSelfhostedMode | undefined {
+        if (mode == null) {
+            return generatorsYml.GithubSelfhostedMode.PullRequest;
+        }
+        switch (mode) {
+            case "pr":
+                return generatorsYml.GithubSelfhostedMode.PullRequest;
+            case "push":
+                return generatorsYml.GithubSelfhostedMode.Push;
+            default:
+                assertNever(mode);
+        }
+    }
+
     private async buildOutputMode(target: Target): Promise<FernFiddle.remoteGen.OutputMode> {
         if (target.output.git != null) {
             const git = target.output.git;
-            const repository = parseRepository(git.repository);
-            const license = git.license != null ? await this.convertLicense(git.license) : undefined;
-            const publishInfo = target.publish != null ? this.buildPublishInfo(target.publish) : undefined;
-            const reviewers = this.buildReviewers(git.reviewers);
-            const mode = git.mode ?? "pr";
-
-            switch (mode) {
-                case "pr":
-                    return FernFiddle.remoteGen.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.pullRequest({
-                            owner: repository.owner,
-                            repo: repository.repo,
-                            license,
-                            publishInfo,
-                            reviewers,
-                            downloadSnippets: undefined
-                        })
-                    );
-                case "release":
-                    return FernFiddle.remoteGen.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.commitAndRelease({
-                            owner: repository.owner,
-                            repo: repository.repo,
-                            license,
-                            publishInfo,
-                            downloadSnippets: undefined
-                        })
-                    );
-                case "push":
-                    return FernFiddle.remoteGen.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.push({
-                            owner: repository.owner,
-                            repo: repository.repo,
-                            branch: git.branch,
-                            license,
-                            publishInfo,
-                            downloadSnippets: undefined
-                        })
-                    );
-                default:
-                    assertNever(mode);
+            if (schemas.isGitOutputSelfHosted(git)) {
+                return await this.buildGitSelfHostedOutputMode({ target, git });
             }
+            return await this.buildGitHubRepositoryOutputMode({ target, git });
         }
         // Default to downloadFiles for local output.
         return FernFiddle.remoteGen.OutputMode.downloadFiles({});
+    }
+
+    private async buildGitHubRepositoryOutputMode({
+        target,
+        git
+    }: {
+        target: Target;
+        git: schemas.GitHubRepositoryOutputSchema;
+    }): Promise<FernFiddle.OutputMode.GithubV2> {
+        const repository = parseRepository(git.repository);
+        const license = git.license != null ? await this.convertLicense(git.license) : undefined;
+        const publishInfo = target.publish != null ? this.buildPublishInfo(target.publish) : undefined;
+        const reviewers = this.buildReviewers(git.reviewers);
+        const mode = git.mode ?? "pr";
+        switch (mode) {
+            case "pr":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        license,
+                        publishInfo,
+                        reviewers,
+                        downloadSnippets: undefined
+                    })
+                );
+            case "release":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.commitAndRelease({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        license,
+                        publishInfo,
+                        downloadSnippets: undefined
+                    })
+                );
+            case "push":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        branch: git.branch,
+                        license,
+                        publishInfo,
+                        downloadSnippets: undefined
+                    })
+                );
+            default:
+                assertNever(mode);
+        }
+    }
+
+    private async buildGitSelfHostedOutputMode({
+        target,
+        git
+    }: {
+        target: Target;
+        git: schemas.GitSelfHostedOutputSchema;
+    }): Promise<FernFiddle.OutputMode.GithubV2> {
+        const repository = parseRepository(git.uri);
+        const license = git.license != null ? await this.convertLicense(git.license) : undefined;
+        const publishInfo = target.publish != null ? this.buildPublishInfo(target.publish) : undefined;
+        const mode = git.mode ?? "pr";
+        switch (mode) {
+            case "pr":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        branch: git.branch,
+                        license,
+                        publishInfo
+                    })
+                );
+            case "push":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        branch: git.branch,
+                        license,
+                        publishInfo
+                    })
+                );
+            default:
+                assertNever(mode);
+        }
     }
 
     private buildPublishInfo(publish: schemas.PublishSchema): FernFiddle.GithubPublishInfo | undefined {

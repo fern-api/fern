@@ -52,6 +52,8 @@ export function convertDiscriminatedOneOf({
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
     const discriminantNameOverride = getExtension<string>(discriminator, FernOpenAPIExtension.FERN_PROPERTY_NAME);
+    const discriminatorContext =
+        getExtension<"data" | "protocol">(discriminator, FernOpenAPIExtension.DISCRIMINATOR_CONTEXT) ?? "data";
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
             const subtypeReference = convertReferenceObject(
@@ -110,6 +112,7 @@ export function convertDiscriminatedOneOf({
         availability,
         discriminant,
         discriminantNameOverride,
+        discriminatorContext,
         subtypes: unionSubTypes,
         namespace,
         groupName,
@@ -219,6 +222,7 @@ export function convertDiscriminatedOneOfWithVariants({
         availability,
         discriminant,
         discriminantNameOverride: undefined,
+        discriminatorContext: "data", // variants don't have discriminator object, default to data
         subtypes: unionSubTypes,
         namespace,
         groupName,
@@ -237,6 +241,7 @@ export function wrapDiscriminatedOneOf({
     availability,
     discriminant,
     discriminantNameOverride,
+    discriminatorContext,
     subtypes,
     namespace,
     groupName,
@@ -252,6 +257,7 @@ export function wrapDiscriminatedOneOf({
     availability: Availability | undefined;
     discriminant: string;
     discriminantNameOverride: string | undefined;
+    discriminatorContext: "data" | "protocol";
     subtypes: Record<string, SchemaWithExample>;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -263,6 +269,7 @@ export function wrapDiscriminatedOneOf({
             availability,
             discriminantProperty: discriminant,
             discriminantPropertyNameOverride: discriminantNameOverride,
+            discriminatorContext,
             nameOverride,
             generatedName,
             title,
