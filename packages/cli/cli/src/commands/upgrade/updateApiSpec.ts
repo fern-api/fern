@@ -54,7 +54,7 @@ function prepareAuthHeaders(url: string): Record<string, string> {
 }
 
 // Helper function to check if JSON response contains introspection data
-function isIntrospectionResult(data: any): boolean {
+export function isIntrospectionResult(data: any): boolean {
     if (!data || typeof data !== "object") {
         return false;
     }
@@ -73,7 +73,7 @@ function isIntrospectionResult(data: any): boolean {
 }
 
 // Helper function to extract introspection data from response
-function extractIntrospectionData(data: any): any {
+export function extractIntrospectionData(data: any): any {
     // If it's already in the right format, return it
     if (data.__schema) {
         return data;
@@ -88,7 +88,7 @@ function extractIntrospectionData(data: any): any {
 }
 
 // Try GraphQL POST introspection approach (current behavior)
-async function tryGraphQLIntrospection(
+export async function tryGraphQLIntrospection(
     url: string,
     logger: Logger
 ): Promise<{
@@ -166,7 +166,7 @@ async function tryGraphQLIntrospection(
 }
 
 // Try direct JSON fetch approach (fallback behavior)
-async function tryDirectJSONFetch(
+export async function tryDirectJSONFetch(
     url: string,
     logger: Logger
 ): Promise<{
@@ -237,7 +237,7 @@ async function tryDirectJSONFetch(
 }
 
 // Auto-detection wrapper that tries both approaches
-async function fetchGraphQLSchemaWithAutoDetection(url: string, path: string, logger: Logger): Promise<void> {
+export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: string, logger: Logger): Promise<void> {
     // First attempt: POST introspection query (existing behavior for compatibility)
     const postResult = await tryGraphQLIntrospection(url, logger);
 
