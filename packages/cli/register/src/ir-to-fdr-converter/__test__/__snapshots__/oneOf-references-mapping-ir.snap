@@ -1384,6 +1384,7 @@
           },
           "wireValue": "type",
         },
+        "discriminatorContext": undefined,
         "extends": [],
         "type": "union",
         "types": [
