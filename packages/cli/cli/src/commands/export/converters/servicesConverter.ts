@@ -434,10 +434,26 @@ function convertResponse({
             }
         };
     } else if (httpResponse?.body?.type === "streaming") {
+        const streamingValue = httpResponse.body.value;
+        let streamingContentType: string;
+        switch (streamingValue.type) {
+            case "sse":
+                streamingContentType = "text/event-stream";
+                break;
+            case "json":
+                streamingContentType = "application/jsonl";
+                break;
+            case "text":
+                streamingContentType = "text/plain";
+                break;
+            default:
+                streamingContentType = "application/octet-stream";
+                break;
+        }
         responseByStatusCode[String(httpResponse.statusCode ?? 200)] = {
-            description: httpResponse.body.value.docs ?? "",
+            description: streamingValue.docs ?? "",
             content: {
-                "application/octet-stream": {
+                [streamingContentType]: {
                     schema: {
                         type: "string",
                         format: "binary"
