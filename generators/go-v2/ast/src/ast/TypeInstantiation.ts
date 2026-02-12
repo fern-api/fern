@@ -391,7 +391,9 @@ export class TypeInstantiation extends AstNode {
                 writer.write(value.toString());
                 return;
             case "string":
-                writer.write(value.includes('"') || value.includes("\n") ? `\`${value}\`` : `"${escapeGoString(value)}"`);
+                writer.write(
+                    value.includes('"') || value.includes("\n") ? `\`${value}\`` : `"${escapeGoString(value)}"`
+                );
                 return;
             case "number":
                 writer.write(value.toString());
