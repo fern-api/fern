@@ -152,9 +152,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     # and <package>/sentry_integration.py if they exist)
     import_paths: Optional[List[str]] = None
 
-    # If true, expose a private _transport override parameter on the client constructor
-    # that is passed through to httpx.Client/AsyncClient. Intended for SDK developers to
-    # supply custom transports via custom code (e.g., factory/classmethod wrappers).
+    # If true, expose an http_client parameter on the client constructor
+    # that accepts an httpx.BaseTransport/AsyncBaseTransport, passed through to
+    # httpx.Client/AsyncClient. Intended for SDK developers to supply custom
+    # transports via custom code (e.g., factory/classmethod wrappers).
     custom_transport: bool = False
 
     class Config:
