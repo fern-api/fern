@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.76.1
+  changelogEntry:
+    - summary: |
+        Add support for bytes request and response body types in the `fern export` command.
+        Previously, exporting APIs with bytes endpoints would fail with "bytes is not supported".
+        Now bytes request bodies are exported as `application/octet-stream` with `format: binary`,
+        and bytes/fileDownload/text/streaming response bodies are properly converted to their
+        corresponding OpenAPI content types.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 3.76.0
   changelogEntry:
     - summary: |
