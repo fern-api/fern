@@ -171,6 +171,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     import_paths: Optional[List[str]] = None
 
     transport_wrapper: Optional[TransportWrapperConfig] = None
+    # If true, expose a private _transport override parameter on the client constructor
+    # that is passed through to httpx.Client/AsyncClient. Intended for SDK developers to
+    # supply custom transports via custom code (e.g., factory/classmethod wrappers).
+    custom_transport: bool = False
 
     class Config:
         extra = pydantic.Extra.forbid

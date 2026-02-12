@@ -737,6 +737,25 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 )
 
+        # Expose a private _transport override when custom_transport is enabled
+        if self._context.custom_config.custom_transport:
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name="_transport",
+                    type_hint=(
+                        AST.TypeHint.optional(AST.TypeHint(HttpX.BASE_TRANSPORT))
+                        if not is_async
+                        else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_BASE_TRANSPORT))
+                    ),
+                    private_member_name=None,
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                    docs=(
+                        "Internal: override the httpx transport used by the client. "
+                        "This is intended for SDK developers via custom code (e.g., factory methods)."
+                    ),
+                )
+            )
+
         parameters.extend(self._get_literal_header_parameters())
 
         return parameters
