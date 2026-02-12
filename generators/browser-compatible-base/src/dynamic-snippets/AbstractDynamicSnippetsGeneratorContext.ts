@@ -401,7 +401,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             case "referenced":
                 return false;
             default:
-                assertNever(body);
+                return assertNever(body);
         }
     }
 
@@ -426,7 +426,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
                 return environment.name;
             }
             default:
-                assertNever(environments);
+                return assertNever(environments);
         }
     }
 
@@ -599,7 +599,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             case "fileUpload":
                 return this.includeFileUploadBodyInWrappedRequest({ fileUpload: body, inlineFileProperties });
             default:
-                assertNever(body);
+                return assertNever(body);
         }
     }
 
@@ -625,7 +625,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
                 case "bodyProperty":
                     return true;
                 default:
-                    assertNever(property);
+                    return assertNever(property);
             }
         });
     }
@@ -639,7 +639,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
                 case "bodyProperty":
                     return false;
                 default:
-                    assertNever(property);
+                    return assertNever(property);
             }
         });
     }
