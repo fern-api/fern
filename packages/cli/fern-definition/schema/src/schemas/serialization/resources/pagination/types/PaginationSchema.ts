@@ -12,8 +12,19 @@ import { UriPaginationSchema } from "./UriPaginationSchema.js";
 export const PaginationSchema: core.serialization.Schema<
     serializers.PaginationSchema.Raw,
     FernDefinition.PaginationSchema
-> = core.serialization.undiscriminatedUnion([CursorPaginationSchema, OffsetPaginationSchema, CustomPaginationSchema, UriPaginationSchema, PathPaginationSchema]);
+> = core.serialization.undiscriminatedUnion([
+    CursorPaginationSchema,
+    OffsetPaginationSchema,
+    CustomPaginationSchema,
+    UriPaginationSchema,
+    PathPaginationSchema,
+]);
 
 export declare namespace PaginationSchema {
-    export type Raw = CursorPaginationSchema.Raw | OffsetPaginationSchema.Raw | CustomPaginationSchema.Raw | UriPaginationSchema.Raw | PathPaginationSchema.Raw;
+    export type Raw =
+        | CursorPaginationSchema.Raw
+        | OffsetPaginationSchema.Raw
+        | CustomPaginationSchema.Raw
+        | UriPaginationSchema.Raw
+        | PathPaginationSchema.Raw;
 }

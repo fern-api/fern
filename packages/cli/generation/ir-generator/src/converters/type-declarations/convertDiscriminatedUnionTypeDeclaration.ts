@@ -1,5 +1,12 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
+import {
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    Type,
+    TypeReference,
+    UnionDiscriminatorContext,
+    UnionDiscriminatorMapping
+} from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
@@ -86,7 +93,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 availability: getAvailability(rawSingleUnionType)
             };
         }),
-        discriminatorMapping: undefined
+        discriminatorMapping: buildDiscriminatorMapping({ union, discriminant })
     });
 }
 
@@ -228,4 +235,24 @@ function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
         }
     }
     return resolvedType;
+}
+
+function buildDiscriminatorMapping({
+    union,
+    discriminant
+}: {
+    union: RawSchemas.DiscriminatedUnionSchema;
+    discriminant: string;
+}): UnionDiscriminatorMapping | undefined {
+    // If context is not explicitly set to "protocol", use undefined mapping (default behavior)
+    if (union.context !== "protocol") {
+        return undefined;
+    }
+
+    // Build mapping for protocol-level discrimination
+    return UnionDiscriminatorMapping.from({
+        context: UnionDiscriminatorContext.Protocol,
+        discriminatorField: discriminant,
+        mapping: Object.fromEntries(Object.keys(union.union).map((unionKey) => [unionKey, unionKey]))
+    });
 }

@@ -1,0 +1,360 @@
+{
+  "title": "Test spec for discriminator context extension",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "SseStream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SseStreamRequest",
+      "request": {
+        "schema": {
+          "generatedName": "SseStreamRequest",
+          "schema": "StreamRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/sse-stream",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "StreamRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "streamRequestQuery",
+            "key": "query",
+            "schema": {
+              "generatedName": "StreamRequestQuery",
+              "description": "The query to process",
+              "value": {
+                "description": "The query to process",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "StreamRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "StreamRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SseStreamEvent": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "event",
+          "discriminatorContext": "protocol",
+          "generatedName": "SseStreamEvent",
+          "schemas": {
+            "completion": {
+              "generatedName": "ComponentsSchemasCompletionEvent",
+              "schema": "CompletionEvent",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "error": {
+              "generatedName": "ComponentsSchemasErrorEvent",
+              "schema": "ErrorEvent",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "CompletionEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "completionEventContent",
+            "key": "content",
+            "schema": {
+              "generatedName": "CompletionEventContent",
+              "description": "The completion content",
+              "value": {
+                "description": "The completion content",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CompletionEventContent",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CompletionEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ErrorEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "errorEventError",
+            "key": "error",
+            "schema": {
+              "generatedName": "ErrorEventError",
+              "description": "The error message",
+              "value": {
+                "description": "The error message",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ErrorEventError",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "errorEventCode",
+            "key": "code",
+            "schema": {
+              "generatedName": "ErrorEventCode",
+              "description": "The error code",
+              "value": {
+                "description": "The error code",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "ErrorEventCode",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ErrorEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "DataLevelUnion": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "type",
+          "discriminatorContext": "data",
+          "generatedName": "DataLevelUnion",
+          "schemas": {
+            "user": {
+              "generatedName": "ComponentsSchemasUserData",
+              "schema": "UserData",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "admin": {
+              "generatedName": "ComponentsSchemasAdminData",
+              "schema": "AdminData",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "UserData": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userDataUsername",
+            "key": "username",
+            "schema": {
+              "generatedName": "UserDataUsername",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserDataUsername",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "UserData",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AdminData": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "adminDataUsername",
+            "key": "username",
+            "schema": {
+              "generatedName": "AdminDataUsername",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AdminDataUsername",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "adminDataPermissions",
+            "key": "permissions",
+            "schema": {
+              "generatedName": "AdminDataPermissions",
+              "value": {
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AdminDataPermissionsItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "AdminDataPermissions",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AdminData",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
