@@ -11,7 +11,7 @@ import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
-import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
+import type { ReleaseType } from "@fern-fern/generators-sdk/generators";
 
 import { CliContext } from "../CliContext.js";
 

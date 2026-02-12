@@ -1,5 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry, FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
+import { ReleaseType } from "@fern-fern/generators-sdk/generators";
+import { GetLatestGeneratorReleaseRequest, VersionsClient } from "@fern-fern/generators-sdk/generators/versions";
 import semver from "semver";
 
 export async function getLatestGeneratorVersion({
@@ -12,23 +13,23 @@ export async function getLatestGeneratorVersion({
 }: {
     generatorName: string;
     cliVersion: string;
-    channel: FernRegistry.generators.ReleaseType | undefined;
+    channel: ReleaseType | undefined;
     currentGeneratorVersion?: string;
     includeMajor?: boolean;
     context?: TaskContext;
 }): Promise<string | undefined> {
     const parsedVersion = semver.parse(currentGeneratorVersion);
     // We're just using unauthed endpoints, so we don't need to pass in a token
-    const client = new GeneratorsClient({
+    const client = new VersionsClient({
         environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
     });
     context?.logger.debug(
         `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion}`
     );
 
-    const payload: FernRegistry.generators.versions.GetLatestGeneratorReleaseRequest = {
+    const payload: GetLatestGeneratorReleaseRequest = {
         generator: getGeneratorMetadataFromName(generatorName, context),
-        releaseTypes: [channel ?? FernRegistry.generators.ReleaseType.Ga],
+        releaseTypes: [channel ?? ReleaseType.Ga],
         // We get "*" as 0.0.0, so we need to handle that case for tests
         // if we see this, then we shouldn't restrict on the CLI version
         cliVersion: cliVersion === "0.0.0" ? undefined : cliVersion
@@ -38,7 +39,7 @@ export async function getLatestGeneratorVersion({
         payload.generatorMajorVersion = parsedVersion.major;
     }
 
-    const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease(payload);
+    const latestReleaseResponse = await client.getLatestGeneratorRelease(payload);
 
     if (latestReleaseResponse.ok) {
         return latestReleaseResponse.body.version;

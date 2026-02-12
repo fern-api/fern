@@ -1,4 +1,4 @@
-import { FernRegistryClient } from "@fern-fern/generators-sdk";
+import { GeneratorsClient } from "@fern-fern/generators-sdk/generators";
 import boxen from "boxen";
 import chalk from "chalk";
 
@@ -122,10 +122,10 @@ export async function getGeneratorUpgradeMessage({
 }
 
 async function normalizeGeneratorName(generatorImage: string): Promise<string> {
-    const client = new FernRegistryClient({
+    const client = new GeneratorsClient({
         environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
     });
-    const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generatorImage });
+    const generatorResponse = await client.getGeneratorByImage({ dockerImage: generatorImage });
     if (!generatorResponse.ok || generatorResponse.body == null) {
         throw new Error(`Generator ${generatorImage} not found`);
     }

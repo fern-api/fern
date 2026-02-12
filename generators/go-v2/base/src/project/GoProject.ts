@@ -3,7 +3,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath, resolveRootModulePath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
+
+type OutputMode = FernGeneratorExec.OutputMode;
+
 import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";

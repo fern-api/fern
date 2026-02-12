@@ -2,9 +2,10 @@ import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/api";
-import * as FernFiddleSerialization from "@fern-fern/fiddle-sdk/serialization";
+import { FernFiddle, serialization as FernFiddleSerialization } from "@fern-fern/fiddle-sdk";
+
+type GithubPublishInfo = FernFiddle.GithubPublishInfo;
+type PublishOutputModeV2 = FernFiddle.PublishOutputModeV2;
 
 import { OutputMode } from "../config/api/index.js";
 import { ParsedDockerName } from "../utils/parseDockerOrThrow.js";

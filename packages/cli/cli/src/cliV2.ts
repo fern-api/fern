@@ -1,5 +1,5 @@
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
-import { FernRegistry } from "@fern-fern/generators-sdk";
+import { ReleaseType } from "@fern-fern/generators-sdk/generators";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
 
@@ -148,7 +148,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         })
                         .option("channel", {
                             demandOption: false,
-                            choices: Object.values(FernRegistry.generators.ReleaseType)
+                            choices: Object.values(ReleaseType)
                         })
                         .option("list", {
                             demandOption: false,

@@ -4,7 +4,13 @@ import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fer
 import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
+
+type GithubPullRequestReviewer = FernFiddle.GithubPullRequestReviewer;
+const GithubPullRequestReviewer = FernFiddle.GithubPullRequestReviewer;
+type OutputMetadata = FernFiddle.OutputMetadata;
+type PublishingMetadata = FernFiddle.PublishingMetadata;
+type PypiMetadata = FernFiddle.PypiMetadata;
+
 import { readFile } from "fs/promises";
 import path from "path";
 

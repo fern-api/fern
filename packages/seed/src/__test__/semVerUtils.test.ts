@@ -1,7 +1,8 @@
-import {
-    ChangelogEntryType,
-    ReleaseRequest
-} from "@fern-fern/generators-sdk/api/resources/generators/resources/commons/types";
+import { FernRegistry } from "@fern-fern/generators-sdk";
+
+type ChangelogEntryType = FernRegistry.generators.ChangelogEntryType;
+const ChangelogEntryType = FernRegistry.generators.ChangelogEntryType;
+type ReleaseRequest = FernRegistry.generators.ReleaseRequest;
 
 import {
     assertValidSemVerChangeOrThrow,

@@ -10,7 +10,6 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -125,7 +124,7 @@ async function createJob({
     });
 
     if (!createResponse.ok) {
-        return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
+        return convertCreateJobError(createResponse.error)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
             },

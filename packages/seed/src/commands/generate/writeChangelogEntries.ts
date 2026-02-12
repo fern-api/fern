@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ChangelogEntry } from "@fern-fern/generators-sdk/api/resources/generators";
+import type { ChangelogEntry } from "@fern-fern/generators-sdk/generators";
+
 import { writeFile } from "fs/promises";
-import moment from "moment";
 
 export function writeChangelogEntries(version: string, entries: ChangelogEntry[] | undefined): string {
     // ## 0.0.1

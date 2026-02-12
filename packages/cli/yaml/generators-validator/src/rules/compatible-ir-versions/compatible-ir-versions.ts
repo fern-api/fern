@@ -1,5 +1,5 @@
 import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader";
-import { createFdrGeneratorsSdkService, getIrVersionForGenerator } from "@fern-api/core";
+import { createFdrGeneratorsClient, getIrVersionForGenerator } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
 import { Rule, RuleViolation } from "../../Rule.js";
@@ -31,13 +31,13 @@ export const CompatibleIrVersionsRule: Rule = {
         return {
             generatorsYml: {
                 generatorInvocation: async ({ invocation, cliVersion }) => {
-                    const fdr = createFdrGeneratorsSdkService({ token: undefined });
+                    const generatorsClient = createFdrGeneratorsClient({ token: undefined });
                     if (cliVersion == null) {
                         return [];
                     }
 
                     // Pull the CLI release to get the IR version
-                    const cliRelease = await fdr.generators.cli.getCliRelease(cliVersion);
+                    const cliRelease = await generatorsClient.cli.getCliRelease(cliVersion);
                     // Again, this is to allow for offline usage, and other transient errors
                     if (!cliRelease.ok) {
                         return [];
@@ -74,7 +74,7 @@ export const CompatibleIrVersionsRule: Rule = {
 
                     // If we've made it this far, we know the IR versions aren't a match, let's grab the min version
                     // and throw an error for the user telling them what to upgrade to to use this generator.
-                    const minCliVersion = await fdr.generators.cli.getMinCliForIr(invocationIrVersion);
+                    const minCliVersion = await generatorsClient.cli.getMinCliForIr(invocationIrVersion);
                     if (minCliVersion.ok) {
                         return getMaybeBadVersionMessage(invocation.name, minCliVersion.body.version, cliVersion) ?? [];
                     } else {

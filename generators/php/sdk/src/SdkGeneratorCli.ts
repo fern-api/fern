@@ -5,7 +5,9 @@ import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
 import { generateModels, generateTraits } from "@fern-api/php-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
+
+type Endpoint = FernGeneratorExec.Endpoint;
+
 import { FernIr } from "@fern-fern/ir-sdk";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator.js";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";

@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
+type BasicLicense = FernGeneratorExec.BasicLicense;
+type CustomLicense = FernGeneratorExec.CustomLicense;
 import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 

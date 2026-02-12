@@ -7,8 +7,7 @@ import {
     generateWellKnownProtobufFiles
 } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { FernGeneratorExec, serialization as FernGeneratorExecSerializers } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";

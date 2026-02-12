@@ -5,7 +5,9 @@ import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
+
+type Endpoint = FernGeneratorExec.Endpoint;
+
 import { FernIr } from "@fern-fern/ir-sdk";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";

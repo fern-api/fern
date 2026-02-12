@@ -64,7 +64,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
     "@fern-api/yaml-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.775",
+    "@fern-fern/fiddle-sdk": "1.0.0",
     "@types/inquirer": "^9.0.7",
     "@types/js-yaml": "^4.0.8",
     "@types/jsonwebtoken": "^9.0.6",

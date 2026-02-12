@@ -1,15 +1,20 @@
-import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
 import {
-    ExitStatusUpdate,
-    GeneratorConfig,
-    GeneratorUpdate,
-    GithubOutputMode,
-    LogLevel
-} from "@fern-fern/generator-exec-sdk/api";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
+    FernGeneratorExec,
+    FernGeneratorExecClient,
+    serialization as GeneratorExecParsing
+} from "@fern-fern/generator-exec-sdk";
+
+type ExitStatusUpdate = FernGeneratorExec.ExitStatusUpdate;
+const ExitStatusUpdate = FernGeneratorExec.ExitStatusUpdate;
+type GeneratorUpdate = FernGeneratorExec.GeneratorUpdate;
+const GeneratorUpdate = FernGeneratorExec.GeneratorUpdate;
+type GeneratorConfig = FernGeneratorExec.GeneratorConfig;
+type GithubOutputMode = FernGeneratorExec.GithubOutputMode;
+type LogLevel = FernGeneratorExec.LogLevel;
+
 import { AbstractGeneratorNotificationService } from "./AbstractGeneratorNotificationService.js";
 
-export { GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel, FernGeneratorExec };
+export { GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, type LogLevel, FernGeneratorExec };
 export type { GeneratorConfig, GithubOutputMode };
 
 export class GeneratorNotificationService implements AbstractGeneratorNotificationService {

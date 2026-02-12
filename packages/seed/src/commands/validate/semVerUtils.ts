@@ -1,7 +1,4 @@
-import {
-    ChangelogEntryType,
-    ReleaseRequest
-} from "@fern-fern/generators-sdk/api/resources/generators/resources/commons/types";
+import { ChangelogEntryType, ReleaseRequest } from "@fern-fern/generators-sdk/generators";
 
 export function assertValidSemVerOrThrow(version: string): void {
     SemVer.fromString(version);

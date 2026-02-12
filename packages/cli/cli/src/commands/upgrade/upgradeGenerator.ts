@@ -8,7 +8,7 @@ import {
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry } from "@fern-fern/generators-sdk";
+import type { ReleaseType } from "@fern-fern/generators-sdk/generators";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
@@ -69,7 +69,7 @@ export async function loadAndUpdateGenerators({
     generatorFilter: string | undefined;
     groupFilter: string | undefined;
     includeMajor: boolean;
-    channel: FernRegistry.generators.ReleaseType | undefined;
+    channel: ReleaseType | undefined;
     cliVersion: string;
 }): Promise<{
     updatedConfiguration: string | undefined;
@@ -288,7 +288,7 @@ export async function upgradeGenerator({
     group: string | undefined;
     project: Project;
     includeMajor: boolean;
-    channel: FernRegistry.generators.ReleaseType | undefined;
+    channel: ReleaseType | undefined;
 }): Promise<void> {
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];

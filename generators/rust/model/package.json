@@ -48,7 +48,7 @@
     "@fern-api/rust-base": "workspace:*",
     "@fern-api/rust-codegen": "workspace:*",
     "@fern-api/test-utils": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@fern-fern/generator-exec-sdk": "1.0.0",
     "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

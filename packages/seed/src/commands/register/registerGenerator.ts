@@ -1,7 +1,7 @@
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
-import { FernRegistryClient as FdrClient, FernRegistry } from "@fern-fern/generators-sdk";
+import { type FernRegistryClient as FdrClient, FernRegistry } from "@fern-fern/generators-sdk";
 
 import { GeneratorType, ScriptCommands } from "../../config/api/index.js";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";

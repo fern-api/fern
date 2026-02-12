@@ -1,13 +1,13 @@
-import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
+import { GeneratorsClient } from "@fern-fern/generators-sdk/generators";
 
-export function createFdrGeneratorsSdkService({
+export function createFdrGeneratorsClient({
     environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     token
 }: {
     environment?: string;
     token: (() => string) | string | undefined;
-}): FdrClient {
-    return new FdrClient({
+}): GeneratorsClient {
+    return new GeneratorsClient({
         environment,
         token
     });
@@ -19,15 +19,15 @@ export interface GeneratorInfo {
 }
 
 export async function getIrVersionForGenerator(invocation: GeneratorInfo): Promise<number | undefined> {
-    const fdr = createFdrGeneratorsSdkService({ token: undefined });
-    const generatorEntity = await fdr.generators.getGeneratorByImage({
+    const generatorsClient = createFdrGeneratorsClient({ token: undefined });
+    const generatorEntity = await generatorsClient.getGeneratorByImage({
         dockerImage: invocation.name
     });
     // Again, this is to allow for offline usage, and other transient errors
     if (!generatorEntity.ok || generatorEntity.body == null) {
         return undefined;
     }
-    const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
+    const generatorRelease = await generatorsClient.versions.getGeneratorRelease(
         generatorEntity.body.id,
         invocation.version
     );

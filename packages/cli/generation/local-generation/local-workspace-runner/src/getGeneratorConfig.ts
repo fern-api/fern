@@ -1,20 +1,25 @@
 import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import {
-    CratesOutput,
-    GithubPublishInfo as FiddleGithubPublishInfo,
-    MavenOutput,
-    NpmOutput,
-    NugetOutput,
-    PostmanOutput,
-    PublishOutputMode,
-    PublishOutputModeV2,
-    PypiOutput,
-    RubyGemsOutput
-} from "@fern-fern/fiddle-sdk/api";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
+
+type CratesOutput = FernFiddle.CratesOutput;
+type GithubPublishInfo = FernFiddle.GithubPublishInfo;
+const GithubPublishInfo = FernFiddle.GithubPublishInfo;
+type MavenOutput = FernFiddle.MavenOutput;
+type NpmOutput = FernFiddle.NpmOutput;
+type NugetOutput = FernFiddle.NugetOutput;
+type PostmanOutput = FernFiddle.PostmanOutput;
+type PublishOutputMode = FernFiddle.PublishOutputMode;
+type PublishOutputModeV2 = FernFiddle.PublishOutputModeV2;
+type PypiOutput = FernFiddle.PypiOutput;
+type RubyGemsOutput = FernFiddle.RubyGemsOutput;
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
+
+type EnvironmentVariable = FernGeneratorExec.EnvironmentVariable;
+const EnvironmentVariable = FernGeneratorExec.EnvironmentVariable;
+
 import * as path from "path";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
@@ -102,10 +107,10 @@ export declare namespace getGeneratorConfig {
 }
 
 function getGithubPublishConfig(
-    githubPublishInfo: FiddleGithubPublishInfo | undefined
+    githubPublishInfo: GithubPublishInfo | undefined
 ): FernGeneratorExec.GithubPublishInfo | undefined {
     return githubPublishInfo != null
-        ? FiddleGithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
+        ? GithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
               npm: (value) => {
                   const token = (value.token ?? "").trim();
                   const useOidc = token === "<USE_OIDC>" || token === "OIDC";

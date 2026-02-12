@@ -4,8 +4,10 @@ import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
+import { FernGeneratorExec, serialization as FernGeneratorExecSerialization } from "@fern-fern/generator-exec-sdk";
+
+const GeneratorConfig = FernGeneratorExecSerialization.GeneratorConfig;
+
 import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";

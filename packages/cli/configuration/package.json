@@ -36,7 +36,7 @@
     "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.775",
+    "@fern-fern/fiddle-sdk": "1.0.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernRegistryClient } from "@fern-fern/generators-sdk";
+import type { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { mkdir, readdir, rm } from "fs/promises";
 import moment from "moment";
 

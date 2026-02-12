@@ -1,5 +1,8 @@
 import { TaskContext } from "@fern-api/task-context";
-import { CliReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
+import type { FernRegistry } from "@fern-fern/generators-sdk";
+
+type CliReleaseRequest = FernRegistry.generators.CliReleaseRequest;
+
 import semver from "semver";
 
 import { parseCliReleasesFile } from "./convertVersionsFileToReleases.js";
