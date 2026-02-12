@@ -31,11 +31,8 @@ async function fetchAndWriteFile(url: string, path: string, logger: Logger, inde
     }
 }
 
-async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, logger: Logger): Promise<void> {
-    // Create the introspection query
-    const introspectionQuery = getIntrospectionQuery();
-
-    // Prepare headers with authentication if available
+// Helper function to prepare authentication headers
+function prepareAuthHeaders(url: string): Record<string, string> {
     const headers: Record<string, string> = {
         "Content-Type": "application/json",
         Accept: "application/json"
@@ -53,47 +50,230 @@ async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, lo
         }
     }
 
-    // Send POST request with introspection query
-    const resp = await fetch(url, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-            query: introspectionQuery
-        })
-    });
+    return headers;
+}
 
-    if (!resp.ok) {
-        if (resp.status === 401 || resp.status === 403) {
-            const authHint = url.includes("github.com")
-                ? "Set GITHUB_TOKEN environment variable with a GitHub personal access token"
-                : "Set GRAPHQL_TOKEN or API_TOKEN environment variable with an authentication token";
-            throw new Error(
-                `GraphQL introspection failed: ${resp.status} ${resp.statusText}. ` +
-                    `This endpoint requires authentication. ${authHint}`
-            );
-        }
-        throw new Error(`GraphQL introspection failed: ${resp.status} ${resp.statusText}`);
+// Helper function to check if JSON response contains introspection data
+function isIntrospectionResult(data: any): boolean {
+    if (!data || typeof data !== "object") {
+        return false;
     }
 
-    const result = await resp.json();
-
-    if (result.errors) {
-        throw new Error(`GraphQL introspection errors: ${JSON.stringify(result.errors)}`);
+    // Check for direct introspection result format: { __schema: { ... } }
+    if (data.__schema && typeof data.__schema === "object") {
+        return true;
     }
 
-    if (!result.data) {
-        throw new Error("GraphQL introspection returned no data");
+    // Check for GraphQL response format: { data: { __schema: { ... } } }
+    if (data.data && typeof data.data === "object" && data.data.__schema && typeof data.data.__schema === "object") {
+        return true;
     }
 
+    return false;
+}
+
+// Helper function to extract introspection data from response
+function extractIntrospectionData(data: any): any {
+    // If it's already in the right format, return it
+    if (data.__schema) {
+        return data;
+    }
+
+    // If it's wrapped in a data property, unwrap it
+    if (data.data && data.data.__schema) {
+        return data.data;
+    }
+
+    return data;
+}
+
+// Try GraphQL POST introspection approach (current behavior)
+async function tryGraphQLIntrospection(
+    url: string,
+    logger: Logger
+): Promise<{
+    success: boolean;
+    result?: string; // SDL string
+    error?: string;
+}> {
     try {
+        logger.debug("Attempting GraphQL POST introspection");
+
+        // Create the introspection query
+        const introspectionQuery = getIntrospectionQuery();
+
+        // Prepare headers with authentication if available
+        const headers = prepareAuthHeaders(url);
+
+        // Send POST request with introspection query
+        const resp = await fetch(url, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+                query: introspectionQuery
+            })
+        });
+
+        if (!resp.ok) {
+            if (resp.status === 401 || resp.status === 403) {
+                const authHint = url.includes("github.com")
+                    ? "Set GITHUB_TOKEN environment variable with a GitHub personal access token"
+                    : "Set GRAPHQL_TOKEN or API_TOKEN environment variable with an authentication token";
+                return {
+                    success: false,
+                    error:
+                        `GraphQL introspection failed: ${resp.status} ${resp.statusText}. ` +
+                        `This endpoint requires authentication. ${authHint}`
+                };
+            }
+            return {
+                success: false,
+                error: `GraphQL introspection failed: ${resp.status} ${resp.statusText}`
+            };
+        }
+
+        const result = await resp.json();
+
+        if (result.errors) {
+            return {
+                success: false,
+                error: `GraphQL introspection errors: ${JSON.stringify(result.errors)}`
+            };
+        }
+
+        if (!result.data) {
+            return {
+                success: false,
+                error: "GraphQL introspection returned no data"
+            };
+        }
+
         // Convert introspection result to schema and then to SDL
         const schema = buildClientSchema(result.data);
         const sdl = printSchema(schema);
 
-        await writeFile(path, sdl, "utf8");
+        logger.debug("GraphQL POST introspection succeeded");
+        return {
+            success: true,
+            result: sdl
+        };
     } catch (error) {
-        throw new Error(`Failed to convert introspection result to SDL: ${error}`);
+        return {
+            success: false,
+            error: `Failed to perform GraphQL introspection: ${error}`
+        };
     }
+}
+
+// Try direct JSON fetch approach (fallback behavior)
+async function tryDirectJSONFetch(
+    url: string,
+    logger: Logger
+): Promise<{
+    success: boolean;
+    result?: string; // SDL string
+    error?: string;
+}> {
+    try {
+        logger.debug("Attempting direct JSON fetch");
+
+        // Prepare headers with authentication if available
+        const headers = prepareAuthHeaders(url);
+        // Remove Content-Type for GET request
+        delete headers["Content-Type"];
+
+        // Send GET request
+        const resp = await fetch(url, {
+            method: "GET",
+            headers
+        });
+
+        if (!resp.ok) {
+            if (resp.status === 401 || resp.status === 403) {
+                const authHint = url.includes("github.com")
+                    ? "Set GITHUB_TOKEN environment variable with a GitHub personal access token"
+                    : "Set GRAPHQL_TOKEN or API_TOKEN environment variable with an authentication token";
+                return {
+                    success: false,
+                    error:
+                        `Direct JSON fetch failed: ${resp.status} ${resp.statusText}. ` +
+                        `This endpoint requires authentication. ${authHint}`
+                };
+            }
+            return {
+                success: false,
+                error: `Direct JSON fetch failed: ${resp.status} ${resp.statusText}`
+            };
+        }
+
+        const result = await resp.json();
+
+        // Validate that the response contains introspection data
+        if (!isIntrospectionResult(result)) {
+            return {
+                success: false,
+                error: "Response does not contain GraphQL introspection data. Expected __schema field."
+            };
+        }
+
+        // Extract the introspection data
+        const introspectionData = extractIntrospectionData(result);
+
+        // Convert introspection result to schema and then to SDL
+        const schema = buildClientSchema(introspectionData);
+        const sdl = printSchema(schema);
+
+        logger.debug("Direct JSON fetch succeeded");
+        return {
+            success: true,
+            result: sdl
+        };
+    } catch (error) {
+        return {
+            success: false,
+            error: `Failed to fetch JSON directly: ${error}`
+        };
+    }
+}
+
+// Auto-detection wrapper that tries both approaches
+async function fetchGraphQLSchemaWithAutoDetection(url: string, path: string, logger: Logger): Promise<void> {
+    // First attempt: POST introspection query (existing behavior for compatibility)
+    const postResult = await tryGraphQLIntrospection(url, logger);
+
+    if (postResult.success) {
+        await writeFile(path, postResult.result!, "utf8");
+        logger.info("Successfully fetched GraphQL schema using POST introspection");
+        return;
+    }
+
+    // Log the first attempt failure for debugging
+    logger.debug(`POST introspection failed: ${postResult.error}`);
+
+    // Second attempt: GET direct JSON fetch (new fallback behavior)
+    const getResult = await tryDirectJSONFetch(url, logger);
+
+    if (getResult.success) {
+        await writeFile(path, getResult.result!, "utf8");
+        logger.info("Successfully fetched GraphQL schema using direct JSON fetch");
+        return;
+    }
+
+    // Both attempts failed - provide comprehensive error message
+    const errorMessage =
+        `Failed to fetch GraphQL schema from ${url}.\n\n` +
+        `Attempt 1 (POST introspection): ${postResult.error}\n` +
+        `Attempt 2 (GET direct fetch): ${getResult.error}\n\n` +
+        `Please ensure the URL either:\n` +
+        `1. Accepts GraphQL introspection queries via POST, or\n` +
+        `2. Returns introspection results directly via GET`;
+
+    throw new Error(errorMessage);
+}
+
+// Legacy function for backward compatibility (not used internally anymore)
+async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, logger: Logger): Promise<void> {
+    return fetchGraphQLSchemaWithAutoDetection(url, path, logger);
 }
 
 export async function updateApiSpec({
@@ -181,10 +361,8 @@ async function getAndFetchFromAPIDefinitionLocation({
         const filePath = join(workspacePath, RelativeFilePath.of(apiLocation.schema.path));
 
         if (apiLocation.schema.type === "graphql") {
-            cliContext.logger.info(
-                `GraphQL schema origin found, performing introspection query to ${apiLocation.origin}`
-            );
-            await fetchGraphQLSchemaFromIntrospection(apiLocation.origin, filePath, cliContext.logger);
+            cliContext.logger.info(`GraphQL schema origin found, fetching schema from ${apiLocation.origin}`);
+            await fetchGraphQLSchemaWithAutoDetection(apiLocation.origin, filePath, cliContext.logger);
         } else {
             cliContext.logger.info(`Origin found, fetching spec from ${apiLocation.origin}`);
             await fetchAndWriteFile(apiLocation.origin, filePath, cliContext.logger, indent);
