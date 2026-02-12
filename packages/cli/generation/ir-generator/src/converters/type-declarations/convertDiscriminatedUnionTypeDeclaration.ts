@@ -4,8 +4,7 @@ import {
     SingleUnionTypeProperties,
     Type,
     TypeReference,
-    UnionDiscriminatorContext,
-    UnionDiscriminatorMapping
+    UnionDiscriminatorContext
 } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext.js";
@@ -93,7 +92,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 availability: getAvailability(rawSingleUnionType)
             };
         }),
-        discriminatorMapping: buildDiscriminatorMapping({ union, discriminant })
+        discriminatorContext: getDiscriminatorContext({ union })
     });
 }
 
@@ -237,25 +236,8 @@ function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
     return resolvedType;
 }
 
-function buildDiscriminatorMapping({
-    union,
-    discriminant
-}: {
-    union: RawSchemas.DiscriminatedUnionSchema;
-    discriminant: string;
-}): UnionDiscriminatorMapping | undefined {
-    // Extract context from discriminant schema if it's an object
+function getDiscriminatorContext({ union }: { union: RawSchemas.DiscriminatedUnionSchema }): UnionDiscriminatorContext {
     const discriminantContext = typeof union.discriminant === "object" && union.discriminant?.context;
 
-    // If context is not explicitly set to "protocol", use undefined mapping (default behavior)
-    if (discriminantContext !== "protocol") {
-        return undefined;
-    }
-
-    // For protocol-level discrimination, generators only need the context and discriminator field.
-    // Generators already have the union structure with all member types.
-    return {
-        context: UnionDiscriminatorContext.Protocol,
-        discriminatorField: discriminant
-    };
+    return discriminantContext === "protocol" ? UnionDiscriminatorContext.Protocol : UnionDiscriminatorContext.Data;
 }

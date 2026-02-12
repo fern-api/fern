@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.75.1
+  changelogEntry:
+    - summary: |
+        Add support for SSE discriminator context with `discriminatorContext` field in IR.
+        Supports "data" (default) for discriminators within union data and "protocol" for
+        SSE event-level discriminators. Includes OpenAPI extension `x-fern-discriminator-context`.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 3.75.0
   changelogEntry:
     - summary: |

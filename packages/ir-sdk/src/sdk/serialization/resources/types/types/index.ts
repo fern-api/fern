@@ -75,6 +75,5 @@ export * from "./UintValidationRules.js";
 export * from "./UndiscriminatedUnionMember.js";
 export * from "./UndiscriminatedUnionTypeDeclaration.js";
 export * from "./UnionDiscriminatorContext.js";
-export * from "./UnionDiscriminatorMapping.js";
 export * from "./UnionTypeDeclaration.js";
 export * from "./UuidType.js";

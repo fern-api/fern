@@ -9,10 +9,9 @@ export interface UnionTypeDeclaration {
     types: FernIr.SingleUnionType[];
     baseProperties: FernIr.ObjectProperty[];
     /**
-     * Optional mapping from discriminant values to union member types.
-     * Enables generators to create compile-time discrimination logic
-     * instead of runtime reflection. Maps wireValue to the corresponding
-     * union member's type information.
+     * Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+     * "data" means discriminator is within the union data itself.
+     * "protocol" means discriminator is at the protocol level (e.g., SSE event field).
      */
-    discriminatorMapping: FernIr.UnionDiscriminatorMapping | undefined;
+    discriminatorContext: FernIr.UnionDiscriminatorContext | undefined;
 }

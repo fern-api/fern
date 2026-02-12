@@ -220,7 +220,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }),
                 extends: extends_,
                 types: unionTypes,
-                discriminatorMapping: undefined
+                discriminatorContext: undefined
             }),
             referencedTypes,
             inlinedTypes: {

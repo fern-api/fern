@@ -133,13 +133,13 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
-      discriminatorMapping:
+      discriminatorContext:
         docs: |
-          Optional mapping from discriminant values to union member types.
-          Enables generators to create compile-time discrimination logic
-          instead of runtime reflection. Maps wireValue to the corresponding
-          union member's type information.
-        type: optional<UnionDiscriminatorMapping>
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means discriminator is within the union data itself.
+          "protocol" means discriminator is at the protocol level (e.g., SSE event field).
+        type: optional<UnionDiscriminatorContext>
+        default: data
 
   SingleUnionType:
     extends: commons.WithDocs
@@ -162,24 +162,6 @@ types:
     properties:
       name: commons.NameAndWireValue
       type: TypeReference
-
-  UnionDiscriminatorMapping:
-    docs: |
-      Provides compile-time mapping from discriminant values to union member types.
-      This enables generators to create type-safe discrimination logic without
-      runtime reflection or type introspection.
-    properties:
-      context:
-        docs: |
-          Where the discriminator is located relative to the union type.
-          Data: discriminator is within the union data itself
-          Protocol: discriminator is at the protocol level (e.g., SSE event field)
-        type: UnionDiscriminatorContext
-        default: data
-      discriminatorField:
-        docs: |
-          Name of the field used for discrimination (e.g., "type", "event", "kind")
-        type: string
 
   UnionDiscriminatorContext:
     docs: Location of the discriminator relative to the union type
