@@ -2,6 +2,7 @@ using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Container;
 using SeedExhaustive.Endpoints.ContentType;
 using SeedExhaustive.Endpoints.HttpMethods;
+using SeedExhaustive.Endpoints.Pagination;
 using SeedExhaustive.Endpoints.Params;
 using SeedExhaustive.Endpoints.Primitive;
 using SeedExhaustive.Endpoints.Put;
@@ -21,6 +22,7 @@ public partial class EndpointsClient : IEndpointsClient
         Enum = new SeedExhaustive.Endpoints.Enum.EnumClient(_client);
         HttpMethods = new HttpMethodsClient(_client);
         Object = new SeedExhaustive.Endpoints.Object.ObjectClient(_client);
+        Pagination = new PaginationClient(_client);
         Params = new ParamsClient(_client);
         Primitive = new PrimitiveClient(_client);
         Put = new PutClient(_client);
@@ -37,6 +39,8 @@ public partial class EndpointsClient : IEndpointsClient
     public IHttpMethodsClient HttpMethods { get; }
 
     public SeedExhaustive.Endpoints.Object.IObjectClient Object { get; }
+
+    public IPaginationClient Pagination { get; }
 
     public IParamsClient Params { get; }
 
