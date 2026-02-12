@@ -514,7 +514,7 @@ export class EndpointSnippetGenerator {
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "Headers",
-                namedParameters: this.context.filterRequiredParameters(request.headers ?? []),
+                namedParameters: request.headers,
                 values: snippet.headers
             })
         );

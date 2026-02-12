@@ -649,7 +649,7 @@ export class EndpointSnippetGenerator {
         }
 
         // Add RequestOptions with headers if present, otherwise None
-        const hasHeaders = this.context.filterRequiredParameters(request.headers ?? []).length > 0 && Object.keys(snippet.headers ?? {}).length > 0;
+        const hasHeaders = (request.headers ?? []).length > 0 && Object.keys(snippet.headers ?? {}).length > 0;
         if (hasHeaders) {
             args.push(rust.Expression.functionCall("Some", [this.getRequestOptionsWithHeaders({ request, snippet })]));
         } else {
@@ -1046,8 +1046,9 @@ export class EndpointSnippetGenerator {
     }): rust.Expression {
         // Create RequestOptions with additional headers
         const headers = this.context.associateByWireValue({
-            parameters: this.context.filterRequiredParameters(request.headers ?? []),
-            values: snippet.headers ?? {}
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {},
+            ignoreMissingParameters: true
         });
 
         // Build the RequestOptions::new().additional_header("key", "value") chain

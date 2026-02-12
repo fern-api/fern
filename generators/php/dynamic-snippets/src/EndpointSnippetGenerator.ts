@@ -862,8 +862,9 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.Headers);
         const headers = this.context.associateByWireValue({
-            parameters: this.context.filterRequiredParameters(request.headers ?? []),
-            values: snippet.headers ?? {}
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {},
+            ignoreMissingParameters: true
         });
         const headerFields = headers.map((header) => ({
             name: this.context.getPropertyName(header.name.name),

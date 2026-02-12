@@ -819,8 +819,9 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.Headers);
         const headers = this.context.associateByWireValue({
-            parameters: this.context.filterRequiredParameters(request.headers ?? []),
-            values: snippet.headers ?? {}
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {},
+            ignoreMissingParameters: true
         });
         const filteredHeaders = headers.filter((header) => !this.context.isDirectLiteral(header.typeReference));
         const sortedHeaders = this.context.sortTypeInstancesByRequiredFirst(filteredHeaders, request.headers ?? []);
