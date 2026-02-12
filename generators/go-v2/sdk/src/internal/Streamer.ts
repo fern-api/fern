@@ -140,6 +140,13 @@ export class Streamer {
                 value: format
             });
         }
+        const eventDiscriminator = this.getEventDiscriminator(args.streamingResponse);
+        if (eventDiscriminator != null) {
+            arguments_.push({
+                name: "EventDiscriminator",
+                value: eventDiscriminator
+            });
+        }
         if (args.request != null) {
             arguments_.push({
                 name: "Request",
@@ -238,5 +245,27 @@ export class Streamer {
             name: "StreamFormatSSE",
             importPath: this.context.getCoreImportPath()
         });
+    }
+
+    private getEventDiscriminator(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
+        if (streamingResponse.type !== "sse") {
+            return undefined;
+        }
+        const payload = streamingResponse.payload;
+        if (payload.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(payload.typeId);
+        if (typeDeclaration.shape.type !== "union") {
+            return undefined;
+        }
+        const union = typeDeclaration.shape;
+        if (
+            !("discriminatorContext" in union) ||
+            (union as { discriminatorContext?: string }).discriminatorContext !== "protocol"
+        ) {
+            return undefined;
+        }
+        return go.TypeInstantiation.string(union.discriminant.wireValue);
     }
 }
