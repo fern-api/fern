@@ -724,19 +724,6 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         )
 
-        transport_wrapper = self._context.custom_config.transport_wrapper
-        if transport_wrapper is not None:
-            for tw_param in transport_wrapper.params:
-                parameters.append(
-                    RootClientConstructorParameter(
-                        constructor_parameter_name=tw_param.name,
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                        private_member_name=None,
-                        initializer=AST.Expression(AST.TypeHint.none()),
-                        exclude_from_wrapper_construction=True,
-                    )
-                )
-
         # Expose a private _transport override when custom_transport is enabled
         if self._context.custom_config.custom_transport:
             parameters.append(
@@ -923,28 +910,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             self._write_url_template_interpolation(writer)
 
-            transport_wrapper = self._context.custom_config.transport_wrapper
             transport_var_name: typing.Optional[str] = None
             if self._context.custom_config.custom_transport:
                 transport_var_name = "_transport"
-            elif transport_wrapper is not None:
-                transport_var_name = "_transport_impl"
-                tw_module = transport_wrapper.module
-                tw_class = transport_wrapper.async_class if is_async else transport_wrapper.sync_class
-                tw_param_names = [p.name for p in transport_wrapper.params]
-                if tw_param_names:
-                    tw_condition = " or ".join(f"{n} is not None" for n in tw_param_names)
-                    tw_kwargs = ", ".join(f"{n}={n}" for n in tw_param_names)
-                    writer.write_line(f"if {tw_condition}:")
-                    with writer.indent():
-                        writer.write_line(f"from .{tw_module} import {tw_class}")
-                        writer.write_line(f"{transport_var_name} = {tw_class}({tw_kwargs})")
-                    writer.write_line("else:")
-                    with writer.indent():
-                        writer.write_line(f"{transport_var_name} = None")
-                else:
-                    writer.write_line(f"from .{tw_module} import {tw_class}")
-                    writer.write_line(f"{transport_var_name} = {tw_class}()")
 
             client_wrapper_generator = ClientWrapperGenerator(
                 context=self._context,

@@ -274,16 +274,6 @@ fixtures:
           - sentry_integration
       outputFolder: import-paths
     - customConfig:
-        transport_wrapper:
-          module: "core.custom_transport"
-          sync_class: "CustomTransport"
-          async_class: "AsyncCustomTransport"
-          params:
-            - name: "account_sid"
-            - name: "api_key_sid"
-            - name: "api_key_secret"
-      outputFolder: transport-wrapper
-    - customConfig:
         custom_transport: true
       outputFolder: custom-transport
   file-upload:
@@ -436,7 +426,6 @@ allowedFailures:
   - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
-  - exhaustive:transport-wrapper # build expects custom_transport module which is SDK-developer-provided code
   - oauth-client-credentials-custom
   - pagination-custom
   - response-property

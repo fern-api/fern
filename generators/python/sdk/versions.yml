@@ -3,10 +3,9 @@
 - version: 4.57.0
   changelogEntry:
     - summary: |
-        Add `transport_wrapper` and `custom_transport` config options for SDK developers to wire
-        custom transport classes into generated clients. `transport_wrapper` auto-imports a transport
-        module and conditionally wraps httpx transport. `custom_transport: true` exposes a simpler
-        `_transport` override parameter on the constructor, deferring all logic to custom code.
+        Add `custom_transport: true` config option for SDK developers to expose a `_transport`
+        override parameter on generated client constructors. This allows SDK developers to provide
+        custom httpx transports via custom code (e.g., factory methods like `ValidationClient`).
       type: feat
   createdAt: "2026-02-12"
   irVersion: 65
