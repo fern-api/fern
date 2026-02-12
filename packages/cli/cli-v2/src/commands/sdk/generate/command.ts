@@ -1,13 +1,16 @@
-import type { schemas } from "@fern-api/config";
+import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { resolve } from "@fern-api/fs-utils";
+import { ValidationIssue } from "@fern-api/yaml-loader";
+import yaml from "js-yaml";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
+import { ValidationError } from "../../../errors/ValidationError.js";
 import type { Target } from "../../../sdk/config/Target.js";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
 import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup.js";
@@ -56,13 +59,13 @@ export class GenerateCommand {
             throw new Error("No SDKs configured in fern.yml");
         }
 
-        this.validateArgs({ workspace, args });
-
         const targets = this.getTargets({
             workspace,
             groupName: args.group ?? workspace.sdks.defaultGroup,
             targetName: args.target
         });
+
+        this.validateArgs({ workspace, args, targets });
 
         const apisToCheck = [...new Set(targets.map((t) => t.api))];
         const checker = new ApiChecker({
@@ -85,7 +88,7 @@ export class GenerateCommand {
             cliVersion: workspace.cliVersion
         });
 
-        const token = args.local ? undefined : await context.getTokenOrPrompt();
+        const token = this.isTokenRequired({ targets, args }) ? await context.getTokenOrPrompt() : undefined;
         const runtime = args.local ? "local" : "remote";
 
         const taskGroup = new SdkTaskGroup({ context });
@@ -169,7 +172,15 @@ export class GenerateCommand {
         }
     }
 
-    private validateArgs({ workspace, args }: { workspace: Workspace; args: GenerateCommand.Args }): void {
+    private validateArgs({
+        workspace,
+        args,
+        targets
+    }: {
+        workspace: Workspace;
+        args: GenerateCommand.Args;
+        targets: Target[];
+    }): void {
         if (args.output != null && !args.preview) {
             throw new Error("The --output flag can only be used with --preview");
         }
@@ -183,6 +194,62 @@ export class GenerateCommand {
         if (defaultGroup == null && args.group == null && args.target == null) {
             throw new Error("A --target or --group must be specified");
         }
+        const issues: ValidationIssue[] = [];
+        if (args.local) {
+            for (const target of targets) {
+                const git = target.output.git;
+                if (git != null && !schemas.isGitOutputSelfHosted(git) && target.output.path == null) {
+                    issues.push(this.suggestGitHubRepositoryOutput({ target, git }));
+                }
+            }
+        }
+        if (issues.length > 0) {
+            throw new ValidationError(issues);
+        }
+    }
+
+    private suggestGitHubRepositoryOutput({
+        target,
+        git
+    }: {
+        target: Target;
+        git: schemas.GitHubRepositoryOutputSchema;
+    }): ValidationIssue {
+        const { repository, reviewers: _reviewers, ...rest } = git;
+        const uri =
+            repository.startsWith("https://") || repository.startsWith("http://")
+                ? repository
+                : `https://github.com/${repository}`;
+        const suggestedTarget = {
+            [target.name]: {
+                output: {
+                    git: {
+                        ...rest,
+                        uri,
+                        token: "${GIT_TOKEN}"
+                    }
+                }
+            }
+        };
+        return new ValidationIssue({
+            message: `Target '${target.name}' is incompatible with --local mode.`,
+            suggestion:
+                `Use remote generation (without --local) or configure the target with 'uri' and 'token' instead of 'repository'.\n\n` +
+                `Example:\n` +
+                this.indentBlock(yaml.dump(suggestedTarget, { lineWidth: -1 })),
+            location: target.sourceLocation
+        });
+    }
+
+    /**
+     * Determines if a Fern token is required for the given targets and arguments.
+     *
+     * A Fern token is required if:
+     *  - The user is relying on remote generation.
+     *  - The target is using Fern's self-hosted git output mode.
+     */
+    private isTokenRequired({ targets, args }: { targets: Target[]; args: GenerateCommand.Args }): boolean {
+        return !args.local || targets.some((t) => t.output.git != null && schemas.isGitOutputSelfHosted(t.output.git));
     }
 
     private getTargets({
@@ -232,7 +299,7 @@ export class GenerateCommand {
         return targets.length === 1 ? "SDK" : "SDKs";
     }
 
-    private getGitOutputStageLabels(mode: schemas.GitOutputModeSchema): Partial<TaskStageLabels> {
+    private getGitOutputStageLabels(mode: schemas.GitHubOutputModeSchema): Partial<TaskStageLabels> {
         switch (mode) {
             case "push":
                 return {
@@ -255,6 +322,14 @@ export class GenerateCommand {
             default:
                 assertNever(mode);
         }
+    }
+
+    private indentBlock(text: string): string {
+        return text
+            .trimEnd()
+            .split("\n")
+            .map((line) => (line.length > 0 ? `  ${line}` : line))
+            .join("\n");
     }
 }
 

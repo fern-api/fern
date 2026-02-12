@@ -1,5 +1,6 @@
 import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
+import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
@@ -136,7 +137,8 @@ export class Context {
             }
         }
         if (target.output.git != null && target.output.path == null) {
-            outputs.push(target.output.git.repository);
+            const git = target.output.git;
+            outputs.push(schemas.isGitOutputSelfHosted(git) ? git.uri : git.repository);
         }
         return outputs;
     }

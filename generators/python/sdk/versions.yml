@@ -1,17 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.57.0
+  changelogEntry:
+    - summary: |
+        Add `transport_wrapper` and `custom_transport` config options for SDK developers to wire
+        custom transport classes into generated clients. `transport_wrapper` auto-imports a transport
+        module and conditionally wraps httpx transport. `custom_transport: true` exposes a simpler
+        `_transport` override parameter on the constructor, deferring all logic to custom code.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 4.56.0
   changelogEntry:
     - summary: |
-        Add `transport_wrapper` custom config option for SDK developers to wire custom transport
-        classes into generated clients. Specify a module, sync/async class names, and extra
-        constructor parameters. The generator auto-imports the transport class and wraps the
-        default httpx transport, so end users see the feature as built-in (e.g., PKCV support)
-        without writing any custom transport code themselves.
+        Add support for URI and path-based pagination.
       type: feat
   createdAt: "2026-02-11"
-  irVersion: 63
-
+  irVersion: 65
 - version: 4.55.5
   changelogEntry:
     - summary: |

@@ -99,7 +99,7 @@ export async function runLocalGenerationForWorkspace({
                 const venus = createVenusService({ token: token?.value });
 
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    token = await getAccessToken();
+                    token ??= await getAccessToken();
                     if (token == null) {
                         interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.");
                         return;

@@ -23,6 +23,8 @@ export declare namespace Class {
         parentClassReference?: AstNode;
         /* The traits that this class uses, if any */
         traits?: ClassReference[];
+        /* The interfaces that this class implements, if any */
+        interfaceReferences?: ClassReference[];
     }
 
     interface Constructor {
@@ -42,12 +44,13 @@ export class Class extends AstNode {
     public readonly docs: string | undefined;
     public readonly parentClassReference: AstNode | undefined;
     public readonly traits: ClassReference[];
+    public readonly interfaceReferences: ClassReference[];
 
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, traits }: Class.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference, traits, interfaceReferences }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
@@ -55,6 +58,7 @@ export class Class extends AstNode {
         this.docs = docs;
         this.parentClassReference = parentClassReference;
         this.traits = traits ?? [];
+        this.interfaceReferences = interfaceReferences ?? [];
     }
 
     public addConstructor(constructor: Class.Constructor): void {
@@ -88,6 +92,18 @@ export class Class extends AstNode {
         if (this.parentClassReference != null) {
             writer.write("extends ");
             this.parentClassReference.write(writer);
+        }
+        if (this.interfaceReferences.length > 0) {
+            if (this.parentClassReference != null) {
+                writer.write(" ");
+            }
+            writer.write("implements ");
+            this.interfaceReferences.forEach((ref, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                writer.writeNode(ref);
+            });
         }
         writer.newLine();
         writer.writeLine("{");
