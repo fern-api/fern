@@ -180,11 +180,6 @@ types:
         docs: |
           Name of the field used for discrimination (e.g., "type", "event", "kind")
         type: string
-      mapping:
-        docs: |
-          Maps discriminant wire values to their corresponding union member information.
-          For example: {"completion" -> CompletionEvent, "chat" -> ChatEvent}
-        type: map<string, UnionMemberTypeInfo>
 
   UnionDiscriminatorContext:
     docs: Location of the discriminator relative to the union type
@@ -193,15 +188,6 @@ types:
         docs: Discriminator is within the union data itself (e.g., data.type field)
       - value: protocol
         docs: Discriminator is at the protocol level (e.g., SSE event field, HTTP path)
-
-  UnionMemberTypeInfo:
-    docs: Information about a specific union member type
-    properties:
-      typeReference: TypeReference
-      discriminantValue: commons.NameAndWireValue
-      memberIndex:
-        docs: Zero-based index of this member in the union types list
-        type: integer
 
   UndiscriminatedUnionTypeDeclaration:
     properties:

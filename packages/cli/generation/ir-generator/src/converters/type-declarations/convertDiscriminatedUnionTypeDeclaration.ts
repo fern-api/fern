@@ -244,15 +244,18 @@ function buildDiscriminatorMapping({
     union: RawSchemas.DiscriminatedUnionSchema;
     discriminant: string;
 }): UnionDiscriminatorMapping | undefined {
+    // Extract context from discriminant schema if it's an object
+    const discriminantContext = typeof union.discriminant === "object" && union.discriminant?.context;
+
     // If context is not explicitly set to "protocol", use undefined mapping (default behavior)
-    if (union.context !== "protocol") {
+    if (discriminantContext !== "protocol") {
         return undefined;
     }
 
-    // Build mapping for protocol-level discrimination
-    return UnionDiscriminatorMapping.from({
+    // For protocol-level discrimination, generators only need the context and discriminator field.
+    // Generators already have the union structure with all member types.
+    return {
         context: UnionDiscriminatorContext.Protocol,
-        discriminatorField: discriminant,
-        mapping: Object.fromEntries(Object.keys(union.union).map((unionKey) => [unionKey, unionKey]))
-    });
+        discriminatorField: discriminant
+    };
 }

@@ -16,9 +16,4 @@ export interface UnionDiscriminatorMapping {
     context: FernIr.UnionDiscriminatorContext;
     /** Name of the field used for discrimination (e.g., "type", "event", "kind") */
     discriminatorField: string;
-    /**
-     * Maps discriminant wire values to their corresponding union member information.
-     * For example: {"completion" -> CompletionEvent, "chat" -> ChatEvent}
-     */
-    mapping: Record<string, FernIr.UnionMemberTypeInfo>;
 }

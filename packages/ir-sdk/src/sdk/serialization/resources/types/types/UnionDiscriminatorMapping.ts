@@ -4,7 +4,6 @@ import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { UnionDiscriminatorContext } from "./UnionDiscriminatorContext.js";
-import { UnionMemberTypeInfo } from "./UnionMemberTypeInfo.js";
 
 export const UnionDiscriminatorMapping: core.serialization.ObjectSchema<
     serializers.UnionDiscriminatorMapping.Raw,
@@ -12,13 +11,11 @@ export const UnionDiscriminatorMapping: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     context: UnionDiscriminatorContext,
     discriminatorField: core.serialization.string(),
-    mapping: core.serialization.record(core.serialization.string(), UnionMemberTypeInfo),
 });
 
 export declare namespace UnionDiscriminatorMapping {
     export interface Raw {
         context: UnionDiscriminatorContext.Raw;
         discriminatorField: string;
-        mapping: Record<string, UnionMemberTypeInfo.Raw>;
     }
 }
