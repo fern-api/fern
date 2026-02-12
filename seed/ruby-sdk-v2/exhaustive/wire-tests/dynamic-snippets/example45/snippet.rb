@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.urls.with_underscores();
+client.endpoints.urls.with_ending_slash();
