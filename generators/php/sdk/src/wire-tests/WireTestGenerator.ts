@@ -299,14 +299,14 @@ export class WireTestGenerator {
 
                     if (isPaginated) {
                         writer.write("$response = ");
-                        writer.writeNode(snippetAst as php.AstNode);
+                        writer.writeNode(snippetAst);
                         writer.writeLine("foreach ($response as $item) {");
                         writer.indent();
                         writer.writeLine("break;");
                         writer.dedent();
                         writer.writeLine("}");
                     } else {
-                        writer.writeNode(snippetAst as php.AstNode);
+                        writer.writeNode(snippetAst);
                     }
 
                     // $this->verifyRequestCount(...);
