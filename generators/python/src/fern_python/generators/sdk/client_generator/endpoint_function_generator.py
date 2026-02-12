@@ -692,6 +692,8 @@ class EndpointFunctionGenerator:
                             named_parameters=named_parameters,
                         ),
                         is_raw_client=self._is_raw_client,
+                        http_method=method,
+                        client_wrapper_member_name=self._client_wrapper_member_name,
                     )
                     streaming_request = get_httpx_request(
                         is_streaming=True,
@@ -729,6 +731,8 @@ class EndpointFunctionGenerator:
                         named_parameters=named_parameters,
                     ),
                     is_raw_client=self._is_raw_client,
+                    http_method=method,
+                    client_wrapper_member_name=self._client_wrapper_member_name,
                 )
                 non_streaming_request = get_httpx_request(
                     is_streaming=False,
@@ -752,6 +756,8 @@ class EndpointFunctionGenerator:
                         named_parameters=named_parameters,
                     ),
                     is_raw_client=self._is_raw_client,
+                    http_method=method,
+                    client_wrapper_member_name=self._client_wrapper_member_name,
                 )
 
                 httpx_request = get_httpx_request(

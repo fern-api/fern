@@ -239,6 +239,17 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }
     }
 
+    private getResponseTypeForStreaming(): Fetcher.Args["responseType"] {
+        const responseBody = this.endpoint.response?.body;
+        if (responseBody?.type === "streaming" && responseBody.value.type === "sse") {
+            return "sse";
+        }
+        if (responseBody?.type === "streamParameter" && responseBody.streamResponse.type === "sse") {
+            return "sse";
+        }
+        return "streaming";
+    }
+
     public invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
@@ -264,7 +275,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
             logging: this.generatedSdkClientClass.getReferenceToLogger(context),
-            responseType: "sse",
+            responseType: this.getResponseTypeForStreaming(),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()

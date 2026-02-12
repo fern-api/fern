@@ -9,7 +9,7 @@ export type Namespace = string;
 export declare namespace PhpFile {
     interface Args {
         /* The class to be written to the PHP File */
-        clazz: php.Class | php.DataClass | php.Trait | php.Enum;
+        clazz: php.Class | php.DataClass | php.Trait | php.Enum | php.Interface;
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* The root namespace of the project. Can be pulled directly from context. */
@@ -46,7 +46,7 @@ function phpFileContent({
     rootNamespace,
     customConfig
 }: {
-    clazz: php.Class | php.DataClass | php.Trait | php.Enum;
+    clazz: php.Class | php.DataClass | php.Trait | php.Enum | php.Interface;
     rootNamespace: string;
     customConfig: BasePhpCustomConfigSchema;
 }): string {

@@ -1,2 +1,2 @@
-export { KeyringStore } from "./KeyringStore.js";
+export { CredentialStore } from "./CredentialStore.js";
 export { TokenService } from "./TokenService.js";

@@ -24,6 +24,6 @@ export namespace ActualResult {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

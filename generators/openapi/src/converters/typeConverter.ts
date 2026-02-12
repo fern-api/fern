@@ -321,16 +321,15 @@ function convertPrimitiveType(primitiveType: FernIr.PrimitiveType): OpenAPIV3.No
                 format: "date-time"
             };
         },
-        double: () => {
-            return {
-                type: "number",
-                format: "double"
-            };
+        double: (val) => {
+            const type: OpenAPIV3.NonArraySchemaObject = { type: "number", format: "double" };
+            applyNumericValidation(type, val.validation);
+            return type;
         },
-        integer: () => {
-            return {
-                type: "integer"
-            };
+        integer: (val) => {
+            const type: OpenAPIV3.NonArraySchemaObject = { type: "integer" };
+            applyNumericValidation(type, val.validation);
+            return type;
         },
         long: () => {
             return {
@@ -345,6 +344,12 @@ function convertPrimitiveType(primitiveType: FernIr.PrimitiveType): OpenAPIV3.No
             }
             if (val.validation?.pattern != null) {
                 type.pattern = val.validation.pattern;
+            }
+            if (val.validation?.minLength != null) {
+                type.minLength = val.validation.minLength;
+            }
+            if (val.validation?.maxLength != null) {
+                type.maxLength = val.validation.maxLength;
             }
             return type;
         },
@@ -394,6 +399,30 @@ function convertPrimitiveType(primitiveType: FernIr.PrimitiveType): OpenAPIV3.No
             throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
         }
     });
+}
+
+function applyNumericValidation(
+    schema: OpenAPIV3.NonArraySchemaObject,
+    rules: FernIr.IntegerValidationRules | FernIr.DoubleValidationRules | undefined
+): void {
+    if (rules == null) {
+        return;
+    }
+    if (rules.min != null) {
+        schema.minimum = rules.min;
+    }
+    if (rules.max != null) {
+        schema.maximum = rules.max;
+    }
+    if (rules.exclusiveMin === true) {
+        schema.exclusiveMinimum = rules.exclusiveMin;
+    }
+    if (rules.exclusiveMax === true) {
+        schema.exclusiveMaximum = rules.exclusiveMax;
+    }
+    if (rules.multipleOf != null) {
+        schema.multipleOf = rules.multipleOf;
+    }
 }
 
 function convertContainerType(containerType: FernIr.ContainerType): OpenApiComponentSchema {

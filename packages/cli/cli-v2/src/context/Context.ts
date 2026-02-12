@@ -1,11 +1,13 @@
 import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
+import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { KeyringStore, TokenService } from "../auth/index.js";
+import { CredentialStore, TokenService } from "../auth/index.js";
+import { Cache } from "../cache/index.js";
 import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
 import { CliError } from "../errors/CliError.js";
 import { ValidationError } from "../errors/ValidationError.js";
@@ -23,6 +25,7 @@ export class Context {
     public readonly logLevel: LogLevel;
     public readonly stdout: Logger;
     public readonly stderr: Logger;
+    public readonly cache: Cache;
     public readonly logFileWriter: LogFileWriter;
     public readonly tokenService: TokenService;
 
@@ -40,12 +43,18 @@ export class Context {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.logFileWriter = new LogFileWriter();
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
+        this.cache = new Cache({ logger: this.stderr });
+        this.logFileWriter = new LogFileWriter(this.cache.logs.absoluteFilePath);
+        this.tokenService = new TokenService({ credential: new CredentialStore() });
+    }
 
-        const keyring = new KeyringStore();
-        this.tokenService = new TokenService({ keyring });
+    /**
+     * Returns true if running in an interactive TTY environment (not CI).
+     */
+    public get isTTY(): boolean {
+        return this.ttyAwareLogger.isTTY;
     }
 
     public async loadWorkspaceOrThrow(): Promise<Workspace> {
@@ -110,14 +119,6 @@ export class Context {
     }
 
     /**
-     * Returns true if running in an interactive TTY environment (not CI).
-     * Delegates to TtyAwareLogger which handles the is-ci check.
-     */
-    public get isTTY(): boolean {
-        return this.ttyAwareLogger.isTTY;
-    }
-
-    /**
      * Get the log file path if logs have been written.
      */
     public getLogFilePath(): AbsoluteFilePath | undefined {
@@ -135,9 +136,9 @@ export class Context {
                 outputs.push(outputPath.toString());
             }
         }
-        if (target.output.git != null) {
-            // TODO: Include a link to the branch, commit, or release that was created.
-            outputs.push(target.output.git.repository);
+        if (target.output.git != null && target.output.path == null) {
+            const git = target.output.git;
+            outputs.push(schemas.isGitOutputSelfHosted(git) ? git.uri : git.repository);
         }
         return outputs;
     }

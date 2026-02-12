@@ -8,7 +8,9 @@ import { getRequestPropertyComponents, getResponsePropertyComponents } from "./c
 export type PaginationPropertyComponents =
     | CursorPaginationPropertyComponents
     | OffsetPaginationPropertyComponents
-    | CustomPaginationPropertyComponents;
+    | CustomPaginationPropertyComponents
+    | UriPaginationPropertyComponents
+    | PathPaginationPropertyComponents;
 
 export interface CursorPaginationPropertyComponents {
     type: "cursor";
@@ -30,10 +32,34 @@ export interface CustomPaginationPropertyComponents {
     results: string[];
 }
 
+export interface UriPaginationPropertyComponents {
+    type: "uri";
+    nextUri: string[];
+    results: string[];
+}
+
+export interface PathPaginationPropertyComponents {
+    type: "path";
+    nextPath: string[];
+    results: string[];
+}
+
 export function getPaginationPropertyComponents(
     endpointPagination: RawSchemas.PaginationSchema
 ): PaginationPropertyComponents {
-    if (isRawOffsetPaginationSchema(endpointPagination)) {
+    if (isRawUriPaginationSchema(endpointPagination)) {
+        return {
+            type: "uri",
+            nextUri: getResponsePropertyComponents(endpointPagination.next_uri),
+            results: getResponsePropertyComponents(endpointPagination.results)
+        };
+    } else if (isRawPathPaginationSchema(endpointPagination)) {
+        return {
+            type: "path",
+            nextPath: getResponsePropertyComponents(endpointPagination.next_path),
+            results: getResponsePropertyComponents(endpointPagination.results)
+        };
+    } else if (isRawOffsetPaginationSchema(endpointPagination)) {
         return {
             type: "offset",
             offset: getRequestPropertyComponents(endpointPagination.offset),
@@ -79,6 +105,18 @@ function isRawCursorPaginationSchema(
     rawPaginationSchema: RawSchemas.PaginationSchema
 ): rawPaginationSchema is RawSchemas.CursorPaginationSchema {
     return (rawPaginationSchema as RawSchemas.CursorPaginationSchema).cursor != null;
+}
+
+export function isRawUriPaginationSchema(
+    rawPaginationSchema: RawSchemas.PaginationSchema
+): rawPaginationSchema is RawSchemas.UriPaginationSchema {
+    return (rawPaginationSchema as RawSchemas.UriPaginationSchema).next_uri != null;
+}
+
+export function isRawPathPaginationSchema(
+    rawPaginationSchema: RawSchemas.PaginationSchema
+): rawPaginationSchema is RawSchemas.PathPaginationSchema {
+    return (rawPaginationSchema as RawSchemas.PathPaginationSchema).next_path != null;
 }
 
 function isRawOffsetPaginationSchema(

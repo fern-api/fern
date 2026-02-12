@@ -1,4 +1,4 @@
-irVersion: v63
+irVersion: v65
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -273,6 +273,9 @@ fixtures:
           - custom_integration
           - sentry_integration
       outputFolder: import-paths
+    - customConfig:
+        custom_transport: true
+      outputFolder: custom-transport
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -429,4 +432,3 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
-  - websocket

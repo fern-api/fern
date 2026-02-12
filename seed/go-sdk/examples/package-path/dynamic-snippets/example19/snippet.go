@@ -100,18 +100,7 @@ func do() {
             Nodes: []*pleaseinhere.Node{
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                    },
+                    Nodes: []*pleaseinhere.Node{},
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -123,18 +112,7 @@ func do() {
                 },
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                    },
+                    Nodes: []*pleaseinhere.Node{},
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -201,18 +179,7 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                    },
+                    Directories: []*pleaseinhere.Directory{},
                 },
                 &pleaseinhere.Directory{
                     Name: "name",
@@ -226,18 +193,7 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
-                        },
-                    },
+                    Directories: []*pleaseinhere.Directory{},
                 },
             },
         },

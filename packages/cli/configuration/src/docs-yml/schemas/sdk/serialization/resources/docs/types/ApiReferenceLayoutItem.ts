@@ -4,6 +4,7 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { ApiReferenceEndpointConfiguration } from "./ApiReferenceEndpointConfiguration.js";
+import { ApiReferenceOperationConfiguration } from "./ApiReferenceOperationConfiguration.js";
 import { LinkConfiguration } from "./LinkConfiguration.js";
 import { PageConfiguration } from "./PageConfiguration.js";
 
@@ -18,6 +19,7 @@ export const ApiReferenceLayoutItem: core.serialization.Schema<
     ),
     core.serialization.lazyObject(() => serializers.ApiReferenceSectionConfiguration),
     ApiReferenceEndpointConfiguration,
+    ApiReferenceOperationConfiguration,
     PageConfiguration,
     LinkConfiguration,
 ]);
@@ -28,6 +30,7 @@ export declare namespace ApiReferenceLayoutItem {
         | Record<string, serializers.ApiReferencePackageConfiguration.Raw>
         | serializers.ApiReferenceSectionConfiguration.Raw
         | ApiReferenceEndpointConfiguration.Raw
+        | ApiReferenceOperationConfiguration.Raw
         | PageConfiguration.Raw
         | LinkConfiguration.Raw;
 }

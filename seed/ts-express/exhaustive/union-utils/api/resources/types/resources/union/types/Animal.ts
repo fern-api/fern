@@ -17,7 +17,7 @@ export namespace Animal {
     }
 
     export interface _Unknown extends _Utils {
-        animal: void;
+        animal: string;
     }
 
     export interface _Utils {
@@ -60,7 +60,7 @@ export const Animal = {
 
     _unknown: (value: { animal: string }): SeedExhaustive.types.Animal._Unknown => {
         return {
-            ...(value as any),
+            ...value,
             _visit: function <_Result>(
                 this: SeedExhaustive.types.Animal._Unknown,
                 visitor: SeedExhaustive.types.Animal._Visitor<_Result>,
@@ -76,9 +76,9 @@ export const Animal = {
     ): _Result => {
         switch (value.animal) {
             case "dog":
-                return visitor.dog(value);
+                return visitor.dog(value as SeedExhaustive.types.Animal.Dog);
             case "cat":
-                return visitor.cat(value);
+                return visitor.cat(value as SeedExhaustive.types.Animal.Cat);
             default:
                 return visitor._other(value);
         }

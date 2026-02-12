@@ -68,6 +68,9 @@ fixtures:
     - customConfig:
         requestValidationStatusCode: 400
       outputFolder: validation-status-code
+    - customConfig:
+        outputSrcOnly: true
+      outputFolder: output-src-only
   exhaustive:
     - customConfig:
         packagePath: src/test-packagePath

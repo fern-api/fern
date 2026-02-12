@@ -28,4 +28,20 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             endpoint
         });
     }
+
+    public generateSignatures({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+    }): php.Method[] {
+        return this.http.generateSignatures({
+            serviceId,
+            service,
+            endpoint
+        });
+    }
 }

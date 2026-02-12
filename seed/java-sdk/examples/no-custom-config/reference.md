@@ -563,36 +563,7 @@ client.service().createBigEntity(
                                 .name("name")
                                 .nodes(
                                     Optional.of(
-                                        Arrays.asList(
-                                            Node
-                                                .builder()
-                                                .name("name")
-                                                .nodes(
-                                                    Optional.of(
-                                                        new ArrayList<Node>()
-                                                    )
-                                                )
-                                                .trees(
-                                                    Optional.of(
-                                                        new ArrayList<Tree>()
-                                                    )
-                                                )
-                                                .build(),
-                                            Node
-                                                .builder()
-                                                .name("name")
-                                                .nodes(
-                                                    Optional.of(
-                                                        new ArrayList<Node>()
-                                                    )
-                                                )
-                                                .trees(
-                                                    Optional.of(
-                                                        new ArrayList<Tree>()
-                                                    )
-                                                )
-                                                .build()
-                                        )
+                                        new ArrayList<Node>()
                                     )
                                 )
                                 .trees(
@@ -623,36 +594,7 @@ client.service().createBigEntity(
                                 .name("name")
                                 .nodes(
                                     Optional.of(
-                                        Arrays.asList(
-                                            Node
-                                                .builder()
-                                                .name("name")
-                                                .nodes(
-                                                    Optional.of(
-                                                        new ArrayList<Node>()
-                                                    )
-                                                )
-                                                .trees(
-                                                    Optional.of(
-                                                        new ArrayList<Tree>()
-                                                    )
-                                                )
-                                                .build(),
-                                            Node
-                                                .builder()
-                                                .name("name")
-                                                .nodes(
-                                                    Optional.of(
-                                                        new ArrayList<Node>()
-                                                    )
-                                                )
-                                                .trees(
-                                                    Optional.of(
-                                                        new ArrayList<Tree>()
-                                                    )
-                                                )
-                                                .build()
-                                        )
+                                        new ArrayList<Node>()
                                     )
                                 )
                                 .trees(
@@ -807,36 +749,7 @@ client.service().createBigEntity(
                                 )
                                 .directories(
                                     Optional.of(
-                                        Arrays.asList(
-                                            Directory
-                                                .builder()
-                                                .name("name")
-                                                .files(
-                                                    Optional.of(
-                                                        new ArrayList<File>()
-                                                    )
-                                                )
-                                                .directories(
-                                                    Optional.of(
-                                                        new ArrayList<Directory>()
-                                                    )
-                                                )
-                                                .build(),
-                                            Directory
-                                                .builder()
-                                                .name("name")
-                                                .files(
-                                                    Optional.of(
-                                                        new ArrayList<File>()
-                                                    )
-                                                )
-                                                .directories(
-                                                    Optional.of(
-                                                        new ArrayList<Directory>()
-                                                    )
-                                                )
-                                                .build()
-                                        )
+                                        new ArrayList<Directory>()
                                     )
                                 )
                                 .build(),
@@ -861,36 +774,7 @@ client.service().createBigEntity(
                                 )
                                 .directories(
                                     Optional.of(
-                                        Arrays.asList(
-                                            Directory
-                                                .builder()
-                                                .name("name")
-                                                .files(
-                                                    Optional.of(
-                                                        new ArrayList<File>()
-                                                    )
-                                                )
-                                                .directories(
-                                                    Optional.of(
-                                                        new ArrayList<Directory>()
-                                                    )
-                                                )
-                                                .build(),
-                                            Directory
-                                                .builder()
-                                                .name("name")
-                                                .files(
-                                                    Optional.of(
-                                                        new ArrayList<File>()
-                                                    )
-                                                )
-                                                .directories(
-                                                    Optional.of(
-                                                        new ArrayList<Directory>()
-                                                    )
-                                                )
-                                                .build()
-                                        )
+                                        new ArrayList<Directory>()
                                     )
                                 )
                                 .build()

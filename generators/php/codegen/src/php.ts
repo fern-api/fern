@@ -10,6 +10,7 @@ import {
     CodeBlock,
     Enum,
     Field,
+    Interface,
     Map,
     Method,
     MethodInvocation,
@@ -33,6 +34,10 @@ export function class_(args: Class.Args): Class {
 
 export function trait(args: Trait.Args): Trait {
     return new Trait(args);
+}
+
+export function interface_(args: Interface.Args): Interface {
+    return new Interface(args);
 }
 
 export function classReference(args: ClassReference.Args): ClassReference {
@@ -138,6 +143,7 @@ export {
     DataClass,
     Enum,
     Field,
+    Interface,
     Map,
     Method,
     MethodInvocation,

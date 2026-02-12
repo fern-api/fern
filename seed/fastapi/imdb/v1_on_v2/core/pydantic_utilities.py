@@ -5,6 +5,7 @@ import datetime as dt
 import inspect
 import json
 import logging
+import warnings
 from collections import defaultdict
 from dataclasses import asdict
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, Tuple, Type, TypeVar, Union, cast
@@ -12,17 +13,36 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, 
 import pydantic
 import typing_extensions
 from .datetime_utils import serialize_datetime
-from pydantic.v1.datetime_parse import parse_date as parse_date
 
 if TYPE_CHECKING:
     from .http_sse._models import ServerSentEvent
-from pydantic.v1.datetime_parse import parse_datetime as parse_datetime
-from pydantic.v1.fields import ModelField as ModelField
-from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-from pydantic.v1.typing import get_args as get_args
-from pydantic.v1.typing import get_origin as get_origin
-from pydantic.v1.typing import is_literal_type as is_literal_type
-from pydantic.v1.typing import is_union as is_union
+
+_datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
+_date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+
+
+def parse_datetime(value: Any) -> dt.datetime:
+    if isinstance(value, dt.datetime):
+        return value
+    return _datetime_adapter.validate_python(value)
+
+
+def parse_date(value: Any) -> dt.date:
+    if isinstance(value, dt.datetime):
+        return value.date()
+    if isinstance(value, dt.date):
+        return value
+    return _date_adapter.validate_python(value)
+
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore", UserWarning)
+    from pydantic.v1.fields import ModelField as ModelField
+    from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
+    from pydantic.v1.typing import get_args as get_args
+    from pydantic.v1.typing import get_origin as get_origin
+    from pydantic.v1.typing import is_literal_type as is_literal_type
+    from pydantic.v1.typing import is_union as is_union
 from typing_extensions import TypeAlias
 
 _logger = logging.getLogger(__name__)
