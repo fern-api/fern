@@ -283,6 +283,9 @@ fixtures:
             - name: "api_key_sid"
             - name: "api_key_secret"
       outputFolder: transport-wrapper
+    - customConfig:
+        custom_transport: true
+      outputFolder: custom-transport
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

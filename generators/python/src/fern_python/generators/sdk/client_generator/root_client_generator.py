@@ -925,8 +925,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             transport_wrapper = self._context.custom_config.transport_wrapper
             transport_var_name: typing.Optional[str] = None
-            if transport_wrapper is not None:
+            if self._context.custom_config.custom_transport:
                 transport_var_name = "_transport"
+            elif transport_wrapper is not None:
+                transport_var_name = "_transport_impl"
                 tw_module = transport_wrapper.module
                 tw_class = transport_wrapper.async_class if is_async else transport_wrapper.sync_class
                 tw_param_names = [p.name for p in transport_wrapper.params]
