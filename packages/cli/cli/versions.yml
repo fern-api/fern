@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.75.0
+  changelogEntry:
+    - summary: |
+        Remove deprecated V1 `python-docs` navigation item. Use the `library` navigation item
+        with `libraries` config instead. See the library docs migration guide for details.
+      type: chore
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 3.74.0
   changelogEntry:
     - summary: |
