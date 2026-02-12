@@ -318,19 +318,12 @@ class ComposerJson {
             require: {
                 php: "^8.1",
                 "ext-json": "*",
-                "psr/http-client": "^1.0",
-                "psr/http-client-implementation": "^1.0",
-                "psr/http-factory": "^1.0",
-                "psr/http-factory-implementation": "^1.0",
-                "psr/http-message": "^1.1 || ^2.0",
-                "php-http/discovery": "^1.0",
-                "php-http/multipart-stream-builder": "^1.0"
+                "guzzlehttp/guzzle": "^7.4"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.0",
                 "friendsofphp/php-cs-fixer": "3.5.0",
-                "phpstan/phpstan": "^1.12",
-                "guzzlehttp/guzzle": "^7.4"
+                "phpstan/phpstan": "^1.12"
             },
             autoload: {
                 "psr-4": {

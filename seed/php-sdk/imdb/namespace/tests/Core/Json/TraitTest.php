@@ -3,7 +3,6 @@
 namespace Fern\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
-use Fern\Core\Json\JsonEncoder;
 use Fern\Core\Json\JsonProperty;
 use Fern\Core\Json\JsonSerializableType;
 
@@ -43,11 +42,12 @@ class TraitTest extends TestCase
 {
     public function testTraitPropertyAndString(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'integer_property' => 42,
                 'string_property' => 'Hello, World!',
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $object = TypeWithTrait::fromJson($expectedJson);

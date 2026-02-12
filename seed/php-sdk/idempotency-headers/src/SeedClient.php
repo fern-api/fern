@@ -3,7 +3,7 @@
 namespace Seed;
 
 use Seed\Payment\PaymentClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

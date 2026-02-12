@@ -5,7 +5,7 @@ namespace Seed;
 use Seed\Complex\ComplexClient;
 use Seed\InlineUsers\InlineUsersClient;
 use Seed\Users\UsersClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

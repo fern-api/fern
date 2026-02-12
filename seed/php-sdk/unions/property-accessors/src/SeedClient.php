@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Bigunion\BigunionClient;
 use Seed\Union\UnionClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

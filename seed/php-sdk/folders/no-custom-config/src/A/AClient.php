@@ -4,7 +4,7 @@ namespace Seed\A;
 
 use Seed\A\B\BClient;
 use Seed\A\C\CClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class AClient

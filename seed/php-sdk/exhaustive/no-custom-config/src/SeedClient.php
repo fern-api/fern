@@ -7,7 +7,7 @@ use Seed\InlinedRequests\InlinedRequestsClient;
 use Seed\NoAuth\NoAuthClient;
 use Seed\NoReqBody\NoReqBodyClient;
 use Seed\ReqWithHeaders\ReqWithHeadersClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

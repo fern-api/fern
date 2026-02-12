@@ -4,7 +4,6 @@ namespace Fern\Tests\Core\Json;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
-use Fern\Core\Json\JsonEncoder;
 use Fern\Core\Json\JsonProperty;
 use Fern\Core\Json\JsonSerializableType;
 use Fern\Core\Types\ArrayType;
@@ -56,7 +55,7 @@ class NestedUnionArrayTest extends TestCase
 {
     public function testNestedUnionArray(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'nested_array' => [
                     1 => [
@@ -70,6 +69,7 @@ class NestedUnionArrayTest extends TestCase
                     ]
                 ]
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $object = NestedUnionArray::fromJson($expectedJson);

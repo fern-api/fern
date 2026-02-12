@@ -4,7 +4,6 @@ namespace Custom\Package\Path\Tests\Core\Json;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
-use Custom\Package\Path\Core\Json\JsonEncoder;
 use Custom\Package\Path\Core\Json\JsonProperty;
 use Custom\Package\Path\Core\Json\JsonSerializableType;
 use Custom\Package\Path\Core\Types\ArrayType;
@@ -34,10 +33,11 @@ class DateArrayTest extends TestCase
 {
     public function testDateTimeInArrays(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'dates' => ['2023-01-01', '2023-02-01', '2023-03-01']
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $object = DateArray::fromJson($expectedJson);

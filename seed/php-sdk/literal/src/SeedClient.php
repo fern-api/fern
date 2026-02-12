@@ -7,7 +7,7 @@ use Seed\Inlined\InlinedClient;
 use Seed\Path\PathClient;
 use Seed\Query\QueryClient;
 use Seed\Reference\ReferenceClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

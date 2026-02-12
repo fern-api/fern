@@ -2,7 +2,7 @@
 
 namespace Custom\Package\Path\Imdb;
 
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Custom\Package\Path\Core\Client\RawClient;
 use Custom\Package\Path\Imdb\Types\CreateMovieRequest;
 use Custom\Package\Path\Exceptions\SeedException;
@@ -11,6 +11,7 @@ use Custom\Package\Path\Core\Json\JsonApiRequest;
 use Custom\Package\Path\Core\Client\HttpMethod;
 use Custom\Package\Path\Core\Json\JsonDecoder;
 use JsonException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Custom\Package\Path\Imdb\Types\Movie;
 
@@ -86,6 +87,16 @@ class ImdbClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -129,6 +140,16 @@ class ImdbClient
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

@@ -3,7 +3,6 @@
 namespace Fern\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
-use Fern\Core\Json\JsonEncoder;
 use Fern\Core\Json\JsonProperty;
 use Fern\Core\Json\JsonSerializableType;
 
@@ -55,12 +54,13 @@ class AdditionalPropertiesTest extends TestCase
 {
     public function testExtraProperties(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'name' => 'john.doe',
                 'email' => 'john.doe@example.com',
                 'age' => 42
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $person = Person::fromJson($expectedJson);

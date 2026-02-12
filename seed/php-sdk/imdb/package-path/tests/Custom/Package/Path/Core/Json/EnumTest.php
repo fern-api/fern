@@ -4,7 +4,6 @@ namespace Custom\Package\Path\Tests\Core\Json;
 
 use JsonSerializable;
 use PHPUnit\Framework\TestCase;
-use Custom\Package\Path\Core\Json\JsonEncoder;
 use Custom\Package\Path\Core\Json\JsonProperty;
 use Custom\Package\Path\Core\Json\JsonSerializableType;
 use Custom\Package\Path\Core\Types\ArrayType;
@@ -61,10 +60,10 @@ class EnumTest extends TestCase
             [Shape::Square, Shape::Circle, Shape::Triangle]
         );
 
-        $expectedJson = JsonEncoder::encode([
+        $expectedJson = json_encode([
             'shape' => 'CIRCLE',
             'shapes' => ['SQUARE', 'CIRCLE', 'TRIANGLE']
-        ]);
+        ], JSON_THROW_ON_ERROR);
 
         $actualJson = $object->toJson();
 

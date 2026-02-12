@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Ec2\Ec2Client;
 use Seed\S3\S3Client;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

@@ -3,7 +3,7 @@
 namespace <%= namespace%>;
 
 use Exception;
-use Http\Discovery\Psr17FactoryDiscovery;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 use <%= coreNamespace%>\Multipart\MultipartFormDataPart;
 
@@ -50,11 +50,11 @@ class File
         ?string $filename = null,
         ?string $contentType = null,
     ): File {
-        $resource = @fopen($filepath, 'r');
+        $resource = fopen($filepath, 'r');
         if (!$resource) {
             throw new Exception("Unable to open file $filepath");
         }
-        $stream = Psr17FactoryDiscovery::findStreamFactory()->createStreamFromResource($resource);
+        $stream = Utils::streamFor($resource);
         if (!$stream->isReadable()) {
             throw new Exception("File $filepath is not readable");
         }
@@ -79,7 +79,7 @@ class File
         ?string $contentType = null,
     ): File {
         return new self(
-            stream: Psr17FactoryDiscovery::findStreamFactory()->createStream($content),
+            stream: Utils::streamFor($content),
             filename: $filename,
             contentType: $contentType,
         );
@@ -95,7 +95,7 @@ class File
     public function toMultipartFormDataPart(string $name, ?string $contentType = null): MultipartFormDataPart
     {
         $contentType ??= $this->contentType;
-        $headers = $contentType !== null
+        $headers = $contentType != null
             ? ['Content-Type' => $contentType]
             : null;
 
@@ -120,10 +120,6 @@ class File
      */
     public function __destruct()
     {
-        try {
-            $this->close();
-        } catch (\Throwable) {
-            // Swallow errors during garbage collection to avoid fatal errors.
-        }
+        $this->close();
     }
 }

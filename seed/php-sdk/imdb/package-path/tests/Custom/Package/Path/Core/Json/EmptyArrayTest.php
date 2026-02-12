@@ -3,7 +3,6 @@
 namespace Custom\Package\Path\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
-use Custom\Package\Path\Core\Json\JsonEncoder;
 use Custom\Package\Path\Core\Json\JsonProperty;
 use Custom\Package\Path\Core\Json\JsonSerializableType;
 use Custom\Package\Path\Core\Types\ArrayType;
@@ -52,12 +51,13 @@ class EmptyArrayTest extends TestCase
 {
     public function testEmptyArray(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'empty_string_array' => [],
                 'empty_map_array' => [],
                 'empty_dates_array' => []
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $object = EmptyArray::fromJson($expectedJson);

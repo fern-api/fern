@@ -6,7 +6,7 @@ use Seed\Auth\AuthClient;
 use Seed\NestedNoAuth\NestedNoAuthClient;
 use Seed\Nested\NestedClient;
 use Seed\Simple\SimpleClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Core\InferredAuthProvider;
 

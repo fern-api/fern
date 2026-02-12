@@ -3,35 +3,25 @@
 namespace <%= namespace%>;
 
 use JsonSerializable;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use <%= coreNamespace%>\Json\JsonApiRequest;
-use <%= coreNamespace%>\Json\JsonEncoder;
 use <%= coreNamespace%>\Multipart\MultipartApiRequest;
 
 class RawClient
 {
     /**
-     * @var RetryDecoratingClient $client
+     * @var ClientInterface $client
      */
-    private RetryDecoratingClient $client;
-
-    /**
-     * @var RequestFactoryInterface $requestFactory
-     */
-    private RequestFactoryInterface $requestFactory;
-
-    /**
-     * @var StreamFactoryInterface $streamFactory
-     */
-    private StreamFactoryInterface $streamFactory;
+    private ClientInterface $client;
 
     /**
      * @var array<string, string> $headers
@@ -47,24 +37,28 @@ class RawClient
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
-     *   maxRetries?: int,
-     *   timeout?: float,
      *   headers?: array<string, string>,
      *   getAuthHeaders?: callable(): array<string, string>,
      * } $options
      */
     public function __construct(
-        private readonly ?array $options = null,
+        public readonly ?array $options = null,
     )
     {
-        $this->client = HttpClientBuilder::build(
-            $this->options['client'] ?? null,
-            $this->options['maxRetries'] ?? 2,
-        );
-        $this->requestFactory = HttpClientBuilder::requestFactory();
-        $this->streamFactory = HttpClientBuilder::streamFactory();
+        $this->client = $this->options['client']
+            ?? $this->createDefaultClient();
         $this->headers = $this->options['headers'] ?? [];
         $this->getAuthHeaders = $this->options['getAuthHeaders'] ?? null;
+    }
+
+    /**
+     * @return Client
+     */
+    private function createDefaultClient(): Client
+    {
+        $handler = HandlerStack::create();
+        $handler->push(RetryMiddleware::create());
+        return new Client(['handler' => $handler]);
     }
 
     /**
@@ -86,11 +80,26 @@ class RawClient
     {
         $opts = $options ?? [];
         $httpRequest = $this->buildRequest($request, $opts);
+        return $this->client->send($httpRequest, $this->toGuzzleOptions($opts));
+    }
 
-        $timeout = $opts['timeout'] ?? $this->options['timeout'] ?? null;
-        $maxRetries = $opts['maxRetries'] ?? null;
-
-        return $this->client->send($httpRequest, $timeout, $maxRetries);
+    /**
+     * @param array{
+     *     maxRetries?: int,
+     *     timeout?: float,
+     * } $options
+     * @return array<string, mixed>
+     */
+    private function toGuzzleOptions(array $options): array
+    {
+        $guzzleOptions = [];
+        if (isset($options['maxRetries'])) {
+            $guzzleOptions['maxRetries'] = $options['maxRetries'];
+        }
+        if (isset($options['timeout'])) {
+            $guzzleOptions['timeout'] = $options['timeout'];
+        }
+        return $guzzleOptions;
     }
 
     /**
@@ -100,39 +109,22 @@ class RawClient
      *     queryParameters?: array<string, mixed>,
      *     bodyProperties?: array<string, mixed>,
      * } $options
-     * @return RequestInterface
+     * @return Request
      */
     private function buildRequest(
         BaseApiRequest $request,
         array          $options
-    ): RequestInterface
+    ): Request
     {
         $url = $this->buildUrl($request, $options);
         $headers = $this->encodeHeaders($request, $options);
-
-        $httpRequest = $this->requestFactory->createRequest(
+        $body = $this->encodeRequestBody($request, $options);
+        return new Request(
             $request->method->name,
             $url,
+            $headers,
+            $body,
         );
-
-        // Encode body and, for multipart, capture the Content-Type with boundary.
-        if ($request instanceof MultipartApiRequest && $request->body !== null) {
-            $builder = new MultipartStreamBuilder($this->streamFactory);
-            $request->body->addToBuilder($builder);
-            $httpRequest = $httpRequest->withBody($builder->build());
-            $headers['Content-Type'] = "multipart/form-data; boundary={$builder->getBoundary()}";
-        } else {
-            $body = $this->encodeRequestBody($request, $options);
-            if ($body !== null) {
-                $httpRequest = $httpRequest->withBody($body);
-            }
-        }
-
-        foreach ($headers as $name => $value) {
-            $httpRequest = $httpRequest->withHeader($name, $value);
-        }
-
-        return $httpRequest;
     }
 
     /**
@@ -181,22 +173,18 @@ class RawClient
         array          $options,
     ): ?StreamInterface
     {
-        if ($request instanceof JsonApiRequest) {
-            return $request->body === null ? null : $this->streamFactory->createStream(
-                JsonEncoder::encode(
+        return match (get_class($request)) {
+            JsonApiRequest::class => $request->body === null ? null : Utils::streamFor(
+                json_encode(
                     $this->buildJsonBody(
                         $request->body,
                         $options,
                     ),
                 )
-            );
-        }
-
-        if ($request instanceof MultipartApiRequest) {
-            return null;
-        }
-
-        throw new InvalidArgumentException('Unsupported request type: ' . get_class($request));
+            ),
+            MultipartApiRequest::class => $request->body != null ? new MultipartStream($request->body->toArray()) : null,
+            default => throw new InvalidArgumentException('Unsupported request type: ' . get_class($request)),
+        };
     }
 
     /**
@@ -292,7 +280,7 @@ class RawClient
             return 'null';
         }
         // Unreachable, but included for a best effort.
-        return urlencode(JsonEncoder::encode($value));
+        return urlencode(strval(json_encode($value)));
     }
 
     /**

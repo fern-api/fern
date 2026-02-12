@@ -4,7 +4,6 @@ namespace Fern\Tests\Core\Json;
 
 use JsonSerializable;
 use PHPUnit\Framework\TestCase;
-use Fern\Core\Json\JsonEncoder;
 use Fern\Core\Json\JsonProperty;
 use Fern\Core\Json\JsonSerializableType;
 use Fern\Core\Types\ArrayType;
@@ -61,10 +60,10 @@ class EnumTest extends TestCase
             [Shape::Square, Shape::Circle, Shape::Triangle]
         );
 
-        $expectedJson = JsonEncoder::encode([
+        $expectedJson = json_encode([
             'shape' => 'CIRCLE',
             'shapes' => ['SQUARE', 'CIRCLE', 'TRIANGLE']
-        ]);
+        ], JSON_THROW_ON_ERROR);
 
         $actualJson = $object->toJson();
 

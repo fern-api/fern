@@ -2,7 +2,6 @@
 
 namespace Seed\Core\Multipart;
 
-use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Message\StreamInterface;
 
 class MultipartFormData
@@ -24,8 +23,8 @@ class MultipartFormData
         string|int|bool|float|StreamInterface $value,
         ?string $contentType = null,
     ): void {
-        $headers = $contentType !== null ? ['Content-Type' => $contentType] : null;
-        $this->addPart(
+        $headers = $contentType != null ? ['Content-Type' => $contentType] : null;
+        self::addPart(
             new MultipartFormDataPart(
                 name: $name,
                 value: $value,
@@ -45,14 +44,18 @@ class MultipartFormData
     }
 
     /**
-     * Adds all parts to a MultipartStreamBuilder.
+     * Converts the multipart form data into an array suitable
+     * for Guzzle's multipart form data.
      *
-     * @param MultipartStreamBuilder $builder
+     * @return array<array{
+     *     name: string,
+     *     contents: StreamInterface,
+     *     filename?: string,
+     *     headers?: array<string, string>
+     * }>
      */
-    public function addToBuilder(MultipartStreamBuilder $builder): void
+    public function toArray(): array
     {
-        foreach ($this->parts as $part) {
-            $part->addToBuilder($builder);
-        }
+        return array_map(fn ($part) => $part->toArray(), $this->parts);
     }
 }

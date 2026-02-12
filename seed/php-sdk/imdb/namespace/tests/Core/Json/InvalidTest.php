@@ -3,7 +3,6 @@
 namespace Fern\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
-use Fern\Core\Json\JsonEncoder;
 use Fern\Core\Json\JsonSerializableType;
 use Fern\Core\Json\JsonProperty;
 
@@ -32,10 +31,11 @@ class InvalidTest extends TestCase
     public function testInvalidJsonThrowsException(): void
     {
         $this->expectException(\TypeError::class);
-        $json = JsonEncoder::encode(
+        $json = json_encode(
             [
                 'integer_property' => 'not_an_integer'
             ],
+            JSON_THROW_ON_ERROR
         );
         Invalid::fromJson($json);
     }

@@ -4,7 +4,6 @@ namespace <%= namespace%>;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
-use <%= coreNamespace%>\Json\JsonEncoder;
 use <%= coreNamespace%>\Json\JsonProperty;
 use <%= coreNamespace%>\Json\JsonSerializableType;
 use <%= coreNamespace%>\Types\ArrayType;
@@ -56,7 +55,7 @@ class NestedUnionArrayTest extends TestCase
 {
     public function testNestedUnionArray(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'nested_array' => [
                     1 => [
@@ -70,6 +69,7 @@ class NestedUnionArrayTest extends TestCase
                     ]
                 ]
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $object = NestedUnionArray::fromJson($expectedJson);

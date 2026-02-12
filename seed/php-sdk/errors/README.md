@@ -70,30 +70,32 @@ try {
 
 ### Custom Client
 
-This SDK is built to work with any HTTP client that implements the [PSR-18](https://www.php-fig.org/psr/psr-18/) `ClientInterface`.
-By default, if no client is provided, the SDK will use `php-http/discovery` to find an installed HTTP client.
+This SDK is built to work with any HTTP client that implements Guzzle's `ClientInterface`.
+By default, if no client is provided, the SDK will use Guzzle's default HTTP client.
 However, you can pass your own client that adheres to `ClientInterface`:
 
 ```php
 use Seed\SeedClient;
 
-// Pass any PSR-18 compatible HTTP client implementation.
-// For example, using Guzzle:
+// Create a custom Guzzle client with specific configuration.
 $customClient = new \GuzzleHttp\Client([
     'timeout' => 5.0,
 ]);
 
+// Pass the custom client when creating an instance of the class.
 $client = new SeedClient(options: [
     'client' => $customClient
 ]);
 
-// Or using Symfony HttpClient:
-// $customClient = (new \Symfony\Component\HttpClient\Psr18Client())
-//     ->withOptions(['timeout' => 5.0]);
-//
-// $client = new SeedClient(options: [
-//     'client' => $customClient
-// ]);
+// You can also utilize the same technique to leverage advanced customizations to the client such as adding middleware
+$handlerStack = \GuzzleHttp\HandlerStack::create();
+$handlerStack->push(MyCustomMiddleware::create());
+$customClient = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+
+// Pass the custom client when creating an instance of the class.
+$client = new SeedClient(options: [
+    'client' => $customClient
+]);
 ```
 
 ### Retries
@@ -127,7 +129,7 @@ The SDK defaults to a 30 second timeout. Use the `timeout` option to configure t
 $response = $client->simple->fooWithoutEndpointError(
     ...,
     options: [
-        'timeout' => 3.0 // Override timeout at the request level
+        'timeout' => 3.0 // Override timeout to 3 seconds
     ]
 );
 ```

@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Auth\AuthClient;
 use Seed\User\UserClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Core\InferredAuthProvider;
 use Exception;

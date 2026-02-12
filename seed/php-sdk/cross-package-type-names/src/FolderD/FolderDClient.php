@@ -3,7 +3,7 @@
 namespace Seed\FolderD;
 
 use Seed\FolderD\Service\ServiceClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class FolderDClient

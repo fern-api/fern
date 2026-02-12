@@ -3,7 +3,6 @@
 namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
-use <%= coreNamespace%>\Json\JsonEncoder;
 use <%= coreNamespace%>\Json\JsonProperty;
 use <%= coreNamespace%>\Json\JsonSerializableType;
 
@@ -43,11 +42,12 @@ class TraitTest extends TestCase
 {
     public function testTraitPropertyAndString(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'integer_property' => 42,
                 'string_property' => 'Hello, World!',
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $object = TypeWithTrait::fromJson($expectedJson);

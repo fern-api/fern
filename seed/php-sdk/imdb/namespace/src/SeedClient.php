@@ -3,7 +3,7 @@
 namespace Fern;
 
 use Fern\Imdb\ImdbClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Fern\Core\Client\RawClient;
 
 class SeedClient

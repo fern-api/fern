@@ -13,7 +13,7 @@ use Seed\Endpoints\Primitive\PrimitiveClient;
 use Seed\Endpoints\Put\PutClient;
 use Seed\Endpoints\Union\UnionClient;
 use Seed\Endpoints\Urls\UrlsClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class EndpointsClient

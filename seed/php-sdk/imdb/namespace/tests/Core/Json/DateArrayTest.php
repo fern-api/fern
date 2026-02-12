@@ -4,7 +4,6 @@ namespace Fern\Tests\Core\Json;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
-use Fern\Core\Json\JsonEncoder;
 use Fern\Core\Json\JsonProperty;
 use Fern\Core\Json\JsonSerializableType;
 use Fern\Core\Types\ArrayType;
@@ -34,10 +33,11 @@ class DateArrayTest extends TestCase
 {
     public function testDateTimeInArrays(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $expectedJson = json_encode(
             [
                 'dates' => ['2023-01-01', '2023-02-01', '2023-03-01']
             ],
+            JSON_THROW_ON_ERROR
         );
 
         $object = DateArray::fromJson($expectedJson);

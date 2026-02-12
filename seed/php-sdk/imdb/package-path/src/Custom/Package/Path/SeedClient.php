@@ -3,7 +3,7 @@
 namespace Custom\Package\Path;
 
 use Custom\Package\Path\Imdb\ImdbClient;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Custom\Package\Path\Core\Client\RawClient;
 
 class SeedClient
