@@ -40,7 +40,7 @@ export async function containerUpgrade({
             return context.failAndThrow(`Could not find a FROM ${IMAGE_NAME}:<tag> line in ${dockerfilePath}`);
         }
 
-        const currentTag = match[2];
+        const currentTag = match[2] ?? "unknown";
 
         context.logger.info("Fetching latest container tag...");
 
