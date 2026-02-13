@@ -7,6 +7,8 @@
         Show "Initiating Library Generation" message and clean library name spinners
         with sequential processing. Verbose logs moved to debug level only.
       type: feat
+  createdAt: "2026-02-13"
+  irVersion: 65
 - version: 3.77.1
   changelogEntry:
     - summary: |
