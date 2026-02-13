@@ -5,6 +5,7 @@ import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import chalk from "chalk";
 import inquirer from "inquirer";
+import { v4 as uuidv4 } from "uuid";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
 import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
@@ -16,6 +17,8 @@ import type { Workspace } from "../workspace/Workspace.js";
 import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 import { TaskContextAdapter } from "./adapter/TaskContextAdapter.js";
 import { LogFileWriter } from "./LogFileWriter.js";
+import { getPosthogManager } from "../telemetry";
+import type { PosthogEvent } from "../telemetry";
 
 export class Context {
     private ttyAwareLogger: TtyAwareLogger;
@@ -27,7 +30,8 @@ export class Context {
     public readonly cache: Cache;
     public readonly logFileWriter: LogFileWriter;
     public readonly tokenService: TokenService;
-
+    public readonly isLocal: boolean;
+    public readonly tags: Record<string, string | number | boolean>;
     constructor({
         stdout,
         stderr,
@@ -47,6 +51,12 @@ export class Context {
         this.cache = new Cache({ logger: this.stderr });
         this.logFileWriter = new LogFileWriter(this.cache.logs.absoluteFilePath);
         this.tokenService = new TokenService({ credential: new CredentialStore() });
+        this.isLocal = false; // TODO: make this configurable
+        this.tags = {
+            invocationId: uuidv4(),
+            version: process.env.CLI_VERSION || '',
+            source: 'CLI',
+        };
     }
 
     /**
@@ -173,6 +183,24 @@ export class Context {
      */
     public finish(): void {
         this.ttyAwareLogger.finish();
+    }
+
+    public async tag(key: string, value: string | number): Promise<void> {
+        this.tags[key] = value
+    }
+
+    public async sendEventToPosthog(event: PosthogEvent): Promise<void> {
+        if (!this.isLocal) {
+            const mergedEvent: PosthogEvent = {
+                event: event.event,
+                properties: {
+                    ...(event.properties ?? {}),
+                    ...this.tags
+                }
+            };
+            const manager = await getPosthogManager();
+            (await getPosthogManager()).sendEvent(mergedEvent);
+        }
     }
 
     private async promptAndLogin(): Promise<FernUserToken> {

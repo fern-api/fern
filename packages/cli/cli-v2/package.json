@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -76,8 +78,10 @@
     "inquirer": "^9.2.15",
     "js-yaml": "^4.1.1",
     "jsonwebtoken": "^9.0.2",
+    "posthog-node": "^5.14.0",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",
+    "uuid": "^13.0.0",
     "vitest": "^4.0.8",
     "yargs": "^17.4.1"
   }

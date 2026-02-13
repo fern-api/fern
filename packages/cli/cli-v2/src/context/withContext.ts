@@ -18,14 +18,23 @@ export function withContext<T extends GlobalArgs>(
 ): (args: T) => Promise<void> {
     return async (args: T) => {
         const context = createContext(args);
+        context.tag("command", args._.join(' '));
+        const startTime = performance.now();
+        let exitCode = 0;
         try {
             await handler(context, args);
-            context.finish();
-            process.exit(0);
         } catch (error) {
             handleError(context, error);
+            exitCode = 1;
+        } finally {
+            const endTime = performance.now();
+            const durationMs = endTime - startTime;
+            context.sendEventToPosthog({
+                event: "command finished",
+                properties: { durationMs }
+            });
             context.finish();
-            process.exit(1);
+            process.exit(exitCode);
         }
     };
 }
