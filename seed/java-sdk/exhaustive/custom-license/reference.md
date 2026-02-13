@@ -1260,6 +1260,75 @@ client.endpoints().object().getAndReturnWithDatetimeLikeString(
 </dl>
 </details>
 
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.listItems() -> SyncPagingIterable&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().pagination().listItems(
+    ListItemsRequest
+        .builder()
+        .cursor("cursor")
+        .limit(1)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `Optional<String>` — The cursor for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` — Maximum number of items to return
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.endpoints.params.getWithPath(param) -> String</code></summary>
 <dl>

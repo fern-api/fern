@@ -1925,6 +1925,92 @@ client.endpoints.object.get_and_return_with_datetime_like_string(
 </dl>
 </details>
 
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.<a href="src/seed/endpoints/pagination/client.py">list_items</a>(...) -&gt; AsyncPager[ObjectWithRequiredField, PaginatedResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.endpoints.pagination.list_items(
+    cursor="cursor",
+    limit=1,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — The cursor for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Maximum number of items to return
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>

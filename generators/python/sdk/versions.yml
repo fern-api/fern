@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.57.1
+  changelogEntry:
+    - summary: |
+        Only copy `custom_pagination.py` into generated SDKs when custom pagination endpoints
+        are present, and only copy `pagination.py` when standard pagination endpoints are present.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 4.57.0
   changelogEntry:
     - summary: |
