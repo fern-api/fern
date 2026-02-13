@@ -9,10 +9,15 @@ import com.seed.paginationUriPath.core.RequestOptions;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathApiException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathHttpResponse;
+import com.seed.paginationUriPath.core.pagination.SyncPagingIterable;
 import com.seed.paginationUriPath.resources.users.types.ListUsersPathPaginationResponse;
 import com.seed.paginationUriPath.resources.users.types.ListUsersUriPaginationResponse;
+import com.seed.paginationUriPath.resources.users.types.User;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -30,12 +35,11 @@ public class AsyncRawUsersClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersUriPaginationResponse>>
-            listWithUriPagination() {
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithUriPagination() {
         return listWithUriPagination(null);
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersUriPaginationResponse>> listWithUriPagination(
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithUriPagination(
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -56,7 +60,7 @@ public class AsyncRawUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersUriPaginationResponse>> future =
+        CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -64,9 +68,20 @@ public class AsyncRawUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
+                        ListUsersUriPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, ListUsersUriPaginationResponse.class);
+                        Optional<String> startingAfter = parsedResponse.getNext();
+                        List<User> result = parsedResponse.getData();
                         future.complete(new SeedPaginationUriPathHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, ListUsersUriPaginationResponse.class),
+                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
+                                    try {
+                                        return listWithUriPagination(requestOptions)
+                                                .get()
+                                                .body();
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }),
                                 response));
                         return;
                     }
@@ -89,12 +104,11 @@ public class AsyncRawUsersClient {
         return future;
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersPathPaginationResponse>>
-            listWithPathPagination() {
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithPathPagination() {
         return listWithPathPagination(null);
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersPathPaginationResponse>> listWithPathPagination(
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithPathPagination(
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -115,7 +129,7 @@ public class AsyncRawUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersPathPaginationResponse>> future =
+        CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -123,9 +137,20 @@ public class AsyncRawUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
+                        ListUsersPathPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, ListUsersPathPaginationResponse.class);
+                        Optional<String> startingAfter = parsedResponse.getNext();
+                        List<User> result = parsedResponse.getData();
                         future.complete(new SeedPaginationUriPathHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, ListUsersPathPaginationResponse.class),
+                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
+                                    try {
+                                        return listWithPathPagination(requestOptions)
+                                                .get()
+                                                .body();
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }),
                                 response));
                         return;
                     }

@@ -796,23 +796,29 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                         CodeBlock.of("$L", variables.getResponseBodyStringName()),
                         Optional.of(body.getResponseBodyType())));
-                ParameterSpec requestParameterSpec = variables
-                        .requestParameterSpec()
-                        .orElseThrow(() -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
                 String endpointName =
                         httpEndpoint.getName().get().getCamelCase().getSafeName();
-                String methodParameters = endpointMethodBuilder.parameters.stream()
-                        .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
-                                ? variables.getNextRequestVariableName()
-                                : parameterSpec.name)
-                        .collect(Collectors.joining(", "));
+                Optional<ParameterSpec> maybeRequestParameterSpec = variables.requestParameterSpec();
+                String methodParameters;
+                if (maybeRequestParameterSpec.isPresent()) {
+                    ParameterSpec requestParameterSpec = maybeRequestParameterSpec.get();
+                    methodParameters = endpointMethodBuilder.parameters.stream()
+                            .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
+                                    ? variables.getNextRequestVariableName()
+                                    : parameterSpec.name)
+                            .collect(Collectors.joining(", "));
+                } else {
+                    methodParameters = endpointMethodBuilder.parameters.stream()
+                            .map(parameterSpec -> parameterSpec.name)
+                            .collect(Collectors.joining(", "));
+                }
                 httpEndpoint
                         .getPagination()
                         .get()
                         .visit(new JsonResponsePaginationVisitor(
                                 httpResponseBuilder,
                                 endpointMethodBuilder,
-                                requestParameterSpec,
+                                maybeRequestParameterSpec.orElse(null),
                                 body,
                                 endpointName,
                                 methodParameters));
@@ -1395,6 +1401,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         private final CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
+        // Null for URI/path pagination endpoints that have no request parameter
         private final ParameterSpec requestParameterSpec;
         private final JsonResponseBodyWithProperty body;
         private final String endpointName;
