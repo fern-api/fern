@@ -306,8 +306,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                         context.getGeneratorConfig().getWorkspaceName(),
                         context.getCustomConfig())
                 .simpleName();
-        PaginationCoreGenerator paginationCoreGenerator =
-                new PaginationCoreGenerator(context, generatorExecClient, apiExceptionSimpleName, baseExceptionSimpleName);
+        PaginationCoreGenerator paginationCoreGenerator = new PaginationCoreGenerator(
+                context, generatorExecClient, apiExceptionSimpleName, baseExceptionSimpleName);
         List<GeneratedFile> generatedFiles = paginationCoreGenerator.generateFiles();
         generatedFiles.forEach(this::addGeneratedFile);
 

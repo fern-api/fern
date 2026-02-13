@@ -1883,9 +1883,8 @@ public abstract class AbstractHttpResponseParserGenerator {
             httpResponseBuilder.addStatement(resultBlock);
 
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
-            TypeName responseBodyTypeName = clientGeneratorContext
-                    .getPoetTypeNameMapper()
-                    .convertToTypeName(true, body.getResponseBodyType());
+            TypeName responseBodyTypeName =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
 
             // Build the getNext lambda: _response -> _response.getNext()
             CodeBlock getNextLambda = CodeBlock.builder()
@@ -1919,8 +1918,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (acceptHeader.isPresent()) {
                 // Extract the header value from the .addHeader("Accept", "...") CodeBlock
                 // Simpler: just build Headers.of with Accept header
-                additionalHeadersExpression =
-                        CodeBlock.of("$T.of($S, $S)", headersClass, "Accept", "application/json");
+                additionalHeadersExpression = CodeBlock.of("$T.of($S, $S)", headersClass, "Accept", "application/json");
             } else {
                 additionalHeadersExpression = CodeBlock.of("new $T.Builder().build()", headersClass);
             }
@@ -1932,9 +1930,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             // Build the XxxPage.create(...) call
             CodeBlock paginationConstructor = CodeBlock.builder()
-                    .add(
-                            "$T.create(\n",
-                            pageHelperClass)
+                    .add("$T.create(\n", pageHelperClass)
                     .indent()
                     .indent()
                     .add("$L,\n", variables.getParsedResponseVariableName())
