@@ -1,15 +1,15 @@
-import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import {
     ArrayReference,
     ClassReference,
     ClassReferenceFactory,
     DiscriminatedUnionClassReference
-} from "./classes/ClassReference";
-import { AstNode } from "./core/AstNode";
-import { ExampleGenerator } from "./ExampleGenerator";
-import { Function_ } from "./functions/Function_";
-import { Parameter } from "./Parameter";
-import { Property } from "./Property";
+} from "./classes/ClassReference.js";
+import { AstNode } from "./core/AstNode.js";
+import { ExampleGenerator } from "./ExampleGenerator.js";
+import { Function_ } from "./functions/Function_.js";
+import { Parameter } from "./Parameter.js";
+import { Property } from "./Property.js";
 
 export interface YardocDocString {
     readonly name: "docString";
@@ -31,7 +31,7 @@ interface YardocDocUniversal {
 export declare namespace Yardoc {
     export interface Init extends Omit<AstNode.Init, "documentation"> {
         reference?: YardocDocString | YardocTypeReference | YardocDocUniversal;
-        flattenedProperties?: Map<TypeId, ObjectProperty[]>;
+        flattenedProperties?: Map<FernIr.TypeId, FernIr.ObjectProperty[]>;
         crf?: ClassReferenceFactory;
         eg?: ExampleGenerator;
     }
@@ -41,7 +41,7 @@ export class Yardoc extends AstNode {
     public reference: YardocDocString | YardocTypeReference | YardocDocUniversal | undefined;
 
     // TODO: we should likely make a yardoc generator so we're not passing in this map and the CRF into each instance
-    private flattenedProperties: Map<TypeId, ObjectProperty[]> | undefined;
+    private flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]> | undefined;
     private crf: ClassReferenceFactory | undefined;
     private eg: ExampleGenerator | undefined;
 
@@ -60,7 +60,7 @@ export class Yardoc extends AstNode {
         startingTabSpaces: number,
         nestedLayer: number
     ): void {
-        const properties: ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
+        const properties: FernIr.ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
         const classFactory = this.crf;
         const postCommentSpacing = " ".repeat(this.tabSizeSpaces * (nestedLayer + 1));
         if (typeId !== undefined && properties !== undefined && classFactory !== undefined) {
@@ -124,7 +124,7 @@ export class Yardoc extends AstNode {
             isArray = true;
             typeId = parameter.type[0].innerType.resolvedTypeId;
         }
-        const properties: ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
+        const properties: FernIr.ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
 
         if (typeId === undefined || properties === undefined || classFactory === undefined) {
             this.writeParameterAsClass(parameter, startingTabSpaces);

@@ -1,4 +1,4 @@
-import { parseEndpointLocator } from "../parseEndpointLocator";
+import { parseEndpointLocator } from "../parseEndpointLocator.js";
 
 describe("parseEndpointLocator", () => {
     it("simple", () => {

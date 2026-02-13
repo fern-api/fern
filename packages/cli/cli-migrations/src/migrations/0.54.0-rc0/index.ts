@@ -1,5 +1,5 @@
-import { VersionMigrations } from "../../types/VersionMigrations";
-import { migration } from "./use-generators-yml-specs/migration";
+import { VersionMigrations } from "../../types/VersionMigrations.js";
+import { migration } from "./use-generators-yml-specs/migration.js";
 
 const versionMigrations: VersionMigrations = {
     version: "0.54.0-rc0",

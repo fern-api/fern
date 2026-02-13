@@ -1,25 +1,24 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace RawClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        serviceId: ServiceId;
-        service: HttpService;
-        subpackage: Subpackage | undefined;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        subpackage: FernIr.Subpackage | undefined;
     }
 }
 
 export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private serviceId: ServiceId;
-    private service: HttpService;
-    private subpackage: Subpackage | undefined;
+    private serviceId: FernIr.ServiceId;
+    private service: FernIr.HttpService;
+    private subpackage: FernIr.Subpackage | undefined;
 
     constructor({ subpackage, context, serviceId, service }: RawClientGenerator.Args) {
         super(context);

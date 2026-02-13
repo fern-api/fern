@@ -6,10 +6,10 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
-import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { upperFirst } from "lodash-es";
-import { RubyProject } from "../project/RubyProject";
-import { RubyTypeMapper } from "./RubyTypeMapper";
+import { RubyProject } from "../project/RubyProject.js";
+import { RubyTypeMapper } from "./RubyTypeMapper.js";
 
 /**
  * Converts a string to snake_case for Ruby naming conventions.
@@ -28,7 +28,7 @@ const defaultVersion: string = "0.0.0";
 export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
 > extends AbstractGeneratorContext {
-    public readonly ir: IntermediateRepresentation;
+    public readonly ir: FernIr.IntermediateRepresentation;
     public readonly project: RubyProject;
     public readonly customConfig: CustomConfig;
     public readonly typeMapper: RubyTypeMapper;
@@ -36,7 +36,7 @@ export abstract class AbstractRubyGeneratorContext<
     public readonly typesModuleName: string = "Types";
 
     public constructor(
-        ir: IntermediateRepresentation,
+        ir: FernIr.IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
         customConfig: CustomConfig,
         generatorNotificationService: GeneratorNotificationService
@@ -48,7 +48,7 @@ export abstract class AbstractRubyGeneratorContext<
         this.project = new RubyProject({ context: this });
     }
 
-    public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
+    public getTypeDeclarationOrThrow(typeId: FernIr.TypeId): FernIr.TypeDeclaration {
         const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
@@ -56,7 +56,7 @@ export abstract class AbstractRubyGeneratorContext<
         return typeDeclaration;
     }
 
-    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
+    public getTypeDeclaration(typeId: FernIr.TypeId): FernIr.TypeDeclaration | undefined {
         return this.ir.types[typeId];
     }
 
@@ -137,25 +137,25 @@ export abstract class AbstractRubyGeneratorContext<
         });
     }
 
-    protected snakeNames(typeDeclaration: TypeDeclaration): string[] {
+    protected snakeNames(typeDeclaration: FernIr.TypeDeclaration): string[] {
         return typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName);
     }
 
-    protected pascalNames(typeDeclaration: TypeDeclaration): string[] {
+    protected pascalNames(typeDeclaration: FernIr.TypeDeclaration): string[] {
         return typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName);
     }
 
-    public abstract getAllTypeDeclarations(): TypeDeclaration[];
+    public abstract getAllTypeDeclarations(): FernIr.TypeDeclaration[];
 
     public abstract getCoreAsIsFiles(): string[];
 
-    public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
+    public abstract getLocationForTypeId(typeId: FernIr.TypeId): RelativeFilePath;
 
-    public abstract getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference;
+    public abstract getClassReferenceForTypeId(typeId: FernIr.TypeId): ruby.ClassReference;
 
-    public abstract getFileNameForTypeId(typeId: TypeId): string;
+    public abstract getFileNameForTypeId(typeId: FernIr.TypeId): string;
 
-    public abstract getModuleNamesForTypeId(typeId: TypeId): string[];
+    public abstract getModuleNamesForTypeId(typeId: FernIr.TypeId): string[];
 
-    public abstract getModulesForTypeId(typeId: TypeId): ruby.Module_[];
+    public abstract getModulesForTypeId(typeId: FernIr.TypeId): ruby.Module_[];
 }

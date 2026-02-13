@@ -2,11 +2,11 @@ import type { OpenAPISpec, OpenRPCSpec } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
-import { LegacyApiSpecAdapter } from "../api/adapter/LegacyApiSpecAdapter";
-import type { AsyncApiSpec } from "../api/config/AsyncApiSpec";
-import type { OpenApiSpec } from "../api/config/OpenApiSpec";
-import type { OpenRpcSpec } from "../api/config/OpenRpcSpec";
-import { createTestContext } from "./utils/createTestContext";
+import { LegacyApiSpecAdapter } from "../api/adapter/LegacyApiSpecAdapter.js";
+import type { AsyncApiSpec } from "../api/config/AsyncApiSpec.js";
+import type { OpenApiSpec } from "../api/config/OpenApiSpec.js";
+import type { OpenRpcSpec } from "../api/config/OpenRpcSpec.js";
+import { createTestContext } from "./utils/createTestContext.js";
 
 describe("LegacyApiSpecAdapter", () => {
     const cwd = AbsoluteFilePath.of("/test/path");

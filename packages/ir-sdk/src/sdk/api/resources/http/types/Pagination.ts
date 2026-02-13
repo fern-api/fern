@@ -5,7 +5,12 @@ import * as FernIr from "../../../index.js";
 /**
  * If set, the endpoint will be generated with auto-pagination features.
  */
-export type Pagination = FernIr.Pagination.Cursor | FernIr.Pagination.Offset | FernIr.Pagination.Custom;
+export type Pagination =
+    | FernIr.Pagination.Cursor
+    | FernIr.Pagination.Offset
+    | FernIr.Pagination.Custom
+    | FernIr.Pagination.Uri
+    | FernIr.Pagination.Path;
 
 export namespace Pagination {
     export interface Cursor extends FernIr.CursorPagination, _Utils {
@@ -20,6 +25,14 @@ export namespace Pagination {
         type: "custom";
     }
 
+    export interface Uri extends FernIr.UriPagination, _Utils {
+        type: "uri";
+    }
+
+    export interface Path extends FernIr.PathPagination, _Utils {
+        type: "path";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Pagination._Visitor<_Result>) => _Result;
     }
@@ -28,6 +41,8 @@ export namespace Pagination {
         cursor: (value: FernIr.CursorPagination) => _Result;
         offset: (value: FernIr.OffsetPagination) => _Result;
         custom: (value: FernIr.CustomPagination) => _Result;
+        uri: (value: FernIr.UriPagination) => _Result;
+        path: (value: FernIr.PathPagination) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -63,6 +78,26 @@ export const Pagination = {
         };
     },
 
+    uri: (value: FernIr.UriPagination): FernIr.Pagination.Uri => {
+        return {
+            ...value,
+            type: "uri",
+            _visit: function <_Result>(this: FernIr.Pagination.Uri, visitor: FernIr.Pagination._Visitor<_Result>) {
+                return FernIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
+    path: (value: FernIr.PathPagination): FernIr.Pagination.Path => {
+        return {
+            ...value,
+            type: "path",
+            _visit: function <_Result>(this: FernIr.Pagination.Path, visitor: FernIr.Pagination._Visitor<_Result>) {
+                return FernIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.Pagination, visitor: FernIr.Pagination._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "cursor":
@@ -71,6 +106,10 @@ export const Pagination = {
                 return visitor.offset(value);
             case "custom":
                 return visitor.custom(value);
+            case "uri":
+                return visitor.uri(value);
+            case "path":
+                return visitor.path(value);
             default:
                 return visitor._other(value);
         }

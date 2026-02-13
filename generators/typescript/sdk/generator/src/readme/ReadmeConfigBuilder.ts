@@ -5,7 +5,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { template } from "lodash-es";
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
 const SdkCustomConfigSchema: typeof TypescriptCustomConfigSchema = TypescriptCustomConfigSchema;
 type SdkCustomConfigSchema = TypescriptCustomConfigSchema;

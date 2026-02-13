@@ -2,7 +2,7 @@ import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile, rm } from "fs/promises";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli } from "../../utils/runFernCli.js";
 
 export async function generateFdrApiDefinitionAsString({
     fixturePath,

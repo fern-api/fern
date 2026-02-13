@@ -46,6 +46,7 @@ class UserPage extends JsonSerializableType
     public function setData(UserListContainer $value): self
     {
         $this->data = $value;
+        $this->_setField('data');
         return $this;
     }
 
@@ -63,6 +64,7 @@ class UserPage extends JsonSerializableType
     public function setNext(?string $value = null): self
     {
         $this->next = $value;
+        $this->_setField('next');
         return $this;
     }
 

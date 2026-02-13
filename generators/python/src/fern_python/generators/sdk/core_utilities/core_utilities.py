@@ -25,7 +25,8 @@ class CoreUtilities:
 
     def __init__(
         self,
-        has_paginated_endpoints: bool,
+        has_standard_paginated_endpoints: bool,
+        has_custom_paginated_endpoints: bool,
         project_module_path: AST.ModulePath,
         custom_config: SDKCustomConfig,
     ) -> None:
@@ -35,7 +36,8 @@ class CoreUtilities:
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = custom_config.pydantic_config.skip_validation
         self._use_typeddict_requests = custom_config.pydantic_config.use_typeddict_requests
-        self._has_paginated_endpoints = has_paginated_endpoints
+        self._has_standard_paginated_endpoints = has_standard_paginated_endpoints
+        self._has_custom_paginated_endpoints = has_custom_paginated_endpoints
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
@@ -215,7 +217,7 @@ class CoreUtilities:
             else set(),
         )
 
-        if self._has_paginated_endpoints:
+        if self._has_standard_paginated_endpoints:
             self._copy_file_to_project(
                 project=project,
                 relative_filepath_on_disk="pagination.py",
@@ -225,7 +227,8 @@ class CoreUtilities:
                 ),
                 exports={"SyncPager", "AsyncPager"} if not self._exclude_types_from_init_exports else set(),
             )
-            # Copy custom pagination file (for user customization)
+
+        if self._has_custom_paginated_endpoints:
             self._copy_file_to_project(
                 project=project,
                 relative_filepath_on_disk="custom_pagination.py",
@@ -265,6 +268,17 @@ class CoreUtilities:
                     file=Filepath.FilepathPart(module_name="events"),
                 ),
                 exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
+            )
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="websocket_compat.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="websocket_compat"),
+                ),
+                exports={"InvalidWebSocketStatus", "get_status_code"}
+                if not self._exclude_types_from_init_exports
+                else set(),
             )
 
         # Copy the entire http_sse folder
@@ -901,6 +915,24 @@ class CoreUtilities:
     def _sanitize_pager_name(self, name: str) -> str:
         """Sanitize the pager name to be a valid Python identifier in PascalCase."""
         return pascal_case(name)
+
+    def get_reference_to_invalid_websocket_status(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="InvalidWebSocketStatus",
+            ),
+        )
+
+    def get_reference_to_get_status_code(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "websocket_compat"),
+                named_import="get_status_code",
+            ),
+        )
 
     def get_import_paths(self) -> Optional[list[str]]:
         """Get the list of import paths for auto-loading user-defined files."""

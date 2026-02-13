@@ -16,7 +16,7 @@ import {
     Struct,
     Switch,
     TypeDeclaration
-} from "./ast";
+} from "./ast/index.js";
 
 export function alias(args: Alias.Args): Alias {
     return new Alias(args);
@@ -86,6 +86,7 @@ export function typeReference(args: GoTypeReference.Args): GoTypeReference {
     return new GoTypeReference(args);
 }
 
+export { AstNode } from "./ast/core/AstNode.js";
 export {
     Alias,
     CodeBlock,
@@ -110,5 +111,4 @@ export {
     TypeInstantiation,
     UuidTypeReference,
     Writer
-} from "./ast";
-export { AstNode } from "./ast/core/AstNode";
+} from "./ast/index.js";

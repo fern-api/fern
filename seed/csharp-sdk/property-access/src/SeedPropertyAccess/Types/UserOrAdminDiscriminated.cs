@@ -242,7 +242,7 @@ public record UserOrAdminDiscriminated
                 "user" => json.Deserialize<SeedPropertyAccess.User?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.User"),
                 "admin" => json.GetProperty("admin").Deserialize<SeedPropertyAccess.Admin?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.Admin"),
+                    ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.Admin"),
                 "empty" => new { },
                 _ => json.Deserialize<object?>(options),
             };

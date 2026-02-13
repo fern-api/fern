@@ -38,6 +38,7 @@ class UsernameCursor extends JsonSerializableType
     public function setCursor(UsernamePage $value): self
     {
         $this->cursor = $value;
+        $this->_setField('cursor');
         return $this;
     }
 

@@ -1,6 +1,6 @@
-import { AstNode, Writer } from "./index";
-import { Statement } from "./Statement";
-import { Type } from "./Type";
+import { AstNode, Writer } from "./index.js";
+import { Statement } from "./Statement.js";
+import { Type } from "./Type.js";
 
 export declare namespace Expression {
     type Args =

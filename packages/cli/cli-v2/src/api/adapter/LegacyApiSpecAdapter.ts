@@ -8,16 +8,16 @@ import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";
 import type { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
-import type { Context } from "../../context/Context";
-import type { ApiSpec } from "../config/ApiSpec";
-import type { AsyncApiSpec } from "../config/AsyncApiSpec";
-import { isAsyncApiSpec } from "../config/AsyncApiSpec";
-import type { OpenApiSpec } from "../config/OpenApiSpec";
-import { isOpenApiSpec } from "../config/OpenApiSpec";
-import type { OpenRpcSpec } from "../config/OpenRpcSpec";
-import { isOpenRpcSpec } from "../config/OpenRpcSpec";
-import type { ProtobufSpec } from "../config/ProtobufSpec";
-import { isProtobufSpec } from "../config/ProtobufSpec";
+import type { Context } from "../../context/Context.js";
+import type { ApiSpec } from "../config/ApiSpec.js";
+import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
+import { isAsyncApiSpec } from "../config/AsyncApiSpec.js";
+import type { OpenApiSpec } from "../config/OpenApiSpec.js";
+import { isOpenApiSpec } from "../config/OpenApiSpec.js";
+import type { OpenRpcSpec } from "../config/OpenRpcSpec.js";
+import { isOpenRpcSpec } from "../config/OpenRpcSpec.js";
+import type { ProtobufSpec } from "../config/ProtobufSpec.js";
+import { isProtobufSpec } from "../config/ProtobufSpec.js";
 
 export namespace LegacyApiSpecAdapter {
     export interface Config {

@@ -157,6 +157,8 @@ allowedFailures:
   - unions
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
+  # Server URL templating not yet supported in Swift SDK
+  - server-url-templating
   - variables
   - websocket-inferred-auth
   # Intermediate failures

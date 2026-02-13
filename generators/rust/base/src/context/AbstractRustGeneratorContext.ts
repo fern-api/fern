@@ -1,9 +1,8 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import type * as FernIr from "@fern-fern/ir-sdk/api";
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { AsIsFileDefinition } from "../AsIs";
-import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AsIsFileDefinition } from "../AsIs.js";
+import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project/index.js";
 import {
     convertPascalToSnakeCase,
     convertToSnakeCase,
@@ -12,7 +11,7 @@ import {
     generateDefaultCrateName,
     RustCycleDetector,
     validateAndSanitizeCrateName
-} from "../utils";
+} from "../utils/index.js";
 
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
@@ -22,7 +21,7 @@ export abstract class AbstractRustGeneratorContext<
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -402,7 +401,7 @@ export abstract class AbstractRustGeneratorContext<
      * 2. Inline request body types
      * 3. Query request types
      */
-    private registerAllFilenames(ir: IntermediateRepresentation): void {
+    private registerAllFilenames(ir: FernIr.IntermediateRepresentation): void {
         this.logger.debug("=== Pre-registering all filenames ===");
 
         // Priority 1: All IR types (covers Enum, Alias, Struct, Union, UndiscriminatedUnion)
@@ -875,14 +874,14 @@ export abstract class AbstractRustGeneratorContext<
 
     /**
      * Get the unique query type name (used in type references).
-     * This looks up the type in IR and endpoind and returns its unique name.
+     * This looks up the type in IR and endpoint and returns its unique name.
      *
      * @param endpoint
      * @param serviceId
      * @returns The unique type name, or the base name if not found in IR
      */
 
-    public getQueryRequestTypeName(endpoint: HttpEndpoint, serviceId: string): string {
+    public getQueryRequestTypeName(endpoint: FernIr.HttpEndpoint, serviceId: string): string {
         // Generate query-specific request type name with service context to prevent collisions
         const methodName = endpoint.name.pascalCase.safeName;
         const baseTypeName = `${methodName}QueryRequest`;

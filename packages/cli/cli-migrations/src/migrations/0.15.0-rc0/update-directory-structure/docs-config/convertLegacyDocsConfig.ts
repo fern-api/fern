@@ -1,4 +1,4 @@
-import { DocsURL, LegacyDocs, MigratedDocs } from ".";
+import { DocsURL, LegacyDocs, MigratedDocs } from "./index.js";
 
 export function convertLegacyDocsConfig({
     docsConfiguration,

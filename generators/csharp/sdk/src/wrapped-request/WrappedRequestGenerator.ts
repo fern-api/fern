@@ -3,18 +3,19 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    ContainerType,
-    ExampleEndpointCall,
-    ExampleInlinedRequestBodyExtraProperty,
-    HttpEndpoint,
-    Name,
-    SdkRequestWrapper,
-    ServiceId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { DefaultValueExtractor, ExtractedDefault } from "../DefaultValueExtractor";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ContainerType = FernIr.ContainerType;
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleInlinedRequestBodyExtraProperty = FernIr.ExampleInlinedRequestBodyExtraProperty;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type Name = FernIr.Name;
+type SdkRequestWrapper = FernIr.SdkRequestWrapper;
+type ServiceId = FernIr.ServiceId;
+type TypeReference = FernIr.TypeReference;
+
+import { DefaultValueExtractor, ExtractedDefault } from "../DefaultValueExtractor.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {
@@ -135,7 +136,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 protobufProperties.push({
                     propertyName: field.name,
                     typeReference: query.allowMultiple
-                        ? TypeReference.container(ContainerType.list(query.valueType))
+                        ? FernIr.TypeReference.container(FernIr.ContainerType.list(query.valueType))
                         : query.valueType
                 });
             }

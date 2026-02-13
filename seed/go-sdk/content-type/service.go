@@ -3,6 +3,8 @@
 package contenttypes
 
 import (
+	json "encoding/json"
+	internal "github.com/content-type/fern/internal"
 	big "math/big"
 )
 
@@ -47,6 +49,27 @@ func (n *NamedMixedPatchRequest) SetInstructions(instructions *string) {
 func (n *NamedMixedPatchRequest) SetActive(active *bool) {
 	n.Active = active
 	n.require(namedMixedPatchRequestFieldActive)
+}
+
+func (n *NamedMixedPatchRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler NamedMixedPatchRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*n = NamedMixedPatchRequest(body)
+	return nil
+}
+
+func (n *NamedMixedPatchRequest) MarshalJSON() ([]byte, error) {
+	type embed NamedMixedPatchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -110,6 +133,27 @@ func (o *OptionalMergePatchRequest) SetNullableString(nullableString *string) {
 	o.require(optionalMergePatchRequestFieldNullableString)
 }
 
+func (o *OptionalMergePatchRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler OptionalMergePatchRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*o = OptionalMergePatchRequest(body)
+	return nil
+}
+
+func (o *OptionalMergePatchRequest) MarshalJSON() ([]byte, error) {
+	type embed OptionalMergePatchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	patchProxyRequestFieldApplication = big.NewInt(1 << 0)
 	patchProxyRequestFieldRequireAuth = big.NewInt(1 << 1)
@@ -142,6 +186,27 @@ func (p *PatchProxyRequest) SetApplication(application *string) {
 func (p *PatchProxyRequest) SetRequireAuth(requireAuth *bool) {
 	p.RequireAuth = requireAuth
 	p.require(patchProxyRequestFieldRequireAuth)
+}
+
+func (p *PatchProxyRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler PatchProxyRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PatchProxyRequest(body)
+	return nil
+}
+
+func (p *PatchProxyRequest) MarshalJSON() ([]byte, error) {
+	type embed PatchProxyRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -250,6 +315,27 @@ func (p *PatchComplexRequest) SetSettings(settings map[string]interface{}) {
 	p.require(patchComplexRequestFieldSettings)
 }
 
+func (p *PatchComplexRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler PatchComplexRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PatchComplexRequest(body)
+	return nil
+}
+
+func (p *PatchComplexRequest) MarshalJSON() ([]byte, error) {
+	type embed PatchComplexRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	regularPatchRequestFieldField1 = big.NewInt(1 << 0)
 	regularPatchRequestFieldField2 = big.NewInt(1 << 1)
@@ -282,4 +368,25 @@ func (r *RegularPatchRequest) SetField1(field1 *string) {
 func (r *RegularPatchRequest) SetField2(field2 *int) {
 	r.Field2 = field2
 	r.require(regularPatchRequestFieldField2)
+}
+
+func (r *RegularPatchRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler RegularPatchRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*r = RegularPatchRequest(body)
+	return nil
+}
+
+func (r *RegularPatchRequest) MarshalJSON() ([]byte, error) {
+	type embed RegularPatchRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

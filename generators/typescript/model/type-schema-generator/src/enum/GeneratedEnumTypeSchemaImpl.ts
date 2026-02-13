@@ -1,13 +1,13 @@
-import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumTypeSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
 export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
-    extends AbstractGeneratedTypeSchema<EnumTypeDeclaration, Context>
+    extends AbstractGeneratedTypeSchema<FernIr.EnumTypeDeclaration, Context>
     implements GeneratedEnumTypeSchema<Context>
 {
     public readonly type = "enum";

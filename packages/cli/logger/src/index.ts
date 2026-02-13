@@ -1,5 +1,5 @@
-export { CONSOLE_LOGGER } from "./console";
-export { createLogger } from "./createLogger";
-export { type Logger } from "./Logger";
-export { LOG_LEVELS, LogLevel } from "./LogLevel";
-export { NOOP_LOGGER } from "./noop";
+export { CONSOLE_LOGGER } from "./console.js";
+export { createLogger } from "./createLogger.js";
+export { type Logger } from "./Logger.js";
+export { LOG_LEVELS, LogLevel } from "./LogLevel.js";
+export { NOOP_LOGGER } from "./noop.js";

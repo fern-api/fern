@@ -78,6 +78,6 @@ export namespace DebugVariableValue {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

@@ -7,8 +7,8 @@ import {
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
     DEFAULT_NODE_DEBUG_PORT
-} from "./constants";
-import { ExecutionEnvironment } from "./ExecutionEnvironment";
+} from "./constants.js";
+import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     private readonly containerImage: string;

@@ -41,6 +41,7 @@
       "types": [],
       "webhooks": [
         {
+          "availability": undefined,
           "description": "Webhook with multipart form data including file uploads",
           "examples": [
             {

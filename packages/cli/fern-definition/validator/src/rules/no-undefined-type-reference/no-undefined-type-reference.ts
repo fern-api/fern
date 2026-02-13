@@ -11,8 +11,8 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
-import { TypeReferenceLocation, visitDefinitionFileYamlAst } from "../../ast";
-import { Rule, RuleViolation } from "../../Rule";
+import { TypeReferenceLocation, visitDefinitionFileYamlAst } from "../../ast/index.js";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 type TypeName = string;
 

@@ -1,4 +1,4 @@
-export * from "./sdk";
-export * from "./sdk/api";
-export * as Serializer from "./sdk/serialization";
+export * from "./sdk/index.js";
+export * from "./sdk/api/index.js";
+export * as Serializer from "./sdk/serialization/index.js";
 

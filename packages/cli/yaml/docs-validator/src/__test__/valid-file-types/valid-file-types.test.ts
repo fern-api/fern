@@ -1,6 +1,6 @@
 import path from "path";
 
-import { getViolationsForFile } from "../../rules/valid-file-types/valid-file-types";
+import { getViolationsForFile } from "../../rules/valid-file-types/valid-file-types.js";
 
 describe("isValidFileType", () => {
     it("should return true for valid file types", async () => {

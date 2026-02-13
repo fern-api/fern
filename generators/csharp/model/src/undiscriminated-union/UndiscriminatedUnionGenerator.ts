@@ -2,8 +2,13 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, is, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { PrimitiveTypeV1, TypeDeclaration, UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type TypeDeclaration = FernIr.TypeDeclaration;
+type UndiscriminatedUnionTypeDeclaration = FernIr.UndiscriminatedUnionTypeDeclaration;
+
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 interface UnionMemberInfo {
     typeReference: FernIr.TypeReference;
@@ -1177,7 +1182,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                 return { discriminator: this.toCamelCase(typeName), methodName: typeName, isNull: false };
             },
             primitive: (primitive) => {
-                return PrimitiveTypeV1._visit(primitive.v1, {
+                return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     string: () => ({ discriminator: "string", methodName: "String", isNull: false }),
                     integer: () => ({ discriminator: "int", methodName: "Int", isNull: false }),
                     long: () => ({ discriminator: "long", methodName: "Long", isNull: false }),
@@ -1354,7 +1359,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             },
             named: (namedType) => namedType.name.pascalCase.safeName,
             primitive: (primitive) => {
-                return PrimitiveTypeV1._visit(primitive.v1, {
+                return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     string: () => "String",
                     integer: () => "Int",
                     long: () => "Long",
@@ -1392,7 +1397,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             },
             named: (namedType) => namedType.name.pascalCase.safeName,
             primitive: (primitive) => {
-                return PrimitiveTypeV1._visit(primitive.v1, {
+                return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     string: () => "String",
                     integer: () => "Int",
                     long: () => "Long",
@@ -1547,7 +1552,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
             },
             primitive: (primitive) => {
                 // Primitive specificity: most specific to least specific
-                return PrimitiveTypeV1._visit(primitive.v1, {
+                return FernIr.PrimitiveTypeV1._visit(primitive.v1, {
                     dateTime: () => 9000, // Most specific parseable from string
                     uuid: () => 8000, // Very specific format (GUID)
                     long: () => 7000, // More specific than double (no decimals)

@@ -102,6 +102,13 @@ export interface ParseOpenAPIOptions {
      * The order to use for path parameters in generated code.
      */
     pathParameterOrder: generatorsYml.PathParameterOrder;
+
+    /**
+     * If true, resolve schema name collisions by appending numbers (e.g., Schema2, Schema3) and emit warnings.
+     * If false, throw hard errors when schema collisions are detected.
+     * Defaults to false.
+     */
+    resolveSchemaCollisions: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -136,7 +143,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceOptionalSchemasToNullable: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
-    pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder
+    pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
+    resolveSchemaCollisions: false
 };
 
 function mergeOptions<T extends object>(params: {

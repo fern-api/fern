@@ -22,20 +22,20 @@ import {
     buildEnumTypeDeclaration,
     buildObjectTypeDeclaration,
     buildOneOfTypeDeclaration
-} from "./buildTypeDeclaration";
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
-import { getDeclarationFileFromGroupName } from "./utils/getDeclarationFileForSchema";
-import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
+} from "./buildTypeDeclaration.js";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
+import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema.js";
+import { getDeclarationFileFromGroupName } from "./utils/getDeclarationFileForSchema.js";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
 import {
     getDefaultFromTypeReference,
     getDocsFromTypeReference,
     getTypeFromTypeReference,
     getValidationFromTypeReference
-} from "./utils/getTypeFromTypeReference";
-import { wrapTypeReferenceAsNullable } from "./utils/wrapTypeReferenceAsNullable";
-import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+} from "./utils/getTypeFromTypeReference.js";
+import { wrapTypeReferenceAsNullable } from "./utils/wrapTypeReferenceAsNullable.js";
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional.js";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;

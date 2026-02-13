@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
 import { Directory, ExportSpecifierStructure, SourceFile, StructureKind } from "ts-morph";
 
-import { getRelativePathAsModuleSpecifierTo, ModuleSpecifier } from "../referencing";
+import { getRelativePathAsModuleSpecifierTo, ModuleSpecifier } from "../referencing/index.js";
 
 export interface ExportedFilePath {
     directories: ExportedDirectory[];

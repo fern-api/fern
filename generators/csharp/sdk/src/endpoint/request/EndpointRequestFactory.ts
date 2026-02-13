@@ -1,10 +1,14 @@
-import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { BytesOnlyEndpointRequest } from "./BytesOnlyEndpointRequest";
-import { EndpointRequest } from "./EndpointRequest";
-import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";
-import { WrappedEndpointRequest } from "./WrappedEndpointRequest";
+type HttpEndpoint = FernIr.HttpEndpoint;
+type SdkRequest = FernIr.SdkRequest;
+type ServiceId = FernIr.ServiceId;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { BytesOnlyEndpointRequest } from "./BytesOnlyEndpointRequest.js";
+import { EndpointRequest } from "./EndpointRequest.js";
+import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest.js";
+import { WrappedEndpointRequest } from "./WrappedEndpointRequest.js";
 
 export declare namespace CreateEndpointRequest {
     interface Args {

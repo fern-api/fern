@@ -2,8 +2,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import chalk from "chalk";
 
-import { RuleViolation } from "../../Rule";
-import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils";
+import { RuleViolation } from "../../Rule.js";
+import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils.js";
 import {
     DEFAULT_ACCESS_TOKEN,
     DEFAULT_REFRESH_TOKEN,
@@ -11,7 +11,7 @@ import {
     validateExpiresInResponseProperty,
     validateRefreshTokenRequestProperty,
     validateRefreshTokenResponseProperty
-} from "./validateUtils";
+} from "./validateUtils.js";
 
 export function validateRefreshTokenEndpoint({
     endpointId,

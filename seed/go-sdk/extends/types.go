@@ -36,6 +36,27 @@ func (i *Inlined) SetUnique(unique string) {
 	i.require(inlinedFieldUnique)
 }
 
+func (i *Inlined) UnmarshalJSON(data []byte) error {
+	type unmarshaler Inlined
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*i = Inlined(body)
+	return nil
+}
+
+func (i *Inlined) MarshalJSON() ([]byte, error) {
+	type embed Inlined
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	docsFieldDocs = big.NewInt(1 << 0)
 )

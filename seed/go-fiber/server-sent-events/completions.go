@@ -13,6 +13,10 @@ type StreamCompletionRequest struct {
 	Query string `json:"query" url:"-"`
 }
 
+type StreamCompletionRequestWithoutTerminator struct {
+	Query string `json:"query" url:"-"`
+}
+
 var (
 	streamedCompletionFieldDelta  = big.NewInt(1 << 0)
 	streamedCompletionFieldTokens = big.NewInt(1 << 1)

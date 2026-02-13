@@ -9,28 +9,32 @@ import {
     ExampleWebSocketMessage,
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
+    FernIr,
     Name,
-    PathParameterLocation,
     WebSocketChannel,
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { getHeaderName } from "..";
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { VariableResolver } from "../resolvers/VariableResolver";
-import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
-import { parseTypeName } from "../utils/parseTypeName";
-import { convertAvailability, convertDeclaration } from "./convertDeclaration";
-import { convertHttpHeader, convertPathParameters, resolvePathParameterOrThrow } from "./services/convertHttpService";
-import { getQueryParameterName } from "./services/convertQueryParameter";
+import { FernFileContext } from "../FernFileContext.js";
+import { getHeaderName } from "../index.js";
+import { ExampleResolver } from "../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { VariableResolver } from "../resolvers/VariableResolver.js";
+import { getEndpointPathParameters } from "../utils/getEndpointPathParameters.js";
+import { parseTypeName } from "../utils/parseTypeName.js";
+import { convertAvailability, convertDeclaration } from "./convertDeclaration.js";
+import {
+    convertHttpHeader,
+    convertPathParameters,
+    resolvePathParameterOrThrow
+} from "./services/convertHttpService.js";
+import { getQueryParameterName } from "./services/convertQueryParameter.js";
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions
-} from "./type-declarations/convertExampleType";
-import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
+} from "./type-declarations/convertExampleType.js";
+import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration.js";
 
 export function convertChannel({
     channel,
@@ -78,7 +82,7 @@ export function convertChannel({
             channel["path-parameters"] != null
                 ? convertPathParameters({
                       pathParameters: channel["path-parameters"],
-                      location: PathParameterLocation.Endpoint,
+                      location: FernIr.PathParameterLocation.Endpoint,
                       file,
                       variableResolver
                   })

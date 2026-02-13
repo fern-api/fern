@@ -1,3 +1,4 @@
+import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { randomUUID } from "crypto";
@@ -5,9 +6,9 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter";
-import type { Target } from "../sdk/config/Target";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter.js";
+import type { Target } from "../sdk/config/Target.js";
 
 describe("SdkConfigConverter", () => {
     let testDir: AbsoluteFilePath;
@@ -403,7 +404,12 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.output.git?.repository).toBe("acme/python-sdk");
+                const git = result.config.targets[0]?.output.git;
+                expect(git).toBeDefined();
+                expect(git != null && schemas.isGitOutputGitHubRepository(git)).toBe(true);
+                if (git != null && schemas.isGitOutputGitHubRepository(git)) {
+                    expect(git.repository).toBe("acme/python-sdk");
+                }
             }
         });
     });
@@ -525,9 +531,13 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                const reviewers = result.config.targets[0]?.output.git?.reviewers;
-                expect(reviewers?.teams).toEqual(["sdk-team", "backend-team"]);
-                expect(reviewers?.users).toEqual(["alice", "bob"]);
+                const git = result.config.targets[0]?.output.git;
+                expect(git).toBeDefined();
+                expect(git != null && schemas.isGitOutputGitHubRepository(git)).toBe(true);
+                if (git != null && schemas.isGitOutputGitHubRepository(git)) {
+                    expect(git.reviewers?.teams).toEqual(["sdk-team", "backend-team"]);
+                    expect(git.reviewers?.users).toEqual(["alice", "bob"]);
+                }
             }
         });
     });

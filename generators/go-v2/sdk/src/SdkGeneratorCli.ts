@@ -6,16 +6,16 @@ import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ClientGenerator } from "./client/ClientGenerator";
-import { InternalFilesGenerator } from "./internal/InternalFilesGenerator";
-import { RawClientGenerator } from "./raw-client/RawClientGenerator";
-import { buildReference } from "./reference/buildReference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ClientGenerator } from "./client/ClientGenerator.js";
+import { InternalFilesGenerator } from "./internal/InternalFilesGenerator.js";
+import { RawClientGenerator } from "./raw-client/RawClientGenerator.js";
+import { buildReference } from "./reference/buildReference.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -24,7 +24,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;

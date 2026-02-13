@@ -16,19 +16,19 @@ import {
 } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { dynamic, HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { exec } from "child_process";
 import { promisify } from "util";
-import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
-import { ErrorGenerator } from "./error/ErrorGenerator";
-import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
-import { RootClientGenerator } from "./generators/RootClientGenerator";
-import { SubClientGenerator } from "./generators/SubClientGenerator";
-import { ReferenceConfigAssembler } from "./reference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
-import { WireTestGenerator } from "./wire-tests";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
+import { ErrorGenerator } from "./error/ErrorGenerator.js";
+import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
+import { RootClientGenerator } from "./generators/RootClientGenerator.js";
+import { SubClientGenerator } from "./generators/SubClientGenerator.js";
+import { ReferenceConfigAssembler } from "./reference/index.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils/index.js";
+import { WireTestGenerator } from "./wire-tests/index.js";
 
 const execAsync = promisify(exec);
 
@@ -43,7 +43,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -550,7 +550,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
+                    const inlinedRequestBody = endpoint.requestBody as FernIr.HttpRequestBody.InlinedRequestBody;
                     // Get the unique type name (may have suffix if there's a collision)
                     const uniqueRequestName = context.getInlineRequestTypeName(endpoint.id);
 
@@ -713,7 +713,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw new Error("Cannot generate FernIr.dynamic snippets without FernIr.dynamic IR");
         }
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
@@ -816,7 +816,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         let firstEndpointId: string | undefined;
-        let firstExample: dynamic.EndpointSnippetRequest | undefined;
+        let firstExample: FernIr.dynamic.EndpointSnippetRequest | undefined;
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             if (endpoint.examples && endpoint.examples.length > 0) {

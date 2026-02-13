@@ -4,8 +4,7 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["node", "vitest/globals"],
-    "moduleResolution": "bundler"
+    "types": ["node", "vitest/globals"]
   },
   "include": ["./src/**/*", "./src/**/*.json"],
   "references": [

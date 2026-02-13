@@ -1,6 +1,6 @@
 import { assertNonNull } from "@fern-api/core-utils";
-import { Symbol } from "..";
-import { ModuleSymbol, SymbolGraph, TypeSymbolShape } from "./symbol-graph";
+import { Symbol } from "../index.js";
+import { ModuleSymbol, SymbolGraph, TypeSymbolShape } from "./symbol-graph/index.js";
 
 /**
  * A symbol registry for a target module used in SDK generation.

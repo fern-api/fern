@@ -1,7 +1,7 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { GoTypeReference } from "./GoTypeReference";
-import { writeArguments } from "./utils/writeArguments";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { GoTypeReference } from "./GoTypeReference.js";
+import { writeArguments } from "./utils/writeArguments.js";
 
 export declare namespace FuncInvocation {
     interface Args {

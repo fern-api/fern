@@ -19,6 +19,6 @@ export namespace CreateProblemResponse {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

@@ -5,6 +5,6 @@ import type * as SeedTrace from "../../../index.js";
 export interface BinaryTreeNodeValue {
     nodeId: SeedTrace.NodeId;
     val: number;
-    right?: SeedTrace.NodeId;
-    left?: SeedTrace.NodeId;
+    right?: SeedTrace.NodeId | undefined;
+    left?: SeedTrace.NodeId | undefined;
 }

@@ -2,6 +2,7 @@ import {
     HeaderWithExample,
     PathParameterWithExample,
     QueryParameterWithExample,
+    Schema,
     SchemaId,
     SchemaWithExample,
     Source,
@@ -11,22 +12,22 @@ import {
 } from "@fern-api/openapi-ir";
 import { camelCase, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-
-import { FernOpenAPIExtension } from "../..";
-import { getExtension } from "../../getExtension";
-import { convertAvailability } from "../../schema/convertAvailability";
-import { convertSchema } from "../../schema/convertSchemas";
-import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
-import { getSchemas } from "../../utils/getSchemas";
-import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
-import { FernAsyncAPIExtension } from "../fernExtensions";
-import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples";
-import { ParseAsyncAPIOptions } from "../options";
-import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { ChannelId, ServerContext } from "../sharedTypes";
-import { constructServerUrl, transformToValidPath } from "../sharedUtils";
-import { AsyncAPIV3 } from "../v3";
-import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext";
+import { getExtension } from "../../getExtension.js";
+import { FernOpenAPIExtension } from "../../index.js";
+import { convertAvailability } from "../../schema/convertAvailability.js";
+import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { getSchemas } from "../../utils/getSchemas.js";
+import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory.js";
+import { FernAsyncAPIExtension } from "../fernExtensions.js";
+import { getFernExamples, WebsocketSessionExampleExtension } from "../getFernExamples.js";
+import { ParseAsyncAPIOptions } from "../options.js";
+import { AsyncAPIIntermediateRepresentation } from "../parse.js";
+import { ChannelId, ServerContext } from "../sharedTypes.js";
+import { constructServerUrl, transformToValidPath } from "../sharedUtils.js";
+import { AsyncAPIV3 } from "../v3/index.js";
+import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext.js";
 
 interface MessageWithMethodName {
     ref: OpenAPIV3.ReferenceObject;
@@ -61,6 +62,9 @@ export function parseAsyncAPIV3({
     asyncApiOptions: ParseAsyncAPIOptions;
     document: AsyncAPIV3.DocumentV3;
 }): AsyncAPIIntermediateRepresentation {
+    // Reset title collision tracker for this document processing
+    resetTitleCollisionTracker();
+
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     const messageSchemas: Record<ChannelId, Record<SchemaId, SchemaWithExample>> = {};
     const seenMessages: Record<string, SeenMessage[]> = {};
@@ -69,8 +73,22 @@ export function parseAsyncAPIV3({
 
     context.logger.debug("Parsing V3 AsyncAPI...");
 
+    const collisionTracker = createSchemaCollisionTracker();
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        schemas[schemaId] = convertSchema(schema, false, false, context, [schemaId], source, context.namespace);
+        const uniqueSchemaId = collisionTracker.getUniqueSchemaId(
+            schemaId,
+            context.logger,
+            context.options.resolveSchemaCollisions
+        );
+        schemas[uniqueSchemaId] = convertSchema(
+            schema,
+            false,
+            false,
+            context,
+            [uniqueSchemaId],
+            source,
+            context.namespace
+        );
     }
 
     for (const [channelId, channel] of Object.entries(document.channels ?? {})) {
@@ -133,11 +151,21 @@ export function parseAsyncAPIV3({
         }
     }
 
-    const flattenedMessageSchemas: Record<string, SchemaWithExample> = Object.values(messageSchemas).reduce(
-        (acc, schemas) => ({ ...acc, ...schemas }),
-        {}
-    );
-    const exampleFactory = new ExampleWebsocketSessionFactory(flattenedMessageSchemas, context);
+    const flattenedMessageSchemas: Record<string, SchemaWithExample> = {};
+    const messageCollisionTracker = createSchemaCollisionTracker();
+
+    for (const [channelId, channelSchemas] of Object.entries(messageSchemas)) {
+        for (const [messageId, messageSchema] of Object.entries(channelSchemas)) {
+            const uniqueMessageId = messageCollisionTracker.getUniqueSchemaId(
+                messageId,
+                context.logger,
+                context.options.resolveSchemaCollisions
+            );
+            flattenedMessageSchemas[uniqueMessageId] = messageSchema;
+        }
+    }
+
+    const exampleFactory = new ExampleWebsocketSessionFactory({ ...schemas, ...flattenedMessageSchemas }, context);
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
@@ -149,12 +177,27 @@ export function parseAsyncAPIV3({
     }
 
     const channelEvents: Record<string, ChannelEvents> = {};
+
+    // Get available channel paths for fallback when operation.channel is null
+    const availableChannelPaths = Object.keys(document.channels ?? {});
+
     for (const [operationId, operation] of Object.entries(document.operations ?? {})) {
         if (getExtension<boolean>(operation, FernAsyncAPIExtension.IGNORE)) {
             continue;
         }
 
-        const channelPath = getChannelPathFromOperation(operation);
+        // Handle operations with null/undefined channel (from overrides)
+        let channelPath: string;
+        if (operation.channel == null || !("$ref" in operation.channel) || operation.channel.$ref == null) {
+            if (availableChannelPaths.length === 1 && availableChannelPaths[0] != null) {
+                channelPath = availableChannelPaths[0];
+            } else {
+                // Skip operations with null channel when there are multiple or no channels
+                continue;
+            }
+        } else {
+            channelPath = getChannelPathFromOperation(operation);
+        }
         if (!channelEvents[channelPath]) {
             channelEvents[channelPath] = { subscribe: [], publish: [], __parsedMessages: [] };
         }
@@ -162,16 +205,30 @@ export function parseAsyncAPIV3({
         // Extract method name from x-fern-sdk-method-name extension
         const methodName = getExtension<string>(operation, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME);
 
-        // Associate the method name with each message from this operation
-        const messagesWithMethodName: MessageWithMethodName[] = operation.messages.map((ref) => ({
-            ref,
-            methodName
-        }));
+        // Skip operations without messages
+        if (!operation.messages || !Array.isArray(operation.messages)) {
+            continue;
+        }
+
+        // Associate the method name with each message from this operation, filtering out invalid references
+        const messagesWithMethodName: MessageWithMethodName[] = operation.messages
+            .filter((ref) => ref != null && ref.$ref != null)
+            .map((ref) => ({
+                ref,
+                methodName
+            }));
+
+        const channelEvent = channelEvents[channelPath];
+        if (channelEvent == null) {
+            throw new Error(
+                `Internal error: channelEvents["${channelPath}"] is unexpectedly undefined for operation ${operationId}`
+            );
+        }
 
         if (operation.action === "receive") {
-            channelEvents[channelPath].subscribe.push(...messagesWithMethodName);
+            channelEvent.subscribe.push(...messagesWithMethodName);
         } else if (operation.action === "send") {
-            channelEvents[channelPath].publish.push(...messagesWithMethodName);
+            channelEvent.publish.push(...messagesWithMethodName);
         } else {
             throw new Error(`Operation ${operationId} has an invalid action: ${operation.action}`);
         }
@@ -385,6 +442,20 @@ export function parseAsyncAPIV3({
         }
     }
 
+    // Merge component schemas with message schemas and convert to Schema objects
+    const allSchemasWithExample = { ...schemas, ...flattenedMessageSchemas };
+    const allSchemas: Record<string, Schema> = {};
+    const finalCollisionTracker = createSchemaCollisionTracker();
+
+    for (const [schemaId, schemaWithExample] of Object.entries(allSchemasWithExample)) {
+        const uniqueSchemaId = finalCollisionTracker.getUniqueSchemaId(
+            schemaId,
+            context.logger,
+            context.options.resolveSchemaCollisions
+        );
+        allSchemas[uniqueSchemaId] = convertSchemaWithExampleToSchema(schemaWithExample);
+    }
+
     const groupedSchemas = getSchemas(context.namespace, schemas);
     const finalServers = Object.values(servers).map((server) => ({
         ...server,
@@ -400,11 +471,21 @@ export function parseAsyncAPIV3({
     };
 }
 
+function decodeJsonPointerSegment(segment: string): string {
+    return segment.replace(/~1/g, "/").replace(/~0/g, "~");
+}
+
 function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
+    if (!operation.channel) {
+        throw new Error("Operation is missing required 'channel' field");
+    }
+    if (!operation.channel.$ref) {
+        throw new Error("Operation channel is missing required '$ref' field");
+    }
     if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
         throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
     }
-    return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
+    return decodeJsonPointerSegment(operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length));
 }
 
 function convertChannelParameterLocation(location: string): {

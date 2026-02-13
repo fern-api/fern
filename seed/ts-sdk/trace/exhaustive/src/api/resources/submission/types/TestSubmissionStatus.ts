@@ -30,6 +30,6 @@ export namespace TestSubmissionStatus {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

@@ -141,6 +141,7 @@ allowedFailures:
   - ruby-reserved-word-properties
   - server-sent-event-examples
   - server-sent-events
+  - server-url-templating
   - simple-api
   - simple-fhir
   - single-url-environment-default
@@ -166,6 +167,7 @@ allowedFailures:
   - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
+  - pagination-uri-path
 
 features:
   requestOptions: true

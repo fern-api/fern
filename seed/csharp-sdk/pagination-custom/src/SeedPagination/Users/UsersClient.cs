@@ -38,6 +38,7 @@ public partial class UsersClient : IUsersClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
+                QueryString = _queryString,
                 Headers = _headers,
                 Options = options,
             }

@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoUndefinedPathParametersRule } from "../no-undefined-path-parameters";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoUndefinedPathParametersRule } from "../no-undefined-path-parameters.js";
 
 describe("no-undefined-path-parameters", () => {
     it("simple", async () => {

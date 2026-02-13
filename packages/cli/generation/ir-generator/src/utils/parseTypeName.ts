@@ -1,9 +1,9 @@
 import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
 
-import { FernFileContext } from "../FernFileContext";
-import { convertToFernFilepath } from "./convertToFernFilepath";
-import { parseReferenceToTypeName } from "./parseReferenceToTypeName";
+import { FernFileContext } from "../FernFileContext.js";
+import { convertToFernFilepath } from "./convertToFernFilepath.js";
+import { parseReferenceToTypeName } from "./parseReferenceToTypeName.js";
 
 export function parseTypeName({ typeName, file }: { typeName: string; file: FernFileContext }): DeclaredTypeName {
     const reference = parseReferenceToTypeName({

@@ -1,10 +1,22 @@
-import { FernToken, getToken } from "@fern-api/auth";
+import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
+import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
-import { CliError } from "../errors/CliError";
-import { Target } from "../sdk/config/Target";
-import { LogFileWriter } from "./LogFileWriter";
+import { getTokenFromAuth0 } from "@fern-api/login";
+import chalk from "chalk";
+import inquirer from "inquirer";
+import { CredentialStore, TokenService } from "../auth/index.js";
+import { Cache } from "../cache/index.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { CliError } from "../errors/CliError.js";
+import { ValidationError } from "../errors/ValidationError.js";
+import { Target } from "../sdk/config/Target.js";
+import { Icons } from "../ui/format.js";
+import type { Workspace } from "../workspace/Workspace.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
+import { TaskContextAdapter } from "./adapter/TaskContextAdapter.js";
+import { LogFileWriter } from "./LogFileWriter.js";
 
 export class Context {
     private ttyAwareLogger: TtyAwareLogger;
@@ -13,7 +25,9 @@ export class Context {
     public readonly logLevel: LogLevel;
     public readonly stdout: Logger;
     public readonly stderr: Logger;
+    public readonly cache: Cache;
     public readonly logFileWriter: LogFileWriter;
+    public readonly tokenService: TokenService;
 
     constructor({
         stdout,
@@ -29,17 +43,79 @@ export class Context {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.logFileWriter = new LogFileWriter({ cwd: this.cwd });
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
+        this.cache = new Cache({ logger: this.stderr });
+        this.logFileWriter = new LogFileWriter(this.cache.logs.absoluteFilePath);
+        this.tokenService = new TokenService({ credential: new CredentialStore() });
     }
 
     /**
      * Returns true if running in an interactive TTY environment (not CI).
-     * Delegates to TtyAwareLogger which handles the is-ci check.
      */
     public get isTTY(): boolean {
         return this.ttyAwareLogger.isTTY;
+    }
+
+    public async loadWorkspaceOrThrow(): Promise<Workspace> {
+        const fernYml = await loadFernYml({ cwd: this.cwd });
+
+        const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
+        const result = await loader.load({ fernYml });
+        if (!result.success) {
+            throw new ValidationError(result.issues);
+        }
+
+        return result.workspace;
+    }
+
+    /**
+     * Get a valid token, prompting to login if necessary.
+     *
+     * Checks in order:
+     *  1. FERN_TOKEN env var (organization token) - returns immediately if set
+     *  2. User token from keyring - verifies JWT and prompts to re-login if expired
+     *
+     * If there's no token or the token is invalid/expired:
+     *  - In TTY mode: prompts "Login required. Continue?" and re-authenticates.
+     *  - In non-TTY mode: throws an error with instructions to run `fern auth login` or set the FERN_TOKEN environment variable.
+     *
+     * @returns A valid FernToken (either organization or user token)
+     * @throws CliError if not logged in and not in TTY mode, or if user declines to login
+     */
+    public async getTokenOrPrompt(): Promise<FernToken> {
+        const envToken = await getAccessToken();
+        if (envToken != null) {
+            return envToken;
+        }
+
+        const token = await this.tokenService.getActiveToken();
+        if (token == null) {
+            if (!this.isTTY) {
+                this.stderr.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
+                this.stderr.info("");
+                this.stderr.info(
+                    chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
+                );
+                throw CliError.exit();
+            }
+            return await this.promptAndLogin();
+        }
+
+        const decoded = await verifyAndDecodeJwt(token);
+        if (decoded == null) {
+            if (!this.isTTY) {
+                this.stderr.error(`${Icons.error} Your access token has expired.`);
+                this.stderr.info("");
+                this.stderr.info(
+                    chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
+                );
+                throw CliError.exit();
+            }
+            return await this.promptAndLogin();
+        }
+
+        return { type: "user", value: token };
     }
 
     /**
@@ -52,20 +128,6 @@ export class Context {
         return undefined;
     }
 
-    /** Get the authentication token or throw an error if it's not available. */
-    public async getAuthTokenOrThrow(): Promise<FernToken> {
-        const token = await this.getAuthToken();
-        if (token == null) {
-            throw CliError.authRequired();
-        }
-        return token;
-    }
-
-    /** Get the authentication token or return undefined if it's not available. */
-    public async getAuthToken(): Promise<FernToken | undefined> {
-        return await getToken();
-    }
-
     public resolveTargetOutputs(target: Target): string[] | undefined {
         const outputs: string[] = [];
         if (target.output.path != null) {
@@ -74,9 +136,9 @@ export class Context {
                 outputs.push(outputPath.toString());
             }
         }
-        if (target.output.git != null) {
-            // TODO: Include a link to the branch, commit, or release that was created.
-            outputs.push(target.output.git.repository);
+        if (target.output.git != null && target.output.path == null) {
+            const git = target.output.git;
+            outputs.push(schemas.isGitOutputSelfHosted(git) ? git.uri : git.repository);
         }
         return outputs;
     }
@@ -113,6 +175,48 @@ export class Context {
      */
     public finish(): void {
         this.ttyAwareLogger.finish();
+    }
+
+    private async promptAndLogin(): Promise<FernUserToken> {
+        const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
+            {
+                type: "confirm",
+                name: "confirm",
+                message: "Login required. Continue?",
+                default: true
+            }
+        ]);
+
+        if (!confirm) {
+            throw CliError.exit();
+        }
+
+        this.stderr.info(`${Icons.info} Opening browser to log in to Fern...`);
+        this.stderr.info(chalk.dim("  If the browser doesn't open, try: fern auth login --device-code"));
+
+        const taskContext = new TaskContextAdapter({ context: this });
+        const { accessToken, idToken } = await getTokenFromAuth0(taskContext, {
+            useDeviceCodeFlow: false,
+            forceReauth: true
+        });
+
+        const payload = await verifyAndDecodeJwt(idToken);
+        if (payload == null) {
+            this.stderr.error(`${Icons.error} Internal error; could not verify ID token`);
+            throw CliError.exit();
+        }
+
+        const email = payload.email;
+        if (email == null) {
+            this.stderr.error(`${Icons.error} Internal error; ID token does not contain email claim`);
+            throw CliError.exit();
+        }
+
+        await this.tokenService.login(email, accessToken);
+
+        this.stderr.info(`${Icons.success} Logged in as ${chalk.bold(email)}`);
+
+        return { type: "user", value: accessToken };
     }
 
     private log(level: LogLevel, ...parts: string[]) {

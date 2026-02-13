@@ -1,8 +1,8 @@
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { describe, expect, it, vi } from "vitest";
 
-import { loadAndRunMigrations, runMigrations } from "../loader";
-import { Migration } from "../types";
+import { loadAndRunMigrations, runMigrations } from "../loader.js";
+import { Migration } from "../types.js";
 
 describe("runMigrations", () => {
     it("should apply migrations sequentially", () => {

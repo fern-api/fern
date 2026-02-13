@@ -87,6 +87,72 @@ class RawCompletionsClient:
 
             yield _stream()
 
+    @contextlib.contextmanager
+    def stream_without_terminator(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamedCompletion]]]:
+        """
+        Parameters
+        ----------
+        query : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[HttpResponse[typing.Iterator[StreamedCompletion]]]
+        """
+        with self._client_wrapper.httpx_client.stream(
+            "stream-no-terminator",
+            method="POST",
+            json={
+                "query": query,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            def _stream() -> HttpResponse[typing.Iterator[StreamedCompletion]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+
+                        def _iter():
+                            _event_source = EventSource(_response)
+                            for _sse in _event_source.iter_sse():
+                                if _sse.data == None:
+                                    return
+                                try:
+                                    yield typing.cast(
+                                        StreamedCompletion,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamedCompletion,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                            return
+
+                        return HttpResponse(response=_response, data=_iter())
+                    _response.read()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield _stream()
+
 
 class AsyncRawCompletionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -126,6 +192,72 @@ class AsyncRawCompletionsClient:
                             _event_source = EventSource(_response)
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":
+                                    return
+                                try:
+                                    yield typing.cast(
+                                        StreamedCompletion,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamedCompletion,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                            return
+
+                        return AsyncHttpResponse(response=_response, data=_iter())
+                    await _response.aread()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield await _stream()
+
+    @contextlib.asynccontextmanager
+    async def stream_without_terminator(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]]:
+        """
+        Parameters
+        ----------
+        query : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]]
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            "stream-no-terminator",
+            method="POST",
+            json={
+                "query": query,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+
+                        async def _iter():
+                            _event_source = EventSource(_response)
+                            async for _sse in _event_source.aiter_sse():
+                                if _sse.data == None:
                                     return
                                 try:
                                     yield typing.cast(

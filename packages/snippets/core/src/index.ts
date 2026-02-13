@@ -1,2 +1,2 @@
-export { generateDynamicIR } from "./generateDynamicIR";
-export { type Spec } from "./Spec";
+export { generateDynamicIR } from "./generateDynamicIR.js";
+export { type Spec } from "./Spec.js";
