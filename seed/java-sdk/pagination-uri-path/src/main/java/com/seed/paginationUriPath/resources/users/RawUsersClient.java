@@ -9,7 +9,9 @@ import com.seed.paginationUriPath.core.RequestOptions;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathApiException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathHttpResponse;
+import com.seed.paginationUriPath.core.pagination.PathPage;
 import com.seed.paginationUriPath.core.pagination.SyncPagingIterable;
+import com.seed.paginationUriPath.core.pagination.UriPage;
 import com.seed.paginationUriPath.resources.users.types.ListUsersPathPaginationResponse;
 import com.seed.paginationUriPath.resources.users.types.ListUsersUriPaginationResponse;
 import com.seed.paginationUriPath.resources.users.types.User;
@@ -20,6 +22,7 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -64,10 +67,18 @@ public class RawUsersClient {
                 Optional<String> startingAfter = parsedResponse.getNext();
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationUriPathHttpResponse<>(
-                        new SyncPagingIterable<User>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> listWithUriPagination(
-                                                requestOptions)
-                                        .body()),
+                        UriPage.create(
+                                parsedResponse,
+                                startingAfter,
+                                result,
+                                ListUsersUriPaginationResponse.class,
+                                ListUsersUriPaginationResponse::getNext,
+                                ListUsersUriPaginationResponse::getData,
+                                "GET",
+                                null,
+                                Headers.of("Accept", "application/json"),
+                                clientOptions,
+                                requestOptions),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
@@ -112,10 +123,18 @@ public class RawUsersClient {
                 Optional<String> startingAfter = parsedResponse.getNext();
                 List<User> result = parsedResponse.getData();
                 return new SeedPaginationUriPathHttpResponse<>(
-                        new SyncPagingIterable<User>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> listWithPathPagination(
-                                                requestOptions)
-                                        .body()),
+                        PathPage.create(
+                                parsedResponse,
+                                startingAfter,
+                                result,
+                                ListUsersPathPaginationResponse.class,
+                                ListUsersPathPaginationResponse::getNext,
+                                ListUsersPathPaginationResponse::getData,
+                                "GET",
+                                null,
+                                Headers.of("Accept", "application/json"),
+                                clientOptions,
+                                requestOptions),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

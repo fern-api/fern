@@ -9,7 +9,9 @@ import com.seed.paginationUriPath.core.RequestOptions;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathApiException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathHttpResponse;
+import com.seed.paginationUriPath.core.pagination.PathPage;
 import com.seed.paginationUriPath.core.pagination.SyncPagingIterable;
+import com.seed.paginationUriPath.core.pagination.UriPage;
 import com.seed.paginationUriPath.resources.users.types.ListUsersPathPaginationResponse;
 import com.seed.paginationUriPath.resources.users.types.ListUsersUriPaginationResponse;
 import com.seed.paginationUriPath.resources.users.types.User;
@@ -17,13 +19,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
@@ -73,15 +75,18 @@ public class AsyncRawUsersClient {
                         Optional<String> startingAfter = parsedResponse.getNext();
                         List<User> result = parsedResponse.getData();
                         future.complete(new SeedPaginationUriPathHttpResponse<>(
-                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
-                                    try {
-                                        return listWithUriPagination(requestOptions)
-                                                .get()
-                                                .body();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }),
+                                UriPage.create(
+                                        parsedResponse,
+                                        startingAfter,
+                                        result,
+                                        ListUsersUriPaginationResponse.class,
+                                        ListUsersUriPaginationResponse::getNext,
+                                        ListUsersUriPaginationResponse::getData,
+                                        "GET",
+                                        null,
+                                        Headers.of("Accept", "application/json"),
+                                        clientOptions,
+                                        requestOptions),
                                 response));
                         return;
                     }
@@ -142,15 +147,18 @@ public class AsyncRawUsersClient {
                         Optional<String> startingAfter = parsedResponse.getNext();
                         List<User> result = parsedResponse.getData();
                         future.complete(new SeedPaginationUriPathHttpResponse<>(
-                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
-                                    try {
-                                        return listWithPathPagination(requestOptions)
-                                                .get()
-                                                .body();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }),
+                                PathPage.create(
+                                        parsedResponse,
+                                        startingAfter,
+                                        result,
+                                        ListUsersPathPaginationResponse.class,
+                                        ListUsersPathPaginationResponse::getNext,
+                                        ListUsersPathPaginationResponse::getData,
+                                        "GET",
+                                        null,
+                                        Headers.of("Accept", "application/json"),
+                                        clientOptions,
+                                        requestOptions),
                                 response));
                         return;
                     }
