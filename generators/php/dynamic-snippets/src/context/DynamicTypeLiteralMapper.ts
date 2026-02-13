@@ -362,10 +362,7 @@ export class DynamicTypeLiteralMapper {
 
         const providedKeys = new Set(Object.keys(record));
         for (const param of object_.properties) {
-            if (
-                !providedKeys.has(param.name.wireValue) &&
-                !this.isOptionalOrNullable(param.typeReference)
-            ) {
+            if (!providedKeys.has(param.name.wireValue) && !this.isOptionalOrNullable(param.typeReference)) {
                 const placeholder = this.generatePlaceholderValue(param.typeReference);
                 if (!php.TypeLiteral.isNop(placeholder)) {
                     fields.push({
