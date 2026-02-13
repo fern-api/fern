@@ -108,12 +108,12 @@ export async function detectAirGappedModeForProtobuf(
             return false;
         }
 
-        // Try buf dep update with a timeout (30 seconds)
+        // Try buf dep update with a timeout (10 seconds)
         try {
             await runExeca(logger, "buf", ["dep", "update"], {
                 cwd: tmpDir,
                 stdio: "pipe",
-                timeout: 30000 // 30 second timeout for detection
+                timeout: 10000 // 10 second timeout for detection
             });
             // Network works - not air-gapped
             logger.debug("Network check succeeded - not in air-gapped mode");
