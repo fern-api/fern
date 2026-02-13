@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.23.8
+- version: 1.24.0
   changelogEntry:
     - summary: |
         Add support for protocol-level SSE discrimination via the new `discriminatorContext`
@@ -9,7 +9,7 @@
         existing `UnmarshalJSON` works unchanged. If the data already contains the
         discriminant key, injection is skipped. Existing SSE endpoints using data-level
         discrimination (the default) are unaffected.
-      type: fix
+      type: feat
   createdAt: "2026-02-13"
   irVersion: 61
 
