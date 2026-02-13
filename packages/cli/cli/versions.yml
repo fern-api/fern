@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.78.1
+  changelogEntry:
+    - summary: |
+        Fix preview docs generation to not send basepath-aware flag. Preview deployments
+        don't support basepath-aware routing, so the flag is now only sent for non-preview
+        docs registration.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
 - version: 3.78.0
   changelogEntry:
     - summary: |

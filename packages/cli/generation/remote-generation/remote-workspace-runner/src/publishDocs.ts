@@ -453,7 +453,7 @@ export async function publishDocs({
         {
             docsDefinition,
             excludeApis,
-            ...(isBasepathAware && { basepathAware: true })
+            ...(isBasepathAware && !preview && { basepathAware: true })
         }
     );
 
