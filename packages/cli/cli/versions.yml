@@ -4,8 +4,8 @@
     - summary: |
         Improve library docs generation UI with clean spinner interface.
         Replace verbose polling logs with interactive task spinners for better UX.
-        Show "Initiating Library Generation" message and clean library name spinners
-        with sequential processing. Verbose logs moved to debug level only.
+        Enable parallel processing of multiple libraries with concurrent spinners.
+        Verbose logs moved to debug level only for cleaner output.
       type: feat
   createdAt: "2026-02-13"
   irVersion: 65
