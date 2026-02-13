@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.2
+  changelogEntry:
+    - summary: |
+        Fix PATCH requests with no explicit body fields failing at runtime with OkHttp's
+        `IllegalArgumentException: method PATCH must have a request body`. The generator now
+        provides a non-null empty request body for PATCH endpoints, matching the existing
+        handling for POST and PUT.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 63
+
 - version: 3.35.1
   changelogEntry:
     - summary: |
