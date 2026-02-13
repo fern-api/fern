@@ -1563,12 +1563,12 @@ func generatedPackagesFromIR(ir *fernir.IntermediateRepresentation) map[string]s
 }
 
 // shouldSkipRequestType returns true if the request type should not be generated.
-func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint, inlinePathParameters bool, inlineFileProperties bool) bool {
+func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint, serviceHeaders []*fernir.HttpHeader, inlinePathParameters bool, inlineFileProperties bool) bool {
 	if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
 		// This endpoint doesn't have any in-lined request types that need to be generated.
 		return true
 	}
-	return !needsRequestParameter(irEndpoint, inlinePathParameters, inlineFileProperties)
+	return !needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties)
 }
 
 // fileUploadHasBodyProperties returns true if the file upload request has at least
@@ -1652,7 +1652,7 @@ func fileInfoToTypes(
 	for _, irService := range irServices {
 		subpackageFileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
 		for _, irEndpoint := range irService.Endpoints {
-			if shouldSkipRequestType(irEndpoint, inlinePathParameters, inlineFileProperties) {
+			if shouldSkipRequestType(irEndpoint, irService.Headers, inlinePathParameters, inlineFileProperties) {
 				continue
 			}
 

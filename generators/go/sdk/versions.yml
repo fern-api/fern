@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.23.8
+  changelogEntry:
+    - summary: |
+        Fix empty request structs being generated for endpoints where the SDK request wrapper
+        has no user-facing fields. This occurred when a wrapper was created (e.g., due to service
+        headers) but all fields were handled globally via RequestOptions, resulting in an empty
+        struct parameter in the method signature. The fix adds service header awareness to
+        needsRequestParameter and changes the default behavior to not generate a request parameter
+        when no visible fields exist.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 61
+
 - version: 1.23.7
   changelogEntry:
     - summary: |
