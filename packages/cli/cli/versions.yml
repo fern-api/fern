@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.78.2
+  changelogEntry:
+    - summary: |
+        Fix nullable query parameters losing examples during OpenAPI parsing.
+        The `hasExample` method in `ExampleTypeFactory` did not traverse through
+        `nullable` or `optional` wrappers, causing parameters like `organization_id`
+        (with `nullable: true`) to be silently dropped from generated endpoint examples.
+      type: fix
+    - summary: |
+        Generate minimal stub examples on cycle detection instead of returning failure.
+        When recursive types are visited more than once, the v1 example generator now
+        produces a valid example with all non-recursive (leaf) properties filled in,
+        preventing cascade failures for types like `JsonschemaSchema` and `BulkSchedule`.
+      type: fix
+  createdAt: "2026-02-14"
+  irVersion: 65
 - version: 3.78.1
   changelogEntry:
     - summary: |
