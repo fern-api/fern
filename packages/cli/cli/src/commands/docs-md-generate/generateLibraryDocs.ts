@@ -75,35 +75,31 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
     const orgId = project.config.organization;
 
     await cliContext.runTask(async (context) => {
-        context.logger.info("Initiating Library Generation");
-        let successful = 0;
+        const results = await Promise.all(
+            Object.entries(librariesToGenerate).map(async ([name, config]) => {
+                if (config == null) {
+                    return false;
+                }
+                if (!isGitLibraryInput(config.input)) {
+                    context.failAndThrow(
+                        `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`
+                    );
+                    return false;
+                }
 
-        for (const [name, config] of Object.entries(librariesToGenerate)) {
-            if (config == null) {
-                continue;
-            }
-            if (!isGitLibraryInput(config.input)) {
-                context.failAndThrow(
-                    `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`
-                );
-                return;
-            }
-
-            const result = await generateSingleLibrary({
-                name,
-                config,
-                docsWorkspace,
-                orgId,
-                token,
-                context
-            });
-
-            if (result) {
-                successful++;
-            }
-        }
+                return generateSingleLibrary({
+                    name,
+                    config,
+                    docsWorkspace,
+                    orgId,
+                    token,
+                    context
+                });
+            })
+        );
 
         // Log summary of successful generations
+        const successful = results.filter(Boolean).length;
         if (successful > 0) {
             context.logger.info(chalk.green(`✓ Generated library documentation for ${successful} libraries`));
         }
