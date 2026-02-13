@@ -32,10 +32,12 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.145.12-b50d999d1"
+    "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
+    "js-yaml": "^4.1.1"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@types/js-yaml": "^4.0.8",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",

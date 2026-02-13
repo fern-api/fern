@@ -8,6 +8,8 @@ import { convertCursorPagination } from "./convertCursorPagination.js";
 import { convertCustomPagination } from "./convertCustomPagination.js";
 import { convertOffsetPagination } from "./convertOffsetPagination.js";
 import { getPaginationPropertyComponents } from "./convertPaginationUtils.js";
+import { convertPathPagination } from "./convertPathPagination.js";
+import { convertUriPagination } from "./convertUriPagination.js";
 
 export function convertPagination({
     propertyResolver,
@@ -45,6 +47,20 @@ export function convertPagination({
             });
         case "custom":
             return convertCustomPagination({
+                propertyResolver,
+                file,
+                endpointName,
+                paginationPropertyComponents
+            });
+        case "uri":
+            return convertUriPagination({
+                propertyResolver,
+                file,
+                endpointName,
+                paginationPropertyComponents
+            });
+        case "path":
+            return convertPathPagination({
                 propertyResolver,
                 file,
                 endpointName,

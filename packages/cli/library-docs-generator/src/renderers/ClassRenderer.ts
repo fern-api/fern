@@ -26,10 +26,6 @@ import {
 import { renderDocstring, renderSimpleDocstring } from "./DocstringRenderer.js";
 import { renderMethodDetailed, renderProperty } from "./FunctionRenderer.js";
 
-// ============================================================================
-// Internal Helpers
-// ============================================================================
-
 interface ClassSignature {
     code: string;
     typeStrings: string[];
@@ -160,10 +156,6 @@ function renderAttribute(attr: FdrAPI.libraryDocs.AttributeIr): string {
 
     return lines.join("\n");
 }
-
-// ============================================================================
-// Public API
-// ============================================================================
 
 /**
  * Render a class in detailed form for the API section.

@@ -195,18 +195,7 @@ async fn test_service_create_big_entity_with_wiremock() {
                     nodes: Some(vec![
                         Node {
                             name: "name".to_string(),
-                            nodes: Some(vec![
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                },
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                },
-                            ]),
+                            nodes: Some(vec![]),
                             trees: Some(vec![
                                 Tree {
                                     nodes: Some(vec![]),
@@ -218,18 +207,7 @@ async fn test_service_create_big_entity_with_wiremock() {
                         },
                         Node {
                             name: "name".to_string(),
-                            nodes: Some(vec![
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                },
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                },
-                            ]),
+                            nodes: Some(vec![]),
                             trees: Some(vec![
                                 Tree {
                                     nodes: Some(vec![]),
@@ -296,18 +274,7 @@ async fn test_service_create_big_entity_with_wiremock() {
                                     contents: "contents".to_string(),
                                 },
                             ]),
-                            directories: Some(vec![
-                                Directory {
-                                    name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
-                                },
-                                Directory {
-                                    name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
-                                },
-                            ]),
+                            directories: Some(vec![]),
                         },
                         Directory {
                             name: "name".to_string(),
@@ -321,18 +288,7 @@ async fn test_service_create_big_entity_with_wiremock() {
                                     contents: "contents".to_string(),
                                 },
                             ]),
-                            directories: Some(vec![
-                                Directory {
-                                    name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
-                                },
-                                Directory {
-                                    name: "name".to_string(),
-                                    files: Some(vec![]),
-                                    directories: Some(vec![]),
-                                },
-                            ]),
+                            directories: Some(vec![]),
                         },
                     ]),
                 }),

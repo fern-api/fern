@@ -35,7 +35,7 @@ export class Field extends AstNode {
     public readonly type: Type;
     public readonly access: Access;
     private readonly_: boolean;
-    private initializer: CodeBlock | undefined;
+    public readonly initializer: CodeBlock | undefined;
     private docs: string | undefined;
     private inlineDocs: string | undefined;
     private attributes: Attribute[];

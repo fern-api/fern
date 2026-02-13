@@ -35,6 +35,11 @@ module Seed
         @object ||= Seed::Endpoints::Object_::Client.new(client: @client)
       end
 
+      # @return [Seed::Pagination::Client]
+      def pagination
+        @pagination ||= Seed::Endpoints::Pagination::Client.new(client: @client)
+      end
+
       # @return [Seed::Params::Client]
       def params
         @params ||= Seed::Endpoints::Params::Client.new(client: @client)

@@ -16,8 +16,11 @@ import { escapeMdx, escapeMdxPreservingCodeBlocks, formatTypeAnnotation } from "
  */
 function renderDescriptionText(text: string): string {
     const sanitized = escapeMdxPreservingCodeBlocks(text);
+    // Only wrap top-level (unindented) code blocks in <CodeBlock>.
+    // Indented code blocks (inside list items) stay as plain fences because
+    // block-level JSX components break MDX parsing within list items.
     return sanitized.replace(
-        /```(\w*)\n([\s\S]*?)\n```/g,
+        /^```(\w*)\n([\s\S]*?)\n```/gm,
         "<CodeBlock showLineNumbers={false}>\n\n```$1\n$2\n```\n\n</CodeBlock>"
     );
 }

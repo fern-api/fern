@@ -91,6 +91,12 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  folders:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-interfaces
+      customConfig:
+        generateClientInterfaces: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -101,6 +107,12 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         propertyAccess: private
+  request-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-defaults
+      customConfig:
+        useDefaultRequestParameterValues: true
   query-parameters:
     - outputFolder: no-custom-config
       customConfig: null

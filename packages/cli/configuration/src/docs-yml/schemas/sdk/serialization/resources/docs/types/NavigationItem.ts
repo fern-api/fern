@@ -9,14 +9,12 @@ import { FolderConfiguration } from "./FolderConfiguration.js";
 import { LibraryReferenceConfiguration } from "./LibraryReferenceConfiguration.js";
 import { LinkConfiguration } from "./LinkConfiguration.js";
 import { PageConfiguration } from "./PageConfiguration.js";
-import { PythonDocsConfiguration } from "./PythonDocsConfiguration.js";
 
 export const NavigationItem: core.serialization.Schema<serializers.NavigationItem.Raw, FernDocsConfig.NavigationItem> =
     core.serialization.undiscriminatedUnion([
         PageConfiguration,
         core.serialization.lazyObject(() => serializers.SectionConfiguration),
         ApiReferenceConfiguration,
-        PythonDocsConfiguration,
         LibraryReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
@@ -28,7 +26,6 @@ export declare namespace NavigationItem {
         | PageConfiguration.Raw
         | serializers.SectionConfiguration.Raw
         | ApiReferenceConfiguration.Raw
-        | PythonDocsConfiguration.Raw
         | LibraryReferenceConfiguration.Raw
         | LinkConfiguration.Raw
         | ChangelogConfiguration.Raw

@@ -43,7 +43,8 @@ export function escapeMdxPreservingCodeBlocks(text: string): string {
     let lastIndex = 0;
 
     // Match code blocks: ```optional-lang\n...content...\n``` OR unclosed ```...to end
-    const codeBlockRegex = /```[\w{}-]*\n[\s\S]*?(?:\n```|$)/g;
+    // Allow indented closing fences (e.g., code blocks inside markdown list items)
+    const codeBlockRegex = /```[\w{}-]*\n[\s\S]*?(?:\n[ \t]*```|$)/g;
 
     let match;
     while ((match = codeBlockRegex.exec(text)) !== null) {
@@ -55,7 +56,7 @@ export function escapeMdxPreservingCodeBlocks(text: string): string {
         let codeBlock = match[0];
 
         // Normalize language tags containing JSX-unsafe chars ({, }) to "python"
-        codeBlock = codeBlock.replace(/^```\{?\w*\}?\n/, "```python\n");
+        codeBlock = codeBlock.replace(/^([ \t]*)```\{?\w*\}?\n/, "$1```python\n");
 
         // Repair unclosed fence — if the regex matched via $ instead of \n```,
         // the block has no closing fence and would swallow all subsequent content
@@ -110,5 +111,5 @@ export function createFrontmatter(slug: string, title?: string): string {
  * Pipe characters break table structure and need to be escaped.
  */
 export function escapeTableCell(text: string): string {
-    return text.replace(/\|/g, "\\|").replace(/\n/g, " ");
+    return escapeJsxChars(text.replace(/\|/g, "\\|").replace(/\n/g, " "));
 }

@@ -4594,6 +4594,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/library-docs-generator':
+        specifier: workspace:*
+        version: link:../library-docs-generator
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../generation/local-generation/local-workspace-runner
@@ -5624,6 +5627,9 @@ importers:
       heap-js:
         specifier: ^2.6.0
         version: 2.7.1
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.23
@@ -5640,6 +5646,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.9
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -6744,10 +6753,16 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: 0.145.12-b50d999d1
         version: 0.145.12-b50d999d1(typescript@5.9.3)
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.9
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3

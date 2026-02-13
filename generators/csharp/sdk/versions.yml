@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.5
+  changelogEntry:
+    - summary: |
+        Upgrade CSharpier formatter to 1.2.6.
+      type: chore
+  createdAt: "2026-02-11"
+  irVersion: 62
+
 - version: 2.20.4
   changelogEntry:
     - summary: |
@@ -6,7 +14,6 @@
       type: fix
   createdAt: "2026-02-10"
   irVersion: 62
-
 - version: 2.20.3
   changelogEntry:
     - summary: |

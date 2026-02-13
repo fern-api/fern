@@ -16,6 +16,7 @@ public partial class EndpointsClient : IEndpointsClient
             Enum = new EnumClient(_client);
             HttpMethods = new HttpMethodsClient(_client);
             Object = new ObjectClient(_client);
+            Pagination = new PaginationClient(_client);
             Params = new ParamsClient(_client);
             Primitive = new PrimitiveClient(_client);
             Put = new PutClient(_client);
@@ -38,6 +39,8 @@ public partial class EndpointsClient : IEndpointsClient
     public IHttpMethodsClient HttpMethods { get; }
 
     public IObjectClient Object { get; }
+
+    public IPaginationClient Pagination { get; }
 
     public IParamsClient Params { get; }
 
