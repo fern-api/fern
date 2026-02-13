@@ -27,10 +27,10 @@ on:
     branches:
       - main
 
-# Cancel previous workflows when another is triggered
+# Let the current run finish, but cancel any queued (pending) runs in favor of the newest
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
