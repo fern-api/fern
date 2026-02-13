@@ -7,6 +7,15 @@
         Show "Initiating Library Generation" message and clean library name spinners
         with sequential processing. Verbose logs moved to debug level only.
       type: feat
+- version: 3.77.1
+  changelogEntry:
+    - summary: |
+        Scope PR update feature for self-hosted GitHub generation to the current generator by
+        including the generator name in the branch prefix (e.g. fern-bot/fernapi-fern-typescript-sdk/).
+        This prevents concurrent generators targeting the same repository from racing on the same PR.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
 - version: 3.77.0
   changelogEntry:
     - summary: |
