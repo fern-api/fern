@@ -9,6 +9,7 @@
           "Shape": {
             "availability": undefined,
             "base-properties": {},
+            "context": "data",
             "discriminant": "type",
             "docs": undefined,
             "encoding": undefined,
@@ -72,6 +73,7 @@
       square: Square
     source:
       openapi: ../openapi.json
+    context: data
   TriangleType:
     enum:
       - triangle

@@ -273,6 +273,9 @@ fixtures:
           - custom_integration
           - sentry_integration
       outputFolder: import-paths
+    - customConfig:
+        custom_transport: true
+      outputFolder: custom-transport
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

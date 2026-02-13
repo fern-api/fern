@@ -20,6 +20,8 @@ public class AsyncEndpointsClient {
 
     protected final Supplier<AsyncObjectClient> objectClient;
 
+    protected final Supplier<AsyncPaginationClient> paginationClient;
+
     protected final Supplier<AsyncParamsClient> paramsClient;
 
     protected final Supplier<AsyncPrimitiveClient> primitiveClient;
@@ -37,6 +39,7 @@ public class AsyncEndpointsClient {
         this.enumClient = Suppliers.memoize(() -> new AsyncEnumClient(clientOptions));
         this.httpMethodsClient = Suppliers.memoize(() -> new AsyncHttpMethodsClient(clientOptions));
         this.objectClient = Suppliers.memoize(() -> new AsyncObjectClient(clientOptions));
+        this.paginationClient = Suppliers.memoize(() -> new AsyncPaginationClient(clientOptions));
         this.paramsClient = Suppliers.memoize(() -> new AsyncParamsClient(clientOptions));
         this.primitiveClient = Suppliers.memoize(() -> new AsyncPrimitiveClient(clientOptions));
         this.putClient = Suppliers.memoize(() -> new AsyncPutClient(clientOptions));
@@ -62,6 +65,10 @@ public class AsyncEndpointsClient {
 
     public AsyncObjectClient object() {
         return this.objectClient.get();
+    }
+
+    public AsyncPaginationClient pagination() {
+        return this.paginationClient.get();
     }
 
     public AsyncParamsClient params() {

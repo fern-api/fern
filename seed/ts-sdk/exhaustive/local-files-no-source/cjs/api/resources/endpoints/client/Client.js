@@ -8,11 +8,12 @@ const Client_js_2 = require("../resources/contentType/client/Client.js");
 const Client_js_3 = require("../resources/enum/client/Client.js");
 const Client_js_4 = require("../resources/httpMethods/client/Client.js");
 const Client_js_5 = require("../resources/object/client/Client.js");
-const Client_js_6 = require("../resources/params/client/Client.js");
-const Client_js_7 = require("../resources/primitive/client/Client.js");
-const Client_js_8 = require("../resources/put/client/Client.js");
-const Client_js_9 = require("../resources/union/client/Client.js");
-const Client_js_10 = require("../resources/urls/client/Client.js");
+const Client_js_6 = require("../resources/pagination/client/Client.js");
+const Client_js_7 = require("../resources/params/client/Client.js");
+const Client_js_8 = require("../resources/primitive/client/Client.js");
+const Client_js_9 = require("../resources/put/client/Client.js");
+const Client_js_10 = require("../resources/union/client/Client.js");
+const Client_js_11 = require("../resources/urls/client/Client.js");
 class EndpointsClient {
     constructor(options) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
@@ -37,25 +38,29 @@ class EndpointsClient {
         var _a;
         return ((_a = this._object) !== null && _a !== void 0 ? _a : (this._object = new Client_js_5.ObjectClient(this._options)));
     }
+    get pagination() {
+        var _a;
+        return ((_a = this._pagination) !== null && _a !== void 0 ? _a : (this._pagination = new Client_js_6.PaginationClient(this._options)));
+    }
     get params() {
         var _a;
-        return ((_a = this._params) !== null && _a !== void 0 ? _a : (this._params = new Client_js_6.ParamsClient(this._options)));
+        return ((_a = this._params) !== null && _a !== void 0 ? _a : (this._params = new Client_js_7.ParamsClient(this._options)));
     }
     get primitive() {
         var _a;
-        return ((_a = this._primitive) !== null && _a !== void 0 ? _a : (this._primitive = new Client_js_7.PrimitiveClient(this._options)));
+        return ((_a = this._primitive) !== null && _a !== void 0 ? _a : (this._primitive = new Client_js_8.PrimitiveClient(this._options)));
     }
     get put() {
         var _a;
-        return ((_a = this._put) !== null && _a !== void 0 ? _a : (this._put = new Client_js_8.PutClient(this._options)));
+        return ((_a = this._put) !== null && _a !== void 0 ? _a : (this._put = new Client_js_9.PutClient(this._options)));
     }
     get union() {
         var _a;
-        return ((_a = this._union) !== null && _a !== void 0 ? _a : (this._union = new Client_js_9.UnionClient(this._options)));
+        return ((_a = this._union) !== null && _a !== void 0 ? _a : (this._union = new Client_js_10.UnionClient(this._options)));
     }
     get urls() {
         var _a;
-        return ((_a = this._urls) !== null && _a !== void 0 ? _a : (this._urls = new Client_js_10.UrlsClient(this._options)));
+        return ((_a = this._urls) !== null && _a !== void 0 ? _a : (this._urls = new Client_js_11.UrlsClient(this._options)));
     }
 }
 exports.EndpointsClient = EndpointsClient;
