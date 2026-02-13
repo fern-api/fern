@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.78.1
+  changelogEntry:
+    - summary: |
+        Fix global header example generation failure causing all endpoint examples to be dropped.
+        When a global header's schema could not produce an example (e.g. an unquoted literal type),
+        the endpoint example factory returned an empty array for every endpoint instead of gracefully
+        skipping the header.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
 - version: 3.78.0
   changelogEntry:
     - summary: |
