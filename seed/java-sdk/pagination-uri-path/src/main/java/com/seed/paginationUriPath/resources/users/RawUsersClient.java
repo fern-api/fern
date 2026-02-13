@@ -22,7 +22,6 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -72,8 +71,8 @@ public class RawUsersClient {
                                 startingAfter,
                                 result,
                                 ListUsersUriPaginationResponse.class,
-                                ListUsersUriPaginationResponse::getNext,
-                                ListUsersUriPaginationResponse::getData,
+                                _response -> _response.getNext(),
+                                _response -> _response.getData(),
                                 "GET",
                                 null,
                                 Headers.of("Accept", "application/json"),
@@ -128,8 +127,8 @@ public class RawUsersClient {
                                 startingAfter,
                                 result,
                                 ListUsersPathPaginationResponse.class,
-                                ListUsersPathPaginationResponse::getNext,
-                                ListUsersPathPaginationResponse::getData,
+                                _response -> _response.getNext(),
+                                _response -> _response.getData(),
                                 "GET",
                                 null,
                                 Headers.of("Accept", "application/json"),

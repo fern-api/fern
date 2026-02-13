@@ -1838,18 +1838,17 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitUri(UriPagination uri) {
-            return visitUriOrPathPagination(
-                    uri.getNextUri(), uri.getResults());
+            return visitUriOrPathPagination(uri.getNextUri(), uri.getResults(), true);
         }
 
         @Override
         public Void visitPath(PathPagination path) {
-            return visitUriOrPathPagination(
-                    path.getNextPath(), path.getResults());
+            return visitUriOrPathPagination(path.getNextPath(), path.getResults(), false);
         }
 
         private Void visitUriOrPathPagination(
-                ResponseProperty nextProperty, ResponseProperty resultsProperty) {
+                ResponseProperty nextProperty, ResponseProperty resultsProperty, boolean isUri) {
+            // Extract next token from response
             SnippetAndResultType nextSnippet = getNestedPropertySnippet(
                     nextProperty.getPropertyPath().map(path -> path.stream()
                             .map(PropertyPathItem::getName)
@@ -1866,30 +1865,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .build();
             httpResponseBuilder.addStatement(nextBlock);
 
-            CodeBlock hasNextPageBlock;
-            if (nextSnippet.typeReference.getContainer().isPresent()) {
-                com.fern.ir.model.types.ContainerType containerType =
-                        nextSnippet.typeReference.getContainer().get();
-                if (containerType.isOptional()) {
-                    hasNextPageBlock = CodeBlock.of("$L.isPresent()", variables.getStartingAfterVariableName());
-                } else if (containerType.isNullable()) {
-                    hasNextPageBlock = CodeBlock.of("$L != null", variables.getStartingAfterVariableName());
-                } else {
-                    throw new IllegalStateException(
-                            "Found non-optional, non-nullable container as next page token. This should be impossible "
-                                    + "due to fern check validation. "
-                                    + getContainerDiagnosticString(containerType));
-                }
-            } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
-                hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
-                        variables.getStartingAfterVariableName(),
-                        nextSnippet.typeReference.getPrimitive().get());
-            } else {
-                throw new IllegalStateException(
-                        "Found non-optional, non-primitive as next page token. This should be impossible "
-                                + "due to fern check validation.");
-            }
-
+            // Extract result items from response
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                     resultsProperty.getPropertyPath().map(path -> path.stream()
                             .map(PropertyPathItem::getName)
@@ -1907,14 +1883,74 @@ public abstract class AbstractHttpResponseParserGenerator {
             httpResponseBuilder.addStatement(resultBlock);
 
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
+            TypeName responseBodyTypeName = clientGeneratorContext
+                    .getPoetTypeNameMapper()
+                    .convertToTypeName(true, body.getResponseBodyType());
 
-            CodeBlock paginationConstructor = CodeBlock.of(
-                    "new $T($L, $L, $L, $L)",
-                    responseType,
-                    hasNextPageBlock,
-                    variables.getResultVariableName(),
-                    variables.getParsedResponseVariableName(),
-                    getNextPageGetter(endpointName, methodParameters));
+            // Build the getNext lambda: _response -> _response.getNext()
+            CodeBlock getNextLambda = CodeBlock.builder()
+                    .add("_response -> _response")
+                    .add(nextSnippet.codeBlock)
+                    .build();
+
+            // Build the getItems lambda: _response -> _response.getData()
+            CodeBlock getItemsLambda = CodeBlock.builder()
+                    .add("_response -> _response")
+                    .add(resultSnippet.codeBlock)
+                    .build();
+
+            // Determine HTTP method
+            String httpMethod = httpEndpoint.getMethod().toString();
+
+            // Build request body expression based on HTTP method
+            ClassName requestBodyClass = ClassName.get("okhttp3", "RequestBody");
+            CodeBlock requestBodyExpression;
+            if (httpEndpoint.getMethod().equals(HttpMethod.POST)
+                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)) {
+                requestBodyExpression = CodeBlock.of("$T.create($S, null)", requestBodyClass, "");
+            } else {
+                requestBodyExpression = CodeBlock.of("null");
+            }
+
+            // Build additional headers
+            ClassName headersClass = ClassName.get("okhttp3", "Headers");
+            Optional<CodeBlock> acceptHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
+            CodeBlock additionalHeadersExpression;
+            if (acceptHeader.isPresent()) {
+                // Extract the header value from the .addHeader("Accept", "...") CodeBlock
+                // Simpler: just build Headers.of with Accept header
+                additionalHeadersExpression =
+                        CodeBlock.of("$T.of($S, $S)", headersClass, "Accept", "application/json");
+            } else {
+                additionalHeadersExpression = CodeBlock.of("new $T.Builder().build()", headersClass);
+            }
+
+            // Select UriPage or PathPage class
+            ClassName pageHelperClass = clientGeneratorContext
+                    .getPoetClassNameFactory()
+                    .getPaginationClassName(isUri ? "UriPage" : "PathPage");
+
+            // Build the XxxPage.create(...) call
+            CodeBlock paginationConstructor = CodeBlock.builder()
+                    .add(
+                            "$T.create(\n",
+                            pageHelperClass)
+                    .indent()
+                    .indent()
+                    .add("$L,\n", variables.getParsedResponseVariableName())
+                    .add("$L,\n", variables.getStartingAfterVariableName())
+                    .add("$L,\n", variables.getResultVariableName())
+                    .add("$T.class,\n", responseBodyTypeName)
+                    .add("$L,\n", getNextLambda)
+                    .add("$L,\n", getItemsLambda)
+                    .add("$S,\n", httpMethod)
+                    .add("$L,\n", requestBodyExpression)
+                    .add("$L,\n", additionalHeadersExpression)
+                    .add("$N,\n", clientOptionsField)
+                    .add("$L)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                    .unindent()
+                    .unindent()
+                    .build();
 
             handleSuccessfulResult(httpResponseBuilder, paginationConstructor);
             endpointMethodBuilder.returns(responseType);
