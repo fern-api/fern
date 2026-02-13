@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { access, chmod, cp, unlink, writeFile } from "fs/promises";
+import { access, chmod, cp, stat, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
@@ -200,6 +200,28 @@ export class ProtobufIRGenerator {
         });
     }
 
+    private async isPackageInstalledGlobally(packageName: string): Promise<boolean> {
+        try {
+            await runExeca(undefined, "npm", ["list", "-g", packageName, "--depth=0"], {
+                stdout: "ignore",
+                stderr: "ignore"
+            });
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    private async isModuleResolvable(moduleName: string, cwd: AbsoluteFilePath): Promise<boolean> {
+        try {
+            const modulePath = join(cwd, RelativeFilePath.of(`node_modules/${moduleName}`));
+            await stat(modulePath);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
     private async setupRemainingProtobufConfig({
         protobufGeneratorConfigPath
     }: {
@@ -211,17 +233,32 @@ export class ProtobufIRGenerator {
             PROTOBUF_MODULE_PACKAGE_JSON
         );
 
-        await runExeca(undefined, "npm", ["install"], {
-            cwd: protobufGeneratorConfigPath,
-            stdout: "ignore",
-            stderr: "pipe"
-        });
+        const hasProtobuf = await this.isModuleResolvable("@bufbuild/protobuf", protobufGeneratorConfigPath);
+        const hasProtoplugin = await this.isModuleResolvable("@bufbuild/protoplugin", protobufGeneratorConfigPath);
+        if (!hasProtobuf || !hasProtoplugin) {
+            this.context.logger.debug("Installing @bufbuild/protobuf and @bufbuild/protoplugin via npm");
+            await runExeca(undefined, "npm", ["install"], {
+                cwd: protobufGeneratorConfigPath,
+                stdout: "ignore",
+                stderr: "pipe"
+            });
+        } else {
+            this.context.logger.debug(
+                "@bufbuild/protobuf and @bufbuild/protoplugin already installed, skipping npm install"
+            );
+        }
 
-        await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
-            cwd: protobufGeneratorConfigPath,
-            stdout: "ignore",
-            stderr: "pipe"
-        });
+        const hasFernApi = await this.isPackageInstalledGlobally("fern-api");
+        if (!hasFernApi) {
+            this.context.logger.debug("Installing fern-api globally via npm");
+            await runExeca(undefined, "npm", ["install", "-g", "fern-api"], {
+                cwd: protobufGeneratorConfigPath,
+                stdout: "ignore",
+                stderr: "pipe"
+            });
+        } else {
+            this.context.logger.debug("fern-api already installed globally, skipping npm install -g");
+        }
 
         // Write buf config
         await writeFile(

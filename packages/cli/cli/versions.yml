@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.76.1
+  changelogEntry:
+    - summary: |
+        Skip npm install for protobuf IR generation when packages are already installed.
+        Prevents hanging in air-gapped environments where npm cannot reach the registry.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
 - version: 3.76.0
   changelogEntry:
     - summary: |
