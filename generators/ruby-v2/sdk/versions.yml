@@ -1,5 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc86
+  changelogEntry:
+    - summary: |
+        Fix RuboCop style offenses in generated dynamic snippets. Generated Ruby snippets now use
+        double-quoted strings, omit trailing semicolons, and drop empty parentheses on no-arg
+        method calls. Also normalizes CRLF line endings to LF and adds RuboCop exclusions for
+        snippet-only cops (FrozenStringLiteralComment, FirstHashElementIndentation) in the
+        generated .rubocop.yml.
+      type: fix
+    - summary: |
+        Change RuboCop Naming/VariableNumber enforced style from snake_case to normalcase in the
+        generated .rubocop.yml. This eliminates false positives on API-derived identifiers that
+        contain numbers (e.g., :recaptcha_v2, :sha256, :line1, :pkcs7) without requiring
+        underscores before digit sequences.
+      type: fix
+    - summary: |
+        Fix seed.yml Docker build command using incorrect package filter (@fern-api/fern-ruby-sdk
+        instead of @fern-api/ruby-sdk).
+      type: fix
+    - summary: |
+        Use %w[] syntax for arrays of simple strings in generated snippets, eliminating
+        Style/WordArray RuboCop offenses.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 61
+
 - version: 1.0.0-rc85
   changelogEntry:
     - summary: |
@@ -840,7 +866,7 @@
   changelogEntry:
     - type: feat
       summary: >-
-        Introduce a revamped Ruby SDK generator with several improvements 
+        Introduce a revamped Ruby SDK generator with several improvements
         to be detailed in a larger post.
   irVersion: 39
 
