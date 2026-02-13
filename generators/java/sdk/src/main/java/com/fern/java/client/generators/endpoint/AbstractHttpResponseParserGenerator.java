@@ -293,6 +293,20 @@ public abstract class AbstractHttpResponseParserGenerator {
                                     }
 
                                     @Override
+                                    public ClassName visitUri(UriPagination uri) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
+                                    public ClassName visitPath(PathPagination path) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
                                     public ClassName _visitUnknown(Object unknownType) {
                                         return clientGeneratorContext
                                                 .getPoetClassNameFactory()
@@ -388,6 +402,50 @@ public abstract class AbstractHttpResponseParserGenerator {
                                                         .map(PropertyPathItem::getName)
                                                         .collect(Collectors.toList())),
                                         customPagination.getResults().getProperty(),
+                                        body.getResponseBodyType());
+                                com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                        .typeReference
+                                        .getContainer()
+                                        .orElseThrow(() -> new RuntimeException(
+                                                "Unexpected non-container pagination result type"));
+                                com.fern.ir.model.types.TypeReference resultUnderlyingType = resultContainerType.visit(
+                                        new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+                                return ParameterizedTypeName.get(
+                                        pagerClassName,
+                                        clientGeneratorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(true, resultUnderlyingType));
+                            }
+
+                            @Override
+                            public TypeName visitUri(UriPagination uri) {
+                                SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                        uri.getResults().getPropertyPath().map(path -> path.stream()
+                                                .map(PropertyPathItem::getName)
+                                                .collect(Collectors.toList())),
+                                        uri.getResults().getProperty(),
+                                        body.getResponseBodyType());
+                                com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                        .typeReference
+                                        .getContainer()
+                                        .orElseThrow(() -> new RuntimeException(
+                                                "Unexpected non-container pagination result type"));
+                                com.fern.ir.model.types.TypeReference resultUnderlyingType = resultContainerType.visit(
+                                        new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+                                return ParameterizedTypeName.get(
+                                        pagerClassName,
+                                        clientGeneratorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(true, resultUnderlyingType));
+                            }
+
+                            @Override
+                            public TypeName visitPath(PathPagination path) {
+                                SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                        path.getResults().getPropertyPath().map(pathItems -> pathItems.stream()
+                                                .map(PropertyPathItem::getName)
+                                                .collect(Collectors.toList())),
+                                        path.getResults().getProperty(),
                                         body.getResponseBodyType());
                                 com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
                                         .typeReference
@@ -1767,6 +1825,91 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .build();
 
             handleSuccessfulResult(httpResponseBuilder, customPagerCreation);
+            endpointMethodBuilder.returns(responseType);
+            return null;
+        }
+
+        @Override
+        public Void visitUri(UriPagination uri) {
+            return visitUriOrPathPagination(
+                    uri.getNextUri(), uri.getResults());
+        }
+
+        @Override
+        public Void visitPath(PathPagination path) {
+            return visitUriOrPathPagination(
+                    path.getNextPath(), path.getResults());
+        }
+
+        private Void visitUriOrPathPagination(
+                ResponseProperty nextProperty, ResponseProperty resultsProperty) {
+            SnippetAndResultType nextSnippet = getNestedPropertySnippet(
+                    nextProperty.getPropertyPath().map(path -> path.stream()
+                            .map(PropertyPathItem::getName)
+                            .collect(Collectors.toList())),
+                    nextProperty.getProperty(),
+                    body.getResponseBodyType());
+            CodeBlock nextBlock = CodeBlock.builder()
+                    .add(
+                            "$T $L = $L",
+                            nextSnippet.typeName,
+                            variables.getStartingAfterVariableName(),
+                            variables.getParsedResponseVariableName())
+                    .add(nextSnippet.codeBlock)
+                    .build();
+            httpResponseBuilder.addStatement(nextBlock);
+
+            CodeBlock hasNextPageBlock;
+            if (nextSnippet.typeReference.getContainer().isPresent()) {
+                com.fern.ir.model.types.ContainerType containerType =
+                        nextSnippet.typeReference.getContainer().get();
+                if (containerType.isOptional()) {
+                    hasNextPageBlock = CodeBlock.of("$L.isPresent()", variables.getStartingAfterVariableName());
+                } else if (containerType.isNullable()) {
+                    hasNextPageBlock = CodeBlock.of("$L != null", variables.getStartingAfterVariableName());
+                } else {
+                    throw new IllegalStateException(
+                            "Found non-optional, non-nullable container as next page token. This should be impossible "
+                                    + "due to fern check validation. "
+                                    + getContainerDiagnosticString(containerType));
+                }
+            } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
+                hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
+                        variables.getStartingAfterVariableName(),
+                        nextSnippet.typeReference.getPrimitive().get());
+            } else {
+                throw new IllegalStateException(
+                        "Found non-optional, non-primitive as next page token. This should be impossible "
+                                + "due to fern check validation.");
+            }
+
+            SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                    resultsProperty.getPropertyPath().map(path -> path.stream()
+                            .map(PropertyPathItem::getName)
+                            .collect(Collectors.toList())),
+                    resultsProperty.getProperty(),
+                    body.getResponseBodyType());
+            CodeBlock resultBlock = CodeBlock.builder()
+                    .add(
+                            "$T $L = $L",
+                            resultSnippet.typeName,
+                            variables.getResultVariableName(),
+                            variables.getParsedResponseVariableName())
+                    .add(resultSnippet.codeBlock)
+                    .build();
+            httpResponseBuilder.addStatement(resultBlock);
+
+            TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
+
+            CodeBlock paginationConstructor = CodeBlock.of(
+                    "new $T($L, $L, $L, $L)",
+                    responseType,
+                    hasNextPageBlock,
+                    variables.getResultVariableName(),
+                    variables.getParsedResponseVariableName(),
+                    getNextPageGetter(endpointName, methodParameters));
+
+            handleSuccessfulResult(httpResponseBuilder, paginationConstructor);
             endpointMethodBuilder.returns(responseType);
             return null;
         }
