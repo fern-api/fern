@@ -6,7 +6,7 @@ import { resolve } from "@fern-api/fs-utils";
 import { generate } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { InteractiveTaskContext, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -74,56 +74,68 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
 
     const orgId = project.config.organization;
 
-    for (const [name, config] of Object.entries(librariesToGenerate)) {
-        if (config == null) {
-            continue;
-        }
-        if (!isGitLibraryInput(config.input)) {
-            cliContext.failAndThrow(
-                `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`
-            );
-            return;
-        }
+    await cliContext.runTask(async (context) => {
+        context.logger.info("Initiating Library Generation");
+        let successful = 0;
 
-        const resolvedOutputPath = resolve(docsWorkspace.absoluteFilePath, config.output.path);
-        const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
+        for (const [name, config] of Object.entries(librariesToGenerate)) {
+            if (config == null) {
+                continue;
+            }
+            if (!isGitLibraryInput(config.input)) {
+                context.failAndThrow(
+                    `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`
+                );
+                return;
+            }
 
-        await cliContext.runTask(async (context) => {
-            const fdr = createFdrService({ token: token.value });
+            const resolvedOutputPath = resolve(docsWorkspace.absoluteFilePath, config.output.path);
+            const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
 
-            context.logger.info(`Starting generation for library '${name}'...`);
+            const result = await context.runInteractiveTask({ name }, async (interactiveTaskContext) => {
+                const fdr = createFdrService({ token: token.value });
 
-            const jobId = await startGeneration(fdr, context, {
-                orgId,
-                githubUrl: gitInput.git,
-                language: config.lang === "python" ? "PYTHON" : "CPP",
-                packagePath: gitInput.subpath,
-                name
+                interactiveTaskContext.logger.debug(`Starting generation for library '${name}' from ${gitInput.git}`);
+
+                const jobId = await startGeneration(fdr, interactiveTaskContext, {
+                    orgId,
+                    githubUrl: gitInput.git,
+                    language: config.lang === "python" ? "PYTHON" : "CPP",
+                    packagePath: gitInput.subpath,
+                    name
+                });
+
+                await pollForCompletion(fdr, jobId, name, interactiveTaskContext);
+
+                const ir = await downloadIr(fdr, jobId, name, interactiveTaskContext);
+
+                const generateResult = generate({
+                    ir,
+                    outputDir: resolvedOutputPath,
+                    slug: name,
+                    title: name
+                });
+
+                interactiveTaskContext.logger.debug(
+                    `Generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`
+                );
             });
 
-            await pollForCompletion(fdr, jobId, name, context);
+            if (result) {
+                successful++;
+            }
+        }
 
-            const ir = await downloadIr(fdr, jobId, name, context);
-
-            context.logger.info("Generating MDX files...");
-
-            const generateResult = generate({
-                ir,
-                outputDir: resolvedOutputPath,
-                slug: name,
-                title: name
-            });
-
-            context.logger.info(
-                chalk.green(`Generated ${generateResult.pageCount} pages for '${name}' at ${resolvedOutputPath}`)
-            );
-        });
-    }
+        // Log summary of successful generations
+        if (successful > 0) {
+            context.logger.info(chalk.green(`✓ Generated library documentation for ${successful} libraries`));
+        }
+    });
 }
 
 async function startGeneration(
     fdr: FdrService,
-    context: TaskContext,
+    context: InteractiveTaskContext,
     opts: { orgId: string; githubUrl: string; language: "PYTHON" | "CPP"; packagePath?: string; name: string }
 ): Promise<FdrAPI.docs.v2.write.LibraryDocsJobId> {
     const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
@@ -145,7 +157,7 @@ async function startGeneration(
     }
 
     const jobId = startResponse.body.jobId;
-    context.logger.info(`Generation job started (${jobId}). Polling for completion...`);
+    context.logger.debug(`Generation job started with ID: ${jobId}`);
     return jobId;
 }
 
@@ -153,7 +165,7 @@ async function pollForCompletion(
     fdr: FdrService,
     jobId: FdrAPI.docs.v2.write.LibraryDocsJobId,
     libraryName: string,
-    context: TaskContext
+    context: InteractiveTaskContext
 ): Promise<void> {
     const deadline = Date.now() + POLL_TIMEOUT_MS;
 
@@ -172,9 +184,12 @@ async function pollForCompletion(
 
         switch (status.status) {
             case "PENDING":
-            case "PARSING":
-                context.logger.info(`Status: ${status.status}${status.progress ? ` — ${status.progress}` : ""}`);
+                context.logger.debug(`Status: PENDING`);
                 break;
+            case "PARSING": {
+                context.logger.debug(`Status: PARSING${status.progress ? ` — ${status.progress}` : ""}`);
+                break;
+            }
             case "COMPLETED":
                 return;
             case "FAILED":
@@ -195,10 +210,8 @@ async function downloadIr(
     fdr: FdrService,
     jobId: FdrAPI.docs.v2.write.LibraryDocsJobId,
     libraryName: string,
-    context: TaskContext
+    context: InteractiveTaskContext
 ): Promise<FdrAPI.libraryDocs.PythonLibraryDocsIr> {
-    context.logger.info("Downloading generated IR...");
-
     const resultResponse = await fdr.docs.v2.write.getLibraryDocsResult(jobId);
 
     if (!resultResponse.ok) {
@@ -207,6 +220,7 @@ async function downloadIr(
         );
     }
 
+    context.logger.debug(`Fetching IR from ${resultResponse.body.resultUrl}`);
     const irFetchResponse = await fetch(resultResponse.body.resultUrl);
     if (!irFetchResponse.ok) {
         return context.failAndThrow(
@@ -224,5 +238,6 @@ async function downloadIr(
         return context.failAndThrow(`IR has no rootModule for library '${libraryName}'`);
     }
 
+    context.logger.debug(`Downloaded IR with ${Object.keys(ir.rootModule.submodules).length} submodules`);
     return ir;
 }
