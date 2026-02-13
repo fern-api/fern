@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.24.0
+  changelogEntry:
+    - summary: |
+        Add support for protocol-level SSE discrimination via the new `discriminatorContext`
+        IR field. When a streaming endpoint returns a discriminated union with
+        `discriminatorContext: "protocol"`, the SSE `event:` field value is injected into
+        the JSON data payload as the discriminant key before unmarshaling, so the union's
+        existing `UnmarshalJSON` works unchanged. If the data already contains the
+        discriminant key, injection is skipped. Existing SSE endpoints using data-level
+        discrimination (the default) are unaffected.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 61
+
 - version: 1.23.7
   changelogEntry:
     - summary: |

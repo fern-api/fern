@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.2
+  changelogEntry:
+    - summary: |
+        Fix file upload tests to be OS-agnostic by using dynamic file size calculation instead
+        of hardcoded values. Previously, tests expected a specific file size (21 bytes) which
+        differs between operating systems due to line ending differences (CRLF on Windows vs
+        LF on Unix). Now uses `fs.statSync()` to dynamically read the test file size at runtime.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
 - version: 3.48.1
   changelogEntry:
     - summary: |

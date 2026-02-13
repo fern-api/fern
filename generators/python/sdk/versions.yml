@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.57.2
+  changelogEntry:
+    - summary: |
+        Fix path-based pagination to pass the next page path as `path=` instead of `url=`
+        in the generated HTTP client request call.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
 - version: 4.57.1
   changelogEntry:
     - summary: |
