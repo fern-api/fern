@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { generate } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -89,36 +89,13 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
                 return;
             }
 
-            const resolvedOutputPath = resolve(docsWorkspace.absoluteFilePath, config.output.path);
-            const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
-
-            const result = await context.runInteractiveTask({ name }, async (interactiveTaskContext) => {
-                const fdr = createFdrService({ token: token.value });
-
-                interactiveTaskContext.logger.debug(`Starting generation for library '${name}' from ${gitInput.git}`);
-
-                const jobId = await startGeneration(fdr, interactiveTaskContext, {
-                    orgId,
-                    githubUrl: gitInput.git,
-                    language: config.lang === "python" ? "PYTHON" : "CPP",
-                    packagePath: gitInput.subpath,
-                    name
-                });
-
-                await pollForCompletion(fdr, jobId, name, interactiveTaskContext);
-
-                const ir = await downloadIr(fdr, jobId, name, interactiveTaskContext);
-
-                const generateResult = generate({
-                    ir,
-                    outputDir: resolvedOutputPath,
-                    slug: name,
-                    title: name
-                });
-
-                interactiveTaskContext.logger.debug(
-                    `Generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`
-                );
+            const result = await generateSingleLibrary({
+                name,
+                config,
+                docsWorkspace,
+                orgId,
+                token,
+                context
             });
 
             if (result) {
@@ -130,6 +107,52 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
         if (successful > 0) {
             context.logger.info(chalk.green(`✓ Generated library documentation for ${successful} libraries`));
         }
+    });
+}
+
+async function generateSingleLibrary({
+    name,
+    config,
+    docsWorkspace,
+    orgId,
+    token,
+    context
+}: {
+    name: string;
+    config: docsYml.RawSchemas.LibraryConfiguration;
+    docsWorkspace: { absoluteFilePath: AbsoluteFilePath };
+    orgId: string;
+    token: FernToken;
+    context: TaskContext;
+}): Promise<boolean> {
+    const resolvedOutputPath = resolve(docsWorkspace.absoluteFilePath, config.output.path);
+    const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
+
+    return context.runInteractiveTask({ name }, async (interactiveTaskContext) => {
+        const fdr = createFdrService({ token: token.value });
+
+        interactiveTaskContext.logger.debug(`Starting generation for library '${name}' from ${gitInput.git}`);
+
+        const jobId = await startGeneration(fdr, interactiveTaskContext, {
+            orgId,
+            githubUrl: gitInput.git,
+            language: config.lang === "python" ? "PYTHON" : "CPP",
+            packagePath: gitInput.subpath,
+            name
+        });
+
+        await pollForCompletion(fdr, jobId, name, interactiveTaskContext);
+
+        const ir = await downloadIr(fdr, jobId, name, interactiveTaskContext);
+
+        const generateResult = generate({
+            ir,
+            outputDir: resolvedOutputPath,
+            slug: name,
+            title: name
+        });
+
+        interactiveTaskContext.logger.debug(`Generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`);
     });
 }
 

@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.78.0
+  changelogEntry:
+    - summary: |
+        Improve library docs generation UI with clean spinner interface.
+        Replace verbose polling logs with interactive task spinners for better UX.
+        Show "Initiating Library Generation" message and clean library name spinners
+        with sequential processing. Verbose logs moved to debug level only.
+      type: feat
 - version: 3.77.0
   changelogEntry:
     - summary: |
