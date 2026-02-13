@@ -5,7 +5,7 @@ import { toBinaryUploadRequest, type Uploadable } from "../../../src/core/file/i
 
 describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "..", "test-file.txt");
-    const TEST_FILE_SIZE = fs.statSync(join(__dirname, "..", "test-file.txt")).size.toString();
+    const TEST_FILE_SIZE = fs.statSync(TEST_FILE_PATH).size.toString();
 
     beforeEach(() => {
         jest.clearAllMocks();
