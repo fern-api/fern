@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.36.0
+  changelogEntry:
+    - summary: |
+        Add server URL templating support. When an OpenAPI spec uses server variables
+        (e.g., `https://api.{region}.{environment}.example.com`), the generated SDK now
+        exposes those variables as builder methods (e.g., `.region("us-east-1")`). The
+        `x-fern-default-url` extension provides a clean fallback URL when no variables
+        are provided. Supports both single and multiple base URL environments.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 63
+
 - version: 3.35.2
   changelogEntry:
     - summary: |
