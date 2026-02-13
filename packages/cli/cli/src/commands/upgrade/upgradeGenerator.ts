@@ -3,7 +3,8 @@ import {
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration,
-    normalizeGeneratorName
+    normalizeGeneratorName,
+    removeDefaultDockerOrgIfPresent
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
@@ -29,6 +30,7 @@ interface AppliedUpgrade {
     groupName: string;
     previousVersion: string;
     newVersion: string;
+    previousName?: string;
     migrationsApplied?: number;
     migrationVersions?: string[];
 }
@@ -149,6 +151,18 @@ export async function loadAndUpdateGenerators({
                 continue;
             }
 
+            const fullOriginalName = addDefaultDockerOrgIfNotPresent(generatorName);
+            const isAlias = fullOriginalName !== normalizedGeneratorName;
+            let replacedName: string | undefined;
+            if (isAlias) {
+                const originalHadOrg = generatorName.includes("/");
+                replacedName = originalHadOrg
+                    ? normalizedGeneratorName
+                    : removeDefaultDockerOrgIfPresent(normalizedGeneratorName);
+                generator.set("name", replacedName);
+                context.logger.debug(chalk.green(`Replacing deprecated alias ${generatorName} with ${replacedName}`));
+            }
+
             // Normalize the generator filter to add default Docker org prefix if not present
             const normalizedGeneratorFilter =
                 generatorFilter != null ? addDefaultDockerOrgIfNotPresent(generatorFilter) : undefined;
@@ -226,10 +240,11 @@ export async function loadAndUpdateGenerators({
                     }
 
                     appliedUpgrades.push({
-                        generatorName,
+                        generatorName: replacedName ?? generatorName,
                         groupName,
                         previousVersion: currentGeneratorVersion,
                         newVersion: latestVersion,
+                        previousName: isAlias ? generatorName : undefined,
                         migrationsApplied: migrationsApplied > 0 ? migrationsApplied : undefined,
                         migrationVersions: migrationVersions.length > 0 ? migrationVersions : undefined
                     });
@@ -238,11 +253,21 @@ export async function loadAndUpdateGenerators({
                     context.logger.debug(
                         chalk.gray(`${generatorName} is already on the latest version: ${currentGeneratorVersion}`)
                     );
-                    alreadyUpToDate.push({
-                        generatorName,
-                        groupName,
-                        version: currentGeneratorVersion
-                    });
+                    if (isAlias) {
+                        appliedUpgrades.push({
+                            generatorName: replacedName ?? generatorName,
+                            groupName,
+                            previousVersion: currentGeneratorVersion,
+                            newVersion: currentGeneratorVersion,
+                            previousName: generatorName
+                        });
+                    } else {
+                        alreadyUpToDate.push({
+                            generatorName,
+                            groupName,
+                            version: currentGeneratorVersion
+                        });
+                    }
                 }
             }
 
@@ -367,11 +392,15 @@ export async function upgradeGenerator({
                 cliContext.logger.info(chalk.green(`${workspacePrefix}Group ${groupName}:`));
 
                 for (const upgrade of groupUpgrades) {
-                    cliContext.logger.info(
-                        chalk.green(
-                            `  - ${upgrade.generatorName}: ${chalk.dim(upgrade.previousVersion)} → ${upgrade.newVersion}`
-                        )
-                    );
+                    const nameChange =
+                        upgrade.previousName != null
+                            ? `${upgrade.previousName} → ${upgrade.generatorName}`
+                            : upgrade.generatorName;
+                    const versionChange =
+                        upgrade.previousVersion !== upgrade.newVersion
+                            ? `: ${chalk.dim(upgrade.previousVersion)} → ${upgrade.newVersion}`
+                            : `: ${upgrade.newVersion} (alias updated)`;
+                    cliContext.logger.info(chalk.green(`  - ${nameChange}${versionChange}`));
                     // Show migration info if migrations were applied
                     if (upgrade.migrationsApplied != null && upgrade.migrationsApplied > 0) {
                         cliContext.logger.info(

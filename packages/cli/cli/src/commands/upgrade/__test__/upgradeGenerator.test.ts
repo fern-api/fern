@@ -8,11 +8,20 @@ import YAML from "yaml";
 
 import { loadAndUpdateGenerators } from "../upgradeGenerator.js";
 
+const GENERATOR_NAME_ALIASES: Record<string, string> = {
+    "fernapi/java-model": "fernapi/fern-java-model",
+    "fernapi/fern-typescript-node-sdk": "fernapi/fern-typescript-sdk"
+};
+
 vi.mock("@fern-api/configuration-loader", () => ({
     getPathToGeneratorsConfiguration: vi.fn(),
     normalizeGeneratorName: vi.fn((name: string) => {
         if (!name.includes("/")) {
             name = `fernapi/${name}`;
+        }
+        const aliased = GENERATOR_NAME_ALIASES[name];
+        if (aliased != null) {
+            name = aliased;
         }
         const knownGenerators = [
             "fernapi/fern-typescript-sdk",
@@ -31,6 +40,13 @@ vi.mock("@fern-api/configuration-loader", () => ({
     addDefaultDockerOrgIfNotPresent: vi.fn((name: string) => {
         if (!name.includes("/")) {
             return `fernapi/${name}`;
+        }
+        return name;
+    }),
+    removeDefaultDockerOrgIfPresent: vi.fn((name: string) => {
+        const prefix = "fernapi/";
+        if (name.startsWith(prefix)) {
+            return name.slice(prefix.length);
         }
         return name;
     }),
@@ -334,5 +350,140 @@ groups:
         expect(nameIndex).toBeLessThan(versionIndex);
         expect(versionIndex).toBeLessThan(outputIndex);
         expect(outputIndex).toBeLessThan(configIndex);
+    });
+
+    it("should replace deprecated alias with canonical name when upgrading version", async () => {
+        const yamlContent = `groups:
+  production:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 1.0.0
+        config:
+          packageName: my-sdk
+`;
+
+        const { getPathToGeneratorsConfiguration } = await import("@fern-api/configuration-loader");
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+
+        const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue("1.5.0");
+
+        const { loadAndRunMigrations } = await import("../migrations");
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(null);
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            channel: undefined,
+            cliVersion: "1.0.0"
+        });
+
+        expect(result.updatedConfiguration).toBeDefined();
+
+        const parsedDoc = YAML.parseDocument(result.updatedConfiguration as string);
+        const groups = parsedDoc.get("groups") as YAML.YAMLMap;
+        const production = groups.get("production") as YAML.YAMLMap;
+        const generators = production.get("generators") as YAML.YAMLSeq;
+        const generator = generators.items[0] as YAML.YAMLMap;
+
+        expect(generator.get("name")).toBe("fernapi/fern-typescript-sdk");
+        expect(generator.get("version")).toBe("1.5.0");
+
+        expect(result.appliedUpgrades).toHaveLength(1);
+        expect(result.appliedUpgrades[0]?.previousName).toBe("fernapi/fern-typescript-node-sdk");
+        expect(result.appliedUpgrades[0]?.generatorName).toBe("fernapi/fern-typescript-sdk");
+    });
+
+    it("should replace deprecated alias preserving shorthand format", async () => {
+        const yamlContent = `groups:
+  production:
+    generators:
+      - name: fern-typescript-node-sdk
+        version: 1.0.0
+`;
+
+        const { getPathToGeneratorsConfiguration } = await import("@fern-api/configuration-loader");
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+
+        const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue("2.0.0");
+
+        const { loadAndRunMigrations } = await import("../migrations");
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(null);
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            channel: undefined,
+            cliVersion: "1.0.0"
+        });
+
+        expect(result.updatedConfiguration).toBeDefined();
+
+        const parsedDoc = YAML.parseDocument(result.updatedConfiguration as string);
+        const groups = parsedDoc.get("groups") as YAML.YAMLMap;
+        const production = groups.get("production") as YAML.YAMLMap;
+        const generators = production.get("generators") as YAML.YAMLSeq;
+        const generator = generators.items[0] as YAML.YAMLMap;
+
+        expect(generator.get("name")).toBe("fern-typescript-sdk");
+        expect(generator.get("version")).toBe("2.0.0");
+
+        expect(result.appliedUpgrades[0]?.previousName).toBe("fern-typescript-node-sdk");
+        expect(result.appliedUpgrades[0]?.generatorName).toBe("fern-typescript-sdk");
+    });
+
+    it("should replace deprecated alias even when version is already latest", async () => {
+        const yamlContent = `groups:
+  production:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 2.0.0
+`;
+
+        const { getPathToGeneratorsConfiguration } = await import("@fern-api/configuration-loader");
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+
+        const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue("2.0.0");
+
+        const { loadAndRunMigrations } = await import("../migrations");
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(null);
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            channel: undefined,
+            cliVersion: "1.0.0"
+        });
+
+        expect(result.updatedConfiguration).toBeDefined();
+
+        const parsedDoc = YAML.parseDocument(result.updatedConfiguration as string);
+        const groups = parsedDoc.get("groups") as YAML.YAMLMap;
+        const production = groups.get("production") as YAML.YAMLMap;
+        const generators = production.get("generators") as YAML.YAMLSeq;
+        const generator = generators.items[0] as YAML.YAMLMap;
+
+        expect(generator.get("name")).toBe("fernapi/fern-typescript-sdk");
+
+        expect(result.appliedUpgrades).toHaveLength(1);
+        expect(result.appliedUpgrades[0]?.previousName).toBe("fernapi/fern-typescript-node-sdk");
+        expect(result.appliedUpgrades[0]?.previousVersion).toBe("2.0.0");
+        expect(result.appliedUpgrades[0]?.newVersion).toBe("2.0.0");
+
+        expect(result.alreadyUpToDate).toHaveLength(0);
     });
 });

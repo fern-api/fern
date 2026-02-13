@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.77.0
+  changelogEntry:
+    - summary: |
+        `fern generator upgrade` now replaces deprecated generator aliases with their canonical names
+        in generators.yml. For example, `fern-typescript-node-sdk` is automatically replaced with
+        `fern-typescript-sdk`. The alias is updated even if the generator is already on the latest version.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 65
+
 - version: 3.76.0
   changelogEntry:
     - summary: |
