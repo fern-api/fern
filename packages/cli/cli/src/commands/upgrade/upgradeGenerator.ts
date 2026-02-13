@@ -287,7 +287,7 @@ export async function loadAndUpdateGenerators({
 
                     if (currentParsed != null && latestParsed != null && latestParsed.major > currentParsed.major) {
                         skippedMajorUpgrades.push({
-                            generatorName,
+                            generatorName: replacedName ?? generatorName,
                             currentVersion: versionToUse,
                             latestMajorVersion
                         });
