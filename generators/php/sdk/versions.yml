@@ -2,17 +2,16 @@
 - version: 2.0.0
   changelogEntry:
     - summary: |
-        BREAKING: Re-introduce PSR-7/17/18 HTTP interfaces for framework-agnostic HTTP client support.
+        Introduce PSR-7/17/18 HTTP interfaces for framework-agnostic HTTP client support.
 
         This restores the PSR-7/17/18 agnostic approach that was temporarily reverted in v1.30.0.
         The SDK now supports any PSR-18 compliant HTTP client (Guzzle, Symfony HttpClient, etc.)
         and uses php-http/discovery to automatically find an installed client at runtime.
 
-        Breaking changes:
+        Breaking changes are minimal, but do exist:
         - Guzzle is no longer a hard dependency (moved to suggest/require-dev)
-        - Custom HTTP client configuration may need updates
-        - Per-request timeout behavior may differ between HTTP client implementations
-        - Retry logic now uses RetryDecoratingClient decorator instead of Guzzle middleware
+        - Per-request timeout behavior may differ between HTTP client implementations (currently supported for Guzzle and Symfony)
+        - Code that directly catches GuzzleHttp\Exception\RequestException will require a refactor
 
         Migration: Existing Guzzle users should be largely unaffected as Guzzle implements PSR-18.
         For custom HTTP clients, ensure they implement PSR-18 interfaces.
