@@ -290,6 +290,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/pagination",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/pagination.listItems"
+            },
+            "snippet": {
+                "sync_client": "from seed import Exhaustive\n\nclient = Exhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.endpoints.pagination.list_items(\n    cursor=\"cursor\",\n    limit=1,\n)\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncExhaustive\n\nclient = AsyncExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.endpoints.pagination.list_items(\n        cursor=\"cursor\",\n        limit=1,\n    )\n    async for item in response:\n        yield item\n\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithPath"

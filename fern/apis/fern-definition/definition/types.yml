@@ -219,6 +219,17 @@ types:
       - commons.WithName
     properties:
       value: string
+      context:
+        type: optional<UnionDiscriminatorContext>
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means the discriminator is within the union data itself.
+          "protocol" means the discriminator is at the SSE protocol level.
+
+  UnionDiscriminatorContext:
+    enum:
+      - data
+      - protocol
 
   #### Undiscriminated Union ####
 

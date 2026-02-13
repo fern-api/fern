@@ -186,6 +186,15 @@ types:
       - Beta
       - Deprecated
 
+  DiscriminatorContext:
+    docs: |
+      Defines the context where a discriminator property exists for union types.
+      "data" means the discriminator exists within the union data itself.
+      "protocol" means the discriminator exists at the SSE protocol level.
+    enum:
+      - data
+      - protocol
+
   Endpoint:
     extends:
       - commons.WithDescription
@@ -870,6 +879,12 @@ types:
           Populated by `x-fern-property-name` on a discriminator object.
           When set, this is used as the code generation name while
           discriminantProperty is used as the wire format.
+      discriminatorContext:
+        type: optional<DiscriminatorContext>
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means the discriminator is within the union data itself.
+          "protocol" means the discriminator is at the SSE protocol level.
       commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
 

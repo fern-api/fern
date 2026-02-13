@@ -8,4 +8,10 @@ export interface UnionTypeDeclaration {
     extends: FernIr.DeclaredTypeName[];
     types: FernIr.SingleUnionType[];
     baseProperties: FernIr.ObjectProperty[];
+    /**
+     * Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+     * "data" means discriminator is within the union data itself.
+     * "protocol" means discriminator is at the protocol level (e.g., SSE event field).
+     */
+    discriminatorContext: FernIr.UnionDiscriminatorContext | undefined;
 }

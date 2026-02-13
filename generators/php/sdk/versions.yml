@@ -1,4 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.0.0
+  changelogEntry:
+    - summary: |
+        Introduce PSR-7/17/18 HTTP interfaces for framework-agnostic HTTP client support.
+
+        This restores the PSR-7/17/18 agnostic approach that was temporarily reverted in v1.30.0.
+        The SDK now supports any PSR-18 compliant HTTP client (Guzzle, Symfony HttpClient, etc.)
+        and uses php-http/discovery to automatically find an installed client at runtime.
+
+        Breaking changes are minimal, but do exist:
+        - Guzzle is no longer a hard dependency (moved to suggest/require-dev)
+        - Per-request timeout behavior may differ between HTTP client implementations (currently supported for Guzzle and Symfony)
+        - Code that directly catches GuzzleHttp\Exception\RequestException will require a refactor
+
+        Migration: Existing Guzzle users should be largely unaffected as Guzzle implements PSR-18.
+        For custom HTTP clients, ensure they implement PSR-18 interfaces.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 62
+
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Temporarily revert PSR-7/17/18 HTTP interfaces back to hard Guzzle dependency.
+        This restores the pre-1.27.0 behavior where the SDK requires Guzzle as a hard dependency.
+        Users should expect this to be re-introduced as a breaking change in v2.0.0.
+
+        This change reverts the framework-agnostic HTTP client support introduced in v1.27.0,
+        restoring Guzzle middleware-based retry logic and direct Guzzle dependency.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 62
+
+- version: 1.29.1
+  changelogEntry:
+    - summary: |
+        Fix wire tests for paginated endpoints. Previously, wire tests called paginated SDK methods
+        without iterating the returned Pager, so no HTTP request was made and WireMock verification
+        always failed with "Expected 1 requests, found 0". The generated test now iterates the Pager
+        to trigger the first page request.
+      type: fix
+  createdAt: "2026-02-11"
+  irVersion: 62
+
 - version: 1.29.0
   changelogEntry:
     - summary: |

@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.76.0
+  changelogEntry:
+    - summary: |
+        Add support for SSE discriminator context with `discriminatorContext` field in IR.
+        Supports "data" (default) for discriminators within union data and "protocol" for
+        SSE protocol-level discriminators, such as `event`.
+
+        "data"-context discrimination :
+        ```
+        event: message
+        data: { "type": "completion", "content": "Hello!" }
+
+        event: message
+        data: { "type": "error", message: "Something went wrong!" }
+        ```
+
+        "protocol"-context discrimination (use `x-fern-discriminator-context: protocol`):
+        ```
+        event: completion
+        data: { "content": "Hello!" }
+
+        event: error
+        data: { "message": "Something went wrong!" }
+        ```
+
+        Example OpenAPI usage:
+        ```yaml
+        SseEvent:
+          oneOf:
+            - $ref: '#/components/schemas/CompletionEvent'
+            - $ref: '#/components/schemas/ErrorEvent'
+          discriminator:
+            propertyName: event
+            x-fern-discriminator-context: protocol
+        ```
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
 - version: 3.75.0
   changelogEntry:
     - summary: |

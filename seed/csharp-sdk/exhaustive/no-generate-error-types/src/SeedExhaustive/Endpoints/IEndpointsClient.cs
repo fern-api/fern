@@ -7,6 +7,7 @@ public partial interface IEndpointsClient
     public IEnumClient Enum { get; }
     public IHttpMethodsClient HttpMethods { get; }
     public IObjectClient Object { get; }
+    public IPaginationClient Pagination { get; }
     public IParamsClient Params { get; }
     public IPrimitiveClient Primitive { get; }
     public IPutClient Put { get; }
