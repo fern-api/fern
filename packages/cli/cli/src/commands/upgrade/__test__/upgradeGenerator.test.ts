@@ -370,7 +370,7 @@ groups:
         vi.mocked(getLatestGeneratorVersion).mockResolvedValue("1.5.0");
 
         const { loadAndRunMigrations } = await import("../migrations");
-        vi.mocked(loadAndRunMigrations).mockResolvedValue(null);
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
 
         const result = await loadAndUpdateGenerators({
             absolutePathToWorkspace: "/test" as AbsoluteFilePath,
@@ -414,7 +414,7 @@ groups:
         vi.mocked(getLatestGeneratorVersion).mockResolvedValue("2.0.0");
 
         const { loadAndRunMigrations } = await import("../migrations");
-        vi.mocked(loadAndRunMigrations).mockResolvedValue(null);
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
 
         const result = await loadAndUpdateGenerators({
             absolutePathToWorkspace: "/test" as AbsoluteFilePath,
@@ -457,7 +457,7 @@ groups:
         vi.mocked(getLatestGeneratorVersion).mockResolvedValue("2.0.0");
 
         const { loadAndRunMigrations } = await import("../migrations");
-        vi.mocked(loadAndRunMigrations).mockResolvedValue(null);
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
 
         const result = await loadAndUpdateGenerators({
             absolutePathToWorkspace: "/test" as AbsoluteFilePath,
