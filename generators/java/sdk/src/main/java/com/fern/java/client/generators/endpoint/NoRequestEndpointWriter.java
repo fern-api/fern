@@ -91,7 +91,8 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 .add(inlineableHttpUrl)
                 .add(")\n");
         if (httpEndpoint.getMethod().equals(HttpMethod.POST)
-                || httpEndpoint.getMethod().equals(HttpMethod.PUT)) {
+                || httpEndpoint.getMethod().equals(HttpMethod.PUT)
+                || httpEndpoint.getMethod().equals(HttpMethod.PATCH)) {
             builder.add(
                     ".method($S, $T.create($S, null))\n",
                     httpEndpoint.getMethod().toString(),
