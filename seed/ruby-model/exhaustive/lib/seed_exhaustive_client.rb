@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "seed_exhaustive_client/endpoints/pagination/types/paginated_response"
 require_relative "seed_exhaustive_client/endpoints/put/types/error"
 require_relative "seed_exhaustive_client/endpoints/put/types/error_category"
 require_relative "seed_exhaustive_client/endpoints/put/types/error_code"
