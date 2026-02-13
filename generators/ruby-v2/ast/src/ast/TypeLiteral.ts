@@ -198,7 +198,7 @@ export class TypeLiteral extends AstNode {
                         (v) =>
                             v instanceof TypeLiteral &&
                             v.internalType.type === "str" &&
-                            !/[\s\\\[\]]/.test(v.internalType.value)
+                            !/[\s\\[\]]/.test(v.internalType.value)
                     )
                 ) {
                     const words = (values as TypeLiteral[]).map((v) => {
