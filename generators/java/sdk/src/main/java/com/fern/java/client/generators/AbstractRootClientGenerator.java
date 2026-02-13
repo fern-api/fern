@@ -688,7 +688,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     .build());
         }
 
-        MethodSpec.Builder buildClientOptionsMethodBuilder= MethodSpec.methodBuilder("buildClientOptions")
+        MethodSpec.Builder buildClientOptionsMethodBuilder = MethodSpec.methodBuilder("buildClientOptions")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(generatedClientOptions.getClassName())
                 .addStatement(
@@ -766,15 +766,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         if (!singleBaseUrl.getEnvironments().isEmpty()) {
                             SingleBaseUrlEnvironment firstEnv =
                                     singleBaseUrl.getEnvironments().get(0);
-                            String urlTemplate =
-                                    firstEnv.getUrlTemplate().orElse(firstEnv.getUrl().get());
+                            String urlTemplate = firstEnv.getUrlTemplate()
+                                    .orElse(firstEnv.getUrl().get());
 
                             CodeBlock.Builder replaceChain = CodeBlock.builder().add("$S", urlTemplate);
                             for (ServerVariable sv : serverVariables) {
                                 replaceChain.add(
-                                        ".replace($S, _$L)",
-                                        "{" + sv.getId() + "}",
-                                        getServerVariableParamName(sv));
+                                        ".replace($S, _$L)", "{" + sv.getId() + "}", getServerVariableParamName(sv));
                             }
                             setEnvironmentMethodBuilder.addStatement(
                                     "this.$N = $T.custom($L)",
@@ -800,12 +798,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                         baseUrl.getName().getCamelCase().getSafeName();
                                 String template;
                                 if (firstEnv.getUrlTemplates().isPresent()
-                                        && firstEnv.getUrlTemplates()
-                                                .get()
-                                                .containsKey(baseUrl.getId())) {
-                                    template = firstEnv.getUrlTemplates()
-                                            .get()
-                                            .get(baseUrl.getId());
+                                        && firstEnv.getUrlTemplates().get().containsKey(baseUrl.getId())) {
+                                    template = firstEnv.getUrlTemplates().get().get(baseUrl.getId());
                                 } else {
                                     template = firstEnv.getUrls()
                                             .get(baseUrl.getId())
