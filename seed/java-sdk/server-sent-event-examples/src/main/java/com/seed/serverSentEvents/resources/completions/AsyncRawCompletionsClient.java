@@ -14,6 +14,8 @@ import com.seed.serverSentEvents.core.SeedServerSentEventsException;
 import com.seed.serverSentEvents.core.SeedServerSentEventsHttpResponse;
 import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
+import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;
+import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -77,6 +79,71 @@ public class AsyncRawCompletionsClient {
                     if (response.isSuccessful()) {
                         future.complete(new SeedServerSentEventsHttpResponse<>(
                                 Stream.fromSse(StreamedCompletion.class, new ResponseBodyReader(response), "[[DONE]]"),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedServerSentEventsApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedServerSentEventsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedServerSentEventsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEvent>>> streamEvents(
+            StreamEventsRequest request) {
+        return streamEvents(request, null);
+    }
+
+    public CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEvent>>> streamEvents(
+            StreamEventsRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("stream-events");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEvent>>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    ResponseBody responseBody = response.body();
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedServerSentEventsHttpResponse<>(
+                                Stream.fromSseWithEventDiscrimination(
+                                        StreamEvent.class, new ResponseBodyReader(response), "event", "[DONE]"),
                                 response));
                         return;
                     }
