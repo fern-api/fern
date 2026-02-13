@@ -10,6 +10,7 @@ import com.seed.exhaustive.resources.endpoints.contenttype.ContentTypeClient;
 import com.seed.exhaustive.resources.endpoints.enum_.EnumClient;
 import com.seed.exhaustive.resources.endpoints.httpmethods.HttpMethodsClient;
 import com.seed.exhaustive.resources.endpoints.object.ObjectClient;
+import com.seed.exhaustive.resources.endpoints.pagination.PaginationClient;
 import com.seed.exhaustive.resources.endpoints.params.ParamsClient;
 import com.seed.exhaustive.resources.endpoints.primitive.PrimitiveClient;
 import com.seed.exhaustive.resources.endpoints.put.PutClient;
@@ -30,6 +31,8 @@ public class EndpointsClient {
 
     protected final Supplier<ObjectClient> objectClient;
 
+    protected final Supplier<PaginationClient> paginationClient;
+
     protected final Supplier<ParamsClient> paramsClient;
 
     protected final Supplier<PrimitiveClient> primitiveClient;
@@ -47,6 +50,7 @@ public class EndpointsClient {
         this.enumClient = Suppliers.memoize(() -> new EnumClient(clientOptions));
         this.httpMethodsClient = Suppliers.memoize(() -> new HttpMethodsClient(clientOptions));
         this.objectClient = Suppliers.memoize(() -> new ObjectClient(clientOptions));
+        this.paginationClient = Suppliers.memoize(() -> new PaginationClient(clientOptions));
         this.paramsClient = Suppliers.memoize(() -> new ParamsClient(clientOptions));
         this.primitiveClient = Suppliers.memoize(() -> new PrimitiveClient(clientOptions));
         this.putClient = Suppliers.memoize(() -> new PutClient(clientOptions));
@@ -72,6 +76,10 @@ public class EndpointsClient {
 
     public ObjectClient object() {
         return this.objectClient.get();
+    }
+
+    public PaginationClient pagination() {
+        return this.paginationClient.get();
     }
 
     public ParamsClient params() {

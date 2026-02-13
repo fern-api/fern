@@ -151,7 +151,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             }
         } else {
             if (httpEndpoint.getMethod().equals(HttpMethod.POST)
-                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)) {
+                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)
+                    || httpEndpoint.getMethod().equals(HttpMethod.PATCH)) {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$T.create($S, null)", RequestBody.class, ""));
             } else {
                 inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));
