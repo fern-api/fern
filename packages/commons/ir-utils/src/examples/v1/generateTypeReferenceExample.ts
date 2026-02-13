@@ -271,7 +271,9 @@ function generateMinimalNamedExample({
                     example: {
                         jsonExample,
                         shape: ExampleTypeReferenceShape.named({
-                            shape: ExampleTypeShape.alias({ value: { jsonExample, shape: ExampleTypeReferenceShape.primitive(example) } }),
+                            shape: ExampleTypeShape.alias({
+                                value: { jsonExample, shape: ExampleTypeReferenceShape.primitive(example) }
+                            }),
                             typeName: typeDeclaration.name
                         })
                     },
@@ -331,10 +333,16 @@ function generateMinimalNamedExample({
                     };
                 }
             }
-            return { type: "failure", message: `No simple variant available for recursive union ${typeDeclaration.name.typeId}` };
+            return {
+                type: "failure",
+                message: `No simple variant available for recursive union ${typeDeclaration.name.typeId}`
+            };
         }
         case "undiscriminatedUnion": {
-            return { type: "failure", message: `Cannot generate stub for recursive undiscriminated union ${typeDeclaration.name.typeId}` };
+            return {
+                type: "failure",
+                message: `Cannot generate stub for recursive undiscriminated union ${typeDeclaration.name.typeId}`
+            };
         }
     }
 }
