@@ -14,7 +14,6 @@ if typing.TYPE_CHECKING:
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
-    from .pagination import AsyncPager, SyncPager
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
         UniversalBaseModel,
@@ -34,7 +33,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncCustomPager": ".custom_pagination",
     "AsyncHttpClient": ".http_client",
     "AsyncHttpResponse": ".http_response",
-    "AsyncPager": ".pagination",
     "BaseClientWrapper": ".client_wrapper",
     "FieldMetadata": ".serialization",
     "File": ".file",
@@ -44,7 +42,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RequestOptions": ".request_options",
     "SyncClientWrapper": ".client_wrapper",
     "SyncCustomPager": ".custom_pagination",
-    "SyncPager": ".pagination",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
     "convert_and_respect_annotation_metadata": ".serialization",
@@ -88,7 +85,6 @@ __all__ = [
     "AsyncCustomPager",
     "AsyncHttpClient",
     "AsyncHttpResponse",
-    "AsyncPager",
     "BaseClientWrapper",
     "FieldMetadata",
     "File",
@@ -98,7 +94,6 @@ __all__ = [
     "RequestOptions",
     "SyncClientWrapper",
     "SyncCustomPager",
-    "SyncPager",
     "UniversalBaseModel",
     "UniversalRootModel",
     "convert_and_respect_annotation_metadata",

@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": [
+        "completion",
+        "error"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event": {
+          "const": "completion"
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "event",
+        "content"
+      ]
+    },
+    {
+      "properties": {
+        "event": {
+          "const": "error"
+        },
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "event",
+        "error"
+      ]
+    }
+  ],
+  "definitions": {}
+}
