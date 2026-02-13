@@ -8,6 +8,7 @@
         LF on Unix). Now uses `fs.statSync()` to dynamically read the test file size at runtime.
       type: fix
   createdAt: "2026-02-02"
+  irVersion: 63
 
 - version: 3.48.1
   changelogEntry:
