@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.76.1
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI channel name collisions when multiple AsyncAPI specs share the same
+        `x-fern-sdk-group-name`. Previously, the second channel would silently overwrite the
+        first during merge. Channel IDs are now deconflicted with a numeric suffix.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
 - version: 3.76.0
   changelogEntry:
     - summary: |

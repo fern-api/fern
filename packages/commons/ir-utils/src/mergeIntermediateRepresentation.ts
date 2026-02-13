@@ -390,11 +390,35 @@ function mergeServicesAndChannels(
         }
     }
 
-    const websocketChannels = {
-        ...(ir1.websocketChannels ?? {}),
-        ...(ir2.websocketChannels ?? {})
-    };
-    return { services: mergedServices, websocketChannels };
+    const mergedWebsocketChannels: Record<string, FernIr.WebSocketChannel> = { ...(ir1.websocketChannels ?? {}) };
+    const changedChannelIds: Record<string, string> = {};
+    for (const [channelId, channel] of Object.entries(ir2.websocketChannels ?? {})) {
+        if (mergedWebsocketChannels[channelId] == null) {
+            mergedWebsocketChannels[channelId] = channel;
+        } else {
+            let newChannelId = channelId;
+            let suffix = 1;
+            while (mergedWebsocketChannels[newChannelId] != null) {
+                newChannelId = `${channelId}_${suffix}`;
+                suffix++;
+            }
+            mergedWebsocketChannels[newChannelId] = channel;
+            changedChannelIds[channelId] = newChannelId;
+        }
+    }
+
+    if (Object.keys(changedChannelIds).length > 0) {
+        for (const subpackage of Object.values(ir2.subpackages)) {
+            if (subpackage.websocket != null && changedChannelIds[subpackage.websocket] != null) {
+                subpackage.websocket = changedChannelIds[subpackage.websocket];
+            }
+        }
+        if (ir2.rootPackage.websocket != null && changedChannelIds[ir2.rootPackage.websocket] != null) {
+            ir2.rootPackage.websocket = changedChannelIds[ir2.rootPackage.websocket];
+        }
+    }
+
+    return { services: mergedServices, websocketChannels: mergedWebsocketChannels };
 }
 
 /**

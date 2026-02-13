@@ -360,12 +360,26 @@ export abstract class AbstractSpecConverter<
         const channelNameOverride = camelCase(websocketGroup?.join("."));
         const defaultChannelName = camelCase(channelPath);
         const channelPrefix = this.context.namespace ? `${camelCase(this.context.namespace)}/` : "";
-        const channelName = channelNameOverride
+        let channelName = channelNameOverride
             ? `channel_${channelPrefix}${channelNameOverride}`
             : `channel_${channelPrefix}${defaultChannelName}`;
-        const pkg = websocketGroup
+
+        if (this.ir.websocketChannels != null && this.ir.websocketChannels[channelName] != null) {
+            channelName = `channel_${channelPrefix}${defaultChannelName}`;
+            let suffix = 1;
+            while (this.ir.websocketChannels[channelName] != null) {
+                channelName = `channel_${channelPrefix}${defaultChannelName}_${suffix}`;
+                suffix++;
+            }
+        }
+
+        let pkg = websocketGroup
             ? this.getOrCreatePackage({ group: websocketGroup })
             : this.getOrCreatePackage({ group: [defaultChannelName] });
+
+        if (pkg.websocket != null && pkg.websocket !== channelName) {
+            pkg = this.getOrCreatePackage({ group: [defaultChannelName] });
+        }
 
         this.ir.websocketChannels = {
             ...this.ir.websocketChannels,

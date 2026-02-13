@@ -5,7 +5,8 @@ import {
     OpenApiIntermediateRepresentation,
     Source as OpenApiIrSource,
     Schemas,
-    Server
+    Server,
+    WebsocketChannel
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
@@ -112,10 +113,19 @@ export function parse({
                         ];
                     }
                     if (parsedAsyncAPI.channels != null) {
-                        ir.channels = {
-                            ...ir.channels,
-                            ...parsedAsyncAPI.channels
-                        };
+                        for (const [channelId, channel] of Object.entries(parsedAsyncAPI.channels)) {
+                            if (ir.channels[channelId] == null) {
+                                ir.channels[channelId] = channel;
+                            } else {
+                                let newChannelId = channelId;
+                                let suffix = 1;
+                                while (ir.channels[newChannelId] != null) {
+                                    newChannelId = `${channelId}_${suffix}`;
+                                    suffix++;
+                                }
+                                ir.channels[newChannelId] = channel;
+                            }
+                        }
                     }
                     if (parsedAsyncAPI.groupedSchemas != null) {
                         ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas, options);
@@ -396,10 +406,7 @@ function merge(
             hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
             endpoints: [...ir1.endpoints, ...ir2.endpoints],
             webhooks: [...ir1.webhooks, ...ir2.webhooks],
-            channels: {
-                ...ir1.channels,
-                ...ir2.channels
-            },
+            channels: mergeChannels(ir1.channels, ir2.channels),
             groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
@@ -564,10 +571,7 @@ function merge(
                 return endpoint;
             }),
             webhooks: [...ir1.webhooks, ...ir2.webhooks],
-            channels: {
-                ...ir1.channels,
-                ...ir2.channels
-            },
+            channels: mergeChannels(ir1.channels, ir2.channels),
             groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
             variables: {
                 ...ir1.variables,
@@ -615,10 +619,7 @@ function merge(
         hasEndpointsMarkedInternal: ir1.hasEndpointsMarkedInternal || ir2.hasEndpointsMarkedInternal,
         endpoints: [...ir1.endpoints, ...ir2.endpoints],
         webhooks: [...ir1.webhooks, ...ir2.webhooks],
-        channels: {
-            ...ir1.channels,
-            ...ir2.channels
-        },
+        channels: mergeChannels(ir1.channels, ir2.channels),
         groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas, options),
         variables: {
             ...ir1.variables,
@@ -638,6 +639,27 @@ function merge(
             ...ir2.groups
         }
     };
+}
+
+function mergeChannels(
+    channels1: Record<string, WebsocketChannel>,
+    channels2: Record<string, WebsocketChannel>
+): Record<string, WebsocketChannel> {
+    const merged: Record<string, WebsocketChannel> = { ...channels1 };
+    for (const [channelId, channel] of Object.entries(channels2)) {
+        if (merged[channelId] == null) {
+            merged[channelId] = channel;
+        } else {
+            let newChannelId = channelId;
+            let suffix = 1;
+            while (merged[newChannelId] != null) {
+                newChannelId = `${channelId}_${suffix}`;
+                suffix++;
+            }
+            merged[newChannelId] = channel;
+        }
+    }
+    return merged;
 }
 
 function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas, options?: Partial<ParseOpenAPIOptions>): Schemas {
