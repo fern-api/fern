@@ -387,11 +387,12 @@ export class WireTestGenerator {
             }
 
             // Verify request count using test ID for filtering
-            // When testing the inferred auth token endpoint, expect 2 requests:
-            // 1. The automatic token fetch request
+            // When testing the auth token endpoint itself, expect 2 requests:
+            // 1. The automatic token fetch request (from OAuth/inferred auth)
             // 2. The actual API call being tested
             // For all other endpoints, expect 1 request (the auth token fetch goes to a different endpoint)
-            const expectedRequestCount = this.isInferredAuthTokenEndpoint(endpoint) ? 2 : 1;
+            const expectedRequestCount =
+                this.isInferredAuthTokenEndpoint(endpoint) || this.isOAuthTokenEndpoint(endpoint) ? 2 : 1;
             statements.push(
                 python.codeBlock(
                     `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, ${expectedRequestCount})`
@@ -436,6 +437,27 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             if (scheme.type === "inferred") {
                 const tokenEndpointId = scheme.tokenEndpoint.endpoint.endpointId;
+                if (endpoint.id === tokenEndpointId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if an endpoint is the OAuth token endpoint.
+     * When testing the token endpoint with OAuth client credentials, expect 2 requests:
+     * 1. The automatic token fetch request (from the OAuth token provider)
+     * 2. The actual API call being tested
+     */
+    private isOAuthTokenEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
+                const tokenEndpointId = scheme.configuration.tokenEndpoint.endpointReference.endpointId;
                 if (endpoint.id === tokenEndpointId) {
                     return true;
                 }
