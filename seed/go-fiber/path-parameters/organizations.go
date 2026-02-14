@@ -46,6 +46,9 @@ func (o *Organization) GetTags() []string {
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -97,6 +100,9 @@ func (o *Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}

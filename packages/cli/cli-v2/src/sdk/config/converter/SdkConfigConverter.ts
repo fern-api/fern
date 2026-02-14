@@ -50,13 +50,7 @@ export class SdkConfigConverter {
      * @param sourced - The sourced fern.yml schema with source location tracking.
      * @returns Result with either the converted config or validation issues.
      */
-    public convert({ fernYml }: { fernYml: FernYmlSchemaLoader.Result }): SdkConfigConverter.Result {
-        if (!fernYml.success) {
-            return {
-                success: false,
-                issues: fernYml.issues
-            };
-        }
+    public convert({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): SdkConfigConverter.Result {
         const sdks = fernYml.data.sdks;
         const sourced = fernYml.sourced.sdks;
         if (sdks == null || isNullish(sourced)) {

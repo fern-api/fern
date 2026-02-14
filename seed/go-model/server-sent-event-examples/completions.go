@@ -66,3 +66,119 @@ func (s *StreamedCompletion) String() string {
 	}
 	return fmt.Sprintf("%#v", s)
 }
+
+type CompletionEvent struct {
+	Content string `json:"content" url:"content"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CompletionEvent) GetContent() string {
+	if c == nil {
+		return ""
+	}
+	return c.Content
+}
+
+func (c *CompletionEvent) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CompletionEvent) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CompletionEvent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CompletionEvent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CompletionEvent) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ErrorEvent struct {
+	Error string `json:"error" url:"error"`
+	Code  *int   `json:"code,omitempty" url:"code,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *ErrorEvent) GetError() string {
+	if e == nil {
+		return ""
+	}
+	return e.Error
+}
+
+func (e *ErrorEvent) GetCode() *int {
+	if e == nil {
+		return nil
+	}
+	return e.Code
+}
+
+func (e *ErrorEvent) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ErrorEvent) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ErrorEvent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ErrorEvent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ErrorEvent) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+type StreamEvent struct {
+	Event      string
+	Completion CompletionEvent
+	Error      ErrorEvent
+}

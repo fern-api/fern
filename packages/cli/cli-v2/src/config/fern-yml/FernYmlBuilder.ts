@@ -10,9 +10,9 @@ export namespace FernYmlBuilder {
 
     export interface OutputConfig {
         type: "local" | "git";
+        mode?: "pr" | "release" | "push";
         path?: string;
         repository?: string;
-        mode?: "pr" | "release" | "push";
         group?: string;
     }
 

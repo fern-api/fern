@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0-rc0
+  changelogEntry:
+    - summary: |
+        Add automated test generation for all Go SDK types. The generator now creates test files
+        alongside generated code, covering getter and setter methods, JSON marshaling, String methods,
+        enum validation, extra properties, and pointer helper functions. Generated tests include
+        comprehensive scenarios for nil handling and edge cases. Also includes performance optimizations
+        for regex compilation, slice allocation, and improved API design with struct-based configuration.
+      type: feat
+  createdAt: "2026-02-14"
+  irVersion: 61
+
 - version: 1.24.0
   changelogEntry:
     - summary: |

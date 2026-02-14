@@ -42,6 +42,9 @@ func (n *Name) GetValue() string {
 }
 
 func (n *Name) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -94,6 +97,9 @@ func (n *Name) MarshalJSON() ([]byte, error) {
 }
 
 func (n *Name) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -340,6 +346,9 @@ func (t *Type) Eighteen() string {
 }
 
 func (t *Type) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -573,6 +582,9 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Type) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

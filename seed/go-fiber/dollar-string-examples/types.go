@@ -48,6 +48,9 @@ func (p *PaymentInfo) GetDescription() *string {
 }
 
 func (p *PaymentInfo) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -106,6 +109,9 @@ func (p *PaymentInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaymentInfo) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}

@@ -11,6 +11,7 @@ import {
     GenerationRunner,
     runLocalGenerationForWorkspace
 } from "@fern-api/local-workspace-runner";
+import { LogLevel } from "@fern-api/logger";
 import { TaskResult } from "@fern-api/task-context";
 import { rm } from "fs/promises";
 import type { AiConfig } from "../../ai/config/AiConfig.js";
@@ -21,6 +22,7 @@ import type { Context } from "../../context/Context.js";
 import type { Task } from "../../ui/Task.js";
 import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
 import type { Target } from "../config/Target.js";
+import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
 
 /**
  * Runs generation using the legacy local-generation infrastructure.
@@ -96,7 +98,11 @@ export class LegacyGenerationRunner {
     }
 
     public async run(args: LegacyGenerationRunner.RunArgs): Promise<LegacyGenerationRunner.Result> {
-        const taskContext = new TaskContextAdapter({ context: this.context, task: args.task });
+        const taskContext = new TaskContextAdapter({
+            context: this.context,
+            task: args.task,
+            logLevel: LogLevel.Info
+        });
         try {
             const generatorInvocation = await this.invocationAdapter.adapt(args.target);
             const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -179,7 +185,13 @@ export class LegacyGenerationRunner {
 
         return {
             success: true,
-            output: this.context.resolveTargetOutputs(args.target)
+            output: resolveTargetOutput({
+                context: this.context,
+                task: args.task,
+                target: args.target,
+                preview: args.preview,
+                outputPath: args.outputPath
+            })
         };
     }
 

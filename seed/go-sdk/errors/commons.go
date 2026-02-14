@@ -40,6 +40,9 @@ func (e *ErrorBody) GetCode() int {
 }
 
 func (e *ErrorBody) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -92,6 +95,9 @@ func (e *ErrorBody) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ErrorBody) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value

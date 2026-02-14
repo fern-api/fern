@@ -6,6 +6,7 @@ import type { AiConfig } from "../ai/config/AiConfig.js";
 import type { ApiDefinition } from "../api/config/ApiDefinition.js";
 import { ApiDefinitionConverter } from "../api/config/converter/ApiDefinitionConverter.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
+import { ValidationError } from "../errors/ValidationError.js";
 import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter.js";
 import { SdkConfig } from "../sdk/config/SdkConfig.js";
 import { Version } from "../version.js";
@@ -46,14 +47,15 @@ export class WorkspaceLoader {
         this.logger = logger;
     }
 
-    public async load({ fernYml }: { fernYml: FernYmlSchemaLoader.Result }): Promise<WorkspaceLoader.Result> {
-        if (!fernYml.success) {
-            return {
-                success: false,
-                issues: fernYml.issues
-            };
+    public async loadOrThrow({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<Workspace> {
+        const result = await this.load({ fernYml });
+        if (!result.success) {
+            throw new ValidationError(result.issues);
         }
+        return result.workspace;
+    }
 
+    public async load({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<WorkspaceLoader.Result> {
         const ai = this.convertAi({ fernYml });
         const apis = await this.convertApis({ fernYml });
         const cliVersion = await this.convertCliVersion({ fernYml });

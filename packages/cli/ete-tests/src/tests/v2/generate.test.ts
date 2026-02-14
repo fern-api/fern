@@ -200,16 +200,202 @@ paths:
             expect(result.exitCode).toBe(0);
             expect(result.stdoutPlain.toLowerCase()).toMatch(/usage|options|target/i);
         });
+    });
 
-        it("should fail without required --target flag", async () => {
-            const result = await runCliV2({
-                args: ["sdk", "generate"],
-                fixture: FIXTURES.petstore,
-                expectError: true,
-                timeout: 60_000
+    describe("flags-only mode (no fern.yml)", () => {
+        const SIMPLE_OPENAPI = `openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      operationId: healthCheck
+      responses:
+        "200":
+          description: OK`;
+
+        describe("flag validation", () => {
+            it("should report all missing flags when no flags are provided", async () => {
+                const fixture = await createTempFixture({
+                    "openapi.yml": SIMPLE_OPENAPI
+                });
+                try {
+                    const result = await runCliV2({
+                        args: ["sdk", "generate"],
+                        cwd: fixture.path,
+                        expectError: true
+                    });
+                    expect(result.exitCode).not.toBe(0);
+                    expect(result.stderrPlain).toContain("--api");
+                    expect(result.stderrPlain).toContain("--target");
+                    expect(result.stderrPlain).toContain("--org");
+                    expect(result.stderrPlain).toContain("--output");
+                } finally {
+                    await fixture.cleanup();
+                }
             });
-            expect(result.exitCode).toBe(1);
-            expect(result.stderrPlain.toLowerCase().includes("target")).toBe(true);
+
+            it("should report missing --target, --org, and --output when only --api is provided", async () => {
+                const fixture = await createTempFixture({
+                    "openapi.yml": SIMPLE_OPENAPI
+                });
+                try {
+                    const result = await runCliV2({
+                        args: ["sdk", "generate", "--api", "openapi.yml"],
+                        cwd: fixture.path,
+                        expectError: true
+                    });
+                    expect(result.exitCode).not.toBe(0);
+                    expect(result.stderrPlain).toContain("--target");
+                    expect(result.stderrPlain).toContain("--org");
+                    expect(result.stderrPlain).toContain("--output");
+                    expect(result.stderrPlain).not.toContain("--api");
+                } finally {
+                    await fixture.cleanup();
+                }
+            });
+
+            it("should report only the specific missing flags", async () => {
+                const fixture = await createTempFixture({
+                    "openapi.yml": SIMPLE_OPENAPI
+                });
+                try {
+                    const result = await runCliV2({
+                        args: ["sdk", "generate", "--api", "openapi.yml", "--target", "go"],
+                        cwd: fixture.path,
+                        expectError: true
+                    });
+                    expect(result.exitCode).not.toBe(0);
+                    expect(result.stderrPlain).toContain("--org");
+                    expect(result.stderrPlain).toContain("--output");
+                    expect(result.stderrPlain).not.toContain("--target");
+                    expect(result.stderrPlain).not.toContain("--api");
+                } finally {
+                    await fixture.cleanup();
+                }
+            });
+
+            it("should reject --group in flags-only mode", async () => {
+                const fixture = await createTempFixture({
+                    "openapi.yml": SIMPLE_OPENAPI
+                });
+                try {
+                    const result = await runCliV2({
+                        args: [
+                            "sdk",
+                            "generate",
+                            "--api",
+                            "openapi.yml",
+                            "--target",
+                            "go",
+                            "--org",
+                            "test-org",
+                            "--output",
+                            "./out",
+                            "--group",
+                            "prod"
+                        ],
+                        cwd: fixture.path,
+                        expectError: true
+                    });
+                    expect(result.exitCode).not.toBe(0);
+                    expect(result.stderrPlain).toContain("--group");
+                } finally {
+                    await fixture.cleanup();
+                }
+            });
+
+            it("should fail with an unsupported language", async () => {
+                const fixture = await createTempFixture({
+                    "openapi.yml": SIMPLE_OPENAPI
+                });
+                try {
+                    const result = await runCliV2({
+                        args: [
+                            "sdk",
+                            "generate",
+                            "--api",
+                            "openapi.yml",
+                            "--target",
+                            "cobol",
+                            "--org",
+                            "test-org",
+                            "--output",
+                            "./out",
+                            "--local"
+                        ],
+                        cwd: fixture.path,
+                        expectError: true
+                    });
+                    expect(result.exitCode).not.toBe(0);
+                    expect(result.stderrPlain).toContain("not a supported language");
+                } finally {
+                    await fixture.cleanup();
+                }
+            });
+        });
+
+        describe("successful generation", () => {
+            it("should generate Go SDK with all required flags", async () => {
+                const fixture = await createTempFixture({
+                    "openapi.yml": SIMPLE_OPENAPI
+                });
+                try {
+                    const result = await runCliV2({
+                        args: [
+                            "sdk",
+                            "generate",
+                            "--api",
+                            "openapi.yml",
+                            "--target",
+                            "go",
+                            "--org",
+                            "test-org",
+                            "--output",
+                            "./out",
+                            "--local"
+                        ],
+                        cwd: fixture.path,
+                        timeout: 120_000
+                    });
+                    expect(result.exitCode).toBe(0);
+
+                    const outputPath = join(AbsoluteFilePath.of(fixture.path), RelativeFilePath.of("out"));
+                    expect(await doesPathExist(outputPath)).toBe(true);
+                } finally {
+                    await fixture.cleanup();
+                }
+            }, 120_000);
+
+            it("should generate Go SDK from a URL-referenced spec", async () => {
+                const fixture = await createTempFixture({});
+                try {
+                    const result = await runCliV2({
+                        args: [
+                            "sdk",
+                            "generate",
+                            "--api",
+                            "https://petstore3.swagger.io/api/v3/openapi.json",
+                            "--target",
+                            "go",
+                            "--org",
+                            "test-org",
+                            "--output",
+                            "./out",
+                            "--local"
+                        ],
+                        cwd: fixture.path,
+                        timeout: 120_000
+                    });
+                    expect(result.exitCode).toBe(0);
+
+                    const outputPath = join(AbsoluteFilePath.of(fixture.path), RelativeFilePath.of("out"));
+                    expect(await doesPathExist(outputPath)).toBe(true);
+                } finally {
+                    await fixture.cleanup();
+                }
+            }, 120_000);
         });
     });
 }, 300_000);

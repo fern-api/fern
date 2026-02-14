@@ -2,26 +2,41 @@ import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
-import { resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { ValidationIssue } from "@fern-api/yaml-loader";
+import { readdir } from "fs/promises";
+import inquirer from "inquirer";
 import yaml from "js-yaml";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
+import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
+import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
+import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
 import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup.js";
 import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
+import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
 import { command } from "../../_internal/command.js";
 
 export declare namespace GenerateCommand {
     export interface Args extends GlobalArgs {
+        /** Path or URL to an API spec file (enables no-config mode) */
+        api?: string;
+
+        /** Organization name (required in no-config mode) */
+        org?: string;
+
         /** The SDK target to generate */
         target?: string;
+
+        /** Override the generator version for the target */
+        "target-version"?: string;
 
         /** Generator group to run (from fern.yml) */
         group?: string;
@@ -41,31 +56,131 @@ export declare namespace GenerateCommand {
         /** Preview mode */
         preview: boolean;
 
-        /** Output directory for preview mode */
+        /** Output directory or git URL */
         output?: string;
+
+        /** Override the version for generated packages */
+        "output-version"?: string;
 
         /** Force generation without prompts */
         force: boolean;
-
-        /** Override the version for generated packages */
-        version?: string;
     }
 }
 
 export class GenerateCommand {
     public async handle(context: Context, args: GenerateCommand.Args): Promise<void> {
-        const workspace = await context.loadWorkspaceOrThrow();
-        if (workspace.sdks == null) {
-            throw new Error("No SDKs configured in fern.yml");
+        const result = await context.loadWorkspace();
+        if (result == null) {
+            return this.handleWithFlags(context, args);
+        }
+        if (!result.success) {
+            throw new ValidationError(result.issues);
+        }
+        return this.handleWithWorkspace(context, result.workspace, args);
+    }
+
+    private async handleWithWorkspace(
+        context: Context,
+        workspace: Workspace,
+        args: GenerateCommand.Args
+    ): Promise<void> {
+        let workspaceWithOverrides = workspace;
+
+        if (args.api != null) {
+            const resolver = new ApiSpecResolver({ context });
+            const resolvedSpec = await resolver.resolve({ reference: args.api });
+
+            const overriddenApis: Record<string, ApiDefinition> = {};
+            for (const apiName of Object.keys(workspaceWithOverrides.apis)) {
+                overriddenApis[apiName] = { specs: [resolvedSpec.spec] };
+            }
+
+            workspaceWithOverrides = { ...workspaceWithOverrides, apis: overriddenApis };
+        }
+
+        if (args.org != null) {
+            workspaceWithOverrides = {
+                ...workspaceWithOverrides,
+                org: args.org
+            };
         }
 
         const targets = this.getTargets({
-            workspace,
-            groupName: args.group ?? workspace.sdks.defaultGroup,
-            targetName: args.target
+            workspace: workspaceWithOverrides,
+            args,
+            groupName: args.group ?? workspaceWithOverrides.sdks?.defaultGroup
         });
 
-        this.validateArgs({ workspace, args, targets });
+        this.validateArgs({ workspace: workspaceWithOverrides, args, targets });
+
+        await this.runGeneration({ context, workspace: workspaceWithOverrides, targets, args, forceLocal: false });
+    }
+
+    private async handleWithFlags(context: Context, args: GenerateCommand.Args): Promise<void> {
+        const missingFlags: string[] = [];
+        if (args.api == null) {
+            missingFlags.push("--api <path|url>      Path or URL to an API spec file (e.g. ./openapi.yaml)");
+        }
+        if (args.target == null) {
+            missingFlags.push("--target <language>    The SDK language to generate (e.g. typescript)");
+        }
+        if (args.org == null) {
+            missingFlags.push("--org <name>           Your organization name (e.g. acme)");
+        }
+        if (args.output == null) {
+            missingFlags.push("--output <path|url>    Output path or git URL (e.g. ./my-sdk)");
+        }
+        if (args.group != null) {
+            missingFlags.push("remove --group         Groups are not supported without a fern.yml");
+        }
+        if (missingFlags.length > 0) {
+            throw new CliError({
+                message:
+                    `No fern.yml found, either run 'fern init' or specify all of the required flags:\n\n` +
+                    missingFlags.map((flag) => `  ${flag}`).join("\n")
+            });
+        }
+
+        // After validation, these are guaranteed to be defined.
+        const api = args.api as string;
+        const target = args.target as string;
+        const org = args.org as string;
+        const output = args.output as string;
+
+        const resolver = new ApiSpecResolver({ context });
+        const resolvedSpec = await resolver.resolve({
+            reference: api
+        });
+
+        const workspaceBuilder = new WorkspaceBuilder({ context });
+        const workspace = await workspaceBuilder.build({
+            org,
+            lang: this.resolveLanguage(target),
+            resolvedSpec,
+            output: this.parseTargetOutput({ ...args, output }),
+            targetVersion: args["target-version"]
+        });
+
+        const targets = workspace.sdks?.targets ?? [];
+        await this.runGeneration({ context, workspace, targets, args, forceLocal: true });
+    }
+
+    private async runGeneration({
+        context,
+        workspace,
+        targets,
+        args,
+        forceLocal
+    }: {
+        context: Context;
+        workspace: Workspace;
+        targets: Target[];
+        args: GenerateCommand.Args;
+        forceLocal: boolean;
+    }): Promise<void> {
+        if (workspace.sdks == null) {
+            throw new Error("No SDKs configured");
+        }
 
         const apisToCheck = [...new Set(targets.map((t) => t.api))];
         const checker = new ApiChecker({
@@ -88,8 +203,13 @@ export class GenerateCommand {
             cliVersion: workspace.cliVersion
         });
 
-        const token = this.isTokenRequired({ targets, args }) ? await context.getTokenOrPrompt() : undefined;
-        const runtime = args.local ? "local" : "remote";
+        const isLocal = forceLocal || args.local;
+
+        const token = this.isTokenRequired({ targets, args: { ...args, local: isLocal } })
+            ? await context.getTokenOrPrompt()
+            : undefined;
+
+        const runtime = isLocal ? "local" : "remote";
 
         const taskGroup = new SdkTaskGroup({ context });
         for (const target of targets) {
@@ -107,6 +227,21 @@ export class GenerateCommand {
             });
         }
 
+        // Check output directories before starting the task UI.
+        for (const target of targets) {
+            const outputPath =
+                args.output != null
+                    ? resolve(context.cwd, args.output)
+                    : context.resolveOutputFilePath(target.output.path);
+
+            if (outputPath != null) {
+                const { shouldProceed } = await this.checkOutputDirectory({ context, args, outputPath });
+                if (!shouldProceed) {
+                    throw new CliError({ message: "Generation cancelled." });
+                }
+            }
+        }
+
         const sdkInitialism = this.maybePluralSdks(targets);
 
         await taskGroup.start({
@@ -119,7 +254,7 @@ export class GenerateCommand {
                 const task = taskGroup.getTask(target.name);
                 if (task == null) {
                     // This should be unreachable.
-                    throw new Error(`Internal error; task '${target.name}' not found`);
+                    throw new CliError({ message: `Internal error; task '${target.name}' not found` });
                 }
 
                 task.start();
@@ -150,7 +285,7 @@ export class GenerateCommand {
                     preview: args.preview,
                     outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
                     token,
-                    version: args.version
+                    version: args["output-version"]
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -181,18 +316,14 @@ export class GenerateCommand {
         args: GenerateCommand.Args;
         targets: Target[];
     }): void {
-        if (args.output != null && !args.preview) {
-            throw new Error("The --output flag can only be used with --preview");
-        }
         if (args["container-engine"] != null && !args.local) {
-            throw new Error("The --container-engine flag can only be used with --local");
+            throw new CliError({ message: "The --container-engine flag can only be used with --local" });
         }
         if (args.group != null && args.target != null) {
-            throw new Error("The --group and --target flags cannot be used together");
+            throw new CliError({ message: "The --group and --target flags cannot be used together" });
         }
-        const defaultGroup = workspace.sdks?.defaultGroup;
-        if (defaultGroup == null && args.group == null && args.target == null) {
-            throw new Error("A --target or --group must be specified");
+        if (targets.length > 1 && args.output != null) {
+            throw new CliError({ message: "The --output flag can only be used when generating a single target" });
         }
         const issues: ValidationIssue[] = [];
         if (args.local) {
@@ -242,40 +373,102 @@ export class GenerateCommand {
     }
 
     /**
-     * Determines if a Fern token is required for the given targets and arguments.
+     * Parses the --output argument into an OutputSchema.
      *
-     * A Fern token is required if:
-     *  - The user is relying on remote generation.
-     *  - The target is using Fern's self-hosted git output mode.
+     * - Git URLs (ending in .git, or starting with https://github.com/, https://gitlab.com/, git@)
+     *   produce a self-hosted git output with token from GITHUB_TOKEN or GIT_TOKEN env vars.
+     * - Anything else is treated as a local path.
      */
-    private isTokenRequired({ targets, args }: { targets: Target[]; args: GenerateCommand.Args }): boolean {
-        return !args.local || targets.some((t) => t.output.git != null && schemas.isGitOutputSelfHosted(t.output.git));
+    private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputSchema {
+        if (args.output != null && this.isGitUrl(args.output)) {
+            if (!args.local) {
+                throw new CliError({
+                    message:
+                        `Remote generation is not supported with a git URL for --output\n\n` +
+                        `  Use --local or specify a local filesystem path for --output`
+                });
+            }
+            const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
+            if (token == null) {
+                throw new CliError({
+                    message:
+                        `A git token is required when --output is a git URL.\n\n` +
+                        `  Set GITHUB_TOKEN or GIT_TOKEN:\n` +
+                        `    export GITHUB_TOKEN=ghp_xxx\n\n` +
+                        `  Or use a local path:\n` +
+                        `    --output ./my-sdk`
+                });
+            }
+            return {
+                git: {
+                    uri: args.output,
+                    token,
+                    mode: "pr"
+                }
+            };
+        }
+
+        return { path: args.output };
     }
 
     private getTargets({
         workspace,
-        groupName,
-        targetName
+        args,
+        groupName
     }: {
         workspace: Workspace;
+        args: GenerateCommand.Args;
         groupName: string | undefined;
-        targetName: string | undefined;
     }): Target[] {
-        const targets = workspace.sdks != null ? this.filterTargetsByGroup(workspace.sdks.targets, groupName) : [];
-        if (targetName != null) {
-            const filtered = targets.filter((t) => t.name === targetName);
-            if (filtered.length === 0) {
-                throw new Error(`Target '${targetName}' not found`);
+        let matched = workspace.sdks != null ? this.filterTargetsByGroup(workspace.sdks.targets, groupName) : [];
+        if (args.target != null) {
+            matched = matched.filter((t) => t.name === args.target);
+            if (matched.length === 0) {
+                throw new Error(`Target '${args.target}' not found`);
             }
-            return filtered;
         }
-        if (targets.length === 0) {
+        if (matched.length === 0) {
             if (groupName != null) {
                 throw new Error(`No targets found for group '${groupName}'`);
             }
             throw new Error("No targets configured in fern.yml");
         }
-        return targets;
+        return matched.map((target) => ({
+            ...target,
+            version: args["target-version"] ?? target.version,
+            output: args.output != null ? this.parseTargetOutput(args) : target.output
+        }));
+    }
+
+    private async checkOutputDirectory({
+        context,
+        args,
+        outputPath
+    }: {
+        context: Context;
+        args: GenerateCommand.Args;
+        outputPath: AbsoluteFilePath;
+    }): Promise<{ shouldProceed: boolean }> {
+        if (args.force || !context.isTTY) {
+            return { shouldProceed: true };
+        }
+        const exists = await doesPathExist(outputPath);
+        if (!exists) {
+            return { shouldProceed: true };
+        }
+        const files = await readdir(outputPath);
+        if (files.length === 0) {
+            return { shouldProceed: true };
+        }
+        const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
+            {
+                type: "confirm",
+                name: "confirm",
+                message: `Directory ${outputPath} contains existing files that may be overwritten. Continue?`,
+                default: false
+            }
+        ]);
+        return { shouldProceed: confirm };
     }
 
     private filterTargetsByGroup(targets: Target[], groupName: string | undefined): Target[] {
@@ -283,6 +476,14 @@ export class GenerateCommand {
             return targets;
         }
         return targets.filter((target) => target.groups?.includes(groupName));
+    }
+
+    private resolveLanguage(target: string): Language {
+        const lang = target as Language;
+        if (LANGUAGES.includes(lang)) {
+            return lang;
+        }
+        throw new Error(`"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`);
     }
 
     private parseAudiences(audiences: string[] | undefined): Audiences | undefined {
@@ -293,10 +494,6 @@ export class GenerateCommand {
             type: "select",
             audiences
         };
-    }
-
-    private maybePluralSdks(targets: Target[]): string {
-        return targets.length === 1 ? "SDK" : "SDKs";
     }
 
     private getGitOutputStageLabels(mode: schemas.GitHubOutputModeSchema): Partial<TaskStageLabels> {
@@ -324,6 +521,30 @@ export class GenerateCommand {
         }
     }
 
+    /**
+     * Determines if a Fern token is required for the given targets and arguments.
+     *
+     * A Fern token is required if:
+     *  - The user is relying on remote generation.
+     *  - The target is using Fern's self-hosted git output mode.
+     */
+    private isTokenRequired({ targets, args }: { targets: Target[]; args: GenerateCommand.Args }): boolean {
+        return !args.local || targets.some((t) => t.output.git != null && schemas.isGitOutputSelfHosted(t.output.git));
+    }
+
+    private isGitUrl(value: string): boolean {
+        return (
+            value.endsWith(".git") ||
+            value.startsWith("https://github.com/") ||
+            value.startsWith("https://gitlab.com/") ||
+            value.startsWith("git@")
+        );
+    }
+
+    private maybePluralSdks(targets: Target[]): string {
+        return targets.length === 1 ? "SDK" : "SDKs";
+    }
+
     private indentBlock(text: string): string {
         return text
             .trimEnd()
@@ -338,13 +559,25 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
     command(
         cli,
         "generate",
-        "Generate SDKs configured in fern.yml",
+        "Generate SDKs from fern.yml or directly from an API spec",
         (context, args) => cmd.handle(context, args as GenerateCommand.Args),
         (yargs) =>
             yargs
+                .option("api", {
+                    type: "string",
+                    description: "Path or URL to an API spec file (enables no-config mode)"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Organization name (required with --api)"
+                })
                 .option("target", {
                     type: "string",
                     description: "The SDK target to generate"
+                })
+                .option("target-version", {
+                    type: "string",
+                    description: "The generator version for the target"
                 })
                 .option("group", {
                     type: "string",
@@ -376,16 +609,16 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                 })
                 .option("output", {
                     type: "string",
-                    description: "Output directory for preview mode (requires --preview)"
+                    description: "Output path or git URL (required with --api; requires --preview in workspace mode)"
+                })
+                .option("output-version", {
+                    type: "string",
+                    description: "The version to use for the generated packages (e.g. 1.0.0)"
                 })
                 .option("force", {
                     type: "boolean",
                     default: false,
                     description: "Ignore prompts to confirm generation"
-                })
-                .option("version", {
-                    type: "string",
-                    description: "The version to use for the generated packages (e.g. 1.0.0)"
                 })
     );
 }
