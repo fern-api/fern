@@ -1623,6 +1623,22 @@ func TestJSONMarshalingStartingAfterPaging(t *testing.T) {
 	})
 }
 
+func TestStringPaginatedConversationResponse(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &PaginatedConversationResponse{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *PaginatedConversationResponse
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringSearchRequest(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -1719,19 +1735,32 @@ func TestStringMultipleFilterSearchRequest(t *testing.T) {
 	})
 }
 
-func TestStringPaginatedConversationResponse(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
+func TestEnumMultipleFilterSearchRequestOperator(t *testing.T) {
+	t.Run("NewFromString_AND", func(t *testing.T) {
 		t.Parallel()
-		obj := &PaginatedConversationResponse{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+		val, err := NewMultipleFilterSearchRequestOperatorFromString("AND")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, MultipleFilterSearchRequestOperator("AND"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+	t.Run("NewFromString_OR", func(t *testing.T) {
 		t.Parallel()
-		var obj *PaginatedConversationResponse
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+		val, err := NewMultipleFilterSearchRequestOperatorFromString("OR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, MultipleFilterSearchRequestOperator("OR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewMultipleFilterSearchRequestOperatorFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewMultipleFilterSearchRequestOperatorFromString("AND")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 
@@ -1813,35 +1842,6 @@ func TestEnumSingleFilterSearchRequestOperator(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewSingleFilterSearchRequestOperatorFromString("=")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumMultipleFilterSearchRequestOperator(t *testing.T) {
-	t.Run("NewFromString_AND", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewMultipleFilterSearchRequestOperatorFromString("AND")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, MultipleFilterSearchRequestOperator("AND"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_OR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewMultipleFilterSearchRequestOperatorFromString("OR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, MultipleFilterSearchRequestOperator("OR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewMultipleFilterSearchRequestOperatorFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewMultipleFilterSearchRequestOperatorFromString("AND")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
