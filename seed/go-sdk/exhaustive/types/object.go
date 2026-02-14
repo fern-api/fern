@@ -33,6 +33,9 @@ func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
 }
 
 func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -78,6 +81,9 @@ func (d *DoubleOptional) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DoubleOptional) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -120,6 +126,9 @@ func (n *NestedObjectWithOptionalField) GetNestedObject() *ObjectWithOptionalFie
 }
 
 func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -172,6 +181,9 @@ func (n *NestedObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedObjectWithOptionalField) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -214,6 +226,9 @@ func (n *NestedObjectWithRequiredField) GetNestedObject() *ObjectWithOptionalFie
 }
 
 func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -266,6 +281,9 @@ func (n *NestedObjectWithRequiredField) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedObjectWithRequiredField) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -313,6 +331,9 @@ func (o *ObjectWithDatetimeLikeString) GetActualDatetime() time.Time {
 }
 
 func (o *ObjectWithDatetimeLikeString) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -373,6 +394,9 @@ func (o *ObjectWithDatetimeLikeString) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithDatetimeLikeString) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -406,6 +430,9 @@ func (o *ObjectWithMapOfMap) GetMap() map[string]map[string]string {
 }
 
 func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -451,6 +478,9 @@ func (o *ObjectWithMapOfMap) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithMapOfMap) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -593,6 +623,9 @@ func (o *ObjectWithOptionalField) GetBigint() *string {
 }
 
 func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -734,6 +767,9 @@ func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithOptionalField) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -767,6 +803,9 @@ func (o *ObjectWithRequiredField) GetFieldString() string {
 }
 
 func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -812,6 +851,9 @@ func (o *ObjectWithRequiredField) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithRequiredField) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
