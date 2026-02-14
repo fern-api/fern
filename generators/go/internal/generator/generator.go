@@ -214,6 +214,15 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			return nil, nil, err
 		}
 		files = append(files, file)
+
+		// Generate test file for getter/setter methods
+		testFile, err := writer.GenerateGetterSetterTestFile()
+		if err != nil {
+			return nil, nil, err
+		}
+		if testFile != nil {
+			files = append(files, testFile)
+		}
 	}
 	return files, generatedRootClients, nil
 }
@@ -406,7 +415,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -470,7 +479,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -496,7 +505,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -525,7 +534,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -581,6 +590,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newEnvironmentInternalFile(g.coordinator))
 		}
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
+		files = append(files, newPointerTestFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
 		if needsFileUploadHelpers(ir) {
@@ -606,7 +616,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -740,7 +750,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 
-
 	for _, file := range files {
 		fmt.Printf("v1 output file %s\n", file.Path)
 	}
@@ -768,7 +777,7 @@ func (g *Generator) generateRootService(
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -819,7 +828,7 @@ func (g *Generator) generateService(
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -873,7 +882,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -922,7 +931,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -1124,6 +1133,43 @@ func newPointerFile(coordinator *coordinator.Client, rootPackageName string, gen
 	// the root package declaration of the generated SDK.
 	content := strings.Replace(
 		pointerFile,
+		"package core",
+		fmt.Sprintf("package %s", rootPackageName),
+		1,
+	)
+	return NewFile(
+		coordinator,
+		filename,
+		[]byte(content),
+	)
+}
+
+// newPointerTestFile returns a *File containing the tests for pointer helper functions.
+// The location matches where newPointerFile places pointer.go (either root or core package).
+func newPointerTestFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
+	// Determine whether pointer.go was placed in core package
+	var useCorePackage bool
+	for generatedName := range generatedNames {
+		if _, ok := pointerFunctionNames[generatedName]; ok {
+			useCorePackage = true
+			break
+		}
+	}
+	if useCorePackage {
+		return NewFile(
+			coordinator,
+			"core/pointer_test.go",
+			[]byte(pointerTestFile),
+		)
+	}
+	// Place test file at root alongside pointer.go
+	filename := "pointer_test.go"
+	if _, ok := generatedNames["Pointer"]; ok {
+		filename = "_pointer_test.go"
+	}
+	// Replace package declaration to match root package
+	content := strings.Replace(
+		pointerTestFile,
 		"package core",
 		fmt.Sprintf("package %s", rootPackageName),
 		1,

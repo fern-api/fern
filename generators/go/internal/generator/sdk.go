@@ -63,6 +63,9 @@ var (
 	//go:embed sdk/utils/pointer.go
 	pointerFile string
 
+	//go:embed sdk/utils/pointer_test.go
+	pointerTestFile string
+
 	//go:embed sdk/internal/query.go
 	queryFile string
 
@@ -3075,6 +3078,7 @@ func (f *fileWriter) WriteRequestType(
 			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
+			// Headers have json:"-" tags, so skip for test generation
 		}
 	}
 
@@ -3085,6 +3089,7 @@ func (f *fileWriter) WriteRequestType(
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
+			// Path parameters have json:"-" tags, so skip for test generation
 		}
 	}
 
@@ -3179,6 +3184,10 @@ func (f *fileWriter) WriteRequestType(
 		// Write setter methods for all properties
 		f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
 
+		// Collect test data for request type (requests have setters only, no getters)
+		needsDereference := make([]bool, len(propertyNames)) // all false for requests
+		f.AddGetterSetterTestData(typeName, propertyNames, propertyTypes, propertySafeNames, false, true, needsDereference)
+
 		return nil
 	}
 	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals, inlineFileProperties)
@@ -3209,6 +3218,10 @@ func (f *fileWriter) WriteRequestType(
 
 	// Write setter methods for all properties
 	f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
+
+	// Collect test data for request type (requests have setters only, no getters)
+	needsDereference := make([]bool, len(propertyNames)) // all false for requests
+	f.AddGetterSetterTestData(typeName, propertyNames, propertyTypes, propertySafeNames, false, true, needsDereference)
 
 	var (
 		referenceType           string

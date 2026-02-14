@@ -98,8 +98,7 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
-		escapedWireValue := strings.Replace(enumValue.Name.WireValue, `"`, `\"`, -1)
-		t.writer.P(enumName, " ", t.typeName, fmt.Sprintf(" = %q", escapedWireValue))
+		t.writer.P(enumName, " ", t.typeName, fmt.Sprintf(" = %q", enumValue.Name.WireValue))
 	}
 	t.writer.P(")")
 	t.writer.P()
@@ -129,6 +128,13 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	t.writer.P("return &", receiver)
 	t.writer.P("}")
 	t.writer.P()
+
+	// Collect enum values for test generation
+	enumValues := make([]string, 0, len(enum.Values))
+	for _, enumValue := range enum.Values {
+		enumValues = append(enumValues, enumValue.Name.WireValue)
+	}
+	t.writer.AddEnumTest(t.typeName, enumValues)
 
 	return nil
 }
@@ -210,6 +216,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P()
 	}
 	t.writer.P("func (", receiver, " *", t.typeName, ") GetExtraProperties() map[string]interface{} {")
+	t.writer.P("if ", receiver, " == nil {")
+	t.writer.P("return nil")
+	t.writer.P("}")
 	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
 	t.writer.P("}")
 	t.writer.P()
@@ -219,6 +228,39 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 
 	// Write setter methods for all properties
 	t.writer.WriteSetterMethods(t.typeName, propertyNames, propertyTypes, propertySafeNames)
+
+	// Collect test information for later generation (at file level)
+	// Use typeFields (which only includes properties with getters) for getter/setter tests
+	if len(typeFields) > 0 {
+		// We need to use typeFields to know which properties have getters,
+		// but use the original propertyTypes for the correct field types (for setters)
+		testPropertyNames := make([]string, len(typeFields))
+		testPropertyTypes := make([]string, len(typeFields))
+		testPropertySafeNames := make([]string, len(typeFields))
+		needsDereference := make([]bool, len(typeFields))
+		for i, typeField := range typeFields {
+			testPropertyNames[i] = typeField.Name
+			// Find the matching property type from the original list
+			for j, name := range propertyNames {
+				if name == typeField.Name {
+					testPropertyTypes[i] = propertyTypes[j]
+					testPropertySafeNames[i] = propertySafeNames[j]
+					break
+				}
+			}
+			needsDereference[i] = typeField.NeedsDereference
+		}
+		// Add getter/setter tests
+		t.writer.AddGetterSetterTestData(t.typeName, testPropertyNames, testPropertyTypes, testPropertySafeNames, true, true, needsDereference)
+	}
+
+	// Objects always have UnmarshalJSON and String() methods, add tests for them
+	// Pass true for hasLiterals if the object has any literal fields (they require specific values in JSON)
+	t.writer.AddJSONMarshalingTestData(t.typeName, len(objectProperties.literals) > 0)
+	t.writer.AddStringMethodTest(t.typeName)
+
+	// Objects always have GetExtraProperties method, add tests for it
+	t.writer.AddExtraPropertiesTest(t.typeName)
 
 	// Implement the json.Unmarshaler interface.
 	if len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
@@ -306,6 +348,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 
 	// Implement fmt.Stringer.
 	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
+	t.writer.P("if ", receiver, " == nil {")
+	t.writer.P("return \"<nil>\"")
+	t.writer.P("}")
 	if t.includeRawJSON {
 		t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
 		t.writer.P("if value, err := internal.StringifyJSON(", receiver, ".rawJSON); err == nil {")
@@ -319,6 +364,11 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P(`return fmt.Sprintf("%#v", `, receiver, ")")
 	t.writer.P("}")
 	t.writer.P()
+
+	// Add JSON marshaling and String() tests to separate test file
+	// Pass true for hasLiterals if the object has any literal fields (they require specific values in JSON)
+	t.writer.AddJSONMarshalingTestData(t.typeName, len(objectProperties.literals) > 0)
+	t.writer.AddStringMethodTest(t.typeName)
 
 	return nil
 }
@@ -758,6 +808,28 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
+	// Collect test data for union type getters
+	if len(typeFields) > 0 {
+		propertyNames := make([]string, 0, len(typeFields))
+		propertyTypes := make([]string, 0, len(typeFields))
+		propertySafeNames := make([]string, 0, len(typeFields))
+		needsDereference := make([]bool, 0, len(typeFields))
+
+		for _, field := range typeFields {
+			propertyNames = append(propertyNames, field.Name)
+			propertyTypes = append(propertyTypes, field.GoType)
+			// For union getters, use the field name as the safe name
+			propertySafeNames = append(propertySafeNames, firstLetterToLower(field.Name))
+			needsDereference = append(needsDereference, field.NeedsDereference)
+		}
+
+		// Unions have getters but not setters
+		t.writer.AddGetterSetterTestData(t.typeName, propertyNames, propertyTypes, propertySafeNames, true, false, needsDereference)
+	}
+
+	// Skip JSON marshaling tests for discriminated unions - empty instances cannot be marshaled
+	// as they require a discriminant value to be set
+
 	return nil
 }
 
@@ -966,6 +1038,26 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("return fmt.Errorf(\"type %T does not include a non-empty union type\", ", receiver, ")")
 	t.writer.P("}")
 	t.writer.P()
+
+	// Collect test data for undiscriminated union type getters
+	undiscriminatedTypeFields := t.getTypeFieldsForUndiscriminatedUnion(union, t.writer.scope)
+	if len(undiscriminatedTypeFields) > 0 {
+		propertyNames := make([]string, 0, len(undiscriminatedTypeFields))
+		propertyTypes := make([]string, 0, len(undiscriminatedTypeFields))
+		propertySafeNames := make([]string, 0, len(undiscriminatedTypeFields))
+		needsDereference := make([]bool, 0, len(undiscriminatedTypeFields))
+
+		for _, field := range undiscriminatedTypeFields {
+			propertyNames = append(propertyNames, field.Name)
+			propertyTypes = append(propertyTypes, field.GoType)
+			// For union getters, use the field name as the safe name
+			propertySafeNames = append(propertySafeNames, firstLetterToLower(field.Name))
+			needsDereference = append(needsDereference, field.NeedsDereference)
+		}
+
+		// Undiscriminated unions have getters but not setters
+		t.writer.AddGetterSetterTestData(t.typeName, propertyNames, propertyTypes, propertySafeNames, true, false, needsDereference)
+	}
 
 	return nil
 }
