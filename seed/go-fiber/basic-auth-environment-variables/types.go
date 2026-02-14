@@ -30,6 +30,9 @@ func (u *UnauthorizedRequestErrorBody) GetMessage() string {
 }
 
 func (u *UnauthorizedRequestErrorBody) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -74,6 +77,9 @@ func (u *UnauthorizedRequestErrorBody) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UnauthorizedRequestErrorBody) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}

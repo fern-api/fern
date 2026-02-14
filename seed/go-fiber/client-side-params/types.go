@@ -323,6 +323,9 @@ func (c *Client) GetMobile() map[string]interface{} {
 }
 
 func (c *Client) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -570,6 +573,9 @@ func (c *Client) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Client) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
@@ -679,6 +685,9 @@ func (c *Connection) GetMetadata() map[string]interface{} {
 }
 
 func (c *Connection) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -779,6 +788,9 @@ func (c *Connection) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Connection) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
@@ -878,6 +890,9 @@ func (c *CreateUserRequest) GetConnection() string {
 }
 
 func (c *CreateUserRequest) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -978,6 +993,9 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateUserRequest) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
@@ -1050,6 +1068,9 @@ func (i *Identity) GetExpiresIn() *int {
 }
 
 func (i *Identity) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
 	return i.extraProperties
 }
 
@@ -1129,6 +1150,9 @@ func (i *Identity) MarshalJSON() ([]byte, error) {
 }
 
 func (i *Identity) String() string {
+	if i == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
@@ -1198,6 +1222,9 @@ func (p *PaginatedClientResponse) GetClients() []*Client {
 }
 
 func (p *PaginatedClientResponse) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -1270,6 +1297,9 @@ func (p *PaginatedClientResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaginatedClientResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
@@ -1334,6 +1364,9 @@ func (p *PaginatedUserResponse) GetTotal() *int {
 }
 
 func (p *PaginatedUserResponse) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -1406,6 +1439,9 @@ func (p *PaginatedUserResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaginatedUserResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
@@ -1478,6 +1514,9 @@ func (r *Resource) GetMetadata() map[string]interface{} {
 }
 
 func (r *Resource) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1569,6 +1608,9 @@ func (r *Resource) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Resource) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
@@ -1614,6 +1656,9 @@ func (s *SearchResponse) GetNextOffset() *int {
 }
 
 func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -1672,6 +1717,9 @@ func (s *SearchResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchResponse) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
@@ -1771,6 +1819,9 @@ func (u *UpdateUserRequest) GetBlocked() *bool {
 }
 
 func (u *UpdateUserRequest) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1871,6 +1922,9 @@ func (u *UpdateUserRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateUserRequest) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
@@ -2079,6 +2133,9 @@ func (u *User) GetFamilyName() *string {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2279,6 +2336,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}

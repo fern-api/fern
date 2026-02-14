@@ -32,6 +32,9 @@ func (s *StringResponse) GetData() string {
 }
 
 func (s *StringResponse) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (s *StringResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StringResponse) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
@@ -103,6 +109,9 @@ func (w *WithMetadata) GetMetadata() map[string]string {
 }
 
 func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -147,6 +156,9 @@ func (w *WithMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithMetadata) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
@@ -183,6 +195,9 @@ func (m *Movie) GetName() string {
 }
 
 func (m *Movie) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -234,6 +249,9 @@ func (m *Movie) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Movie) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
@@ -281,6 +299,9 @@ func (r *Response) GetData() *Movie {
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -339,6 +360,9 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Response) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
@@ -366,6 +390,9 @@ func (w *WithDocs) GetDocs() string {
 }
 
 func (w *WithDocs) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -410,6 +437,9 @@ func (w *WithDocs) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithDocs) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}

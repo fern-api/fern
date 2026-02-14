@@ -30,6 +30,9 @@ func (c *Conversation) GetFoo() string {
 }
 
 func (c *Conversation) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -74,6 +77,9 @@ func (c *Conversation) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Conversation) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
@@ -133,6 +139,9 @@ func (c *CursorPages) Type() string {
 }
 
 func (c *CursorPages) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -209,6 +218,9 @@ func (c *CursorPages) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CursorPages) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
@@ -245,6 +257,9 @@ func (m *MultipleFilterSearchRequest) GetValue() *MultipleFilterSearchRequestVal
 }
 
 func (m *MultipleFilterSearchRequest) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -296,6 +311,9 @@ func (m *MultipleFilterSearchRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MultipleFilterSearchRequest) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
@@ -430,6 +448,9 @@ func (p *PaginatedConversationResponse) Type() string {
 }
 
 func (p *PaginatedConversationResponse) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -499,6 +520,9 @@ func (p *PaginatedConversationResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaginatedConversationResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
@@ -535,6 +559,9 @@ func (s *SearchRequest) GetQuery() *SearchRequestQuery {
 }
 
 func (s *SearchRequest) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -586,6 +613,9 @@ func (s *SearchRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchRequest) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
@@ -693,6 +723,9 @@ func (s *SingleFilterSearchRequest) GetValue() *string {
 }
 
 func (s *SingleFilterSearchRequest) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -751,6 +784,9 @@ func (s *SingleFilterSearchRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SingleFilterSearchRequest) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
@@ -833,6 +869,9 @@ func (s *StartingAfterPaging) GetStartingAfter() *string {
 }
 
 func (s *StartingAfterPaging) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -884,6 +923,9 @@ func (s *StartingAfterPaging) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StartingAfterPaging) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

@@ -31,6 +31,9 @@ func (f *FolderCFoo) GetBarProperty() uuid.UUID {
 }
 
 func (f *FolderCFoo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -75,6 +78,9 @@ func (f *FolderCFoo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FolderCFoo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
