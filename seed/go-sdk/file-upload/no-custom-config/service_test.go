@@ -678,22 +678,6 @@ func TestJSONMarshalingMyObjectWithOptional(t *testing.T) {
 	})
 }
 
-func TestStringMyInlineType(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &MyInlineType{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *MyInlineType
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
 func TestStringMyObject(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -723,6 +707,51 @@ func TestStringMyObjectWithOptional(t *testing.T) {
 		var obj *MyObjectWithOptional
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringMyInlineType(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &MyInlineType{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MyInlineType
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestEnumObjectType(t *testing.T) {
+	t.Run("NewFromString_FOO", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewObjectTypeFromString("FOO")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ObjectType("FOO"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_BAR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewObjectTypeFromString("BAR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ObjectType("BAR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewObjectTypeFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewObjectTypeFromString("FOO")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 
@@ -759,58 +788,6 @@ func TestEnumOpenEnumType(t *testing.T) {
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
 		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumObjectType(t *testing.T) {
-	t.Run("NewFromString_FOO", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewObjectTypeFromString("FOO")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ObjectType("FOO"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_BAR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewObjectTypeFromString("BAR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ObjectType("BAR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewObjectTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewObjectTypeFromString("FOO")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestExtraPropertiesMyObjectWithOptional(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &MyObjectWithOptional{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *MyObjectWithOptional
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 
@@ -855,6 +832,29 @@ func TestExtraPropertiesMyObject(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *MyObject
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesMyObjectWithOptional(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &MyObjectWithOptional{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MyObjectWithOptional
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
