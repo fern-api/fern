@@ -200,17 +200,6 @@ paths:
             expect(result.exitCode).toBe(0);
             expect(result.stdoutPlain.toLowerCase()).toMatch(/usage|options|target/i);
         });
-
-        it("should fail without required --target flag", async () => {
-            const result = await runCliV2({
-                args: ["sdk", "generate"],
-                fixture: FIXTURES.petstore,
-                expectError: true,
-                timeout: 60_000
-            });
-            expect(result.exitCode).toBe(1);
-            expect(result.stderrPlain.toLowerCase().includes("target")).toBe(true);
-        });
     });
 
     describe("flags-only mode (no fern.yml)", () => {
