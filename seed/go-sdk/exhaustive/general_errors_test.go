@@ -12,9 +12,9 @@ import (
 func TestSettersBadObjectRequestInfo(t *testing.T) {
 	t.Run("SetMessage", func(t *testing.T) {
 		obj := &BadObjectRequestInfo{}
-		var testValMessage string
-		obj.SetMessage(testValMessage)
-		assert.Equal(t, testValMessage, obj.Message)
+		var fernTestValueMessage string
+		obj.SetMessage(fernTestValueMessage)
+		assert.Equal(t, fernTestValueMessage, obj.Message)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -51,10 +51,10 @@ func TestSettersMarkExplicitBadObjectRequestInfo(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &BadObjectRequestInfo{}
-		var testValMessage string
+		var fernTestValueMessage string
 
 		// Act
-		obj.SetMessage(testValMessage)
+		obj.SetMessage(fernTestValueMessage)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

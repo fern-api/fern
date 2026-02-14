@@ -3186,7 +3186,15 @@ func (f *fileWriter) WriteRequestType(
 
 		// Collect test data for request type (requests have setters only, no getters)
 		needsDereference := make([]bool, len(propertyNames)) // all false for requests
-		f.AddGetterSetterTestData(typeName, propertyNames, propertyTypes, propertySafeNames, false, true, needsDereference)
+		f.AddGetterSetterTestData(GetterSetterTestConfig{
+			TypeName:         typeName,
+			PropertyNames:    propertyNames,
+			PropertyTypes:    propertyTypes,
+			SafeNames:        propertySafeNames,
+			HasGetters:       false,
+			HasSetters:       true,
+			NeedsDereference: needsDereference,
+		})
 
 		return nil
 	}
@@ -3221,7 +3229,15 @@ func (f *fileWriter) WriteRequestType(
 
 	// Collect test data for request type (requests have setters only, no getters)
 	needsDereference := make([]bool, len(propertyNames)) // all false for requests
-	f.AddGetterSetterTestData(typeName, propertyNames, propertyTypes, propertySafeNames, false, true, needsDereference)
+	f.AddGetterSetterTestData(GetterSetterTestConfig{
+		TypeName:         typeName,
+		PropertyNames:    propertyNames,
+		PropertyTypes:    propertyTypes,
+		SafeNames:        propertySafeNames,
+		HasGetters:       false,
+		HasSetters:       true,
+		NeedsDereference: needsDereference,
+	})
 
 	var (
 		referenceType           string

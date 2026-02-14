@@ -13,17 +13,17 @@ import (
 func TestSettersListItemsRequest(t *testing.T) {
 	t.Run("SetCursor", func(t *testing.T) {
 		obj := &ListItemsRequest{}
-		var testValCursor *string
-		obj.SetCursor(testValCursor)
-		assert.Equal(t, testValCursor, obj.Cursor)
+		var fernTestValueCursor *string
+		obj.SetCursor(fernTestValueCursor)
+		assert.Equal(t, fernTestValueCursor, obj.Cursor)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetLimit", func(t *testing.T) {
 		obj := &ListItemsRequest{}
-		var testValLimit *int
-		obj.SetLimit(testValLimit)
-		assert.Equal(t, testValLimit, obj.Limit)
+		var fernTestValueLimit *int
+		obj.SetLimit(fernTestValueLimit)
+		assert.Equal(t, fernTestValueLimit, obj.Limit)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -34,10 +34,10 @@ func TestSettersMarkExplicitListItemsRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ListItemsRequest{}
-		var testValCursor *string
+		var fernTestValueCursor *string
 
 		// Act
-		obj.SetCursor(testValCursor)
+		obj.SetCursor(fernTestValueCursor)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -65,10 +65,10 @@ func TestSettersMarkExplicitListItemsRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ListItemsRequest{}
-		var testValLimit *int
+		var fernTestValueLimit *int
 
 		// Act
-		obj.SetLimit(testValLimit)
+		obj.SetLimit(fernTestValueLimit)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -97,17 +97,17 @@ func TestSettersMarkExplicitListItemsRequest(t *testing.T) {
 func TestSettersPaginatedResponse(t *testing.T) {
 	t.Run("SetItems", func(t *testing.T) {
 		obj := &PaginatedResponse{}
-		var testValItems []*types.ObjectWithRequiredField
-		obj.SetItems(testValItems)
-		assert.Equal(t, testValItems, obj.Items)
+		var fernTestValueItems []*types.ObjectWithRequiredField
+		obj.SetItems(fernTestValueItems)
+		assert.Equal(t, fernTestValueItems, obj.Items)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetNext", func(t *testing.T) {
 		obj := &PaginatedResponse{}
-		var testValNext *string
-		obj.SetNext(testValNext)
-		assert.Equal(t, testValNext, obj.Next)
+		var fernTestValueNext *string
+		obj.SetNext(fernTestValueNext)
+		assert.Equal(t, fernTestValueNext, obj.Next)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -187,10 +187,10 @@ func TestSettersMarkExplicitPaginatedResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PaginatedResponse{}
-		var testValItems []*types.ObjectWithRequiredField
+		var fernTestValueItems []*types.ObjectWithRequiredField
 
 		// Act
-		obj.SetItems(testValItems)
+		obj.SetItems(fernTestValueItems)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -218,10 +218,10 @@ func TestSettersMarkExplicitPaginatedResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PaginatedResponse{}
-		var testValNext *string
+		var fernTestValueNext *string
 
 		// Act
-		obj.SetNext(testValNext)
+		obj.SetNext(fernTestValueNext)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

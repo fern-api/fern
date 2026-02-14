@@ -251,7 +251,15 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			needsDereference[i] = typeField.NeedsDereference
 		}
 		// Add getter/setter tests
-		t.writer.AddGetterSetterTestData(t.typeName, testPropertyNames, testPropertyTypes, testPropertySafeNames, true, true, needsDereference)
+		t.writer.AddGetterSetterTestData(GetterSetterTestConfig{
+			TypeName:         t.typeName,
+			PropertyNames:    testPropertyNames,
+			PropertyTypes:    testPropertyTypes,
+			SafeNames:        testPropertySafeNames,
+			HasGetters:       true,
+			HasSetters:       true,
+			NeedsDereference: needsDereference,
+		})
 	}
 
 	// Objects always have UnmarshalJSON and String() methods, add tests for them
@@ -365,10 +373,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
-	// Add JSON marshaling and String() tests to separate test file
-	// Pass true for hasLiterals if the object has any literal fields (they require specific values in JSON)
-	t.writer.AddJSONMarshalingTestData(t.typeName, len(objectProperties.literals) > 0)
-	t.writer.AddStringMethodTest(t.typeName)
+	// JSON marshaling and String() tests are already added above (lines 259-260)
 
 	return nil
 }
@@ -824,7 +829,15 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		}
 
 		// Unions have getters but not setters
-		t.writer.AddGetterSetterTestData(t.typeName, propertyNames, propertyTypes, propertySafeNames, true, false, needsDereference)
+		t.writer.AddGetterSetterTestData(GetterSetterTestConfig{
+			TypeName:         t.typeName,
+			PropertyNames:    propertyNames,
+			PropertyTypes:    propertyTypes,
+			SafeNames:        propertySafeNames,
+			HasGetters:       true,
+			HasSetters:       false,
+			NeedsDereference: needsDereference,
+		})
 	}
 
 	// Skip JSON marshaling tests for discriminated unions - empty instances cannot be marshaled
@@ -1056,7 +1069,15 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		}
 
 		// Undiscriminated unions have getters but not setters
-		t.writer.AddGetterSetterTestData(t.typeName, propertyNames, propertyTypes, propertySafeNames, true, false, needsDereference)
+		t.writer.AddGetterSetterTestData(GetterSetterTestConfig{
+			TypeName:         t.typeName,
+			PropertyNames:    propertyNames,
+			PropertyTypes:    propertyTypes,
+			SafeNames:        propertySafeNames,
+			HasGetters:       true,
+			HasSetters:       false,
+			NeedsDereference: needsDereference,
+		})
 	}
 
 	return nil

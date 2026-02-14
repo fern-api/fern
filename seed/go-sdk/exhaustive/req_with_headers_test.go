@@ -12,17 +12,17 @@ import (
 func TestSettersReqWithHeaders(t *testing.T) {
 	t.Run("SetXTestServiceHeader", func(t *testing.T) {
 		obj := &ReqWithHeaders{}
-		var testValXTestServiceHeader string
-		obj.SetXTestServiceHeader(testValXTestServiceHeader)
-		assert.Equal(t, testValXTestServiceHeader, obj.XTestServiceHeader)
+		var fernTestValueXTestServiceHeader string
+		obj.SetXTestServiceHeader(fernTestValueXTestServiceHeader)
+		assert.Equal(t, fernTestValueXTestServiceHeader, obj.XTestServiceHeader)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetXTestEndpointHeader", func(t *testing.T) {
 		obj := &ReqWithHeaders{}
-		var testValXTestEndpointHeader string
-		obj.SetXTestEndpointHeader(testValXTestEndpointHeader)
-		assert.Equal(t, testValXTestEndpointHeader, obj.XTestEndpointHeader)
+		var fernTestValueXTestEndpointHeader string
+		obj.SetXTestEndpointHeader(fernTestValueXTestEndpointHeader)
+		assert.Equal(t, fernTestValueXTestEndpointHeader, obj.XTestEndpointHeader)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -33,10 +33,10 @@ func TestSettersMarkExplicitReqWithHeaders(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ReqWithHeaders{}
-		var testValXTestServiceHeader string
+		var fernTestValueXTestServiceHeader string
 
 		// Act
-		obj.SetXTestServiceHeader(testValXTestServiceHeader)
+		obj.SetXTestServiceHeader(fernTestValueXTestServiceHeader)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -64,10 +64,10 @@ func TestSettersMarkExplicitReqWithHeaders(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ReqWithHeaders{}
-		var testValXTestEndpointHeader string
+		var fernTestValueXTestEndpointHeader string
 
 		// Act
-		obj.SetXTestEndpointHeader(testValXTestEndpointHeader)
+		obj.SetXTestEndpointHeader(fernTestValueXTestEndpointHeader)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

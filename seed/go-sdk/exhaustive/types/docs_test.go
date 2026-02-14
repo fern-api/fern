@@ -12,9 +12,9 @@ import (
 func TestSettersObjectWithDocs(t *testing.T) {
 	t.Run("SetFieldString", func(t *testing.T) {
 		obj := &ObjectWithDocs{}
-		var testValFieldString string
-		obj.SetFieldString(testValFieldString)
-		assert.Equal(t, testValFieldString, obj.FieldString)
+		var fernTestValueFieldString string
+		obj.SetFieldString(fernTestValueFieldString)
+		assert.Equal(t, fernTestValueFieldString, obj.FieldString)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -51,10 +51,10 @@ func TestSettersMarkExplicitObjectWithDocs(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithDocs{}
-		var testValFieldString string
+		var fernTestValueFieldString string
 
 		// Act
-		obj.SetFieldString(testValFieldString)
+		obj.SetFieldString(fernTestValueFieldString)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

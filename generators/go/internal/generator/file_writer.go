@@ -30,6 +30,44 @@ const whitelabelFileHeader = `// Code generated from our API definition. DO NOT 
 
 `
 
+var (
+	// packageQualifierRegex matches package.Type patterns for stripping package qualifiers
+	packageQualifierRegex = regexp.MustCompile(`\b(\w+)\.`)
+
+	// packageExtractorRegex extracts package names from qualified types
+	packageExtractorRegex = regexp.MustCompile(`\b([a-zA-Z][a-zA-Z0-9_]*)\.[A-Z]`)
+
+	// stdlibPackages contains Go standard library package names for test filtering
+	stdlibPackages = map[string]bool{
+		"time":     true,
+		"context":  true,
+		"fmt":      true,
+		"strings":  true,
+		"strconv":  true,
+		"errors":   true,
+		"io":       true,
+		"os":       true,
+		"path":     true,
+		"filepath": true,
+		"net":      true,
+		"http":     true,
+		"url":      true,
+		"json":     true,
+		"xml":      true,
+		"bytes":    true,
+		"bufio":    true,
+		"sync":     true,
+		"regexp":   true,
+		"sort":     true,
+		"math":     true,
+		"big":      true,
+		"crypto":   true,
+		"encoding": true,
+		"unicode":  true,
+		"reflect":  true,
+	}
+)
+
 // fileWriter wries and formats Go files.
 type fileWriter struct {
 	filename                     string
@@ -61,6 +99,17 @@ type fileWriter struct {
 	stringMethodTests    map[string]struct{}
 	enumTests            map[string][]string // map[typeName][]enumValues for enum tests
 	extraPropertiesTests map[string]struct{} // types that have GetExtraProperties()
+}
+
+// GetterSetterTestConfig contains configuration for generating getter/setter tests
+type GetterSetterTestConfig struct {
+	TypeName         string
+	PropertyNames    []string
+	PropertyTypes    []string
+	SafeNames        []string
+	HasGetters       bool   // true for objects and unions, false for request types
+	HasSetters       bool   // true for objects and requests, false for unions/undiscriminated unions
+	NeedsDereference []bool // true for properties that should be dereferenced in getters
 }
 
 type typeTestData struct {
@@ -138,7 +187,7 @@ func newFileWriter(
 		errors:                       errors,
 		coordinator:                  coordinator,
 		buffer:                       new(bytes.Buffer),
-		testData:                     make([]*typeTestData, 0),
+		testData:                     make([]*typeTestData, 0, 16), // Pre-allocate capacity for common cases
 		jsonMarshalingTests:          make(map[string]bool),
 		stringMethodTests:            make(map[string]struct{}),
 		enumTests:                    make(map[string][]string),
@@ -301,18 +350,29 @@ func (f *fileWriter) WriteExplicitFields() {
 }
 
 // AddGetterSetterTestData collects information about a type for later test generation.
-// hasGetters=true for objects and unions (types with getters), false for request types (setters only).
-// hasSetters=true for objects and requests (types with setters), false for unions/undiscriminated unions (getters only).
-// needsDereference indicates which properties should be dereferenced in getters (only relevant when hasGetters=true).
-func (f *fileWriter) AddGetterSetterTestData(typeName string, propertyNames []string, propertyTypes []string, propertySafeNames []string, hasGetters bool, hasSetters bool, needsDereference []bool) {
+func (f *fileWriter) AddGetterSetterTestData(config GetterSetterTestConfig) {
 	f.testData = append(f.testData, &typeTestData{
-		typeName:          typeName,
-		propertyNames:     propertyNames,
-		propertyTypes:     propertyTypes,
-		propertySafeNames: propertySafeNames,
-		hasGetters:        hasGetters,
-		hasSetters:        hasSetters,
-		needsDereference:  needsDereference,
+		typeName:          config.TypeName,
+		propertyNames:     config.PropertyNames,
+		propertyTypes:     config.PropertyTypes,
+		propertySafeNames: config.SafeNames,
+		hasGetters:        config.HasGetters,
+		hasSetters:        config.HasSetters,
+		needsDereference:  config.NeedsDereference,
+	})
+}
+
+// AddGetterSetterTestDataLegacy provides backward compatibility for the old function signature.
+// Deprecated: Use AddGetterSetterTestData with GetterSetterTestConfig instead.
+func (f *fileWriter) AddGetterSetterTestDataLegacy(typeName string, propertyNames []string, propertyTypes []string, propertySafeNames []string, hasGetters bool, hasSetters bool, needsDereference []bool) {
+	f.AddGetterSetterTestData(GetterSetterTestConfig{
+		TypeName:         typeName,
+		PropertyNames:    propertyNames,
+		PropertyTypes:    propertyTypes,
+		SafeNames:        propertySafeNames,
+		HasGetters:       hasGetters,
+		HasSetters:       hasSetters,
+		NeedsDereference: needsDereference,
 	})
 }
 
@@ -496,22 +556,25 @@ func stripPackageQualifier(goType string, packageName string) string {
 		return goType
 	}
 
-	// Pattern to match package.Type (with word boundaries)
-	pattern := `\b` + packageName + `\.`
-	re := regexp.MustCompile(pattern)
-	return re.ReplaceAllString(goType, "")
+	// Use compiled regex to replace package.Type patterns
+	return packageQualifierRegex.ReplaceAllStringFunc(goType, func(match string) string {
+		// Extract the package name from the match
+		pkgName := strings.TrimSuffix(match, ".")
+		if pkgName == packageName {
+			return ""
+		}
+		return match
+	})
 }
 
 // extractPackageQualifier extracts the package name from a qualified type.
 // For example, "flows.SomeType" returns "flows", "*tenants.Type" returns "tenants".
 // Returns empty string if no package qualifier is found.
 func extractPackageQualifier(goType string) string {
-	// Pattern to match package name before a dot and type name
+	// Use compiled regex to match package name before a dot and type name
 	// Matches word characters before a dot, avoiding map keys like "map[string]"
 	// Note: While Go convention is lowercase packages, this supports uppercase for edge cases
-	pattern := `\b([a-zA-Z][a-zA-Z0-9_]*)\.[A-Z]`
-	re := regexp.MustCompile(pattern)
-	matches := re.FindStringSubmatch(goType)
+	matches := packageExtractorRegex.FindStringSubmatch(goType)
 	if len(matches) > 1 {
 		return matches[1]
 	}
@@ -532,8 +595,8 @@ func (f *fileWriter) WriteGetterSetterTests(typeName string, propertyNames []str
 		for i, propertyName := range propertyNames {
 			setterName := fmt.Sprintf("Set%s", propertyName)
 			propertyType := propertyTypes[i]
-			// Use testVal prefix + property name to avoid any naming conflicts and make tests more readable
-			paramName := "testVal" + propertyName
+			// Use unique prefix + property name to avoid any naming conflicts with actual field names
+			paramName := "fernTestValue" + propertyName
 
 			f.P("\tt.Run(\"", setterName, "\", func(t *testing.T) {")
 			f.P("\t\tobj := &", typeName, "{}")
@@ -645,8 +708,8 @@ func (f *fileWriter) WriteGetterSetterTests(typeName string, propertyNames []str
 		for i, propertyName := range propertyNames {
 			setterName := fmt.Sprintf("Set%s", propertyName)
 			propertyType := propertyTypes[i]
-			// Use testVal prefix + property name to avoid any naming conflicts and make tests more readable
-			paramName := "testVal" + propertyName
+			// Use unique prefix + property name to avoid any naming conflicts with actual field names
+			paramName := "fernTestValue" + propertyName
 
 			f.P("\tt.Run(\"", setterName, "_MarksExplicit\", func(t *testing.T) {")
 			f.P("\t\tt.Parallel()")
@@ -828,34 +891,6 @@ func (f *fileWriter) WriteExtraPropertiesTests(typeName string) {
 // This is used to distinguish stdlib packages (which should be included in tests)
 // from external third-party packages (which should be filtered out).
 func isStdLibPackage(pkgName string) bool {
-	stdlibPackages := map[string]bool{
-		"time":     true,
-		"context":  true,
-		"fmt":      true,
-		"strings":  true,
-		"strconv":  true,
-		"errors":   true,
-		"io":       true,
-		"os":       true,
-		"path":     true,
-		"filepath": true,
-		"net":      true,
-		"http":     true,
-		"url":      true,
-		"json":     true,
-		"xml":      true,
-		"bytes":    true,
-		"bufio":    true,
-		"sync":     true,
-		"regexp":   true,
-		"sort":     true,
-		"math":     true,
-		"big":      true,
-		"crypto":   true,
-		"encoding": true,
-		"unicode":  true,
-		"reflect":  true,
-	}
 	return stdlibPackages[pkgName]
 }
 

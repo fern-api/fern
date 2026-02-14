@@ -104,17 +104,17 @@ func TestGettersAnimal(t *testing.T) {
 func TestSettersCat(t *testing.T) {
 	t.Run("SetName", func(t *testing.T) {
 		obj := &Cat{}
-		var testValName string
-		obj.SetName(testValName)
-		assert.Equal(t, testValName, obj.Name)
+		var fernTestValueName string
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetLikesToMeow", func(t *testing.T) {
 		obj := &Cat{}
-		var testValLikesToMeow bool
-		obj.SetLikesToMeow(testValLikesToMeow)
-		assert.Equal(t, testValLikesToMeow, obj.LikesToMeow)
+		var fernTestValueLikesToMeow bool
+		obj.SetLikesToMeow(fernTestValueLikesToMeow)
+		assert.Equal(t, fernTestValueLikesToMeow, obj.LikesToMeow)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -174,10 +174,10 @@ func TestSettersMarkExplicitCat(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Cat{}
-		var testValName string
+		var fernTestValueName string
 
 		// Act
-		obj.SetName(testValName)
+		obj.SetName(fernTestValueName)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -205,10 +205,10 @@ func TestSettersMarkExplicitCat(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Cat{}
-		var testValLikesToMeow bool
+		var fernTestValueLikesToMeow bool
 
 		// Act
-		obj.SetLikesToMeow(testValLikesToMeow)
+		obj.SetLikesToMeow(fernTestValueLikesToMeow)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -237,17 +237,17 @@ func TestSettersMarkExplicitCat(t *testing.T) {
 func TestSettersDog(t *testing.T) {
 	t.Run("SetName", func(t *testing.T) {
 		obj := &Dog{}
-		var testValName string
-		obj.SetName(testValName)
-		assert.Equal(t, testValName, obj.Name)
+		var fernTestValueName string
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetLikesToWoof", func(t *testing.T) {
 		obj := &Dog{}
-		var testValLikesToWoof bool
-		obj.SetLikesToWoof(testValLikesToWoof)
-		assert.Equal(t, testValLikesToWoof, obj.LikesToWoof)
+		var fernTestValueLikesToWoof bool
+		obj.SetLikesToWoof(fernTestValueLikesToWoof)
+		assert.Equal(t, fernTestValueLikesToWoof, obj.LikesToWoof)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -307,10 +307,10 @@ func TestSettersMarkExplicitDog(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Dog{}
-		var testValName string
+		var fernTestValueName string
 
 		// Act
-		obj.SetName(testValName)
+		obj.SetName(fernTestValueName)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -338,10 +338,10 @@ func TestSettersMarkExplicitDog(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Dog{}
-		var testValLikesToWoof bool
+		var fernTestValueLikesToWoof bool
 
 		// Act
-		obj.SetLikesToWoof(testValLikesToWoof)
+		obj.SetLikesToWoof(fernTestValueLikesToWoof)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -465,29 +465,6 @@ func TestStringDog(t *testing.T) {
 	})
 }
 
-func TestExtraPropertiesCat(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &Cat{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *Cat
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
 func TestExtraPropertiesDog(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -506,6 +483,29 @@ func TestExtraPropertiesDog(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *Dog
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCat(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &Cat{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Cat
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

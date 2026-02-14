@@ -12,9 +12,9 @@ import (
 func TestSettersPutRequest(t *testing.T) {
 	t.Run("SetId", func(t *testing.T) {
 		obj := &PutRequest{}
-		var testValId string
-		obj.SetId(testValId)
-		assert.Equal(t, testValId, obj.Id)
+		var fernTestValueId string
+		obj.SetId(fernTestValueId)
+		assert.Equal(t, fernTestValueId, obj.Id)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -25,10 +25,10 @@ func TestSettersMarkExplicitPutRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PutRequest{}
-		var testValId string
+		var fernTestValueId string
 
 		// Act
-		obj.SetId(testValId)
+		obj.SetId(fernTestValueId)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -57,33 +57,33 @@ func TestSettersMarkExplicitPutRequest(t *testing.T) {
 func TestSettersError(t *testing.T) {
 	t.Run("SetCategory", func(t *testing.T) {
 		obj := &Error{}
-		var testValCategory ErrorCategory
-		obj.SetCategory(testValCategory)
-		assert.Equal(t, testValCategory, obj.Category)
+		var fernTestValueCategory ErrorCategory
+		obj.SetCategory(fernTestValueCategory)
+		assert.Equal(t, fernTestValueCategory, obj.Category)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetCode", func(t *testing.T) {
 		obj := &Error{}
-		var testValCode ErrorCode
-		obj.SetCode(testValCode)
-		assert.Equal(t, testValCode, obj.Code)
+		var fernTestValueCode ErrorCode
+		obj.SetCode(fernTestValueCode)
+		assert.Equal(t, fernTestValueCode, obj.Code)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetDetail", func(t *testing.T) {
 		obj := &Error{}
-		var testValDetail *string
-		obj.SetDetail(testValDetail)
-		assert.Equal(t, testValDetail, obj.Detail)
+		var fernTestValueDetail *string
+		obj.SetDetail(fernTestValueDetail)
+		assert.Equal(t, fernTestValueDetail, obj.Detail)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetField", func(t *testing.T) {
 		obj := &Error{}
-		var testValField *string
-		obj.SetField(testValField)
-		assert.Equal(t, testValField, obj.Field)
+		var fernTestValueField *string
+		obj.SetField(fernTestValueField)
+		assert.Equal(t, fernTestValueField, obj.Field)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -209,10 +209,10 @@ func TestSettersMarkExplicitError(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Error{}
-		var testValCategory ErrorCategory
+		var fernTestValueCategory ErrorCategory
 
 		// Act
-		obj.SetCategory(testValCategory)
+		obj.SetCategory(fernTestValueCategory)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -240,10 +240,10 @@ func TestSettersMarkExplicitError(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Error{}
-		var testValCode ErrorCode
+		var fernTestValueCode ErrorCode
 
 		// Act
-		obj.SetCode(testValCode)
+		obj.SetCode(fernTestValueCode)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -271,10 +271,10 @@ func TestSettersMarkExplicitError(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Error{}
-		var testValDetail *string
+		var fernTestValueDetail *string
 
 		// Act
-		obj.SetDetail(testValDetail)
+		obj.SetDetail(fernTestValueDetail)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -302,10 +302,10 @@ func TestSettersMarkExplicitError(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Error{}
-		var testValField *string
+		var fernTestValueField *string
 
 		// Act
-		obj.SetField(testValField)
+		obj.SetField(fernTestValueField)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -334,9 +334,9 @@ func TestSettersMarkExplicitError(t *testing.T) {
 func TestSettersPutResponse(t *testing.T) {
 	t.Run("SetErrors", func(t *testing.T) {
 		obj := &PutResponse{}
-		var testValErrors []*Error
-		obj.SetErrors(testValErrors)
-		assert.Equal(t, testValErrors, obj.Errors)
+		var fernTestValueErrors []*Error
+		obj.SetErrors(fernTestValueErrors)
+		assert.Equal(t, fernTestValueErrors, obj.Errors)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -383,10 +383,10 @@ func TestSettersMarkExplicitPutResponse(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PutResponse{}
-		var testValErrors []*Error
+		var fernTestValueErrors []*Error
 
 		// Act
-		obj.SetErrors(testValErrors)
+		obj.SetErrors(fernTestValueErrors)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

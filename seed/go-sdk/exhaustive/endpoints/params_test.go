@@ -12,17 +12,17 @@ import (
 func TestSettersGetWithMultipleQuery(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
 		obj := &GetWithMultipleQuery{}
-		var testValQuery []string
-		obj.SetQuery(testValQuery)
-		assert.Equal(t, testValQuery, obj.Query)
+		var fernTestValueQuery []string
+		obj.SetQuery(fernTestValueQuery)
+		assert.Equal(t, fernTestValueQuery, obj.Query)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetNumber", func(t *testing.T) {
 		obj := &GetWithMultipleQuery{}
-		var testValNumber []int
-		obj.SetNumber(testValNumber)
-		assert.Equal(t, testValNumber, obj.Number)
+		var fernTestValueNumber []int
+		obj.SetNumber(fernTestValueNumber)
+		assert.Equal(t, fernTestValueNumber, obj.Number)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -33,10 +33,10 @@ func TestSettersMarkExplicitGetWithMultipleQuery(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithMultipleQuery{}
-		var testValQuery []string
+		var fernTestValueQuery []string
 
 		// Act
-		obj.SetQuery(testValQuery)
+		obj.SetQuery(fernTestValueQuery)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -64,10 +64,10 @@ func TestSettersMarkExplicitGetWithMultipleQuery(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithMultipleQuery{}
-		var testValNumber []int
+		var fernTestValueNumber []int
 
 		// Act
-		obj.SetNumber(testValNumber)
+		obj.SetNumber(fernTestValueNumber)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -96,9 +96,9 @@ func TestSettersMarkExplicitGetWithMultipleQuery(t *testing.T) {
 func TestSettersGetWithInlinePath(t *testing.T) {
 	t.Run("SetParam", func(t *testing.T) {
 		obj := &GetWithInlinePath{}
-		var testValParam string
-		obj.SetParam(testValParam)
-		assert.Equal(t, testValParam, obj.Param)
+		var fernTestValueParam string
+		obj.SetParam(fernTestValueParam)
+		assert.Equal(t, fernTestValueParam, obj.Param)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -109,10 +109,10 @@ func TestSettersMarkExplicitGetWithInlinePath(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithInlinePath{}
-		var testValParam string
+		var fernTestValueParam string
 
 		// Act
-		obj.SetParam(testValParam)
+		obj.SetParam(fernTestValueParam)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -141,17 +141,17 @@ func TestSettersMarkExplicitGetWithInlinePath(t *testing.T) {
 func TestSettersGetWithInlinePathAndQuery(t *testing.T) {
 	t.Run("SetParam", func(t *testing.T) {
 		obj := &GetWithInlinePathAndQuery{}
-		var testValParam string
-		obj.SetParam(testValParam)
-		assert.Equal(t, testValParam, obj.Param)
+		var fernTestValueParam string
+		obj.SetParam(fernTestValueParam)
+		assert.Equal(t, fernTestValueParam, obj.Param)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetQuery", func(t *testing.T) {
 		obj := &GetWithInlinePathAndQuery{}
-		var testValQuery string
-		obj.SetQuery(testValQuery)
-		assert.Equal(t, testValQuery, obj.Query)
+		var fernTestValueQuery string
+		obj.SetQuery(fernTestValueQuery)
+		assert.Equal(t, fernTestValueQuery, obj.Query)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -162,10 +162,10 @@ func TestSettersMarkExplicitGetWithInlinePathAndQuery(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithInlinePathAndQuery{}
-		var testValParam string
+		var fernTestValueParam string
 
 		// Act
-		obj.SetParam(testValParam)
+		obj.SetParam(fernTestValueParam)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -193,10 +193,10 @@ func TestSettersMarkExplicitGetWithInlinePathAndQuery(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithInlinePathAndQuery{}
-		var testValQuery string
+		var fernTestValueQuery string
 
 		// Act
-		obj.SetQuery(testValQuery)
+		obj.SetQuery(fernTestValueQuery)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -225,9 +225,9 @@ func TestSettersMarkExplicitGetWithInlinePathAndQuery(t *testing.T) {
 func TestSettersGetWithPathAndQuery(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
 		obj := &GetWithPathAndQuery{}
-		var testValQuery string
-		obj.SetQuery(testValQuery)
-		assert.Equal(t, testValQuery, obj.Query)
+		var fernTestValueQuery string
+		obj.SetQuery(fernTestValueQuery)
+		assert.Equal(t, fernTestValueQuery, obj.Query)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -238,10 +238,10 @@ func TestSettersMarkExplicitGetWithPathAndQuery(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithPathAndQuery{}
-		var testValQuery string
+		var fernTestValueQuery string
 
 		// Act
-		obj.SetQuery(testValQuery)
+		obj.SetQuery(fernTestValueQuery)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -270,17 +270,17 @@ func TestSettersMarkExplicitGetWithPathAndQuery(t *testing.T) {
 func TestSettersGetWithQuery(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
 		obj := &GetWithQuery{}
-		var testValQuery string
-		obj.SetQuery(testValQuery)
-		assert.Equal(t, testValQuery, obj.Query)
+		var fernTestValueQuery string
+		obj.SetQuery(fernTestValueQuery)
+		assert.Equal(t, fernTestValueQuery, obj.Query)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetNumber", func(t *testing.T) {
 		obj := &GetWithQuery{}
-		var testValNumber int
-		obj.SetNumber(testValNumber)
-		assert.Equal(t, testValNumber, obj.Number)
+		var fernTestValueNumber int
+		obj.SetNumber(fernTestValueNumber)
+		assert.Equal(t, fernTestValueNumber, obj.Number)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -291,10 +291,10 @@ func TestSettersMarkExplicitGetWithQuery(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithQuery{}
-		var testValQuery string
+		var fernTestValueQuery string
 
 		// Act
-		obj.SetQuery(testValQuery)
+		obj.SetQuery(fernTestValueQuery)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -322,10 +322,10 @@ func TestSettersMarkExplicitGetWithQuery(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetWithQuery{}
-		var testValNumber int
+		var fernTestValueNumber int
 
 		// Act
-		obj.SetNumber(testValNumber)
+		obj.SetNumber(fernTestValueNumber)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -354,9 +354,9 @@ func TestSettersMarkExplicitGetWithQuery(t *testing.T) {
 func TestSettersModifyResourceAtInlinedPath(t *testing.T) {
 	t.Run("SetParam", func(t *testing.T) {
 		obj := &ModifyResourceAtInlinedPath{}
-		var testValParam string
-		obj.SetParam(testValParam)
-		assert.Equal(t, testValParam, obj.Param)
+		var fernTestValueParam string
+		obj.SetParam(fernTestValueParam)
+		assert.Equal(t, fernTestValueParam, obj.Param)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -367,10 +367,10 @@ func TestSettersMarkExplicitModifyResourceAtInlinedPath(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ModifyResourceAtInlinedPath{}
-		var testValParam string
+		var fernTestValueParam string
 
 		// Act
-		obj.SetParam(testValParam)
+		obj.SetParam(fernTestValueParam)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

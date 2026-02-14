@@ -13,25 +13,25 @@ import (
 func TestSettersPostWithObjectBody(t *testing.T) {
 	t.Run("SetFieldString", func(t *testing.T) {
 		obj := &PostWithObjectBody{}
-		var testValFieldString string
-		obj.SetFieldString(testValFieldString)
-		assert.Equal(t, testValFieldString, obj.FieldString)
+		var fernTestValueFieldString string
+		obj.SetFieldString(fernTestValueFieldString)
+		assert.Equal(t, fernTestValueFieldString, obj.FieldString)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetInteger", func(t *testing.T) {
 		obj := &PostWithObjectBody{}
-		var testValInteger int
-		obj.SetInteger(testValInteger)
-		assert.Equal(t, testValInteger, obj.Integer)
+		var fernTestValueInteger int
+		obj.SetInteger(fernTestValueInteger)
+		assert.Equal(t, fernTestValueInteger, obj.Integer)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetNestedObject", func(t *testing.T) {
 		obj := &PostWithObjectBody{}
-		var testValNestedObject *types.ObjectWithOptionalField
-		obj.SetNestedObject(testValNestedObject)
-		assert.Equal(t, testValNestedObject, obj.NestedObject)
+		var fernTestValueNestedObject *types.ObjectWithOptionalField
+		obj.SetNestedObject(fernTestValueNestedObject)
+		assert.Equal(t, fernTestValueNestedObject, obj.NestedObject)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -42,10 +42,10 @@ func TestSettersMarkExplicitPostWithObjectBody(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PostWithObjectBody{}
-		var testValFieldString string
+		var fernTestValueFieldString string
 
 		// Act
-		obj.SetFieldString(testValFieldString)
+		obj.SetFieldString(fernTestValueFieldString)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -73,10 +73,10 @@ func TestSettersMarkExplicitPostWithObjectBody(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PostWithObjectBody{}
-		var testValInteger int
+		var fernTestValueInteger int
 
 		// Act
-		obj.SetInteger(testValInteger)
+		obj.SetInteger(fernTestValueInteger)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -104,10 +104,10 @@ func TestSettersMarkExplicitPostWithObjectBody(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PostWithObjectBody{}
-		var testValNestedObject *types.ObjectWithOptionalField
+		var fernTestValueNestedObject *types.ObjectWithOptionalField
 
 		// Act
-		obj.SetNestedObject(testValNestedObject)
+		obj.SetNestedObject(fernTestValueNestedObject)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

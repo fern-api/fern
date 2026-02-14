@@ -13,9 +13,9 @@ import (
 func TestSettersDoubleOptional(t *testing.T) {
 	t.Run("SetOptionalAlias", func(t *testing.T) {
 		obj := &DoubleOptional{}
-		var testValOptionalAlias *OptionalAlias
-		obj.SetOptionalAlias(testValOptionalAlias)
-		assert.Equal(t, testValOptionalAlias, obj.OptionalAlias)
+		var fernTestValueOptionalAlias *OptionalAlias
+		obj.SetOptionalAlias(fernTestValueOptionalAlias)
+		assert.Equal(t, fernTestValueOptionalAlias, obj.OptionalAlias)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -62,10 +62,10 @@ func TestSettersMarkExplicitDoubleOptional(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &DoubleOptional{}
-		var testValOptionalAlias *OptionalAlias
+		var fernTestValueOptionalAlias *OptionalAlias
 
 		// Act
-		obj.SetOptionalAlias(testValOptionalAlias)
+		obj.SetOptionalAlias(fernTestValueOptionalAlias)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -94,17 +94,17 @@ func TestSettersMarkExplicitDoubleOptional(t *testing.T) {
 func TestSettersNestedObjectWithOptionalField(t *testing.T) {
 	t.Run("SetFieldString", func(t *testing.T) {
 		obj := &NestedObjectWithOptionalField{}
-		var testValFieldString *string
-		obj.SetFieldString(testValFieldString)
-		assert.Equal(t, testValFieldString, obj.FieldString)
+		var fernTestValueFieldString *string
+		obj.SetFieldString(fernTestValueFieldString)
+		assert.Equal(t, fernTestValueFieldString, obj.FieldString)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetNestedObject", func(t *testing.T) {
 		obj := &NestedObjectWithOptionalField{}
-		var testValNestedObject *ObjectWithOptionalField
-		obj.SetNestedObject(testValNestedObject)
-		assert.Equal(t, testValNestedObject, obj.NestedObject)
+		var fernTestValueNestedObject *ObjectWithOptionalField
+		obj.SetNestedObject(fernTestValueNestedObject)
+		assert.Equal(t, fernTestValueNestedObject, obj.NestedObject)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -184,10 +184,10 @@ func TestSettersMarkExplicitNestedObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &NestedObjectWithOptionalField{}
-		var testValFieldString *string
+		var fernTestValueFieldString *string
 
 		// Act
-		obj.SetFieldString(testValFieldString)
+		obj.SetFieldString(fernTestValueFieldString)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -215,10 +215,10 @@ func TestSettersMarkExplicitNestedObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &NestedObjectWithOptionalField{}
-		var testValNestedObject *ObjectWithOptionalField
+		var fernTestValueNestedObject *ObjectWithOptionalField
 
 		// Act
-		obj.SetNestedObject(testValNestedObject)
+		obj.SetNestedObject(fernTestValueNestedObject)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -247,17 +247,17 @@ func TestSettersMarkExplicitNestedObjectWithOptionalField(t *testing.T) {
 func TestSettersNestedObjectWithRequiredField(t *testing.T) {
 	t.Run("SetFieldString", func(t *testing.T) {
 		obj := &NestedObjectWithRequiredField{}
-		var testValFieldString string
-		obj.SetFieldString(testValFieldString)
-		assert.Equal(t, testValFieldString, obj.FieldString)
+		var fernTestValueFieldString string
+		obj.SetFieldString(fernTestValueFieldString)
+		assert.Equal(t, fernTestValueFieldString, obj.FieldString)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetNestedObject", func(t *testing.T) {
 		obj := &NestedObjectWithRequiredField{}
-		var testValNestedObject *ObjectWithOptionalField
-		obj.SetNestedObject(testValNestedObject)
-		assert.Equal(t, testValNestedObject, obj.NestedObject)
+		var fernTestValueNestedObject *ObjectWithOptionalField
+		obj.SetNestedObject(fernTestValueNestedObject)
+		assert.Equal(t, fernTestValueNestedObject, obj.NestedObject)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -327,10 +327,10 @@ func TestSettersMarkExplicitNestedObjectWithRequiredField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &NestedObjectWithRequiredField{}
-		var testValFieldString string
+		var fernTestValueFieldString string
 
 		// Act
-		obj.SetFieldString(testValFieldString)
+		obj.SetFieldString(fernTestValueFieldString)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -358,10 +358,10 @@ func TestSettersMarkExplicitNestedObjectWithRequiredField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &NestedObjectWithRequiredField{}
-		var testValNestedObject *ObjectWithOptionalField
+		var fernTestValueNestedObject *ObjectWithOptionalField
 
 		// Act
-		obj.SetNestedObject(testValNestedObject)
+		obj.SetNestedObject(fernTestValueNestedObject)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -390,17 +390,17 @@ func TestSettersMarkExplicitNestedObjectWithRequiredField(t *testing.T) {
 func TestSettersObjectWithDatetimeLikeString(t *testing.T) {
 	t.Run("SetDatetimeLikeString", func(t *testing.T) {
 		obj := &ObjectWithDatetimeLikeString{}
-		var testValDatetimeLikeString string
-		obj.SetDatetimeLikeString(testValDatetimeLikeString)
-		assert.Equal(t, testValDatetimeLikeString, obj.DatetimeLikeString)
+		var fernTestValueDatetimeLikeString string
+		obj.SetDatetimeLikeString(fernTestValueDatetimeLikeString)
+		assert.Equal(t, fernTestValueDatetimeLikeString, obj.DatetimeLikeString)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetActualDatetime", func(t *testing.T) {
 		obj := &ObjectWithDatetimeLikeString{}
-		var testValActualDatetime time.Time
-		obj.SetActualDatetime(testValActualDatetime)
-		assert.Equal(t, testValActualDatetime, obj.ActualDatetime)
+		var fernTestValueActualDatetime time.Time
+		obj.SetActualDatetime(fernTestValueActualDatetime)
+		assert.Equal(t, fernTestValueActualDatetime, obj.ActualDatetime)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -460,10 +460,10 @@ func TestSettersMarkExplicitObjectWithDatetimeLikeString(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithDatetimeLikeString{}
-		var testValDatetimeLikeString string
+		var fernTestValueDatetimeLikeString string
 
 		// Act
-		obj.SetDatetimeLikeString(testValDatetimeLikeString)
+		obj.SetDatetimeLikeString(fernTestValueDatetimeLikeString)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -491,10 +491,10 @@ func TestSettersMarkExplicitObjectWithDatetimeLikeString(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithDatetimeLikeString{}
-		var testValActualDatetime time.Time
+		var fernTestValueActualDatetime time.Time
 
 		// Act
-		obj.SetActualDatetime(testValActualDatetime)
+		obj.SetActualDatetime(fernTestValueActualDatetime)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -523,9 +523,9 @@ func TestSettersMarkExplicitObjectWithDatetimeLikeString(t *testing.T) {
 func TestSettersObjectWithMapOfMap(t *testing.T) {
 	t.Run("SetMap", func(t *testing.T) {
 		obj := &ObjectWithMapOfMap{}
-		var testValMap map[string]map[string]string
-		obj.SetMap(testValMap)
-		assert.Equal(t, testValMap, obj.Map)
+		var fernTestValueMap map[string]map[string]string
+		obj.SetMap(fernTestValueMap)
+		assert.Equal(t, fernTestValueMap, obj.Map)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -572,10 +572,10 @@ func TestSettersMarkExplicitObjectWithMapOfMap(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithMapOfMap{}
-		var testValMap map[string]map[string]string
+		var fernTestValueMap map[string]map[string]string
 
 		// Act
-		obj.SetMap(testValMap)
+		obj.SetMap(fernTestValueMap)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -604,97 +604,97 @@ func TestSettersMarkExplicitObjectWithMapOfMap(t *testing.T) {
 func TestSettersObjectWithOptionalField(t *testing.T) {
 	t.Run("SetFieldString", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValFieldString *string
-		obj.SetFieldString(testValFieldString)
-		assert.Equal(t, testValFieldString, obj.FieldString)
+		var fernTestValueFieldString *string
+		obj.SetFieldString(fernTestValueFieldString)
+		assert.Equal(t, fernTestValueFieldString, obj.FieldString)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetInteger", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValInteger *int
-		obj.SetInteger(testValInteger)
-		assert.Equal(t, testValInteger, obj.Integer)
+		var fernTestValueInteger *int
+		obj.SetInteger(fernTestValueInteger)
+		assert.Equal(t, fernTestValueInteger, obj.Integer)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetLong", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValLong *int64
-		obj.SetLong(testValLong)
-		assert.Equal(t, testValLong, obj.Long)
+		var fernTestValueLong *int64
+		obj.SetLong(fernTestValueLong)
+		assert.Equal(t, fernTestValueLong, obj.Long)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetDouble", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValDouble *float64
-		obj.SetDouble(testValDouble)
-		assert.Equal(t, testValDouble, obj.Double)
+		var fernTestValueDouble *float64
+		obj.SetDouble(fernTestValueDouble)
+		assert.Equal(t, fernTestValueDouble, obj.Double)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetBool", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValBool *bool
-		obj.SetBool(testValBool)
-		assert.Equal(t, testValBool, obj.Bool)
+		var fernTestValueBool *bool
+		obj.SetBool(fernTestValueBool)
+		assert.Equal(t, fernTestValueBool, obj.Bool)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetDatetime", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValDatetime *time.Time
-		obj.SetDatetime(testValDatetime)
-		assert.Equal(t, testValDatetime, obj.Datetime)
+		var fernTestValueDatetime *time.Time
+		obj.SetDatetime(fernTestValueDatetime)
+		assert.Equal(t, fernTestValueDatetime, obj.Datetime)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetDate", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValDate *time.Time
-		obj.SetDate(testValDate)
-		assert.Equal(t, testValDate, obj.Date)
+		var fernTestValueDate *time.Time
+		obj.SetDate(fernTestValueDate)
+		assert.Equal(t, fernTestValueDate, obj.Date)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetBase64", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValBase64 *[]byte
-		obj.SetBase64(testValBase64)
-		assert.Equal(t, testValBase64, obj.Base64)
+		var fernTestValueBase64 *[]byte
+		obj.SetBase64(fernTestValueBase64)
+		assert.Equal(t, fernTestValueBase64, obj.Base64)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetList", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValList []string
-		obj.SetList(testValList)
-		assert.Equal(t, testValList, obj.List)
+		var fernTestValueList []string
+		obj.SetList(fernTestValueList)
+		assert.Equal(t, fernTestValueList, obj.List)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetSet", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValSet []string
-		obj.SetSet(testValSet)
-		assert.Equal(t, testValSet, obj.Set)
+		var fernTestValueSet []string
+		obj.SetSet(fernTestValueSet)
+		assert.Equal(t, fernTestValueSet, obj.Set)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetMap", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValMap map[int]string
-		obj.SetMap(testValMap)
-		assert.Equal(t, testValMap, obj.Map)
+		var fernTestValueMap map[int]string
+		obj.SetMap(fernTestValueMap)
+		assert.Equal(t, fernTestValueMap, obj.Map)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetBigint", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var testValBigint *string
-		obj.SetBigint(testValBigint)
-		assert.Equal(t, testValBigint, obj.Bigint)
+		var fernTestValueBigint *string
+		obj.SetBigint(fernTestValueBigint)
+		assert.Equal(t, fernTestValueBigint, obj.Bigint)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1104,10 +1104,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValFieldString *string
+		var fernTestValueFieldString *string
 
 		// Act
-		obj.SetFieldString(testValFieldString)
+		obj.SetFieldString(fernTestValueFieldString)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1135,10 +1135,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValInteger *int
+		var fernTestValueInteger *int
 
 		// Act
-		obj.SetInteger(testValInteger)
+		obj.SetInteger(fernTestValueInteger)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1166,10 +1166,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValLong *int64
+		var fernTestValueLong *int64
 
 		// Act
-		obj.SetLong(testValLong)
+		obj.SetLong(fernTestValueLong)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1197,10 +1197,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValDouble *float64
+		var fernTestValueDouble *float64
 
 		// Act
-		obj.SetDouble(testValDouble)
+		obj.SetDouble(fernTestValueDouble)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1228,10 +1228,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValBool *bool
+		var fernTestValueBool *bool
 
 		// Act
-		obj.SetBool(testValBool)
+		obj.SetBool(fernTestValueBool)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1259,10 +1259,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValDatetime *time.Time
+		var fernTestValueDatetime *time.Time
 
 		// Act
-		obj.SetDatetime(testValDatetime)
+		obj.SetDatetime(fernTestValueDatetime)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1290,10 +1290,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValDate *time.Time
+		var fernTestValueDate *time.Time
 
 		// Act
-		obj.SetDate(testValDate)
+		obj.SetDate(fernTestValueDate)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1321,10 +1321,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValBase64 *[]byte
+		var fernTestValueBase64 *[]byte
 
 		// Act
-		obj.SetBase64(testValBase64)
+		obj.SetBase64(fernTestValueBase64)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1352,10 +1352,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValList []string
+		var fernTestValueList []string
 
 		// Act
-		obj.SetList(testValList)
+		obj.SetList(fernTestValueList)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1383,10 +1383,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValSet []string
+		var fernTestValueSet []string
 
 		// Act
-		obj.SetSet(testValSet)
+		obj.SetSet(fernTestValueSet)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1414,10 +1414,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValMap map[int]string
+		var fernTestValueMap map[int]string
 
 		// Act
-		obj.SetMap(testValMap)
+		obj.SetMap(fernTestValueMap)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1445,10 +1445,10 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var testValBigint *string
+		var fernTestValueBigint *string
 
 		// Act
-		obj.SetBigint(testValBigint)
+		obj.SetBigint(fernTestValueBigint)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1477,9 +1477,9 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 func TestSettersObjectWithRequiredField(t *testing.T) {
 	t.Run("SetFieldString", func(t *testing.T) {
 		obj := &ObjectWithRequiredField{}
-		var testValFieldString string
-		obj.SetFieldString(testValFieldString)
-		assert.Equal(t, testValFieldString, obj.FieldString)
+		var fernTestValueFieldString string
+		obj.SetFieldString(fernTestValueFieldString)
+		assert.Equal(t, fernTestValueFieldString, obj.FieldString)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1516,10 +1516,10 @@ func TestSettersMarkExplicitObjectWithRequiredField(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithRequiredField{}
-		var testValFieldString string
+		var fernTestValueFieldString string
 
 		// Act
-		obj.SetFieldString(testValFieldString)
+		obj.SetFieldString(fernTestValueFieldString)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1543,105 +1543,6 @@ func TestSettersMarkExplicitObjectWithRequiredField(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-}
-
-func TestJSONMarshalingObjectWithDatetimeLikeString(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ObjectWithDatetimeLikeString{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled ObjectWithDatetimeLikeString
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj ObjectWithDatetimeLikeString
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj ObjectWithDatetimeLikeString
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingObjectWithMapOfMap(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ObjectWithMapOfMap{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled ObjectWithMapOfMap
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj ObjectWithMapOfMap
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj ObjectWithMapOfMap
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingObjectWithOptionalField(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ObjectWithOptionalField{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled ObjectWithOptionalField
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj ObjectWithOptionalField
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj ObjectWithOptionalField
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingObjectWithRequiredField(t *testing.T) {
@@ -1776,35 +1677,102 @@ func TestJSONMarshalingNestedObjectWithRequiredField(t *testing.T) {
 	})
 }
 
-func TestStringObjectWithOptionalField(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
+func TestJSONMarshalingObjectWithDatetimeLikeString(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
-		obj := &ObjectWithOptionalField{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+		// Arrange
+		obj := &ObjectWithDatetimeLikeString{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ObjectWithDatetimeLikeString
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj *ObjectWithOptionalField
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+		var obj ObjectWithDatetimeLikeString
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithDatetimeLikeString
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
 }
 
-func TestStringObjectWithRequiredField(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
+func TestJSONMarshalingObjectWithMapOfMap(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
-		obj := &ObjectWithRequiredField{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+		// Arrange
+		obj := &ObjectWithMapOfMap{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ObjectWithMapOfMap
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj *ObjectWithRequiredField
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+		var obj ObjectWithMapOfMap
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithMapOfMap
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingObjectWithOptionalField(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithOptionalField{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ObjectWithOptionalField
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithOptionalField
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithOptionalField
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
 }
 
@@ -1883,6 +1851,38 @@ func TestStringObjectWithMapOfMap(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ObjectWithMapOfMap
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringObjectWithOptionalField(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithOptionalField{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithOptionalField
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringObjectWithRequiredField(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithRequiredField{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithRequiredField
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
