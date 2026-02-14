@@ -294,39 +294,6 @@ func TestSettersMarkExplicitMyObjectWithOptional(t *testing.T) {
 
 }
 
-func TestJSONMarshalingMyObject(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &MyObject{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled MyObject
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj MyObject
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj MyObject
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
 func TestJSONMarshalingMyObjectWithOptional(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -393,6 +360,55 @@ func TestJSONMarshalingMyInlineType(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingMyObject(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &MyObject{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled MyObject
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj MyObject
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj MyObject
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestStringMyObjectWithOptional(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &MyObjectWithOptional{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *MyObjectWithOptional
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringMyInlineType(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -425,51 +441,6 @@ func TestStringMyObject(t *testing.T) {
 	})
 }
 
-func TestStringMyObjectWithOptional(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &MyObjectWithOptional{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *MyObjectWithOptional
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestEnumObjectType(t *testing.T) {
-	t.Run("NewFromString_FOO", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewObjectTypeFromString("FOO")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ObjectType("FOO"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_BAR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewObjectTypeFromString("BAR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ObjectType("BAR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewObjectTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewObjectTypeFromString("FOO")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumOpenEnumType(t *testing.T) {
 	t.Run("NewFromString_OPTION_A", func(t *testing.T) {
 		t.Parallel()
@@ -499,6 +470,35 @@ func TestEnumOpenEnumType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewOpenEnumTypeFromString("OPTION_A")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumObjectType(t *testing.T) {
+	t.Run("NewFromString_FOO", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewObjectTypeFromString("FOO")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ObjectType("FOO"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_BAR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewObjectTypeFromString("BAR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ObjectType("BAR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewObjectTypeFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewObjectTypeFromString("FOO")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
