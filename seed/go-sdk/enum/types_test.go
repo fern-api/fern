@@ -56,93 +56,6 @@ func TestGettersColorOrOperand(t *testing.T) {
 
 }
 
-func TestEnumColor(t *testing.T) {
-	t.Run("NewFromString_red", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewColorFromString("red")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, Color("red"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_blue", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewColorFromString("blue")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, Color("blue"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewColorFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewColorFromString("red")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEnumWithCustom(t *testing.T) {
-	t.Run("NewFromString_safe", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEnumWithCustomFromString("safe")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EnumWithCustom("safe"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Custom", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEnumWithCustomFromString("Custom")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EnumWithCustom("Custom"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEnumWithCustomFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEnumWithCustomFromString("safe")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEnumWithSpecialCharacters(t *testing.T) {
-	t.Run("NewFromString___bla", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEnumWithSpecialCharactersFromString("\\$bla")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EnumWithSpecialCharacters("\\$bla"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString___yo", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEnumWithSpecialCharactersFromString("\\$yo")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EnumWithSpecialCharacters("\\$yo"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEnumWithSpecialCharactersFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEnumWithSpecialCharactersFromString("\\$bla")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumOperand(t *testing.T) {
 	t.Run("NewFromString_>", func(t *testing.T) {
 		t.Parallel()
@@ -411,6 +324,93 @@ func TestEnumSpecialEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewSpecialEnumFromString("")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumColor(t *testing.T) {
+	t.Run("NewFromString_red", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewColorFromString("red")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, Color("red"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_blue", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewColorFromString("blue")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, Color("blue"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewColorFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewColorFromString("red")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEnumWithCustom(t *testing.T) {
+	t.Run("NewFromString_safe", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEnumWithCustomFromString("safe")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EnumWithCustom("safe"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Custom", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEnumWithCustomFromString("Custom")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EnumWithCustom("Custom"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEnumWithCustomFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEnumWithCustomFromString("safe")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEnumWithSpecialCharacters(t *testing.T) {
+	t.Run("NewFromString___bla", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEnumWithSpecialCharactersFromString("\\$bla")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EnumWithSpecialCharacters("\\$bla"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString___yo", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEnumWithSpecialCharactersFromString("\\$yo")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EnumWithSpecialCharacters("\\$yo"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEnumWithSpecialCharactersFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEnumWithSpecialCharactersFromString("\\$bla")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
