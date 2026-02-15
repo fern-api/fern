@@ -510,42 +510,6 @@ func TestStringPutResponse(t *testing.T) {
 	})
 }
 
-func TestEnumErrorCategory(t *testing.T) {
-	t.Run("NewFromString_API_ERROR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewErrorCategoryFromString("API_ERROR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ErrorCategory("API_ERROR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_AUTHENTICATION_ERROR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewErrorCategoryFromString("AUTHENTICATION_ERROR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ErrorCategory("AUTHENTICATION_ERROR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_INVALID_REQUEST_ERROR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewErrorCategoryFromString("INVALID_REQUEST_ERROR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ErrorCategory("INVALID_REQUEST_ERROR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewErrorCategoryFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewErrorCategoryFromString("API_ERROR")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumErrorCode(t *testing.T) {
 	t.Run("NewFromString_INTERNAL_SERVER_ERROR", func(t *testing.T) {
 		t.Parallel()
@@ -638,26 +602,39 @@ func TestEnumErrorCode(t *testing.T) {
 	})
 }
 
-func TestExtraPropertiesError(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
+func TestEnumErrorCategory(t *testing.T) {
+	t.Run("NewFromString_API_ERROR", func(t *testing.T) {
 		t.Parallel()
-		obj := &Error{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
+		val, err := NewErrorCategoryFromString("API_ERROR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ErrorCategory("API_ERROR"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+	t.Run("NewFromString_AUTHENTICATION_ERROR", func(t *testing.T) {
 		t.Parallel()
-		var obj *Error
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+		val, err := NewErrorCategoryFromString("AUTHENTICATION_ERROR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ErrorCategory("AUTHENTICATION_ERROR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_INVALID_REQUEST_ERROR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewErrorCategoryFromString("INVALID_REQUEST_ERROR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ErrorCategory("INVALID_REQUEST_ERROR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewErrorCategoryFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewErrorCategoryFromString("API_ERROR")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 
@@ -679,6 +656,29 @@ func TestExtraPropertiesPutResponse(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *PutResponse
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesError(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &Error{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Error
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
