@@ -249,6 +249,13 @@ export class GenerateCommand {
             subtitle: `org: ${workspace.sdks.org}`
         });
 
+        context.onShutdown(() => {
+            taskGroup.finish({
+                successMessage: `Successfully generated ${sdkInitialism}`,
+                errorMessage: `Generation interrupted`
+            });
+        });
+
         await Promise.all(
             targets.map(async (target) => {
                 const task = taskGroup.getTask(target.name);

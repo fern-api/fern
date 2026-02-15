@@ -19,6 +19,9 @@ import { LogFileWriter } from "./LogFileWriter.js";
 
 export class Context {
     private ttyAwareLogger: TtyAwareLogger;
+    private shutdownCallbacks: Array<() => void> = [];
+    private isShuttingDown = false;
+    private logFilePathPrinted = false;
 
     public readonly cwd: AbsoluteFilePath;
     public readonly logLevel: LogLevel;
@@ -138,6 +141,47 @@ export class Context {
         }
 
         return { type: "user", value: token };
+    }
+
+    /**
+     * Register a callback to run during graceful shutdown (e.g. SIGINT).
+     * Callbacks are invoked synchronously in registration order.
+     */
+    public onShutdown(callback: () => void): void {
+        this.shutdownCallbacks.push(callback);
+    }
+
+    /**
+     * Run all registered shutdown callbacks, then finish the logger.
+     */
+    public shutdown(): void {
+        if (this.isShuttingDown) {
+            return;
+        }
+        this.isShuttingDown = true;
+        for (const callback of this.shutdownCallbacks) {
+            try {
+                callback();
+            } catch {
+                // Swallow errors to ensure we always restore the terminal.
+            }
+        }
+        this.finish();
+    }
+
+    /**
+     * Print the log file path to the given stream (defaults to stderr).
+     */
+    public printLogFilePath(stream: NodeJS.WriteStream): void {
+        if (this.logFilePathPrinted) {
+            return;
+        }
+        const logFilePath = this.getLogFilePath();
+        if (logFilePath == null) {
+            return;
+        }
+        this.logFilePathPrinted = true;
+        stream.write(`\n${chalk.dim(`Logs written to: ${logFilePath}`)}\n`);
     }
 
     /**
