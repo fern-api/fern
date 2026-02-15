@@ -1,6 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { mkdtemp, readFile, rm } from "fs/promises";
-import { buildSchema, introspectionFromSchema, printSchema } from "graphql";
+import { buildSchema, introspectionFromSchema } from "graphql";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -107,8 +107,10 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryGraphQLIntrospection("http://example.com/graphql", mockLogger);
 
             expect(result.success).toBe(true);
-            expect(result.result).toContain("type Query");
-            expect(result.result).toContain("type User");
+            if (result.success) {
+                expect(result.result).toContain("type Query");
+                expect(result.result).toContain("type User");
+            }
             expect(mockFetch).toHaveBeenCalledWith(
                 "http://example.com/graphql",
                 expect.objectContaining({
@@ -131,7 +133,9 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryGraphQLIntrospection("http://example.com/graphql", mockLogger);
 
             expect(result.success).toBe(false);
-            expect(result.error).toContain("requires authentication");
+            if (!result.success) {
+                expect(result.error).toContain("requires authentication");
+            }
         });
 
         it("should handle GraphQL errors", async () => {
@@ -145,7 +149,9 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryGraphQLIntrospection("http://example.com/graphql", mockLogger);
 
             expect(result.success).toBe(false);
-            expect(result.error).toContain("GraphQL introspection errors");
+            if (!result.success) {
+                expect(result.error).toContain("GraphQL introspection errors");
+            }
         });
 
         it("should handle network errors", async () => {
@@ -154,7 +160,9 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryGraphQLIntrospection("http://example.com/graphql", mockLogger);
 
             expect(result.success).toBe(false);
-            expect(result.error).toContain("Failed to perform GraphQL introspection");
+            if (!result.success) {
+                expect(result.error).toContain("Failed to perform GraphQL introspection");
+            }
         });
     });
 
@@ -172,8 +180,10 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryDirectJSONFetch("http://example.com/schema.json", mockLogger);
 
             expect(result.success).toBe(true);
-            expect(result.result).toContain("type Query");
-            expect(result.result).toContain("type User");
+            if (result.success) {
+                expect(result.result).toContain("type Query");
+                expect(result.result).toContain("type User");
+            }
             expect(mockFetch).toHaveBeenCalledWith(
                 "http://example.com/schema.json",
                 expect.objectContaining({
@@ -198,8 +208,10 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryDirectJSONFetch("http://example.com/schema.json", mockLogger);
 
             expect(result.success).toBe(true);
-            expect(result.result).toContain("type Query");
-            expect(result.result).toContain("type User");
+            if (result.success) {
+                expect(result.result).toContain("type Query");
+                expect(result.result).toContain("type User");
+            }
         });
 
         it("should reject invalid JSON format", async () => {
@@ -211,7 +223,9 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryDirectJSONFetch("http://example.com/schema.json", mockLogger);
 
             expect(result.success).toBe(false);
-            expect(result.error).toContain("does not contain GraphQL introspection data");
+            if (!result.success) {
+                expect(result.error).toContain("does not contain GraphQL introspection data");
+            }
         });
 
         it("should handle HTTP errors", async () => {
@@ -224,7 +238,9 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             const result = await tryDirectJSONFetch("http://example.com/schema.json", mockLogger);
 
             expect(result.success).toBe(false);
-            expect(result.error).toContain("Direct JSON fetch failed: 404 Not Found");
+            if (!result.success) {
+                expect(result.error).toContain("Direct JSON fetch failed: 404 Not Found");
+            }
         });
     });
 

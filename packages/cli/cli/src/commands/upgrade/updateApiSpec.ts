@@ -4,13 +4,26 @@ import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
-import { buildClientSchema, getIntrospectionQuery, printSchema } from "graphql";
+import { buildClientSchema, getIntrospectionQuery, IntrospectionQuery, printSchema } from "graphql";
 import yaml from "js-yaml";
 import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { ReadableStream } from "stream/web";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+
+// Type definitions for GraphQL introspection results
+interface GraphQLIntrospectionResponse {
+    data: IntrospectionQuery;
+    errors?: never;
+}
+
+interface GraphQLErrorResponse {
+    data?: never;
+    errors: Array<{ message: string }>;
+}
+
+type GraphQLResponse = GraphQLIntrospectionResponse | GraphQLErrorResponse;
 
 async function fetchAndWriteFile(url: string, path: string, logger: Logger, indent: number): Promise<void> {
     const resp = await fetch(url);
@@ -53,49 +66,59 @@ function prepareAuthHeaders(url: string): Record<string, string> {
     return headers;
 }
 
+// Type guard for direct introspection result
+function isDirectIntrospectionResult(data: object): data is IntrospectionQuery {
+    return "__schema" in data && data.__schema !== null && typeof data.__schema === "object";
+}
+
+// Type guard for wrapped GraphQL response
+function isGraphQLIntrospectionResponse(data: object): data is GraphQLIntrospectionResponse {
+    return (
+        "data" in data && data.data !== null && typeof data.data === "object" && isDirectIntrospectionResult(data.data)
+    );
+}
+
 // Helper function to check if JSON response contains introspection data
-export function isIntrospectionResult(data: any): boolean {
+export function isIntrospectionResult(data: unknown): boolean {
     if (!data || typeof data !== "object") {
         return false;
     }
-
-    // Check for direct introspection result format: { __schema: { ... } }
-    if (data.__schema && typeof data.__schema === "object") {
-        return true;
-    }
-
-    // Check for GraphQL response format: { data: { __schema: { ... } } }
-    if (data.data && typeof data.data === "object" && data.data.__schema && typeof data.data.__schema === "object") {
-        return true;
-    }
-
-    return false;
+    return isDirectIntrospectionResult(data) || isGraphQLIntrospectionResponse(data);
 }
 
 // Helper function to extract introspection data from response
-export function extractIntrospectionData(data: any): any {
+export function extractIntrospectionData(data: unknown): IntrospectionQuery {
+    if (!data || typeof data !== "object") {
+        throw new Error("Data does not contain valid GraphQL introspection result");
+    }
+
     // If it's already in the right format, return it
-    if (data.__schema) {
+    if (isDirectIntrospectionResult(data)) {
         return data;
     }
 
     // If it's wrapped in a data property, unwrap it
-    if (data.data && data.data.__schema) {
+    if (isGraphQLIntrospectionResponse(data)) {
         return data.data;
     }
 
-    return data;
+    throw new Error("Data does not contain valid GraphQL introspection result");
 }
 
 // Try GraphQL POST introspection approach (current behavior)
 export async function tryGraphQLIntrospection(
     url: string,
     logger: Logger
-): Promise<{
-    success: boolean;
-    result?: string; // SDL string
-    error?: string;
-}> {
+): Promise<
+    | {
+          success: true;
+          result: string; // SDL string
+      }
+    | {
+          success: false;
+          error: string;
+      }
+> {
     try {
         logger.debug("Attempting GraphQL POST introspection");
 
@@ -134,6 +157,14 @@ export async function tryGraphQLIntrospection(
 
         const result = await resp.json();
 
+        // Validate the response structure
+        if (!result || typeof result !== "object") {
+            return {
+                success: false,
+                error: "Invalid JSON response from GraphQL endpoint"
+            };
+        }
+
         if (result.errors) {
             return {
                 success: false,
@@ -141,7 +172,7 @@ export async function tryGraphQLIntrospection(
             };
         }
 
-        if (!result.data) {
+        if (!result.data || !isDirectIntrospectionResult(result.data)) {
             return {
                 success: false,
                 error: "GraphQL introspection returned no data"
@@ -169,11 +200,16 @@ export async function tryGraphQLIntrospection(
 export async function tryDirectJSONFetch(
     url: string,
     logger: Logger
-): Promise<{
-    success: boolean;
-    result?: string; // SDL string
-    error?: string;
-}> {
+): Promise<
+    | {
+          success: true;
+          result: string; // SDL string
+      }
+    | {
+          success: false;
+          error: string;
+      }
+> {
     try {
         logger.debug("Attempting direct JSON fetch");
 
@@ -242,7 +278,7 @@ export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: str
     const postResult = await tryGraphQLIntrospection(url, logger);
 
     if (postResult.success) {
-        await writeFile(path, postResult.result!, "utf8");
+        await writeFile(path, postResult.result, "utf8");
         logger.info("Successfully fetched GraphQL schema using POST introspection");
         return;
     }
@@ -254,7 +290,7 @@ export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: str
     const getResult = await tryDirectJSONFetch(url, logger);
 
     if (getResult.success) {
-        await writeFile(path, getResult.result!, "utf8");
+        await writeFile(path, getResult.result, "utf8");
         logger.info("Successfully fetched GraphQL schema using direct JSON fetch");
         return;
     }
