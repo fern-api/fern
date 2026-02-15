@@ -321,24 +321,26 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             // Set environment variable
             process.env.GRAPHQL_TOKEN = "test-token";
 
-            mockFetch.mockResolvedValueOnce({
-                ok: true,
-                json: async () => ({ data: introspectionResult })
-            });
+            try {
+                mockFetch.mockResolvedValueOnce({
+                    ok: true,
+                    json: async () => ({ data: introspectionResult })
+                });
 
-            await fetchGraphQLSchemaWithAutoDetection("http://example.com/graphql", testFile, mockLogger);
+                await fetchGraphQLSchemaWithAutoDetection("http://example.com/graphql", testFile, mockLogger);
 
-            expect(mockFetch).toHaveBeenCalledWith(
-                "http://example.com/graphql",
-                expect.objectContaining({
-                    headers: expect.objectContaining({
-                        Authorization: "Bearer test-token"
+                expect(mockFetch).toHaveBeenCalledWith(
+                    "http://example.com/graphql",
+                    expect.objectContaining({
+                        headers: expect.objectContaining({
+                            Authorization: "Bearer test-token"
+                        })
                     })
-                })
-            );
-
-            // Clean up
-            delete process.env.GRAPHQL_TOKEN;
+                );
+            } finally {
+                // Clean up - this will always run even if assertions fail
+                delete process.env.GRAPHQL_TOKEN;
+            }
         });
 
         it("should handle GitHub-specific authentication", async () => {
@@ -349,24 +351,26 @@ describe("GraphQL Auto-Detection Enhancement", () => {
             // Set environment variable
             process.env.GRAPHQL_TOKEN = "github-token";
 
-            mockFetch.mockResolvedValueOnce({
-                ok: true,
-                json: async () => ({ data: introspectionResult })
-            });
+            try {
+                mockFetch.mockResolvedValueOnce({
+                    ok: true,
+                    json: async () => ({ data: introspectionResult })
+                });
 
-            await fetchGraphQLSchemaWithAutoDetection("https://api.github.com/graphql", testFile, mockLogger);
+                await fetchGraphQLSchemaWithAutoDetection("https://api.github.com/graphql", testFile, mockLogger);
 
-            expect(mockFetch).toHaveBeenCalledWith(
-                "https://api.github.com/graphql",
-                expect.objectContaining({
-                    headers: expect.objectContaining({
-                        Authorization: "token github-token"
+                expect(mockFetch).toHaveBeenCalledWith(
+                    "https://api.github.com/graphql",
+                    expect.objectContaining({
+                        headers: expect.objectContaining({
+                            Authorization: "token github-token"
+                        })
                     })
-                })
-            );
-
-            // Clean up
-            delete process.env.GRAPHQL_TOKEN;
+                );
+            } finally {
+                // Clean up - this will always run even if assertions fail
+                delete process.env.GRAPHQL_TOKEN;
+            }
         });
     });
 
