@@ -367,39 +367,6 @@ func TestSettersMarkExplicitPutResponse(t *testing.T) {
 
 }
 
-func TestJSONMarshalingError(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &Error{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled Error
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj Error
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj Error
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
 func TestJSONMarshalingPutResponse(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -428,6 +395,39 @@ func TestJSONMarshalingPutResponse(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj PutResponse
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingError(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Error{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled Error
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj Error
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj Error
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -462,6 +462,42 @@ func TestStringPutResponse(t *testing.T) {
 		var obj *PutResponse
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestEnumErrorCategory(t *testing.T) {
+	t.Run("NewFromString_API_ERROR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewErrorCategoryFromString("API_ERROR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ErrorCategory("API_ERROR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_AUTHENTICATION_ERROR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewErrorCategoryFromString("AUTHENTICATION_ERROR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ErrorCategory("AUTHENTICATION_ERROR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_INVALID_REQUEST_ERROR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewErrorCategoryFromString("INVALID_REQUEST_ERROR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ErrorCategory("INVALID_REQUEST_ERROR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewErrorCategoryFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewErrorCategoryFromString("API_ERROR")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 
@@ -550,42 +586,6 @@ func TestEnumErrorCode(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewErrorCodeFromString("INTERNAL_SERVER_ERROR")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumErrorCategory(t *testing.T) {
-	t.Run("NewFromString_API_ERROR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewErrorCategoryFromString("API_ERROR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ErrorCategory("API_ERROR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_AUTHENTICATION_ERROR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewErrorCategoryFromString("AUTHENTICATION_ERROR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ErrorCategory("AUTHENTICATION_ERROR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_INVALID_REQUEST_ERROR", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewErrorCategoryFromString("INVALID_REQUEST_ERROR")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ErrorCategory("INVALID_REQUEST_ERROR"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewErrorCategoryFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewErrorCategoryFromString("API_ERROR")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
