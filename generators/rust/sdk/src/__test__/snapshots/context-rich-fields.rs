@@ -28,6 +28,8 @@ pub enum ApiError {
     StreamTerminated,
     #[error("SSE parse error: {0}")]
     SseParseError(String),
+    #[error("WebSocket error: {0}")]
+    WebSocketError(String),
 }
 
 impl ApiError {
