@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.0
+  changelogEntry:
+    - summary: |
+        Support GraphQL origins that serve JSON schema directly.
+      type: feat
+  createdAt: "2026-02-14"
+  irVersion: 65
 - version: 3.78.0
   changelogEntry:
     - summary: |
