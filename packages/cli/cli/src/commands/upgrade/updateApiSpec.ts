@@ -12,12 +12,6 @@ import { ReadableStream } from "stream/web";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 
-// Type definitions for GraphQL introspection results
-interface GraphQLIntrospectionResponse {
-    data: IntrospectionQuery;
-    errors?: never;
-}
-
 async function fetchAndWriteFile(url: string, path: string, logger: Logger, indent: number): Promise<void> {
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
@@ -59,24 +53,20 @@ function prepareAuthHeaders(url: string): Record<string, string> {
     return headers;
 }
 
-// Type guard for direct introspection result
-function isDirectIntrospectionResult(data: object): data is IntrospectionQuery {
-    return "__schema" in data && data.__schema !== null && typeof data.__schema === "object";
-}
-
-// Type guard for wrapped GraphQL response
-function isGraphQLIntrospectionResponse(data: object): data is GraphQLIntrospectionResponse {
-    return (
-        "data" in data && data.data !== null && typeof data.data === "object" && isDirectIntrospectionResult(data.data)
-    );
-}
-
 // Helper function to check if JSON response contains introspection data
 export function isIntrospectionResult(data: unknown): boolean {
     if (!data || typeof data !== "object") {
         return false;
     }
-    return isDirectIntrospectionResult(data) || isGraphQLIntrospectionResponse(data);
+    // Check for direct introspection format: { __schema: ... }
+    if ("__schema" in data && data.__schema) {
+        return true;
+    }
+    // Check for wrapped format: { data: { __schema: ... } }
+    if ("data" in data && data.data && typeof data.data === "object" && "__schema" in data.data) {
+        return true;
+    }
+    return false;
 }
 
 // Helper function to extract introspection data from response
@@ -85,14 +75,14 @@ export function extractIntrospectionData(data: unknown): IntrospectionQuery {
         throw new Error("Data does not contain valid GraphQL introspection result");
     }
 
-    // If it's already in the right format, return it
-    if (isDirectIntrospectionResult(data)) {
-        return data;
+    // If it has __schema directly, return it
+    if ("__schema" in data && data.__schema) {
+        return data as IntrospectionQuery;
     }
 
-    // If it's wrapped in a data property, unwrap it
-    if (isGraphQLIntrospectionResponse(data)) {
-        return data.data;
+    // If it's wrapped in { data: ... }, unwrap it
+    if ("data" in data && data.data && typeof data.data === "object" && "__schema" in data.data) {
+        return data.data as IntrospectionQuery;
     }
 
     throw new Error("Data does not contain valid GraphQL introspection result");
@@ -165,7 +155,7 @@ export async function tryGraphQLIntrospection(
             };
         }
 
-        if (!result.data || !isDirectIntrospectionResult(result.data)) {
+        if (!result.data?.__schema) {
             return {
                 success: false,
                 error: "GraphQL introspection returned no data"
