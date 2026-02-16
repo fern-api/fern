@@ -41,10 +41,14 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
-        const files = Object.values(AsIsFiles);
+        let files = Object.values(AsIsFiles);
         // Only include sse_stream.rs when there are streaming endpoints
         if (!this.hasStreamingEndpoints()) {
-            return files.filter((file) => file.filename !== "sse_stream.rs");
+            files = files.filter((file) => file.filename !== "sse_stream.rs");
+        }
+        // Only include websocket.rs when there are WebSocket channels
+        if (!this.hasWebSocketChannels()) {
+            files = files.filter((file) => file.filename !== "websocket.rs");
         }
         return files;
     }

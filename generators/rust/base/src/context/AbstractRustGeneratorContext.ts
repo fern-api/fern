@@ -128,6 +128,18 @@ export abstract class AbstractRustGeneratorContext<
             this.dependencyManager.addFeature("multipart", []);
         }
 
+        const hasWebSocket = this.hasWebSocketChannels();
+
+        if (hasWebSocket) {
+            this.dependencyManager.add("tokio-tungstenite", { version: "0.24", features: ["native-tls"], optional: true });
+            this.dependencyManager.add("urlencoding", { version: "2.1", optional: true });
+
+            this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding"]);
+            autoDetectedDefaults.push("websocket");
+        } else {
+            this.dependencyManager.addFeature("websocket", []);
+        }
+
         // Always declare sse feature (empty if not used, to avoid cfg warnings)
         if (hasStreaming) {
             // Add SSE-specific dependencies as optional
@@ -372,6 +384,10 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if IR has any streaming endpoints
      */
+    public hasWebSocketChannels(): boolean {
+        return this.ir.websocketChannels != null && Object.keys(this.ir.websocketChannels).length > 0;
+    }
+
     public hasStreamingEndpoints(): boolean {
         return Object.values(this.ir.services).some((service) =>
             service.endpoints.some((endpoint) => {

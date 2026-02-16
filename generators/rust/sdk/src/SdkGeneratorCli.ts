@@ -24,6 +24,7 @@ import { ErrorGenerator } from "./error/ErrorGenerator.js";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
 import { RootClientGenerator } from "./generators/RootClientGenerator.js";
 import { SubClientGenerator } from "./generators/SubClientGenerator.js";
+import { WebSocketChannelGenerator } from "./generators/WebSocketChannelGenerator.js";
 import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
@@ -267,6 +268,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             files.push(...this.generateTypeFiles(context));
         }
 
+        // WebSocket channels
+        if (this.hasWebSocketChannels(context)) {
+            const wsChannelCount = Object.keys(context.ir.websocketChannels ?? {}).length;
+            context.logger.debug(`Generating ${wsChannelCount} WebSocket channel client(s)...`);
+            files.push(...this.generateWebSocketFiles(context));
+        }
+
         return files;
     }
 
@@ -332,11 +340,17 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (hasTypes) {
             moduleDoc.push("- [`types`] - Request, response, and model types");
         }
+        if (this.hasWebSocketChannels(context)) {
+            moduleDoc.push("- [`websocket`] - WebSocket channel clients");
+        }
 
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "resources", isPublic: true }));
         if (hasTypes) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
+        }
+        if (this.hasWebSocketChannels(context)) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "websocket", isPublic: true }));
         }
 
         // Add named re-exports for resources
@@ -348,6 +362,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Add named re-exports for types
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
+        }
+
+        // Add named re-exports for websocket
+        if (this.hasWebSocketChannels(context)) {
+            useStatements.push(new UseStatement({ path: "websocket", items: ["*"], isPublic: true }));
         }
 
         const apiModule = new Module({
@@ -857,6 +876,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.debug(`Failed to generate snippet using EndpointSnippetGenerator: ${error}`);
             return [];
         }
+    }
+
+    private generateWebSocketFiles(context: SdkGeneratorContext): RustFile[] {
+        const generator = new WebSocketChannelGenerator(context);
+        return generator.generateAll();
+    }
+
+    private hasWebSocketChannels(context: SdkGeneratorContext): boolean {
+        return context.hasWebSocketChannels();
     }
 
     private hasTypes(context: SdkGeneratorContext): boolean {
