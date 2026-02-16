@@ -1,3 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "seed_server_sent_events_client/completions/types/streamed_completion"
+require_relative "seed_server_sent_events_client/completions/types/completion_event"
+require_relative "seed_server_sent_events_client/completions/types/error_event"
+require_relative "seed_server_sent_events_client/completions/types/stream_event"
