@@ -88,7 +88,7 @@ export function extractIntrospectionData(data: unknown): IntrospectionQuery {
     throw new Error("Data does not contain valid GraphQL introspection result");
 }
 
-// Try GraphQL POST introspection approach (current behavior)
+// Try GraphQL POST introspection approach
 export async function tryGraphQLIntrospection(
     url: string,
     logger: Logger
@@ -179,7 +179,7 @@ export async function tryGraphQLIntrospection(
     }
 }
 
-// Try direct JSON fetch approach (fallback behavior)
+// Try direct JSON fetch approach
 export async function tryDirectJSONFetch(
     url: string,
     logger: Logger
