@@ -81,7 +81,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.completions.stream()
+    client.completions.stream(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -117,7 +117,7 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     ...,
 )
-with client.completions.with_raw_response.stream() as response:
+with client.completions.with_raw_response.stream(...) as response:
     print(
         response.headers
     )  # access the response headersprint(response.status_code)  # access the response status code
@@ -140,7 +140,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.completions.stream(request_options={
+client.completions.stream(..., request_options={
     "max_retries": 1
 })
 ```
@@ -160,7 +160,7 @@ client = SeedServerSentEvents(
 
 
 # Override timeout for a specific method
-client.completions.stream(request_options={
+client.completions.stream(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
