@@ -6,6 +6,16 @@
       type: feat
   createdAt: "2026-02-14"
   irVersion: 65
+- version: 3.78.1
+  changelogEntry:
+    - summary: |
+        Fix endpoint example generation for global headers, nullable params, and recursive types.
+        Global header example failures no longer drop all endpoint examples. Nullable/optional
+        wrappers are now traversed in `hasExample()`. Recursive types produce minimal stub examples
+        on cycle detection instead of cascading failures.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
 - version: 3.78.0
   changelogEntry:
     - summary: |
