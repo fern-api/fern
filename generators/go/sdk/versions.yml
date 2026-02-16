@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0-rc1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic ordering of generated test functions. The test generation
+        for JSON marshaling, String methods, enum validation, and extra properties tests
+        now sorts type names before iterating, ensuring consistent output across runs.
+      type: fix
+  createdAt: "2026-02-16"
+  irVersion: 61
+
 - version: 1.25.0-rc0
   changelogEntry:
     - summary: |
