@@ -16,4 +16,14 @@ public final class CompletionsClient: Sendable {
             responseType: JSONValue.self
         )
     }
+
+    public func streamEvents(request: Requests.StreamEventsRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/stream-events",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: JSONValue.self
+        )
+    }
 }
