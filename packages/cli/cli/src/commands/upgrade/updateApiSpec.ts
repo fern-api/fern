@@ -18,13 +18,6 @@ interface GraphQLIntrospectionResponse {
     errors?: never;
 }
 
-interface GraphQLErrorResponse {
-    data?: never;
-    errors: Array<{ message: string }>;
-}
-
-type GraphQLResponse = GraphQLIntrospectionResponse | GraphQLErrorResponse;
-
 async function fetchAndWriteFile(url: string, path: string, logger: Logger, indent: number): Promise<void> {
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
@@ -274,7 +267,7 @@ export async function tryDirectJSONFetch(
 
 // Auto-detection wrapper that tries both approaches
 export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: string, logger: Logger): Promise<void> {
-    // First attempt: POST introspection query (existing behavior for compatibility)
+    // First attempt: POST introspection query
     const postResult = await tryGraphQLIntrospection(url, logger);
 
     if (postResult.success) {
@@ -286,7 +279,7 @@ export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: str
     // Log the first attempt failure for debugging
     logger.debug(`POST introspection failed: ${postResult.error}`);
 
-    // Second attempt: GET direct JSON fetch (new fallback behavior)
+    // Second attempt: GET direct JSON fetch
     const getResult = await tryDirectJSONFetch(url, logger);
 
     if (getResult.success) {
@@ -305,11 +298,6 @@ export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: str
         `2. Returns introspection results directly via GET`;
 
     throw new Error(errorMessage);
-}
-
-// Legacy function for backward compatibility (not used internally anymore)
-async function fetchGraphQLSchemaFromIntrospection(url: string, path: string, logger: Logger): Promise<void> {
-    return fetchGraphQLSchemaWithAutoDetection(url, path, logger);
 }
 
 export async function updateApiSpec({
