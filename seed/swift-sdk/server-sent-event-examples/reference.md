@@ -57,3 +57,60 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.completions.<a href="/Sources/Resources/Completions/CompletionsClient.swift">streamEvents</a>(request: Requests.StreamEventsRequest, requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import ServerSentEvents
+
+private func main() async throws {
+    let client = ServerSentEventsClient()
+
+    _ = try await client.completions.streamEvents(request: .init(query: "query"))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Requests.StreamEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
