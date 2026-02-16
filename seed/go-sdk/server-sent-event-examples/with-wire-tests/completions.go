@@ -123,6 +123,9 @@ func (c *CompletionEvent) GetContent() string {
 }
 
 func (c *CompletionEvent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -168,6 +171,9 @@ func (c *CompletionEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CompletionEvent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -210,6 +216,9 @@ func (e *ErrorEvent) GetCode() *int {
 }
 
 func (e *ErrorEvent) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -262,6 +271,9 @@ func (e *ErrorEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ErrorEvent) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -421,6 +433,9 @@ func (s *StreamedCompletion) GetTokens() *int {
 }
 
 func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -473,6 +488,9 @@ func (s *StreamedCompletion) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StreamedCompletion) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value

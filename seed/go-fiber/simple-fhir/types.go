@@ -80,6 +80,9 @@ func (a *Account) ResourceType() string {
 }
 
 func (a *Account) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -170,6 +173,9 @@ func (a *Account) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Account) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
@@ -215,6 +221,9 @@ func (b *BaseResource) GetMemo() *Memo {
 }
 
 func (b *BaseResource) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -273,6 +282,9 @@ func (b *BaseResource) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BaseResource) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
@@ -309,6 +321,9 @@ func (m *Memo) GetAccount() *Account {
 }
 
 func (m *Memo) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -360,6 +375,9 @@ func (m *Memo) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Memo) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
@@ -428,6 +446,9 @@ func (p *Patient) ResourceType() string {
 }
 
 func (p *Patient) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -511,6 +532,9 @@ func (p *Patient) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Patient) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
@@ -570,6 +594,9 @@ func (p *Practitioner) ResourceType() string {
 }
 
 func (p *Practitioner) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -646,6 +673,9 @@ func (p *Practitioner) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Practitioner) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
@@ -809,6 +839,9 @@ func (s *Script) ResourceType() string {
 }
 
 func (s *Script) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -885,6 +918,9 @@ func (s *Script) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Script) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

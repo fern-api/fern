@@ -116,6 +116,9 @@ func (u *UnionListResponse) GetData() []*MyUnion {
 }
 
 func (u *UnionListResponse) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -160,6 +163,9 @@ func (u *UnionListResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UnionListResponse) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
@@ -187,6 +193,9 @@ func (u *UnionResponse) GetData() *MyUnion {
 }
 
 func (u *UnionResponse) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -231,6 +240,9 @@ func (u *UnionResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UnionResponse) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
@@ -263,6 +275,9 @@ func (v *VariantA) Type() string {
 }
 
 func (v *VariantA) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
 	return v.extraProperties
 }
 
@@ -318,6 +333,9 @@ func (v *VariantA) MarshalJSON() ([]byte, error) {
 }
 
 func (v *VariantA) String() string {
+	if v == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(v); err == nil {
 		return value
 	}
@@ -350,6 +368,9 @@ func (v *VariantB) Type() string {
 }
 
 func (v *VariantB) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
 	return v.extraProperties
 }
 
@@ -405,6 +426,9 @@ func (v *VariantB) MarshalJSON() ([]byte, error) {
 }
 
 func (v *VariantB) String() string {
+	if v == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(v); err == nil {
 		return value
 	}
@@ -437,6 +461,9 @@ func (v *VariantC) Type() string {
 }
 
 func (v *VariantC) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
 	return v.extraProperties
 }
 
@@ -492,6 +519,9 @@ func (v *VariantC) MarshalJSON() ([]byte, error) {
 }
 
 func (v *VariantC) String() string {
+	if v == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(v); err == nil {
 		return value
 	}

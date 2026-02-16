@@ -17,6 +17,7 @@ import { TaskContextAdapter } from "../context/adapter/TaskContextAdapter";
 import type { Context } from "../context/Context";
 import type { Language } from "../sdk/config/Language";
 import { Icons } from "../ui/format";
+import { withSpinner } from "../ui/withSpinner";
 
 const LANGUAGE_DISPLAY_NAMES: Record<Language, string> = {
     typescript: "TypeScript",
@@ -256,11 +257,13 @@ export class Wizard {
 
                 case "not-found": {
                     const taskContext = new TaskContextAdapter({ context: this.context });
-                    const created = await createOrganizationIfDoesNotExist({
-                        organization,
-                        token,
-                        context: taskContext
-                    });
+                    const created = await withSpinner("Creating organization...", () =>
+                        createOrganizationIfDoesNotExist({
+                            organization,
+                            token,
+                            context: taskContext
+                        })
+                    );
                     if (created) {
                         this.context.stderr.info(`  ${Icons.success} Created organization "${organization}"\n`);
                     }
