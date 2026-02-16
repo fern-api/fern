@@ -54,7 +54,7 @@ function prepareAuthHeaders(url: string): Record<string, string> {
 }
 
 // Helper function to check if JSON response contains introspection data
-export function isIntrospectionResult(data: unknown): boolean {
+function isIntrospectionResult(data: unknown): boolean {
     if (!data || typeof data !== "object") {
         return false;
     }
@@ -70,7 +70,7 @@ export function isIntrospectionResult(data: unknown): boolean {
 }
 
 // Helper function to extract introspection data from response
-export function extractIntrospectionData(data: unknown): IntrospectionQuery {
+function extractIntrospectionData(data: unknown): IntrospectionQuery {
     if (!data || typeof data !== "object") {
         throw new Error("Data does not contain valid GraphQL introspection result");
     }
@@ -89,7 +89,7 @@ export function extractIntrospectionData(data: unknown): IntrospectionQuery {
 }
 
 // Try GraphQL POST introspection approach
-export async function tryGraphQLIntrospection(
+async function tryGraphQLIntrospection(
     url: string,
     logger: Logger
 ): Promise<
@@ -183,7 +183,7 @@ export async function tryGraphQLIntrospection(
 }
 
 // Try direct JSON fetch approach
-export async function tryDirectJSONFetch(
+async function tryDirectJSONFetch(
     url: string,
     logger: Logger
 ): Promise<
@@ -286,7 +286,7 @@ export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: str
         `Failed to fetch GraphQL schema from ${url}.\n\n` +
         `Attempt 1 (POST introspection): ${postResult.error}\n` +
         `Attempt 2 (GET direct fetch): ${getResult.error}\n\n` +
-        `Please ensure the URL either:\n` +
+        `To update the schema from its defined origin, please ensure the origin either:\n` +
         `1. Accepts GraphQL introspection queries via POST, or\n` +
         `2. Returns introspection results directly via GET`;
 
