@@ -54,7 +54,7 @@ class RawClient
      * } $options
      */
     public function __construct(
-        private readonly ?array $options = null,
+        public readonly ?array $options = null,
     ) {
         $this->client = HttpClientBuilder::build(
             $this->options['client'] ?? null,
