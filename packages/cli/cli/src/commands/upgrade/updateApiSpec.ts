@@ -155,15 +155,18 @@ export async function tryGraphQLIntrospection(
             };
         }
 
-        if (!result.data?.__schema) {
+        if (!isIntrospectionResult(result)) {
             return {
                 success: false,
                 error: "GraphQL introspection returned no data"
             };
         }
 
+        // Extract the introspection data regardless of format
+        const introspectionData = extractIntrospectionData(result);
+
         // Convert introspection result to schema and then to SDL
-        const schema = buildClientSchema(result.data);
+        const schema = buildClientSchema(introspectionData);
         const sdl = printSchema(schema);
 
         logger.debug("GraphQL POST introspection succeeded");
