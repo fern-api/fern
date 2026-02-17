@@ -160,6 +160,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -178,6 +179,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -292,6 +294,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -317,6 +320,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -369,6 +373,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -404,8 +409,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
-				g.config.ExportAllRequestsAtRoot,
-				g.config.UnionVersion,
+			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
+			g.config.UnionVersion,
 			g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
@@ -434,6 +440,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -468,8 +475,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
-				g.config.ExportAllRequestsAtRoot,
-				g.config.UnionVersion,
+			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
+			g.config.UnionVersion,
 			g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
@@ -494,8 +502,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
-				g.config.ExportAllRequestsAtRoot,
-				g.config.UnionVersion,
+			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
+			g.config.UnionVersion,
 			g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
@@ -523,8 +532,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
-				g.config.ExportAllRequestsAtRoot,
-				g.config.UnionVersion,
+			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
+			g.config.UnionVersion,
 			g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
@@ -552,6 +562,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -604,8 +615,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.InlineFileProperties,
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
-				g.config.ExportAllRequestsAtRoot,
-				g.config.UnionVersion,
+			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
+			g.config.UnionVersion,
 			g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
@@ -767,8 +779,9 @@ func (g *Generator) generateRootService(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -818,8 +831,9 @@ func (g *Generator) generateService(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -872,8 +886,9 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -921,8 +936,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -1194,6 +1210,7 @@ func newClientTestFile(
 		filename,
 		packageName,
 		baseImportPath,
+		false,
 		false,
 		false,
 		false,
@@ -1563,12 +1580,11 @@ func generatedPackagesFromIR(ir *fernir.IntermediateRepresentation) map[string]s
 }
 
 // shouldSkipRequestType returns true if the request type should not be generated.
-func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint, serviceHeaders []*fernir.HttpHeader, inlinePathParameters bool, inlineFileProperties bool) bool {
+func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint, serviceHeaders []*fernir.HttpHeader, inlinePathParameters bool, inlineFileProperties bool, omitEmptyRequestWrappers bool) bool {
 	if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
-		// This endpoint doesn't have any in-lined request types that need to be generated.
 		return true
 	}
-	return !needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties)
+	return !needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties, omitEmptyRequestWrappers)
 }
 
 // fileUploadHasBodyProperties returns true if the file upload request has at least
@@ -1646,13 +1662,14 @@ func fileInfoToTypes(
 	inlinePathParameters bool,
 	inlineFileProperties bool,
 	exportAllRequestsAtRoot bool,
+	omitEmptyRequestWrappers bool,
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
 
 	for _, irService := range irServices {
 		subpackageFileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
 		for _, irEndpoint := range irService.Endpoints {
-			if shouldSkipRequestType(irEndpoint, irService.Headers, inlinePathParameters, inlineFileProperties) {
+			if shouldSkipRequestType(irEndpoint, irService.Headers, inlinePathParameters, inlineFileProperties, omitEmptyRequestWrappers) {
 				continue
 			}
 

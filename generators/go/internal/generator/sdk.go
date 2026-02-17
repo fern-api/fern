@@ -2287,7 +2287,7 @@ func getEndpointParameters(
 		)
 	}
 
-	if !shouldSkipRequestType(endpoint, serviceHeaders, f.inlinePathParameters, f.inlineFileProperties) {
+	if !shouldSkipRequestType(endpoint, serviceHeaders, f.inlinePathParameters, f.inlineFileProperties, f.omitEmptyRequestWrappers) {
 		fields = append(
 			fields,
 			exampleRequestBodyToFields(f, endpoint, example.Request)...,
@@ -2654,7 +2654,7 @@ func (f *fileWriter) endpointFromIR(
 	)
 
 	if irEndpoint.SdkRequest != nil {
-		if needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties) {
+		if needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties, f.omitEmptyRequestWrappers) {
 			var requestType string
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
@@ -3878,6 +3878,7 @@ func needsRequestParameter(
 	serviceHeaders []*ir.HttpHeader,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	omitEmptyRequestWrappers bool,
 ) bool {
 	if endpoint.SdkRequest == nil {
 		return false
@@ -3903,7 +3904,7 @@ func needsRequestParameter(
 	if onlyPathParameters != nil && *onlyPathParameters {
 		return false
 	}
-	return false
+	return !omitEmptyRequestWrappers
 }
 
 // includePathParametersInWrappedRequest returns true if the endpoint's request should
