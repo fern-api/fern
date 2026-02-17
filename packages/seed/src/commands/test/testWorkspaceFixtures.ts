@@ -51,9 +51,10 @@ export async function testGenerator({
             continue;
         }
         if (config != null) {
-            const filteredConfigs = fixtureOutputFolder != null
-                ? config.filter((instance) => instance.outputFolder === fixtureOutputFolder)
-                : config;
+            const filteredConfigs =
+                fixtureOutputFolder != null
+                    ? config.filter((instance) => instance.outputFolder === fixtureOutputFolder)
+                    : config;
 
             const hasRootOutputFolder = filteredConfigs.some(
                 (instance) => instance.outputFolder === "." || instance.outputFolder === ""
