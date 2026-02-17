@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .resources import Error, ErrorCategory, ErrorCode, PutResponse, put
+from .resources import Error, ErrorCategory, ErrorCode, PaginatedResponse, PutResponse, pagination, put
 
-__all__ = ["Error", "ErrorCategory", "ErrorCode", "PutResponse", "put"]
+__all__ = ["Error", "ErrorCategory", "ErrorCode", "PaginatedResponse", "PutResponse", "pagination", "put"]

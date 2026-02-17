@@ -1,4 +1,5 @@
 import { schemas } from "@fern-api/config";
+import type { SourceLocation } from "@fern-api/source";
 import type { Language } from "./Language.js";
 
 export interface Target {
@@ -12,6 +13,8 @@ export interface Target {
     lang: Language;
     /** SDK version to generate */
     version: string;
+    /** Source location of this target in fern.yml (for error reporting) */
+    sourceLocation: SourceLocation;
     /** Output configuration for local/git publishing */
     output: schemas.OutputSchema;
     /** Target-specific configuration */

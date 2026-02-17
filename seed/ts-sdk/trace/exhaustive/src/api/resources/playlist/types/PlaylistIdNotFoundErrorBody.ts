@@ -13,6 +13,6 @@ export namespace PlaylistIdNotFoundErrorBody {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

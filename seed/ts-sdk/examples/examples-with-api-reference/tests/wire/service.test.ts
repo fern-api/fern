@@ -172,18 +172,12 @@ describe("ServiceClient", () => {
                 nodes: [
                     {
                         name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
+                        nodes: [{ name: "name" }, { name: "name" }],
                         trees: [{ nodes: [] }, { nodes: [] }],
                     },
                     {
                         name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
+                        nodes: [{ name: "name" }, { name: "name" }],
                         trees: [{ nodes: [] }, { nodes: [] }],
                     },
                 ],
@@ -215,10 +209,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [{ name: "name" }, { name: "name" }],
                     },
                     {
                         name: "name",
@@ -226,10 +217,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [{ name: "name" }, { name: "name" }],
                     },
                 ],
             },
@@ -330,13 +318,9 @@ describe("ServiceClient", () => {
                         nodes: [
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                         ],
                         trees: [
@@ -353,13 +337,9 @@ describe("ServiceClient", () => {
                         nodes: [
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                         ],
                         trees: [
@@ -431,13 +411,9 @@ describe("ServiceClient", () => {
                         directories: [
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                         ],
                     },
@@ -456,13 +432,9 @@ describe("ServiceClient", () => {
                         directories: [
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                         ],
                     },

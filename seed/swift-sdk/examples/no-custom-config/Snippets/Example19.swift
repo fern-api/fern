@@ -93,14 +93,10 @@ private func main() async throws {
                     name: "name",
                     nodes: [
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         ),
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         )
                     ],
                     trees: [
@@ -116,14 +112,10 @@ private func main() async throws {
                     name: "name",
                     nodes: [
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         ),
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         )
                     ],
                     trees: [
@@ -194,14 +186,10 @@ private func main() async throws {
                     ],
                     directories: [
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         ),
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         )
                     ]
                 ),
@@ -219,14 +207,10 @@ private func main() async throws {
                     ],
                     directories: [
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         ),
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         )
                     ]
                 )

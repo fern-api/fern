@@ -7,6 +7,7 @@ import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
 import { DeclaredTypeName } from "./DeclaredTypeName.js";
 import { ObjectProperty } from "./ObjectProperty.js";
 import { SingleUnionType } from "./SingleUnionType.js";
+import { UnionDiscriminatorContext } from "./UnionDiscriminatorContext.js";
 
 export const UnionTypeDeclaration: core.serialization.ObjectSchema<
     serializers.UnionTypeDeclaration.Raw,
@@ -16,6 +17,7 @@ export const UnionTypeDeclaration: core.serialization.ObjectSchema<
     extends: core.serialization.list(DeclaredTypeName),
     types: core.serialization.list(SingleUnionType),
     baseProperties: core.serialization.list(ObjectProperty),
+    discriminatorContext: UnionDiscriminatorContext.optional(),
 });
 
 export declare namespace UnionTypeDeclaration {
@@ -24,5 +26,6 @@ export declare namespace UnionTypeDeclaration {
         extends: DeclaredTypeName.Raw[];
         types: SingleUnionType.Raw[];
         baseProperties: ObjectProperty.Raw[];
+        discriminatorContext?: UnionDiscriminatorContext.Raw | null;
     }
 }

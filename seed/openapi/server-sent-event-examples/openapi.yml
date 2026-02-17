@@ -28,6 +28,26 @@ paths:
               Stream completions:
                 value:
                   query: foo
+  /stream-events:
+    post:
+      operationId: completions_streamEvents
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+              required:
+                - query
 components:
   schemas:
     StreamedCompletion:
@@ -41,4 +61,48 @@ components:
           nullable: true
       required:
         - delta
+    CompletionEvent:
+      title: CompletionEvent
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+        - content
+    ErrorEvent:
+      title: ErrorEvent
+      type: object
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+          nullable: true
+      required:
+        - error
+    StreamEvent:
+      title: StreamEvent
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - completion
+            - $ref: '#/components/schemas/CompletionEvent'
+          required:
+            - event
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - error
+            - $ref: '#/components/schemas/ErrorEvent'
+          required:
+            - event
   securitySchemes: {}

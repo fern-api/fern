@@ -10,11 +10,11 @@ import (
 )
 
 type testExplicitFieldsStruct struct {
-	Name           *string  `json:"name,omitempty"`
-	Code           *string  `json:"code,omitempty"`
-	Count          *int     `json:"count,omitempty"`
-	Enabled        *bool    `json:"enabled,omitempty"`
-	Tags           []string `json:"tags,omitempty"`
+	Name    *string  `json:"name,omitempty"`
+	Code    *string  `json:"code,omitempty"`
+	Count   *int     `json:"count,omitempty"`
+	Enabled *bool    `json:"enabled,omitempty"`
+	Tags    []string `json:"tags,omitempty"`
 	//lint:ignore unused this field is intentionally unused for testing
 	unexported     string   `json:"-"`
 	explicitFields *big.Int `json:"-"`
@@ -481,6 +481,155 @@ func TestHandleExplicitFieldsNestedStruct(t *testing.T) {
 			require.NoError(t, json.Unmarshal(bytes, &value))
 		})
 	}
+}
+
+// Test for setter method documentation and behavior
+func TestSetterMethodsDocumentation(t *testing.T) {
+	t.Run("setter prevents omitempty for nil values", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{}
+
+		// Use setter to explicitly set nil - this should prevent omitempty
+		s.SetName(nil)
+		s.SetCode(nil)
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// Both fields should be included as null, not omitted
+		assert.JSONEq(t, `{"name":null,"code":null}`, string(bytes))
+	})
+
+	t.Run("setter prevents omitempty for empty slice", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{}
+
+		// Use setter to explicitly set empty slice
+		s.SetTags([]string{})
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// Empty slice should be included as [], not omitted
+		assert.JSONEq(t, `{"tags":[]}`, string(bytes))
+	})
+
+	t.Run("setter prevents omitempty for zero values", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{}
+
+		// Use setter to explicitly set zero values
+		s.SetCount(intPtr(0))
+		s.SetEnabled(boolPtr(false))
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// Zero values should be included, not omitted
+		assert.JSONEq(t, `{"count":0,"enabled":false}`, string(bytes))
+	})
+
+	t.Run("direct assignment is omitted when nil", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{
+			Name: nil, // Direct assignment, not using setter
+			Code: nil, // Direct assignment, not using setter
+		}
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// Fields not set via setter should be omitted when nil
+		assert.JSONEq(t, `{}`, string(bytes))
+	})
+
+	t.Run("mix of setter and direct assignment", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{
+			Name:  stringPtr("direct"), // Direct assignment
+			Count: intPtr(42),          // Direct assignment
+		}
+		s.SetCode(nil)               // Setter with nil
+		s.SetEnabled(boolPtr(false)) // Setter with zero value
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// Direct assignments included if non-nil, setter fields always included
+		assert.JSONEq(t, `{"name":"direct","code":null,"count":42,"enabled":false}`, string(bytes))
+	})
+}
+
+// Test for complex scenarios with multiple setters
+func TestComplexSetterScenarios(t *testing.T) {
+	t.Run("multiple setter calls on same field", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{}
+
+		// Call setter multiple times - last one should win
+		s.SetName(stringPtr("first"))
+		s.SetName(stringPtr("second"))
+		s.SetName(nil) // Final value is nil
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// Should serialize the last set value (nil)
+		assert.JSONEq(t, `{"name":null}`, string(bytes))
+	})
+
+	t.Run("setter after direct assignment", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{
+			Name: stringPtr("direct"),
+		}
+
+		// Override with setter
+		s.SetName(nil)
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// Setter should mark field as explicit, so nil is serialized
+		assert.JSONEq(t, `{"name":null}`, string(bytes))
+	})
+
+	t.Run("all fields set via setters", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{}
+		s.SetName(nil)
+		s.SetCode(stringPtr(""))     // Empty string
+		s.SetCount(intPtr(0))        // Zero
+		s.SetEnabled(boolPtr(false)) // False
+		s.SetTags(nil)               // Nil slice
+
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		// All fields should be present even with nil/zero values
+		assert.JSONEq(t, `{"name":null,"code":"","count":0,"enabled":false,"tags":null}`, string(bytes))
+	})
+}
+
+// Test for backwards compatibility
+func TestBackwardsCompatibility(t *testing.T) {
+	t.Run("struct without setters behaves normally", func(t *testing.T) {
+		s := &testStructWithoutExplicitFields{
+			Name: stringPtr("test"),
+			Code: nil, // This should be omitted
+		}
+
+		bytes, err := json.Marshal(s)
+		require.NoError(t, err)
+
+		// Without setters, omitempty works normally
+		assert.JSONEq(t, `{"name":"test"}`, string(bytes))
+	})
+
+	t.Run("struct with explicit fields works with standard json.Marshal", func(t *testing.T) {
+		s := &testExplicitFieldsStruct{
+			Name: stringPtr("test"),
+		}
+		s.SetCode(nil)
+
+		// Using the custom MarshalJSON
+		bytes, err := s.MarshalJSON()
+		require.NoError(t, err)
+
+		assert.JSONEq(t, `{"name":"test","code":null}`, string(bytes))
+	})
 }
 
 // Helper functions

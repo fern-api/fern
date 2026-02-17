@@ -133,6 +133,13 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+      discriminatorContext:
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means discriminator is within the union data itself.
+          "protocol" means discriminator is at the protocol level (e.g., SSE event field).
+        type: optional<UnionDiscriminatorContext>
+        default: data
 
   SingleUnionType:
     extends: commons.WithDocs
@@ -155,6 +162,14 @@ types:
     properties:
       name: commons.NameAndWireValue
       type: TypeReference
+
+  UnionDiscriminatorContext:
+    docs: Location of the discriminator relative to the union type
+    enum:
+      - value: data
+        docs: Discriminator is within the union data itself (e.g., data.type field)
+      - value: protocol
+        docs: Discriminator is at the protocol level (e.g., SSE event field, HTTP path)
 
   UndiscriminatedUnionTypeDeclaration:
     properties:

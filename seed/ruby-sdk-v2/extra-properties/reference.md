@@ -14,10 +14,10 @@
 
 ```ruby
 client.user.create_user(
-  name: 'Alice',
-  type: 'CreateUserRequest',
-  version: 'v1'
-);
+  name: "Alice",
+  type: "CreateUserRequest",
+  version: "v1"
+)
 ```
 </dd>
 </dl>

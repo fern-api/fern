@@ -13,6 +13,10 @@ type StreamCompletionRequest struct {
 	Query string `json:"query" url:"-"`
 }
 
+type StreamCompletionRequestWithoutTerminator struct {
+	Query string `json:"query" url:"-"`
+}
+
 var (
 	streamedCompletionFieldDelta  = big.NewInt(1 << 0)
 	streamedCompletionFieldTokens = big.NewInt(1 << 1)
@@ -43,6 +47,9 @@ func (s *StreamedCompletion) GetTokens() *int {
 }
 
 func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -94,6 +101,9 @@ func (s *StreamedCompletion) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StreamedCompletion) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

@@ -109,3 +109,17 @@ export const Colors = {
     info: chalk.cyan.bind(chalk),
     dim: chalk.dim.bind(chalk)
 } as const;
+
+/**
+ * Format bytes as a human-readable string.
+ */
+export function formatBytes(bytes: number): string {
+    if (bytes === 0) {
+        return "0 B";
+    }
+    const units = ["B", "KB", "MB", "GB"];
+    const base = 1024;
+    const index = Math.min(Math.floor(Math.log(bytes) / Math.log(base)), units.length - 1);
+    const value = bytes / Math.pow(base, index);
+    return `${value.toFixed(index === 0 ? 0 : 1)} ${units[index]}`;
+}

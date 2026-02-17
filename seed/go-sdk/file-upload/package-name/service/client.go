@@ -176,6 +176,22 @@ func (c *Client) WithInlineType(
 	return response.Body, nil
 }
 
+func (c *Client) WithJsonProperty(
+	ctx context.Context,
+	request *upload.WithJsonPropertyRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithJsonProperty(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,

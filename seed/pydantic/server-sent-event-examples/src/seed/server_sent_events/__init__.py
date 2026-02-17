@@ -2,6 +2,22 @@
 
 # isort: skip_file
 
-from .resources import StreamedCompletion, completions
+from .resources import (
+    CompletionEvent,
+    ErrorEvent,
+    StreamEvent,
+    StreamEvent_Completion,
+    StreamEvent_Error,
+    StreamedCompletion,
+    completions,
+)
 
-__all__ = ["StreamedCompletion", "completions"]
+__all__ = [
+    "CompletionEvent",
+    "ErrorEvent",
+    "StreamEvent",
+    "StreamEvent_Completion",
+    "StreamEvent_Error",
+    "StreamedCompletion",
+    "completions",
+]

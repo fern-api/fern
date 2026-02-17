@@ -49,6 +49,54 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return methods;
     }
 
+    public generateSignatures({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+    }): php.Method[] {
+        const methods: php.Method[] = [];
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(
+            php.parameter({
+                name: this.context.getRequestOptionsName(),
+                type: php.Type.optional(this.context.getRequestOptionsType({ endpoint }))
+            })
+        );
+
+        if (this.hasPagination(endpoint)) {
+            const return_ = this.getPagerReturnType(endpoint);
+            methods.push(
+                php.method({
+                    name: this.context.getPagedEndpointMethodName(endpoint),
+                    access: "public",
+                    parameters,
+                    docs: endpoint.docs,
+                    return_,
+                    noBody: true
+                })
+            );
+        } else {
+            const return_ = getEndpointReturnType({ context: this.context, endpoint });
+            methods.push(
+                php.method({
+                    name: this.context.getEndpointMethodName(endpoint),
+                    access: "public",
+                    parameters,
+                    docs: endpoint.docs,
+                    return_,
+                    noBody: true
+                })
+            );
+        }
+
+        return methods;
+    }
+
     public generateUnpagedEndpointMethod({
         serviceId,
         service,
@@ -127,49 +175,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (successResponseStatements != null) {
                     writer.writeNode(successResponseStatements);
                 }
-                writer.dedent();
-                writer.write("} catch (");
-                writer.writeNode(this.context.guzzleClient.getRequestExceptionClassReference());
-                writer.writeLine(" $e) {");
-                writer.indent();
-                writer.writeNodeStatement(php.assignVariable(php.variable("response"), "$e->getResponse()"));
-                writer.controlFlow("if", php.codeblock("$response === null"));
-                writer.writeNodeStatement(
-                    php.throwException({
-                        classReference: this.context.getBaseExceptionClassReference(),
-                        arguments_: [
-                            {
-                                name: "message",
-                                assignment: "$e->getMessage()"
-                            },
-                            {
-                                name: "previous",
-                                assignment: php.variable("e")
-                            }
-                        ]
-                    })
-                );
-                writer.endControlFlow();
-                writer.writeNodeStatement(
-                    php.throwException({
-                        classReference: this.context.getBaseApiExceptionClassReference(),
-                        arguments_: [
-                            {
-                                name: "message",
-                                assignment: php.string("API request failed")
-                            },
-                            {
-                                name: "statusCode",
-                                assignment: "$response->getStatusCode()"
-                            },
-                            {
-                                name: "body",
-                                assignment: "$response->getBody()->getContents()"
-                            }
-                        ],
-                        multiline: true
-                    })
-                );
                 writer.dedent();
                 writer.write("} catch (");
                 writer.writeNode(this.context.getClientExceptionInterfaceClassReference());

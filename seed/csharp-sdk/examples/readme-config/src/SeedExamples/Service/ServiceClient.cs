@@ -408,18 +408,8 @@ public partial class ServiceClient : IServiceClient
     ///                     Name = "name",
     ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new Node
-    ///                         {
-    ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
-    ///                         },
-    ///                         new Node
-    ///                         {
-    ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
-    ///                         },
+    ///                         new Node { Name = "name" },
+    ///                         new Node { Name = "name" },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
@@ -432,18 +422,8 @@ public partial class ServiceClient : IServiceClient
     ///                     Name = "name",
     ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new Node
-    ///                         {
-    ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
-    ///                         },
-    ///                         new Node
-    ///                         {
-    ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
-    ///                         },
+    ///                         new Node { Name = "name" },
+    ///                         new Node { Name = "name" },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
@@ -512,18 +492,8 @@ public partial class ServiceClient : IServiceClient
     ///                     },
     ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new SeedExamples.Directory
-    ///                         {
-    ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
-    ///                         },
-    ///                         new SeedExamples.Directory
-    ///                         {
-    ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
-    ///                         },
+    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                         new SeedExamples.Directory { Name = "name" },
     ///                     },
     ///                 },
     ///                 new SeedExamples.Directory
@@ -536,18 +506,8 @@ public partial class ServiceClient : IServiceClient
     ///                     },
     ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new SeedExamples.Directory
-    ///                         {
-    ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
-    ///                         },
-    ///                         new SeedExamples.Directory
-    ///                         {
-    ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
-    ///                         },
+    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                         new SeedExamples.Directory { Name = "name" },
     ///                     },
     ///                 },
     ///             },
