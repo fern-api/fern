@@ -27,7 +27,7 @@ export async function testGenerator({
     outputFolder?: string;
     inspect: boolean;
 }): Promise<boolean> {
-    const testCases: Promise<TestRunner.TestResult>[] = [];
+    const testCases: Promise<TestRunner.TestResult | TestRunner.TestResult[]>[] = [];
     const allowedFailuresAsSet = new Set(generator.workspaceConfig.allowedFailures);
     for (const fixture of fixtures) {
         let fixtureName = fixture;
@@ -51,17 +51,47 @@ export async function testGenerator({
             continue;
         }
         if (config != null) {
-            for (const instance of config) {
-                if (fixtureOutputFolder != null && instance.outputFolder !== fixtureOutputFolder) {
-                    continue;
-                }
+            const filteredConfigs =
+                fixtureOutputFolder != null
+                    ? config.filter((instance) => instance.outputFolder === fixtureOutputFolder)
+                    : config;
+
+            const hasRootOutputFolder = filteredConfigs.some(
+                (instance) => instance.outputFolder === "." || instance.outputFolder === ""
+            );
+
+            if (hasRootOutputFolder && filteredConfigs.length > 1) {
                 testCases.push(
-                    runner.run({
-                        fixture: fixtureName,
-                        configuration: instance,
-                        inspect
-                    })
+                    (async () => {
+                        const rootConfigs = filteredConfigs.filter(
+                            (instance) => instance.outputFolder === "." || instance.outputFolder === ""
+                        );
+                        const subfolderConfigs = filteredConfigs.filter(
+                            (instance) => instance.outputFolder !== "." && instance.outputFolder !== ""
+                        );
+                        const rootResults = await Promise.all(
+                            rootConfigs.map((instance) =>
+                                runner.run({ fixture: fixtureName, configuration: instance, inspect })
+                            )
+                        );
+                        const subfolderResults = await Promise.all(
+                            subfolderConfigs.map((instance) =>
+                                runner.run({ fixture: fixtureName, configuration: instance, inspect })
+                            )
+                        );
+                        return [...rootResults, ...subfolderResults];
+                    })()
                 );
+            } else {
+                for (const instance of filteredConfigs) {
+                    testCases.push(
+                        runner.run({
+                            fixture: fixtureName,
+                            configuration: instance,
+                            inspect
+                        })
+                    );
+                }
             }
         } else {
             testCases.push(
@@ -73,7 +103,8 @@ export async function testGenerator({
             );
         }
     }
-    const results = await Promise.all(testCases);
+    const nestedResults = await Promise.all(testCases);
+    const results = nestedResults.flat();
 
     printTestCases(results);
 
