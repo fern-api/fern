@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.1
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement being silently skipped.
+      type: fix
+  createdAt: "2026-02-17"
+  irVersion: 65
 - version: 3.79.0
   changelogEntry:
     - summary: |
