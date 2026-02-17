@@ -17,6 +17,7 @@ import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
@@ -194,15 +195,16 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             TypeReference expiresInType = expiresInProperty.getProperty().getValueType();
             boolean isOptional = isOptionalType(expiresInType);
             if (isOptional) {
-                // Handle optional expires_in with default fallback
-                // In Java, optional fields return Optional<T>, so use .orElse()
-                // Cast the default value to Long to handle type compatibility
+                // Optional expires_in needs .orElse(default) unwrapping.
+                // Use Long literal (e.g. 3600L) when the inner type is long/uint64
                 getMethodSpecBuilder.addStatement(
-                        "this.$L = $L(authResponse.get$L().orElse($LL))",
+                        "this.$L = $L(authResponse.get$L().orElse($L))",
                         EXPIRES_AT_FIELD_NAME,
                         GET_EXPIRES_AT_METHOD_NAME,
                         tokenPropertyName,
-                        DEFAULT_EXPIRES_IN_SECONDS);
+                        isLongType(expiresInType.getContainer().get().getOptional().get())
+                                ? DEFAULT_EXPIRES_IN_SECONDS + "L"
+                                : DEFAULT_EXPIRES_IN_SECONDS);
             } else {
                 getMethodSpecBuilder.addStatement(
                         "this.$L = $L(authResponse.get$L())",
@@ -368,6 +370,14 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             return typeReference.getContainer().get().isOptional();
         }
         return false;
+    }
+
+    private boolean isLongType(TypeReference typeReference) {
+        if (!typeReference.isPrimitive()) {
+            return false;
+        }
+        PrimitiveTypeV1 primitiveV1 = typeReference.getPrimitive().get().getV1();
+        return primitiveV1 == PrimitiveTypeV1.LONG || primitiveV1 == PrimitiveTypeV1.UINT_64;
     }
 
     private boolean isLiteralProperty(RequestProperty requestProperty) {
