@@ -187,6 +187,10 @@ export class ExampleTypeFactory {
                         const fullExample = getFullExampleAsObject(example);
                         const exampleDiscriminant = fullExample?.[schema.value.discriminantProperty];
                         const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
+                        const resolvedVariantSchema =
+                            exampleUnionVariantSchema != null
+                                ? this.getObjectSchema(exampleUnionVariantSchema)
+                                : undefined;
 
                         // Pick the union variant from the example, otherwise try each of them until one works
                         const unionVariants = [];
@@ -201,11 +205,10 @@ export class ExampleTypeFactory {
                         for (const unionVariant of unionVariants) {
                             if (
                                 exampleDiscriminant != null &&
-                                exampleUnionVariantSchema != null &&
-                                exampleUnionVariantSchema.type === "object"
+                                resolvedVariantSchema != null
                             ) {
-                                allProperties = this.getAllProperties(exampleUnionVariantSchema);
-                                requiredProperties = this.getAllRequiredProperties(exampleUnionVariantSchema);
+                                allProperties = this.getAllProperties(resolvedVariantSchema);
+                                requiredProperties = this.getAllRequiredProperties(resolvedVariantSchema);
                                 result[schema.value.discriminantProperty] = FullExample.primitive(
                                     PrimitiveExample.string(exampleDiscriminant)
                                 );
