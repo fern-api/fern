@@ -436,6 +436,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
 		f.exportAllRequestsAtRoot,
+		f.omitEmptyRequestWrappers,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,
