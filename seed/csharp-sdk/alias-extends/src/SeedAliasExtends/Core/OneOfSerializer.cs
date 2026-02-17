@@ -25,7 +25,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
                 reader.Skip();
                 return (IOneOf)cast.Invoke(null, [result])!;
             }
-            catch (JsonException) { }
+            catch (Exception) { }
         }
 
         throw new JsonException(
