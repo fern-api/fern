@@ -284,6 +284,7 @@ export async function publishDocs({
             playgroundConfig,
             apiName,
             workspace,
+            openApiSourceFilePath,
             graphqlOperations,
             graphqlTypes
         }) => {
@@ -304,17 +305,13 @@ export async function publishDocs({
                 docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
             if (aiEnhancerConfig) {
-                const sources = workspace?.getSources();
-                const openApiSource = sources?.find((source) => source.type === "openapi");
-                const sourceFilePath = openApiSource?.absoluteFilePath;
-
                 apiDefinition = await enhanceExamplesWithAI(
                     apiDefinition,
                     aiEnhancerConfig,
                     context,
                     token,
                     organization,
-                    sourceFilePath
+                    openApiSourceFilePath
                 );
             }
 
