@@ -2,9 +2,7 @@
 - version: 3.79.1
   changelogEntry:
     - summary: |
-        Fix AI example enhancement being silently skipped when using the default V3 OpenAPI parser.
-        The workspace was only loaded when snippets were configured, causing the AI enhancement
-        pipeline to be bypassed for users without snippet configuration.
+        Fix AI example enhancement being silently skipped.
       type: fix
   createdAt: "2026-02-17"
   irVersion: 65
