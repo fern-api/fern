@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.retries.get_users();
+client.retries.get_users
 ```
 </dd>
 </dl>

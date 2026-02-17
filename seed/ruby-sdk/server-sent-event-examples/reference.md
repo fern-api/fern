@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.completions.stream(query: 'foo');
+client.completions.stream(query: "foo")
 ```
 </dd>
 </dl>
@@ -61,7 +61,7 @@ client.completions.stream(query: 'foo');
 <dd>
 
 ```ruby
-client.completions.stream_events(query: 'query');
+client.completions.stream_events(query: "query")
 ```
 </dd>
 </dl>

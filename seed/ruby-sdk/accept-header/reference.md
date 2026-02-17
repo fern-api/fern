@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.endpoint();
+client.service.endpoint
 ```
 </dd>
 </dl>
