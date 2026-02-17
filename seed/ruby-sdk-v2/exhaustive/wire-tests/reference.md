@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_list_of_primitives(request: ["string", "string"])
+client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
 ```
 </dd>
 </dl>
@@ -374,7 +374,7 @@ client.endpoints.content_type.post_json_patch_content_type(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -438,7 +438,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -708,7 +708,7 @@ client.endpoints.http_methods.test_patch(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -829,7 +829,7 @@ client.endpoints.object.get_and_return_with_optional_field(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -995,7 +995,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -1063,7 +1063,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -1138,7 +1138,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -1157,7 +1157,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -2636,7 +2636,7 @@ client.inlined_requests.post_with_object_bodyand_response(
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
