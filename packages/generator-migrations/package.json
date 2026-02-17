@@ -23,9 +23,9 @@
   "types": "lib/index.d.mts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "clean": "rm -rf ./lib && rm -rf ./dist && rm -f tsconfig.tsbuildinfo",
+    "compile": "tsc --composite false",
+    "compile:debug": "tsc --composite false --sourceMap",
     "dist": "node build.mjs",
     "depcheck": "depcheck",
     "test": "vitest --passWithNoTests --run",

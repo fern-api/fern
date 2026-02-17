@@ -23,9 +23,9 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "clean": "rm -rf ./lib && rm -f tsconfig.tsbuildinfo",
+    "compile": "tsc --composite false",
+    "compile:debug": "tsc --composite false --sourceMap",
     "depcheck": "depcheck",
     "test": "vitest --run --passWithNoTests",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",

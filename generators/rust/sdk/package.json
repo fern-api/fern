@@ -24,8 +24,8 @@
     "lib"
   ],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "rm -rf ./lib && rm -rf ./dist && rm -f tsconfig.tsbuildinfo",
+    "compile": "tsc --composite false",
     "depcheck": "depcheck",
     "dist:cli": "node build.mjs",
     "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-rust-sdk:latest ../../..",
