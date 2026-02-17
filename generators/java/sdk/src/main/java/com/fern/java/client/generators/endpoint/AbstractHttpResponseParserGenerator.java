@@ -491,47 +491,42 @@ public abstract class AbstractHttpResponseParserGenerator {
     protected boolean isStreamingEndpoint() {
         return httpEndpoint.getResponse().isPresent()
                 && httpEndpoint.getResponse().get().getBody().isPresent()
-                && httpEndpoint
-                        .getResponse()
-                        .get()
-                        .getBody()
-                        .get()
-                        .visit(new HttpResponseBody.Visitor<Boolean>() {
-                            @Override
-                            public Boolean visitJson(JsonResponse jsonResponse) {
-                                return false;
-                            }
+                && httpEndpoint.getResponse().get().getBody().get().visit(new HttpResponseBody.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitJson(JsonResponse jsonResponse) {
+                        return false;
+                    }
 
-                            @Override
-                            public Boolean visitFileDownload(FileDownloadResponse fileDownloadResponse) {
-                                return false;
-                            }
+                    @Override
+                    public Boolean visitFileDownload(FileDownloadResponse fileDownloadResponse) {
+                        return false;
+                    }
 
-                            @Override
-                            public Boolean visitText(TextResponse textResponse) {
-                                return false;
-                            }
+                    @Override
+                    public Boolean visitText(TextResponse textResponse) {
+                        return false;
+                    }
 
-                            @Override
-                            public Boolean visitBytes(BytesResponse bytesResponse) {
-                                return false;
-                            }
+                    @Override
+                    public Boolean visitBytes(BytesResponse bytesResponse) {
+                        return false;
+                    }
 
-                            @Override
-                            public Boolean visitStreaming(StreamingResponse streamingResponse) {
-                                return true;
-                            }
+                    @Override
+                    public Boolean visitStreaming(StreamingResponse streamingResponse) {
+                        return true;
+                    }
 
-                            @Override
-                            public Boolean visitStreamParameter(StreamParameterResponse streamParameterResponse) {
-                                return false;
-                            }
+                    @Override
+                    public Boolean visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                        return false;
+                    }
 
-                            @Override
-                            public Boolean _visitUnknown(Object o) {
-                                return false;
-                            }
-                        });
+                    @Override
+                    public Boolean _visitUnknown(Object o) {
+                        return false;
+                    }
+                });
     }
 
     protected boolean shouldPreReadResponseBodyString() {
