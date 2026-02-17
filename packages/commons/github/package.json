@@ -23,8 +23,8 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "rm -rf ./lib && rm -rf ./dist && rm -f tsconfig.tsbuildinfo",
+    "compile": "tsc --composite false",
     "depcheck": "depcheck",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",

@@ -22,10 +22,10 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "rm -rf ./lib && rm -f tsconfig.tsbuildinfo",
+    "compile": "tsc --composite false",
     "postcompile": "rsync -a --delete ./src/asIs/ ./lib/asIs/",
-    "compile:debug": "tsc --build --sourceMap",
+    "compile:debug": "tsc --composite false --sourceMap",
     "depcheck": "depcheck",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",

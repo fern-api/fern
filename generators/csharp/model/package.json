@@ -22,9 +22,9 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "clean": "rm -rf ./lib && rm -rf ./dist && rm -f tsconfig.tsbuildinfo",
+    "compile": "tsc --composite false",
+    "compile:debug": "tsc --composite false --sourceMap",
     "depcheck": "depcheck",
     "dist:cli": "node build.mjs",
     "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-csharp-model:latest ../../..",
