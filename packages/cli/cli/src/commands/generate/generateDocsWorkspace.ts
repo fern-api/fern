@@ -100,7 +100,9 @@ export async function generateDocsWorkspace({
         });
         const validationTimeMs = performance.now() - validationStart;
 
-        context.logger.info(`Validation complete in ${validationTimeMs.toFixed(0)}ms, starting remote docs generation...`);
+        context.logger.info(
+            `Validation complete in ${validationTimeMs.toFixed(0)}ms, starting remote docs generation...`
+        );
 
         const filterStart = performance.now();
         const ossWorkspaces = await filterOssWorkspaces(project);
