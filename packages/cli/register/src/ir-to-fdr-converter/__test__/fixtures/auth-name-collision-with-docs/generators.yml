@@ -1,0 +1,12 @@
+auth-schemes:
+  bearerAuth:
+    scheme: bearer
+    token:
+      name: customToken
+      env: CUSTOM_TOKEN_ENV
+    docs: Custom docs from generators.yml that should take precedence over OpenAPI description
+
+api:
+  auth: bearerAuth
+  specs:
+    - openapi: openapi.yml

@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": "Auth Name Collision Test API",
+  "apiDisplayName": "Auth Name Collision With Docs Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "authNameCollisionTestApi",
-      "unsafeName": "authNameCollisionTestApi",
+      "safeName": "authNameCollisionWithDocsTestApi",
+      "unsafeName": "authNameCollisionWithDocsTestApi",
     },
-    "originalName": "Auth Name Collision Test API",
+    "originalName": "Auth Name Collision With Docs Test API",
     "pascalCase": {
-      "safeName": "AuthNameCollisionTestApi",
-      "unsafeName": "AuthNameCollisionTestApi",
+      "safeName": "AuthNameCollisionWithDocsTestApi",
+      "unsafeName": "AuthNameCollisionWithDocsTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "AUTH_NAME_COLLISION_TEST_API",
-      "unsafeName": "AUTH_NAME_COLLISION_TEST_API",
+      "safeName": "AUTH_NAME_COLLISION_WITH_DOCS_TEST_API",
+      "unsafeName": "AUTH_NAME_COLLISION_WITH_DOCS_TEST_API",
     },
     "snakeCase": {
-      "safeName": "auth_name_collision_test_api",
-      "unsafeName": "auth_name_collision_test_api",
+      "safeName": "auth_name_collision_with_docs_test_api",
+      "unsafeName": "auth_name_collision_with_docs_test_api",
     },
   },
   "apiPlayground": undefined,
@@ -29,7 +29,7 @@
     "schemes": [
       {
         "_visit": [Function],
-        "docs": "OpenAPI version of bearerAuth (should be different from generators.yml version)",
+        "docs": "Custom docs from generators.yml that should take precedence over OpenAPI description",
         "key": "bearerAuth",
         "token": {
           "camelCase": {
