@@ -105,6 +105,80 @@ class TestBuildSystemBlock:
         assert 'build-backend = "poetry.core.masonry.api"' in output
 
 
+def test_pyproject_toml_includes_aiohttp_extra():
+    """Test that pyproject.toml always includes aiohttp optional dependency"""
+    import tempfile
+    import os
+    from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
+    from fern_python.codegen.dependency_manager import DependencyManager
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        package_config = PyProjectTomlPackageConfig(include="test_package")
+        dependency_manager = DependencyManager()
+
+        pyproject = PyProjectToml(
+            name="test-package",
+            version="1.0.0",
+            package=package_config,
+            path=temp_dir,
+            dependency_manager=dependency_manager,
+            python_version="^3.8",
+            pypi_metadata=None,
+            github_output_mode=None,
+            license_=None,
+            extras={},  # Empty extras to test auto-addition
+        )
+
+        pyproject.write()
+
+        # Read the generated pyproject.toml
+        with open(os.path.join(temp_dir, "pyproject.toml"), "r") as f:
+            content = f.read()
+
+        # Should contain aiohttp extra
+        assert "[tool.poetry.extras]" in content
+        assert 'aiohttp=["aiohttp", "httpx_aiohttp>=0.1.9"]' in content
+
+
+def test_pyproject_toml_preserves_user_extras():
+    """Test that user-provided extras are preserved alongside aiohttp"""
+    import tempfile
+    import os
+    from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
+    from fern_python.codegen.dependency_manager import DependencyManager
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        package_config = PyProjectTomlPackageConfig(include="test_package")
+        dependency_manager = DependencyManager()
+
+        user_extras = {"dev": ["pytest", "black"], "docs": ["sphinx"]}
+
+        pyproject = PyProjectToml(
+            name="test-package",
+            version="1.0.0",
+            package=package_config,
+            path=temp_dir,
+            dependency_manager=dependency_manager,
+            python_version="^3.8",
+            pypi_metadata=None,
+            github_output_mode=None,
+            license_=None,
+            extras=user_extras,
+        )
+
+        pyproject.write()
+
+        # Read the generated pyproject.toml
+        with open(os.path.join(temp_dir, "pyproject.toml"), "r") as f:
+            content = f.read()
+
+        # Should contain both user extras and aiohttp extra
+        assert "[tool.poetry.extras]" in content
+        assert 'aiohttp=["aiohttp", "httpx_aiohttp>=0.1.9"]' in content
+        assert 'dev=["pytest", "black"]' in content
+        assert 'docs=["sphinx"]' in content
+
+
 class TestPoetryCoreValidation:
     """Validate generated pyproject.toml using poetry-core."""
 
