@@ -993,9 +993,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             "Custom docs from generators.yml that should take precedence over OpenAPI description"
         );
 
-        await expect(fdrApiDefinition).toMatchFileSnapshot(
-            "__snapshots__/auth-name-collision-with-docs-fdr.snap"
-        );
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-name-collision-with-docs-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot(
             "__snapshots__/auth-name-collision-with-docs-ir.snap"
         );
