@@ -3682,10 +3682,12 @@
   "nonRequestReferencedSchemas": {},
   "securitySchemes": {
     "bearerAuth": {
+      "description": "Enter the key with the `Bearer` prefix, e.g. 'Bearer API_KEY'.",
       "headerName": "Authorization",
       "type": "header"
     },
     "userAuth": {
+      "description": "User authorization token",
       "headerName": "Authorization",
       "type": "header"
     }

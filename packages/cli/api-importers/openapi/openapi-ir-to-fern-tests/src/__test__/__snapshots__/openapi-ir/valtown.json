@@ -10030,6 +10030,7 @@
   "nonRequestReferencedSchemas": {},
   "securitySchemes": {
     "bearerAuth": {
+      "description": "Endpoints that support authorization expect Bearer authentication, using an API token provided from Val Town.",
       "type": "bearer"
     }
   },
