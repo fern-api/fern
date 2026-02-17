@@ -135,7 +135,7 @@ jobs:
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     strategy:
       matrix:
         generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -230,11 +230,7 @@ jobs:
       - name: Checkout Files
         uses: actions/checkout@v4
         with:
-          # Get sufficient history to check for changes
           fetch-depth: 0
-          sparse-checkout: |
-            ${{ matrix.files }}
-            .github/
 
       - name: Setup Base SHA
         id: setup-base-sha

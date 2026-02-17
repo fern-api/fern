@@ -59,6 +59,14 @@ runs:
         echo "Generated string: '$string_result'"
         echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
+    - name: Clear partial clone state
+      shell: bash
+      run: |
+        if [ -d .git ] && git config --get remote.origin.partialclonefilter > /dev/null 2>&1; then
+          echo "Removing .git to clear partial clone state and prevent promisor remote fetch failures"
+          rm -rf .git
+        fi
+
     - name: Checkout repo
       uses: actions/checkout@v4
 
