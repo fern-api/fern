@@ -2,7 +2,7 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI script requires console output for user feedback
 import { execSync } from "child_process";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { dirname, join } from "path";
+import { dirname, join, relative } from "path";
 import * as readline from "readline";
 import {
     getChangelogFolder,
@@ -35,18 +35,18 @@ async function promptForConfig(softwareName: string): Promise<SoftwareConfig> {
     }
 
     const defaultChangelogFolder = join(dirname(versionsFile), "changes");
-    const changelogFolder = await question(`Changelog folder path (default: ${defaultChangelogFolder}): `);
+    const changelogFolderInput = await question(`Changelog folder path (default: ${defaultChangelogFolder}): `);
 
     const defaultSoftwareDir = dirname(versionsFile);
-    const softwareDirectory = await question(
+    const softwareDirectoryInput = await question(
         `Software directory to watch for changes (default: ${defaultSoftwareDir}): `
     );
 
     const config: SoftwareConfig = {
         name: displayName.trim() || softwareName,
         versionsFile: versionsFile.trim(),
-        changelogFolder: changelogFolder.trim() || undefined,
-        softwareDirectory: softwareDirectory.trim() || undefined
+        changelogFolder: changelogFolderInput.trim() || defaultChangelogFolder,
+        softwareDirectory: softwareDirectoryInput.trim() || defaultSoftwareDir
     };
 
     console.log("\n📋 Configuration summary:");
@@ -81,9 +81,15 @@ function createChangelogStructure(config: SoftwareConfig): void {
 
     // Create template file
     const templatePath = join(unreleasedDir, ".template.yml");
+
+    // Calculate relative path from unreleased dir to schema file at repo root
+    const repoRoot = join(__dirname, "..");
+    const schemaPath = join(repoRoot, "fern-changes-yml.schema.json");
+    const relativeSchemaPath = relative(unreleasedDir, schemaPath);
+
     const templateContent = `# Template for changelog entries
 # Copy this file and rename it to describe your change (e.g., add-auth-feature.yml)
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+# yaml-language-server: $schema=${relativeSchemaPath}
 
 - summary: |
     Brief description of your change.
@@ -94,7 +100,10 @@ function createChangelogStructure(config: SoftwareConfig): void {
 
     // Create .gitkeep to ensure directory is tracked
     const gitkeepPath = join(unreleasedDir, ".gitkeep");
-    writeFileSync(gitkeepPath, "");
+    const gitkeepContent = `# This directory contains unreleased changelog entries
+# Create files here following the format in fern-changes-yml.schema.json
+`;
+    writeFileSync(gitkeepPath, gitkeepContent);
 
     console.log("   ✅ Changelog structure created");
 }
@@ -188,8 +197,13 @@ to prepare releases for ${config.name}.
     }
 }
 
-export async function setupSoftware(softwareName: string): Promise<void> {
+export async function setupSoftware(softwareName: string, createPr = false): Promise<void> {
     console.log(`\n🚀 Setting up release configuration for: ${softwareName}\n`);
+
+    if (!createPr) {
+        console.log("📝 Running in dry-run mode (local changes only)");
+        console.log("   Use --create-pr flag to create a branch and pull request\n");
+    }
 
     // Prompt for configuration
     const config = await promptForConfig(softwareName);
@@ -203,34 +217,53 @@ export async function setupSoftware(softwareName: string): Promise<void> {
     // Create changelog structure
     createChangelogStructure(config);
 
-    // Create branch
-    const branchName = createBranch(softwareName);
+    if (createPr) {
+        // Create branch
+        const branchName = createBranch(softwareName);
 
-    // Commit and push changes
-    commitAndPushChanges(softwareName, config, branchName);
+        // Commit and push changes
+        commitAndPushChanges(softwareName, config, branchName);
 
-    // Create pull request
-    createPullRequest(softwareName, config, branchName);
+        // Create pull request
+        createPullRequest(softwareName, config, branchName);
 
-    console.log("\n✨ Setup complete!");
-    console.log("\n📋 Summary:");
-    console.log(`   - Configuration saved for: ${config.name}`);
-    console.log(`   - Branch created: ${branchName}`);
-    console.log(`   - Changelog structure created`);
-    console.log("\n📝 Note: The unified CI workflow will automatically enforce changelog entries for this software.");
-    console.log("\n🎉 Review and merge the PR to complete setup!");
+        console.log("\n✨ Setup complete!");
+        console.log("\n📋 Summary:");
+        console.log(`   - Configuration saved for: ${config.name}`);
+        console.log(`   - Branch created: ${branchName}`);
+        console.log(`   - Changelog structure created`);
+        console.log(
+            "\n📝 Note: The unified CI workflow will automatically enforce changelog entries for this software."
+        );
+        console.log("\n🎉 Review and merge the PR to complete setup!");
+    } else {
+        console.log("\n✨ Setup complete (dry-run)!");
+        console.log("\n📋 Summary:");
+        console.log(`   - Configuration saved for: ${config.name}`);
+        console.log(`   - Changelog structure created locally`);
+        console.log("\n📝 Next steps:");
+        console.log("   1. Review the changes in release-config.json and the changelog structure");
+        console.log("   2. Commit the changes manually, or run with --create-pr to automate this");
+        console.log(
+            "\n📝 Note: The unified CI workflow will automatically enforce changelog entries for this software."
+        );
+    }
 }
 
 // Run if called directly
 if (require.main === module) {
-    const softwareName = process.argv[2];
+    const args = process.argv.slice(2);
+    const softwareName = args.find((arg) => !arg.startsWith("--"));
+    const createPr = args.includes("--create-pr");
 
     if (!softwareName) {
-        console.error("Usage: tsx scripts/release-setup.ts <software-name>");
+        console.error("Usage: tsx scripts/release-setup.ts <software-name> [--create-pr]");
+        console.error("\nOptions:");
+        console.error("  --create-pr  Create a branch and pull request (default: dry-run with local changes only)");
         process.exit(1);
     }
 
-    setupSoftware(softwareName).catch((error) => {
+    setupSoftware(softwareName, createPr).catch((error) => {
         console.error("Error during setup:", error);
         process.exit(1);
     });

@@ -354,10 +354,15 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
 }
 
 async function main(): Promise<void> {
-    const softwareName = process.argv[2];
+    const args = process.argv.slice(2);
+    const softwareName = args.find((arg) => !arg.startsWith("--"));
+    const createPr = args.includes("--create-pr");
 
     if (!softwareName) {
-        console.log("Usage: pnpm release <software>\n");
+        console.log("Usage: pnpm release <software> [--create-pr]\n");
+        console.log("Options:");
+        console.log("  --create-pr  When setting up new software, create a branch and pull request");
+        console.log("               (default: dry-run with local changes only)\n");
         console.log("Available software:");
 
         const configured = listConfiguredSoftware();
@@ -380,7 +385,7 @@ async function main(): Promise<void> {
         console.log("Would you like to set it up now?\n");
 
         // Run the setup flow
-        await setupSoftware(softwareName);
+        await setupSoftware(softwareName, createPr);
     } else {
         // Run the release preparation flow
         prepareRelease(softwareName, config);
