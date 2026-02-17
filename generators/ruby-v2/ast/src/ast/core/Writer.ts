@@ -1,4 +1,9 @@
-import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    AbstractFormatter,
+    AbstractWriter,
+    NopFormatter
+} from "@fern-api/browser-compatible-base-generator";
 
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema.js";
 
@@ -54,6 +59,15 @@ export class Writer extends AbstractWriter {
     public override dedent(): void {
         this._indentLevel--;
         super.dedent();
+    }
+
+    /**
+     * Override to omit the trailing semicolon. Ruby does not use semicolons
+     * as statement terminators.
+     */
+    public override writeNodeStatement(node: AbstractAstNode): void {
+        this.writeNode(node);
+        this.writeNewLineIfLastLineNot();
     }
 
     // override abstract method

@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
-client.endpoints.container.get_and_return_list_of_primitives(request: ['string', 'string']);
+client.endpoints.container.get_and_return_list_of_primitives(request: ["string", "string"])
 ```
 
 ## Environments
