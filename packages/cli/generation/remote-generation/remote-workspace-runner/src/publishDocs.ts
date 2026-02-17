@@ -11,8 +11,13 @@ type DynamicIrUpload = APIV1Write.DynamicIrUpload;
 type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
-import * as posixPath from "node:path/posix";
-import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    convertToFernHostRelativeFilePath,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
@@ -116,12 +121,13 @@ export async function publishDocs({
         editThisPage,
         uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
+            const fernParentDir = resolve(docsWorkspace.absoluteFilePath, RelativeFilePath.of(".."));
             const filePathToAbsolutePath = new Map<string, AbsoluteFilePath>(
                 files.map((file) => {
-                    const cleaned = stripLeadingDotDotSegments(
-                        convertToFernHostRelativeFilePath(file.relativeFilePath)
+                    const serverPath = convertToFernHostRelativeFilePath(
+                        relative(fernParentDir, file.absoluteFilePath)
                     );
-                    return [cleaned, file.absoluteFilePath];
+                    return [serverPath, file.absoluteFilePath];
                 })
             );
             const filesWithMimeType: FileWithMimeType[] = files
@@ -152,7 +158,7 @@ export async function publishDocs({
 
                     const obj = {
                         filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                            stripLeadingDotDotSegments(convertToFernHostRelativeFilePath(filePath.relativeFilePath))
+                            convertToFernHostRelativeFilePath(relative(fernParentDir, filePath.absoluteFilePath))
                         ),
                         width: image.width,
                         height: image.height,
@@ -181,7 +187,7 @@ export async function publishDocs({
                 nonImageFiles,
                 async (file) => ({
                     path: CjsFdrSdk.docs.v1.write.FilePath(
-                        stripLeadingDotDotSegments(convertToFernHostRelativeFilePath(file.relativeFilePath))
+                        convertToFernHostRelativeFilePath(relative(fernParentDir, file.absoluteFilePath))
                     ),
                     fileHash: await calculateFileHash(file.absoluteFilePath)
                 })
@@ -626,10 +632,6 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
     }
 
     return undefined;
-}
-
-function stripLeadingDotDotSegments(filePath: string): string {
-    return posixPath.normalize(filePath).replace(/^(\.\.\/?)+/, "");
 }
 
 function parseBasePath(domain: string): string | undefined {
