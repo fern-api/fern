@@ -32,6 +32,23 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
+export interface PublishDocsMetrics {
+    resolveTimeMs?: number;
+    fileUploadTimeMs?: number;
+    fileUploadCount?: number;
+    fileUploadSkippedCount?: number;
+    fileHashTimeMs?: number;
+    apiRegistrationTimeMs?: number;
+    apiRegistrationCount?: number;
+    finishRegisterTimeMs?: number;
+    pageCount?: number;
+    resolveParseConfigTimeMs?: number;
+    resolveNavTreeTimeMs?: number;
+    resolveReplaceRefsTimeMs?: number;
+    resolveImageParseTimeMs?: number;
+    resolveConfigConvertTimeMs?: number;
+}
+
 interface FileWithMimeType {
     mediaType: string;
     absoluteFilePath: AbsoluteFilePath;
@@ -60,7 +77,8 @@ export async function publishDocs({
     withAiExamples = true,
     excludeApis = false,
     targetAudiences,
-    docsUrl
+    docsUrl,
+    metrics
 }: {
     token: FernToken;
     organization: string;
@@ -79,6 +97,7 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
     docsUrl?: string;
+    metrics?: PublishDocsMetrics;
 }): Promise<void> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -94,6 +113,13 @@ export async function publishDocs({
             "Experimental flag 'exclude-apis' is enabled - API references will be excluded from S3 upload"
         );
     }
+
+    let totalFileUploadTimeMs = 0;
+    let totalFileHashTimeMs = 0;
+    let totalFileUploadCount = 0;
+    let totalFileUploadSkippedCount = 0;
+    let totalApiRegistrationTimeMs = 0;
+    let apiRegistrationCount = 0;
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
@@ -114,6 +140,7 @@ export async function publishDocs({
         taskContext: context,
         editThisPage,
         uploadFiles: async (files) => {
+            const uploadCallbackStart = performance.now();
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
             const filesWithMimeType: FileWithMimeType[] = files
                 .map((fileMetadata) => ({
@@ -177,6 +204,7 @@ export async function publishDocs({
             );
             const hashNonImageTime = performance.now() - hashNonImageStart;
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
+            totalFileHashTimeMs += (performance.now() - hashImageStart);
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
@@ -203,6 +231,8 @@ export async function publishDocs({
 
                         const uploadCount = Object.keys(urlsToUpload).length;
                         const skippedCount = skippedSet.size;
+                        totalFileUploadCount += uploadCount;
+                        totalFileUploadSkippedCount += skippedCount;
 
                         if (uploadCount > 0) {
                             context.logger.debug(`Uploading ${uploadCount} files (${skippedCount} skipped)...`);
@@ -216,6 +246,7 @@ export async function publishDocs({
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
                         }
                     }
+                    totalFileUploadTimeMs += (performance.now() - uploadCallbackStart);
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -256,6 +287,9 @@ export async function publishDocs({
                         );
 
                         const uploadCount = Object.keys(urlsToUpload).length;
+                        const skippedCountProd = startDocsRegisterResponse.body.skippedFiles?.length || 0;
+                        totalFileUploadCount += uploadCount;
+                        totalFileUploadSkippedCount += skippedCountProd;
 
                         if (uploadCount > 0) {
                             context.logger.info(`↑ Uploading ${uploadCount} files...`);
@@ -269,6 +303,7 @@ export async function publishDocs({
                             context.logger.info("No files to upload (all up to date)");
                         }
                     }
+                    totalFileUploadTimeMs += (performance.now() - uploadCallbackStart);
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -288,6 +323,8 @@ export async function publishDocs({
             graphqlOperations,
             graphqlTypes
         }) => {
+            const apiRegStart = performance.now();
+            apiRegistrationCount++;
             // Use apiName from docs.yml (folder name) as the API identifier for FDR
             // This ensures users can reference APIs by their folder name in docs components
             let apiDefinition = convertIrToFdrApi({
@@ -384,6 +421,7 @@ export async function publishDocs({
                     }
                 }
 
+                totalApiRegistrationTimeMs += (performance.now() - apiRegStart);
                 return response.body.apiDefinitionId;
             } else {
                 switch (response.error.error) {
@@ -420,6 +458,7 @@ export async function publishDocs({
     const resolveStart = performance.now();
     let docsDefinition = await resolver.resolve();
     const resolveTime = performance.now() - resolveStart;
+    const resolveMetrics = resolver.getMetrics();
 
     if (docsWorkspace.config.settings?.substituteEnvVars) {
         context.logger.debug("Applying environment variable substitution to docs definition...");
@@ -448,7 +487,7 @@ export async function publishDocs({
     }
 
     context.logger.info("Publishing docs to FDR...");
-    const publishStart = performance.now();
+    const finishRegisterStart = performance.now();
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
@@ -459,8 +498,27 @@ export async function publishDocs({
     );
 
     if (registerDocsResponse.ok) {
-        const publishTime = performance.now() - publishStart;
-        context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+        const finishRegisterTime = performance.now() - finishRegisterStart;
+        context.logger.debug(`Docs published to FDR in ${finishRegisterTime.toFixed(0)}ms`);
+
+        if (metrics) {
+            metrics.resolveTimeMs = Math.round(resolveTime);
+            metrics.fileUploadTimeMs = Math.round(totalFileUploadTimeMs);
+            metrics.fileUploadCount = totalFileUploadCount;
+            metrics.fileUploadSkippedCount = totalFileUploadSkippedCount;
+            metrics.fileHashTimeMs = Math.round(totalFileHashTimeMs);
+            metrics.apiRegistrationTimeMs = Math.round(totalApiRegistrationTimeMs);
+            metrics.apiRegistrationCount = apiRegistrationCount;
+            metrics.finishRegisterTimeMs = Math.round(finishRegisterTime);
+            metrics.pageCount = pageCount;
+            if (resolveMetrics) {
+                metrics.resolveParseConfigTimeMs = resolveMetrics.parseConfigTimeMs;
+                metrics.resolveNavTreeTimeMs = resolveMetrics.navTreeTimeMs;
+                metrics.resolveReplaceRefsTimeMs = resolveMetrics.replaceRefsTimeMs;
+                metrics.resolveImageParseTimeMs = resolveMetrics.imageParseTimeMs;
+                metrics.resolveConfigConvertTimeMs = resolveMetrics.configConvertTimeMs;
+            }
+        }
 
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({

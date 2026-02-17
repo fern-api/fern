@@ -94,6 +94,14 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
+export interface ResolveMetrics {
+    parseConfigTimeMs?: number;
+    navTreeTimeMs?: number;
+    replaceRefsTimeMs?: number;
+    imageParseTimeMs?: number;
+    configConvertTimeMs?: number;
+}
+
 export interface DocsDefinitionResolverArgs {
     domain: string;
     docsWorkspace: DocsWorkspace;
@@ -117,6 +125,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private _metrics: ResolveMetrics = {};
 
     constructor({
         domain,
@@ -549,7 +558,19 @@ export class DocsDefinitionResolver {
             `Total resolve time: ${totalResolveTime.toFixed(0)}ms, Memory delta: RSS=${((endMemory.rss - startMemory.rss) / 1024 / 1024).toFixed(2)}MB`
         );
 
+        this._metrics = {
+            parseConfigTimeMs: Math.round(parseTime),
+            navTreeTimeMs: Math.round(rootTime),
+            replaceRefsTimeMs: Math.round(refTime),
+            imageParseTimeMs: Math.round(imageParseTime),
+            configConvertTimeMs: Math.round(configTime)
+        };
+
         return { config, pages, jsFiles };
+    }
+
+    public getMetrics(): ResolveMetrics {
+        return this._metrics;
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;

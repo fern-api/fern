@@ -3,7 +3,7 @@ import { replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-import { publishDocs } from "./publishDocs.js";
+import { PublishDocsMetrics, publishDocs } from "./publishDocs.js";
 
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
@@ -15,7 +15,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     instanceUrl,
     preview,
     disableTemplates,
-    skipUpload
+    skipUpload,
+    metrics
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -27,6 +28,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     preview: boolean;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    metrics?: PublishDocsMetrics;
 }): Promise<void> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -107,7 +109,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                     ? maybeInstance.audiences
                     : [maybeInstance.audiences]
                 : undefined,
-            docsUrl: maybeInstance.url
+            docsUrl: maybeInstance.url,
+            metrics
         });
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);

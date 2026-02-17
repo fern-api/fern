@@ -3,7 +3,7 @@ import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
+import { PublishDocsMetrics, runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -31,6 +31,7 @@ export async function generateDocsWorkspace({
     noPrompt?: boolean;
     skipUpload: boolean | undefined;
 }): Promise<void> {
+    const totalStart = performance.now();
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
         cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
@@ -87,6 +88,7 @@ export async function generateDocsWorkspace({
     }
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        const validationStart = performance.now();
         await validateDocsWorkspaceAndLogIssues({
             workspace: docsWorkspace,
             context,
@@ -96,17 +98,19 @@ export async function generateDocsWorkspace({
             errorOnBrokenLinks: strictBrokenLinks,
             excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks, isRunningOnSelfHosted)
         });
+        const validationTimeMs = performance.now() - validationStart;
 
-        context.logger.info("Validation complete, starting remote docs generation...");
+        context.logger.info(`Validation complete in ${validationTimeMs.toFixed(0)}ms, starting remote docs generation...`);
 
         const filterStart = performance.now();
         const ossWorkspaces = await filterOssWorkspaces(project);
-        const filterTime = performance.now() - filterStart;
+        const filterTimeMs = performance.now() - filterStart;
         context.logger.debug(
-            `Filtered OSS workspaces (${ossWorkspaces.length} workspaces) in ${filterTime.toFixed(0)}ms`
+            `Filtered OSS workspaces (${ossWorkspaces.length} workspaces) in ${filterTimeMs.toFixed(0)}ms`
         );
 
         const generationStart = performance.now();
+        const publishMetrics: PublishDocsMetrics = {};
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,
@@ -117,10 +121,36 @@ export async function generateDocsWorkspace({
             instanceUrl: instance,
             preview,
             disableTemplates,
-            skipUpload
+            skipUpload,
+            metrics: publishMetrics
         });
-        const generationTime = performance.now() - generationStart;
-        context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);
+        const generationTimeMs = performance.now() - generationStart;
+        const totalTimeMs = performance.now() - totalStart;
+
+        const metricsProperties: Record<string, unknown> = {
+            totalTimeMs: Math.round(totalTimeMs),
+            validationTimeMs: Math.round(validationTimeMs),
+            ossFilterTimeMs: Math.round(filterTimeMs),
+            remoteGenerationTimeMs: Math.round(generationTimeMs),
+            ...publishMetrics,
+            apiWorkspaceCount: project.apiWorkspaces.length,
+            ossWorkspaceCount: ossWorkspaces.length,
+            preview
+        };
+
+        context.logger.info(
+            `Docs generation completed in ${(totalTimeMs / 1000).toFixed(1)}s` +
+                ` (validation: ${(validationTimeMs / 1000).toFixed(1)}s,` +
+                ` publishing: ${(generationTimeMs / 1000).toFixed(1)}s)`
+        );
+
+        if (!isRunningOnSelfHosted) {
+            await context.instrumentPostHogEvent({
+                orgId: project.config.organization,
+                command: "fern generate --docs metrics",
+                properties: metricsProperties
+            });
+        }
     });
 }
 
