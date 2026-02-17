@@ -84,6 +84,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -128,6 +131,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -172,6 +178,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return ObjectWithMapOfMap::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -216,6 +225,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return NestedObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -261,6 +273,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -305,6 +320,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -353,6 +371,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return ObjectWithDatetimeLikeString::fromJson($json);
             }
         } catch (JsonException $e) {
