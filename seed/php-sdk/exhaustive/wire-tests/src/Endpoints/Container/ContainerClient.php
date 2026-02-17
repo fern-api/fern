@@ -80,6 +80,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return JsonDecoder::decodeArray($json, ['string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -124,6 +127,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -168,6 +174,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return JsonDecoder::decodeArray($json, ['string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -212,6 +221,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -256,6 +268,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return JsonDecoder::decodeArray($json, ['string' => 'string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
@@ -300,6 +315,9 @@ class ContainerClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null; // @phpstan-ignore return.type
+                }
                 return JsonDecoder::decodeArray($json, ['string' => ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
