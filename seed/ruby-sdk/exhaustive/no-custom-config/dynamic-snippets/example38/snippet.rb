@@ -1,8 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.endpoints.primitive.get_and_return_date(request: '2023-01-15');
+client.endpoints.primitive.get_and_return_date(request: "2023-01-15")
