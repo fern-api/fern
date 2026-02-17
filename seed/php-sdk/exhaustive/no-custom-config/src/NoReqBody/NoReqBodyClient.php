@@ -58,11 +58,11 @@ class NoReqBodyClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithOptionalField
+     * @return ?ObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithNoRequestBody(?array $options = null): ObjectWithOptionalField
+    public function getWithNoRequestBody(?array $options = null): ?ObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -77,6 +77,9 @@ class NoReqBodyClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -100,11 +103,11 @@ class NoReqBodyClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postWithNoRequestBody(?array $options = null): string
+    public function postWithNoRequestBody(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -119,6 +122,9 @@ class NoReqBodyClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {

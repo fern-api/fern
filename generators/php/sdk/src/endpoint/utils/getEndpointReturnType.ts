@@ -19,10 +19,7 @@ export function getEndpointReturnType({
         fileDownload: () => undefined,
         json: (reference) => {
             const type = context.phpTypeMapper.convert({ reference: reference.responseBodyType });
-            if (!type.isOptional() && endpoint.method === "DELETE") {
-                return php.Type.optional(type);
-            }
-            return type;
+            return type.isOptional() ? type : php.Type.optional(type);
         },
         streaming: () => undefined,
         text: () => php.Type.string(),

@@ -64,11 +64,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithOptionalField
+     * @return ?ObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
+    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ?ObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -84,6 +84,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -108,11 +111,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithRequiredField
+     * @return ?ObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ObjectWithRequiredField
+    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ?ObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -128,6 +131,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -152,11 +158,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithMapOfMap
+     * @return ?ObjectWithMapOfMap
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ObjectWithMapOfMap
+    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ?ObjectWithMapOfMap
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -172,6 +178,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithMapOfMap::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -196,11 +205,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return NestedObjectWithOptionalField
+     * @return ?NestedObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): NestedObjectWithOptionalField
+    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): ?NestedObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -216,6 +225,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -241,11 +253,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return NestedObjectWithRequiredField
+     * @return ?NestedObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): NestedObjectWithRequiredField
+    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): ?NestedObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -261,6 +273,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -285,11 +300,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return NestedObjectWithRequiredField
+     * @return ?NestedObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): NestedObjectWithRequiredField
+    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): ?NestedObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -305,6 +320,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -333,11 +351,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithDatetimeLikeString
+     * @return ?ObjectWithDatetimeLikeString
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString $request, ?array $options = null): ObjectWithDatetimeLikeString
+    public function getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString $request, ?array $options = null): ?ObjectWithDatetimeLikeString
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -353,6 +371,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithDatetimeLikeString::fromJson($json);
             }
         } catch (JsonException $e) {
