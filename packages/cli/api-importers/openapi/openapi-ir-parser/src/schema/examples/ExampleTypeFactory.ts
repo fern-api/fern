@@ -203,10 +203,7 @@ export class ExampleTypeFactory {
                         unionVariants.push(...Object.entries(schema.value.schemas));
 
                         for (const unionVariant of unionVariants) {
-                            if (
-                                exampleDiscriminant != null &&
-                                resolvedVariantSchema != null
-                            ) {
+                            if (exampleDiscriminant != null && resolvedVariantSchema != null) {
                                 allProperties = this.getAllProperties(resolvedVariantSchema);
                                 requiredProperties = this.getAllRequiredProperties(resolvedVariantSchema);
                                 result[schema.value.discriminantProperty] = FullExample.primitive(
