@@ -18,6 +18,7 @@ import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequ
 import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -64,6 +65,7 @@ public class RawCompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         try {
             Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
@@ -112,6 +114,7 @@ public class RawCompletionsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         try {
             Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
