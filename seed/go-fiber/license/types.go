@@ -31,6 +31,9 @@ func (t *Type) GetName() string {
 }
 
 func (t *Type) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -75,6 +78,9 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Type) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}

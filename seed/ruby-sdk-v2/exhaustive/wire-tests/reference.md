@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_list_of_primitives(request: ['string', 'string']);
+client.endpoints.container.get_and_return_list_of_primitives(request: ["string", "string"])
 ```
 </dd>
 </dl>
@@ -62,10 +62,10 @@ client.endpoints.container.get_and_return_list_of_primitives(request: ['string',
 
 ```ruby
 client.endpoints.container.get_and_return_list_of_objects(request: [{
-  string: 'string'
+  string: "string"
 }, {
-  string: 'string'
-}]);
+  string: "string"
+}])
 ```
 </dd>
 </dl>
@@ -113,7 +113,7 @@ client.endpoints.container.get_and_return_list_of_objects(request: [{
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(['string']));
+client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(["string"]))
 ```
 </dd>
 </dl>
@@ -162,8 +162,8 @@ client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(['s
 
 ```ruby
 client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
-  string: 'string'
-}]));
+  string: "string"
+}]))
 ```
 </dd>
 </dl>
@@ -212,8 +212,8 @@ client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
 
 ```ruby
 client.endpoints.container.get_and_return_map_prim_to_prim(request: {
-  string: 'string'
-});
+  string: "string"
+})
 ```
 </dd>
 </dl>
@@ -263,9 +263,9 @@ client.endpoints.container.get_and_return_map_prim_to_prim(request: {
 ```ruby
 client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
   string: {
-    string: 'string'
+    string: "string"
   }
-});
+})
 ```
 </dd>
 </dl>
@@ -314,8 +314,8 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
 
 ```ruby
 client.endpoints.container.get_and_return_optional(request: {
-  string: 'string'
-});
+  string: "string"
+})
 ```
 </dd>
 </dl>
@@ -365,22 +365,22 @@ client.endpoints.container.get_and_return_optional(request: {
 
 ```ruby
 client.endpoints.content_type.post_json_patch_content_type(
-  string: 'string',
+  string: "string",
   integer: 1,
   long: 1000000,
   double: 1.1,
   bool: true,
-  datetime: '2024-01-15T09:30:00Z',
-  date: '2023-01-15',
-  uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  base_64: 'SGVsbG8gd29ybGQh',
-  list: ['list', 'list'],
-  set: Set.new(['set']),
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  base_64: "SGVsbG8gd29ybGQh",
+  list: ["list", "list"],
+  set: Set.new(["set"]),
   map: {
-    1 => 'map'
+    1 => "map"
   },
-  bigint: '1000000'
-);
+  bigint: "1000000"
+)
 ```
 </dd>
 </dl>
@@ -429,22 +429,22 @@ client.endpoints.content_type.post_json_patch_content_type(
 
 ```ruby
 client.endpoints.content_type.post_json_patch_content_with_charset_type(
-  string: 'string',
+  string: "string",
   integer: 1,
   long: 1000000,
   double: 1.1,
   bool: true,
-  datetime: '2024-01-15T09:30:00Z',
-  date: '2023-01-15',
-  uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  base_64: 'SGVsbG8gd29ybGQh',
-  list: ['list', 'list'],
-  set: Set.new(['set']),
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  base_64: "SGVsbG8gd29ybGQh",
+  list: ["list", "list"],
+  set: Set.new(["set"]),
   map: {
-    1 => 'map'
+    1 => "map"
   },
-  bigint: '1000000'
-);
+  bigint: "1000000"
+)
 ```
 </dd>
 </dl>
@@ -493,7 +493,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 <dd>
 
 ```ruby
-client.endpoints.enum.get_and_return_enum(request: 'SUNNY');
+client.endpoints.enum.get_and_return_enum(request: "SUNNY")
 ```
 </dd>
 </dl>
@@ -542,7 +542,7 @@ client.endpoints.enum.get_and_return_enum(request: 'SUNNY');
 <dd>
 
 ```ruby
-client.endpoints.http_methods.test_get(id: 'id');
+client.endpoints.http_methods.test_get(id: "id")
 ```
 </dd>
 </dl>
@@ -590,7 +590,7 @@ client.endpoints.http_methods.test_get(id: 'id');
 <dd>
 
 ```ruby
-client.endpoints.http_methods.test_post(string: 'string');
+client.endpoints.http_methods.test_post(string: "string")
 ```
 </dd>
 </dl>
@@ -639,9 +639,9 @@ client.endpoints.http_methods.test_post(string: 'string');
 
 ```ruby
 client.endpoints.http_methods.test_put(
-  id: 'id',
-  string: 'string'
-);
+  id: "id",
+  string: "string"
+)
 ```
 </dd>
 </dl>
@@ -698,23 +698,23 @@ client.endpoints.http_methods.test_put(
 
 ```ruby
 client.endpoints.http_methods.test_patch(
-  id: 'id',
-  string: 'string',
+  id: "id",
+  string: "string",
   integer: 1,
   long: 1000000,
   double: 1.1,
   bool: true,
-  datetime: '2024-01-15T09:30:00Z',
-  date: '2023-01-15',
-  uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  base_64: 'SGVsbG8gd29ybGQh',
-  list: ['list', 'list'],
-  set: Set.new(['set']),
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  base_64: "SGVsbG8gd29ybGQh",
+  list: ["list", "list"],
+  set: Set.new(["set"]),
   map: {
-    1 => 'map'
+    1 => "map"
   },
-  bigint: '1000000'
-);
+  bigint: "1000000"
+)
 ```
 </dd>
 </dl>
@@ -770,7 +770,7 @@ client.endpoints.http_methods.test_patch(
 <dd>
 
 ```ruby
-client.endpoints.http_methods.test_delete(id: 'id');
+client.endpoints.http_methods.test_delete(id: "id")
 ```
 </dd>
 </dl>
@@ -820,22 +820,22 @@ client.endpoints.http_methods.test_delete(id: 'id');
 
 ```ruby
 client.endpoints.object.get_and_return_with_optional_field(
-  string: 'string',
+  string: "string",
   integer: 1,
   long: 1000000,
   double: 1.1,
   bool: true,
-  datetime: '2024-01-15T09:30:00Z',
-  date: '2023-01-15',
-  uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  base_64: 'SGVsbG8gd29ybGQh',
-  list: ['list', 'list'],
-  set: Set.new(['set']),
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  base_64: "SGVsbG8gd29ybGQh",
+  list: ["list", "list"],
+  set: Set.new(["set"]),
   map: {
-    1 => 'map'
+    1 => "map"
   },
-  bigint: '1000000'
-);
+  bigint: "1000000"
+)
 ```
 </dd>
 </dl>
@@ -883,7 +883,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_required_field(string: 'string');
+client.endpoints.object.get_and_return_with_required_field(string: "string")
 ```
 </dd>
 </dl>
@@ -933,9 +933,9 @@ client.endpoints.object.get_and_return_with_required_field(string: 'string');
 ```ruby
 client.endpoints.object.get_and_return_with_map_of_map(map: {
   map: {
-    map: 'map'
+    map: "map"
   }
-});
+})
 ```
 </dd>
 </dl>
@@ -984,25 +984,25 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
 
 ```ruby
 client.endpoints.object.get_and_return_nested_with_optional_field(
-  string: 'string',
+  string: "string",
   nested_object: {
-    string: 'string',
+    string: "string",
     integer: 1,
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: '2024-01-15T09:30:00Z',
-    date: '2023-01-15',
-    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    base_64: 'SGVsbG8gd29ybGQh',
-    list: ['list', 'list'],
-    set: Set.new(['set']),
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base_64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: Set.new(["set"]),
     map: {
-      1 => 'map'
+      1 => "map"
     },
-    bigint: '1000000'
+    bigint: "1000000"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -1051,26 +1051,26 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 
 ```ruby
 client.endpoints.object.get_and_return_nested_with_required_field(
-  string: 'string',
-  string: 'string',
+  string: "string",
+  string: "string",
   nested_object: {
-    string: 'string',
+    string: "string",
     integer: 1,
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: '2024-01-15T09:30:00Z',
-    date: '2023-01-15',
-    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    base_64: 'SGVsbG8gd29ybGQh',
-    list: ['list', 'list'],
-    set: Set.new(['set']),
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base_64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: Set.new(["set"]),
     map: {
-      1 => 'map'
+      1 => "map"
     },
-    bigint: '1000000'
+    bigint: "1000000"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -1127,44 +1127,44 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 
 ```ruby
 client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
-  string: 'string',
+  string: "string",
   nested_object: {
-    string: 'string',
+    string: "string",
     integer: 1,
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: '2024-01-15T09:30:00Z',
-    date: '2023-01-15',
-    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    base_64: 'SGVsbG8gd29ybGQh',
-    list: ['list', 'list'],
-    set: Set.new(['set']),
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base_64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: Set.new(["set"]),
     map: {
-      1 => 'map'
+      1 => "map"
     },
-    bigint: '1000000'
+    bigint: "1000000"
   }
 }, {
-  string: 'string',
+  string: "string",
   nested_object: {
-    string: 'string',
+    string: "string",
     integer: 1,
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: '2024-01-15T09:30:00Z',
-    date: '2023-01-15',
-    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    base_64: 'SGVsbG8gd29ybGQh',
-    list: ['list', 'list'],
-    set: Set.new(['set']),
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base_64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: Set.new(["set"]),
     map: {
-      1 => 'map'
+      1 => "map"
     },
-    bigint: '1000000'
+    bigint: "1000000"
   }
-}]);
+}])
 ```
 </dd>
 </dl>
@@ -1229,9 +1229,9 @@ without being converted to "2023-08-31T14:15:22.000Z".
 
 ```ruby
 client.endpoints.object.get_and_return_with_datetime_like_string(
-  datetime_like_string: '2023-08-31T14:15:22Z',
-  actual_datetime: '2023-08-31T14:15:22Z'
-);
+  datetime_like_string: "2023-08-31T14:15:22Z",
+  actual_datetime: "2023-08-31T14:15:22Z"
+)
 ```
 </dd>
 </dl>
@@ -1295,9 +1295,9 @@ List items with cursor pagination
 
 ```ruby
 client.endpoints.pagination.list_items(
-  cursor: 'cursor',
+  cursor: "cursor",
   limit: 1
-);
+)
 ```
 </dd>
 </dl>
@@ -1368,7 +1368,7 @@ GET with path param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path(param: 'param');
+client.endpoints.params.get_with_path(param: "param")
 ```
 </dd>
 </dl>
@@ -1430,7 +1430,7 @@ GET with path param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path(param: 'param');
+client.endpoints.params.get_with_path(param: "param")
 ```
 </dd>
 </dl>
@@ -1493,9 +1493,9 @@ GET with query param
 
 ```ruby
 client.endpoints.params.get_with_query(
-  query: 'query',
+  query: "query",
   number: 1
-);
+)
 ```
 </dd>
 </dl>
@@ -1566,9 +1566,9 @@ GET with multiple of same query param
 
 ```ruby
 client.endpoints.params.get_with_query(
-  query: 'query',
+  query: "query",
   number: 1
-);
+)
 ```
 </dd>
 </dl>
@@ -1639,9 +1639,9 @@ GET with path and query params
 
 ```ruby
 client.endpoints.params.get_with_path_and_query(
-  param: 'param',
-  query: 'query'
-);
+  param: "param",
+  query: "query"
+)
 ```
 </dd>
 </dl>
@@ -1712,9 +1712,9 @@ GET with path and query params
 
 ```ruby
 client.endpoints.params.get_with_path_and_query(
-  param: 'param',
-  query: 'query'
-);
+  param: "param",
+  query: "query"
+)
 ```
 </dd>
 </dl>
@@ -1785,9 +1785,9 @@ PUT to update with path param
 
 ```ruby
 client.endpoints.params.modify_with_path(
-  param: 'param',
-  request: 'string'
-);
+  param: "param",
+  request: "string"
+)
 ```
 </dd>
 </dl>
@@ -1858,9 +1858,9 @@ PUT to update with path param
 
 ```ruby
 client.endpoints.params.modify_with_path(
-  param: 'param',
-  request: 'string'
-);
+  param: "param",
+  request: "string"
+)
 ```
 </dd>
 </dl>
@@ -1917,7 +1917,7 @@ client.endpoints.params.modify_with_path(
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_string(request: 'string');
+client.endpoints.primitive.get_and_return_string(request: "string")
 ```
 </dd>
 </dl>
@@ -1965,7 +1965,7 @@ client.endpoints.primitive.get_and_return_string(request: 'string');
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_int(request: 1);
+client.endpoints.primitive.get_and_return_int(request: 1)
 ```
 </dd>
 </dl>
@@ -2013,7 +2013,7 @@ client.endpoints.primitive.get_and_return_int(request: 1);
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_long(request: 1000000);
+client.endpoints.primitive.get_and_return_long(request: 1000000)
 ```
 </dd>
 </dl>
@@ -2061,7 +2061,7 @@ client.endpoints.primitive.get_and_return_long(request: 1000000);
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_double(request: 1.1);
+client.endpoints.primitive.get_and_return_double(request: 1.1)
 ```
 </dd>
 </dl>
@@ -2109,7 +2109,7 @@ client.endpoints.primitive.get_and_return_double(request: 1.1);
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_bool(request: true);
+client.endpoints.primitive.get_and_return_bool(request: true)
 ```
 </dd>
 </dl>
@@ -2157,7 +2157,7 @@ client.endpoints.primitive.get_and_return_bool(request: true);
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_datetime(request: '2024-01-15T09:30:00Z');
+client.endpoints.primitive.get_and_return_datetime(request: "2024-01-15T09:30:00Z")
 ```
 </dd>
 </dl>
@@ -2205,7 +2205,7 @@ client.endpoints.primitive.get_and_return_datetime(request: '2024-01-15T09:30:00
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_date(request: '2023-01-15');
+client.endpoints.primitive.get_and_return_date(request: "2023-01-15")
 ```
 </dd>
 </dl>
@@ -2253,7 +2253,7 @@ client.endpoints.primitive.get_and_return_date(request: '2023-01-15');
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_uuid(request: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32');
+client.endpoints.primitive.get_and_return_uuid(request: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
 ```
 </dd>
 </dl>
@@ -2301,7 +2301,7 @@ client.endpoints.primitive.get_and_return_uuid(request: 'd5e9c84f-c2b2-4bf4-b4b0
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_base_64(request: 'SGVsbG8gd29ybGQh');
+client.endpoints.primitive.get_and_return_base_64(request: "SGVsbG8gd29ybGQh")
 ```
 </dd>
 </dl>
@@ -2350,7 +2350,7 @@ client.endpoints.primitive.get_and_return_base_64(request: 'SGVsbG8gd29ybGQh');
 <dd>
 
 ```ruby
-client.endpoints.put.add(id: 'id');
+client.endpoints.put.add(id: "id")
 ```
 </dd>
 </dl>
@@ -2399,7 +2399,7 @@ client.endpoints.put.add(id: 'id');
 <dd>
 
 ```ruby
-client.endpoints.union.get_and_return_union();
+client.endpoints.union.get_and_return_union
 ```
 </dd>
 </dl>
@@ -2448,7 +2448,7 @@ client.endpoints.union.get_and_return_union();
 <dd>
 
 ```ruby
-client.endpoints.urls.with_mixed_case();
+client.endpoints.urls.with_mixed_case
 ```
 </dd>
 </dl>
@@ -2488,7 +2488,7 @@ client.endpoints.urls.with_mixed_case();
 <dd>
 
 ```ruby
-client.endpoints.urls.no_ending_slash();
+client.endpoints.urls.no_ending_slash
 ```
 </dd>
 </dl>
@@ -2528,7 +2528,7 @@ client.endpoints.urls.no_ending_slash();
 <dd>
 
 ```ruby
-client.endpoints.urls.with_ending_slash();
+client.endpoints.urls.with_ending_slash
 ```
 </dd>
 </dl>
@@ -2568,7 +2568,7 @@ client.endpoints.urls.with_ending_slash();
 <dd>
 
 ```ruby
-client.endpoints.urls.with_underscores();
+client.endpoints.urls.with_underscores
 ```
 </dd>
 </dl>
@@ -2624,26 +2624,26 @@ POST with custom object in request body, response is an object
 
 ```ruby
 client.inlined_requests.post_with_object_bodyand_response(
-  string: 'string',
+  string: "string",
   integer: 1,
   nested_object: {
-    string: 'string',
+    string: "string",
     integer: 1,
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: '2024-01-15T09:30:00Z',
-    date: '2023-01-15',
-    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    base_64: 'SGVsbG8gd29ybGQh',
-    list: ['list', 'list'],
-    set: Set.new(['set']),
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base_64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: Set.new(["set"]),
     map: {
-      1 => 'map'
+      1 => "map"
     },
-    bigint: '1000000'
+    bigint: "1000000"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -2722,7 +2722,7 @@ POST request with no auth
 <dd>
 
 ```ruby
-client.no_auth.post_with_no_auth();
+client.no_auth.post_with_no_auth
 ```
 </dd>
 </dl>
@@ -2771,7 +2771,7 @@ client.no_auth.post_with_no_auth();
 <dd>
 
 ```ruby
-client.no_req_body.get_with_no_request_body();
+client.no_req_body.get_with_no_request_body
 ```
 </dd>
 </dl>
@@ -2811,7 +2811,7 @@ client.no_req_body.get_with_no_request_body();
 <dd>
 
 ```ruby
-client.no_req_body.post_with_no_request_body();
+client.no_req_body.post_with_no_request_body
 ```
 </dd>
 </dl>
@@ -2853,10 +2853,10 @@ client.no_req_body.post_with_no_request_body();
 
 ```ruby
 client.req_with_headers.get_with_custom_header(
-  x_test_service_header: 'X-TEST-SERVICE-HEADER',
-  x_test_endpoint_header: 'X-TEST-ENDPOINT-HEADER',
-  body: 'string'
-);
+  x_test_service_header: "X-TEST-SERVICE-HEADER",
+  x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+  body: "string"
+)
 ```
 </dd>
 </dl>

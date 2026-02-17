@@ -92,7 +92,11 @@ client.service.create_big_entity(
     name: 'name',
     nodes: [{
       name: 'name',
-      nodes: [],
+      nodes: [{
+        name: 'name'
+      }, {
+        name: 'name'
+      }],
       trees: [{
         nodes: []
       }, {
@@ -100,7 +104,11 @@ client.service.create_big_entity(
       }]
     }, {
       name: 'name',
-      nodes: [],
+      nodes: [{
+        name: 'name'
+      }, {
+        name: 'name'
+      }],
       trees: [{
         nodes: []
       }, {
@@ -147,7 +155,11 @@ client.service.create_big_entity(
         name: 'name',
         contents: 'contents'
       }],
-      directories: []
+      directories: [{
+        name: 'name'
+      }, {
+        name: 'name'
+      }]
     }, {
       name: 'name',
       files: [{
@@ -157,7 +169,11 @@ client.service.create_big_entity(
         name: 'name',
         contents: 'contents'
       }],
-      directories: []
+      directories: [{
+        name: 'name'
+      }, {
+        name: 'name'
+      }]
     }]
   },
   moment: {

@@ -57,6 +57,9 @@ func (d *DocumentMetadata) GetTitle() *string {
 }
 
 func (d *DocumentMetadata) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -122,6 +125,9 @@ func (d *DocumentMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DocumentMetadata) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
@@ -158,6 +164,9 @@ func (d *DocumentUploadResult) GetStatus() *string {
 }
 
 func (d *DocumentUploadResult) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -209,6 +218,9 @@ func (d *DocumentUploadResult) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DocumentUploadResult) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}

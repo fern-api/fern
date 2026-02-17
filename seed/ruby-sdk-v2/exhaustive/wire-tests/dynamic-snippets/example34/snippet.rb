@@ -1,8 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.endpoints.primitive.get_and_return_long(request: 1000000);
+client.endpoints.primitive.get_and_return_long(request: 1000000)

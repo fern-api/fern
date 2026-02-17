@@ -45,6 +45,9 @@ func (e *Event) GetName() string {
 }
 
 func (e *Event) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -96,6 +99,9 @@ func (e *Event) MarshalJSON() ([]byte, error) {
 }
 
 func (e *Event) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}

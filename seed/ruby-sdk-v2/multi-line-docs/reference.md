@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```ruby
-client.user.get_user(user_id: 'userId');
+client.user.get_user(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -95,9 +95,9 @@ This endpoint is used to create a new user.
 
 ```ruby
 client.user.create_user(
-  name: 'name',
+  name: "name",
   age: 1
-);
+)
 ```
 </dd>
 </dl>
