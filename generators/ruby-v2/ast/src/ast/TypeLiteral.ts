@@ -113,11 +113,11 @@ export class TypeLiteral extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "str": {
-                // For now, just write the string as a Ruby string literal
-                if (this.internalType.value.includes("'") || this.internalType.value.includes("#")) {
-                    writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`);
+                const value = this.internalType.value.replaceAll("\r\n", "\n");
+                if (value.includes('"') && !value.includes("'") && !value.includes("#")) {
+                    writer.write(`'${value}'`);
                 } else {
-                    writer.write(`'${this.internalType.value}'`);
+                    writer.write(`"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`);
                 }
                 break;
             }
@@ -188,6 +188,24 @@ export class TypeLiteral extends AstNode {
                 const values = this.internalType.values.filter((v) => !TypeLiteral.isNop(v));
                 if (values.length === 0) {
                     writer.write("[]");
+                    break;
+                }
+                // Use %w[] for arrays where every element is a simple string with no
+                // spaces, backslashes, or brackets that would break the syntax.
+                if (
+                    values.length >= 2 &&
+                    values.every(
+                        (v) =>
+                            v instanceof TypeLiteral &&
+                            v.internalType.type === "str" &&
+                            !/[\s\\[\]]/.test(v.internalType.value)
+                    )
+                ) {
+                    const words = (values as TypeLiteral[]).map((v) => {
+                        const str = v.internalType as { type: "str"; value: string };
+                        return str.value;
+                    });
+                    writer.write(`%w[${words.join(" ")}]`);
                     break;
                 }
                 writer.write("[");

@@ -31,6 +31,9 @@ func (u *UsernameCursor) GetCursor() *UsernamePage {
 }
 
 func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (u *UsernameCursor) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsernameCursor) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -118,6 +124,9 @@ func (u *UsernamePage) GetData() []string {
 }
 
 func (u *UsernamePage) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -170,6 +179,9 @@ func (u *UsernamePage) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsernamePage) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

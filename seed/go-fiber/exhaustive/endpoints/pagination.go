@@ -47,6 +47,9 @@ func (p *PaginatedResponse) GetNext() *string {
 }
 
 func (p *PaginatedResponse) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -98,6 +101,9 @@ func (p *PaginatedResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaginatedResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}

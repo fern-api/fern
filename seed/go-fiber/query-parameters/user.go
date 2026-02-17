@@ -58,6 +58,9 @@ func (n *NestedUser) GetUser() *User {
 }
 
 func (n *NestedUser) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -109,6 +112,9 @@ func (n *NestedUser) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedUser) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
@@ -145,6 +151,9 @@ func (u *User) GetTags() []string {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -196,6 +205,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}

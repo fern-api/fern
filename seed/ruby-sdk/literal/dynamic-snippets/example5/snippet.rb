@@ -1,5 +1,5 @@
 require "seed"
 
-client = Seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.path.send_(id: '123');
+client.path.send_(id: "123")

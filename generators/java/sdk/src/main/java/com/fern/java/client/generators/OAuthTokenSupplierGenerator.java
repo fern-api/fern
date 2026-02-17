@@ -17,6 +17,7 @@ import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
@@ -138,15 +139,16 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         TypeName fetchTokenReturnType = clientGeneratorContext
                 .getPoetTypeNameMapper()
                 .convertToTypeName(true, jsonResponseBody.getResponseBodyType());
-        String accessTokenResponsePropertyName = clientCredentials
-                .getTokenEndpoint()
-                .getResponseProperties()
-                .getAccessToken()
+        ResponseProperty accessTokenResponseProperty =
+                clientCredentials.getTokenEndpoint().getResponseProperties().getAccessToken();
+        String accessTokenResponsePropertyName = accessTokenResponseProperty
                 .getProperty()
                 .getName()
                 .getName()
                 .getPascalCase()
                 .getUnsafeName();
+        boolean isAccessTokenOptional =
+                isOptionalType(accessTokenResponseProperty.getProperty().getValueType());
         ParameterizedTypeName supplierOfString =
                 ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
         Optional<ResponseProperty> expiryResponseProperty =
@@ -168,9 +170,19 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                                 : CodeBlock.builder()
                                         .add("if ($L == null)", ACCESS_TOKEN_FIELD_NAME)
                                         .build())
-                .addStatement("$T authResponse = $L()", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME)
-                .addStatement(
-                        "this.$L = authResponse.get$L()", ACCESS_TOKEN_FIELD_NAME, accessTokenResponsePropertyName);
+                .addStatement("$T authResponse = $L()", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME);
+
+        if (isAccessTokenOptional) {
+            getMethodSpecBuilder.addStatement(
+                    "this.$L = authResponse.get$L().orElseThrow(() -> new $T($S))",
+                    ACCESS_TOKEN_FIELD_NAME,
+                    accessTokenResponsePropertyName,
+                    RuntimeException.class,
+                    "Access token not present in OAuth response");
+        } else {
+            getMethodSpecBuilder.addStatement(
+                    "this.$L = authResponse.get$L()", ACCESS_TOKEN_FIELD_NAME, accessTokenResponsePropertyName);
+        }
         if (refreshRequired) {
             ResponseProperty expiresInProperty = expiryResponseProperty.get();
             String tokenPropertyName = expiresInProperty
@@ -182,14 +194,20 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             TypeReference expiresInType = expiresInProperty.getProperty().getValueType();
             boolean isOptional = isOptionalType(expiresInType);
             if (isOptional) {
-                // Handle optional expires_in with default fallback
-                // In Java, optional fields return Optional<T>, so use .orElse()
+                // Optional expires_in needs .orElse(default) unwrapping.
+                // Use Long literal (e.g. 3600L) when the inner type is long/uint64
                 getMethodSpecBuilder.addStatement(
                         "this.$L = $L(authResponse.get$L().orElse($L))",
                         EXPIRES_AT_FIELD_NAME,
                         GET_EXPIRES_AT_METHOD_NAME,
                         tokenPropertyName,
-                        DEFAULT_EXPIRES_IN_SECONDS);
+                        isLongType(expiresInType
+                                        .getContainer()
+                                        .get()
+                                        .getOptional()
+                                        .get())
+                                ? DEFAULT_EXPIRES_IN_SECONDS + "L"
+                                : DEFAULT_EXPIRES_IN_SECONDS);
             } else {
                 getMethodSpecBuilder.addStatement(
                         "this.$L = $L(authResponse.get$L())",
@@ -355,6 +373,14 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             return typeReference.getContainer().get().isOptional();
         }
         return false;
+    }
+
+    private boolean isLongType(TypeReference typeReference) {
+        if (!typeReference.isPrimitive()) {
+            return false;
+        }
+        PrimitiveTypeV1 primitiveV1 = typeReference.getPrimitive().get().getV1();
+        return primitiveV1 == PrimitiveTypeV1.LONG || primitiveV1 == PrimitiveTypeV1.UINT_64;
     }
 
     private boolean isLiteralProperty(RequestProperty requestProperty) {

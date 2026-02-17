@@ -17,7 +17,7 @@ on:
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   setup:
@@ -137,16 +137,35 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          # Get sufficient history to check for changes
-          fetch-depth: 200
+          # Full history needed to compare against last successful workflow run
+          fetch-depth: 0
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
+
+      - name: Get base SHA from last successful run
+        id: get-base-sha
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LAST_SUCCESS_SHA=$(gh api \
+            "/repos/${{ github.repository }}/actions/workflows/seed.yml/runs?branch=main&status=success&per_page=1" \
+            --jq '.workflow_runs[0].head_sha // empty' 2>/dev/null || echo "")
+
+          if [[ -n "$LAST_SUCCESS_SHA" ]]; then
+            echo "Last successful run SHA: $LAST_SUCCESS_SHA"
+            echo "base_sha=$LAST_SUCCESS_SHA" >> $GITHUB_OUTPUT
+          else
+            echo "No successful run found, using default change detection"
+            echo "base_sha=" >> $GITHUB_OUTPUT
+          fi
 
       - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
         uses: ./.github/actions/check-for-changed-files
         with:
+          base_sha: ${{ steps.get-base-sha.outputs.base_sha }}
           files: ${{ matrix.files }}
 
       - name: Set output

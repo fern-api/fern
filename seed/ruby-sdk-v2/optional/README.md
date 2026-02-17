@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.optional.send_optional_body(request: {});
+client.optional.send_optional_body(request: {})
 ```
 
 ## Environments

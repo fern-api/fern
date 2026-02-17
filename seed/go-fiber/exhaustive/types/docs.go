@@ -94,6 +94,9 @@ func (o *ObjectWithDocs) GetFieldString() string {
 }
 
 func (o *ObjectWithDocs) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -138,6 +141,9 @@ func (o *ObjectWithDocs) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithDocs) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}

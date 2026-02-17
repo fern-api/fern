@@ -32,13 +32,33 @@ function makeMockCliContext() {
         runTask: vi.fn(
             async (
                 fn: (ctx: {
-                    logger: { info: (m: string) => void };
+                    logger: { info: (m: string) => void; debug: (m: string) => void };
                     failAndThrow: (...args: unknown[]) => never;
+                    runInteractiveTask: (
+                        { name }: { name: string },
+                        taskFn: (interactiveCtx: {
+                            logger: { debug: (m: string) => void };
+                            setSubtitle: (subtitle: string) => void;
+                            failAndThrow: (...args: unknown[]) => never;
+                        }) => Promise<unknown>
+                    ) => Promise<boolean>;
                 }) => unknown
             ) => {
                 return fn({
-                    logger: { info: (m: string) => logs.push(m) },
-                    failAndThrow: fail
+                    logger: {
+                        info: (m: string) => logs.push(m),
+                        debug: (m: string) => logs.push(`[DEBUG] ${m}`)
+                    },
+                    failAndThrow: fail,
+                    runInteractiveTask: vi.fn(async ({ name }, taskFn) => {
+                        logs.push(`Starting task: ${name}`);
+                        await taskFn({
+                            logger: { debug: (m: string) => logs.push(`[DEBUG] ${m}`) },
+                            setSubtitle: (subtitle: string) => logs.push(`[SUBTITLE] ${subtitle}`),
+                            failAndThrow: fail
+                        });
+                        return true;
+                    })
                 });
             }
         ),
@@ -238,7 +258,7 @@ describe("generateLibraryDocs", () => {
             })
         );
 
-        expect(ctx.logs.some((l: string) => l.includes("Generated 1 pages"))).toBe(true);
+        expect(ctx.logs.some((l: string) => l.includes("Generated library documentation for 1 libraries"))).toBe(true);
     });
 
     it("reports failure when generation status is FAILED", async () => {

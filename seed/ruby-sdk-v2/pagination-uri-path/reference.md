@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.users.list_with_uri_pagination();
+client.users.list_with_uri_pagination
 ```
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.users.list_with_uri_pagination();
 <dd>
 
 ```ruby
-client.users.list_with_path_pagination();
+client.users.list_with_path_pagination
 ```
 </dd>
 </dl>

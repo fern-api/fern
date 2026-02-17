@@ -594,9 +594,7 @@ export class ExampleEndpointFactory {
                 );
                 example = undefined;
             }
-            if (example == null) {
-                return [];
-            } else if (example != null) {
+            if (example != null) {
                 headers.push({
                     name: globalHeader.header,
                     value: example

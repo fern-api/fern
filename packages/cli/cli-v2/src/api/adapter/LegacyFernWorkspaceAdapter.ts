@@ -1,8 +1,8 @@
-import type { FernWorkspace, OpenAPISpec, ProtobufSpec } from "@fern-api/api-workspace-commons";
+import type { FernWorkspace } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, relativize } from "@fern-api/fs-utils";
-import { ConjureWorkspace, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { ConjureWorkspace, LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../context/Context.js";
 import type { Task } from "../../ui/Task.js";
@@ -11,7 +11,7 @@ import type { ConjureSpec } from "../config/ConjureSpec.js";
 import { isConjureSpec } from "../config/ConjureSpec.js";
 import type { FernSpec } from "../config/FernSpec.js";
 import { isFernSpec } from "../config/FernSpec.js";
-import { LegacyApiSpecAdapter } from "./LegacyApiSpecAdapter.js";
+import { LegacyOSSWorkspaceAdapter } from "./LegacyOSSWorkspaceAdapter.js";
 
 export namespace LegacyFernWorkspaceAdapter {
     export interface Config {
@@ -93,40 +93,18 @@ export class LegacyFernWorkspaceAdapter {
     }
 
     private async adaptOssSpecs(definition: ApiDefinition): Promise<FernWorkspace> {
-        // Filter out Fern and Conjure specs (handled separately).
-        const ossSpecs = definition.specs.filter((spec) => !isFernSpec(spec) && !isConjureSpec(spec));
-
-        const specAdapter = new LegacyApiSpecAdapter({ context: this.context });
-        const v1Specs = specAdapter.convertAll(ossSpecs);
-
-        const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | ProtobufSpec => {
-            if (spec.type === "openrpc") {
-                return false;
-            }
-            if (spec.type === "protobuf" && !spec.fromOpenAPI) {
-                return false;
-            }
-            return true;
-        });
-
-        const allSpecs = v1Specs.filter((spec) => {
-            if (spec.type === "protobuf" && spec.fromOpenAPI) {
-                return false;
-            }
-            return true;
-        });
-
         const apiConfig = this.buildApiConfiguration(definition);
-
-        const ossWorkspace = new OSSWorkspace({
-            specs: filteredSpecs,
-            allSpecs,
-            absoluteFilePath: this.context.cwd,
+        const ossAdapter = new LegacyOSSWorkspaceAdapter({ context: this.context });
+        const ossWorkspace = ossAdapter.build({
+            definition,
             cliVersion: this.cliVersion,
-            generatorsConfiguration: apiConfig != null ? this.buildGeneratorsConfiguration(apiConfig) : undefined,
-            workspaceName: undefined,
-            changelog: undefined
+            absoluteFilePath: this.context.cwd,
+            generatorsConfiguration: apiConfig != null ? this.buildGeneratorsConfiguration(apiConfig) : undefined
         });
+
+        if (ossWorkspace == null) {
+            throw new Error("Internal error; failed to build API definitions");
+        }
 
         return ossWorkspace.toFernWorkspace({ context: this.taskContext });
     }
