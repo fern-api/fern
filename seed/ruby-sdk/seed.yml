@@ -54,6 +54,12 @@ fixtures:
     - customConfig:
         flattenModuleStructure: true
       outputFolder: flattened-module-structure
+  request-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        useDefaultRequestParameterValues: true
+      outputFolder: with-defaults
 allowedFailures:
   - accept-header
   - examples:wire-tests
@@ -134,7 +140,8 @@ allowedFailures:
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
-  - request-parameters
+  - request-parameters:no-custom-config
+  - request-parameters:with-defaults
   - required-nullable
   - reserved-keywords
   - response-property
