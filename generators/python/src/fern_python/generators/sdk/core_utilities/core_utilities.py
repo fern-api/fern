@@ -46,6 +46,7 @@ class CoreUtilities:
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
+        self._custom_config = custom_config
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -130,7 +131,15 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
-            exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
+            exports={
+                "HttpClient",
+                "AsyncHttpClient",
+                "DefaultAsyncHttpxClient",  # New export
+                "DefaultAioHttpClient"      # New export
+            } if not self._exclude_types_from_init_exports else set(),
+            string_replacements={
+                "__FERN_SDK_PACKAGE__": self._get_package_name()  # Template SDK name
+            }
         )
 
         self._copy_file_to_project(
@@ -294,6 +303,14 @@ class CoreUtilities:
             project.add_dependency(PYDANTIC_V2_DEPENDENCY)
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
+
+    def _get_package_name(self) -> str:
+        """Get the PyPI package name for templating into error messages."""
+        # Prefer explicit package name from config
+        if self._custom_config.package_name:
+            return self._custom_config.package_name
+        # Fall back to module path (e.g., "my_company.my_sdk")
+        return ".".join(self._project_module_path)
 
     def _copy_file_to_project(
         self,
