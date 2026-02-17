@@ -30,6 +30,9 @@ func (d *DeployParams) GetUpdateDraft() *bool {
 }
 
 func (d *DeployParams) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -74,6 +77,9 @@ func (d *DeployParams) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeployParams) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
@@ -101,6 +107,9 @@ func (d *DeployResponse) GetSuccess() bool {
 }
 
 func (d *DeployResponse) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -145,6 +154,9 @@ func (d *DeployResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeployResponse) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
@@ -172,6 +184,9 @@ func (s *SendOptionalBodyRequest) GetMessage() string {
 }
 
 func (s *SendOptionalBodyRequest) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -216,6 +231,9 @@ func (s *SendOptionalBodyRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendOptionalBodyRequest) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

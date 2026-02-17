@@ -40,6 +40,9 @@ func (g *GetTokenRequest) GetClientSecret() string {
 }
 
 func (g *GetTokenRequest) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -91,6 +94,9 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetTokenRequest) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(g); err == nil {
 		return value
 	}
@@ -128,6 +134,9 @@ func (t *TokenResponse) GetExpiresIn() int {
 }
 
 func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -179,6 +188,9 @@ func (t *TokenResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenResponse) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}

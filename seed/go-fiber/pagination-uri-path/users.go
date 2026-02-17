@@ -39,6 +39,9 @@ func (l *ListUsersPathPaginationResponse) GetNext() *string {
 }
 
 func (l *ListUsersPathPaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -90,6 +93,9 @@ func (l *ListUsersPathPaginationResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersPathPaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
@@ -126,6 +132,9 @@ func (l *ListUsersUriPaginationResponse) GetNext() *string {
 }
 
 func (l *ListUsersUriPaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -177,6 +186,9 @@ func (l *ListUsersUriPaginationResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersUriPaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
@@ -213,6 +225,9 @@ func (u *User) GetId() int {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -264,6 +279,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}

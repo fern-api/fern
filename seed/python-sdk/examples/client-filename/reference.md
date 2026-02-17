@@ -745,7 +745,14 @@ client.service.create_big_entity(
         nodes=[
             Node(
                 name="name",
-                nodes=[],
+                nodes=[
+                    Node(
+                        name="name",
+                    ),
+                    Node(
+                        name="name",
+                    ),
+                ],
                 trees=[
                     Tree(
                         nodes=[],
@@ -757,7 +764,14 @@ client.service.create_big_entity(
             ),
             Node(
                 name="name",
-                nodes=[],
+                nodes=[
+                    Node(
+                        name="name",
+                    ),
+                    Node(
+                        name="name",
+                    ),
+                ],
                 trees=[
                     Tree(
                         nodes=[],
@@ -824,7 +838,14 @@ client.service.create_big_entity(
                         contents="contents",
                     ),
                 ],
-                directories=[],
+                directories=[
+                    Directory(
+                        name="name",
+                    ),
+                    Directory(
+                        name="name",
+                    ),
+                ],
             ),
             Directory(
                 name="name",
@@ -838,7 +859,14 @@ client.service.create_big_entity(
                         contents="contents",
                     ),
                 ],
-                directories=[],
+                directories=[
+                    Directory(
+                        name="name",
+                    ),
+                    Directory(
+                        name="name",
+                    ),
+                ],
             ),
         ],
     ),
