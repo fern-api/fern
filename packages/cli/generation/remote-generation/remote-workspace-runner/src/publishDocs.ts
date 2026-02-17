@@ -306,9 +306,7 @@ export async function publishDocs({
             );
             if (aiEnhancerConfig) {
                 if (openApiSourceFilePath == null) {
-                    context.logger.debug(
-                        "Skipping AI example enhancement: no OpenAPI source file path available"
-                    );
+                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file path available");
                 } else {
                     apiDefinition = await enhanceExamplesWithAI(
                         apiDefinition,
