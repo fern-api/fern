@@ -1,10 +1,12 @@
 """Tests for pyproject_toml module."""
 
+import os
 import tempfile
 from pathlib import Path
 
 import pytest
 
+from fern_python.codegen.dependency_manager import DependencyManager
 from fern_python.codegen.pyproject_toml import (
     PyProjectToml,
     PyProjectTomlPackageConfig,
@@ -107,11 +109,6 @@ class TestBuildSystemBlock:
 
 def test_pyproject_toml_includes_aiohttp_extra():
     """Test that pyproject.toml always includes aiohttp optional dependency"""
-    import tempfile
-    import os
-    from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
-    from fern_python.codegen.dependency_manager import DependencyManager
-
     with tempfile.TemporaryDirectory() as temp_dir:
         package_config = PyProjectTomlPackageConfig(include="test_package")
         dependency_manager = DependencyManager()
@@ -142,11 +139,6 @@ def test_pyproject_toml_includes_aiohttp_extra():
 
 def test_pyproject_toml_preserves_user_extras():
     """Test that user-provided extras are preserved alongside aiohttp"""
-    import tempfile
-    import os
-    from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
-    from fern_python.codegen.dependency_manager import DependencyManager
-
     with tempfile.TemporaryDirectory() as temp_dir:
         package_config = PyProjectTomlPackageConfig(include="test_package")
         dependency_manager = DependencyManager()
