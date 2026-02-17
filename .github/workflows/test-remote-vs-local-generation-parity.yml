@@ -113,6 +113,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
     steps:
