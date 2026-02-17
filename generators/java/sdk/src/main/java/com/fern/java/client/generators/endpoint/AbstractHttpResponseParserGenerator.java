@@ -864,7 +864,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                     // Analyze SSE payload type for discrimination
                     SseDiscriminationAnalyzer.SseDiscriminationInfo discriminationInfo =
                             SseDiscriminationAnalyzer.analyze(
-                                    sse.getPayload(), clientGeneratorContext.getTypeDeclarations());
+                                    sse.getPayload(),
+                                    clientGeneratorContext.getTypeDeclarations(),
+                                    clientGeneratorContext.getDiscriminatorContexts());
 
                     if (discriminationInfo.getType() == SseDiscriminationAnalyzer.DiscriminationType.EVENT_LEVEL) {
                         // Event-level discrimination: discriminator is at SSE envelope level

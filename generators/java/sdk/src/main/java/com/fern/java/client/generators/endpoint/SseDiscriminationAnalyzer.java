@@ -6,23 +6,19 @@ import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.types.UnionTypeDeclaration;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Analyzes SSE payload types to determine if event-level or data-level discrimination is needed.
  *
- * <p>Following Python's approach from PR #11726: - If the union's discriminator property name matches an SSE envelope
- * field (event, id, retry, data), it's event-level discrimination. - Otherwise, it's data-level discrimination where
- * the discriminator is inside the JSON data payload.
+ * <p>Uses the IR's discriminatorContext field on UnionTypeDeclaration to determine discrimination type: - "protocol":
+ * discriminator is at the SSE envelope level (event-level discrimination) - "data" (or absent): discriminator is inside
+ * the JSON data payload (data-level discrimination)
  */
 public final class SseDiscriminationAnalyzer {
 
-    /** SSE envelope fields that indicate event-level discrimination when used as a discriminator. */
-    private static final Set<String> SSE_ENVELOPE_FIELDS = new HashSet<>(Arrays.asList("event", "id", "retry", "data"));
+    private static final String DISCRIMINATOR_CONTEXT_PROTOCOL = "protocol";
 
     /** Type of discrimination for SSE events. */
     public enum DiscriminationType {
@@ -65,52 +61,56 @@ public final class SseDiscriminationAnalyzer {
         }
     }
 
-    private SseDiscriminationAnalyzer() {
-        // Utility class
-    }
+    private SseDiscriminationAnalyzer() {}
 
     /**
-     * Analyzes the SSE payload type to determine what type of discrimination is needed.
+     * Analyzes the SSE payload type to determine what type of discrimination is needed, using the IR's
+     * discriminatorContext field.
      *
      * @param payloadType The SSE payload type reference from the IR
      * @param typeDeclarations Map of all type declarations
+     * @param discriminatorContexts Map of TypeId to discriminatorContext values extracted from the IR JSON
      * @return The discrimination info indicating how to handle SSE parsing
      */
     public static SseDiscriminationInfo analyze(
-            TypeReference payloadType, Map<TypeId, TypeDeclaration> typeDeclarations) {
+            TypeReference payloadType,
+            Map<TypeId, TypeDeclaration> typeDeclarations,
+            Map<TypeId, String> discriminatorContexts) {
 
-        // Resolve the type reference to its declaration
-        Optional<UnionTypeDeclaration> unionDeclaration = resolveUnionType(payloadType, typeDeclarations);
+        Optional<UnionResolutionResult> result = resolveUnionType(payloadType, typeDeclarations);
 
-        if (unionDeclaration.isEmpty()) {
-            // Not a discriminated union - use standard SSE parsing
+        if (result.isEmpty()) {
             return SseDiscriminationInfo.none();
         }
 
-        // Get the discriminant property name
-        String discriminatorProperty = unionDeclaration.get().getDiscriminant().getWireValue();
+        UnionResolutionResult unionResult = result.get();
+        String discriminatorProperty = unionResult.union.getDiscriminant().getWireValue();
 
-        // Check if the discriminator is an SSE envelope field
-        if (isEventLevelDiscriminator(discriminatorProperty)) {
+        String context = discriminatorContexts.getOrDefault(unionResult.typeId, "data");
+        if (DISCRIMINATOR_CONTEXT_PROTOCOL.equals(context)) {
             return SseDiscriminationInfo.eventLevel(discriminatorProperty);
         } else {
             return SseDiscriminationInfo.dataLevel(discriminatorProperty);
         }
     }
 
-    /** Checks if the discriminator property indicates event-level discrimination. */
-    public static boolean isEventLevelDiscriminator(String discriminatorProperty) {
-        return SSE_ENVELOPE_FIELDS.contains(discriminatorProperty);
+    private static final class UnionResolutionResult {
+        final TypeId typeId;
+        final UnionTypeDeclaration union;
+
+        UnionResolutionResult(TypeId typeId, UnionTypeDeclaration union) {
+            this.typeId = typeId;
+            this.union = union;
+        }
     }
 
-    /** Resolves a TypeReference to its UnionTypeDeclaration, following aliases if necessary. */
-    private static Optional<UnionTypeDeclaration> resolveUnionType(
+    /** Resolves a TypeReference to its UnionTypeDeclaration and TypeId, following aliases if necessary. */
+    private static Optional<UnionResolutionResult> resolveUnionType(
             TypeReference typeReference, Map<TypeId, TypeDeclaration> typeDeclarations) {
 
-        return typeReference.visit(new TypeReference.Visitor<Optional<UnionTypeDeclaration>>() {
+        return typeReference.visit(new TypeReference.Visitor<Optional<UnionResolutionResult>>() {
             @Override
-            public Optional<UnionTypeDeclaration> visitContainer(com.fern.ir.model.types.ContainerType container) {
-                // Handle optional/nullable containers by unwrapping
+            public Optional<UnionResolutionResult> visitContainer(com.fern.ir.model.types.ContainerType container) {
                 if (container.getOptional().isPresent()) {
                     return resolveUnionType(container.getOptional().get(), typeDeclarations);
                 }
@@ -121,62 +121,61 @@ public final class SseDiscriminationAnalyzer {
             }
 
             @Override
-            public Optional<UnionTypeDeclaration> visitNamed(NamedType named) {
+            public Optional<UnionResolutionResult> visitNamed(NamedType named) {
                 TypeDeclaration typeDeclaration = typeDeclarations.get(named.getTypeId());
                 if (typeDeclaration == null) {
                     return Optional.empty();
                 }
 
-                return typeDeclaration.getShape().visit(new Type.Visitor<Optional<UnionTypeDeclaration>>() {
+                return typeDeclaration.getShape().visit(new Type.Visitor<Optional<UnionResolutionResult>>() {
                     @Override
-                    public Optional<UnionTypeDeclaration> visitAlias(
+                    public Optional<UnionResolutionResult> visitAlias(
                             com.fern.ir.model.types.AliasTypeDeclaration alias) {
-                        // Follow alias to underlying type
                         return resolveUnionType(alias.getAliasOf(), typeDeclarations);
                     }
 
                     @Override
-                    public Optional<UnionTypeDeclaration> visitEnum(com.fern.ir.model.types.EnumTypeDeclaration enum_) {
+                    public Optional<UnionResolutionResult> visitEnum(
+                            com.fern.ir.model.types.EnumTypeDeclaration enum_) {
                         return Optional.empty();
                     }
 
                     @Override
-                    public Optional<UnionTypeDeclaration> visitObject(
+                    public Optional<UnionResolutionResult> visitObject(
                             com.fern.ir.model.types.ObjectTypeDeclaration object) {
                         return Optional.empty();
                     }
 
                     @Override
-                    public Optional<UnionTypeDeclaration> visitUnion(UnionTypeDeclaration union) {
-                        return Optional.of(union);
+                    public Optional<UnionResolutionResult> visitUnion(UnionTypeDeclaration union) {
+                        return Optional.of(new UnionResolutionResult(named.getTypeId(), union));
                     }
 
                     @Override
-                    public Optional<UnionTypeDeclaration> visitUndiscriminatedUnion(
+                    public Optional<UnionResolutionResult> visitUndiscriminatedUnion(
                             com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-                        // Undiscriminated unions don't have a discriminator
                         return Optional.empty();
                     }
 
                     @Override
-                    public Optional<UnionTypeDeclaration> _visitUnknown(Object unknownType) {
+                    public Optional<UnionResolutionResult> _visitUnknown(Object unknownType) {
                         return Optional.empty();
                     }
                 });
             }
 
             @Override
-            public Optional<UnionTypeDeclaration> visitPrimitive(com.fern.ir.model.types.PrimitiveType primitive) {
+            public Optional<UnionResolutionResult> visitPrimitive(com.fern.ir.model.types.PrimitiveType primitive) {
                 return Optional.empty();
             }
 
             @Override
-            public Optional<UnionTypeDeclaration> visitUnknown() {
+            public Optional<UnionResolutionResult> visitUnknown() {
                 return Optional.empty();
             }
 
             @Override
-            public Optional<UnionTypeDeclaration> _visitUnknown(Object unknownType) {
+            public Optional<UnionResolutionResult> _visitUnknown(Object unknownType) {
                 return Optional.empty();
             }
         });

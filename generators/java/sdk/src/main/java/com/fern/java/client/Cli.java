@@ -208,7 +208,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatorConfig,
                 sdkCustomConfig,
                 clientPoetClassNameFactory,
-                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes(),
+                getDiscriminatorContexts());
         generateClient(context, ir, generatorExecClient);
     }
 
@@ -239,7 +240,12 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
-                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
+                ir,
+                generatorConfig,
+                customConfig,
+                clientPoetClassNameFactory,
+                resolvedAuthSchemes,
+                getDiscriminatorContexts());
         generateClient(context, ir, generatorExecClient);
     }
 
@@ -712,7 +718,12 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
-                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
+                ir,
+                generatorConfig,
+                customConfig,
+                clientPoetClassNameFactory,
+                resolvedAuthSchemes,
+                getDiscriminatorContexts());
         GeneratedRootClient generatedClientWrapper = generateClient(context, ir, generatorExecClient);
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);

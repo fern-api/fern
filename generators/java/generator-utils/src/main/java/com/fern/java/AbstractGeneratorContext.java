@@ -14,6 +14,7 @@ import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
     private final Set<TypeId> interfaces;
     private final U customConfig;
     private final List<AuthScheme> resolvedAuthSchemes;
+    private final Map<TypeId, String> discriminatorContexts;
 
     public AbstractGeneratorContext(
             IntermediateRepresentation ir,
@@ -40,12 +42,23 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
             U customConfig,
             T poetClassNameFactory,
             List<AuthScheme> resolvedAuthSchemes) {
+        this(ir, generatorConfig, customConfig, poetClassNameFactory, resolvedAuthSchemes, Collections.emptyMap());
+    }
+
+    public AbstractGeneratorContext(
+            IntermediateRepresentation ir,
+            GeneratorConfig generatorConfig,
+            U customConfig,
+            T poetClassNameFactory,
+            List<AuthScheme> resolvedAuthSchemes,
+            Map<TypeId, String> discriminatorContexts) {
         this.ir = ir;
         this.generatorConfig = generatorConfig;
         this.customConfig = customConfig;
         this.poetClassNameFactory = poetClassNameFactory;
         this.typeDefinitionsByName = ir.getTypes();
         this.resolvedAuthSchemes = resolvedAuthSchemes;
+        this.discriminatorContexts = discriminatorContexts;
         this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
         this.errorDefinitionsByName = ir.getErrors();
         this.globalHeaders = new GlobalHeaders(ir, poetTypeNameMapper);
@@ -96,6 +109,10 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
 
     public List<AuthScheme> getResolvedAuthSchemes() {
         return resolvedAuthSchemes;
+    }
+
+    public Map<TypeId, String> getDiscriminatorContexts() {
+        return discriminatorContexts;
     }
 
     public boolean isEndpointSecurity() {

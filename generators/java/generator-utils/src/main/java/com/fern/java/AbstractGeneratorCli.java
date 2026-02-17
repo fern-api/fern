@@ -20,6 +20,7 @@ import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.generator.exec.model.logging.SuccessfulStatusUpdate;
 import com.fern.ir.core.ObjectMappers;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.publish.DirectPublish;
 import com.fern.ir.model.publish.Filesystem;
@@ -44,7 +45,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -93,8 +96,19 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
+    /** Result of loading the IR, including the deserialized model and supplementary data. */
+    private static final class IrLoadResult {
+        private final IntermediateRepresentation ir;
+        private final Map<TypeId, String> discriminatorContexts;
+
+        IrLoadResult(IntermediateRepresentation ir, Map<TypeId, String> discriminatorContexts) {
+            this.ir = ir;
+            this.discriminatorContexts = discriminatorContexts;
+        }
+    }
+
     /** Loads and preprocesses the IR from file, handling integer overflow values. */
-    private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
+    private static IrLoadResult loadIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
@@ -107,10 +121,44 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
             }
 
-            return ObjectMappers.JSON_MAPPER.treeToValue(rootNode, IntermediateRepresentation.class);
+            Map<TypeId, String> discriminatorContexts = extractDiscriminatorContexts(rootNode);
+
+            IntermediateRepresentation ir =
+                    ObjectMappers.JSON_MAPPER.treeToValue(rootNode, IntermediateRepresentation.class);
+            return new IrLoadResult(ir, discriminatorContexts);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
+    }
+
+    /**
+     * Extracts discriminatorContext values from the raw IR JSON for union type declarations. The irV63 Java model does
+     * not expose this field (added in IR v65), but it is present in the JSON due to passthrough serialization.
+     */
+    private static Map<TypeId, String> extractDiscriminatorContexts(JsonNode rootNode) {
+        JsonNode typesNode = rootNode.get("types");
+        if (typesNode == null || !typesNode.isObject()) {
+            return Collections.emptyMap();
+        }
+        Map<TypeId, String> result = new HashMap<>();
+        Iterator<Map.Entry<String, JsonNode>> fields = typesNode.fields();
+        while (fields.hasNext()) {
+            Map.Entry<String, JsonNode> entry = fields.next();
+            JsonNode typeDecl = entry.getValue();
+            JsonNode shapeNode = typeDecl.get("shape");
+            if (shapeNode == null) {
+                continue;
+            }
+            JsonNode typeField = shapeNode.get("_type");
+            if (typeField == null || !"union".equals(typeField.asText())) {
+                continue;
+            }
+            JsonNode contextNode = shapeNode.get("discriminatorContext");
+            if (contextNode != null && contextNode.isTextual()) {
+                result.put(TypeId.valueOf(entry.getKey()), contextNode.asText());
+            }
+        }
+        return Collections.unmodifiableMap(result);
     }
 
     /** Processes JSON nodes in-place to convert integer overflow values to long type. */
@@ -313,7 +361,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     private Path outputDirectory = null;
 
+    private Map<TypeId, String> discriminatorContexts = Collections.emptyMap();
+
     protected AbstractGeneratorCli() {}
+
+    protected Map<TypeId, String> getDiscriminatorContexts() {
+        return discriminatorContexts;
+    }
 
     public final void run(String... args) {
         String pluginPath = args[0];
@@ -321,7 +375,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
             log(generatorExecClient, "Starting Java SDK generation");
-            IntermediateRepresentation ir = getIr(generatorConfig);
+            IrLoadResult irLoadResult = loadIr(generatorConfig);
+            IntermediateRepresentation ir = irLoadResult.ir;
+            this.discriminatorContexts = irLoadResult.discriminatorContexts;
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
             generatorConfig
                     .getOutput()
