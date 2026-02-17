@@ -204,7 +204,7 @@ export async function publishDocs({
             );
             const hashNonImageTime = performance.now() - hashNonImageStart;
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
-            totalFileHashTimeMs += (performance.now() - hashImageStart);
+            totalFileHashTimeMs += performance.now() - hashImageStart;
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
@@ -246,7 +246,7 @@ export async function publishDocs({
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
                         }
                     }
-                    totalFileUploadTimeMs += (performance.now() - uploadCallbackStart);
+                    totalFileUploadTimeMs += performance.now() - uploadCallbackStart;
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -303,7 +303,7 @@ export async function publishDocs({
                             context.logger.info("No files to upload (all up to date)");
                         }
                     }
-                    totalFileUploadTimeMs += (performance.now() - uploadCallbackStart);
+                    totalFileUploadTimeMs += performance.now() - uploadCallbackStart;
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
                         docsWorkspace.absoluteFilePath
@@ -421,7 +421,7 @@ export async function publishDocs({
                     }
                 }
 
-                totalApiRegistrationTimeMs += (performance.now() - apiRegStart);
+                totalApiRegistrationTimeMs += performance.now() - apiRegStart;
                 return response.body.apiDefinitionId;
             } else {
                 switch (response.error.error) {
