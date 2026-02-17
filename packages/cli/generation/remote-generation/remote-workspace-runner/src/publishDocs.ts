@@ -11,6 +11,7 @@ type DynamicIrUpload = APIV1Write.DynamicIrUpload;
 type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
+import * as posixPath from "node:path/posix";
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -115,6 +116,14 @@ export async function publishDocs({
         editThisPage,
         uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
+            const filePathToAbsolutePath = new Map<string, AbsoluteFilePath>(
+                files.map((file) => {
+                    const cleaned = stripLeadingDotDotSegments(
+                        convertToFernHostRelativeFilePath(file.relativeFilePath)
+                    );
+                    return [cleaned, file.absoluteFilePath];
+                })
+            );
             const filesWithMimeType: FileWithMimeType[] = files
                 .map((fileMetadata) => ({
                     ...fileMetadata,
@@ -143,7 +152,7 @@ export async function publishDocs({
 
                     const obj = {
                         filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                            convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                            stripLeadingDotDotSegments(convertToFernHostRelativeFilePath(filePath.relativeFilePath))
                         ),
                         width: image.width,
                         height: image.height,
@@ -171,7 +180,9 @@ export async function publishDocs({
                 HASH_CONCURRENCY,
                 nonImageFiles,
                 async (file) => ({
-                    path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
+                    path: CjsFdrSdk.docs.v1.write.FilePath(
+                        stripLeadingDotDotSegments(convertToFernHostRelativeFilePath(file.relativeFilePath))
+                    ),
                     fileHash: await calculateFileHash(file.absoluteFilePath)
                 })
             );
@@ -210,7 +221,8 @@ export async function publishDocs({
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
                                 context,
-                                UPLOAD_FILE_BATCH_SIZE
+                                UPLOAD_FILE_BATCH_SIZE,
+                                filePathToAbsolutePath
                             );
                         } else {
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
@@ -218,7 +230,8 @@ export async function publishDocs({
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
+                        docsWorkspace.absoluteFilePath,
+                        filePathToAbsolutePath
                     );
                 } else {
                     return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
@@ -263,7 +276,8 @@ export async function publishDocs({
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
                                 context,
-                                UPLOAD_FILE_BATCH_SIZE
+                                UPLOAD_FILE_BATCH_SIZE,
+                                filePathToAbsolutePath
                             );
                         } else {
                             context.logger.info("No files to upload (all up to date)");
@@ -271,7 +285,8 @@ export async function publishDocs({
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
+                        docsWorkspace.absoluteFilePath,
+                        filePathToAbsolutePath
                     );
                 } else {
                     return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
@@ -495,7 +510,8 @@ async function uploadFiles(
     filesToUpload: Record<string, DocsV1Write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
-    batchSize: number
+    batchSize: number,
+    filePathToAbsolutePath?: Map<string, AbsoluteFilePath>
 ): Promise<void> {
     const startTime = Date.now();
     const totalFiles = Object.keys(filesToUpload).length;
@@ -505,8 +521,8 @@ async function uploadFiles(
     for (const chunkedFilepaths of chunkedFilepathsToUpload) {
         await Promise.all(
             chunkedFilepaths.map(async ([key, { uploadUrl }]) => {
-                const relativeFilePath = RelativeFilePath.of(key);
-                const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+                const absoluteFilePath =
+                    filePathToAbsolutePath?.get(key) ?? resolve(docsWorkspacePath, RelativeFilePath.of(key));
                 try {
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
@@ -532,12 +548,13 @@ async function uploadFiles(
 
 function convertToFilePathPairs(
     uploadUrls: Record<string, DocsV1Write.FileS3UploadUrl>,
-    docsWorkspacePath: AbsoluteFilePath
+    docsWorkspacePath: AbsoluteFilePath,
+    filePathToAbsolutePath?: Map<string, AbsoluteFilePath>
 ): UploadedFile[] {
     const toRet: UploadedFile[] = [];
     for (const [key, value] of Object.entries(uploadUrls)) {
         const relativeFilePath = RelativeFilePath.of(key);
-        const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+        const absoluteFilePath = filePathToAbsolutePath?.get(key) ?? resolve(docsWorkspacePath, relativeFilePath);
         toRet.push({
             relativeFilePath,
             absoluteFilePath,
@@ -609,6 +626,10 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
     }
 
     return undefined;
+}
+
+function stripLeadingDotDotSegments(filePath: string): string {
+    return posixPath.normalize(filePath).replace(/^(\.\.\/?)+/, "");
 }
 
 function parseBasePath(domain: string): string | undefined {
