@@ -61,6 +61,9 @@ export class DataClass extends AstNode {
                         writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
                         if (field.type.isOptional()) {
                             writer.write(" ?? null");
+                        } else if (field.initializer != null) {
+                            writer.write(" ?? ");
+                            field.initializer.write(writer);
                         }
                         writer.write(";");
                     }
@@ -73,7 +76,7 @@ export class DataClass extends AstNode {
     }
 
     private allFieldsAreOptional(): boolean {
-        return this.class_.fields.every((field) => field.type.isOptional());
+        return this.class_.fields.every((field) => field.type.isOptional() || field.initializer != null);
     }
 
     private getConstructorParameters({ orderedFields }: { orderedFields: Field[] }): Parameter[] {
@@ -84,7 +87,7 @@ export class DataClass extends AstNode {
                     orderedFields.map((field) => ({
                         key: field.name,
                         valueType: field.type,
-                        optional: field.type.isOptional()
+                        optional: field.type.isOptional() || field.initializer != null
                     })),
                     {
                         multiline: true

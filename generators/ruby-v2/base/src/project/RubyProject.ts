@@ -275,7 +275,7 @@ class GemspecFile {
             require_relative "lib/${moduleFolderName}/version"
             require_relative "${CUSTOM_GEMSPEC_FILENAME}"
 
-            # Note: A handful of these fields are required as part of the Ruby specification. 
+            # Note: A handful of these fields are required as part of the Ruby specification.
             #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
             spec.name = "${gemName}"

@@ -95,6 +95,18 @@
             },
             "default": "./dist/cjs/api/resources/endpoints/resources/object/exports.js"
         },
+        "./endpoints/pagination": {
+            "types": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/endpoints/resources/pagination/exports.d.mts",
+                "default": "./dist/esm/api/resources/endpoints/resources/pagination/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.d.ts",
+                "default": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.js"
+        },
         "./endpoints/params": {
             "types": "./dist/cjs/api/resources/endpoints/resources/params/exports.d.ts",
             "import": {

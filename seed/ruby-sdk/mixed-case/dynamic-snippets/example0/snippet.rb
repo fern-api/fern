@@ -1,5 +1,5 @@
 require "seed"
 
-client = Seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.service.get_resource(resource_id: 'rsc-xyz');
+client.service.get_resource(resource_id: "rsc-xyz")

@@ -1,5 +1,6 @@
 import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
+import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
@@ -7,9 +8,8 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
-import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
 import { CliError } from "../errors/CliError.js";
-import { ValidationError } from "../errors/ValidationError.js";
 import { Target } from "../sdk/config/Target.js";
 import { Icons } from "../ui/format.js";
 import type { Workspace } from "../workspace/Workspace.js";
@@ -19,6 +19,9 @@ import { LogFileWriter } from "./LogFileWriter.js";
 
 export class Context {
     private ttyAwareLogger: TtyAwareLogger;
+    private shutdownCallbacks: Array<() => void> = [];
+    private isShuttingDown = false;
+    private logFilePathPrinted = false;
 
     public readonly cwd: AbsoluteFilePath;
     public readonly logLevel: LogLevel;
@@ -56,16 +59,39 @@ export class Context {
         return this.ttyAwareLogger.isTTY;
     }
 
+    /**
+     * Get the TtyAwareLogger for coordinated task display.
+     * Use this to register tasks that need TTY-aware rendering.
+     */
+    public getTtyAwareLogger(): TtyAwareLogger {
+        return this.ttyAwareLogger;
+    }
+
+    /**
+     * Finish the TtyAwareLogger (call when exiting the CLI).
+     */
+    public finish(): void {
+        this.ttyAwareLogger.finish();
+    }
+
     public async loadWorkspaceOrThrow(): Promise<Workspace> {
-        const fernYml = await loadFernYml({ cwd: this.cwd });
-
+        const schemaLoader = new FernYmlSchemaLoader({ cwd: this.cwd });
+        const fernYml = await schemaLoader.loadOrThrow();
         const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
-        const result = await loader.load({ fernYml });
-        if (!result.success) {
-            throw new ValidationError(result.issues);
-        }
+        return await loader.loadOrThrow({ fernYml });
+    }
 
-        return result.workspace;
+    public async loadWorkspace(): Promise<WorkspaceLoader.Result | undefined> {
+        const schemaLoader = new FernYmlSchemaLoader({ cwd: this.cwd });
+        const loadResult = await schemaLoader.load();
+        if (loadResult.type === "notFound") {
+            return undefined;
+        }
+        if (loadResult.type === "failure") {
+            return { success: false, issues: loadResult.issues };
+        }
+        const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
+        return await loader.load({ fernYml: loadResult });
     }
 
     /**
@@ -118,6 +144,47 @@ export class Context {
     }
 
     /**
+     * Register a callback to run during graceful shutdown (e.g. SIGINT).
+     * Callbacks are invoked synchronously in registration order.
+     */
+    public onShutdown(callback: () => void): void {
+        this.shutdownCallbacks.push(callback);
+    }
+
+    /**
+     * Run all registered shutdown callbacks, then finish the logger.
+     */
+    public shutdown(): void {
+        if (this.isShuttingDown) {
+            return;
+        }
+        this.isShuttingDown = true;
+        for (const callback of this.shutdownCallbacks) {
+            try {
+                callback();
+            } catch {
+                // Swallow errors to ensure we always restore the terminal.
+            }
+        }
+        this.finish();
+    }
+
+    /**
+     * Print the log file path to the given stream (defaults to stderr).
+     */
+    public printLogFilePath(stream: NodeJS.WriteStream): void {
+        if (this.logFilePathPrinted) {
+            return;
+        }
+        const logFilePath = this.getLogFilePath();
+        if (logFilePath == null) {
+            return;
+        }
+        this.logFilePathPrinted = true;
+        stream.write(`\n${chalk.dim(`Logs written to: ${logFilePath}`)}\n`);
+    }
+
+    /**
      * Get the log file path if logs have been written.
      */
     public getLogFilePath(): AbsoluteFilePath | undefined {
@@ -136,7 +203,8 @@ export class Context {
             }
         }
         if (target.output.git != null && target.output.path == null) {
-            outputs.push(target.output.git.repository);
+            const git = target.output.git;
+            outputs.push(schemas.isGitOutputSelfHosted(git) ? git.uri : git.repository);
         }
         return outputs;
     }
@@ -158,21 +226,6 @@ export class Context {
             return AbsoluteFilePath.of(outputPath);
         }
         return join(this.cwd, RelativeFilePath.of(outputPath));
-    }
-
-    /**
-     * Get the TtyAwareLogger for coordinated task display.
-     * Use this to register tasks that need TTY-aware rendering.
-     */
-    public getTtyAwareLogger(): TtyAwareLogger {
-        return this.ttyAwareLogger;
-    }
-
-    /**
-     * Finish the TtyAwareLogger (call when exiting the CLI).
-     */
-    public finish(): void {
-        this.ttyAwareLogger.finish();
     }
 
     private async promptAndLogin(): Promise<FernUserToken> {

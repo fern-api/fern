@@ -6,6 +6,7 @@ export { ApisSchema } from "./ApisSchema.js";
 export { AuthSchemesSchema } from "./AuthSchemesSchema.js";
 export { CliSchema } from "./CliSchema.js";
 export { CratesPublishSchema } from "./CratesPublishSchema.js";
+export * from "./docs/index.js";
 export { EnvironmentSchema } from "./EnvironmentSchema.js";
 export { FernYmlSchema } from "./FernYmlSchema.js";
 export {
@@ -15,8 +16,12 @@ export {
     FernRcCacheSchema,
     FernRcSchema
 } from "./fernrc/index.js";
-export { GitOutputModeSchema } from "./GitOutputModeSchema.js";
-export { GitOutputSchema } from "./GitOutputSchema.js";
+export { GitHubOutputModeSchema } from "./GitHubOutputModeSchema.js";
+export { GitHubRepositoryOutputModeSchema } from "./GitHubRepositoryOutputModeSchema.js";
+export { GitHubRepositoryOutputSchema } from "./GitHubRepositoryOutputSchema.js";
+export { GitOutputSchema, isGitOutputGitHubRepository, isGitOutputSelfHosted } from "./GitOutputSchema.js";
+export { GitSelfHostedOutputModeSchema } from "./GitSelfHostedOutputModeSchema.js";
+export { GitSelfHostedOutputSchema } from "./GitSelfHostedOutputSchema.js";
 export { HeaderConfigSchema } from "./HeaderConfigSchema.js";
 export { HeaderSchema } from "./HeaderSchema.js";
 export { isWellKnownLicense, LicenseSchema } from "./LicenseSchema.js";

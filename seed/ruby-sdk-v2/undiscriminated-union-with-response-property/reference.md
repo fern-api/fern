@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.get_union();
+client.get_union
 ```
 </dd>
 </dl>
@@ -52,7 +52,7 @@ client.get_union();
 <dd>
 
 ```ruby
-client.list_unions();
+client.list_unions
 ```
 </dd>
 </dl>

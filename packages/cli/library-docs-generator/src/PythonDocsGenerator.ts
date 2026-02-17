@@ -5,6 +5,7 @@
  * 1. Build type link data from IR (single-pass traversal)
  * 2. Render each module page and stream to disk via MdxFileWriter
  * 3. Build navigation tree from module hierarchy
+ * 4. Write _navigation.yml to output directory
  *
  * Designed for streaming: each page is rendered and written immediately
  * so we never hold all page content in memory at once.
@@ -14,11 +15,7 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { renderModulePage } from "./renderers/ModuleRenderer.js";
 import { buildTypeLinkData, type RenderContext } from "./utils/TypeLinkResolver.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
-import { buildNavigation, type NavNode } from "./writers/NavigationBuilder.js";
-
-// ============================================================================
-// Public Types
-// ============================================================================
+import { buildNavigation, type NavNode, writeNavigation } from "./writers/NavigationBuilder.js";
 
 export interface GenerateOptions {
     /** Parsed Python library IR */
@@ -36,22 +33,20 @@ export interface GenerateResult {
     navigation: NavNode[];
     /** Page ID for the root module overview page (e.g., "reference/python/nemo_rl.mdx") */
     rootPageId: string;
-    /** Absolute paths of all written files */
+    /** Absolute paths of all written files (includes _navigation.yml) */
     writtenFiles: string[];
-    /** Total number of pages generated */
+    /** Total number of MDX pages generated */
     pageCount: number;
+    /** Absolute path to the _navigation.yml file */
+    navigationFilePath: string;
 }
-
-// ============================================================================
-// Public API
-// ============================================================================
 
 /**
  * Generate MDX documentation from a Python library IR.
  *
- * Writes MDX files to `outputDir` and returns a navigation tree
- * along with file metadata. The root module page serves as the
- * section overview, and `navigation` contains child items.
+ * Writes MDX files and `_navigation.yml` to `outputDir`, returning
+ * a navigation tree along with file metadata. The root module page
+ * serves as the section overview, and `navigation` contains child items.
  */
 export function generate(options: GenerateOptions): GenerateResult {
     const { ir, outputDir, slug } = options;
@@ -68,16 +63,19 @@ export function generate(options: GenerateOptions): GenerateResult {
     const navigation = buildNavigation(ir.rootModule, slug);
     const rootPageId = `${slug}/${ir.rootModule.name}.mdx`;
 
+    // Stage 4: Write navigation YAML
+    const navigationFilePath = writeNavigation(outputDir, navigation);
+
+    const writerResult = writer.result();
+
     return {
         navigation,
         rootPageId,
-        ...writer.result()
+        writtenFiles: [...writerResult.writtenFiles, navigationFilePath],
+        pageCount: writerResult.pageCount,
+        navigationFilePath
     };
 }
-
-// ============================================================================
-// Internal
-// ============================================================================
 
 /**
  * Recursively render modules and write pages to disk.

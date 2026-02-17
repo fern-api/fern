@@ -52,14 +52,11 @@ export class ApiDefinitionConverter {
      * @param fernYml - The loaded fern.yml schema result with source location tracking.
      * @returns Result with either the converted API definitions or validation issues
      */
-    public async convert({ fernYml }: { fernYml: FernYmlSchemaLoader.Result }): Promise<ApiDefinitionConverter.Result> {
-        if (!fernYml.success) {
-            return {
-                success: false,
-                issues: fernYml.issues
-            };
-        }
-
+    public async convert({
+        fernYml
+    }: {
+        fernYml: FernYmlSchemaLoader.Success;
+    }): Promise<ApiDefinitionConverter.Result> {
         const { api, apis } = fernYml.data;
         const sourced = fernYml.sourced;
 

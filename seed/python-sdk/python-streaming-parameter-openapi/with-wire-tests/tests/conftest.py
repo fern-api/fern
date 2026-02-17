@@ -16,35 +16,18 @@ import pytest
 
 _STARTED: bool = False
 _WIREMOCK_PORT: str = "8080"  # Default, will be updated after container starts
+_PROJECT_NAME: str = "seed-api"
 
-
-def _compose_file() -> str:
-    """Returns the path to the docker-compose file for WireMock."""
-    # This file lives in tests/conftest.py, so the project root is the parent of tests.
-    tests_dir = os.path.dirname(__file__)
-    project_root = os.path.abspath(os.path.join(tests_dir, ".."))
-    wiremock_dir = os.path.join(project_root, "wiremock")
-    return os.path.join(wiremock_dir, "docker-compose.test.yml")
-
-
-def _project_name() -> str:
-    """Returns a unique project name for this test fixture to avoid container name conflicts."""
-    tests_dir = os.path.dirname(__file__)
-    project_root = os.path.abspath(os.path.join(tests_dir, ".."))
-    # Use the last two directory names to create a unique project name
-    # e.g., "python-streaming-parameter-openapi-with-wire-tests"
-    parent = os.path.basename(os.path.dirname(project_root))
-    current = os.path.basename(project_root)
-    return f"{parent}-{current}".replace("_", "-").lower()
+# This file lives at tests/conftest.py, so the project root is one level up.
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+_COMPOSE_FILE = os.path.join(_PROJECT_ROOT, "wiremock", "docker-compose.test.yml")
 
 
 def _get_wiremock_port() -> str:
     """Gets the dynamically assigned port for the WireMock container."""
-    compose_file = _compose_file()
-    project = _project_name()
     try:
         result = subprocess.run(
-            ["docker", "compose", "-f", compose_file, "-p", project, "port", "wiremock", "8080"],
+            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "port", "wiremock", "8080"],
             check=True,
             capture_output=True,
             text=True,
@@ -62,12 +45,10 @@ def _start_wiremock() -> None:
     if _STARTED:
         return
 
-    compose_file = _compose_file()
-    project = _project_name()
-    print(f"\nStarting WireMock container (project: {project})...")
+    print(f"\nStarting WireMock container (project: {_PROJECT_NAME})...")
     try:
         subprocess.run(
-            ["docker", "compose", "-f", compose_file, "-p", project, "up", "-d", "--wait"],
+            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "up", "-d", "--wait"],
             check=True,
             capture_output=True,
             text=True,
@@ -83,11 +64,9 @@ def _start_wiremock() -> None:
 
 def _stop_wiremock() -> None:
     """Stops and removes the WireMock container."""
-    compose_file = _compose_file()
-    project = _project_name()
     print("\nStopping WireMock container...")
     subprocess.run(
-        ["docker", "compose", "-f", compose_file, "-p", project, "down", "-v"],
+        ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],
         check=False,
         capture_output=True,
     )

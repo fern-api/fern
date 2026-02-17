@@ -8,10 +8,6 @@ const NEMO_FIXTURES: Record<string, FdrAPI.libraryDocs.DocstringIr> = JSON.parse
     readFileSync(join(__dirname, "fixtures", "nemo-docstrings.json"), "utf-8")
 );
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 /** Minimal empty docstring — all arrays present, optional fields undefined. */
 function emptyDocstring(): FdrAPI.libraryDocs.DocstringIr {
     return {
@@ -30,10 +26,6 @@ function emptyDocstring(): FdrAPI.libraryDocs.DocstringIr {
 function docstring(overrides: Partial<FdrAPI.libraryDocs.DocstringIr>): FdrAPI.libraryDocs.DocstringIr {
     return { ...emptyDocstring(), ...overrides };
 }
-
-// ---------------------------------------------------------------------------
-// renderDocstring
-// ---------------------------------------------------------------------------
 
 describe("renderDocstring", () => {
     // --- Null / empty handling ---
@@ -420,10 +412,6 @@ describe("renderDocstring", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderSimpleDocstring
-// ---------------------------------------------------------------------------
-
 describe("renderSimpleDocstring", () => {
     it("returns empty string for null", () => {
         expect(renderSimpleDocstring(null)).toBe("");
@@ -467,10 +455,6 @@ describe("renderSimpleDocstring", () => {
         expect(result).not.toContain("Ignored");
     });
 });
-
-// ---------------------------------------------------------------------------
-// NeMo IR fixture tests — real docstrings from nemo_rl
-// ---------------------------------------------------------------------------
 
 describe("renderDocstring (NeMo fixtures)", () => {
     it("get_tokenizer: renders params, returns, and example", () => {

@@ -31,6 +31,9 @@ func (c *CreateOrganizationRequest) GetName() string {
 }
 
 func (c *CreateOrganizationRequest) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (c *CreateOrganizationRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateOrganizationRequest) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -127,6 +133,9 @@ func (o *Organization) GetUsers() []*User {
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -186,6 +195,9 @@ func (o *Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value

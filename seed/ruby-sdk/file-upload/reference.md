@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.just_file();
+client.service.just_file
 ```
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.service.just_file();
 <dd>
 
 ```ruby
-client.service.optional_args();
+client.service.optional_args
 ```
 </dd>
 </dl>
@@ -93,7 +93,7 @@ client.service.optional_args();
 <dd>
 
 ```ruby
-client.service.simple();
+client.service.simple
 ```
 </dd>
 </dl>

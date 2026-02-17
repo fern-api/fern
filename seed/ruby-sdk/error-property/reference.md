@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```ruby
-client.property_based_error.throw_error();
+client.property_based_error.throw_error
 ```
 </dd>
 </dl>

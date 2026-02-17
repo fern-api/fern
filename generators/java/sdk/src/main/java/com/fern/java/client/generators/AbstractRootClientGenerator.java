@@ -31,6 +31,14 @@ import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.commons.WebSocketChannelId;
+import com.fern.ir.model.environment.EnvironmentBaseUrlWithId;
+import com.fern.ir.model.environment.Environments;
+import com.fern.ir.model.environment.EnvironmentsConfig;
+import com.fern.ir.model.environment.MultipleBaseUrlsEnvironment;
+import com.fern.ir.model.environment.MultipleBaseUrlsEnvironments;
+import com.fern.ir.model.environment.ServerVariable;
+import com.fern.ir.model.environment.SingleBaseUrlEnvironment;
+import com.fern.ir.model.environment.SingleBaseUrlEnvironments;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.QueryParameter;
@@ -44,6 +52,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
@@ -661,6 +670,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
+        List<ServerVariable> serverVariables = getServerVariables();
+        for (ServerVariable serverVar : serverVariables) {
+            String paramName = getServerVariableParamName(serverVar);
+            clientBuilder.addField(FieldSpec.builder(String.class, paramName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .build());
+        }
+        for (ServerVariable serverVar : serverVariables) {
+            String paramName = getServerVariableParamName(serverVar);
+            clientBuilder.addMethod(MethodSpec.methodBuilder(paramName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                    .addParameter(String.class, paramName)
+                    .addStatement("this.$L = $L", paramName, paramName)
+                    .addStatement(isExtensible ? "return self()" : "return this")
+                    .build());
+        }
+
         MethodSpec.Builder buildClientOptionsMethodBuilder = MethodSpec.methodBuilder("buildClientOptions")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(generatedClientOptions.getClassName())
@@ -700,16 +727,108 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         clientBuilder.addMethod(buildClientOptionsMethodBuilder.build());
 
-        MethodSpec setEnvironmentMethod = MethodSpec.methodBuilder("setEnvironment")
+        MethodSpec.Builder setEnvironmentMethodBuilder = MethodSpec.methodBuilder("setEnvironment")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
                 .addJavadoc("Sets the environment configuration for the client.\n"
                         + "Override this method to modify URLs or add environment-specific logic.\n"
                         + "\n"
-                        + "@param builder The ClientOptions.Builder to configure")
-                .addStatement("builder.$N(this.$N)", generatedClientOptions.environment(), environmentField)
-                .build();
-        clientBuilder.addMethod(setEnvironmentMethod);
+                        + "@param builder The ClientOptions.Builder to configure");
+
+        if (!serverVariables.isEmpty()) {
+            Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
+            if (envConfig.isPresent()) {
+                StringBuilder conditionBuilder = new StringBuilder();
+                for (int i = 0; i < serverVariables.size(); i++) {
+                    if (i > 0) conditionBuilder.append(" || ");
+                    conditionBuilder
+                            .append("this.")
+                            .append(getServerVariableParamName(serverVariables.get(i)))
+                            .append(" != null");
+                }
+                setEnvironmentMethodBuilder.beginControlFlow("if ($L)", conditionBuilder.toString());
+
+                for (ServerVariable serverVar : serverVariables) {
+                    String paramName = getServerVariableParamName(serverVar);
+                    String defaultValue = serverVar.getDefault().orElse("");
+                    setEnvironmentMethodBuilder.addStatement(
+                            "$T _$L = this.$L != null ? this.$L : $S",
+                            String.class,
+                            paramName,
+                            paramName,
+                            paramName,
+                            defaultValue);
+                }
+
+                Environments envs = envConfig.get().getEnvironments();
+                if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
+                    envs.getSingleBaseUrl().ifPresent(singleBaseUrl -> {
+                        if (!singleBaseUrl.getEnvironments().isEmpty()) {
+                            SingleBaseUrlEnvironment firstEnv =
+                                    singleBaseUrl.getEnvironments().get(0);
+                            String urlTemplate = firstEnv.getUrlTemplate()
+                                    .orElse(firstEnv.getUrl().get());
+
+                            CodeBlock.Builder replaceChain = CodeBlock.builder().add("$S", urlTemplate);
+                            for (ServerVariable sv : serverVariables) {
+                                replaceChain.add(
+                                        ".replace($S, _$L)", "{" + sv.getId() + "}", getServerVariableParamName(sv));
+                            }
+                            setEnvironmentMethodBuilder.addStatement(
+                                    "this.$N = $T.custom($L)",
+                                    environmentField,
+                                    generatedEnvironmentsClass.getClassName(),
+                                    replaceChain.build());
+                        }
+                    });
+                } else if (generatedEnvironmentsClass.info() instanceof MultiUrlEnvironmentsClass) {
+                    envs.getMultipleBaseUrls().ifPresent(multiBase -> {
+                        if (!multiBase.getEnvironments().isEmpty()) {
+                            MultipleBaseUrlsEnvironment firstEnv =
+                                    multiBase.getEnvironments().get(0);
+
+                            CodeBlock.Builder envCode = CodeBlock.builder();
+                            envCode.add(
+                                    "this.$N = $T.custom()",
+                                    environmentField,
+                                    generatedEnvironmentsClass.getClassName());
+
+                            for (EnvironmentBaseUrlWithId baseUrl : multiBase.getBaseUrls()) {
+                                String urlName =
+                                        baseUrl.getName().getCamelCase().getSafeName();
+                                String template;
+                                if (firstEnv.getUrlTemplates().isPresent()
+                                        && firstEnv.getUrlTemplates().get().containsKey(baseUrl.getId())) {
+                                    template = firstEnv.getUrlTemplates().get().get(baseUrl.getId());
+                                } else {
+                                    template = firstEnv.getUrls()
+                                            .get(baseUrl.getId())
+                                            .get();
+                                }
+
+                                CodeBlock.Builder replaceChain =
+                                        CodeBlock.builder().add("$S", template);
+                                for (ServerVariable sv : serverVariables) {
+                                    replaceChain.add(
+                                            ".replace($S, _$L)",
+                                            "{" + sv.getId() + "}",
+                                            getServerVariableParamName(sv));
+                                }
+                                envCode.add("\n.$L($L)", urlName, replaceChain.build());
+                            }
+                            envCode.add("\n.build()");
+                            setEnvironmentMethodBuilder.addStatement("$L", envCode.build());
+                        }
+                    });
+                }
+
+                setEnvironmentMethodBuilder.endControlFlow();
+            }
+        }
+
+        setEnvironmentMethodBuilder.addStatement(
+                "builder.$N(this.$N)", generatedClientOptions.environment(), environmentField);
+        clientBuilder.addMethod(setEnvironmentMethodBuilder.build());
 
         if (hasAuth) {
             clientBuilder.addMethod(configureAuthBuilder.build());
@@ -882,6 +1001,71 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         generatorContext.getGeneratorConfig().getOrganization())
                 + CasingUtils.convertKebabCaseToUpperCamelCase(
                         generatorContext.getGeneratorConfig().getWorkspaceName());
+    }
+
+    private static final Set<String> RESERVED_BUILDER_PARAM_NAMES =
+            Set.of("environment", "url", "timeout", "maxRetries", "httpClient");
+
+    private List<ServerVariable> getServerVariables() {
+        Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
+        if (!envConfig.isPresent()) {
+            return new ArrayList<>();
+        }
+
+        Environments environments = envConfig.get().getEnvironments();
+        Set<String> seenIds = new HashSet<>();
+        List<ServerVariable> variables = new ArrayList<>();
+
+        environments.visit(new Environments.Visitor<Void>() {
+            @Override
+            public Void visitSingleBaseUrl(SingleBaseUrlEnvironments singleBaseUrl) {
+                if (!singleBaseUrl.getEnvironments().isEmpty()) {
+                    SingleBaseUrlEnvironment firstEnv =
+                            singleBaseUrl.getEnvironments().get(0);
+                    firstEnv.getUrlVariables().ifPresent(vars -> {
+                        for (ServerVariable var : vars) {
+                            if (seenIds.add(var.getId())) {
+                                variables.add(var);
+                            }
+                        }
+                    });
+                }
+                return null;
+            }
+
+            @Override
+            public Void visitMultipleBaseUrls(MultipleBaseUrlsEnvironments multipleBaseUrls) {
+                if (!multipleBaseUrls.getEnvironments().isEmpty()) {
+                    MultipleBaseUrlsEnvironment firstEnv =
+                            multipleBaseUrls.getEnvironments().get(0);
+                    firstEnv.getUrlVariables().ifPresent(urlVarsMap -> {
+                        for (List<ServerVariable> vars : urlVarsMap.values()) {
+                            for (ServerVariable var : vars) {
+                                if (seenIds.add(var.getId())) {
+                                    variables.add(var);
+                                }
+                            }
+                        }
+                    });
+                }
+                return null;
+            }
+
+            @Override
+            public Void _visitUnknown(Object unknown) {
+                return null;
+            }
+        });
+
+        return variables;
+    }
+
+    private String getServerVariableParamName(ServerVariable var) {
+        String name = var.getName().getCamelCase().getSafeName();
+        if (RESERVED_BUILDER_PARAM_NAMES.contains(name)) {
+            return "serverUrl" + var.getName().getPascalCase().getSafeName();
+        }
+        return name;
     }
 
     private final class AuthSchemeHandler implements AuthScheme.Visitor<Void> {

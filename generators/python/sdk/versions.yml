@@ -1,14 +1,60 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.55.6
+- version: 4.57.4
   changelogEntry:
     - summary: |
         Fix TypeError crash in `construct_type` when a non-mapping value (e.g., a list) is passed
         where a Pydantic model is expected. The function now checks `isinstance(object_, typing.Mapping)`
         before attempting `**object_` unpacking, gracefully returning the raw value instead of crashing.
       type: fix
+  createdAt: "2026-02-17"
+  irVersion: 65
+
+- version: 4.57.3
+  changelogEntry:
+    - summary: |
+        Handle optional access tokens in OAuth token provider by raising `RuntimeError`
+        when the token is `None`. Fix wire test setup to use `client_id`/`client_secret`
+        for OAuth client credentials and expect 2 requests when testing the token endpoint.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
+- version: 4.57.2
+  changelogEntry:
+    - summary: |
+        Fix path-based pagination to pass the next page path as `path=` instead of `url=`
+        in the generated HTTP client request call.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
+- version: 4.57.1
+  changelogEntry:
+    - summary: |
+        Only copy `custom_pagination.py` into generated SDKs when custom pagination endpoints
+        are present, and only copy `pagination.py` when standard pagination endpoints are present.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 65
+
+- version: 4.57.0
+  changelogEntry:
+    - summary: |
+        Add `custom_transport: true` config option for SDK developers to expose an `http_client`
+        override parameter on generated client constructors. This allows SDK developers to provide
+        custom httpx transports via custom code (e.g., factory methods like `ValidationClient`).
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
+- version: 4.56.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination.
+      type: feat
   createdAt: "2026-02-11"
-  irVersion: 63
+  irVersion: 65
 
 - version: 4.55.5
   changelogEntry:

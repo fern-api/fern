@@ -1,14 +1,15 @@
 import { z } from "zod";
-import { GitOutputModeSchema } from "./GitOutputModeSchema.js";
-import { LicenseSchema } from "./LicenseSchema.js";
-import { ReviewersSchema } from "./ReviewersSchema.js";
+import { GitHubRepositoryOutputSchema } from "./GitHubRepositoryOutputSchema.js";
+import { GitSelfHostedOutputSchema } from "./GitSelfHostedOutputSchema.js";
 
-export const GitOutputSchema = z.object({
-    repository: z.string(),
-    mode: GitOutputModeSchema.optional(),
-    branch: z.string().optional(),
-    license: LicenseSchema.optional(),
-    reviewers: ReviewersSchema.optional()
-});
+export const GitOutputSchema = z.union([GitSelfHostedOutputSchema, GitHubRepositoryOutputSchema]);
 
 export type GitOutputSchema = z.infer<typeof GitOutputSchema>;
+
+export function isGitOutputSelfHosted(git: GitOutputSchema): git is GitSelfHostedOutputSchema {
+    return "uri" in git;
+}
+
+export function isGitOutputGitHubRepository(git: GitOutputSchema): git is GitHubRepositoryOutputSchema {
+    return "repository" in git;
+}

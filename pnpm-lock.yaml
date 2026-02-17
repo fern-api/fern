@@ -14,7 +14,7 @@ overrides:
   nanoid: 3.3.8
   yaml: 2.3.3
   node-fetch@2.x>whatwg-url: ^14.0.0
-  qs: 6.14.1
+  qs: 6.14.2
   url-join: ^4.0.1
   '@fern-api/fdr-sdk': 0.145.12-b50d999d1
   es-toolkit: ^1.39.10
@@ -4594,6 +4594,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/library-docs-generator':
+        specifier: workspace:*
+        version: link:../library-docs-generator
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../generation/local-generation/local-workspace-runner
@@ -4963,12 +4966,18 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
+      '@fern-api/configuration-loader':
+        specifier: workspace:*
+        version: link:../configuration-loader
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../core
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/docs-preview':
+        specifier: workspace:*
+        version: link:../docs-preview
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -5002,6 +5011,9 @@ importers:
       '@fern-api/oss-validator':
         specifier: workspace:*
         version: link:../workspace/oss-validator
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../project-loader
       '@fern-api/remote-workspace-runner':
         specifier: workspace:*
         version: link:../generation/remote-generation/remote-workspace-runner
@@ -5014,6 +5026,9 @@ importers:
       '@fern-api/venus-api-sdk':
         specifier: 0.17.3-3-gf696595
         version: 0.17.3-3-gf696595
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       '@fern-api/yaml-loader':
         specifier: workspace:*
         version: link:../yaml/loader
@@ -5044,6 +5059,9 @@ importers:
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
+      get-port:
+        specifier: ^7.0.0
+        version: 7.1.0
       inquirer:
         specifier: ^9.2.15
         version: 9.3.8(@types/node@18.15.3)
@@ -5053,6 +5071,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.3
+      ora:
+        specifier: ^7.0.1
+        version: 7.0.1
       tsup:
         specifier: ^8.5.0
         version: 8.5.1(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
@@ -5624,6 +5645,9 @@ importers:
       heap-js:
         specifier: ^2.6.0
         version: 2.7.1
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.23
@@ -5640,6 +5664,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.9
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -6744,10 +6771,16 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: 0.145.12-b50d999d1
         version: 0.145.12-b50d999d1(typescript@5.9.3)
+      js-yaml:
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.9
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -6813,8 +6846,8 @@ importers:
         specifier: ^8.4.0
         version: 8.4.2
       qs:
-        specifier: 6.14.1
-        version: 6.14.1
+        specifier: 6.14.2
+        version: 6.14.2
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -14219,8 +14252,8 @@ packages:
     resolution: {integrity: sha512-tsSGN1x3h569ZSU1u6diwhltLyfUWDp3YbFHedapTmpBl0B3P6U3+Qptg7xu+v+1io1EwhdPyyRHYbEw0KN2FA==}
     engines: {node: '>=20'}
 
-  qs@6.14.1:
-    resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
+  qs@6.14.2:
+    resolution: {integrity: sha512-V/yCWTTF7VJ9hIh18Ugr2zhJMP01MY7c5kh4J870L7imm6/DIzBsNLTXzMwUA3yZ5b/KBqLx8Kp3uRvd7xSe3Q==}
     engines: {node: '>=0.6'}
 
   quansync@1.0.0:
@@ -16882,7 +16915,7 @@ snapshots:
       httpsnippet-lite: 3.0.5
       js-base64: 3.7.7
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
       tinycolor2: 1.6.0
       ts-essentials: 10.1.1(typescript@5.9.3)
@@ -16918,7 +16951,7 @@ snapshots:
       form-data: 4.0.5
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -16928,7 +16961,7 @@ snapshots:
       form-data: 4.0.5
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -16938,7 +16971,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -16948,7 +16981,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -16957,7 +16990,7 @@ snapshots:
     dependencies:
       form-data: 4.0.5
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -16968,7 +17001,7 @@ snapshots:
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -16983,7 +17016,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -16993,7 +17026,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -17003,7 +17036,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -17123,7 +17156,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -17153,7 +17186,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.14.1
+      qs: 6.14.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -18829,7 +18862,7 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.4.24
       on-finished: 2.4.1
-      qs: 6.14.1
+      qs: 6.14.2
       raw-body: 2.5.3
       type-is: 1.6.18
       unpipe: 1.0.0
@@ -19792,7 +19825,7 @@ snapshots:
       parseurl: 1.3.3
       path-to-regexp: 0.1.12
       proxy-addr: 2.0.7
-      qs: 6.14.1
+      qs: 6.14.2
       range-parser: 1.2.1
       safe-buffer: 5.2.1
       send: 0.19.2
@@ -21994,7 +22027,7 @@ snapshots:
     dependencies:
       hookified: 1.15.0
 
-  qs@6.14.1:
+  qs@6.14.2:
     dependencies:
       side-channel: 1.1.0
 

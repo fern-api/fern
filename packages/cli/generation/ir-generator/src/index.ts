@@ -4,6 +4,7 @@ export {
     doesRequestHaveNonBodyProperties
 } from "./converters/services/convertHttpSdkRequest.js";
 export { getHeaderName, resolvePathParameter } from "./converters/services/convertHttpService.js";
+export { isRawPathPaginationSchema, isRawUriPaginationSchema } from "./converters/services/convertPaginationUtils.js";
 export { getQueryParameterName } from "./converters/services/convertQueryParameter.js";
 export { convertResponseErrors } from "./converters/services/convertResponseErrors.js";
 export {

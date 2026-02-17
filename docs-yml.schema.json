@@ -2516,38 +2516,6 @@
       ],
       "additionalProperties": false
     },
-    "docs.PythonDocsConfiguration": {
-      "type": "object",
-      "properties": {
-        "python-docs": {
-          "type": "string"
-        },
-        "title": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "slug": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "python-docs"
-      ],
-      "additionalProperties": false
-    },
     "docs.LibraryName": {
       "type": "string"
     },
@@ -2834,9 +2802,6 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
-        },
-        {
-          "$ref": "#/definitions/docs.PythonDocsConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LibraryReferenceConfiguration"

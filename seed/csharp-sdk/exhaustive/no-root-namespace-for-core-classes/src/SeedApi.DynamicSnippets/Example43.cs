@@ -13,7 +13,7 @@ public class Example43
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.Endpoints.Urls.WithMixedCaseAsync();
     }
 
 }

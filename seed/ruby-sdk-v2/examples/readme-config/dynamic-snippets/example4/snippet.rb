@@ -1,8 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.file.notification.service.get_exception(notification_id: 'notificationId');
+client.file.notification.service.get_exception(notification_id: "notificationId")

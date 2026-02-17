@@ -168,7 +168,7 @@ type SpecialEnum string
 
 const (
 	SpecialEnumA  SpecialEnum = ""
-	SpecialEnumB  SpecialEnum = "Hello \\\\\"World\\\\\""
+	SpecialEnumB  SpecialEnum = "Hello \\\"World\\\""
 	SpecialEnumC  SpecialEnum = "Hello 'World'"
 	SpecialEnumD  SpecialEnum = "Hello\\\\World"
 	SpecialEnumE  SpecialEnum = "Hello\\nWorld"
@@ -184,20 +184,20 @@ const (
 	SpecialEnumP  SpecialEnum = "Hello\\u001FWorld"
 	SpecialEnumQ  SpecialEnum = "Hello\\u007FWorld"
 	SpecialEnumR  SpecialEnum = "Hello\\u009FWorld"
-	SpecialEnumS  SpecialEnum = "Line 1\\n\\\"Quote\\\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null"
+	SpecialEnumS  SpecialEnum = "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null"
 	SpecialEnumT  SpecialEnum = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
 	SpecialEnumU  SpecialEnum = "Hello 世界"
 	SpecialEnumV  SpecialEnum = "café"
 	SpecialEnumW  SpecialEnum = "🚀"
 	SpecialEnumX  SpecialEnum = "\\\\n"
 	SpecialEnumY  SpecialEnum = "\\\\"
-	SpecialEnumZ  SpecialEnum = "{\\\"name\\\": \\\"John\\\", \\\"age\\\": 30, \\\"city\\\": \\\"New York\\\"}"
+	SpecialEnumZ  SpecialEnum = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}"
 	SpecialEnumAa SpecialEnum = "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'"
 	SpecialEnumBb SpecialEnum = "C:\\\\Users\\\\John\\\\Documents\\\\file.txt"
 	SpecialEnumCc SpecialEnum = "/usr/local/bin/app"
 	SpecialEnumDd SpecialEnum = "\\\\d{3}-\\\\d{2}-\\\\d{4}"
 	SpecialEnumEe SpecialEnum = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}"
-	SpecialEnumFf SpecialEnum = "transcript[transcriptType=\\\"final\\\"]"
+	SpecialEnumFf SpecialEnum = "transcript[transcriptType=\"final\"]"
 	SpecialEnumGg SpecialEnum = "transcript[transcriptType='final']"
 )
 

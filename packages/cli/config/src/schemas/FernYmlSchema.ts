@@ -3,6 +3,7 @@ import { AiConfigSchema } from "./AiConfigSchema.js";
 import { ApiDefinitionSchema } from "./ApiDefinitionSchema.js";
 import { ApisSchema } from "./ApisSchema.js";
 import { CliSchema } from "./CliSchema.js";
+import { DocsSchema } from "./docs/DocsSchema.js";
 import { SdksSchema } from "./SdksSchema.js";
 
 export const FernYmlSchema = z.object({
@@ -10,6 +11,7 @@ export const FernYmlSchema = z.object({
     org: z.string(),
     ai: AiConfigSchema.optional(),
     cli: CliSchema.optional(),
+    docs: DocsSchema.optional(),
     sdks: SdksSchema.optional(),
 
     // At most one of 'api' or 'apis' should be present.
