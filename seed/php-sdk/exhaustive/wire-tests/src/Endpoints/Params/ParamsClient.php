@@ -65,11 +65,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithPath(string $param, ?array $options = null): string
+    public function getWithPath(string $param, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -85,7 +85,7 @@ class ParamsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
@@ -113,11 +113,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInlinePath(string $param, ?array $options = null): string
+    public function getWithInlinePath(string $param, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -133,7 +133,7 @@ class ParamsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
@@ -342,11 +342,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function modifyWithPath(string $param, string $request, ?array $options = null): string
+    public function modifyWithPath(string $param, string $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -363,7 +363,7 @@ class ParamsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
@@ -392,11 +392,11 @@ class ParamsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): string
+    public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -413,7 +413,7 @@ class ParamsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
+                    return null;
                 }
                 return JsonDecoder::decodeString($json);
             }
