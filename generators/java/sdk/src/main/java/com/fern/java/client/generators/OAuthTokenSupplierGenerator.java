@@ -139,17 +139,16 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         TypeName fetchTokenReturnType = clientGeneratorContext
                 .getPoetTypeNameMapper()
                 .convertToTypeName(true, jsonResponseBody.getResponseBodyType());
-        ResponseProperty accessTokenResponseProperty = clientCredentials
-                .getTokenEndpoint()
-                .getResponseProperties()
-                .getAccessToken();
+        ResponseProperty accessTokenResponseProperty =
+                clientCredentials.getTokenEndpoint().getResponseProperties().getAccessToken();
         String accessTokenResponsePropertyName = accessTokenResponseProperty
                 .getProperty()
                 .getName()
                 .getName()
                 .getPascalCase()
                 .getUnsafeName();
-        boolean isAccessTokenOptional = isOptionalType(accessTokenResponseProperty.getProperty().getValueType());
+        boolean isAccessTokenOptional =
+                isOptionalType(accessTokenResponseProperty.getProperty().getValueType());
         ParameterizedTypeName supplierOfString =
                 ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
         Optional<ResponseProperty> expiryResponseProperty =
@@ -202,7 +201,11 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         EXPIRES_AT_FIELD_NAME,
                         GET_EXPIRES_AT_METHOD_NAME,
                         tokenPropertyName,
-                        isLongType(expiresInType.getContainer().get().getOptional().get())
+                        isLongType(expiresInType
+                                        .getContainer()
+                                        .get()
+                                        .getOptional()
+                                        .get())
                                 ? DEFAULT_EXPIRES_IN_SECONDS + "L"
                                 : DEFAULT_EXPIRES_IN_SECONDS);
             } else {
