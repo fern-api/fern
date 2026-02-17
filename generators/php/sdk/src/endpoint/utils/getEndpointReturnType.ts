@@ -14,12 +14,11 @@ export function getEndpointReturnType({
         return undefined;
     }
     return endpoint.response.body._visit({
-        bytes: () => undefined,
+        bytes: () => php.Type.string(),
         streamParameter: () => undefined,
-        fileDownload: () => undefined,
+        fileDownload: () => php.Type.string(),
         json: (reference) => {
-            const type = context.phpTypeMapper.convert({ reference: reference.responseBodyType });
-            return type.isOptional() ? type : php.Type.optional(type);
+            return context.phpTypeMapper.convert({ reference: reference.responseBodyType });
         },
         streaming: () => undefined,
         text: () => php.Type.string(),

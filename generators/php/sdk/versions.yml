@@ -2,11 +2,10 @@
 - version: 2.0.2
   changelogEntry:
     - summary: |
-        Fix JSON deserialization error on 204 No Content responses. Previously, endpoints with
-        a declared response type would attempt to deserialize an empty response body, causing a
-        `JsonException` ("Failed to deserialize response"). Now all JSON response handlers check
-        for an empty body before decoding, returning `null` for empty responses such as 204 No Content.
-      type: fix
+        Add support for fileDownload (application/octet-stream) and bytes response types.
+        Previously, endpoints returning binary data would throw an error at runtime because no
+        success handling was generated. Now these endpoints return the raw response body as a string.
+      type: feat
   createdAt: "2026-02-17"
   irVersion: 62
 
