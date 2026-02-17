@@ -305,14 +305,20 @@ export async function publishDocs({
                 docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
             if (aiEnhancerConfig) {
-                apiDefinition = await enhanceExamplesWithAI(
-                    apiDefinition,
-                    aiEnhancerConfig,
-                    context,
-                    token,
-                    organization,
-                    openApiSourceFilePath
-                );
+                if (openApiSourceFilePath == null) {
+                    context.logger.debug(
+                        "Skipping AI example enhancement: no OpenAPI source file path available"
+                    );
+                } else {
+                    apiDefinition = await enhanceExamplesWithAI(
+                        apiDefinition,
+                        aiEnhancerConfig,
+                        context,
+                        token,
+                        organization,
+                        openApiSourceFilePath
+                    );
+                }
             }
 
             // create dynamic IR + metadata for each generator language
