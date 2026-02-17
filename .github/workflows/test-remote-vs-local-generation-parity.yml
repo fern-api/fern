@@ -113,6 +113,13 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: false
+      # Run one generator at a time to prevent branch name collisions on the remote
+      # (Fiddle) target repo. Fiddle uses minute-level timestamps for branch names
+      # (e.g. fern-bot/2026-02-17T16-39Z) without a generator-specific prefix, so
+      # concurrent jobs can overwrite each other's branches and produce false parity
+      # failures. This can be removed once Fiddle includes the generator name in its
+      # branch naming (matching the local generation fix in PR #12331).
+      max-parallel: 1
       matrix:
         generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
     steps:
