@@ -5,5 +5,4 @@
 - summary: |
     Brief description of your change.
     You can use multiple lines for longer descriptions.
-  type: feat  # Options: feat, fix, chore, internal, break
-  severity: minor  # Options: major (breaking), minor (new feature), patch (bug fix)
+  type: feat  # Options: fix/chore (patch), feat/internal (minor), break (major)

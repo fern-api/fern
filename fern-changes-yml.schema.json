@@ -17,17 +17,12 @@
                 },
                 "type": {
                     "$ref": "#/definitions/ChangelogType",
-                    "description": "Type of change: feat (new feature), fix (bug fix), chore (maintenance), internal (internal change), break (breaking change)"
-                },
-                "severity": {
-                    "$ref": "#/definitions/Severity",
-                    "description": "Semantic version impact: major (breaking), minor (new feature), patch (bug fix/chore)"
+                    "description": "Type of change determines version bump: fix/chore (patch), feat/internal (minor), break (major)"
                 }
             },
             "required": [
                 "summary",
-                "type",
-                "severity"
+                "type"
             ],
             "title": "Changelog"
         },
@@ -41,17 +36,7 @@
                 "break"
             ],
             "title": "Changelog Type",
-            "description": "The type of change being made"
-        },
-        "Severity": {
-            "type": "string",
-            "enum": [
-                "major",
-                "minor",
-                "patch"
-            ],
-            "title": "Severity",
-            "description": "The semantic version impact of this change"
+            "description": "The type of change: fix/chore → patch, feat/internal → minor, break → major"
         }
     }
 }

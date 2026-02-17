@@ -13,6 +13,8 @@
   "scripts": {
     "sparse-checkout": "./scripts/sparse-checkout.sh",
     "cli:prepare-release": "tsx scripts/release-cli.ts",
+    "release": "tsx scripts/release.ts",
+    "release:setup": "tsx scripts/release-setup.ts",
     "clean": "turbo run clean",
     "compile": "turbo run compile",
     "compile:debug": "turbo run compile:debug",
