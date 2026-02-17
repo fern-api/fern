@@ -78,9 +78,6 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return Animal::fromJson($json);
             }
         } catch (JsonException $e) {

@@ -80,9 +80,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -127,9 +124,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeInt($json);
             }
         } catch (JsonException $e) {
@@ -174,9 +168,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeInt($json);
             }
         } catch (JsonException $e) {
@@ -221,9 +212,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeFloat($json);
             }
         } catch (JsonException $e) {
@@ -268,9 +256,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
@@ -315,9 +300,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeDateTime($json);
             }
         } catch (JsonException $e) {
@@ -362,9 +344,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeDate($json);
             }
         } catch (JsonException $e) {
@@ -409,9 +388,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -456,9 +432,6 @@ class PrimitiveClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null; // @phpstan-ignore return.type
-                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
