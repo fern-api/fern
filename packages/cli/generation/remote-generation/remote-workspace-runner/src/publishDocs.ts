@@ -43,6 +43,12 @@ export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | str
     return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
 }
 
+function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
+    // Replace ../ segments with _up_/ to prevent HTTP client normalization issues
+    // that cause S3 signature mismatches when paths contain parent directory references
+    return relativeFilePath.replace(/\.\.\//g, "_up_/") as RelativeFilePath;
+}
+
 export async function publishDocs({
     token,
     organization,
@@ -115,6 +121,10 @@ export async function publishDocs({
         editThisPage,
         uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
+            // Create mapping from sanitized relative paths to original absolute paths
+            const sanitizedToAbsoluteMap = new Map(
+                files.map((file) => [sanitizeRelativePathForS3(file.relativeFilePath), file.absoluteFilePath])
+            );
             const filesWithMimeType: FileWithMimeType[] = files
                 .map((fileMetadata) => ({
                     ...fileMetadata,
@@ -143,7 +153,7 @@ export async function publishDocs({
 
                     const obj = {
                         filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                            convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                            convertToFernHostRelativeFilePath(sanitizeRelativePathForS3(filePath.relativeFilePath))
                         ),
                         width: image.width,
                         height: image.height,
@@ -171,7 +181,9 @@ export async function publishDocs({
                 HASH_CONCURRENCY,
                 nonImageFiles,
                 async (file) => ({
-                    path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
+                    path: CjsFdrSdk.docs.v1.write.FilePath(
+                        convertToFernHostRelativeFilePath(sanitizeRelativePathForS3(file.relativeFilePath))
+                    ),
                     fileHash: await calculateFileHash(file.absoluteFilePath)
                 })
             );
@@ -210,7 +222,8 @@ export async function publishDocs({
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
                                 context,
-                                UPLOAD_FILE_BATCH_SIZE
+                                UPLOAD_FILE_BATCH_SIZE,
+                                sanitizedToAbsoluteMap
                             );
                         } else {
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
@@ -218,7 +231,8 @@ export async function publishDocs({
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
+                        docsWorkspace.absoluteFilePath,
+                        sanitizedToAbsoluteMap
                     );
                 } else {
                     return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
@@ -263,7 +277,8 @@ export async function publishDocs({
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
                                 context,
-                                UPLOAD_FILE_BATCH_SIZE
+                                UPLOAD_FILE_BATCH_SIZE,
+                                sanitizedToAbsoluteMap
                             );
                         } else {
                             context.logger.info("No files to upload (all up to date)");
@@ -271,7 +286,8 @@ export async function publishDocs({
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
+                        docsWorkspace.absoluteFilePath,
+                        sanitizedToAbsoluteMap
                     );
                 } else {
                     return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
@@ -495,7 +511,8 @@ async function uploadFiles(
     filesToUpload: Record<string, DocsV1Write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
-    batchSize: number
+    batchSize: number,
+    sanitizedToAbsoluteMap: Map<string, AbsoluteFilePath>
 ): Promise<void> {
     const startTime = Date.now();
     const totalFiles = Object.keys(filesToUpload).length;
@@ -505,8 +522,9 @@ async function uploadFiles(
     for (const chunkedFilepaths of chunkedFilepathsToUpload) {
         await Promise.all(
             chunkedFilepaths.map(async ([key, { uploadUrl }]) => {
-                const relativeFilePath = RelativeFilePath.of(key);
-                const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+                // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
+                const absoluteFilePath =
+                    sanitizedToAbsoluteMap.get(key) || resolve(docsWorkspacePath, RelativeFilePath.of(key));
                 try {
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
@@ -532,12 +550,14 @@ async function uploadFiles(
 
 function convertToFilePathPairs(
     uploadUrls: Record<string, DocsV1Write.FileS3UploadUrl>,
-    docsWorkspacePath: AbsoluteFilePath
+    docsWorkspacePath: AbsoluteFilePath,
+    sanitizedToAbsoluteMap?: Map<string, AbsoluteFilePath>
 ): UploadedFile[] {
     const toRet: UploadedFile[] = [];
     for (const [key, value] of Object.entries(uploadUrls)) {
         const relativeFilePath = RelativeFilePath.of(key);
-        const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+        // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
+        const absoluteFilePath = sanitizedToAbsoluteMap?.get(key) || resolve(docsWorkspacePath, relativeFilePath);
         toRet.push({
             relativeFilePath,
             absoluteFilePath,
