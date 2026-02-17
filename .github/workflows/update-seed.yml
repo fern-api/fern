@@ -238,26 +238,29 @@ jobs:
 
       - name: Setup Base SHA
         id: setup-base-sha
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           BASE_SHA=""
 
-          # For workflow_dispatch events that aren't on main, find the last commit from the main branch and compare against that
-          # For workflows involving the main branch, compare to the last commit
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
             git fetch origin main
             MERGE_BASE=$(git merge-base HEAD origin/main)
             echo "Merge base commit: $MERGE_BASE"
-
             BASE_SHA=$MERGE_BASE
-          elif [[ ("${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" == "refs/heads/main") || \
-                  ("${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main") ]]; then            
-            PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
-            echo "Previous commit on main: $PREVIOUS_MAIN_COMMIT"
-
-            BASE_SHA=$PREVIOUS_MAIN_COMMIT
           else
-            echo "Unexpected event and branch combination. Event: ${{ github.event_name }}, Branch: ${{ github.ref }}"
-            exit 1
+            LAST_SUCCESS_SHA=$(gh api \
+              "/repos/${{ github.repository }}/actions/workflows/update-seed.yml/runs?branch=main&status=success&per_page=1" \
+              --jq '.workflow_runs[0].head_sha // empty' 2>/dev/null || echo "")
+
+            if [[ -n "$LAST_SUCCESS_SHA" ]]; then
+              echo "Last successful run SHA: $LAST_SUCCESS_SHA"
+              BASE_SHA=$LAST_SUCCESS_SHA
+            else
+              PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
+              echo "No successful run found, falling back to previous commit: $PREVIOUS_MAIN_COMMIT"
+              BASE_SHA=$PREVIOUS_MAIN_COMMIT
+            fi
           fi
 
           echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
