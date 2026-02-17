@@ -28,6 +28,8 @@ export declare namespace Method {
         classReference?: ClassReference;
         /* Whether this method is static */
         static_?: boolean;
+        /* Whether this method has no body (e.g., interface method signatures) */
+        noBody?: boolean;
     }
 }
 
@@ -41,8 +43,20 @@ export class Method extends AstNode {
     public readonly docs: string | undefined;
     public readonly classReference: ClassReference | undefined;
     public readonly static_: boolean;
+    public readonly noBody: boolean;
 
-    constructor({ name, access, parameters, throws, return_, body, docs, classReference, static_ }: Method.Args) {
+    constructor({
+        name,
+        access,
+        parameters,
+        throws,
+        return_,
+        body,
+        docs,
+        classReference,
+        static_,
+        noBody
+    }: Method.Args) {
         super();
         this.name = name;
         this.access = access;
@@ -53,6 +67,7 @@ export class Method extends AstNode {
         this.docs = docs;
         this.classReference = classReference;
         this.static_ = static_ ?? false;
+        this.noBody = noBody ?? false;
     }
 
     public write(writer: Writer): void {
@@ -78,13 +93,17 @@ export class Method extends AstNode {
         } else {
             writer.write("void");
         }
-        writer.writeLine(" {");
+        if (this.noBody) {
+            writer.writeTextStatement("");
+        } else {
+            writer.writeLine(" {");
 
-        writer.indent();
-        this.body?.write(writer);
-        writer.dedent();
+            writer.indent();
+            this.body?.write(writer);
+            writer.dedent();
 
-        writer.writeLine("}");
+            writer.writeLine("}");
+        }
     }
 
     private writeComment(writer: Writer): void {

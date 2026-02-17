@@ -4,6 +4,7 @@ import type * as FernDefinition from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { WithName } from "../../commons/types/WithName.js";
+import { UnionDiscriminatorContext } from "./UnionDiscriminatorContext.js";
 
 export const UnionDiscriminantSchema: core.serialization.ObjectSchema<
     serializers.UnionDiscriminantSchema.Raw,
@@ -11,11 +12,13 @@ export const UnionDiscriminantSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         value: core.serialization.string(),
+        context: UnionDiscriminatorContext.optional(),
     })
     .extend(WithName);
 
 export declare namespace UnionDiscriminantSchema {
     export interface Raw extends WithName.Raw {
         value: string;
+        context?: UnionDiscriminatorContext.Raw | null;
     }
 }

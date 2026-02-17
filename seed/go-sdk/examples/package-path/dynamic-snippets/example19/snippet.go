@@ -100,7 +100,14 @@ func do() {
             Nodes: []*pleaseinhere.Node{
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{},
+                    Nodes: []*pleaseinhere.Node{
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                    },
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -112,7 +119,14 @@ func do() {
                 },
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{},
+                    Nodes: []*pleaseinhere.Node{
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                    },
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -179,7 +193,14 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{},
+                    Directories: []*pleaseinhere.Directory{
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                    },
                 },
                 &pleaseinhere.Directory{
                     Name: "name",
@@ -193,7 +214,14 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{},
+                    Directories: []*pleaseinhere.Directory{
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                    },
                 },
             },
         },

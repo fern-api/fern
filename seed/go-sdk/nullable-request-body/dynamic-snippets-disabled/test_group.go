@@ -97,6 +97,9 @@ func (p *PlainObject) GetName() *string {
 }
 
 func (p *PlainObject) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -149,6 +152,9 @@ func (p *PlainObject) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PlainObject) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value

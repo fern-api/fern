@@ -530,7 +530,14 @@ $client->service->createBigEntity(
             'nodes' => [
                 new Node([
                     'name' => 'name',
-                    'nodes' => [],
+                    'nodes' => [
+                        new Node([
+                            'name' => 'name',
+                        ]),
+                        new Node([
+                            'name' => 'name',
+                        ]),
+                    ],
                     'trees' => [
                         new Tree([
                             'nodes' => [],
@@ -542,7 +549,14 @@ $client->service->createBigEntity(
                 ]),
                 new Node([
                     'name' => 'name',
-                    'nodes' => [],
+                    'nodes' => [
+                        new Node([
+                            'name' => 'name',
+                        ]),
+                        new Node([
+                            'name' => 'name',
+                        ]),
+                    ],
                     'trees' => [
                         new Tree([
                             'nodes' => [],
@@ -609,7 +623,14 @@ $client->service->createBigEntity(
                             'contents' => 'contents',
                         ]),
                     ],
-                    'directories' => [],
+                    'directories' => [
+                        new Directory([
+                            'name' => 'name',
+                        ]),
+                        new Directory([
+                            'name' => 'name',
+                        ]),
+                    ],
                 ]),
                 new Directory([
                     'name' => 'name',
@@ -623,7 +644,14 @@ $client->service->createBigEntity(
                             'contents' => 'contents',
                         ]),
                     ],
-                    'directories' => [],
+                    'directories' => [
+                        new Directory([
+                            'name' => 'name',
+                        ]),
+                        new Directory([
+                            'name' => 'name',
+                        ]),
+                    ],
                 ]),
             ],
         ]),

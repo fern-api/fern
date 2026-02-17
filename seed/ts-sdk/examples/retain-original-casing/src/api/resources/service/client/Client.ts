@@ -281,7 +281,11 @@ export class ServiceClient {
      *             name: "name",
      *             nodes: [{
      *                     name: "name",
-     *                     nodes: [],
+     *                     nodes: [{
+     *                             name: "name"
+     *                         }, {
+     *                             name: "name"
+     *                         }],
      *                     trees: [{
      *                             nodes: []
      *                         }, {
@@ -289,7 +293,11 @@ export class ServiceClient {
      *                         }]
      *                 }, {
      *                     name: "name",
-     *                     nodes: [],
+     *                     nodes: [{
+     *                             name: "name"
+     *                         }, {
+     *                             name: "name"
+     *                         }],
      *                     trees: [{
      *                             nodes: []
      *                         }, {
@@ -336,7 +344,11 @@ export class ServiceClient {
      *                             name: "name",
      *                             contents: "contents"
      *                         }],
-     *                     directories: []
+     *                     directories: [{
+     *                             name: "name"
+     *                         }, {
+     *                             name: "name"
+     *                         }]
      *                 }, {
      *                     name: "name",
      *                     files: [{
@@ -346,7 +358,11 @@ export class ServiceClient {
      *                             name: "name",
      *                             contents: "contents"
      *                         }],
-     *                     directories: []
+     *                     directories: [{
+     *                             name: "name"
+     *                         }, {
+     *                             name: "name"
+     *                         }]
      *                 }]
      *         },
      *         moment: {

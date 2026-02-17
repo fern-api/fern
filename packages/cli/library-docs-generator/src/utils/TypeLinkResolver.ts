@@ -8,10 +8,6 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { escapeMdx, generateAnchorId } from "./mdx.js";
 
-// ============================================================================
-// Render Context
-// ============================================================================
-
 /**
  * Shared context for rendering, passed to all render functions.
  */
@@ -31,10 +27,6 @@ export interface TypeLinkData {
     /** Maps re-exported paths to their actual definition paths */
     pathAliases: Map<string, string>;
 }
-
-// ============================================================================
-// Build Type Link Data
-// ============================================================================
 
 /**
  * Build valid paths and path aliases from the IR in a single traversal.
@@ -94,10 +86,6 @@ export function buildTypeLinkData(ir: FdrAPI.libraryDocs.PythonLibraryDocsIr): T
     return { validPaths, pathAliases };
 }
 
-// ============================================================================
-// Path Utilities
-// ============================================================================
-
 /**
  * Extract module path from a fully qualified path.
  * e.g., "nemo_rl.algorithms.dpo.SomeClass" -> "nemo_rl.algorithms.dpo"
@@ -125,10 +113,6 @@ function pathToAnchorUrl(typePath: string, baseSlug: string, currentModulePath?:
 
     return `/${baseSlug}/${parts.slice(0, -1).join("/")}#${anchor}`;
 }
-
-// ============================================================================
-// Link Extraction
-// ============================================================================
 
 /** Regex to match qualified Python paths (at least 2 segments). */
 const QUALIFIED_PATH_REGEX = /[a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)+/g;
@@ -179,10 +163,6 @@ export function extractLinksFromTypes(
     return links;
 }
 
-// ============================================================================
-// TypeInfo Helpers (for tables, docstrings)
-// ============================================================================
-
 /**
  * Get display string from TypeInfo (short name for tables/docstrings).
  */
@@ -231,10 +211,6 @@ export function linkTypeInfo(
     return `\`${escapeMdx(displayName)}\``;
 }
 
-// ============================================================================
-// CodeBlock Rendering
-// ============================================================================
-
 /**
  * Render code in a CodeBlock component with optional type links.
  */
@@ -252,10 +228,6 @@ export function renderCodeBlockWithLinks(code: string, links: Record<string, str
         "</CodeBlock>"
     ].join("\n");
 }
-
-// ============================================================================
-// Signature Formatting
-// ============================================================================
 
 export interface SignatureParam {
     name: string;

@@ -7,11 +7,7 @@ import {
     replaceReferencedMarkdown,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import {
-    createPythonDocsSectionPlaceholder,
-    DocsDefinitionResolver,
-    filterOssWorkspaces
-} from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -282,8 +278,7 @@ export async function getPreviewDocsDefinition({
                 };
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences: undefined,
-        pythonDocsSectionHandler: createPythonDocsSectionPlaceholder
+        targetAudiences: undefined
     });
 
     const writeDocsDefinition = await resolver.resolve();

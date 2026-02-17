@@ -28,10 +28,6 @@ import { renderClassDetailed } from "./ClassRenderer.js";
 import { renderSimpleDocstring } from "./DocstringRenderer.js";
 import { renderFunctionDetailed } from "./FunctionRenderer.js";
 
-// ============================================================================
-// Internal Helpers
-// ============================================================================
-
 /**
  * Render a list of submodules, split into Subpackages (have children) and Submodules (leaf nodes).
  * This matches Python/Sphinx conventions where packages contain other modules.
@@ -106,10 +102,6 @@ function renderAttributeDetailed(attr: FdrAPI.libraryDocs.AttributeIr, ctx: Rend
 
     return lines.join("\n");
 }
-
-// ============================================================================
-// Public API
-// ============================================================================
 
 /**
  * Render a single module to an MDX page.

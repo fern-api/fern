@@ -13,10 +13,6 @@ import {
     type SignatureParam
 } from "../utils/TypeLinkResolver.js";
 
-// ============================================================================
-// Test Helpers
-// ============================================================================
-
 function makeTypeInfo(overrides: Partial<FdrAPI.libraryDocs.TypeInfo> = {}): FdrAPI.libraryDocs.TypeInfo {
     return {
         display: overrides.display,
@@ -118,10 +114,6 @@ function makeCtx(overrides: Partial<RenderContext> = {}): RenderContext {
         ...overrides
     };
 }
-
-// ============================================================================
-// buildTypeLinkData
-// ============================================================================
 
 describe("buildTypeLinkData", () => {
     it("should collect module paths", () => {
@@ -314,10 +306,6 @@ describe("buildTypeLinkData", () => {
     });
 });
 
-// ============================================================================
-// getModulePath
-// ============================================================================
-
 describe("getModulePath", () => {
     it("should return parent module path", () => {
         expect(getModulePath("nemo_rl.algorithms.dpo.SomeClass")).toBe("nemo_rl.algorithms.dpo");
@@ -331,10 +319,6 @@ describe("getModulePath", () => {
         expect(getModulePath("pkg.Foo")).toBe("pkg");
     });
 });
-
-// ============================================================================
-// extractLinksFromTypes
-// ============================================================================
 
 describe("extractLinksFromTypes", () => {
     it("should extract links for valid qualified paths", () => {
@@ -423,10 +407,6 @@ describe("extractLinksFromTypes", () => {
     });
 });
 
-// ============================================================================
-// getTypeDisplay
-// ============================================================================
-
 describe("getTypeDisplay", () => {
     it("should return display when available", () => {
         const ti = makeTypeInfo({ display: "List[str]" });
@@ -453,10 +433,6 @@ describe("getTypeDisplay", () => {
     });
 });
 
-// ============================================================================
-// getTypePathForSignature
-// ============================================================================
-
 describe("getTypePathForSignature", () => {
     it("should return resolvedPath when available", () => {
         const ti = makeTypeInfo({ resolvedPath: "typing.List[str]" });
@@ -477,10 +453,6 @@ describe("getTypePathForSignature", () => {
         expect(getTypePathForSignature(undefined)).toBe("");
     });
 });
-
-// ============================================================================
-// linkTypeInfo
-// ============================================================================
 
 describe("linkTypeInfo", () => {
     it("should return dash for undefined typeInfo", () => {
@@ -555,10 +527,6 @@ describe("linkTypeInfo", () => {
     });
 });
 
-// ============================================================================
-// renderCodeBlockWithLinks
-// ============================================================================
-
 describe("renderCodeBlockWithLinks", () => {
     it("should render code block without links", () => {
         const result = renderCodeBlockWithLinks("def foo():", {});
@@ -583,10 +551,6 @@ describe("renderCodeBlockWithLinks", () => {
         expect(result).toContain("```");
     });
 });
-
-// ============================================================================
-// formatSignatureMultiline
-// ============================================================================
 
 describe("formatSignatureMultiline", () => {
     it("should format empty params as single line", () => {

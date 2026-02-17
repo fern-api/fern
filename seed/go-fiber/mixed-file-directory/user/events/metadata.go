@@ -44,6 +44,9 @@ func (m *Metadata) GetValue() interface{} {
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -95,6 +98,9 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Metadata) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}

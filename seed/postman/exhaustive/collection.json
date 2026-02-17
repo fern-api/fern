@@ -1897,6 +1897,101 @@
         {
           "_type": "container",
           "description": null,
+          "name": "Pagination",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "List Items",
+              "request": {
+                "description": "List items with cursor pagination",
+                "url": {
+                  "raw": "{{baseUrl}}/pagination?cursor=cursor&limit=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "pagination"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "description": "The cursor for pagination",
+                      "value": "cursor",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "description": "Maximum number of items to return",
+                      "value": "1",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "List items with cursor pagination",
+                    "url": {
+                      "raw": "{{baseUrl}}/pagination?cursor=cursor&limit=1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "pagination"
+                      ],
+                      "query": [
+                        {
+                          "key": "cursor",
+                          "description": "The cursor for pagination",
+                          "value": "cursor",
+                          "disabled": true
+                        },
+                        {
+                          "key": "limit",
+                          "description": "Maximum number of items to return",
+                          "value": "1",
+                          "disabled": true
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"items\": [\n        {\n            \"string\": \"string\"\n        },\n        {\n            \"string\": \"string\"\n        }\n    ],\n    \"next\": \"next\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
           "name": "Params",
           "item": [
             {

@@ -1,12 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.48.1
+- version: 3.48.3
   changelogEntry:
     - summary: |
         Support base-properties on discriminated unions in builder generation. Previously, unions with
         base-properties would throw "Cannot create builders because union has base properties". Now,
         base properties are included in generated builder functions with undefined defaults.
       type: fix
-  createdAt: "2026-02-10"
+  createdAt: "2026-02-17"
+  irVersion: 63
+
+- version: 3.48.2
+  changelogEntry:
+    - summary: |
+        Fix file upload tests to be OS-agnostic by using dynamic file size calculation instead
+        of hardcoded values. Previously, tests expected a specific file size (21 bytes) which
+        differs between operating systems due to line ending differences (CRLF on Windows vs
+        LF on Unix). Now uses `fs.statSync()` to dynamically read the test file size at runtime.
+      type: fix
+  createdAt: "2026-02-02"
+  irVersion: 63
+
+- version: 3.48.1
+  changelogEntry:
+    - summary: |
+        Fix `_Unknown` union variant discriminant type from `void` to `string` when
+        `includeOtherInUnionTypes` is enabled.
+      type: fix
+  createdAt: "2026-02-11"
   irVersion: 63
 
 - version: 3.48.0

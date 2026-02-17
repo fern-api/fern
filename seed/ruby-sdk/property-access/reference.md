@@ -13,17 +13,17 @@
 
 ```ruby
 client.create_user(
-  id: 'id',
-  email: 'email',
-  password: 'password',
+  id: "id",
+  email: "email",
+  password: "password",
   profile: {
-    name: 'name',
+    name: "name",
     verification: {
-      verified: 'verified'
+      verified: "verified"
     },
-    ssn: 'ssn'
+    ssn: "ssn"
   }
-);
+)
 ```
 </dd>
 </dl>

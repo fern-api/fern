@@ -9,10 +9,6 @@ const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.par
     readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
 );
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function emptyCtx(): RenderContext {
     return { baseSlug: "reference/python", validPaths: new Set(), pathAliases: new Map() };
 }
@@ -82,10 +78,6 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
     } as FdrAPI.libraryDocs.AttributeIr;
 }
 
-// ---------------------------------------------------------------------------
-// renderModulePage — Frontmatter
-// ---------------------------------------------------------------------------
-
 describe("renderModulePage (frontmatter)", () => {
     it("renders frontmatter with slug and title from module path", () => {
         const mod = makeModule({ name: "mymod", path: "pkg.mymod" });
@@ -113,10 +105,6 @@ describe("renderModulePage (frontmatter)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderModulePage — Module docstring
-// ---------------------------------------------------------------------------
-
 describe("renderModulePage (docstring)", () => {
     it("renders module docstring when present", () => {
         const mod = makeModule({
@@ -143,10 +131,6 @@ describe("renderModulePage (docstring)", () => {
         expect(result).not.toContain("This module");
     });
 });
-
-// ---------------------------------------------------------------------------
-// renderModulePage — Submodules section
-// ---------------------------------------------------------------------------
 
 describe("renderModulePage (submodules)", () => {
     it("renders Submodules heading for leaf submodules", () => {
@@ -206,10 +190,6 @@ describe("renderModulePage (submodules)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderModulePage — Module Contents header
-// ---------------------------------------------------------------------------
-
 describe("renderModulePage (contents header)", () => {
     it("renders 'Module Contents' for leaf modules", () => {
         const mod = makeModule({
@@ -236,10 +216,6 @@ describe("renderModulePage (contents header)", () => {
         expect(result).not.toContain("### API");
     });
 });
-
-// ---------------------------------------------------------------------------
-// renderModulePage — Classes summary table
-// ---------------------------------------------------------------------------
 
 describe("renderModulePage (classes summary)", () => {
     it("renders classes summary table with anchor links", () => {
@@ -306,10 +282,6 @@ describe("renderModulePage (classes summary)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderModulePage — Functions summary table
-// ---------------------------------------------------------------------------
-
 describe("renderModulePage (functions summary)", () => {
     it("renders functions summary table with anchor links", () => {
         const mod = makeModule({
@@ -351,10 +323,6 @@ describe("renderModulePage (functions summary)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderModulePage — Data/attributes summary
-// ---------------------------------------------------------------------------
-
 describe("renderModulePage (data summary)", () => {
     it("renders data section with anchor links", () => {
         const mod = makeModule({
@@ -371,10 +339,6 @@ describe("renderModulePage (data summary)", () => {
         expect(result).not.toContain("### Data");
     });
 });
-
-// ---------------------------------------------------------------------------
-// renderModulePage — API section (detailed renderings)
-// ---------------------------------------------------------------------------
 
 describe("renderModulePage (API detail)", () => {
     it("renders API heading", () => {
@@ -510,10 +474,6 @@ describe("renderModulePage (API detail)", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderModulePage — Section ordering
-// ---------------------------------------------------------------------------
-
 describe("renderModulePage (ordering)", () => {
     it("renders sections in correct order: frontmatter > docstring > submodules > contents > API", () => {
         const mod = makeModule({
@@ -567,10 +527,6 @@ describe("renderModulePage (ordering)", () => {
         expect(funcIdx).toBeLessThan(attrIdx);
     });
 });
-
-// ---------------------------------------------------------------------------
-// renderAllModulePages
-// ---------------------------------------------------------------------------
 
 describe("renderAllModulePages", () => {
     it("generates pages for root and all submodules", () => {
@@ -678,10 +634,6 @@ describe("renderAllModulePages", () => {
         expect(pages["reference/python/pkg/sub.mdx"]).toContain("slug: reference/python/pkg/sub");
     });
 });
-
-// ---------------------------------------------------------------------------
-// NeMo IR fixture tests
-// ---------------------------------------------------------------------------
 
 describe("renderModulePage (NeMo fixtures)", () => {
     it("leaf_with_mixed_content: renders classes, functions, and attributes", () => {

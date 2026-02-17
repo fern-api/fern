@@ -1,4 +1,5 @@
 export { AbsoluteFilePath } from "./AbsoluteFilePath.js";
+export { basename } from "./basename.js";
 export { cwd } from "./cwd.js";
 export { dirname } from "./dirname.js";
 export { doesPathExist, doesPathExistSync, isPathEmpty } from "./doesPathExist.js";

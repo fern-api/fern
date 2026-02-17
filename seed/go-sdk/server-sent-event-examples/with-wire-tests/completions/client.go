@@ -69,3 +69,41 @@ func (c *Client) Stream(
 		},
 	)
 }
+
+func (c *Client) StreamEvents(
+	ctx context.Context,
+	request *sse.StreamEventsRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[sse.StreamEvent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream-events"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[sse.StreamEvent](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:                endpointURL,
+			Method:             http.MethodPost,
+			Headers:            headers,
+			MaxAttempts:        options.MaxAttempts,
+			BodyProperties:     options.BodyProperties,
+			QueryParameters:    options.QueryParameters,
+			Client:             options.HTTPClient,
+			Prefix:             internal.DefaultSSEDataPrefix,
+			Terminator:         "[DONE]",
+			Format:             core.StreamFormatSSE,
+			EventDiscriminator: "event",
+			Request:            request,
+			ErrorDecoder:       internal.NewErrorDecoder(sse.ErrorCodes),
+		},
+	)
+}

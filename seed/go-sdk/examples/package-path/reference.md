@@ -574,7 +574,14 @@ request := &pleaseinhere.BigEntity{
             Nodes: []*pleaseinhere.Node{
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{},
+                    Nodes: []*pleaseinhere.Node{
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                    },
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -586,7 +593,14 @@ request := &pleaseinhere.BigEntity{
                 },
                 &pleaseinhere.Node{
                     Name: "name",
-                    Nodes: []*pleaseinhere.Node{},
+                    Nodes: []*pleaseinhere.Node{
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Node{
+                            Name: "name",
+                        },
+                    },
                     Trees: []*pleaseinhere.Tree{
                         &pleaseinhere.Tree{
                             Nodes: []*pleaseinhere.Node{},
@@ -653,7 +667,14 @@ request := &pleaseinhere.BigEntity{
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{},
+                    Directories: []*pleaseinhere.Directory{
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                    },
                 },
                 &pleaseinhere.Directory{
                     Name: "name",
@@ -667,7 +688,14 @@ request := &pleaseinhere.BigEntity{
                             Contents: "contents",
                         },
                     },
-                    Directories: []*pleaseinhere.Directory{},
+                    Directories: []*pleaseinhere.Directory{
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                        &pleaseinhere.Directory{
+                            Name: "name",
+                        },
+                    },
                 },
             },
         },

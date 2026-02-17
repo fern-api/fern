@@ -7,6 +7,12 @@ import { Icons } from "../ui/format.js";
 import { Context } from "./Context.js";
 import type { GlobalArgs } from "./GlobalArgs.js";
 
+// It's standard to use 128 as the base exit code for signals.
+// https://en.wikipedia.org/wiki/Signal_(IPC)
+const SIGNAL_EXIT_CODE_BASE = 128;
+const SIGINT_EXIT_CODE = SIGNAL_EXIT_CODE_BASE + 2;
+const SIGTERM_EXIT_CODE = SIGNAL_EXIT_CODE_BASE + 15;
+
 /**
  * Wraps a command handler with context creation and error handling.
  *
@@ -18,6 +24,9 @@ export function withContext<T extends GlobalArgs>(
 ): (args: T) => Promise<void> {
     return async (args: T) => {
         const context = createContext(args);
+
+        setupSignalHandler(context);
+
         try {
             await handler(context, args);
             context.finish();
@@ -71,6 +80,16 @@ function handleError(context: Context, error: unknown): void {
     }
 
     process.stderr.write(`${chalk.red(String(error))}\n`);
+}
+
+function setupSignalHandler(context: Context): void {
+    const onSignal = (exitCode: number): void => {
+        context.shutdown();
+        context.printLogFilePath(process.stderr);
+        process.exit(exitCode);
+    };
+    process.on("SIGINT", () => onSignal(SIGINT_EXIT_CODE));
+    process.on("SIGTERM", () => onSignal(SIGTERM_EXIT_CODE));
 }
 
 function parseLogLevel(level: string): LogLevel {

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.get_movie(request: 'string');
+client.service.get_movie(request: "string")
 ```
 </dd>
 </dl>
@@ -61,7 +61,7 @@ client.service.get_movie(request: 'string');
 <dd>
 
 ```ruby
-client.service.get_movie(request: 'string');
+client.service.get_movie(request: "string")
 ```
 </dd>
 </dl>
@@ -109,7 +109,7 @@ client.service.get_movie(request: 'string');
 <dd>
 
 ```ruby
-client.service.get_movie(request: 'string');
+client.service.get_movie(request: "string")
 ```
 </dd>
 </dl>
@@ -157,7 +157,7 @@ client.service.get_movie(request: 'string');
 <dd>
 
 ```ruby
-client.service.get_movie(request: 'string');
+client.service.get_movie(request: "string")
 ```
 </dd>
 </dl>
@@ -205,7 +205,7 @@ client.service.get_movie(request: 'string');
 <dd>
 
 ```ruby
-client.service.get_movie(request: 'string');
+client.service.get_movie(request: "string")
 ```
 </dd>
 </dl>
@@ -253,7 +253,7 @@ client.service.get_movie(request: 'string');
 <dd>
 
 ```ruby
-client.service.get_movie(request: 'string');
+client.service.get_movie(request: "string")
 ```
 </dd>
 </dl>
@@ -301,7 +301,7 @@ client.service.get_movie(request: 'string');
 <dd>
 
 ```ruby
-client.service.get_movie(request: 'string');
+client.service.get_movie(request: "string")
 ```
 </dd>
 </dl>

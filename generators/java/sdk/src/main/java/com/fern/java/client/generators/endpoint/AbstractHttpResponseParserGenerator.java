@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
@@ -173,6 +174,13 @@ public abstract class AbstractHttpResponseParserGenerator {
                         generatedClientOptions.httpClientWithTimeout(),
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
+        if (isStreamingEndpoint()) {
+            httpResponseBuilder.addStatement(
+                    "$L = $L.newBuilder().callTimeout(0, $T.SECONDS).build()",
+                    variables.getDefaultedClientName(),
+                    variables.getDefaultedClientName(),
+                    TimeUnit.class);
+        }
         maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
 
         addResponseHandlingCode(
@@ -192,6 +200,13 @@ public abstract class AbstractHttpResponseParserGenerator {
     public CodeBlock getResponseParserCodeBlockWithoutRequestOptions(MethodSpec.Builder endpointMethodBuilder) {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder();
         // Note: OkHttpClient is already initialized by the caller, so we skip that here
+        if (isStreamingEndpoint()) {
+            httpResponseBuilder.addStatement(
+                    "$L = $L.newBuilder().callTimeout(0, $T.SECONDS).build()",
+                    variables.getDefaultedClientName(),
+                    variables.getDefaultedClientName(),
+                    TimeUnit.class);
+        }
         maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
 
         addResponseHandlingCode(
@@ -471,6 +486,47 @@ public abstract class AbstractHttpResponseParserGenerator {
         } else {
             return TypeName.VOID;
         }
+    }
+
+    protected boolean isStreamingEndpoint() {
+        return httpEndpoint.getResponse().isPresent()
+                && httpEndpoint.getResponse().get().getBody().isPresent()
+                && httpEndpoint.getResponse().get().getBody().get().visit(new HttpResponseBody.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitJson(JsonResponse jsonResponse) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFileDownload(FileDownloadResponse fileDownloadResponse) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitText(TextResponse textResponse) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBytes(BytesResponse bytesResponse) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitStreaming(StreamingResponse streamingResponse) {
+                        return true;
+                    }
+
+                    @Override
+                    public Boolean visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object o) {
+                        return false;
+                    }
+                });
     }
 
     protected boolean shouldPreReadResponseBodyString() {
@@ -861,6 +917,44 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public CodeBlock visitSse(SseStreamChunk sse) {
+                    // Analyze SSE payload type for discrimination
+                    SseDiscriminationAnalyzer.SseDiscriminationInfo discriminationInfo =
+                            SseDiscriminationAnalyzer.analyze(
+                                    sse.getPayload(), clientGeneratorContext.getTypeDeclarations());
+
+                    if (discriminationInfo.getType() == SseDiscriminationAnalyzer.DiscriminationType.EVENT_LEVEL) {
+                        // Event-level discrimination: discriminator is at SSE envelope level
+                        String discriminatorProperty =
+                                discriminationInfo.getDiscriminatorProperty().orElse("event");
+                        if (terminator != null) {
+                            return CodeBlock.of(
+                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $S)",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getStreamClassName(),
+                                    bodyTypeName,
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getResponseBodyReaderClassName(),
+                                    variables.getResponseName(),
+                                    discriminatorProperty,
+                                    terminator);
+                        } else {
+                            return CodeBlock.of(
+                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S)",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getStreamClassName(),
+                                    bodyTypeName,
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getResponseBodyReaderClassName(),
+                                    variables.getResponseName(),
+                                    discriminatorProperty);
+                        }
+                    }
+
+                    // Data-level discrimination or non-union: use standard SSE parsing
                     if (terminator != null) {
                         return CodeBlock.of(
                                 "$T.fromSse($T.class, new $T($L), $S)",

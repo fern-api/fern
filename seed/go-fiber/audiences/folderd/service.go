@@ -30,6 +30,9 @@ func (r *Response) GetFoo() string {
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -74,6 +77,9 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Response) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}

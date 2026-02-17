@@ -14,11 +14,11 @@
 
 ```ruby
 client.user.create_username(
-  tags: ['tags', 'tags'],
-  username: 'username',
-  password: 'password',
-  name: 'test'
-);
+  tags: %w[tags tags],
+  username: "username",
+  password: "password",
+  name: "test"
+)
 ```
 </dd>
 </dl>
@@ -91,11 +91,11 @@ client.user.create_username(
 
 ```ruby
 client.user.create_username_with_referenced_type(
-  tags: ['tags', 'tags'],
-  username: 'username',
-  password: 'password',
-  name: 'test'
-);
+  tags: %w[tags tags],
+  username: "username",
+  password: "password",
+  name: "test"
+)
 ```
 </dd>
 </dl>
@@ -151,7 +151,7 @@ client.user.create_username_with_referenced_type(
 <dd>
 
 ```ruby
-client.user.create_username_optional(request: {});
+client.user.create_username_optional(request: {})
 ```
 </dd>
 </dl>
@@ -201,40 +201,40 @@ client.user.create_username_optional(request: {});
 ```ruby
 client.user.get_username(
   limit: 1,
-  id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  date: '2023-01-15',
-  deadline: '2024-01-15T09:30:00Z',
-  bytes: 'SGVsbG8gd29ybGQh',
+  id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  date: "2023-01-15",
+  deadline: "2024-01-15T09:30:00Z",
+  bytes: "SGVsbG8gd29ybGQh",
   user: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   },
   user_list: [{
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   }, {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   }],
-  optional_deadline: '2024-01-15T09:30:00Z',
+  optional_deadline: "2024-01-15T09:30:00Z",
   key_value: {
-    keyValue: 'keyValue'
+    keyValue: "keyValue"
   },
-  optional_string: 'optionalString',
+  optional_string: "optionalString",
   nested_user: {
-    name: 'name',
+    name: "name",
     user: {
-      name: 'name',
-      tags: ['tags', 'tags']
+      name: "name",
+      tags: %w[tags tags]
     }
   },
   optional_user: {
-    name: 'name',
-    tags: ['tags', 'tags']
+    name: "name",
+    tags: %w[tags tags]
   },
   long_param: 1000000,
-  big_int_param: '1000000'
-);
+  big_int_param: "1000000"
+)
 ```
 </dd>
 </dl>

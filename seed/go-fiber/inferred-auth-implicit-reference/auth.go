@@ -59,6 +59,9 @@ func (g *GetTokenRequest) GrantType() string {
 }
 
 func (g *GetTokenRequest) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -135,6 +138,9 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetTokenRequest) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(g); err == nil {
 		return value
 	}
@@ -200,6 +206,9 @@ func (r *RefreshTokenRequest) GrantType() string {
 }
 
 func (r *RefreshTokenRequest) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -283,6 +292,9 @@ func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RefreshTokenRequest) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
@@ -329,6 +341,9 @@ func (t *TokenResponse) GetRefreshToken() *string {
 }
 
 func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -387,6 +402,9 @@ func (t *TokenResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenResponse) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}

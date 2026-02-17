@@ -236,6 +236,9 @@ func (m *MyInlineType) GetBar() string {
 }
 
 func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -281,6 +284,9 @@ func (m *MyInlineType) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyInlineType) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -314,6 +320,9 @@ func (m *MyObject) GetFoo() string {
 }
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -359,6 +368,9 @@ func (m *MyObject) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObject) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -401,6 +413,9 @@ func (m *MyObjectWithOptional) GetOptionalProp() *string {
 }
 
 func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -453,6 +468,9 @@ func (m *MyObjectWithOptional) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObjectWithOptional) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value

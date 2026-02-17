@@ -463,9 +463,18 @@ class OAuthTokenProviderGenerator:
             property_name = response_property.property.name.name.snake_case.safe_name
             # Extract names from PropertyPathItem objects
             property_path_names = [item.name for item in property_path] if property_path else None
-            writer.write_line(
-                f"self.{member_name} = token_response.{self._get_response_property_path(property_path_names)}{property_name}"
-            )
+            property_value = f"token_response.{self._get_response_property_path(property_path_names)}{property_name}"
+            property_type = response_property.property.value_type
+            property_is_optional = self._context.resolved_schema_is_optional_or_unknown(property_type)
+
+            if property_is_optional:
+                # For optional access tokens, raise an exception if None
+                writer.write_line(f"if {property_value} is None:")
+                with writer.indent():
+                    writer.write_line('raise RuntimeError("Access token not present in OAuth response")')
+                writer.write_line(f"self.{member_name} = {property_value}")
+            else:
+                writer.write_line(f"self.{member_name} = {property_value}")
 
         return _write_response_property_setter
 

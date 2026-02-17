@@ -1,6 +1,8 @@
 export * as container from "./container";
 export * as httpMethods from "./httpMethods";
 export * as object from "./object";
+export * as pagination from "./pagination";
+export * from "./pagination/types";
 export * as params from "./params";
 export * as primitive from "./primitive";
 export * as put from "./put";
