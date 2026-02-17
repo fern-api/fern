@@ -98,7 +98,7 @@ export class LegacyRemoteGenerationRunner {
         const taskContext = new TaskContextAdapter({
             context: this.context,
             task: args.task,
-            logLevel: LogLevel.Info // Capture INFO logs to parse git output URLs
+            logLevel: LogLevel.Info
         });
         try {
             const generatorInvocation = await this.invocationAdapter.adapt(args.target);

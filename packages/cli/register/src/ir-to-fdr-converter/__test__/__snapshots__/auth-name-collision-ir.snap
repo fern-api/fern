@@ -24,7 +24,7 @@
   "apiVersion": undefined,
   "audiences": undefined,
   "auth": {
-    "docs": undefined,
+    "docs": "OpenAPI version of bearerAuth (should be different from generators.yml version)",
     "requirement": "ALL",
     "schemes": [
       {
@@ -87,6 +87,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
           "defaultUrl": undefined,
           "docs": undefined,
           "id": "https://api.example.com/v1",

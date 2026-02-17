@@ -18,6 +18,7 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
         id: EnvironmentId,
         name: Name,
         urls: core.serialization.record(EnvironmentBaseUrlId, EnvironmentUrl),
+        audiences: core.serialization.list(core.serialization.string()).optional(),
         defaultUrls: core.serialization.record(EnvironmentBaseUrlId, core.serialization.string()).optional(),
         urlTemplates: core.serialization.record(EnvironmentBaseUrlId, core.serialization.string()).optional(),
         urlVariables: core.serialization
@@ -31,6 +32,7 @@ export declare namespace MultipleBaseUrlsEnvironment {
         id: EnvironmentId.Raw;
         name: Name.Raw;
         urls: Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;
+        audiences?: string[] | null;
         defaultUrls?: Record<EnvironmentBaseUrlId.Raw, string> | null;
         urlTemplates?: Record<EnvironmentBaseUrlId.Raw, string> | null;
         urlVariables?: Record<EnvironmentBaseUrlId.Raw, ServerVariable.Raw[]> | null;
