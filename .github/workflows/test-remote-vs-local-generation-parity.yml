@@ -72,9 +72,12 @@ jobs:
             echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
           fi
 
+  # Run compile and build once to populate the turbo remote cache,
+  # so that the parallel matrix jobs get cache hits instead of
+  # racing to compile simultaneously.
   compile-and-build:
     needs: determine-generator
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Checkout Repo
@@ -94,20 +97,6 @@ jobs:
       - name: Build Seed CLI
         run: pnpm seed:build
 
-      - name: Upload Seed CLI
-        uses: actions/upload-artifact@v4
-        with:
-          name: seed-cli
-          path: packages/seed/dist/
-          retention-days: 1
-
-      - name: Upload Fern CLI
-        uses: actions/upload-artifact@v4
-        with:
-          name: fern-cli
-          path: packages/cli/cli/dist/prod/
-          retention-days: 1
-
   test-remote-local-parity:
     needs: [determine-generator, compile-and-build]
     runs-on: ubuntu-latest
@@ -122,17 +111,17 @@ jobs:
         with:
           ref: ${{ inputs.branch || 'main' }}
 
-      - name: Download Seed CLI
-        uses: actions/download-artifact@v4
-        with:
-          name: seed-cli
-          path: packages/seed/dist/
+      - name: Install
+        uses: ./.github/actions/install
 
-      - name: Download Fern CLI
-        uses: actions/download-artifact@v4
-        with:
-          name: fern-cli
-          path: packages/cli/cli/dist/prod/
+      - name: Compile
+        run: pnpm compile
+
+      - name: Build Fern CLI
+        run: pnpm fern:build
+
+      - name: Build Seed CLI
+        run: pnpm seed:build
 
       - name: Run Seed Test Remote-Local (${{ matrix.generator }})
         uses: nick-fields/retry@v3
@@ -140,7 +129,7 @@ jobs:
           timeout_minutes: 30
           max_attempts: 5
           retry_wait_seconds: 120
-          command: node --enable-source-maps packages/seed/dist/cli.cjs test-remote-local --generator ${{ matrix.generator }} --output-mode github
+          command: pnpm seed test-remote-local --generator ${{ matrix.generator }} --output-mode github
         env:
           FERN_TOKEN: ${{ secrets.FERN_FERN_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.TEST_REMOTE_LOCAL_GITHUB_TOKEN }}
