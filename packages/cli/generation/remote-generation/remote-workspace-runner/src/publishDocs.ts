@@ -43,7 +43,7 @@ export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | str
     return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
 }
 
-function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
+export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
     // Replace ../ segments with _up_/ to prevent HTTP client normalization issues
     // that cause S3 signature mismatches when paths contain parent directory references
     return relativeFilePath.replace(/\.\.\//g, "_up_/") as RelativeFilePath;
