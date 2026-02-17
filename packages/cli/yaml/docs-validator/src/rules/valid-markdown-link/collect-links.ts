@@ -14,6 +14,9 @@ import { toHast } from "mdast-util-to-hast";
 import type { Position } from "unist";
 import { visit } from "unist-util-visit";
 
+const MARKDOWN_SNIPPET_REGEX = /<Markdown\s+([^>]+)\/>/g;
+const SNIPPET_SRC_REGEX = /src=(?:\{?['"]([^'"]+)['"]\}?)/;
+
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",
     "mdxJsxFlowElement",
@@ -79,7 +82,9 @@ export function collectLinksAndSources({
             visitedAbsoluteFilepaths.add(absoluteFilepath);
         }
 
-        const mdast = parseMarkdownToTree(content);
+        const resolvedContent = resolveMarkdownSnippets(content, absoluteFilepath, readFile);
+
+        const mdast = parseMarkdownToTree(resolvedContent);
 
         const hast = toHast(mdast, {
             allowDangerousHtml: true,
@@ -210,6 +215,61 @@ export function collectLinksAndSources({
     } while (contentQueue.length > 0);
 
     return { links, sources };
+}
+
+function resolveMarkdownSnippets(
+    content: string,
+    absoluteFilepath: AbsoluteFilePath | undefined,
+    readFile: (path: AbsoluteFilePath) => string,
+    visited: Set<string> = new Set()
+): string {
+    if (!content.includes("<Markdown")) {
+        return content;
+    }
+
+    if (absoluteFilepath == null) {
+        return content;
+    }
+
+    let result = content;
+    let match: RegExpExecArray | null;
+    const regex = new RegExp(MARKDOWN_SNIPPET_REGEX.source, MARKDOWN_SNIPPET_REGEX.flags);
+
+    while ((match = regex.exec(content)) != null) {
+        const fullMatch = match[0];
+        const attributesString = match[1];
+        if (fullMatch == null || attributesString == null) {
+            continue;
+        }
+
+        const srcMatch = attributesString.match(SNIPPET_SRC_REGEX);
+        if (srcMatch?.[1] == null) {
+            continue;
+        }
+        const src = srcMatch[1];
+
+        if (!src.match(/\.mdx?$/)) {
+            continue;
+        }
+
+        const resolvedPath = resolve(dirname(absoluteFilepath), RelativeFilePath.of(src));
+
+        if (visited.has(resolvedPath)) {
+            continue;
+        }
+
+        try {
+            let snippetContent = readFile(resolvedPath);
+            const newVisited = new Set(visited);
+            newVisited.add(absoluteFilepath);
+            snippetContent = resolveMarkdownSnippets(snippetContent, resolvedPath, readFile, newVisited);
+            result = result.replace(fullMatch, snippetContent);
+        } catch {
+            // leave unresolvable snippets as-is
+        }
+    }
+
+    return result;
 }
 
 // acorns and other errors are being thrown when we parse the markdown
