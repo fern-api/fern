@@ -61,11 +61,11 @@ class InlinedRequestsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithOptionalField
+     * @return ObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options = null): ?ObjectWithOptionalField
+    public function postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options = null): ObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -82,7 +82,7 @@ class InlinedRequestsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 if (empty($json)) {
-                    return null;
+                    return null; // @phpstan-ignore return.type
                 }
                 return ObjectWithOptionalField::fromJson($json);
             }
