@@ -18,7 +18,7 @@ def test_core_utilities_exports_aiohttp_clients():
         project = Project(config=project_config, path=Path(temp_dir))
 
         custom_config = SDKCustomConfig(package_name="test-package")
-        project_module_path = AST.ModulePath(("test_package",))
+        project_module_path = ("test_package",)
 
         core_utilities = CoreUtilities(
             has_standard_paginated_endpoints=False,
@@ -52,7 +52,7 @@ def test_core_utilities_templates_package_name():
         project = Project(config=project_config, path=Path(temp_dir))
 
         custom_config = SDKCustomConfig(package_name="my-awesome-sdk")
-        project_module_path = AST.ModulePath(("test_package",))
+        project_module_path = ("test_package",)
 
         core_utilities = CoreUtilities(
             has_standard_paginated_endpoints=False,
@@ -83,7 +83,7 @@ def test_core_utilities_fallback_package_name():
         project = Project(config=project_config, path=Path(temp_dir))
 
         custom_config = SDKCustomConfig()  # No package_name provided
-        project_module_path = AST.ModulePath(("my", "nested", "package"))
+        project_module_path = ("my", "nested", "package")
 
         core_utilities = CoreUtilities(
             has_standard_paginated_endpoints=False,
