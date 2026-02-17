@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.57.3
+  changelogEntry:
+    - summary: |
+        Handle optional access tokens in OAuth token provider by raising `RuntimeError`
+        when the token is `None`. Fix wire test setup to use `client_id`/`client_secret`
+        for OAuth client credentials and expect 2 requests when testing the token endpoint.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
 - version: 4.57.2
   changelogEntry:
     - summary: |

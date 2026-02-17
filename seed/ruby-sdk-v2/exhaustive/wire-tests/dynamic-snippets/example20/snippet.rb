@@ -17,7 +17,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -36,7 +36,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"

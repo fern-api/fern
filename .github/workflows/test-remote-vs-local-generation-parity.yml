@@ -72,8 +72,33 @@ jobs:
             echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
           fi
 
-  test-remote-local-parity:
+  # Run compile and build once to populate the turbo remote cache,
+  # so that the parallel matrix jobs get cache hits instead of
+  # racing to compile simultaneously.
+  compile-and-build:
     needs: determine-generator
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || 'main' }}
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile
+
+      - name: Build Fern CLI
+        run: pnpm fern:build
+
+      - name: Build Seed CLI
+        run: pnpm seed:build
+
+  test-remote-local-parity:
+    needs: [determine-generator, compile-and-build]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
