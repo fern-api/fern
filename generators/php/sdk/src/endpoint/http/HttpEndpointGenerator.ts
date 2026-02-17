@@ -697,13 +697,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return;
                     }
                     writer.writeNodeStatement(this.getResponseBodyContent());
-                    writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
-                    if (!return_.isOptional()) {
-                        writer.writeLine("return null; // @phpstan-ignore return.type");
-                    } else {
+                    if (return_.isOptional()) {
+                        writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
                         writer.writeTextStatement("return null");
+                        writer.endControlFlow();
                     }
-                    writer.endControlFlow();
                     writer.write("return ");
                     writer.writeNode(this.decodeJsonResponse(return_));
                     writer.endControlFlow();
