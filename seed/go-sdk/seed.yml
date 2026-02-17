@@ -271,9 +271,9 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
-  trace:
     - outputFolder: omit-empty-request-wrappers
       customConfig:
+        enableWireTests: true
         omitEmptyRequestWrappers: true
 scripts:
   - image: fernapi/go-seed:1.0.0
@@ -307,7 +307,6 @@ allowedFailures:
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-url-templating
   - trace
-  - trace:omit-empty-request-wrappers
   - property-access
   - oauth-client-credentials:.
   - oauth-client-credentials-reference
