@@ -5,7 +5,7 @@ import pytest
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.generators.sdk.custom_config import SDKCustomConfig
 from fern_python.codegen.project import Project, ProjectConfig
-from fern_python.codegen.ast import AST
+from fern_python.codegen import AST
 
 
 def test_core_utilities_exports_aiohttp_clients():
