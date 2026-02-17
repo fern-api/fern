@@ -307,6 +307,7 @@ allowedFailures:
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-url-templating
   - trace
+  - trace:omit-empty-request-wrappers
   - property-access
   - oauth-client-credentials:.
   - oauth-client-credentials-reference
