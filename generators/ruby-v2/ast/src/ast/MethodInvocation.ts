@@ -40,10 +40,6 @@ export class MethodInvocation extends AstNode {
         this.on.write(writer);
         writer.write(".");
         writer.write(this.method);
-        // If there is more than one argument, write each argument on its own line,
-        // separated by commas, for better readability in the generated Ruby code.
-        // Otherwise, write the arguments inline (on the same line).
-        writer.write("(");
 
         const allArguments: PositionalOrKeywordArgument[] = [];
         for (const node of this.arguments_) {
@@ -53,6 +49,15 @@ export class MethodInvocation extends AstNode {
             allArguments.push({ kind: "keyword", arg });
         }
 
+        // In Ruby, omit parentheses on method calls with no arguments and no block.
+        if (allArguments.length === 0 && this.block == null) {
+            return;
+        }
+
+        // If there is more than one argument, write each argument on its own line,
+        // separated by commas, for better readability in the generated Ruby code.
+        // Otherwise, write the arguments inline (on the same line).
+        writer.write("(");
         if (allArguments.length > 1) {
             writer.indent();
             writer.newLine();

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.auth.get_token(api_key: 'api_key');
+client.auth.get_token(api_key: "api_key")
 ```
 </dd>
 </dl>
@@ -62,7 +62,7 @@ client.auth.get_token(api_key: 'api_key');
 <dd>
 
 ```ruby
-client.nested_no_auth.api.get_something();
+client.nested_no_auth.api.get_something
 ```
 </dd>
 </dl>
@@ -103,7 +103,7 @@ client.nested_no_auth.api.get_something();
 <dd>
 
 ```ruby
-client.nested.api.get_something();
+client.nested.api.get_something
 ```
 </dd>
 </dl>
@@ -144,7 +144,7 @@ client.nested.api.get_something();
 <dd>
 
 ```ruby
-client.simple.get_something();
+client.simple.get_something
 ```
 </dd>
 </dl>

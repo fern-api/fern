@@ -35,6 +35,18 @@
   createdAt: "2026-02-13"
   irVersion: 61
 
+- version: 1.23.8
+  changelogEntry:
+    - summary: |
+        Add `omitEmptyRequestWrappers` configuration flag to skip generating empty request structs
+        for endpoints where the SDK request wrapper has no user-facing fields. When enabled, endpoints
+        whose wrapper was created (e.g., due to service headers) but where all fields are handled
+        globally via RequestOptions will no longer produce an empty struct parameter in the method
+        signature. The flag defaults to false for backward compatibility.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 61
+
 - version: 1.23.7
   changelogEntry:
     - summary: |

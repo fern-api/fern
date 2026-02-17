@@ -25,7 +25,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
-    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-ruby-sdk
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/ruby-sdk
 language: ruby
 generatorType: SDK
 defaultOutputMode: github

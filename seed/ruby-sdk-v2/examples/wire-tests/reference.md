@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
+client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
 ```
 </dd>
 </dl>
@@ -60,7 +60,7 @@ client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
 <dd>
 
 ```ruby
-client.echo(request: 'primitive');
+client.echo(request: "primitive")
 ```
 </dd>
 </dl>
@@ -109,7 +109,7 @@ client.echo(request: 'primitive');
 <dd>
 
 ```ruby
-client.file.notification.service.get_exception(notification_id: 'notification-hsy129x');
+client.file.notification.service.get_exception(notification_id: "notification-hsy129x")
 ```
 </dd>
 </dl>
@@ -173,9 +173,9 @@ This endpoint returns a file by its name.
 
 ```ruby
 client.file.service.get_file(
-  filename: 'file.txt',
-  x_file_api_version: '0.0.2'
-);
+  filename: "file.txt",
+  x_file_api_version: "0.0.2"
+)
 ```
 </dd>
 </dl>
@@ -238,7 +238,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```ruby
-client.health.service.check(id: 'id-2sdx82h');
+client.health.service.check(id: "id-2sdx82h")
 ```
 </dd>
 </dl>
@@ -300,7 +300,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```ruby
-client.health.service.ping();
+client.health.service.ping
 ```
 </dd>
 </dl>
@@ -341,7 +341,7 @@ client.health.service.ping();
 <dd>
 
 ```ruby
-client.service.get_movie(movie_id: 'movie-c06a4ad7');
+client.service.get_movie(movie_id: "movie-c06a4ad7")
 ```
 </dd>
 </dl>
@@ -390,16 +390,16 @@ client.service.get_movie(movie_id: 'movie-c06a4ad7');
 
 ```ruby
 client.service.create_movie(
-  id: 'movie-c06a4ad7',
-  prequel: 'movie-cv9b914f',
-  title: 'The Boy and the Heron',
-  from: 'Hayao Miyazaki',
+  id: "movie-c06a4ad7",
+  prequel: "movie-cv9b914f",
+  title: "The Boy and the Heron",
+  from: "Hayao Miyazaki",
   rating: 8,
-  type: 'movie',
-  tag: 'tag-wf9as23d',
+  type: "movie",
+  tag: "tag-wf9as23d",
   metadata: {},
   revenue: 1000000
-);
+)
 ```
 </dd>
 </dl>
@@ -449,8 +449,8 @@ client.service.create_movie(
 ```ruby
 client.service.get_metadata(
   shallow: false,
-  x_api_version: '0.0.1'
-);
+  x_api_version: "0.0.1"
+)
 ```
 </dd>
 </dl>
@@ -516,48 +516,48 @@ client.service.get_metadata(
 ```ruby
 client.service.create_big_entity(
   cast_member: {
-    name: 'name',
-    id: 'id'
+    name: "name",
+    id: "id"
   },
   extended_movie: {
-    cast: ['cast', 'cast'],
-    id: 'id',
-    prequel: 'prequel',
-    title: 'title',
-    from: 'from',
+    cast: %w[cast cast],
+    id: "id",
+    prequel: "prequel",
+    title: "title",
+    from: "from",
     rating: 1.1,
-    type: 'movie',
-    tag: 'tag',
-    book: 'book',
+    type: "movie",
+    tag: "tag",
+    book: "book",
     metadata: {},
     revenue: 1000000
   },
   entity: {
-    type: 'primitive',
-    name: 'name'
+    type: "primitive",
+    name: "name"
   },
   metadata: {},
   common_metadata: {
-    id: 'id',
+    id: "id",
     data: {
-      data: 'data'
+      data: "data"
     },
-    json_string: 'jsonString'
+    json_string: "jsonString"
   },
   data: {},
   migration: {
-    name: 'name',
-    status: 'RUNNING'
+    name: "name",
+    status: "RUNNING"
   },
   test: {},
   node: {
-    name: 'name',
+    name: "name",
     nodes: [{
-      name: 'name',
+      name: "name",
       nodes: [{
-        name: 'name'
+        name: "name"
       }, {
-        name: 'name'
+        name: "name"
       }],
       trees: [{
         nodes: []
@@ -565,11 +565,11 @@ client.service.create_big_entity(
         nodes: []
       }]
     }, {
-      name: 'name',
+      name: "name",
       nodes: [{
-        name: 'name'
+        name: "name"
       }, {
-        name: 'name'
+        name: "name"
       }],
       trees: [{
         nodes: []
@@ -579,71 +579,71 @@ client.service.create_big_entity(
     }],
     trees: [{
       nodes: [{
-        name: 'name',
+        name: "name",
         nodes: [],
         trees: []
       }, {
-        name: 'name',
+        name: "name",
         nodes: [],
         trees: []
       }]
     }, {
       nodes: [{
-        name: 'name',
+        name: "name",
         nodes: [],
         trees: []
       }, {
-        name: 'name',
+        name: "name",
         nodes: [],
         trees: []
       }]
     }]
   },
   directory: {
-    name: 'name',
+    name: "name",
     files: [{
-      name: 'name',
-      contents: 'contents'
+      name: "name",
+      contents: "contents"
     }, {
-      name: 'name',
-      contents: 'contents'
+      name: "name",
+      contents: "contents"
     }],
     directories: [{
-      name: 'name',
+      name: "name",
       files: [{
-        name: 'name',
-        contents: 'contents'
+        name: "name",
+        contents: "contents"
       }, {
-        name: 'name',
-        contents: 'contents'
+        name: "name",
+        contents: "contents"
       }],
       directories: [{
-        name: 'name'
+        name: "name"
       }, {
-        name: 'name'
+        name: "name"
       }]
     }, {
-      name: 'name',
+      name: "name",
       files: [{
-        name: 'name',
-        contents: 'contents'
+        name: "name",
+        contents: "contents"
       }, {
-        name: 'name',
-        contents: 'contents'
+        name: "name",
+        contents: "contents"
       }],
       directories: [{
-        name: 'name'
+        name: "name"
       }, {
-        name: 'name'
+        name: "name"
       }]
     }]
   },
   moment: {
-    id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    date: '2023-01-15',
-    datetime: '2024-01-15T09:30:00Z'
+    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    date: "2023-01-15",
+    datetime: "2024-01-15T09:30:00Z"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -693,7 +693,7 @@ client.service.create_big_entity(
 ```ruby
 client.service.refresh_token(request: {
   ttl: 420
-});
+})
 ```
 </dd>
 </dl>
