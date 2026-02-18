@@ -12,17 +12,19 @@ import fs from "fs-extra";
 import path from "path";
 
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
-import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace.js";
+import { createDefaultOpenAPIWorkspace, createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace.js";
 
 export async function initializeAPI({
     organization,
     versionOfCli,
     openApiPath,
+    useFernDefinition,
     context
 }: {
     organization: string | undefined;
     versionOfCli: string;
     openApiPath: AbsoluteFilePath | undefined;
+    useFernDefinition: boolean;
     context: TaskContext;
 }): Promise<void> {
     const { absolutePathToFernDirectory } = await createFernDirectoryAndWorkspace({
@@ -44,10 +46,18 @@ export async function initializeAPI({
         });
 
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
-    } else {
+    } else if (useFernDefinition) {
         await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context });
 
         context.logger.info(chalk.green("Created new fern folder"));
+    } else {
+        await createDefaultOpenAPIWorkspace({
+            directoryOfWorkspace,
+            cliVersion: versionOfCli,
+            context
+        });
+
+        context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     }
 }
 

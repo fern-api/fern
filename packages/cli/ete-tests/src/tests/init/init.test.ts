@@ -17,6 +17,15 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("f
 describe("fern init", () => {
     it("no existing fern directory", async () => {
         const pathOfDirectory = await init();
+        expect(
+            await getDirectoryContentsForSnapshot(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
+        ).toMatchSnapshot();
+    }, 60_000);
+
+    it("no existing fern directory with fern definition", async () => {
+        const pathOfDirectory = await init({
+            additionalArgs: [{ name: "--fern-definition" }]
+        });
         await runFernCli(["check"], {
             cwd: pathOfDirectory
         });
@@ -27,11 +36,14 @@ describe("fern init", () => {
 
     it("existing fern directory", async () => {
         // add existing directory
-        const pathOfDirectory = await init();
+        const pathOfDirectory = await init({
+            additionalArgs: [{ name: "--fern-definition" }]
+        });
 
         // add new api
         await init({
-            directory: pathOfDirectory
+            directory: pathOfDirectory,
+            additionalArgs: [{ name: "--fern-definition" }]
         });
         expect(
             await doesPathExist(
@@ -67,7 +79,9 @@ describe("fern init", () => {
     }, 60_000);
 
     it("init docs", async () => {
-        const pathOfDirectory = await init();
+        const pathOfDirectory = await init({
+            additionalArgs: [{ name: "--fern-definition" }]
+        });
 
         await runFernCli(["init", "--docs", "--organization", "fern"], {
             cwd: pathOfDirectory
