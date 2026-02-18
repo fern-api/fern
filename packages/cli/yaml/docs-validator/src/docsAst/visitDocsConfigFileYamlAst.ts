@@ -4,17 +4,17 @@ import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { asyncPool } from "../utils/asyncPool.js";
-import { boundedReadFile } from "../utils/fileReadSemaphore.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { validateProductConfigFileSchema } from "./validateProductConfig.js";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig.js";
 import { visitFilepath } from "./visitFilepath.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 
-const VALIDATION_CONCURRENCY = parseInt(process.env.FERN_DOCS_VALIDATION_CONCURRENCY ?? "32", 10);
+const VERSION_CONCURRENCY = parseInt(process.env.FERN_DOCS_VERSION_CONCURRENCY ?? "4", 10);
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
@@ -222,7 +222,7 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
-            await asyncPool(VALIDATION_CONCURRENCY, products, async (product, idx) => {
+            await asyncPool(VERSION_CONCURRENCY, products, async (product, idx) => {
                 if ("path" in product) {
                     await visitFilepath({
                         absoluteFilepathToConfiguration,
@@ -232,7 +232,7 @@ export async function visitDocsConfigFileYamlAst({
                         willBeUploaded: false
                     });
                     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
-                    const content = yaml.load((await boundedReadFile(absoluteFilepath, "utf8")).toString());
+                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
                     if (await doesPathExist(absoluteFilepath)) {
                         await visitor.productFile?.(
                             {
@@ -305,7 +305,7 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
-            await asyncPool(VALIDATION_CONCURRENCY, versions, async (version, idx) => {
+            await asyncPool(VERSION_CONCURRENCY, versions, async (version, idx) => {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: version.path,
@@ -314,7 +314,7 @@ export async function visitDocsConfigFileYamlAst({
                     willBeUploaded: false
                 });
                 const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
-                const content = yaml.load((await boundedReadFile(absoluteFilepath, "utf8")).toString());
+                const content = yaml.load((await readFile(absoluteFilepath)).toString());
                 if (await doesPathExist(absoluteFilepath)) {
                     await visitor.versionFile?.(
                         {
