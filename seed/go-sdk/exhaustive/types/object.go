@@ -33,9 +33,6 @@ func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
 }
 
 func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
-	if d == nil {
-		return nil
-	}
 	return d.extraProperties
 }
 
@@ -81,9 +78,6 @@ func (d *DoubleOptional) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DoubleOptional) String() string {
-	if d == nil {
-		return "<nil>"
-	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -126,9 +120,6 @@ func (n *NestedObjectWithOptionalField) GetNestedObject() *ObjectWithOptionalFie
 }
 
 func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
-	if n == nil {
-		return nil
-	}
 	return n.extraProperties
 }
 
@@ -181,9 +172,6 @@ func (n *NestedObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedObjectWithOptionalField) String() string {
-	if n == nil {
-		return "<nil>"
-	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -226,9 +214,6 @@ func (n *NestedObjectWithRequiredField) GetNestedObject() *ObjectWithOptionalFie
 }
 
 func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
-	if n == nil {
-		return nil
-	}
 	return n.extraProperties
 }
 
@@ -281,9 +266,6 @@ func (n *NestedObjectWithRequiredField) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedObjectWithRequiredField) String() string {
-	if n == nil {
-		return "<nil>"
-	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -331,9 +313,6 @@ func (o *ObjectWithDatetimeLikeString) GetActualDatetime() time.Time {
 }
 
 func (o *ObjectWithDatetimeLikeString) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
 	return o.extraProperties
 }
 
@@ -394,9 +373,6 @@ func (o *ObjectWithDatetimeLikeString) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithDatetimeLikeString) String() string {
-	if o == nil {
-		return "<nil>"
-	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -430,9 +406,6 @@ func (o *ObjectWithMapOfMap) GetMap() map[string]map[string]string {
 }
 
 func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
 	return o.extraProperties
 }
 
@@ -478,9 +451,6 @@ func (o *ObjectWithMapOfMap) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithMapOfMap) String() string {
-	if o == nil {
-		return "<nil>"
-	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -623,9 +593,6 @@ func (o *ObjectWithOptionalField) GetBigint() *string {
 }
 
 func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
 	return o.extraProperties
 }
 
@@ -767,9 +734,6 @@ func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithOptionalField) String() string {
-	if o == nil {
-		return "<nil>"
-	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -803,9 +767,6 @@ func (o *ObjectWithRequiredField) GetFieldString() string {
 }
 
 func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
 	return o.extraProperties
 }
 
@@ -851,9 +812,86 @@ func (o *ObjectWithRequiredField) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithRequiredField) String() string {
-	if o == nil {
-		return "<nil>"
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
 	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that unknown/any values containing backslashes in map keys
+// are properly escaped in Go string literals.
+var (
+	objectWithUnknownFieldFieldUnknown = big.NewInt(1 << 0)
+)
+
+type ObjectWithUnknownField struct {
+	Unknown interface{} `json:"unknown" url:"unknown"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithUnknownField) GetUnknown() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Unknown
+}
+
+func (o *ObjectWithUnknownField) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
+}
+
+func (o *ObjectWithUnknownField) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetUnknown sets the Unknown field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithUnknownField) SetUnknown(unknown interface{}) {
+	o.Unknown = unknown
+	o.require(objectWithUnknownFieldFieldUnknown)
+}
+
+func (o *ObjectWithUnknownField) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithUnknownField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithUnknownField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithUnknownField) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithUnknownField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithUnknownField) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value

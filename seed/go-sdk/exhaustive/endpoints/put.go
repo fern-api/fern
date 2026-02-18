@@ -83,9 +83,6 @@ func (e *Error) GetField() *string {
 }
 
 func (e *Error) GetExtraProperties() map[string]interface{} {
-	if e == nil {
-		return nil
-	}
 	return e.extraProperties
 }
 
@@ -152,9 +149,6 @@ func (e *Error) MarshalJSON() ([]byte, error) {
 }
 
 func (e *Error) String() string {
-	if e == nil {
-		return "<nil>"
-	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -262,9 +256,6 @@ func (p *PutResponse) GetErrors() []*Error {
 }
 
 func (p *PutResponse) GetExtraProperties() map[string]interface{} {
-	if p == nil {
-		return nil
-	}
 	return p.extraProperties
 }
 
@@ -310,9 +301,6 @@ func (p *PutResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PutResponse) String() string {
-	if p == nil {
-		return "<nil>"
-	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value

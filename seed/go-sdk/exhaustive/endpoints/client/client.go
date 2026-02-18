@@ -9,7 +9,6 @@ import (
 	enum "github.com/exhaustive/fern/endpoints/enum"
 	httpmethods "github.com/exhaustive/fern/endpoints/httpmethods"
 	object "github.com/exhaustive/fern/endpoints/object"
-	pagination "github.com/exhaustive/fern/endpoints/pagination"
 	params "github.com/exhaustive/fern/endpoints/params"
 	primitive "github.com/exhaustive/fern/endpoints/primitive"
 	put "github.com/exhaustive/fern/endpoints/put"
@@ -24,7 +23,6 @@ type Client struct {
 	Enum        *enum.Client
 	HttpMethods *httpmethods.Client
 	Object      *object.Client
-	Pagination  *pagination.Client
 	Params      *params.Client
 	Primitive   *primitive.Client
 	Put         *put.Client
@@ -43,7 +41,6 @@ func NewClient(options *core.RequestOptions) *Client {
 		Enum:        enum.NewClient(options),
 		HttpMethods: httpmethods.NewClient(options),
 		Object:      object.NewClient(options),
-		Pagination:  pagination.NewClient(options),
 		Params:      params.NewClient(options),
 		Primitive:   primitive.NewClient(options),
 		Put:         put.NewClient(options),

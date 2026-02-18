@@ -157,9 +157,6 @@ func (c *Cat) GetLikesToMeow() bool {
 }
 
 func (c *Cat) GetExtraProperties() map[string]interface{} {
-	if c == nil {
-		return nil
-	}
 	return c.extraProperties
 }
 
@@ -212,9 +209,6 @@ func (c *Cat) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Cat) String() string {
-	if c == nil {
-		return "<nil>"
-	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -257,9 +251,6 @@ func (d *Dog) GetLikesToWoof() bool {
 }
 
 func (d *Dog) GetExtraProperties() map[string]interface{} {
-	if d == nil {
-		return nil
-	}
 	return d.extraProperties
 }
 
@@ -312,9 +303,6 @@ func (d *Dog) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Dog) String() string {
-	if d == nil {
-		return "<nil>"
-	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value

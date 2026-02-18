@@ -31,9 +31,6 @@ func (b *BadObjectRequestInfo) GetMessage() string {
 }
 
 func (b *BadObjectRequestInfo) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
 	return b.extraProperties
 }
 
@@ -79,9 +76,6 @@ func (b *BadObjectRequestInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BadObjectRequestInfo) String() string {
-	if b == nil {
-		return "<nil>"
-	}
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
