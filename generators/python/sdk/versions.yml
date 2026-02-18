@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.58.0
+  changelogEntry:
+    - summary: |
+        Add configurable logging support to generated Python SDKs. The SDK client constructor now
+        accepts a `logging` parameter with `LogConfig` (level, logger, silent) or a pre-configured
+        `Logger` instance. HTTP request/response metadata is logged at debug level with automatic
+        redaction of sensitive headers. Logging is silent by default.
+      type: feat
+  createdAt: "2026-02-10"
+  irVersion: 65
+
 - version: 4.57.3
   changelogEntry:
     - summary: |

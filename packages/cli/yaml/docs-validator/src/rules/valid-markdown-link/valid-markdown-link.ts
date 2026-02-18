@@ -1,5 +1,6 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { noop } from "@fern-api/core-utils";
+import { replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { convertIrToApiDefinition, DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
@@ -94,8 +95,15 @@ export const ValidMarkdownLinks: Rule = {
                     return [];
                 }
 
+                const { markdown: resolvedContent } = await replaceReferencedMarkdown({
+                    markdown: content,
+                    absolutePathToFernFolder: workspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilepath,
+                    context: NOOP_CONTEXT
+                });
+
                 // Find all matches in the Markdown text
-                const { pathnamesToCheck, violations } = collectPathnamesToCheck(content, {
+                const { pathnamesToCheck, violations } = collectPathnamesToCheck(resolvedContent, {
                     absoluteFilepath,
                     instanceUrls
                 });

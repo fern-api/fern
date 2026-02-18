@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.0
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for types with required constructor fields. Previously, the
+        test generator would pass empty arrays `[]` as constructor arguments when no example
+        values were provided for required fields (e.g., `new SomeType([])`). Now generates
+        appropriate placeholder values based on each field's type (e.g., `new SomeType(['ids' => [1]])`).
+      type: fix
+    - summary: |
+        Add support for fileDownload (application/octet-stream) and bytes response types.
+        Previously, endpoints returning binary data would throw an error at runtime because no
+        success handling was generated. Now these endpoints return the raw response body as a string.
+      type: feat
+  createdAt: "2026-02-17"
+  irVersion: 62
+
 - version: 2.0.0
   changelogEntry:
     - summary: |
