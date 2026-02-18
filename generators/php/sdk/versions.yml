@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.2
+  changelogEntry:
+    - summary: |
+        Fix `generateClientInterfaces` to generate interfaces for aggregator-only clients (clients
+        that hold sub-client properties but have no direct API endpoints). Previously, these clients
+        were skipped, leaving the top-level client and intermediate grouping clients without interfaces.
+
+        Interfaces now include typed getter method signatures for each sub-client (e.g.,
+        `getUsers(): UsersClientInterface`), and the corresponding client classes implement these
+        getters.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 62
+
 - version: 2.1.1
   changelogEntry:
     - summary: |
