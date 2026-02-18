@@ -173,9 +173,18 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             expect(toB2).toHaveProperty("toC");
             const toC2 = toB2.toC as Record<string, unknown>;
             expect(toC2).toHaveProperty("value");
-            // toA gets a stub with leaf properties filled in (value is a string primitive)
-            // but recursive properties (toB) are skipped
-            expect(toC2.toA).toEqual({ value: "value" });
+            // toA gets a stub with leaf properties and non-leaf named properties filled in recursively.
+            // The visited set prevents infinite recursion (A is visited, so toA inside C's minimal stub
+            // won't recurse back into A again).
+            expect(toC2.toA).toEqual({
+                value: "value",
+                toB: {
+                    value: "value",
+                    toC: {
+                        value: "value"
+                    }
+                }
+            });
         }
     });
 
