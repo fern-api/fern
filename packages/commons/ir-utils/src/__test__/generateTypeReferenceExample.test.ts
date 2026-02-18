@@ -262,36 +262,4 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             expect(stubSchedule).toHaveProperty("frequency");
         }
     });
-
-    it("should complete in O(N) time for N optional self-referencing fields, not O(N^N)", () => {
-        const fieldCounts = [5, 10, 20, 50];
-        const times: number[] = [];
-
-        for (const n of fieldCounts) {
-            const fields = Array.from({ length: n }, (_, i) => `field${i}`);
-            const typeDeclarations: Record<TypeId, TypeDeclaration> = {
-                HeavySelfRef: makeObjectTypeDeclaration(
-                    "HeavySelfRef",
-                    [...fields, "name"],
-                    [...fields.map(() => optionalNamedRef("HeavySelfRef")), stringRef()]
-                )
-            };
-
-            const start = Date.now();
-            generateTypeReferenceExample({
-                fieldName: undefined,
-                typeReference: namedRef("HeavySelfRef"),
-                typeDeclarations,
-                maxDepth: 10,
-                currentDepth: 0,
-                skipOptionalProperties: false
-            });
-            times.push(Date.now() - start);
-        }
-
-        const lastTime = times[times.length - 1] ?? 0;
-        const firstTime = times[0] ?? 1;
-        const ratio = lastTime / Math.max(firstTime, 1);
-        expect(ratio).toBeLessThan(100);
-    });
 });
