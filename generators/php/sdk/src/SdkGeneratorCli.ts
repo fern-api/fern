@@ -139,8 +139,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             if (!context.shouldGenerateSubpackageClient(subpackage)) {
                 continue;
             }
-            const service =
-                subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subClientInterface = new SubPackageClientInterfaceGenerator({
                 context,
                 subpackage,

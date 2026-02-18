@@ -83,9 +83,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                         name: this.context.getSubpackageGetterName(subpackage),
                         access: "public",
                         parameters: [],
-                        return_: php.Type.reference(
-                            this.context.getSubpackageInterfaceClassReference(subpackage)
-                        ),
+                        return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
                         body: php.codeblock((writer) => {
                             writer.writeTextStatement(`return $this->${subpackage.name.camelCase.safeName}`);
                         })
