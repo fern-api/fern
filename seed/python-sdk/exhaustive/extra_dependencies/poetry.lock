@@ -678,21 +678,6 @@ socks = ["socksio (==1.*)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
-name = "httpx-aiohttp"
-version = "0.1.12"
-description = "Aiohttp transport for HTTPX"
-optional = true
-python-versions = ">=3.8"
-files = [
-    {file = "httpx_aiohttp-0.1.12-py3-none-any.whl", hash = "sha256:5b0eac39a7f360fa7867a60bcb46bb1024eada9c01cbfecdb54dc1edb3fb7141"},
-    {file = "httpx_aiohttp-0.1.12.tar.gz", hash = "sha256:81feec51fd82c0ecfa0e9aaf1b1a6c2591260d5e2bcbeb7eb0277a78e610df2c"},
-]
-
-[package.dependencies]
-aiohttp = ">=3.10.0,<4"
-httpx = ">=0.27.0"
-
-[[package]]
 name = "idna"
 version = "3.11"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -2067,10 +2052,9 @@ multidict = ">=4.0"
 propcache = ">=0.2.0"
 
 [extras]
-aiohttp = ["aiohttp", "httpx_aiohttp"]
 telemetry = ["boto3", "langchain"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "bf57041768c83c4fd88a532a87597443e6acc9e67db26fb33edbd33d6af71afe"
+content-hash = "6077576be9ee6c228a0bc1c3e198c0bb3024477368c5fcd2e9866f0097a73db3"
