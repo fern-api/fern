@@ -7,11 +7,14 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
+import { asyncPool } from "../utils/asyncPool.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { validateProductConfigFileSchema } from "./validateProductConfig.js";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig.js";
 import { visitFilepath } from "./visitFilepath.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
+
+const VALIDATION_CONCURRENCY = parseInt(process.env.FERN_DOCS_VALIDATION_CONCURRENCY ?? "32", 10);
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
@@ -219,42 +222,40 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
-            await Promise.all(
-                products.map(async (product, idx) => {
-                    if ("path" in product) {
-                        await visitFilepath({
-                            absoluteFilepathToConfiguration,
-                            rawUnresolvedFilepath: product.path,
-                            visitor,
-                            nodePath: ["products", `${idx}`],
-                            willBeUploaded: false
-                        });
-                        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
-                        const content = yaml.load((await readFile(absoluteFilepath)).toString());
-                        if (await doesPathExist(absoluteFilepath)) {
-                            await visitor.productFile?.(
-                                {
-                                    path: product.path,
-                                    content
-                                },
-                                [product.path]
-                            );
-                        }
-                        const parsedProductFile = await validateProductConfigFileSchema({ value: content });
-                        if (parsedProductFile.type === "success") {
-                            await visitNavigationAst({
-                                absolutePathToFernFolder,
-                                navigation: parsedProductFile.contents.navigation,
-                                visitor,
-                                nodePath: ["navigation"],
-                                absoluteFilepathToConfiguration: absoluteFilepath,
-                                apiWorkspaces,
-                                context
-                            });
-                        }
+            await asyncPool(VALIDATION_CONCURRENCY, products, async (product, idx) => {
+                if ("path" in product) {
+                    await visitFilepath({
+                        absoluteFilepathToConfiguration,
+                        rawUnresolvedFilepath: product.path,
+                        visitor,
+                        nodePath: ["products", `${idx}`],
+                        willBeUploaded: false
+                    });
+                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
+                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                    if (await doesPathExist(absoluteFilepath)) {
+                        await visitor.productFile?.(
+                            {
+                                path: product.path,
+                                content
+                            },
+                            [product.path]
+                        );
                     }
-                })
-            );
+                    const parsedProductFile = await validateProductConfigFileSchema({ value: content });
+                    if (parsedProductFile.type === "success") {
+                        await visitNavigationAst({
+                            absolutePathToFernFolder,
+                            navigation: parsedProductFile.contents.navigation,
+                            visitor,
+                            nodePath: ["navigation"],
+                            absoluteFilepathToConfiguration: absoluteFilepath,
+                            apiWorkspaces,
+                            context
+                        });
+                    }
+                }
+            });
         },
         redirects: noop,
         tabs: noop,
@@ -304,40 +305,38 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
-            await Promise.all(
-                versions.map(async (version, idx) => {
-                    await visitFilepath({
-                        absoluteFilepathToConfiguration,
-                        rawUnresolvedFilepath: version.path,
+            await asyncPool(VALIDATION_CONCURRENCY, versions, async (version, idx) => {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: version.path,
+                    visitor,
+                    nodePath: ["versions", `${idx}`],
+                    willBeUploaded: false
+                });
+                const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
+                const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                if (await doesPathExist(absoluteFilepath)) {
+                    await visitor.versionFile?.(
+                        {
+                            path: version.path,
+                            content
+                        },
+                        [version.path]
+                    );
+                }
+                const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
+                if (parsedVersionFile.type === "success") {
+                    await visitNavigationAst({
+                        absolutePathToFernFolder,
+                        navigation: parsedVersionFile.contents.navigation,
                         visitor,
-                        nodePath: ["versions", `${idx}`],
-                        willBeUploaded: false
+                        nodePath: ["navigation"],
+                        absoluteFilepathToConfiguration: absoluteFilepath,
+                        apiWorkspaces,
+                        context
                     });
-                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
-                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
-                    if (await doesPathExist(absoluteFilepath)) {
-                        await visitor.versionFile?.(
-                            {
-                                path: version.path,
-                                content
-                            },
-                            [version.path]
-                        );
-                    }
-                    const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
-                    if (parsedVersionFile.type === "success") {
-                        await visitNavigationAst({
-                            absolutePathToFernFolder,
-                            navigation: parsedVersionFile.contents.navigation,
-                            visitor,
-                            nodePath: ["navigation"],
-                            absoluteFilepathToConfiguration: absoluteFilepath,
-                            apiWorkspaces,
-                            context
-                        });
-                    }
-                })
-            );
+                }
+            });
         },
         roles: noop,
         languages: noop,
