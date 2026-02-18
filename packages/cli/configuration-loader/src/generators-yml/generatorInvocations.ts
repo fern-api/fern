@@ -71,9 +71,6 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             path: "../sdks/python"
         }
     },
-    [GeneratorName.GO_FIBER]: {
-        version: "0.23.5"
-    },
     [GeneratorName.GO_MODEL]: {
         version: "0.23.5"
     },
