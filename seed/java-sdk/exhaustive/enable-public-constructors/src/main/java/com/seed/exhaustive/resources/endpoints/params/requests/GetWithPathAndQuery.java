@@ -70,6 +70,8 @@ public final class GetWithPathAndQuery {
 
     public interface _FinalStage {
         GetWithPathAndQuery build();
+
+        _FinalStage additionalProperty(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +99,12 @@ public final class GetWithPathAndQuery {
         @java.lang.Override
         public GetWithPathAndQuery build() {
             return new GetWithPathAndQuery(query, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
         }
     }
 }

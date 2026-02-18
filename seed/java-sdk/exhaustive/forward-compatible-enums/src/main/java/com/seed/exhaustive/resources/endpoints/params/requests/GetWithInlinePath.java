@@ -70,6 +70,8 @@ public final class GetWithInlinePath {
 
     public interface _FinalStage {
         GetWithInlinePath build();
+
+        _FinalStage additionalProperty(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +99,12 @@ public final class GetWithInlinePath {
         @java.lang.Override
         public GetWithInlinePath build() {
             return new GetWithInlinePath(param, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
         }
     }
 }

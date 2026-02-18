@@ -13,7 +13,7 @@ if typing.TYPE_CHECKING:
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
-    from .logging import LogConfig, LogLevel, Logger, create_logger
+    from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
     from .pagination import AsyncPager, SyncPager
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
@@ -36,10 +36,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncHttpResponse": ".http_response",
     "AsyncPager": ".pagination",
     "BaseClientWrapper": ".client_wrapper",
+    "ConsoleLogger": ".logging",
     "FieldMetadata": ".serialization",
     "File": ".file",
     "HttpClient": ".http_client",
     "HttpResponse": ".http_response",
+    "ILogger": ".logging",
     "IS_PYDANTIC_V2": ".pydantic_utilities",
     "LogConfig": ".logging",
     "LogLevel": ".logging",
@@ -95,10 +97,12 @@ __all__ = [
     "AsyncHttpResponse",
     "AsyncPager",
     "BaseClientWrapper",
+    "ConsoleLogger",
     "FieldMetadata",
     "File",
     "HttpClient",
     "HttpResponse",
+    "ILogger",
     "IS_PYDANTIC_V2",
     "LogConfig",
     "LogLevel",

@@ -130,7 +130,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="logging"),
             ),
-            exports={"Logger", "LogConfig", "LogLevel", "create_logger"}
+            exports={"Logger", "LogConfig", "LogLevel", "ConsoleLogger", "ILogger", "create_logger"}
             if not self._exclude_types_from_init_exports
             else set(),
         )

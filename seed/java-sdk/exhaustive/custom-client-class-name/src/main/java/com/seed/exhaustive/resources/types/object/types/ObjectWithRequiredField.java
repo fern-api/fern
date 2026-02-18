@@ -70,6 +70,8 @@ public final class ObjectWithRequiredField {
 
     public interface _FinalStage {
         ObjectWithRequiredField build();
+
+        _FinalStage additionalProperty(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +99,12 @@ public final class ObjectWithRequiredField {
         @java.lang.Override
         public ObjectWithRequiredField build() {
             return new ObjectWithRequiredField(string, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
         }
     }
 }

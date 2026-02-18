@@ -25,11 +25,16 @@ public final class TraceClient: Sendable {
     public convenience init(
         baseURL: String = TraceEnvironment.prod.rawValue,
         token: String? = nil,
+        xRandomHeader: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
         urlSession: Networking.URLSession? = nil
     ) {
+        var mergedHeaders = headers ?? [:]
+        if let xRandomHeader = xRandomHeader {
+            mergedHeaders["X-Random-Header"] = xRandomHeader
+        }
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
@@ -37,7 +42,7 @@ public final class TraceClient: Sendable {
                 .init(token: .staticToken($0))
             },
             basicAuth: nil,
-            headers: headers,
+            headers: mergedHeaders,
             timeout: timeout,
             maxRetries: maxRetries,
             urlSession: urlSession
@@ -55,11 +60,16 @@ public final class TraceClient: Sendable {
     public convenience init(
         baseURL: String = TraceEnvironment.prod.rawValue,
         token: ClientConfig.CredentialProvider? = nil,
+        xRandomHeader: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
         urlSession: Networking.URLSession? = nil
     ) {
+        var mergedHeaders = headers ?? [:]
+        if let xRandomHeader = xRandomHeader {
+            mergedHeaders["X-Random-Header"] = xRandomHeader
+        }
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
@@ -67,7 +77,7 @@ public final class TraceClient: Sendable {
                 .init(token: .provider($0))
             },
             basicAuth: nil,
-            headers: headers,
+            headers: mergedHeaders,
             timeout: timeout,
             maxRetries: maxRetries,
             urlSession: urlSession
