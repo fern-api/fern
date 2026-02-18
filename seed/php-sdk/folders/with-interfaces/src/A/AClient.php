@@ -6,8 +6,10 @@ use Seed\A\B\BClient;
 use Seed\A\C\CClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\A\B\BClientInterface;
+use Seed\A\C\CClientInterface;
 
-class AClient
+class AClient implements AClientInterface
 {
     /**
      * @var BClient $b
@@ -53,5 +55,21 @@ class AClient
         $this->options = $options ?? [];
         $this->b = new BClient($this->client, $this->options);
         $this->c = new CClient($this->client, $this->options);
+    }
+
+    /**
+     * @return BClientInterface
+     */
+    public function getB(): BClientInterface
+    {
+        return $this->b;
+    }
+
+    /**
+     * @return CClientInterface
+     */
+    public function getC(): CClientInterface
+    {
+        return $this->c;
     }
 }

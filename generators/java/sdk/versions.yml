@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.0
+  changelogEntry:
+    - summary: |
+        Add `additionalProperty(String key, Object value)` and `additionalProperties(Map<String, Object>)`
+        methods to generated builders, allowing users to set arbitrary extra fields programmatically.
+        Previously, additional properties were only populated during JSON deserialization.
+      type: feat
+  createdAt: "2026-02-18"
+  irVersion: 63
+
 - version: 3.36.3
   changelogEntry:
     - summary: Use correct Long literals (3600L) instead of int literals (3600) for `Optional<Long>` expires_in fields in OAuth token suppliers

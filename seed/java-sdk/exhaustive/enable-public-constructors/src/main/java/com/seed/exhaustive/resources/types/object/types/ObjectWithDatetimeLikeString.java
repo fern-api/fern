@@ -96,6 +96,8 @@ public final class ObjectWithDatetimeLikeString {
 
     public interface _FinalStage {
         ObjectWithDatetimeLikeString build();
+
+        _FinalStage additionalProperty(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -143,6 +145,12 @@ public final class ObjectWithDatetimeLikeString {
         @java.lang.Override
         public ObjectWithDatetimeLikeString build() {
             return new ObjectWithDatetimeLikeString(datetimeLikeString, actualDatetime, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
         }
     }
 }
