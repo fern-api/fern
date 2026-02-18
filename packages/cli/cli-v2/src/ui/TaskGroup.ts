@@ -245,10 +245,7 @@ export class TaskGroup {
             this.stream.write(`${chalk.red("✕")} ${errorMessage} ${chalk.dim(`in ${duration}`)}\n`);
         }
 
-        const logFilePath = this.context.getLogFilePath();
-        if (logFilePath != null) {
-            this.stream.write(`\n${chalk.dim(`Logs written to: ${logFilePath}`)}\n`);
-        }
+        this.context.printLogFilePath(this.stream);
 
         this.stream.write("\n");
 

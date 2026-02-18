@@ -1,0 +1,31 @@
+imports:
+  objects: ../types/object.yml
+
+types:
+  PaginatedResponse:
+    properties:
+      items: list<objects.ObjectWithRequiredField>
+      next: optional<string>
+
+service:
+  auth: true
+  base-path: /pagination
+  endpoints:
+    listItems:
+      docs: List items with cursor pagination
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next
+        results: $response.items
+      method: GET
+      path: ""
+      request:
+        name: ListItemsRequest
+        query-parameters:
+          cursor:
+            type: optional<string>
+            docs: The cursor for pagination
+          limit:
+            type: optional<integer>
+            docs: Maximum number of items to return
+      response: PaginatedResponse

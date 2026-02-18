@@ -1,11 +1,12 @@
 import type { FernToken } from "@fern-api/auth";
 import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, basename, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
+import { cp, mkdtemp, rm } from "fs/promises";
+import { tmpdir } from "os";
 import type { AiConfig } from "../../ai/config/AiConfig.js";
 import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter.js";
 import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
@@ -14,6 +15,7 @@ import type { Context } from "../../context/Context.js";
 import type { Task } from "../../ui/Task.js";
 import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
 import type { Target } from "../config/Target.js";
+import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
 
 /**
  * Runs remote generation using the legacy remote-generation infrastructure.
@@ -76,13 +78,6 @@ export namespace LegacyRemoteGenerationRunner {
     }
 }
 
-interface GitOutput {
-    pullRequestUrl?: string;
-    commitHash?: string;
-    branchUrl?: string;
-    releaseUrl?: string;
-}
-
 export class LegacyRemoteGenerationRunner {
     private readonly context: Context;
     private readonly cliVersion: string;
@@ -116,7 +111,7 @@ export class LegacyRemoteGenerationRunner {
             });
             const fernWorkspace = await workspaceAdapter.adapt(args.apiDefinition);
 
-            const absolutePathToPreview = this.getAbsolutePathToPreview(args);
+            const absolutePathToPreview = await this.getAbsolutePathToPreview(args);
             await runRemoteGenerationForAPIWorkspace({
                 projectConfig: this.getProjectConfig(args),
                 organization: args.organization,
@@ -133,16 +128,40 @@ export class LegacyRemoteGenerationRunner {
                 dynamicIrOnly: false
             });
 
+            if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {
+                // Copy preview output to the configured output.path, then clean up the
+                // temp directory.
+                const generatorName = basename(generatorInvocation.name);
+                const previewOutputDirectory = join(absolutePathToPreview, RelativeFilePath.of(generatorName));
+                const targetOutputDirectory = generatorInvocation.absolutePathToLocalOutput;
+                if (targetOutputDirectory != null) {
+                    await cp(previewOutputDirectory, targetOutputDirectory, { recursive: true });
+
+                    // The preview output includes .git from the repository setup —- remove it
+                    // so the output is represented as plain files, not a separate repository.
+                    await rm(join(targetOutputDirectory, RelativeFilePath.of(".git")), {
+                        recursive: true,
+                        force: true
+                    });
+                }
+                await rm(absolutePathToPreview, { recursive: true, force: true });
+            }
+
             if (taskContext.getResult() === TaskResult.Failure) {
                 return {
                     success: false
                 };
             }
 
-            const gitOutput = this.extractGitOutputFromTaskLogs(args.task);
             return {
                 success: true,
-                output: this.resolveOutput(args, gitOutput)
+                output: resolveTargetOutput({
+                    context: this.context,
+                    task: args.task,
+                    target: args.target,
+                    preview: args.preview,
+                    outputPath: args.outputPath
+                })
             };
         } catch (error) {
             return {
@@ -152,7 +171,15 @@ export class LegacyRemoteGenerationRunner {
         }
     }
 
-    private getAbsolutePathToPreview(args: LegacyRemoteGenerationRunner.RunArgs): AbsoluteFilePath | undefined {
+    private async getAbsolutePathToPreview(
+        args: LegacyRemoteGenerationRunner.RunArgs
+    ): Promise<AbsoluteFilePath | undefined> {
+        if (this.isLocalGitCombo(args)) {
+            const tmpPreviewDirectory = await mkdtemp(
+                join(AbsoluteFilePath.of(tmpdir()), RelativeFilePath.of("fern-preview-"))
+            );
+            return AbsoluteFilePath.of(tmpPreviewDirectory);
+        }
         if (!args.preview) {
             return undefined;
         }
@@ -188,63 +215,14 @@ export class LegacyRemoteGenerationRunner {
     }
 
     /**
-     * Extract git output URLs from task logs.
+     * When both `path` and `git` are configured (and not already in preview mode),
+     * we force preview mode so that the remote generation service produces a full
+     * project (i.e. CI workflows, repo URLs in package metadata, etc) without
+     * actually pushing to GitHub.
      *
-     * The remote generation service logs messages like:
-     *  - "Created pull request: https://github.com/owner/repo/pull/123"
-     *  - "Created commit abc123"
-     *  - "Pushed branch: https://github.com/owner/repo/tree/branch-name"
-     *  - "Release tagged. View here: https://github.com/owner/repo/releases/tag/v1.0.0"
+     * The output is downloaded to a temp directory and then copied to `output.path`.
      */
-    private extractGitOutputFromTaskLogs(task: Task): GitOutput | undefined {
-        const gitOutput: GitOutput = {};
-        for (const log of task.logs ?? []) {
-            const prMatch = log.message.match(/Created pull request: (.+)/);
-            if (prMatch != null) {
-                gitOutput.pullRequestUrl = prMatch[1];
-            }
-
-            const commitMatch = log.message.match(/Created commit (\w+)/);
-            if (commitMatch != null) {
-                gitOutput.commitHash = commitMatch[1];
-            }
-
-            const branchMatch = log.message.match(/Pushed branch: (.+)/);
-            if (branchMatch != null) {
-                gitOutput.branchUrl = branchMatch[1];
-            }
-
-            const releaseMatch = log.message.match(/Release tagged\. View here: (.+)/);
-            if (releaseMatch != null) {
-                gitOutput.releaseUrl = releaseMatch[1];
-            }
-        }
-        return Object.keys(gitOutput).length > 0 ? gitOutput : undefined;
-    }
-
-    /**
-     * Resolve output URLs/paths for display.
-     */
-    private resolveOutput(
-        args: LegacyRemoteGenerationRunner.RunArgs,
-        gitOutput: GitOutput | undefined
-    ): string[] | undefined {
-        const absolutePathToPreview = this.getAbsolutePathToPreview(args);
-        if (absolutePathToPreview != null) {
-            return [absolutePathToPreview.toString()];
-        }
-        if (gitOutput != null) {
-            if (gitOutput.pullRequestUrl != null) {
-                return [gitOutput.pullRequestUrl];
-            }
-            if (gitOutput.releaseUrl != null) {
-                return [gitOutput.releaseUrl];
-            }
-            if (gitOutput.branchUrl != null) {
-                return [gitOutput.branchUrl];
-            }
-        }
-        // Fall back to target config (repo URL or local path).
-        return this.context.resolveTargetOutputs(args.target);
+    private isLocalGitCombo(args: LegacyRemoteGenerationRunner.RunArgs): boolean {
+        return args.target.output.path != null && args.target.output.git != null && !args.preview;
     }
 }

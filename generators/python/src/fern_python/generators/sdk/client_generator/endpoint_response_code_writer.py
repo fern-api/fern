@@ -16,6 +16,12 @@ from fern_python.generators.sdk.client_generator.pagination.custom import (
 from fern_python.generators.sdk.client_generator.pagination.offset import (
     OffsetPagination,
 )
+from fern_python.generators.sdk.client_generator.pagination.path import (
+    PathPagination,
+)
+from fern_python.generators.sdk.client_generator.pagination.uri import (
+    UriPagination,
+)
 from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
@@ -42,6 +48,8 @@ class EndpointResponseCodeWriter:
         pagination_snippet_config: PaginationSnippetConfig,
         chunk_size_parameter: Optional[str] = None,
         is_raw_client: bool = False,
+        http_method: str = "GET",
+        client_wrapper_member_name: str = "_client_wrapper",
     ):
         self._context = context
         self._response = response
@@ -52,6 +60,8 @@ class EndpointResponseCodeWriter:
         self._pagination_snippet_config = pagination_snippet_config
         self._chunk_size_parameter = chunk_size_parameter
         self._is_raw_client = is_raw_client
+        self._http_method = http_method
+        self._client_wrapper_member_name = client_wrapper_member_name
 
     def get_writer(self) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
@@ -388,6 +398,7 @@ class EndpointResponseCodeWriter:
 
         if self._pagination is not None:
             response_is_optional = self.is_json_response_optional(json_response)
+            response_body_type = self._get_json_response_body_type(json_response)
             paginator = self._pagination.visit(
                 cursor=lambda cursor: CursorPagination(
                     context=self._context,
@@ -411,6 +422,28 @@ class EndpointResponseCodeWriter:
                     pydantic_parse_expression=pydantic_parse_expression,
                     config=self._pagination_snippet_config,
                     custom=custom,
+                    response_is_optional=response_is_optional,
+                ),
+                uri=lambda uri: UriPagination(
+                    context=self._context,
+                    is_async=self._is_async,
+                    pydantic_parse_expression=pydantic_parse_expression,
+                    config=self._pagination_snippet_config,
+                    uri=uri,
+                    response_body_type=response_body_type,
+                    http_method=self._http_method,
+                    client_wrapper_member_name=self._client_wrapper_member_name,
+                    response_is_optional=response_is_optional,
+                ),
+                path=lambda path: PathPagination(
+                    context=self._context,
+                    is_async=self._is_async,
+                    pydantic_parse_expression=pydantic_parse_expression,
+                    config=self._pagination_snippet_config,
+                    path=path,
+                    response_body_type=response_body_type,
+                    http_method=self._http_method,
+                    client_wrapper_member_name=self._client_wrapper_member_name,
                     response_is_optional=response_is_optional,
                 ),
             )

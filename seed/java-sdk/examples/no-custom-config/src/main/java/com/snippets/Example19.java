@@ -99,7 +99,13 @@ public class Example19 {
                                 .nodes(Optional.of(Arrays.asList(
                                         Node.builder()
                                                 .name("name")
-                                                .nodes(Optional.of(new ArrayList<Node>()))
+                                                .nodes(Optional.of(Arrays.asList(
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .trees(Optional.of(Arrays.asList(
                                                         Tree.builder()
                                                                 .nodes(Optional.of(new ArrayList<Node>()))
@@ -110,7 +116,13 @@ public class Example19 {
                                                 .build(),
                                         Node.builder()
                                                 .name("name")
-                                                .nodes(Optional.of(new ArrayList<Node>()))
+                                                .nodes(Optional.of(Arrays.asList(
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .trees(Optional.of(Arrays.asList(
                                                         Tree.builder()
                                                                 .nodes(Optional.of(new ArrayList<Node>()))
@@ -170,7 +182,13 @@ public class Example19 {
                                                                 .name("name")
                                                                 .contents("contents")
                                                                 .build())))
-                                                .directories(Optional.of(new ArrayList<Directory>()))
+                                                .directories(Optional.of(Arrays.asList(
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .build(),
                                         Directory.builder()
                                                 .name("name")
@@ -183,7 +201,13 @@ public class Example19 {
                                                                 .name("name")
                                                                 .contents("contents")
                                                                 .build())))
-                                                .directories(Optional.of(new ArrayList<Directory>()))
+                                                .directories(Optional.of(Arrays.asList(
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .build())))
                                 .build())
                         .moment(Moment.builder()

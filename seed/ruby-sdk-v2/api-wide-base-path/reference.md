@@ -14,10 +14,10 @@
 
 ```ruby
 client.service.post(
-  service_param: 'serviceParam',
+  service_param: "serviceParam",
   endpoint_param: 1,
-  resource_param: 'resourceParam'
-);
+  resource_param: "resourceParam"
+)
 ```
 </dd>
 </dl>

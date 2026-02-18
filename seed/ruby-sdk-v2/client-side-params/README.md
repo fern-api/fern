@@ -28,14 +28,14 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
 client.service.search_resources(
   limit: 1,
   offset: 1,
-  query: 'query',
+  query: "query",
   filters: {}
-);
+)
 ```
 
 ## Environments

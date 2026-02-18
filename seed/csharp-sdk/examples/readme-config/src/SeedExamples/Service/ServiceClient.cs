@@ -406,7 +406,11 @@ public partial class ServiceClient : IServiceClient
     ///                 new Node
     ///                 {
     ///                     Name = "name",
-    ///                     Nodes = new List&lt;Node&gt;() { },
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node { Name = "name" },
+    ///                         new Node { Name = "name" },
+    ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
     ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
@@ -416,7 +420,11 @@ public partial class ServiceClient : IServiceClient
     ///                 new Node
     ///                 {
     ///                     Name = "name",
-    ///                     Nodes = new List&lt;Node&gt;() { },
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node { Name = "name" },
+    ///                         new Node { Name = "name" },
+    ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
     ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
@@ -482,7 +490,11 @@ public partial class ServiceClient : IServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///                     {
+    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                     },
     ///                 },
     ///                 new SeedExamples.Directory
     ///                 {
@@ -492,7 +504,11 @@ public partial class ServiceClient : IServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///                     {
+    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                     },
     ///                 },
     ///             },
     ///         },

@@ -32,6 +32,9 @@ func (m *MyObject) GetUnknown() interface{} {
 }
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (m *MyObject) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObject) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}

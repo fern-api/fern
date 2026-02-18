@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.simple();
+client.service.simple
 ```
 </dd>
 </dl>

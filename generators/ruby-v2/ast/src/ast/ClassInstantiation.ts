@@ -26,6 +26,11 @@ export class ClassInstantiation extends AstNode {
         writer.writeNode(this.classReference);
         writer.write(".");
         writer.write("new");
+
+        if (this.arguments_.length === 0) {
+            return;
+        }
+
         writer.write("(");
         // If there is more than one argument, write each argument on its own line,
         // separated by commas, for better readability in the generated Ruby code.

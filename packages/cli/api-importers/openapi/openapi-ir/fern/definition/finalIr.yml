@@ -186,6 +186,15 @@ types:
       - Beta
       - Deprecated
 
+  DiscriminatorContext:
+    docs: |
+      Defines the context where a discriminator property exists for union types.
+      "data" means the discriminator exists within the union data itself.
+      "protocol" means the discriminator exists at the SSE protocol level.
+    enum:
+      - data
+      - protocol
+
   Endpoint:
     extends:
       - commons.WithDescription
@@ -261,6 +270,8 @@ types:
       cursor: CursorPagination
       offset: OffsetPagination
       custom: CustomPagination
+      uri: UriPagination
+      path: PathPagination
 
   CursorPagination:
     properties:
@@ -274,6 +285,22 @@ types:
       results: string
       step: optional<string>
       hasNextPage: optional<string>
+
+  UriPagination:
+    docs: |
+      Pagination where the next URI is contained in a response property.
+      The next URI is the complete URI to fetch the next page.
+    properties:
+      nextUri: string
+      results: string
+
+  PathPagination:
+    docs: |
+      Pagination where the next path is contained in a response property.
+      The next path is everything after the base hostname and port.
+    properties:
+      nextPath: string
+      results: string
 
   CustomPagination:
     docs: |
@@ -852,6 +879,12 @@ types:
           Populated by `x-fern-property-name` on a discriminator object.
           When set, this is used as the code generation name while
           discriminantProperty is used as the wire format.
+      discriminatorContext:
+        type: optional<DiscriminatorContext>
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means the discriminator is within the union data itself.
+          "protocol" means the discriminator is at the SSE protocol level.
       commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
 

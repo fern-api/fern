@@ -21,6 +21,10 @@ public class SeedApiClientBuilder {
 
     private OkHttpClient httpClient;
 
+    private String region;
+
+    private String serverUrlEnvironment;
+
     public SeedApiClientBuilder environment(Environment environment) {
         this.environment = environment;
         return this;
@@ -63,6 +67,16 @@ public class SeedApiClientBuilder {
         return this;
     }
 
+    public SeedApiClientBuilder region(String region) {
+        this.region = region;
+        return this;
+    }
+
+    public SeedApiClientBuilder serverUrlEnvironment(String serverUrlEnvironment) {
+        this.serverUrlEnvironment = serverUrlEnvironment;
+        return this;
+    }
+
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
@@ -83,6 +97,18 @@ public class SeedApiClientBuilder {
      * @param builder The ClientOptions.Builder to configure
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
+        if (this.region != null || this.serverUrlEnvironment != null) {
+            String _region = this.region != null ? this.region : "us-east-1";
+            String _serverUrlEnvironment = this.serverUrlEnvironment != null ? this.serverUrlEnvironment : "prod";
+            this.environment = Environment.custom()
+                    .base("https://api.{region}.{environment}.example.com/v1"
+                            .replace("{region}", _region)
+                            .replace("{environment}", _serverUrlEnvironment))
+                    .auth("https://auth.{region}.example.com"
+                            .replace("{region}", _region)
+                            .replace("{environment}", _serverUrlEnvironment))
+                    .build();
+        }
         builder.environment(this.environment);
     }
 

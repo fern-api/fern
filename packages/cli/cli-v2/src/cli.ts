@@ -3,8 +3,10 @@ import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { addAuthCommand } from "./commands/auth/index.js";
+import { addCacheCommand } from "./commands/cache/index.js";
 import { addCheckCommand } from "./commands/check/index.js";
 import { addConfigCommand } from "./commands/config/index.js";
+import { addDocsCommand } from "./commands/docs/index.js";
 import { addInitCommand } from "./commands/init/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
@@ -53,8 +55,10 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
         });
 
     addAuthCommand(cli);
+    addCacheCommand(cli);
     addCheckCommand(cli);
     addConfigCommand(cli);
+    addDocsCommand(cli);
     addInitCommand(cli);
     addSdkCommand(cli);
 

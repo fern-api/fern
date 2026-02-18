@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
     from .logging import LogConfig, LogLevel, Logger, create_logger
+    from .pagination import AsyncPager, SyncPager
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
         UniversalBaseModel,
@@ -33,6 +34,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncClientWrapper": ".client_wrapper",
     "AsyncHttpClient": ".http_client",
     "AsyncHttpResponse": ".http_response",
+    "AsyncPager": ".pagination",
     "BaseClientWrapper": ".client_wrapper",
     "FieldMetadata": ".serialization",
     "File": ".file",
@@ -44,6 +46,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Logger": ".logging",
     "RequestOptions": ".request_options",
     "SyncClientWrapper": ".client_wrapper",
+    "SyncPager": ".pagination",
     "UncheckedBaseModel": ".unchecked_base_model",
     "UnionMetadata": ".unchecked_base_model",
     "UniversalBaseModel": ".pydantic_utilities",
@@ -90,6 +93,7 @@ __all__ = [
     "AsyncClientWrapper",
     "AsyncHttpClient",
     "AsyncHttpResponse",
+    "AsyncPager",
     "BaseClientWrapper",
     "FieldMetadata",
     "File",
@@ -101,6 +105,7 @@ __all__ = [
     "Logger",
     "RequestOptions",
     "SyncClientWrapper",
+    "SyncPager",
     "UncheckedBaseModel",
     "UnionMetadata",
     "UniversalBaseModel",

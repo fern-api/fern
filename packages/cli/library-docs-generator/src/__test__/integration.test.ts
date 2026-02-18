@@ -1,18 +1,15 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "fs";
+import jsYaml from "js-yaml";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { generate } from "../PythonDocsGenerator";
-import type { NavNode } from "../writers/NavigationBuilder";
+import { NAVIGATION_FILENAME, type NavNode } from "../writers/NavigationBuilder";
 
 const NEMO_MODULES: Record<string, FdrAPI.libraryDocs.PythonModuleIr> = JSON.parse(
     readFileSync(join(__dirname, "fixtures", "nemo-modules.json"), "utf-8")
 );
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
 
 function makeModule(overrides: Partial<FdrAPI.libraryDocs.PythonModuleIr>): FdrAPI.libraryDocs.PythonModuleIr {
     return {
@@ -81,10 +78,6 @@ function flattenNav(nodes: NavNode[]): NavNode[] {
     return result;
 }
 
-// ---------------------------------------------------------------------------
-// Build test IR
-// ---------------------------------------------------------------------------
-
 /**
  * Compose a realistic IR from NeMo fixture modules.
  *
@@ -118,10 +111,6 @@ function buildTestIr(): FdrAPI.libraryDocs.PythonLibraryDocsIr {
     return { rootModule } as FdrAPI.libraryDocs.PythonLibraryDocsIr;
 }
 
-// ===========================================================================
-// Integration Tests
-// ===========================================================================
-
 describe("generate() — full pipeline integration", () => {
     let tmpDir: string;
     const SLUG = "reference/python";
@@ -138,9 +127,10 @@ describe("generate() — full pipeline integration", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        // 5 pages: nemo_rl, distillation, package_info, data, aime
+        // 5 MDX pages: nemo_rl, distillation, package_info, data, aime
         expect(result.pageCount).toBe(5);
-        expect(result.writtenFiles).toHaveLength(5);
+        // writtenFiles includes MDX pages + _navigation.yml
+        expect(result.writtenFiles).toHaveLength(6);
     });
 
     it("writes all files to the correct paths on disk", () => {
@@ -179,7 +169,8 @@ describe("generate() — full pipeline integration", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        for (const filePath of result.writtenFiles) {
+        const mdxFiles = result.writtenFiles.filter((f) => f.endsWith(".mdx"));
+        for (const filePath of mdxFiles) {
             const content = readFileSync(filePath, "utf-8");
             expect(content).toMatch(/^---\n/);
             expect(content).toMatch(/slug:/);
@@ -318,10 +309,6 @@ describe("generate() — full pipeline integration", () => {
     });
 });
 
-// ===========================================================================
-// Edge case: minimal IR
-// ===========================================================================
-
 describe("generate() — edge cases", () => {
     let tmpDir: string;
 
@@ -385,13 +372,66 @@ describe("generate() — edge cases", () => {
         expect(existsSync(join(tmpDir, "ref/a/b/c/deep.mdx"))).toBe(true);
     });
 
-    it("written files match what exists on disk", () => {
+    it("written MDX files match what exists on disk", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Test" });
 
-        const filesOnDisk = collectMdxFiles(tmpDir).sort();
-        const reportedFiles = [...result.writtenFiles].sort();
+        const mdxOnDisk = collectMdxFiles(tmpDir).sort();
+        const reportedMdx = result.writtenFiles.filter((f) => f.endsWith(".mdx")).sort();
 
-        expect(reportedFiles).toEqual(filesOnDisk);
+        expect(reportedMdx).toEqual(mdxOnDisk);
+    });
+
+    it("navigationFilePath points to _navigation.yml on disk", () => {
+        const ir = buildTestIr();
+        const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Test" });
+
+        expect(result.navigationFilePath).toContain(NAVIGATION_FILENAME);
+        expect(existsSync(result.navigationFilePath)).toBe(true);
+    });
+});
+
+describe("generate() writes _navigation.yml automatically", () => {
+    let tmpDir: string;
+    const SLUG = "reference/python";
+
+    beforeEach(() => {
+        tmpDir = mkdtempSync(join(tmpdir(), "libdocs-nav-integration-"));
+    });
+
+    afterEach(() => {
+        rmSync(tmpDir, { recursive: true, force: true });
+    });
+
+    it("navigation YAML is written and round-trips with correct structure", () => {
+        const ir = buildTestIr();
+        const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
+
+        // _navigation.yml should already exist (written by generate())
+        expect(existsSync(result.navigationFilePath)).toBe(true);
+
+        // Read back and parse
+        const raw = readFileSync(result.navigationFilePath, "utf-8");
+        const yamlContent = raw.split("\n").slice(1).join("\n");
+        const parsed = jsYaml.load(yamlContent) as NavNode[];
+
+        // Node count matches
+        expect(parsed).toHaveLength(result.navigation.length);
+
+        // Hierarchy matches: top-level titles should be distillation, package_info, data
+        const titles = parsed.map((n) => n.title);
+        expect(titles).toEqual(["distillation", "package_info", "data"]);
+
+        // All page nodes in navigation correspond to actual MDX files on disk
+        const allNodes = flattenNav(parsed);
+        const pages = allNodes.filter((n): n is NavNode & { type: "page"; pageId: string } => n.type === "page");
+        for (const page of pages) {
+            expect(existsSync(join(tmpDir, page.pageId))).toBe(true);
+        }
+
+        // Slugs use the correct base prefix
+        for (const node of allNodes) {
+            expect(node.slug).toMatch(new RegExp(`^${SLUG}/`));
+        }
     });
 });

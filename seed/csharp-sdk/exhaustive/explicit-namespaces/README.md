@@ -12,6 +12,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -59,6 +60,25 @@ try {
 } catch (SeedExhaustiveApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+}
+```
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
+
+```csharp
+using SeedExhaustive.Endpoints.Pagination;
+using SeedExhaustive;
+
+var client = new SeedExhaustiveClient("TOKEN");
+var items = await client.Endpoints.Pagination.ListItemsAsync(
+    new ListItemsRequest { Cursor = "cursor", Limit = 1 }
+);
+
+await foreach (var item in items)
+{
+    // do something with item
 }
 ```
 

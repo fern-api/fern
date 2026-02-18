@@ -14,9 +14,9 @@
 
 ```ruby
 client.service.patch(
-  application: 'application',
+  application: "application",
   require_auth: true
-);
+)
 ```
 </dd>
 </dl>
@@ -90,18 +90,18 @@ This endpoint demonstrates the distinction between:
 
 ```ruby
 client.service.patch_complex(
-  id: 'id',
-  name: 'name',
+  id: "id",
+  name: "name",
   age: 1,
   active: true,
   metadata: {},
-  tags: ['tags', 'tags'],
-  email: 'email',
-  nickname: 'nickname',
-  bio: 'bio',
-  profile_image_url: 'profileImageUrl',
+  tags: %w[tags tags],
+  email: "email",
+  nickname: "nickname",
+  bio: "bio",
+  profile_image_url: "profileImageUrl",
   settings: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -245,11 +245,11 @@ This should trigger the NPE issue when optional fields aren't initialized.
 
 ```ruby
 client.service.named_patch_with_mixed(
-  id: 'id',
-  app_id: 'appId',
-  instructions: 'instructions',
+  id: "id",
+  app_id: "appId",
+  instructions: "instructions",
   active: true
-);
+)
 ```
 </dd>
 </dl>
@@ -339,12 +339,12 @@ This endpoint should:
 
 ```ruby
 client.service.optional_merge_patch_test(
-  required_field: 'requiredField',
-  optional_string: 'optionalString',
+  required_field: "requiredField",
+  optional_string: "optionalString",
   optional_integer: 1,
   optional_boolean: true,
-  nullable_string: 'nullableString'
-);
+  nullable_string: "nullableString"
+)
 ```
 </dd>
 </dl>
@@ -439,10 +439,10 @@ Regular PATCH endpoint without merge-patch semantics
 
 ```ruby
 client.service.regular_patch(
-  id: 'id',
-  field_1: 'field1',
+  id: "id",
+  field_1: "field1",
   field_2: 1
-);
+)
 ```
 </dd>
 </dl>

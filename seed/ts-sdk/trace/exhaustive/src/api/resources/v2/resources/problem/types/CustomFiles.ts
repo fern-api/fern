@@ -18,6 +18,6 @@ export namespace CustomFiles {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

@@ -23,6 +23,9 @@ func (f *Failure) Status() string {
 }
 
 func (f *Failure) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -71,6 +74,9 @@ func (f *Failure) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Failure) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}

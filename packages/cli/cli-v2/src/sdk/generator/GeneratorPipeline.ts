@@ -1,4 +1,5 @@
 import type { FernToken } from "@fern-api/auth";
+import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -107,7 +108,7 @@ export class GeneratorPipeline {
      */
     public async run(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
         try {
-            if (args.runtime === "local") {
+            if (this.isLocalGeneration(args)) {
                 return await this.runLocalGeneration(args);
             }
             return await this.runRemoteGeneration(args);
@@ -137,7 +138,8 @@ export class GeneratorPipeline {
             keepContainer: args.keepContainer,
             preview: args.preview,
             outputPath: args.outputPath,
-            containerEngine: args.containerEngine
+            containerEngine: args.containerEngine,
+            token: args.token
         });
         if (!result.success) {
             return {
@@ -187,5 +189,12 @@ export class GeneratorPipeline {
             target: args.target,
             output: result.output
         };
+    }
+
+    private isLocalGeneration(args: GeneratorPipeline.RunArgs): boolean {
+        return (
+            args.runtime === "local" ||
+            (args.target.output.git != null && schemas.isGitOutputSelfHosted(args.target.output.git))
+        );
     }
 }

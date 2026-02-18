@@ -105,6 +105,16 @@ impl ServiceClient {
         ).await
     }
 
+    pub async fn with_json_property(&self, request: &WithJsonPropertyRequest, options: Option<RequestOptions>) -> Result<String, ApiError> {
+        self.http_client.execute_multipart_request(
+            Method::POST,
+            "/with-json-property",
+            request.clone().to_multipart(),
+            None,
+            options,
+        ).await
+    }
+
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client.execute_request(
             Method::POST,

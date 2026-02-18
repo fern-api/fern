@@ -5,7 +5,9 @@ import * as FernOpenapiIr from "../../../index.js";
 export type Pagination =
     | FernOpenapiIr.Pagination.Cursor
     | FernOpenapiIr.Pagination.Offset
-    | FernOpenapiIr.Pagination.Custom;
+    | FernOpenapiIr.Pagination.Custom
+    | FernOpenapiIr.Pagination.Uri
+    | FernOpenapiIr.Pagination.Path;
 
 export namespace Pagination {
     export interface Cursor extends FernOpenapiIr.CursorPagination, _Utils {
@@ -20,6 +22,14 @@ export namespace Pagination {
         type: "custom";
     }
 
+    export interface Uri extends FernOpenapiIr.UriPagination, _Utils {
+        type: "uri";
+    }
+
+    export interface Path extends FernOpenapiIr.PathPagination, _Utils {
+        type: "path";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Pagination._Visitor<_Result>) => _Result;
     }
@@ -28,6 +38,8 @@ export namespace Pagination {
         cursor: (value: FernOpenapiIr.CursorPagination) => _Result;
         offset: (value: FernOpenapiIr.OffsetPagination) => _Result;
         custom: (value: FernOpenapiIr.CustomPagination) => _Result;
+        uri: (value: FernOpenapiIr.UriPagination) => _Result;
+        path: (value: FernOpenapiIr.PathPagination) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -72,6 +84,32 @@ export const Pagination = {
         };
     },
 
+    uri: (value: FernOpenapiIr.UriPagination): FernOpenapiIr.Pagination.Uri => {
+        return {
+            ...value,
+            type: "uri",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.Pagination.Uri,
+                visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
+    path: (value: FernOpenapiIr.PathPagination): FernOpenapiIr.Pagination.Path => {
+        return {
+            ...value,
+            type: "path",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.Pagination.Path,
+                visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.Pagination._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernOpenapiIr.Pagination,
         visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
@@ -83,6 +121,10 @@ export const Pagination = {
                 return visitor.offset(value);
             case "custom":
                 return visitor.custom(value);
+            case "uri":
+                return visitor.uri(value);
+            case "path":
+                return visitor.path(value);
             default:
                 return visitor._other(value);
         }
