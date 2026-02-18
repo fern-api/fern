@@ -39,10 +39,10 @@ describe("fern generator upgrade", () => {
             }
         );
 
-            expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("4.0.0");
-        }, 60_000);
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("4.0.0");
+    }, 60_000);
 
-        it("fern generator upgrade with filters", async () => {
+    it("fern generator upgrade with filters", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
@@ -82,10 +82,10 @@ describe("fern generator upgrade", () => {
             }
         );
 
-            expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("4.0.0");
-        }, 60_000);
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("4.0.0");
+    }, 60_000);
 
-        it("fern generator help commands", async () => {
+    it("fern generator help commands", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
