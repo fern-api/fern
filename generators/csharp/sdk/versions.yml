@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.20.6
+  changelogEntry:
+    - summary: |
+        Fix WebSocket binary message support: Send raw bytes directly instead of JSON-serializing binary payloads.
+        Previously, binary messages (e.g., audio data) were wrapped in JsonUtils.Serialize(), causing the server
+        to interpret them as configuration messages and respond with CONFIG_DENIED.
+      type: fix
+    - summary: |
+        Fix WebSocket incoming message deserialization: Use discriminant-based matching for server messages.
+        Previously, messages were deserialized by trying each type sequentially, which caused incorrect matches
+        (e.g., transcript messages treated as flushed) because System.Text.Json doesn't validate const field values.
+        Now checks literal/const property values in the JSON before attempting deserialization.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 62
+
 - version: 2.20.5
   changelogEntry:
     - summary: |

@@ -569,6 +569,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             type: ast.Type | ast.ClassReference;
             eventType: ast.ClassReference;
             name: string | undefined;
+            discriminants: { wireValue: string; literalValue: string }[];
         }[] = [];
 
         for (const each of this.websocketChannel.messages) {
@@ -577,36 +578,33 @@ export class WebSocketClientGenerator extends WithGeneration {
                 const type = this.context.csharpTypeMapper.convert({
                     reference: each.body.bodyType
                 });
-                if (each.body.type === "reference") {
-                    const reference = each.body.bodyType;
-                    const type = this.context.csharpTypeMapper.convert({
-                        reference: each.body.bodyType
-                    });
 
-                    // if the result is a oneof, we will expand it into multiple
-                    if (is.OneOf.OneOf(type)) {
-                        for (const oneOfType of type.generics) {
-                            result.push({
-                                type: oneOfType,
-                                eventType: this.Types.WebSocketEvent(oneOfType),
-                                name: is.ClassReference(oneOfType) ? oneOfType.name : undefined
-                            });
-                        }
-                    } else {
-                        // otherwise it's just a single type here
+                // if the result is a oneof, we will expand it into multiple
+                if (is.OneOf.OneOf(type)) {
+                    for (const oneOfType of type.generics) {
                         result.push({
-                            type,
-                            eventType: this.Types.WebSocketEvent(type),
-                            name:
-                                reference._visit({
-                                    container: () => undefined,
-                                    named: (named) => named.name.pascalCase.safeName,
-                                    primitive: (value) => undefined,
-                                    unknown: () => undefined,
-                                    _other: (value) => value.type
-                                }) || each.displayName
+                            type: oneOfType,
+                            eventType: this.Types.WebSocketEvent(oneOfType),
+                            name: is.ClassReference(oneOfType) ? oneOfType.name : undefined,
+                            discriminants: []
                         });
                     }
+                } else {
+                    // otherwise it's just a single type here
+                    const discriminants = this.getDiscriminantsForType(reference);
+                    result.push({
+                        type,
+                        eventType: this.Types.WebSocketEvent(type),
+                        name:
+                            reference._visit({
+                                container: () => undefined,
+                                named: (named) => named.name.pascalCase.safeName,
+                                primitive: (value) => undefined,
+                                unknown: () => undefined,
+                                _other: (value) => value.type
+                            }) || each.displayName,
+                        discriminants
+                    });
                 }
             }
         }
@@ -691,32 +689,86 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.writeTextStatement(`return`);
                 writer.popScope();
 
-                // there is no empirical way to determine the correct event type from the IR
-                // so the only option is to try each event model until one is successful
-                // iterate thru the event models and try to deserialize the message to the correct event
-
                 writer.writeLine();
-                writer.writeLine("// deserialize the message to find the correct event");
+                writer.writeLine("// deserialize the message to find the correct event using discriminant matching");
 
-                for (const event of this.events) {
-                    writer.pushScope();
-                    writer.write(
-                        `if(`,
-                        this.Types.JsonUtils,
-                        `.TryDeserialize(json`,
-                        `, out `,
-                        event.name,
-                        `? message))`
-                    );
-                    writer.pushScope();
+                const events = this.events;
+                const hasDiscriminants = events.some((e) => e.discriminants.length > 0);
 
-                    writer.writeTextStatement(`await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`);
-                    writer.writeTextStatement(`return`);
+                if (hasDiscriminants) {
+                    // Group events by discriminant field for efficient matching
+                    // Check each event's discriminant properties against the JSON
+                    for (const event of events) {
+                        if (event.discriminants.length > 0) {
+                            // Build a condition that checks all discriminant fields
+                            const conditions = event.discriminants.map(
+                                (d) =>
+                                    `(json.RootElement.TryGetProperty("${d.wireValue}", out var ${d.wireValue.replace(/[^a-zA-Z0-9]/g, "_")}Prop) && ${d.wireValue.replace(/[^a-zA-Z0-9]/g, "_")}Prop.ValueKind == System.Text.Json.JsonValueKind.String && ${d.wireValue.replace(/[^a-zA-Z0-9]/g, "_")}Prop.GetString() == "${d.literalValue}")`
+                            );
+                            writer.writeLine(`if(${conditions.join(" && ")})`);
+                            writer.pushScope();
+                            writer.write(
+                                `if(`,
+                                this.Types.JsonUtils,
+                                `.TryDeserialize(json`,
+                                `, out `,
+                                event.name,
+                                `? message))`
+                            );
+                            writer.pushScope();
+                            writer.writeTextStatement(
+                                `await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`
+                            );
+                            writer.writeTextStatement(`return`);
+                            writer.popScope();
+                            writer.popScope();
+                            writer.writeLine();
+                        }
+                    }
 
-                    writer.popScope();
-                    writer.popScope();
-
-                    writer.writeLine();
+                    // Fallback for events without discriminants
+                    for (const event of events) {
+                        if (event.discriminants.length === 0) {
+                            writer.pushScope();
+                            writer.write(
+                                `if(`,
+                                this.Types.JsonUtils,
+                                `.TryDeserialize(json`,
+                                `, out `,
+                                event.name,
+                                `? message))`
+                            );
+                            writer.pushScope();
+                            writer.writeTextStatement(
+                                `await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`
+                            );
+                            writer.writeTextStatement(`return`);
+                            writer.popScope();
+                            writer.popScope();
+                            writer.writeLine();
+                        }
+                    }
+                } else {
+                    // No discriminants available, fall back to trying each type
+                    for (const event of events) {
+                        writer.pushScope();
+                        writer.write(
+                            `if(`,
+                            this.Types.JsonUtils,
+                            `.TryDeserialize(json`,
+                            `, out `,
+                            event.name,
+                            `? message))`
+                        );
+                        writer.pushScope();
+                        writer.writeTextStatement(
+                            `await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`
+                        );
+                        writer.writeTextStatement(`return`);
+                        writer.popScope();
+                        writer.popScope();
+                        writer.writeLine();
+                    }
                 }
 
                 // if no event was found, raise an exception
@@ -739,6 +791,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      */
     private createSendMessageMethods(cls: ast.Class): void {
         this.messages.forEach((each) => {
+            const isBinary = is.Value.byte(each.type);
             cls.addMethod({
                 access: ast.Access.Public,
                 isAsync: true,
@@ -754,9 +807,15 @@ export class WebSocketClientGenerator extends WithGeneration {
                 }),
 
                 body: this.csharp.codeblock((writer) => {
-                    writer.writeLine(`await _client.SendInstant(`);
-                    writer.writeNode(this.Types.JsonUtils);
-                    writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
+                    if (isBinary) {
+                        writer.writeTextStatement(
+                            `await _client.SendInstant(message).ConfigureAwait(false)`
+                        );
+                    } else {
+                        writer.writeLine(`await _client.SendInstant(`);
+                        writer.writeNode(this.Types.JsonUtils);
+                        writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
+                    }
                 })
             });
         });
@@ -1048,6 +1107,37 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param typeReference - The type reference to check
      * @returns True if the type is a named/object type, false for primitives and containers
      */
+    private getDiscriminantsForType(
+        typeReference: TypeReference
+    ): { wireValue: string; literalValue: string }[] {
+        const discriminants: { wireValue: string; literalValue: string }[] = [];
+        if (typeReference.type !== "named") {
+            return discriminants;
+        }
+        const typeId = typeReference.typeId;
+        const typeDeclaration = this.context.ir.types[typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "object") {
+            return discriminants;
+        }
+        const allProperties = [
+            ...typeDeclaration.shape.properties,
+            ...(typeDeclaration.shape.extendedProperties ?? [])
+        ];
+        for (const property of allProperties) {
+            if (
+                property.valueType.type === "container" &&
+                property.valueType.container.type === "literal" &&
+                property.valueType.container.literal.type === "string"
+            ) {
+                discriminants.push({
+                    wireValue: property.name.wireValue,
+                    literalValue: property.valueType.container.literal.string
+                });
+            }
+        }
+        return discriminants;
+    }
+
     private isComplexType(typeReference: TypeReference): boolean {
         return typeReference._visit({
             container: (container) => {
