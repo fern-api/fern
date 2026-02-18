@@ -157,19 +157,17 @@ async function visitNavigationItem({
             if (items == null) {
                 return;
             }
-            await Promise.all(
-                items.map(async (item, idx) => {
-                    await visitNavigationItem({
-                        absolutePathToFernFolder,
-                        navigationItem: item,
-                        visitor,
-                        nodePath: [...nodePath, "contents", `${idx}`],
-                        absoluteFilepathToConfiguration,
-                        apiWorkspaces,
-                        context
-                    });
-                })
-            );
+            await asyncPool(VALIDATION_CONCURRENCY, items, async (item, idx) => {
+                await visitNavigationItem({
+                    absolutePathToFernFolder,
+                    navigationItem: item,
+                    visitor,
+                    nodePath: [...nodePath, "contents", `${idx}`],
+                    absoluteFilepathToConfiguration,
+                    apiWorkspaces,
+                    context
+                });
+            });
         },
         viewers: async (viewers: docsYml.RawSchemas.WithPermissions["viewers"]): Promise<void> => {
             if (viewers != null && viewers.length > 0) {
