@@ -2,9 +2,9 @@
 - version: 3.37.0
   changelogEntry:
     - summary: |
-        Add `additionalProperty(String key, Object value)` method to generated builders,
-        allowing users to set arbitrary extra fields programmatically. Previously,
-        additional properties were only populated during JSON deserialization.
+        Add `additionalProperty(String key, Object value)` and `additionalProperties(Map<String, Object>)`
+        methods to generated builders, allowing users to set arbitrary extra fields programmatically.
+        Previously, additional properties were only populated during JSON deserialization.
       type: feat
   createdAt: "2026-02-18"
   irVersion: 63
