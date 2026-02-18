@@ -206,6 +206,10 @@ public final class Movie implements IMovie {
     public interface _FinalStage {
         Movie build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage prequel(Optional<String> prequel);
 
         _FinalStage prequel(String prequel);
@@ -361,6 +365,18 @@ public final class Movie implements IMovie {
         @java.lang.Override
         public Movie build() {
             return new Movie(id, prequel, title, from, rating, tag, book, metadata, revenue, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

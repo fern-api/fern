@@ -81,6 +81,10 @@ public final class StreamedCompletion {
     public interface _FinalStage {
         StreamedCompletion build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage tokens(Optional<Integer> tokens);
 
         _FinalStage tokens(Integer tokens);
@@ -127,6 +131,18 @@ public final class StreamedCompletion {
         @java.lang.Override
         public StreamedCompletion build() {
             return new StreamedCompletion(delta, tokens, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

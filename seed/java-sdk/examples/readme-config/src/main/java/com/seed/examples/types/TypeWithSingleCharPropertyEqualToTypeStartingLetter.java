@@ -84,6 +84,10 @@ public final class TypeWithSingleCharPropertyEqualToTypeStartingLetter {
 
     public interface _FinalStage {
         TypeWithSingleCharPropertyEqualToTypeStartingLetter build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -121,6 +125,18 @@ public final class TypeWithSingleCharPropertyEqualToTypeStartingLetter {
         @java.lang.Override
         public TypeWithSingleCharPropertyEqualToTypeStartingLetter build() {
             return new TypeWithSingleCharPropertyEqualToTypeStartingLetter(t, ty, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
