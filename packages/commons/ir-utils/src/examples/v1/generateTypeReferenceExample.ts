@@ -322,7 +322,11 @@ function generateMinimalNamedExample({
             if (aliasOf.type === "named") {
                 const aliasedDeclaration = typeDeclarations[aliasOf.typeId];
                 if (aliasedDeclaration != null && aliasedDeclaration.name.typeId !== typeDeclaration.name.typeId) {
-                    return generateMinimalNamedExample({ typeDeclaration: aliasedDeclaration, typeDeclarations });
+                    return generateMinimalNamedExample({
+                        typeDeclaration: aliasedDeclaration,
+                        typeDeclarations,
+                        visitedMinimalTypes: visited
+                    });
                 }
             }
             const jsonExample = {};
