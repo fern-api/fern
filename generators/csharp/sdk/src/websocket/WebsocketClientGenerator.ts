@@ -716,9 +716,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                                 `? message))`
                             );
                             writer.pushScope();
-                            writer.writeTextStatement(
-                                `await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`
-                            );
+                            writer.writeTextStatement(`await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`);
                             writer.writeTextStatement(`return`);
                             writer.popScope();
                             writer.popScope();
@@ -739,9 +737,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                                 `? message))`
                             );
                             writer.pushScope();
-                            writer.writeTextStatement(
-                                `await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`
-                            );
+                            writer.writeTextStatement(`await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`);
                             writer.writeTextStatement(`return`);
                             writer.popScope();
                             writer.popScope();
@@ -761,9 +757,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                             `? message))`
                         );
                         writer.pushScope();
-                        writer.writeTextStatement(
-                            `await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`
-                        );
+                        writer.writeTextStatement(`await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`);
                         writer.writeTextStatement(`return`);
                         writer.popScope();
                         writer.popScope();
@@ -808,9 +802,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 body: this.csharp.codeblock((writer) => {
                     if (isBinary) {
-                        writer.writeTextStatement(
-                            `await _client.SendInstant(message).ConfigureAwait(false)`
-                        );
+                        writer.writeTextStatement(`await _client.SendInstant(message).ConfigureAwait(false)`);
                     } else {
                         writer.writeLine(`await _client.SendInstant(`);
                         writer.writeNode(this.Types.JsonUtils);
@@ -1107,9 +1099,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param typeReference - The type reference to check
      * @returns True if the type is a named/object type, false for primitives and containers
      */
-    private getDiscriminantsForType(
-        typeReference: TypeReference
-    ): { wireValue: string; literalValue: string }[] {
+    private getDiscriminantsForType(typeReference: TypeReference): { wireValue: string; literalValue: string }[] {
         const discriminants: { wireValue: string; literalValue: string }[] = [];
         if (typeReference.type !== "named") {
             return discriminants;
