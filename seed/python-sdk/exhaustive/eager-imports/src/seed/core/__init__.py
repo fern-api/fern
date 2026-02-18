@@ -9,6 +9,7 @@ from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
 from .http_client import AsyncHttpClient, HttpClient
 from .http_response import AsyncHttpResponse, HttpResponse
 from .jsonable_encoder import jsonable_encoder
+from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
 from .pagination import AsyncPager, SyncPager
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
@@ -31,11 +32,16 @@ __all__ = [
     "AsyncHttpResponse",
     "AsyncPager",
     "BaseClientWrapper",
+    "ConsoleLogger",
     "FieldMetadata",
     "File",
     "HttpClient",
     "HttpResponse",
+    "ILogger",
     "IS_PYDANTIC_V2",
+    "LogConfig",
+    "LogLevel",
+    "Logger",
     "RequestOptions",
     "SyncClientWrapper",
     "SyncPager",
@@ -43,6 +49,7 @@ __all__ = [
     "UniversalRootModel",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
+    "create_logger",
     "encode_query",
     "jsonable_encoder",
     "parse_obj_as",
