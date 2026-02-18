@@ -1,29 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.58.1
+  changelogEntry:
+    - summary: |
+        Export `ConsoleLogger` and `ILogger` from the `core` module, allowing users to import
+        and use them directly:
+
+        ```python
+        from acme.core import ConsoleLogger, ILogger
+        ```
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 65
+
 - version: 4.58.0
   changelogEntry:
     - summary: |
-        Add configurable logging support to generated Python SDKs. The SDK client constructor now
-        accepts a `logging` parameter that can be configured in two ways:
+        Add support for logging to the generated SDK.
+        Users can configure the logger by passing in a `logging` parameter to the client constructor.
 
-        1. **LogConfig dict**: Pass `{"level": "debug", "logger": custom_logger, "silent": False}` where:
-           - `level`: Log level threshold (`"debug"`, `"info"`, `"warn"`, or `"error"`)
-           - `logger`: Optional custom logger implementing the `ILogger` protocol (debug/info/warn/error methods)
-           - `silent`: Boolean to disable all logging (defaults to `True` for backward compatibility)
+        ```python
+        from acme import AcmeClient
+        from acme.core import ConsoleLogger
 
-        2. **Logger instance**: Pass a pre-configured `Logger` object for reuse across clients
+        client = AcmeClient(
+            token="YOUR_TOKEN",
+            logging={
+                "level": "debug",  # "info" is the default
+                "logger": ConsoleLogger(),  # ConsoleLogger is the default
+                "silent": False,  # True is the default, set to False to enable logging
+            }
+        )
+        ```
 
-        **What gets logged:**
-        - HTTP request metadata at debug level: method, URL, redacted headers, and body presence indicator
-        - HTTP response success at debug level: method, URL, and status code
-        - HTTP errors at error level: method, URL, and status code for 4xx/5xx responses
-        - Streaming request metadata at debug level
+        The `logging` parameter accepts a `LogConfig` dict with the following properties:
+        - `level`: The log level to use. Defaults to `"info"`.
+        - `logger`: The logger to use. Defaults to `ConsoleLogger`.
+        - `silent`: Whether to silence the logger. Defaults to `True`.
 
-        **Security:** Sensitive headers are automatically redacted including: `authorization`, `x-api-key`,
-        `cookie`, `x-csrf-token`, `x-session-token`, and other auth-related headers.
+        The `level` property can be one of the following values:
+        - `"debug"`
+        - `"info"`
+        - `"warn"`
+        - `"error"`
 
-        **Default behavior:** Logging is silent by default (`silent=True`) to maintain backward compatibility.
-        Set `silent=False` to enable logging output.
+        To provide a custom logger, pass an object implementing the `ILogger` protocol
+        with `debug`, `info`, `warn`, and `error` methods.
+
+        Sensitive headers (`authorization`, `x-api-key`, `cookie`, etc.) are automatically
+        redacted in logs.
       type: feat
   createdAt: "2026-02-10"
   irVersion: 65
