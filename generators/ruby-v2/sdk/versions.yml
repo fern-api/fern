@@ -9,49 +9,14 @@
         generator — existing configs, gem names, and modules just work. ✅
 
         ✨ **Highlights**
-
-        🔐 **Authentication**
-        - Bearer token, API key (header-based), OAuth 2.0, and inferred auth support
-        - Automatic token refresh with configurable buffer period
-
-        🌐 **HTTP & Networking**
-        - Automatic retries with exponential backoff and jitter for transient errors (408, 429,
-          5xx status codes), including Retry-After header support
-        - Per-request `base_url`, additional headers, and query parameters via `request_options`
-        - Multipart file upload support
-
-        📄 **Types & Serialization**
-        - Discriminated unions, undiscriminated unions, and enum types
-        - Correct round-trip serialization for non-snake_case wire field names (camelCase,
-          PascalCase, SCREAMING_SNAKE_CASE)
-        - Lazy-loaded type references to handle circular dependencies and import order
-
-        📦 **Pagination**
-        - Cursor and offset pagination with lazy iterators
-        - Custom pagination support via `customPagerName` config option
-
-        🏗️ **Code Generation**
-        - YARD documentation for all generated methods and parameters
-        - RuboCop-clean output with a generated `.rubocop.yml` tailored to SDK idioms
-        - CI workflow with lint, test, and RubyGems OIDC publish jobs
-        - Wire test generation with WireMock for serialization/deserialization validation
-        - Comprehensive `README.md` and `reference.md` with usage examples and source links
-
-        ⚙️ **Configuration**
-        - `moduleName` / `clientModuleName` — customize the gem module and root client class name
-        - `packageName` — set gem name from publish config
-        - `requirePaths` — auto-load user-defined files on gem require
-        - `extraDependencies` / `extraDevDependencies` — add gems to gemspec and Gemfile
-        - `enableWireTests` / `customPagerName` — opt-in wire tests and custom pagination
-
-        🌍 **Environments**
-        - Multiple named environments with SCREAMING_SNAKE_CASE constants
-        - Multi-URL environments (`x-fern-server-name`) for APIs with separate endpoint URLs
-
-        🚀 **Publishing**
-        - RubyGems OIDC trusted publishing via `rubygems/configure-rubygems-credentials`
-        - Self-hosted mode: clone, generate, and push/PR to the user's own GitHub repository
-        - `.fernignore` support to preserve user customizations across regenerations
+        - 🔐 Bearer, API key, OAuth 2.0 & inferred auth with automatic token refresh
+        - 🌐 Exponential-backoff retries, per-request `base_url` override, multipart uploads
+        - 📄 Discriminated & undiscriminated unions, correct non-snake_case wire serialization
+        - 📦 Cursor & offset pagination with lazy iterators, custom pager support
+        - 🏗️ YARD docs, RuboCop-clean output, CI with RubyGems OIDC publishing, wire tests
+        - ⚙️ Rich config: `moduleName`, `requirePaths`, `extraDependencies`, `enableWireTests`, and more
+        - 🌍 Multiple named environments and multi-URL environment support
+        - 🚀 RubyGems OIDC publishing and self-hosted mode with `.fernignore` support
       type: feat
   createdAt: "2026-02-19"
   irVersion: 61
