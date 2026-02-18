@@ -70,6 +70,8 @@ public final class PutRequest {
 
     public interface _FinalStage {
         PutRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +99,12 @@ public final class PutRequest {
         @java.lang.Override
         public PutRequest build() {
             return new PutRequest(id, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
         }
     }
 }

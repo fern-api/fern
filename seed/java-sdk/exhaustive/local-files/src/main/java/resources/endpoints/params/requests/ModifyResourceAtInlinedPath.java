@@ -75,6 +75,8 @@ public final class ModifyResourceAtInlinedPath {
 
   public interface _FinalStage {
     ModifyResourceAtInlinedPath build();
+
+    _FinalStage additionalProperty(String key, Object value);
   }
 
   @JsonIgnoreProperties(
@@ -105,6 +107,12 @@ public final class ModifyResourceAtInlinedPath {
     @java.lang.Override
     public ModifyResourceAtInlinedPath build() {
       return new ModifyResourceAtInlinedPath(body, additionalProperties);
+    }
+
+    @java.lang.Override
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
     }
   }
 }
