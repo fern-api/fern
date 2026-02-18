@@ -44,6 +44,9 @@ func (r *RegularResponse) GetName() *string {
 }
 
 func (r *RegularResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -95,6 +98,9 @@ func (r *RegularResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RegularResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
@@ -131,6 +137,9 @@ func (s *StreamResponse) GetName() *string {
 }
 
 func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -182,6 +191,9 @@ func (s *StreamResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StreamResponse) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

@@ -31,6 +31,9 @@
 "/object/get-and-return-with-unknown-field"
 "/object/get-and-return-with-datetime-like-string"
 
+// service_endpoints/pagination
+"/pagination"
+
 // service_endpoints/params
 "/params/path/\(param)"
 "/params/path/\(param)"

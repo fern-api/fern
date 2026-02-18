@@ -63,5 +63,10 @@ public final class GetWithInlinePath {
     public GetWithInlinePath build() {
       return new GetWithInlinePath(additionalProperties);
     }
+
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
+    }
   }
 }

@@ -27,7 +27,7 @@ Get a user by ID
 <dd>
 
 ```ruby
-client.nullable_optional.get_user(user_id: 'userId');
+client.nullable_optional.get_user(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -90,19 +90,19 @@ Create a new user
 
 ```ruby
 client.nullable_optional.create_user(
-  username: 'username',
-  email: 'email',
-  phone: 'phone',
+  username: "username",
+  email: "email",
+  phone: "phone",
   address: {
-    street: 'street',
-    city: 'city',
-    state: 'state',
-    zip_code: 'zipCode',
-    country: 'country',
-    building_id: 'buildingId',
-    tenant_id: 'tenantId'
+    street: "street",
+    city: "city",
+    state: "state",
+    zip_code: "zipCode",
+    country: "country",
+    building_id: "buildingId",
+    tenant_id: "tenantId"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -165,20 +165,20 @@ Update a user (partial update)
 
 ```ruby
 client.nullable_optional.update_user(
-  user_id: 'userId',
-  username: 'username',
-  email: 'email',
-  phone: 'phone',
+  user_id: "userId",
+  username: "username",
+  email: "email",
+  phone: "phone",
   address: {
-    street: 'street',
-    city: 'city',
-    state: 'state',
-    zip_code: 'zipCode',
-    country: 'country',
-    building_id: 'buildingId',
-    tenant_id: 'tenantId'
+    street: "street",
+    city: "city",
+    state: "state",
+    zip_code: "zipCode",
+    country: "country",
+    building_id: "buildingId",
+    tenant_id: "tenantId"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -252,8 +252,8 @@ client.nullable_optional.list_users(
   limit: 1,
   offset: 1,
   include_deleted: true,
-  sort_by: 'sortBy'
-);
+  sort_by: "sortBy"
+)
 ```
 </dd>
 </dl>
@@ -340,11 +340,11 @@ Search users
 
 ```ruby
 client.nullable_optional.search_users(
-  query: 'query',
-  department: 'department',
-  role: 'role',
+  query: "query",
+  department: "department",
+  role: "role",
   is_active: true
-);
+)
 ```
 </dd>
 </dl>
@@ -431,33 +431,33 @@ Create a complex profile to test nullable enums and unions
 
 ```ruby
 client.nullable_optional.create_complex_profile(
-  id: 'id',
-  nullable_role: 'ADMIN',
-  optional_role: 'ADMIN',
-  optional_nullable_role: 'ADMIN',
-  nullable_status: 'active',
-  optional_status: 'active',
-  optional_nullable_status: 'active',
-  nullable_array: ['nullableArray', 'nullableArray'],
-  optional_array: ['optionalArray', 'optionalArray'],
-  optional_nullable_array: ['optionalNullableArray', 'optionalNullableArray'],
-  nullable_list_of_nullables: ['nullableListOfNullables', 'nullableListOfNullables'],
+  id: "id",
+  nullable_role: "ADMIN",
+  optional_role: "ADMIN",
+  optional_nullable_role: "ADMIN",
+  nullable_status: "active",
+  optional_status: "active",
+  optional_nullable_status: "active",
+  nullable_array: %w[nullableArray nullableArray],
+  optional_array: %w[optionalArray optionalArray],
+  optional_nullable_array: %w[optionalNullableArray optionalNullableArray],
+  nullable_list_of_nullables: %w[nullableListOfNullables nullableListOfNullables],
   nullable_map_of_nullables: {
     nullableMapOfNullables: {
-      street: 'street',
-      city: 'city',
-      state: 'state',
-      zip_code: 'zipCode',
-      country: 'country',
-      building_id: 'buildingId',
-      tenant_id: 'tenantId'
+      street: "street",
+      city: "city",
+      state: "state",
+      zip_code: "zipCode",
+      country: "country",
+      building_id: "buildingId",
+      tenant_id: "tenantId"
     }
   },
   nullable_list_of_unions: [],
   optional_map_of_enums: {
-    optionalMapOfEnums: 'ADMIN'
+    optionalMapOfEnums: "ADMIN"
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -519,7 +519,7 @@ Get a complex profile by ID
 <dd>
 
 ```ruby
-client.nullable_optional.get_complex_profile(profile_id: 'profileId');
+client.nullable_optional.get_complex_profile(profile_id: "profileId")
 ```
 </dd>
 </dl>
@@ -582,11 +582,11 @@ Update complex profile to test nullable field updates
 
 ```ruby
 client.nullable_optional.update_complex_profile(
-  profile_id: 'profileId',
-  nullable_role: 'ADMIN',
-  nullable_status: 'active',
-  nullable_array: ['nullableArray', 'nullableArray']
-);
+  profile_id: "profileId",
+  nullable_role: "ADMIN",
+  nullable_status: "active",
+  nullable_array: %w[nullableArray nullableArray]
+)
 ```
 </dd>
 </dl>
@@ -689,32 +689,32 @@ Test endpoint for validating null deserialization
 
 ```ruby
 client.nullable_optional.test_deserialization(
-  required_string: 'requiredString',
-  nullable_string: 'nullableString',
-  optional_string: 'optionalString',
-  optional_nullable_string: 'optionalNullableString',
-  nullable_enum: 'ADMIN',
-  optional_enum: 'active',
-  nullable_list: ['nullableList', 'nullableList'],
+  required_string: "requiredString",
+  nullable_string: "nullableString",
+  optional_string: "optionalString",
+  optional_nullable_string: "optionalNullableString",
+  nullable_enum: "ADMIN",
+  optional_enum: "active",
+  nullable_list: %w[nullableList nullableList],
   nullable_map: {
     nullableMap: 1
   },
   nullable_object: {
-    street: 'street',
-    city: 'city',
-    state: 'state',
-    zip_code: 'zipCode',
-    country: 'country',
-    building_id: 'buildingId',
-    tenant_id: 'tenantId'
+    street: "street",
+    city: "city",
+    state: "state",
+    zip_code: "zipCode",
+    country: "country",
+    building_id: "buildingId",
+    tenant_id: "tenantId"
   },
   optional_object: {
-    id: 'id',
-    name: 'name',
-    domain: 'domain',
+    id: "id",
+    name: "name",
+    domain: "domain",
     employee_count: 1
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -777,10 +777,10 @@ Filter users by role with nullable enum
 
 ```ruby
 client.nullable_optional.filter_by_role(
-  role: 'ADMIN',
-  status: 'active',
-  secondary_role: 'ADMIN'
-);
+  role: "ADMIN",
+  status: "active",
+  secondary_role: "ADMIN"
+)
 ```
 </dd>
 </dl>
@@ -858,7 +858,7 @@ Get notification settings which may be null
 <dd>
 
 ```ruby
-client.nullable_optional.get_notification_settings(user_id: 'userId');
+client.nullable_optional.get_notification_settings(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -921,11 +921,11 @@ Update tags to test array handling
 
 ```ruby
 client.nullable_optional.update_tags(
-  user_id: 'userId',
-  tags: ['tags', 'tags'],
-  categories: ['categories', 'categories'],
-  labels: ['labels', 'labels']
-);
+  user_id: "userId",
+  tags: %w[tags tags],
+  categories: %w[categories categories],
+  labels: %w[labels labels]
+)
 ```
 </dd>
 </dl>
@@ -1012,12 +1012,12 @@ Get search results with nullable unions
 
 ```ruby
 client.nullable_optional.get_search_results(
-  query: 'query',
+  query: "query",
   filters: {
-    filters: 'filters'
+    filters: "filters"
   },
-  include_types: ['includeTypes', 'includeTypes']
-);
+  include_types: %w[includeTypes includeTypes]
+)
 ```
 </dd>
 </dl>

@@ -28,20 +28,20 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.create_user(
-  id: 'id',
-  email: 'email',
-  password: 'password',
+  id: "id",
+  email: "email",
+  password: "password",
   profile: {
-    name: 'name',
+    name: "name",
     verification: {
-      verified: 'verified'
+      verified: "verified"
     },
-    ssn: 'ssn'
+    ssn: "ssn"
   }
-);
+)
 ```
 
 ## Environments

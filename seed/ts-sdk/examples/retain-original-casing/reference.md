@@ -597,7 +597,11 @@ await client.service.createBigEntity({
         name: "name",
         nodes: [{
                 name: "name",
-                nodes: [],
+                nodes: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }],
                 trees: [{
                         nodes: []
                     }, {
@@ -605,7 +609,11 @@ await client.service.createBigEntity({
                     }]
             }, {
                 name: "name",
-                nodes: [],
+                nodes: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }],
                 trees: [{
                         nodes: []
                     }, {
@@ -652,7 +660,11 @@ await client.service.createBigEntity({
                         name: "name",
                         contents: "contents"
                     }],
-                directories: []
+                directories: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }]
             }, {
                 name: "name",
                 files: [{
@@ -662,7 +674,11 @@ await client.service.createBigEntity({
                         name: "name",
                         contents: "contents"
                     }],
-                directories: []
+                directories: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }]
             }]
     },
     moment: {

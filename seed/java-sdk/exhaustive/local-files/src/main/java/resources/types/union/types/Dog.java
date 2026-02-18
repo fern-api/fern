@@ -87,6 +87,8 @@ public final class Dog {
 
   public interface _FinalStage {
     Dog build();
+
+    _FinalStage additionalProperty(String key, Object value);
   }
 
   @JsonIgnoreProperties(
@@ -127,6 +129,12 @@ public final class Dog {
     @java.lang.Override
     public Dog build() {
       return new Dog(name, likesToWoof, additionalProperties);
+    }
+
+    @java.lang.Override
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
     }
   }
 }

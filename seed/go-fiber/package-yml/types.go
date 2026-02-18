@@ -39,6 +39,9 @@ func (e *EchoRequest) GetSize() int {
 }
 
 func (e *EchoRequest) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -90,6 +93,9 @@ func (e *EchoRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EchoRequest) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}

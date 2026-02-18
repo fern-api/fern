@@ -91,5 +91,10 @@ public final class DoubleOptional {
         public DoubleOptional build() {
             return new DoubleOptional(optionalAlias, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
     }
 }

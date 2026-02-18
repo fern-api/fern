@@ -563,7 +563,16 @@ client.service().createBigEntity(
                                 .name("name")
                                 .nodes(
                                     Optional.of(
-                                        new ArrayList<Node>()
+                                        Arrays.asList(
+                                            Node
+                                                .builder()
+                                                .name("name")
+                                                .build(),
+                                            Node
+                                                .builder()
+                                                .name("name")
+                                                .build()
+                                        )
                                     )
                                 )
                                 .trees(
@@ -594,7 +603,16 @@ client.service().createBigEntity(
                                 .name("name")
                                 .nodes(
                                     Optional.of(
-                                        new ArrayList<Node>()
+                                        Arrays.asList(
+                                            Node
+                                                .builder()
+                                                .name("name")
+                                                .build(),
+                                            Node
+                                                .builder()
+                                                .name("name")
+                                                .build()
+                                        )
                                     )
                                 )
                                 .trees(
@@ -749,7 +767,16 @@ client.service().createBigEntity(
                                 )
                                 .directories(
                                     Optional.of(
-                                        new ArrayList<Directory>()
+                                        Arrays.asList(
+                                            Directory
+                                                .builder()
+                                                .name("name")
+                                                .build(),
+                                            Directory
+                                                .builder()
+                                                .name("name")
+                                                .build()
+                                        )
                                     )
                                 )
                                 .build(),
@@ -774,7 +801,16 @@ client.service().createBigEntity(
                                 )
                                 .directories(
                                     Optional.of(
-                                        new ArrayList<Directory>()
+                                        Arrays.asList(
+                                            Directory
+                                                .builder()
+                                                .name("name")
+                                                .build(),
+                                            Directory
+                                                .builder()
+                                                .name("name")
+                                                .build()
+                                        )
                                     )
                                 )
                                 .build()

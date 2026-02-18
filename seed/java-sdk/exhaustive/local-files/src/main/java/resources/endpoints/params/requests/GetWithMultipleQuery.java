@@ -161,5 +161,10 @@ public final class GetWithMultipleQuery {
     public GetWithMultipleQuery build() {
       return new GetWithMultipleQuery(query, number, additionalProperties);
     }
+
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
+    }
   }
 }

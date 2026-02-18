@@ -26,7 +26,7 @@ Returns a RootObject which inherits from a nullable schema.
 <dd>
 
 ```ruby
-client.get_test();
+client.get_test
 ```
 </dd>
 </dl>
@@ -80,7 +80,7 @@ Creates a test object with nullable allOf in request body.
 <dd>
 
 ```ruby
-client.create_test();
+client.create_test
 ```
 </dd>
 </dl>

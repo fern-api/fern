@@ -98,7 +98,7 @@ class PathPagination(Paginator):
                 writer.write(f"{PathPagination.NEXT_RESPONSE_VAR} = await {client_ref}.request(")
             else:
                 writer.write(f"{PathPagination.NEXT_RESPONSE_VAR} = {client_ref}.request(")
-            writer.write(f'method="{self._http_method}", url=_next_path')
+            writer.write(f'method="{self._http_method}", path=_next_path')
             writer.write_line(")")
 
             # Parse response

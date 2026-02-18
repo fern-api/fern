@@ -34,6 +34,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.UseReaderForBytesRequest,
 		config.GettersPassByValue,
 		config.ExportAllRequestsAtRoot,
+		config.OmitEmptyRequestWrappers,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,

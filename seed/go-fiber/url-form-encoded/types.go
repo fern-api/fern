@@ -46,6 +46,9 @@ func (p *PostSubmitResponse) GetMessage() *string {
 }
 
 func (p *PostSubmitResponse) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -97,6 +100,9 @@ func (p *PostSubmitResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PostSubmitResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}

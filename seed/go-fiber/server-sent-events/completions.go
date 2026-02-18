@@ -47,6 +47,9 @@ func (s *StreamedCompletion) GetTokens() *int {
 }
 
 func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -98,6 +101,9 @@ func (s *StreamedCompletion) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StreamedCompletion) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

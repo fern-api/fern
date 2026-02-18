@@ -598,6 +598,33 @@
       }
     },
     {
+      "id": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
+      "name": "listItems - default",
+      "request": {
+        "urlPathTemplate": "/pagination",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    },\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
       "name": "getWithPath - default",
       "request": {
@@ -1369,6 +1396,6 @@
     }
   ],
   "meta": {
-    "total": 50
+    "total": 51
   }
 }

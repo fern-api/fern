@@ -847,6 +847,13 @@
       ],
       "additionalProperties": false
     },
+    "types.UnionDiscriminatorContext": {
+      "type": "string",
+      "enum": [
+        "data",
+        "protocol"
+      ]
+    },
     "types.UnionDiscriminantSchema": {
       "type": "object",
       "properties": {
@@ -862,6 +869,16 @@
         },
         "value": {
           "type": "string"
+        },
+        "context": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.UnionDiscriminatorContext"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

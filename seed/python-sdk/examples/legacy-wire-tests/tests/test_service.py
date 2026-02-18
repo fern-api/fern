@@ -153,8 +153,8 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
         node=Node(
             name="name",
             nodes=[
-                Node(name="name", nodes=[], trees=[Tree(nodes=[]), Tree(nodes=[])]),
-                Node(name="name", nodes=[], trees=[Tree(nodes=[]), Tree(nodes=[])]),
+                Node(name="name", nodes=[Node(name="name"), Node(name="name")], trees=[Tree(nodes=[]), Tree(nodes=[])]),
+                Node(name="name", nodes=[Node(name="name"), Node(name="name")], trees=[Tree(nodes=[]), Tree(nodes=[])]),
             ],
             trees=[
                 Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
@@ -168,12 +168,12 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
                 Directory(
                     name="name",
                     files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
-                    directories=[],
+                    directories=[Directory(name="name"), Directory(name="name")],
                 ),
                 Directory(
                     name="name",
                     files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
-                    directories=[],
+                    directories=[Directory(name="name"), Directory(name="name")],
                 ),
             ],
         ),
@@ -214,8 +214,8 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
         node=Node(
             name="name",
             nodes=[
-                Node(name="name", nodes=[], trees=[Tree(nodes=[]), Tree(nodes=[])]),
-                Node(name="name", nodes=[], trees=[Tree(nodes=[]), Tree(nodes=[])]),
+                Node(name="name", nodes=[Node(name="name"), Node(name="name")], trees=[Tree(nodes=[]), Tree(nodes=[])]),
+                Node(name="name", nodes=[Node(name="name"), Node(name="name")], trees=[Tree(nodes=[]), Tree(nodes=[])]),
             ],
             trees=[
                 Tree(nodes=[Node(name="name", nodes=[], trees=[]), Node(name="name", nodes=[], trees=[])]),
@@ -229,12 +229,12 @@ async def test_create_big_entity(client: SeedExamples, async_client: AsyncSeedEx
                 Directory(
                     name="name",
                     files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
-                    directories=[],
+                    directories=[Directory(name="name"), Directory(name="name")],
                 ),
                 Directory(
                     name="name",
                     files=[File(name="name", contents="contents"), File(name="name", contents="contents")],
-                    directories=[],
+                    directories=[Directory(name="name"), Directory(name="name")],
                 ),
             ],
         ),

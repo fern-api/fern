@@ -11,6 +11,8 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\A\AClientInterface;
+use Seed\Folder\FolderClientInterface;
 
 class SeedClient implements SeedClientInterface
 {
@@ -110,5 +112,21 @@ class SeedClient implements SeedClientInterface
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
         );
+    }
+
+    /**
+     * @return AClientInterface
+     */
+    public function getA(): AClientInterface
+    {
+        return $this->a;
+    }
+
+    /**
+     * @return FolderClientInterface
+     */
+    public function getFolder(): FolderClientInterface
+    {
+        return $this->folder;
     }
 }

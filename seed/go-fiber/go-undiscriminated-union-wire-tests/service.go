@@ -92,6 +92,9 @@ func (d *DocumentObject) GetText() string {
 }
 
 func (d *DocumentObject) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -136,6 +139,9 @@ func (d *DocumentObject) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DocumentObject) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
@@ -172,6 +178,9 @@ func (r *RerankRequest) GetQuery() string {
 }
 
 func (r *RerankRequest) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -223,6 +232,9 @@ func (r *RerankRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RerankRequest) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
@@ -250,6 +262,9 @@ func (r *RerankResponse) GetResults() []string {
 }
 
 func (r *RerankResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -294,6 +309,9 @@ func (r *RerankResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RerankResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}

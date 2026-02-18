@@ -3,13 +3,13 @@
 exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
 client.service.get_metadata(
   shallow: false,
-  tag: ['development', 'public'],
-  x_api_version: '0.0.1'
-);
+  tag: %w[development public],
+  x_api_version: "0.0.1"
+)
 "
 `;
 
@@ -28,29 +28,29 @@ exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
 client.service.create_big_entity(
   cast_member: {
-    id: 'john.doe',
-    name: 'John Doe'
+    id: "john.doe",
+    name: "John Doe"
   },
   extended_movie: {
-    cast: ['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
-    id: 'movie-sda231x',
-    title: 'Pulp Fiction',
-    from: 'Quentin Tarantino',
+    cast: ["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
+    id: "movie-sda231x",
+    title: "Pulp Fiction",
+    from: "Quentin Tarantino",
     rating: 8.5,
-    type: 'movie',
-    tag: 'tag-12efs9dv',
+    type: "movie",
+    tag: "tag-12efs9dv",
     metadata: {},
     revenue: 1000000
   },
   migration: {
-    name: 'Migration 31 Aug',
-    status: 'RUNNING'
+    name: "Migration 31 Aug",
+    status: "RUNNING"
   }
-);
+)
 "
 `;
 
@@ -69,44 +69,44 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
 client.service.create_movie(
-  id: 'movie-c06a4ad7',
-  prequel: 'movie-cv9b914f',
-  title: 'The Boy and the Heron',
-  from: 'Hayao Miyazaki',
+  id: "movie-c06a4ad7",
+  prequel: "movie-cv9b914f",
+  title: "The Boy and the Heron",
+  from: "Hayao Miyazaki",
   rating: 8,
-  type: 'movie',
-  tag: 'development',
+  type: "movie",
+  tag: "development",
   metadata: {},
   revenue: 1000000
-);
+)
 "
 `;
 
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
 client.endpoints.object.get_and_return_with_optional_field(
-  string: 'string',
+  string: "string",
   integer: 1,
   long: 1000000,
   double: 1.1,
   bool: true,
-  datetime: '2024-01-15T09:30:00Z',
-  date: '2023-01-15',
-  uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  base64: 'SGVsbG8gd29ybGQh',
-  list: ['list', 'list'],
-  set: Set.new(['set']),
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  base64: "SGVsbG8gd29ybGQh",
+  list: %w[list list],
+  set: Set.new(["set"]),
   map: {
-    1 => 'map'
+    1 => "map"
   },
-  bigint: '1000000'
-);
+  bigint: "1000000"
+)
 "
 `;
 
@@ -132,75 +132,75 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
 client.endpoints.container.get_and_return_list_of_objects(request: [{
-  string: 'one'
+  string: "one"
 }, {
-  string: 'two'
+  string: "two"
 }, {
-  string: 'three'
-}]);
+  string: "three"
+}])
 "
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.endpoints.container.get_and_return_list_of_primitives(request: ['one', 'two', 'three']);
+client.endpoints.container.get_and_return_list_of_primitives(request: %w[one two three])
 "
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "require "acme"
 
-client = Acme::Client.new();
+client = Acme::Client.new
 
-client.service.post();
+client.service.post
 "
 `;
 
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 "require "acme"
 
-client = Acme::Client.new();
+client = Acme::Client.new
 
-client.service.just_file();
+client.service.just_file
 "
 `;
 
 exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
 "require "acme"
 
-client = Acme::Client.new();
+client = Acme::Client.new
 
 client.service.just_file_with_query_params(
   integer: 42,
-  maybe_string: 'exists'
-);
+  maybe_string: "exists"
+)
 "
 `;
 
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.imdb.get_movie(movie_id: 'movie_xyz');
+client.imdb.get_movie(movie_id: "movie_xyz")
 "
 `;
 
 exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
 client.imdb.create_movie(
-  title: 'The Matrix',
+  title: "The Matrix",
   rating: 8.2
-);
+)
 "
 `;
 
@@ -228,11 +228,11 @@ exports[`snippets (default) > multi-url-environment > 'Production environment' 1
 "require "acme"
 
 client = Acme::Client.new(
-  token: '<YOUR_API_KEY>',
+  token: "<YOUR_API_KEY>",
   environment: Acme::Environment::PRODUCTION
-);
+)
 
-client.s3.get_presigned_url(s3key: 'xyz');
+client.s3.get_presigned_url(s3key: "xyz")
 "
 `;
 
@@ -240,11 +240,11 @@ exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] 
 "require "acme"
 
 client = Acme::Client.new(
-  token: '<YOUR_API_KEY>',
+  token: "<YOUR_API_KEY>",
   environment: Acme::Environment::STAGING
-);
+)
 
-client.s3.get_presigned_url(s3key: 'xyz');
+client.s3.get_presigned_url(s3key: "xyz")
 "
 `;
 
@@ -261,19 +261,19 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: "https://api.example.com")
 
 client.nullable.create_user(
-  username: 'john.doe',
-  tags: ['admin'],
+  username: "john.doe",
+  tags: ["admin"],
   metadata: {
-    created_at: '1980-01-01T00:00:00Z',
-    updated_at: '1980-01-01T00:00:00Z',
+    created_at: "1980-01-01T00:00:00Z",
+    updated_at: "1980-01-01T00:00:00Z",
     avatar: nil,
     activated: nil
   },
   avatar: nil
-);
+)
 "
 `;
 
@@ -290,46 +290,46 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: "https://api.example.com")
 
 client.nullable.get_users(
-  usernames: ['john.doe', 'jane.doe'],
+  usernames: %w[john.doe jane.doe],
   tags: [nil],
   extra: nil
-);
+)
 "
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: "https://api.example.com")
 
 client.create_user(
-  password: 'password',
+  password: "password",
   profile: {
-    name: 'name',
+    name: "name",
     verification: {},
-    ssn: 'ssn'
+    ssn: "ssn"
   }
-);
+)
 "
 `;
 
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
 "require "acme"
 
-client = Acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: "https://api.example.com")
 
 client.create_user(
-  id: 'id',
-  password: 'password',
+  id: "id",
+  password: "password",
   profile: {
-    name: 'name',
+    name: "name",
     verification: {},
-    ssn: 'ssn'
+    ssn: "ssn"
   }
-);
+)
 "
 `;
 
@@ -337,11 +337,11 @@ exports[`snippets (default) > single-url-environment-default > 'Production envir
 "require "acme"
 
 client = Acme::Client.new(
-  token: '<YOUR_API_KEY>',
+  token: "<YOUR_API_KEY>",
   environment: Acme::Environment::PRODUCTION
-);
+)
 
-client.dummy.get_dummy();
+client.dummy.get_dummy
 "
 `;
 
@@ -349,11 +349,11 @@ exports[`snippets (default) > single-url-environment-default > 'Staging environm
 "require "acme"
 
 client = Acme::Client.new(
-  token: '<YOUR_API_KEY>',
+  token: "<YOUR_API_KEY>",
   environment: Acme::Environment::STAGING
-);
+)
 
-client.dummy.get_dummy();
+client.dummy.get_dummy
 "
 `;
 
@@ -361,11 +361,11 @@ exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 
 "require "acme"
 
 client = Acme::Client.new(
-  token: '<YOUR_API_KEY>',
-  base_url: 'http://localhost:8080'
-);
+  token: "<YOUR_API_KEY>",
+  base_url: "http://localhost:8080"
+)
 
-client.dummy.get_dummy();
+client.dummy.get_dummy
 "
 `;
 

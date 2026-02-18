@@ -88,6 +88,8 @@ public final class NestedObjectWithRequiredField {
 
   public interface _FinalStage {
     NestedObjectWithRequiredField build();
+
+    _FinalStage additionalProperty(String key, Object value);
   }
 
   @JsonIgnoreProperties(
@@ -128,6 +130,12 @@ public final class NestedObjectWithRequiredField {
     @java.lang.Override
     public NestedObjectWithRequiredField build() {
       return new NestedObjectWithRequiredField(string, nestedObject, additionalProperties);
+    }
+
+    @java.lang.Override
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
     }
   }
 }

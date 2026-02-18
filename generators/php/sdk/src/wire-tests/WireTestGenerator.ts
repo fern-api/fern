@@ -287,6 +287,8 @@ export class WireTestGenerator {
                 skipClientInstantiation: true
             });
 
+            const isPaginated = endpoint.pagination != null && this.context.config.generatePaginatedClients === true;
+
             return php.method({
                 name: testName,
                 access: "public",
@@ -295,8 +297,17 @@ export class WireTestGenerator {
                     // $testId = '...';
                     writer.writeStatement(`$testId = '${testId}'`);
 
-                    // API call from FernIr.dynamic snippet AST
-                    writer.writeNode(snippetAst as php.AstNode);
+                    if (isPaginated) {
+                        writer.write("$response = ");
+                        writer.writeNode(snippetAst);
+                        writer.writeLine("foreach ($response as $item) {");
+                        writer.indent();
+                        writer.writeLine("break;");
+                        writer.dedent();
+                        writer.writeLine("}");
+                    } else {
+                        writer.writeNode(snippetAst);
+                    }
 
                     // $this->verifyRequestCount(...);
                     writer.writeStatement(`$this->verifyRequestCount(

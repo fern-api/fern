@@ -15,9 +15,9 @@
 client.create(
   decimal: 2.2,
   even: 100,
-  name: 'fern',
-  shape: 'SQUARE'
-);
+  name: "fern",
+  shape: "SQUARE"
+)
 ```
 </dd>
 </dl>
@@ -92,8 +92,8 @@ client.create(
 client.get(
   decimal: 2.2,
   even: 100,
-  name: 'fern'
-);
+  name: "fern"
+)
 ```
 </dd>
 </dl>

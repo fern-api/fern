@@ -13,10 +13,10 @@
 
 ```ruby
 client.extended_inline_request_body(
-  name: 'name',
-  docs: 'docs',
-  unique: 'unique'
-);
+  name: "name",
+  docs: "docs",
+  unique: "unique"
+)
 ```
 </dd>
 </dl>
