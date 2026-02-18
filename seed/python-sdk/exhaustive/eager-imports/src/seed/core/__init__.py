@@ -6,7 +6,7 @@ from .api_error import ApiError
 from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
 from .datetime_utils import serialize_datetime
 from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
-from .http_client import AsyncHttpClient, HttpClient
+from .http_client import AsyncHttpClient, DefaultAioHttpClient, DefaultAsyncHttpxClient, HttpClient
 from .http_response import AsyncHttpResponse, HttpResponse
 from .jsonable_encoder import jsonable_encoder
 from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
@@ -33,6 +33,8 @@ __all__ = [
     "AsyncPager",
     "BaseClientWrapper",
     "ConsoleLogger",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "FieldMetadata",
     "File",
     "HttpClient",
