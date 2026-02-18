@@ -5,8 +5,9 @@ import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
-import { readdir, readFile, stat } from "fs/promises";
+import { readdir, stat } from "fs/promises";
 import { asyncPool } from "../utils/asyncPool.js";
+import { boundedReadFile } from "../utils/fileReadSemaphore.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { visitFilepath } from "./visitFilepath.js";
 
@@ -190,7 +191,7 @@ async function visitNavigationItem({
             }
 
             const startTime = performance.now();
-            const content = (await readFile(absoluteFilepath, "utf8")).toString();
+            const content = (await boundedReadFile(absoluteFilepath, "utf8")).toString();
             const readTime = performance.now() - startTime;
 
             if (readTime > 2000) {
@@ -261,7 +262,7 @@ async function visitNavigationItem({
 
             await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (file) => {
                 const absoluteFilepath = resolve(changelogDir, file);
-                const content = (await readFile(absoluteFilepath, "utf8")).toString();
+                const content = (await boundedReadFile(absoluteFilepath, "utf8")).toString();
                 context.logger.trace(`Validating changelog file: ${file}`);
 
                 await visitor.markdownPage?.(

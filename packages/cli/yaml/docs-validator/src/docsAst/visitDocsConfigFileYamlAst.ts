@@ -4,10 +4,10 @@ import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
-import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { asyncPool } from "../utils/asyncPool.js";
+import { boundedReadFile } from "../utils/fileReadSemaphore.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { validateProductConfigFileSchema } from "./validateProductConfig.js";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig.js";
@@ -232,7 +232,7 @@ export async function visitDocsConfigFileYamlAst({
                         willBeUploaded: false
                     });
                     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
-                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                    const content = yaml.load((await boundedReadFile(absoluteFilepath, "utf8")).toString());
                     if (await doesPathExist(absoluteFilepath)) {
                         await visitor.productFile?.(
                             {
@@ -314,7 +314,7 @@ export async function visitDocsConfigFileYamlAst({
                     willBeUploaded: false
                 });
                 const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
-                const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                const content = yaml.load((await boundedReadFile(absoluteFilepath, "utf8")).toString());
                 if (await doesPathExist(absoluteFilepath)) {
                     await visitor.versionFile?.(
                         {
