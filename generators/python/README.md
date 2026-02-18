@@ -159,6 +159,86 @@ config:
     version: v1 # or v2 or "both"
 ```
 
+### Logging
+
+Generated Python SDKs include a built-in configurable logging system. Logging is **silent by default** and can be enabled by passing a `logging` parameter to the client constructor.
+
+#### Basic usage
+
+```python
+from my_sdk import MyClient
+from my_sdk.core import LogConfig
+
+client = MyClient(
+    token="YOUR_TOKEN",
+    logging=LogConfig(
+        level="debug",   # "debug" | "info" | "warn" | "error"
+        silent=False,     # must be False to enable output
+    ),
+)
+```
+
+#### Using a pre-configured Logger instance
+
+```python
+from my_sdk.core import Logger, ConsoleLogger
+
+logger = Logger(level="debug", logger=ConsoleLogger(), silent=False)
+
+client = MyClient(
+    token="YOUR_TOKEN",
+    logging=logger,
+)
+```
+
+#### Custom logger implementation
+
+You can supply your own logger by implementing the `ILogger` protocol:
+
+```python
+from my_sdk.core import ILogger, LogConfig
+
+class MyCustomLogger:
+    def debug(self, message: str, **kwargs) -> None:
+        print(f"[DEBUG] {message}", kwargs)
+
+    def info(self, message: str, **kwargs) -> None:
+        print(f"[INFO] {message}", kwargs)
+
+    def warn(self, message: str, **kwargs) -> None:
+        print(f"[WARN] {message}", kwargs)
+
+    def error(self, message: str, **kwargs) -> None:
+        print(f"[ERROR] {message}", kwargs)
+
+client = MyClient(
+    token="YOUR_TOKEN",
+    logging=LogConfig(
+        logger=MyCustomLogger(),
+        silent=False,
+    ),
+)
+```
+
+#### What gets logged
+
+| Event | Level | Details |
+|---|---|---|
+| Outgoing HTTP request | `debug` | Method, URL, redacted headers |
+| Outgoing streaming request | `debug` | Method, URL, redacted headers |
+| Successful response (2xx/3xx) | `debug` | Method, URL, status code, redacted response headers |
+| Error response (4xx/5xx) | `error` | Method, URL, status code, redacted response headers |
+
+Sensitive headers (`Authorization`, `Cookie`, `X-API-Key`, `X-CSRF-Token`, etc.) are automatically replaced with `[REDACTED]` in all log output.
+
+#### Configuration reference
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `level` | `"debug"` \| `"info"` \| `"warn"` \| `"error"` | `"info"` | Minimum log level |
+| `logger` | `ILogger` | `ConsoleLogger()` | Logger implementation (uses Python's `logging` module by default) |
+| `silent` | `bool` | `True` | When `True`, suppresses all log output |
+
 ### FastAPI Generator Configuration
 
 The FastAPI generator supports the following options:
