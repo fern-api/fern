@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.3
+  changelogEntry:
+    - summary: |
+        Fix auto-generated examples for recursive types to include required non-leaf properties (e.g. nested objects) and empty containers in minimal stubs, preventing deserialization failures in generated mock server tests.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 65
 - version: 3.79.2
   changelogEntry:
     - summary: |
