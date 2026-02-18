@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.1
+  changelogEntry:
+    - summary: |
+        Fix PHPStan static analysis errors in core runtime classes. Tightens return types
+        (e.g., `castKey` now returns `int|string` instead of `mixed`), adds missing null checks,
+        and improves PHPDoc annotations across JsonSerializer, JsonDeserializer, and Utils.
+        Also fixes `BaseApiException::__toString()` to use `getCode()` instead of direct property
+        access and `print_r()` for non-scalar body values.
+      type: fix
+    - summary: |
+        Add `of object` bound to pagination template generics (`CursorPager`, `OffsetPager`)
+        to satisfy PHPStan's requirement for `clone` on object types.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 62
+
 - version: 2.1.0
   changelogEntry:
     - summary: |
