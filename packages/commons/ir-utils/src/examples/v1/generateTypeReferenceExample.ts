@@ -51,12 +51,12 @@ export function generateTypeReferenceExample({
             const visited = visitedTypes ?? new Map<string, number>();
             const count = visited.get(typeReference.typeId) ?? 0;
             if (count >= 2) {
-                // Pass an initial visited set to prevent exponential recursion
-                const initialVisited = new Set<string>();
+                // Pass current type to prevent infinite recursion in minimal generation
+                const visitedMinimalTypes = new Set<string>([typeReference.typeId]);
                 return generateMinimalNamedExample({
                     typeDeclaration,
                     typeDeclarations,
-                    visitedMinimalTypes: initialVisited
+                    visitedMinimalTypes
                 });
             }
             visited.set(typeReference.typeId, count + 1);
