@@ -147,7 +147,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string nested_user optional_user exclude_user filter long_param big_int_param]
         query_params = {}
-        query_params["limit"] = params[:limit] if params.key?(:limit)
+        query_params["limit"] = params.fetch(:limit, 10)
         query_params["id"] = params[:id] if params.key?(:id)
         query_params["date"] = params[:date] if params.key?(:date)
         query_params["deadline"] = params[:deadline] if params.key?(:deadline)
