@@ -148,6 +148,15 @@ public final class BuilderGenerator {
                     .addAnnotation(JsonAnySetter.class)
                     .initializer("new $T<>()", HashMap.class)
                     .build());
+            builderImplTypeSpec.addMethod(MethodSpec.methodBuilder(getAdditionalPropertyMethodName())
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(nestedBuilderClassName)
+                    .addAnnotation(ClassName.get("", "java.lang.Override"))
+                    .addParameter(String.class, "key")
+                    .addParameter(Object.class, "value")
+                    .addStatement("this.$L.put(key, value)", additionalPropertiesFieldName)
+                    .addStatement("return this")
+                    .build());
         }
 
         List<PoetTypeWithClassName> stagedBuilderTypes = new ArrayList<>();
@@ -229,6 +238,14 @@ public final class BuilderGenerator {
                     .addModifiers(Modifier.PRIVATE)
                     .addAnnotation(JsonAnySetter.class)
                     .initializer("new $T<>()", HashMap.class)
+                    .build());
+            builderImplTypeSpec.addMethod(MethodSpec.methodBuilder(getAdditionalPropertyMethodName())
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(nestedBuilderClassName)
+                    .addParameter(String.class, "key")
+                    .addParameter(Object.class, "value")
+                    .addStatement("this.$L.put(key, value)", additionalPropertiesFieldName)
+                    .addStatement("return this")
                     .build());
         }
 
@@ -373,6 +390,11 @@ public final class BuilderGenerator {
         return methodBuilder;
     }
 
+    private String getAdditionalPropertyMethodName() {
+        boolean hasConflict = allPropertyCamelCaseNames.contains("additionalProperty");
+        return hasConflict ? "_additionalProperty" : "additionalProperty";
+    }
+
     private MethodSpec.Builder getFromSetter() {
         return MethodSpec.methodBuilder(StageBuilderConstants.FROM_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
@@ -394,6 +416,15 @@ public final class BuilderGenerator {
                         objectClassName.nestedClass(StageBuilderConstants.FINAL_STAGE_CLASS_NAME))
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(getBaseBuildMethod().addModifiers(Modifier.ABSTRACT).build());
+
+        if (this.supportAdditionalProperties) {
+            finalStageBuilder.addMethod(MethodSpec.methodBuilder(getAdditionalPropertyMethodName())
+                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                    .returns(finalStageClassName)
+                    .addParameter(String.class, "key")
+                    .addParameter(Object.class, "value")
+                    .build());
+        }
 
         List<EnrichedObjectPropertyWithField> finalStageProperties = stagedBuilderConfig.finalStage();
         for (EnrichedObjectPropertyWithField enrichedProperty : finalStageProperties) {
