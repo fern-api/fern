@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.3
+  changelogEntry:
+    - summary: |
+        Always load workspace in V3 OpenAPI parser path for AI example enhancement and dynamic snippets.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 65
 - version: 3.79.2
   changelogEntry:
     - summary: |

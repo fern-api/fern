@@ -284,7 +284,6 @@ export async function publishDocs({
             playgroundConfig,
             apiName,
             workspace,
-            openApiSourceFilePath,
             graphqlOperations,
             graphqlTypes
         }) => {
@@ -305,7 +304,11 @@ export async function publishDocs({
                 docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
             if (aiEnhancerConfig) {
-                if (openApiSourceFilePath == null) {
+                const sources = workspace?.getSources();
+                const openApiSource = sources?.find((source) => source.type === "openapi");
+                const sourceFilePath = openApiSource?.absoluteFilePath;
+
+                if (sourceFilePath == null) {
                     context.logger.debug("Skipping AI example enhancement: no OpenAPI source file path available");
                 } else {
                     apiDefinition = await enhanceExamplesWithAI(
@@ -314,7 +317,7 @@ export async function publishDocs({
                         context,
                         token,
                         organization,
-                        openApiSourceFilePath
+                        sourceFilePath
                     );
                 }
             }
