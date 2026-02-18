@@ -141,7 +141,6 @@ export class RootClientGenerator {
         const initializerParams = this.getConvenienceInitializerParams({
             bearerTokenParamType
         });
-        const globalHeaderParams = this.getGlobalHeaderParameters();
         const globalHeaders = this.sdkGeneratorContext.ir.headers.filter((header) => {
             const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
             return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
