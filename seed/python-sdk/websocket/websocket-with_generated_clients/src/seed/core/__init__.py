@@ -14,7 +14,7 @@ if typing.TYPE_CHECKING:
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
-    from .logging import LogConfig, LogLevel, Logger, create_logger
+    from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
         UniversalBaseModel,
@@ -35,12 +35,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncHttpClient": ".http_client",
     "AsyncHttpResponse": ".http_response",
     "BaseClientWrapper": ".client_wrapper",
+    "ConsoleLogger": ".logging",
     "EventEmitterMixin": ".events",
     "EventType": ".events",
     "FieldMetadata": ".serialization",
     "File": ".file",
     "HttpClient": ".http_client",
     "HttpResponse": ".http_response",
+    "ILogger": ".logging",
     "IS_PYDANTIC_V2": ".pydantic_utilities",
     "InvalidWebSocketStatus": ".websocket_compat",
     "LogConfig": ".logging",
@@ -93,12 +95,14 @@ __all__ = [
     "AsyncHttpClient",
     "AsyncHttpResponse",
     "BaseClientWrapper",
+    "ConsoleLogger",
     "EventEmitterMixin",
     "EventType",
     "FieldMetadata",
     "File",
     "HttpClient",
     "HttpResponse",
+    "ILogger",
     "IS_PYDANTIC_V2",
     "InvalidWebSocketStatus",
     "LogConfig",
