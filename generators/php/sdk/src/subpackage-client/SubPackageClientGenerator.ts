@@ -32,10 +32,9 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
     public doGenerate(): PhpFile {
         const class_ = php.class_({
             ...this.classReference,
-            interfaceReferences:
-                this.context.customConfig.generateClientInterfaces && this.service != null
-                    ? [this.context.getSubpackageInterfaceClassReference(this.subpackage)]
-                    : undefined
+            interfaceReferences: this.context.customConfig.generateClientInterfaces
+                ? [this.context.getSubpackageInterfaceClassReference(this.subpackage)]
+                : undefined
         });
 
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
@@ -74,6 +73,22 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                     endpoint
                 });
                 class_.addMethods(methods);
+            }
+        }
+
+        if (this.context.customConfig.generateClientInterfaces) {
+            for (const subpackage of subpackages) {
+                class_.addMethod(
+                    php.method({
+                        name: this.context.getSubpackageGetterName(subpackage),
+                        access: "public",
+                        parameters: [],
+                        return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
+                        body: php.codeblock((writer) => {
+                            writer.writeTextStatement(`return $this->${subpackage.name.camelCase.safeName}`);
+                        })
+                    })
+                );
             }
         }
 
