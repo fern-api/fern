@@ -95,24 +95,12 @@ export const ValidMarkdownLinks: Rule = {
                     return [];
                 }
 
-                const snippetWarnings: string[] = [];
-                const snippetContext = createMockTaskContext({
-                    logger: createLogger((_level, ...args) => {
-                        snippetWarnings.push(args.join(" "));
-                    })
-                });
-
                 const { markdown: resolvedContent } = await replaceReferencedMarkdown({
                     markdown: content,
                     absolutePathToFernFolder: workspace.absoluteFilePath,
                     absolutePathToMarkdownFile: absoluteFilepath,
-                    context: snippetContext
+                    context: NOOP_CONTEXT
                 });
-
-                const snippetViolations: RuleViolation[] = snippetWarnings.map((warning) => ({
-                    severity: "warning" as const,
-                    message: warning
-                }));
 
                 // Find all matches in the Markdown text
                 const { pathnamesToCheck, violations } = collectPathnamesToCheck(resolvedContent, {
@@ -153,7 +141,7 @@ export const ValidMarkdownLinks: Rule = {
                     })
                 );
 
-                return [...snippetViolations, ...violations, ...pathToCheckViolations.flat()];
+                return [...violations, ...pathToCheckViolations.flat()];
             },
             apiSection: async ({ workspace: apiWorkspace, config }) => {
                 const fernWorkspace = await apiWorkspace.toFernWorkspace(
