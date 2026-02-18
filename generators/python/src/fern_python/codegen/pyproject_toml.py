@@ -65,7 +65,7 @@ class PyProjectToml:
         self._python_version = python_version
         self._extras = {
             **extras,  # User-provided extras
-            "aiohttp": ["aiohttp", "httpx_aiohttp>=0.1.9"]  # Always add aiohttp support
+            "aiohttp": ["aiohttp", "httpx_aiohttp"]  # Always add aiohttp support
         }
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml

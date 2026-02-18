@@ -134,7 +134,7 @@ def test_pyproject_toml_includes_aiohttp_extra():
 
         # Should contain aiohttp extra
         assert "[tool.poetry.extras]" in content
-        assert 'aiohttp=["aiohttp", "httpx_aiohttp>=0.1.9"]' in content
+        assert 'aiohttp=["aiohttp", "httpx_aiohttp"]' in content
 
 
 def test_pyproject_toml_preserves_user_extras():
@@ -166,7 +166,7 @@ def test_pyproject_toml_preserves_user_extras():
 
         # Should contain both user extras and aiohttp extra
         assert "[tool.poetry.extras]" in content
-        assert 'aiohttp=["aiohttp", "httpx_aiohttp>=0.1.9"]' in content
+        assert 'aiohttp=["aiohttp", "httpx_aiohttp"]' in content
         assert 'dev=["pytest", "black"]' in content
         assert 'docs=["sphinx"]' in content
 

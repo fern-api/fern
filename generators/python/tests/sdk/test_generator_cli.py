@@ -69,7 +69,7 @@ def test_generator_includes_aiohttp_support() -> None:
 
         # Test that aiohttp extra is automatically included
         assert "aiohttp" in pyproject._extras
-        assert pyproject._extras["aiohttp"] == ["aiohttp", "httpx_aiohttp>=0.1.9"]
+        assert pyproject._extras["aiohttp"] == ["aiohttp", "httpx_aiohttp"]
 
         # Test 2: Verify core utilities include new exports
         # This would test the actual file export process in a real scenario

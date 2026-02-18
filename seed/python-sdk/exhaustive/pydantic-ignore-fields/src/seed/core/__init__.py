@@ -10,7 +10,7 @@ if typing.TYPE_CHECKING:
     from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
     from .datetime_utils import serialize_datetime
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
-    from .http_client import AsyncHttpClient, HttpClient
+    from .http_client import AsyncHttpClient, DefaultAioHttpClient, DefaultAsyncHttpxClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
     from .pagination import AsyncPager, SyncPager
@@ -34,6 +34,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncHttpResponse": ".http_response",
     "AsyncPager": ".pagination",
     "BaseClientWrapper": ".client_wrapper",
+    "DefaultAioHttpClient": ".http_client",
+    "DefaultAsyncHttpxClient": ".http_client",
     "FieldMetadata": ".serialization",
     "File": ".file",
     "HttpClient": ".http_client",
@@ -86,6 +88,8 @@ __all__ = [
     "AsyncHttpResponse",
     "AsyncPager",
     "BaseClientWrapper",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "FieldMetadata",
     "File",
     "HttpClient",

@@ -13,6 +13,10 @@ from fern_python.external_dependencies.pydantic import (
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
+from fern_python.external_dependencies.httpx_aiohttp import (
+    AIOHTTP_DEPENDENCY,
+    HTTPX_AIOHTTP_DEPENDENCY,
+)
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.generators.sdk.custom_config import SDKCustomConfig
 from fern_python.source_file_factory import SourceFileFactory
@@ -141,6 +145,10 @@ class CoreUtilities:
                 "__FERN_SDK_PACKAGE__": self._get_package_name()  # Template SDK name
             }
         )
+
+        # Add optional aiohttp dependencies for aiohttp backend support
+        project.add_dependency(AIOHTTP_DEPENDENCY)
+        project.add_dependency(HTTPX_AIOHTTP_DEPENDENCY)
 
         self._copy_file_to_project(
             project=project,
