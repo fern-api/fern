@@ -92,5 +92,10 @@ public final class PutResponse {
         public PutResponse build() {
             return new PutResponse(errors, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
     }
 }
