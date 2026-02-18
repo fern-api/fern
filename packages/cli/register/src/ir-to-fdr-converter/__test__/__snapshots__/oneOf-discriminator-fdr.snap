@@ -6,7 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_oneOfExamples",
@@ -44,6 +44,7 @@
           "description": "Demonstrates oneOf with discriminator mapping.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -194,7 +195,7 @@
           "slug": undefined,
         },
       ],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "oneOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_oneOfExamples",

@@ -1,7 +1,7 @@
 import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
-import { XmlDocBlock } from "../language/XmlDocBlock";
-import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
+import { XmlDocBlock } from "../language/XmlDocBlock.js";
+import { AstNode } from "./AstNode.js";
+import { Writer } from "./Writer.js";
 
 export class XmlDocWriter {
     // Tags that are safe to preserve in XML documentation comments

@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
-import { mergeEndpointPairs } from "./mergeEndpointPairs";
+import { mergeEndpointPairs } from "./mergeEndpointPairs.js";
 
 export function mergeAndFilterChildren<EndpointType extends { method: string }>({
     left,

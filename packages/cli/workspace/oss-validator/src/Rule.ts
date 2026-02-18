@@ -2,7 +2,7 @@ import { OpenAPISpec } from "@fern-api/api-workspace-commons";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ValidationViolation } from "./ValidationViolation";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export interface Rule {
     name: string;

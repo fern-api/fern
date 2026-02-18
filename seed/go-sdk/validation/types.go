@@ -61,6 +61,27 @@ func (c *CreateRequest) SetShape(shape Shape) {
 	c.require(createRequestFieldShape)
 }
 
+func (c *CreateRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateRequest(body)
+	return nil
+}
+
+func (c *CreateRequest) MarshalJSON() ([]byte, error) {
+	type embed CreateRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	getRequestFieldDecimal = big.NewInt(1 << 0)
 	getRequestFieldEven    = big.NewInt(1 << 1)
@@ -187,6 +208,9 @@ func (t *Type) GetShape() Shape {
 }
 
 func (t *Type) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -253,6 +277,9 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Type) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

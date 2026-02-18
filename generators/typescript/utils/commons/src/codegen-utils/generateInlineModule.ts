@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
@@ -9,7 +9,7 @@ import {
     WriterFunction
 } from "ts-morph";
 
-import { InlineConsts } from "./inlineConsts";
+import { InlineConsts } from "./inlineConsts.js";
 
 export function generateInlinePropertiesModule({
     generateStatements,
@@ -21,7 +21,7 @@ export function generateInlinePropertiesModule({
         return [];
     }
     return inlineProperties.flatMap(
-        ([propertyName, typeReference, typeDeclaration]: [string, TypeReference, TypeDeclaration]) => {
+        ([propertyName, typeReference, typeDeclaration]: [string, FernIr.TypeReference, FernIr.TypeDeclaration]) => {
             return generateTypeVisitor(typeReference, {
                 named: () => generateStatements(typeDeclaration.name, propertyName),
                 list: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
@@ -51,7 +51,7 @@ export function generateInlinePropertiesModule({
 
 function propertyListOrSetStatementGenerator(
     propertyName: string,
-    typeDeclaration: TypeDeclaration,
+    typeDeclaration: FernIr.TypeDeclaration,
     generateStatements: GenerateStatements
 ) {
     const statements: StatementStructures[] = [];
@@ -85,7 +85,7 @@ export function generateInlineAliasModule({
     const inlineModuleStatements = generateTypeVisitor(typeReference, {
         list: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
         set: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
-        map: (mapType: MapType) => {
+        map: (mapType: FernIr.MapType) => {
             const namedType = getNamedType(mapType.valueType);
             if (!namedType) {
                 return undefined;
@@ -114,7 +114,7 @@ export function generateInlineAliasModule({
 }
 
 function aliasListOrSetStatementGenerator(
-    listItemType: TypeReference,
+    listItemType: FernIr.TypeReference,
     generateStatements: GenerateStatements,
     getTypeDeclaration: GetTypeDeclaration
 ): undefined | string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
@@ -133,22 +133,22 @@ function aliasListOrSetStatementGenerator(
 function getInlineProperties(
     properties: Property[],
     getTypeDeclaration: GetTypeDeclaration
-): [string, TypeReference, TypeDeclaration][] {
+): [string, FernIr.TypeReference, FernIr.TypeDeclaration][] {
     return properties
-        .map(({ propertyName, typeReference }): [string, TypeReference, TypeDeclaration] | undefined => {
+        .map(({ propertyName, typeReference }): [string, FernIr.TypeReference, FernIr.TypeDeclaration] | undefined => {
             const declaration = getInlineTypeDeclaration(typeReference, getTypeDeclaration);
             if (!declaration) {
                 return undefined;
             }
             return [propertyName, typeReference, declaration];
         })
-        .filter((x): x is [string, TypeReference, TypeDeclaration] => x !== undefined);
+        .filter((x): x is [string, FernIr.TypeReference, FernIr.TypeDeclaration] => x !== undefined);
 }
 
 function getInlineTypeDeclaration(
-    typeReference: TypeReference,
+    typeReference: FernIr.TypeReference,
     getTypeDeclaration: GetTypeDeclaration
-): TypeDeclaration | undefined {
+): FernIr.TypeDeclaration | undefined {
     const namedType = getNamedType(typeReference);
     if (!namedType) {
         return undefined;
@@ -168,31 +168,31 @@ export interface InlinePropertiesParams {
 }
 
 interface Property {
-    typeReference: TypeReference;
+    typeReference: FernIr.TypeReference;
     propertyName: string;
 }
 
 export interface InlineAliasParams {
     generateStatements: GenerateStatements;
     getTypeDeclaration: GetTypeDeclaration;
-    typeReference: TypeReference;
+    typeReference: FernIr.TypeReference;
     aliasTypeName: string;
 }
 
 type GenerateStatements = (
-    typeName: DeclaredTypeName,
+    typeName: FernIr.DeclaredTypeName,
     typeNameOverride?: string
 ) => string | WriterFunction | (string | WriterFunction | StatementStructures)[];
 
-type GetTypeDeclaration = (namedType: NamedType) => TypeDeclaration;
+type GetTypeDeclaration = (namedType: FernIr.NamedType) => FernIr.TypeDeclaration;
 
 function generateTypeVisitor<TOut>(
-    typeReference: TypeReference,
+    typeReference: FernIr.TypeReference,
     visitor: {
-        named: (namedType: NamedType) => TOut;
-        list: (itemType: TypeReference) => TOut;
-        map: (mapType: MapType) => TOut;
-        set: (itemType: TypeReference) => TOut;
+        named: (namedType: FernIr.NamedType) => TOut;
+        list: (itemType: FernIr.TypeReference) => TOut;
+        map: (mapType: FernIr.MapType) => TOut;
+        set: (itemType: FernIr.TypeReference) => TOut;
         other: () => TOut;
     }
 ): TOut {
@@ -214,7 +214,7 @@ function generateTypeVisitor<TOut>(
     });
 }
 
-function getNamedType(typeReference: TypeReference): NamedType | undefined {
+function getNamedType(typeReference: FernIr.TypeReference): FernIr.NamedType | undefined {
     switch (typeReference.type) {
         case "named":
             return typeReference;

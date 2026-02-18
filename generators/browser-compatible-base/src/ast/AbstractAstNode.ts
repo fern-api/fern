@@ -1,5 +1,5 @@
-import { tag } from "../utils/stacktrace";
-import { AbstractWriter } from "./AbstractWriter";
+import { tag } from "../utils/stacktrace.js";
+import { AbstractWriter } from "./AbstractWriter.js";
 
 export abstract class AbstractAstNode {
     /**

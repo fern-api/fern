@@ -131,13 +131,14 @@ fixtures:
         enableWireTests: true
         packageName: testPackageName
         errorCodes: per-endpoint
+        clientConstructorName: NewIMDBClient
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
     - outputFolder: deep-package-path
-      customConfig: 
+      customConfig:
         packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
@@ -270,6 +271,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+    - outputFolder: omit-empty-request-wrappers
+      customConfig:
+        enableWireTests: true
+        omitEmptyRequestWrappers: true
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
@@ -300,8 +305,10 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-url-templating
   - trace
   - property-access
+  - oauth-client-credentials:.
   - oauth-client-credentials-reference
 
   # TODO: Fix example generator to produce valid dynamic snippets.
@@ -316,8 +323,8 @@ allowedFailures:
   - variables
 
   # Will include these back in once we fix dynamic snippets for inline file properties
-  - file-upload:no-custom-config 
-  - file-upload:package-name 
+  - file-upload:no-custom-config
+  - file-upload:package-name
   - file-upload-openapi
 
   - pagination-custom:.

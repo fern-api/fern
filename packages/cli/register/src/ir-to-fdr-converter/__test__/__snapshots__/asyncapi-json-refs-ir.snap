@@ -60,6 +60,8 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
+          "defaultUrl": undefined,
           "docs": undefined,
           "id": "production",
           "name": {
@@ -82,6 +84,8 @@
             },
           },
           "url": "wss://events.plantstore.dev",
+          "urlTemplate": undefined,
+          "urlVariables": undefined,
         },
       ],
       "type": "singleBaseUrl",

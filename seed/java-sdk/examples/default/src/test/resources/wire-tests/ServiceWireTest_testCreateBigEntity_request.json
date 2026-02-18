@@ -77,14 +77,10 @@
         "name": "name",
         "nodes": [
           {
-            "name": "name",
-            "nodes": [],
-            "trees": []
+            "name": "name"
           },
           {
-            "name": "name",
-            "nodes": [],
-            "trees": []
+            "name": "name"
           }
         ],
         "trees": [
@@ -100,14 +96,10 @@
         "name": "name",
         "nodes": [
           {
-            "name": "name",
-            "nodes": [],
-            "trees": []
+            "name": "name"
           },
           {
-            "name": "name",
-            "nodes": [],
-            "trees": []
+            "name": "name"
           }
         ],
         "trees": [
@@ -178,14 +170,10 @@
         ],
         "directories": [
           {
-            "name": "name",
-            "files": [],
-            "directories": []
+            "name": "name"
           },
           {
-            "name": "name",
-            "files": [],
-            "directories": []
+            "name": "name"
           }
         ]
       },
@@ -203,14 +191,10 @@
         ],
         "directories": [
           {
-            "name": "name",
-            "files": [],
-            "directories": []
+            "name": "name"
           },
           {
-            "name": "name",
-            "files": [],
-            "directories": []
+            "name": "name"
           }
         ]
       }

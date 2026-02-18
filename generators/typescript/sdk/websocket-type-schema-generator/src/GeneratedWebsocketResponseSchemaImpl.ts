@@ -1,4 +1,4 @@
-import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getSchemaOptions, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedWebsocketTypeSchema, SdkContext } from "@fern-typescript/contexts";
@@ -7,8 +7,8 @@ import { ModuleDeclaration, ts } from "ts-morph";
 export declare namespace GeneratedWebsocketResponseSchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
         packageId: PackageId;
-        channel: WebSocketChannel;
-        receiveMessages: WebSocketMessageBodyReference[];
+        channel: FernIr.WebSocketChannel;
+        receiveMessages: FernIr.WebSocketMessageBodyReference[];
         includeSerdeLayer: boolean;
         omitUndefined: boolean;
         skipResponseValidation: boolean;
@@ -20,8 +20,8 @@ export class GeneratedWebsocketResponseSchemaImpl
     implements GeneratedWebsocketTypeSchema
 {
     private packageId: PackageId;
-    private channel: WebSocketChannel;
-    private receiveMessages: WebSocketMessageBodyReference[];
+    private channel: FernIr.WebSocketChannel;
+    private receiveMessages: FernIr.WebSocketMessageBodyReference[];
     private includeSerdeLayer: boolean;
     private omitUndefined: boolean;
     private skipResponseValidation: boolean;

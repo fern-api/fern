@@ -1,24 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    AuthScheme,
-    AuthSchemesRequirement,
-    ErrorDeclaration,
-    ExampleEndpointCall,
-    ExampleEndpointErrorResponse,
-    ExampleInlinedRequestBody,
-    ExampleObjectType,
-    ExampleObjectTypeWithTypeId,
-    ExampleRequestBody,
-    ExampleResponse,
-    ExampleTypeReference,
-    HttpEndpoint,
-    HttpMethod,
-    HttpService,
-    IntermediateRepresentation,
-    Name,
-    OAuthTokenEndpoint,
-    ObjectPropertyAccess
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     DependencyManager,
     DependencyType,
@@ -41,7 +22,7 @@ const DEFAULT_PACKAGE_PATH = "src";
 
 export declare namespace TestGenerator {
     interface Args {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         dependencyManager: DependencyManager;
         rootDirectory: Directory;
         includeSerdeLayer: boolean;
@@ -62,7 +43,7 @@ export declare namespace TestGenerator {
 }
 
 export class TestGenerator {
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly dependencyManager: DependencyManager;
     private readonly rootDirectory: Directory;
     private readonly writeUnitTests: boolean;
@@ -229,7 +210,7 @@ export class TestGenerator {
         await vitestConfig.save();
     }
 
-    public getTestFile(service: HttpService): ExportedFilePath {
+    public getTestFile(service: FernIr.HttpService): ExportedFilePath {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
@@ -582,7 +563,7 @@ export function ${functionName}(server: MockServer): void {
         const authOptions: Record<string, Code> = {};
 
         // Check if this is ANY or ENDPOINT_SECURITY auth which requires nested options structure
-        const requiresNestedAuth = AuthSchemesRequirement._visit(this.ir.auth.requirement, {
+        const requiresNestedAuth = FernIr.AuthSchemesRequirement._visit(this.ir.auth.requirement, {
             any: () => true,
             all: () => false,
             endpointSecurity: () => true,
@@ -745,7 +726,7 @@ export function ${functionName}(server: MockServer): void {
 
                     const authRequestParameters = this.getAuthRequestExampleOptions({
                         request: example,
-                        auth: AuthScheme.inferred(auth),
+                        auth: FernIr.AuthScheme.inferred(auth),
                         context
                     });
 
@@ -769,8 +750,8 @@ export function ${functionName}(server: MockServer): void {
         auth,
         context
     }: {
-        request: ExampleEndpointCall;
-        auth: AuthScheme;
+        request: FernIr.ExampleEndpointCall;
+        auth: FernIr.AuthScheme;
         context: SdkContext;
     }): Record<string, Code> {
         const result: Record<string, Code> = {};
@@ -830,8 +811,8 @@ export function ${functionName}(server: MockServer): void {
         tokenEndpoint,
         context
     }: {
-        example: ExampleRequestBody | undefined;
-        tokenEndpoint: OAuthTokenEndpoint;
+        example: FernIr.ExampleRequestBody | undefined;
+        tokenEndpoint: FernIr.OAuthTokenEndpoint;
         context: SdkContext;
     }): Code | undefined {
         if (!example) {
@@ -882,7 +863,7 @@ export function ${functionName}(server: MockServer): void {
         });
     }
 
-    private getAuthRequestParameters({ shape }: ExampleTypeReference): Record<string, Code> {
+    private getAuthRequestParameters({ shape }: FernIr.ExampleTypeReference): Record<string, Code> {
         const getAuthRequestParameters = this.getAuthRequestParameters.bind(this);
         const createRawJsonExample = this.createRawJsonExample.bind(this);
         return shape._visit<Record<string, Code>>({
@@ -944,7 +925,7 @@ export function ${functionName}(server: MockServer): void {
 
     public buildFile(
         serviceName: string,
-        service: HttpService,
+        service: FernIr.HttpService,
         packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
@@ -1037,7 +1018,7 @@ describe("${serviceName}", () => {
     }
 
     private buildEndpointTests(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
@@ -1082,8 +1063,8 @@ describe("${serviceName}", () => {
         importStatement,
         baseOptions
     }: {
-        endpoint: HttpEndpoint;
-        example: ExampleEndpointCall;
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
         exampleIndex: number;
         hasMultipleExamples: boolean;
         serviceGenerator: GeneratedSdkClientClass;
@@ -1182,7 +1163,7 @@ describe("${serviceName}", () => {
             }
         });
 
-        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
+        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === FernIr.HttpMethod.Head;
 
         const matchesOAuthTokenEndpoint = this.ir.auth.schemes.some((scheme) => {
             if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
@@ -1307,7 +1288,7 @@ describe("${serviceName}", () => {
             if (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset") {
                 const pageProperty = endpoint.pagination.page;
                 // Build the full path to the page field (e.g., "pagination.cursor" or just "cursor" or "pagination.offset")
-                // PropertyPathItem.name is of type Name (use originalName), while property.name is NameAndWireValue (use wireValue)
+                // PropertyPathItem.name is of type FernIr.Name (use originalName), while property.name is NameAndWireValue (use wireValue)
                 const pathParts = [
                     ...(pageProperty.propertyPath ?? []).map((p) => p.name.originalName),
                     pageProperty.property.name.wireValue
@@ -1408,11 +1389,11 @@ describe("${serviceName}", () => {
           `;
     }
 
-    private getName({ name, context }: { name: Name; context: SdkContext }): string {
+    private getName({ name, context }: { name: FernIr.Name; context: SdkContext }): string {
         return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
     }
 
-    private getMockBodyMethod(endpoint: HttpEndpoint): string {
+    private getMockBodyMethod(endpoint: FernIr.HttpEndpoint): string {
         const contentType = endpoint.requestBody?.contentType;
         if (contentType === "application/x-www-form-urlencoded") {
             return "formUrlEncodedBody";
@@ -1420,7 +1401,7 @@ describe("${serviceName}", () => {
         return "jsonBody";
     }
 
-    private shouldBuildTest(endpoint: HttpEndpoint): boolean {
+    private shouldBuildTest(endpoint: FernIr.HttpEndpoint): boolean {
         if (
             this.ir.auth.schemes.some((scheme) => {
                 switch (scheme.type) {
@@ -1476,7 +1457,7 @@ describe("${serviceName}", () => {
         return true;
     }
 
-    getRequestExample(request: ExampleRequestBody | undefined): Code | undefined {
+    getRequestExample(request: FernIr.ExampleRequestBody | undefined): Code | undefined {
         if (!request) {
             return undefined;
         }
@@ -1532,7 +1513,7 @@ describe("${serviceName}", () => {
         return requestExample;
     }
 
-    getResponseExample(response: ExampleResponse | undefined): Code | undefined {
+    getResponseExample(response: FernIr.ExampleResponse | undefined): Code | undefined {
         if (!response) {
             return undefined;
         }
@@ -1583,7 +1564,7 @@ describe("${serviceName}", () => {
         isForRequest,
         isForResponse
     }: {
-        example: ExampleTypeReference;
+        example: FernIr.ExampleTypeReference;
         isForRequest: boolean;
         isForResponse: boolean;
     }): Code {
@@ -1711,13 +1692,13 @@ describe("${serviceName}", () => {
                                         }
                                         if (
                                             filterOutReadonlyProps &&
-                                            p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                            p.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly
                                         ) {
                                             return false;
                                         }
                                         if (
                                             filterOutWriteonlyProps &&
-                                            p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                            p.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly
                                         ) {
                                             return false;
                                         }
@@ -1784,13 +1765,13 @@ describe("${serviceName}", () => {
                                             }
                                             if (
                                                 filterOutReadonlyProps &&
-                                                p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                                p.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly
                                             ) {
                                                 return false;
                                             }
                                             if (
                                                 filterOutWriteonlyProps &&
-                                                p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                                p.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly
                                             ) {
                                                 return false;
                                             }
@@ -1854,8 +1835,8 @@ function getExampleResponseStatusCode({
     response,
     ir
 }: {
-    response: ExampleResponse;
-    ir: IntermediateRepresentation;
+    response: FernIr.ExampleResponse;
+    ir: FernIr.IntermediateRepresentation;
 }): number {
     return response._visit({
         ok: () => 200,
@@ -1874,7 +1855,7 @@ function getExampleResponseStatusCode({
  */
 function getUnusedPropertiesFromJsonExample(
     jsonExample: unknown,
-    shape: ExampleObjectType | ExampleObjectTypeWithTypeId | ExampleInlinedRequestBody
+    shape: FernIr.ExampleObjectType | FernIr.ExampleObjectTypeWithTypeId | FernIr.ExampleInlinedRequestBody
 ): [string, unknown][] {
     const properties = "object" in shape ? shape.object.properties : shape.properties;
     const propertyKeys = new Set(properties.map((p) => p.name.wireValue));
@@ -1895,7 +1876,7 @@ function getExpectedResponse({
     context,
     neverThrowErrors
 }: {
-    response: ExampleResponse;
+    response: FernIr.ExampleResponse;
     context: SdkContext;
     neverThrowErrors: boolean;
 }): Code {
@@ -1949,9 +1930,9 @@ function getExampleErrorDeclarationOrThrow({
     exampleError,
     ir
 }: {
-    exampleError: ExampleEndpointErrorResponse;
-    ir: IntermediateRepresentation;
-}): ErrorDeclaration {
+    exampleError: FernIr.ExampleEndpointErrorResponse;
+    ir: FernIr.IntermediateRepresentation;
+}): FernIr.ErrorDeclaration {
     const error = ir.errors[exampleError.error.errorId];
     if (!error) {
         throw new Error(`Error with ID ${exampleError.error.errorId} not found in IR`);
@@ -1976,7 +1957,7 @@ function getParameterNameForVariable({
     variableName,
     retainOriginalCasing
 }: {
-    variableName: Name;
+    variableName: FernIr.Name;
     retainOriginalCasing: boolean;
 }): string {
     if (retainOriginalCasing) {
@@ -1985,7 +1966,7 @@ function getParameterNameForVariable({
     return variableName.camelCase.safeName;
 }
 
-function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefined {
+function getResponseBodyJsonExample(response: FernIr.ExampleResponse): unknown | undefined {
     return response._visit({
         ok: (okResp) =>
             okResp._visit({
@@ -2003,8 +1984,8 @@ function isPaginationResultsPathMissingInExample({
     example,
     endpoint
 }: {
-    example: ExampleEndpointCall;
-    endpoint: HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+    endpoint: FernIr.HttpEndpoint;
 }): boolean {
     const pagination = endpoint.pagination;
     if (pagination == null || pagination.results == null) {
@@ -2049,8 +2030,8 @@ function isPaginationCursorMissingInExample({
     example,
     endpoint
 }: {
-    example: ExampleEndpointCall;
-    endpoint: HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+    endpoint: FernIr.HttpEndpoint;
 }): boolean {
     const pagination = endpoint.pagination;
     if (pagination == null) {

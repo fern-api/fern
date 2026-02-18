@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .raw_client import AsyncRawEndpointsClient, RawEndpointsClient
 
 if typing.TYPE_CHECKING:
     from .container.client import AsyncContainerClient, ContainerClient
@@ -12,6 +13,7 @@ if typing.TYPE_CHECKING:
     from .enum.client import AsyncEnumClient, EnumClient
     from .http_methods.client import AsyncHttpMethodsClient, HttpMethodsClient
     from .object.client import AsyncObjectClient, ObjectClient
+    from .pagination.client import AsyncPaginationClient, PaginationClient
     from .params.client import AsyncParamsClient, ParamsClient
     from .primitive.client import AsyncPrimitiveClient, PrimitiveClient
     from .put.client import AsyncPutClient, PutClient
@@ -21,17 +23,30 @@ if typing.TYPE_CHECKING:
 
 class EndpointsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._raw_client = RawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._container: typing.Optional[ContainerClient] = None
         self._content_type: typing.Optional[ContentTypeClient] = None
         self._enum: typing.Optional[EnumClient] = None
         self._http_methods: typing.Optional[HttpMethodsClient] = None
         self._object: typing.Optional[ObjectClient] = None
+        self._pagination: typing.Optional[PaginationClient] = None
         self._params: typing.Optional[ParamsClient] = None
         self._primitive: typing.Optional[PrimitiveClient] = None
         self._put: typing.Optional[PutClient] = None
         self._union: typing.Optional[UnionClient] = None
         self._urls: typing.Optional[UrlsClient] = None
+
+    @property
+    def with_raw_response(self) -> RawEndpointsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawEndpointsClient
+        """
+        return self._raw_client
 
     @property
     def container(self):
@@ -72,6 +87,14 @@ class EndpointsClient:
 
             self._object = ObjectClient(client_wrapper=self._client_wrapper)
         return self._object
+
+    @property
+    def pagination(self):
+        if self._pagination is None:
+            from .pagination.client import PaginationClient  # noqa: E402
+
+            self._pagination = PaginationClient(client_wrapper=self._client_wrapper)
+        return self._pagination
 
     @property
     def params(self):
@@ -116,17 +139,30 @@ class EndpointsClient:
 
 class AsyncEndpointsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawEndpointsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._container: typing.Optional[AsyncContainerClient] = None
         self._content_type: typing.Optional[AsyncContentTypeClient] = None
         self._enum: typing.Optional[AsyncEnumClient] = None
         self._http_methods: typing.Optional[AsyncHttpMethodsClient] = None
         self._object: typing.Optional[AsyncObjectClient] = None
+        self._pagination: typing.Optional[AsyncPaginationClient] = None
         self._params: typing.Optional[AsyncParamsClient] = None
         self._primitive: typing.Optional[AsyncPrimitiveClient] = None
         self._put: typing.Optional[AsyncPutClient] = None
         self._union: typing.Optional[AsyncUnionClient] = None
         self._urls: typing.Optional[AsyncUrlsClient] = None
+
+    @property
+    def with_raw_response(self) -> AsyncRawEndpointsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawEndpointsClient
+        """
+        return self._raw_client
 
     @property
     def container(self):
@@ -167,6 +203,14 @@ class AsyncEndpointsClient:
 
             self._object = AsyncObjectClient(client_wrapper=self._client_wrapper)
         return self._object
+
+    @property
+    def pagination(self):
+        if self._pagination is None:
+            from .pagination.client import AsyncPaginationClient  # noqa: E402
+
+            self._pagination = AsyncPaginationClient(client_wrapper=self._client_wrapper)
+        return self._pagination
 
     @property
     def params(self):

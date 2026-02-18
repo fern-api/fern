@@ -1,17 +1,16 @@
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, HttpResponseBody, Pagination, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { getPageType } from "./getPaginationInfo";
-import { getResponseBodyType } from "./getResponseBodyType";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { getPageType } from "./getPaginationInfo.js";
+import { getResponseBodyType } from "./getResponseBodyType.js";
 
 export function getEndpointPageReturnType({
     context,
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): go.Type | undefined {
     const response = endpoint.response;
     if (response?.body == null) {
@@ -35,7 +34,7 @@ function getCorePageReturnType({
     responseType
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
     responseType: go.Type;
 }): go.Type {
     return go.Type.pointer(
@@ -54,7 +53,7 @@ function getPaginationValueType({
     pagination
 }: {
     context: SdkGeneratorContext;
-    pagination: Pagination;
+    pagination: FernIr.Pagination;
 }): go.Type {
     const iterableType = context.maybeUnwrapIterable(pagination.results.property.valueType);
     if (iterableType != null) {
@@ -69,8 +68,8 @@ function getCustomPagerReturnType({
     pagination
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
-    pagination: Pagination;
+    endpoint: FernIr.HttpEndpoint;
+    pagination: FernIr.Pagination;
 }): go.Type {
     const response = endpoint.response;
     if (response?.body == null) {
@@ -106,10 +105,10 @@ function getLinkTypeFromResponse({
     responseBody
 }: {
     context: SdkGeneratorContext;
-    responseBody: HttpResponseBody;
+    responseBody: FernIr.HttpResponseBody;
 }): go.Type {
     // Extract the response body type reference
-    let responseTypeReference: TypeReference | undefined;
+    let responseTypeReference: FernIr.TypeReference | undefined;
     if (responseBody.type === "json") {
         if (responseBody.value.type === "response") {
             responseTypeReference = responseBody.value.responseBodyType;

@@ -7,7 +7,7 @@ import {
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 function ensureFinalNewline(content: string): string {
     return content.endsWith("\n") ? content : content + "\n";

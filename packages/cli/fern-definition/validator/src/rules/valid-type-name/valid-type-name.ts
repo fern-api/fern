@@ -1,4 +1,4 @@
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 const ALPHA_REGEX = /^[a-z]/i;
 

@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as RuntimeManifest } from "./Runtime";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as RuntimeManifest } from "./Runtime.js";
 
 export interface Stream {
     readonly Stream: {

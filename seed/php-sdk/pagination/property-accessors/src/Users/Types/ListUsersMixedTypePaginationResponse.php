@@ -47,6 +47,7 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
     public function setNext(string $value): self
     {
         $this->next = $value;
+        $this->_setField('next');
         return $this;
     }
 
@@ -64,6 +65,7 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
     public function setData(array $value): self
     {
         $this->data = $value;
+        $this->_setField('data');
         return $this;
     }
 

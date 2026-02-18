@@ -1,12 +1,12 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext, AsIsFiles } from "@fern-api/ruby-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
-    public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
+    public getLocationForTypeId(typeId: FernIr.TypeId): RelativeFilePath {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return join(
             RelativeFilePath.of("lib"),
@@ -16,7 +16,7 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
         );
     }
 
-    public getClassReferenceForTypeId(typeId: TypeId): ruby.ClassReference {
+    public getClassReferenceForTypeId(typeId: FernIr.TypeId): ruby.ClassReference {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             modules: this.getModuleNamesForTypeId(typeId),
@@ -24,21 +24,21 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
         });
     }
 
-    public getFileNameForTypeId(typeId: TypeId): string {
+    public getFileNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return typeDeclaration.name.name.snakeCase.safeName + ".rb";
     }
 
-    public getAllTypeDeclarations(): TypeDeclaration[] {
+    public getAllTypeDeclarations(): FernIr.TypeDeclaration[] {
         return Object.values(this.ir.types);
     }
 
-    public getModuleNamesForTypeId(typeId: TypeId): string[] {
+    public getModuleNamesForTypeId(typeId: FernIr.TypeId): string[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return [this.getRootModuleName(), ...this.pascalNames(typeDeclaration), this.getTypesModule().name];
     }
 
-    public getModulesForTypeId(typeId: TypeId): ruby.Module_[] {
+    public getModulesForTypeId(typeId: FernIr.TypeId): ruby.Module_[] {
         const modules = this.getModuleNamesForTypeId(typeId);
         return modules.map((name) => ruby.module({ name }));
     }

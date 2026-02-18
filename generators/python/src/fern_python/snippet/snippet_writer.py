@@ -237,31 +237,35 @@ class SnippetWriter:
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
             ),
-            optional=lambda optional: self.get_snippet_for_example_type_reference(
-                example_type_reference=optional.optional,
-                use_typeddict_request=use_typeddict_request,
-                as_request=as_request,
-                in_typeddict=in_typeddict,
-            )
-            if optional.optional is not None
-            else None,
-            nullable=lambda nullable: self.get_snippet_for_example_type_reference(
-                example_type_reference=nullable.nullable,
-                use_typeddict_request=use_typeddict_request,
-                as_request=as_request,
-                in_typeddict=in_typeddict,
-            )
-            if nullable.nullable is not None
-            else None,
+            optional=lambda optional: (
+                self.get_snippet_for_example_type_reference(
+                    example_type_reference=optional.optional,
+                    use_typeddict_request=use_typeddict_request,
+                    as_request=as_request,
+                    in_typeddict=in_typeddict,
+                )
+                if optional.optional is not None
+                else None
+            ),
+            nullable=lambda nullable: (
+                self.get_snippet_for_example_type_reference(
+                    example_type_reference=nullable.nullable,
+                    use_typeddict_request=use_typeddict_request,
+                    as_request=as_request,
+                    in_typeddict=in_typeddict,
+                )
+                if nullable.nullable is not None
+                else None
+            ),
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map.map_,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
             ),
-            literal=lambda lit: self._get_snippet_for_primitive(lit.literal)
-            if in_typeddict or force_include_literals
-            else None,
+            literal=lambda lit: (
+                self._get_snippet_for_primitive(lit.literal) if in_typeddict or force_include_literals else None
+            ),
         )
 
     def _get_snippet_for_unknown(

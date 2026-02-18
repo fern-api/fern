@@ -43,6 +43,27 @@ func (j *JustFileWithOptionalQueryParamsRequest) SetMaybeInteger(maybeInteger *i
 	j.require(justFileWithOptionalQueryParamsRequestFieldMaybeInteger)
 }
 
+func (j *JustFileWithOptionalQueryParamsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler JustFileWithOptionalQueryParamsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*j = JustFileWithOptionalQueryParamsRequest(body)
+	return nil
+}
+
+func (j *JustFileWithOptionalQueryParamsRequest) MarshalJSON() ([]byte, error) {
+	type embed JustFileWithOptionalQueryParamsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*j),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, j.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	justFileWithQueryParamsRequestFieldMaybeString           = big.NewInt(1 << 0)
 	justFileWithQueryParamsRequestFieldInteger               = big.NewInt(1 << 1)
@@ -102,6 +123,27 @@ func (j *JustFileWithQueryParamsRequest) SetListOfStrings(listOfStrings []string
 func (j *JustFileWithQueryParamsRequest) SetOptionalListOfStrings(optionalListOfStrings []*string) {
 	j.OptionalListOfStrings = optionalListOfStrings
 	j.require(justFileWithQueryParamsRequestFieldOptionalListOfStrings)
+}
+
+func (j *JustFileWithQueryParamsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler JustFileWithQueryParamsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*j = JustFileWithQueryParamsRequest(body)
+	return nil
+}
+
+func (j *JustFileWithQueryParamsRequest) MarshalJSON() ([]byte, error) {
+	type embed JustFileWithQueryParamsRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*j),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, j.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 type OptionalArgsRequest struct {
@@ -172,6 +214,9 @@ func (m *MyInlineType) GetBar() string {
 }
 
 func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -217,6 +262,9 @@ func (m *MyInlineType) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyInlineType) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -250,6 +298,9 @@ func (m *MyObject) GetFoo() string {
 }
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -295,6 +346,9 @@ func (m *MyObject) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObject) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -337,6 +391,9 @@ func (m *MyObjectWithOptional) GetOptionalProp() *string {
 }
 
 func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -389,6 +446,9 @@ func (m *MyObjectWithOptional) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MyObjectWithOptional) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -515,6 +575,20 @@ func (i *InlineTypeRequest) require(field *big.Int) {
 		i.explicitFields = big.NewInt(0)
 	}
 	i.explicitFields.Or(i.explicitFields, field)
+}
+
+type WithJsonPropertyRequest struct {
+	Json *MyObject `json:"json,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WithJsonPropertyRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
 }
 
 type LiteralEnumRequest struct {

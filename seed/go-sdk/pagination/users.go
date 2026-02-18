@@ -91,6 +91,27 @@ func (l *ListUsersBodyCursorPaginationRequest) SetPagination(pagination *WithCur
 	l.require(listUsersBodyCursorPaginationRequestFieldPagination)
 }
 
+func (l *ListUsersBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	listUsersBodyOffsetPaginationRequestFieldPagination = big.NewInt(1 << 0)
 )
@@ -116,6 +137,27 @@ func (l *ListUsersBodyOffsetPaginationRequest) require(field *big.Int) {
 func (l *ListUsersBodyOffsetPaginationRequest) SetPagination(pagination *WithPage) {
 	l.Pagination = pagination
 	l.require(listUsersBodyOffsetPaginationRequestFieldPagination)
+}
+
+func (l *ListUsersBodyOffsetPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersBodyOffsetPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersBodyOffsetPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersBodyOffsetPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersBodyOffsetPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -543,6 +585,27 @@ func (l *ListUsersTopLevelBodyCursorPaginationRequest) SetFilter(filter *string)
 	l.require(listUsersTopLevelBodyCursorPaginationRequestFieldFilter)
 }
 
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersTopLevelBodyCursorPaginationRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*l = ListUsersTopLevelBodyCursorPaginationRequest(body)
+	return nil
+}
+
+func (l *ListUsersTopLevelBodyCursorPaginationRequest) MarshalJSON() ([]byte, error) {
+	type embed ListUsersTopLevelBodyCursorPaginationRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 var (
 	listUsersExtendedOptionalListResponseFieldData       = big.NewInt(1 << 0)
 	listUsersExtendedOptionalListResponseFieldNext       = big.NewInt(1 << 1)
@@ -584,6 +647,9 @@ func (l *ListUsersExtendedOptionalListResponse) GetTotalCount() int {
 }
 
 func (l *ListUsersExtendedOptionalListResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -643,6 +709,9 @@ func (l *ListUsersExtendedOptionalListResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersExtendedOptionalListResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -695,6 +764,9 @@ func (l *ListUsersExtendedResponse) GetTotalCount() int {
 }
 
 func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -754,6 +826,9 @@ func (l *ListUsersExtendedResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersExtendedResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -796,6 +871,9 @@ func (l *ListUsersMixedTypePaginationResponse) GetData() []*User {
 }
 
 func (l *ListUsersMixedTypePaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -848,6 +926,9 @@ func (l *ListUsersMixedTypePaginationResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersMixedTypePaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -909,6 +990,9 @@ func (l *ListUsersOptionalDataPaginationResponse) GetData() []*User {
 }
 
 func (l *ListUsersOptionalDataPaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -975,6 +1059,9 @@ func (l *ListUsersOptionalDataPaginationResponse) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListUsersOptionalDataPaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -1036,6 +1123,9 @@ func (l *ListUsersPaginationResponse) GetData() []*User {
 }
 
 func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -1102,6 +1192,9 @@ func (l *ListUsersPaginationResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersPaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -1144,6 +1237,9 @@ func (l *ListUsersTopLevelCursorPaginationResponse) GetData() []*User {
 }
 
 func (l *ListUsersTopLevelCursorPaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -1196,6 +1292,9 @@ func (l *ListUsersTopLevelCursorPaginationResponse) MarshalJSON() ([]byte, error
 }
 
 func (l *ListUsersTopLevelCursorPaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -1238,6 +1337,9 @@ func (n *NextPage) GetStartingAfter() string {
 }
 
 func (n *NextPage) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -1290,6 +1392,9 @@ func (n *NextPage) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NextPage) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -1373,6 +1478,9 @@ func (p *Page) GetTotalPage() int {
 }
 
 func (p *Page) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -1439,6 +1547,9 @@ func (p *Page) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Page) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -1481,6 +1592,9 @@ func (u *User) GetId() int {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1533,6 +1647,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1566,6 +1683,9 @@ func (u *UserListContainer) GetUsers() []*User {
 }
 
 func (u *UserListContainer) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1611,6 +1731,9 @@ func (u *UserListContainer) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserListContainer) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1644,6 +1767,9 @@ func (u *UserOptionalListContainer) GetUsers() []*User {
 }
 
 func (u *UserOptionalListContainer) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1689,6 +1815,9 @@ func (u *UserOptionalListContainer) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserOptionalListContainer) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1731,6 +1860,9 @@ func (u *UserOptionalListPage) GetNext() *uuid.UUID {
 }
 
 func (u *UserOptionalListPage) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1783,6 +1915,9 @@ func (u *UserOptionalListPage) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserOptionalListPage) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1825,6 +1960,9 @@ func (u *UserPage) GetNext() *uuid.UUID {
 }
 
 func (u *UserPage) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1877,6 +2015,9 @@ func (u *UserPage) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserPage) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1910,6 +2051,9 @@ func (u *UsernameContainer) GetResults() []string {
 }
 
 func (u *UsernameContainer) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1955,6 +2099,9 @@ func (u *UsernameContainer) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsernameContainer) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1988,6 +2135,9 @@ func (w *WithCursor) GetCursor() *string {
 }
 
 func (w *WithCursor) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -2033,6 +2183,9 @@ func (w *WithCursor) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithCursor) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value
@@ -2066,6 +2219,9 @@ func (w *WithPage) GetPage() *int {
 }
 
 func (w *WithPage) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -2111,6 +2267,9 @@ func (w *WithPage) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithPage) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value

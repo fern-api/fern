@@ -19,6 +19,8 @@ import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { JsConfig } from "./JsConfig.js";
 import { Language } from "./Language.js";
 import { LayoutConfig } from "./LayoutConfig.js";
+import { LibraryConfiguration } from "./LibraryConfiguration.js";
+import { LibraryName } from "./LibraryName.js";
 import { LogoConfiguration } from "./LogoConfiguration.js";
 import { MetadataConfig } from "./MetadataConfig.js";
 import { NavbarLink } from "./NavbarLink.js";
@@ -40,6 +42,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
 > = core.serialization.object({
     instances: core.serialization.list(DocsInstance),
     title: core.serialization.string().optional(),
+    libraries: core.serialization.record(LibraryName, LibraryConfiguration).optional(),
     analytics: AnalyticsConfig.optional(),
     announcement: AnnouncementConfig.optional(),
     roles: core.serialization.list(RoleId).optional(),
@@ -70,12 +73,15 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
+    header: core.serialization.string().optional(),
+    footer: core.serialization.string().optional(),
 });
 
 export declare namespace DocsConfiguration {
     export interface Raw {
         instances: DocsInstance.Raw[];
         title?: string | null;
+        libraries?: Record<LibraryName.Raw, LibraryConfiguration.Raw> | null;
         analytics?: AnalyticsConfig.Raw | null;
         announcement?: AnnouncementConfig.Raw | null;
         roles?: RoleId.Raw[] | null;
@@ -106,5 +112,7 @@ export declare namespace DocsConfiguration {
         integrations?: IntegrationsConfig.Raw | null;
         css?: CssConfig.Raw | null;
         js?: JsConfig.Raw | null;
+        header?: string | null;
+        footer?: string | null;
     }
 }

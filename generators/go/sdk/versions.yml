@@ -1,4 +1,81 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0-rc1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic ordering of generated test functions. The test generation
+        for JSON marshaling, String methods, enum validation, and extra properties tests
+        now sorts type names before iterating, ensuring consistent output across runs.
+      type: fix
+  createdAt: "2026-02-16"
+  irVersion: 61
+
+- version: 1.25.0-rc0
+  changelogEntry:
+    - summary: |
+        Add automated test generation for all Go SDK types. The generator now creates test files
+        alongside generated code, covering getter and setter methods, JSON marshaling, String methods,
+        enum validation, extra properties, and pointer helper functions. Generated tests include
+        comprehensive scenarios for nil handling and edge cases. Also includes performance optimizations
+        for regex compilation, slice allocation, and improved API design with struct-based configuration.
+      type: feat
+  createdAt: "2026-02-14"
+  irVersion: 61
+
+- version: 1.24.0
+  changelogEntry:
+    - summary: |
+        Add support for protocol-level SSE discrimination via the new `discriminatorContext`
+        IR field. When a streaming endpoint returns a discriminated union with
+        `discriminatorContext: "protocol"`, the SSE `event:` field value is injected into
+        the JSON data payload as the discriminant key before unmarshaling, so the union's
+        existing `UnmarshalJSON` works unchanged. If the data already contains the
+        discriminant key, injection is skipped. Existing SSE endpoints using data-level
+        discrimination (the default) are unaffected.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 61
+
+- version: 1.23.8
+  changelogEntry:
+    - summary: |
+        Add `omitEmptyRequestWrappers` configuration flag to skip generating empty request structs
+        for endpoints where the SDK request wrapper has no user-facing fields. When enabled, endpoints
+        whose wrapper was created (e.g., due to service headers) but where all fields are handled
+        globally via RequestOptions will no longer produce an empty struct parameter in the method
+        signature. The flag defaults to false for backward compatibility.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 61
+
+- version: 1.23.7
+  changelogEntry:
+    - summary: |
+        Fix MarshalJSON not being generated for inlined request types that have properties
+        but no literals, dates, reference types, or extra properties. This caused the
+        explicitFields tracking (used for explicit null serialization via setter methods)
+        to be ineffective for simple request types.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 61
+
+- version: 1.23.6
+  changelogEntry:
+    - summary: |
+        Fix multipart file uploads to support in-memory readers (bytes.Reader, strings.Reader, etc.)
+        by ensuring the filename attribute is always present in the Content-Disposition header.
+        When no filename is provided, the field name is used as the default filename.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 61
+
+- version: 1.23.5
+  changelogEntry:
+    - summary: |
+        Fix wire tests to use configured `clientConstructorName` instead of hardcoded `NewClient`.
+      type: fix
+  createdAt: "2026-02-03"
+  irVersion: 61
+
 - version: 1.23.4
   changelogEntry:
     - summary: |

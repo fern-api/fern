@@ -7,20 +7,20 @@ import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-import { unifiedRemoveBreaks } from "../cleaners/breaks";
-import { unifiedRemoveClassNames } from "../cleaners/className";
-import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis";
-import { unifiedRemoveEmptyParagraphs } from "../cleaners/emptyParagraphs";
-import { remarkProperlyFormatEmphasis } from "../cleaners/formatEmphasis";
-import { removeHastComments } from "../cleaners/hastComments";
-import { convertHeaderLinksToText } from "../cleaners/link";
-import { remarkRemoveBottomMetadata } from "../cleaners/metadata";
-import { unifiedRemoveNestedRoots } from "../cleaners/nestedRoots";
-import { unifiedRemovePositions } from "../cleaners/position";
-import { unifiedRemoveSuggestEdits } from "../cleaners/suggestEdits";
-import { remarkRemoveCodeBlocksInCells } from "../cleaners/tableCells";
-import { unifiedRemoveTableOfContents } from "../cleaners/toc";
-import { remarkRemoveUpdatedAt } from "../cleaners/updatedAt";
+import { unifiedRemoveBreaks } from "../cleaners/breaks.js";
+import { unifiedRemoveClassNames } from "../cleaners/className.js";
+import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis.js";
+import { unifiedRemoveEmptyParagraphs } from "../cleaners/emptyParagraphs.js";
+import { remarkProperlyFormatEmphasis } from "../cleaners/formatEmphasis.js";
+import { removeHastComments } from "../cleaners/hastComments.js";
+import { convertHeaderLinksToText } from "../cleaners/link.js";
+import { remarkRemoveBottomMetadata } from "../cleaners/metadata.js";
+import { unifiedRemoveNestedRoots } from "../cleaners/nestedRoots.js";
+import { unifiedRemovePositions } from "../cleaners/position.js";
+import { unifiedRemoveSuggestEdits } from "../cleaners/suggestEdits.js";
+import { remarkRemoveCodeBlocksInCells } from "../cleaners/tableCells.js";
+import { unifiedRemoveTableOfContents } from "../cleaners/toc.js";
+import { remarkRemoveUpdatedAt } from "../cleaners/updatedAt.js";
 import {
     createAccordion,
     createAccordionGroup,
@@ -31,16 +31,16 @@ import {
     createEmbed,
     createFrame,
     createTabs
-} from "../customComponents/create";
-import { rehypeToRemarkCustomComponents } from "../customComponents/plugin";
-import { selectiveRehypeRemark } from "../customComponents/selective";
-import { getImagesUsedInFile } from "../extract/images";
-import { findSourceElement } from "../extract/source";
-import { getDescriptionFromRoot, getTitleFromHeading } from "../extract/title";
-import type { Result } from "../types/result";
-import { formatPageWithFrontmatter } from "../utils/files/file";
-import { htmlToHast } from "../utils/hast";
-import { normalizePath } from "../utils/strings";
+} from "../customComponents/create.js";
+import { rehypeToRemarkCustomComponents } from "../customComponents/plugin.js";
+import { selectiveRehypeRemark } from "../customComponents/selective.js";
+import { getImagesUsedInFile } from "../extract/images.js";
+import { findSourceElement } from "../extract/source.js";
+import { getDescriptionFromRoot, getTitleFromHeading } from "../extract/title.js";
+import type { Result } from "../types/result.js";
+import { formatPageWithFrontmatter } from "../utils/files/file.js";
+import { htmlToHast } from "../utils/hast.js";
+import { normalizePath } from "../utils/strings.js";
 
 export declare namespace parsePage {
     interface Args {

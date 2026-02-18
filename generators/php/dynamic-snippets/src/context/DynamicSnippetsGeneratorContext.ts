@@ -6,8 +6,8 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BasePhpCustomConfigSchema, getSafeClassName, php } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 const RESERVED_METHOD_NAMES = ["use", "clone", "list"];
 const REQUEST_NAMESPACE = "Requests";

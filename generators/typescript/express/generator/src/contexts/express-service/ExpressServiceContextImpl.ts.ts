@@ -4,7 +4,7 @@ import { ExpressServiceGenerator } from "@fern-typescript/express-service-genera
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { ExpressServiceDeclarationReferencer } from "../../declaration-referencers/ExpressServiceDeclarationReferencer";
+import { ExpressServiceDeclarationReferencer } from "../../declaration-referencers/ExpressServiceDeclarationReferencer.js";
 
 export declare namespace ExpressServiceContextImpl {
     export interface Init {

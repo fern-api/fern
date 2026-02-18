@@ -1,4 +1,4 @@
-export { generateModels } from "./generateModels";
-export { ModelGeneratorContext } from "./ModelGeneratorContext";
-export { generateFields } from "./object/generateFields";
-export { ObjectGenerator } from "./object/ObjectGenerator";
+export { generateModels } from "./generateModels.js";
+export { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+export { generateFields } from "./object/generateFields.js";
+export { ObjectGenerator } from "./object/ObjectGenerator.js";

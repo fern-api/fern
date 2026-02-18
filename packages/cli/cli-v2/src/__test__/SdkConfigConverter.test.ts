@@ -1,3 +1,4 @@
+import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { randomUUID } from "crypto";
@@ -5,9 +6,9 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter";
-import type { Target } from "../sdk/config/Target";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter.js";
+import type { Target } from "../sdk/config/Target.js";
 
 describe("SdkConfigConverter", () => {
     let testDir: AbsoluteFilePath;
@@ -403,13 +404,18 @@ sdks:
 
             expect(result.success).toBe(true);
             if (result.success) {
-                expect(result.config.targets[0]?.output.git?.repository).toBe("acme/python-sdk");
+                const git = result.config.targets[0]?.output.git;
+                expect(git).toBeDefined();
+                expect(git != null && schemas.isGitOutputGitHubRepository(git)).toBe(true);
+                if (git != null && schemas.isGitOutputGitHubRepository(git)) {
+                    expect(git.repository).toBe("acme/python-sdk");
+                }
             }
         });
     });
 
     describe("publish configuration", () => {
-        it("converts npm publish configuration", async () => {
+        it("npm", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -435,7 +441,43 @@ sdks:
             }
         });
 
-        it("omits publish when not specified", async () => {
+        it("pypi", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    python:
+      output:
+        path: ./sdks/python
+      publish:
+        pypi:
+          packageName: "acme-sdk"
+          metadata:
+            keywords:
+              - api
+              - sdk
+            documentationLink: "https://docs.acme.com"
+            homepageLink: "https://acme.com"
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = converter.convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                const pypi = result.config.targets[0]?.publish?.pypi;
+                expect(pypi?.packageName).toBe("acme-sdk");
+                expect(pypi?.metadata?.keywords).toEqual(["api", "sdk"]);
+                expect(pypi?.metadata?.documentationLink).toBe("https://docs.acme.com");
+                expect(pypi?.metadata?.homepageLink).toBe("https://acme.com");
+            }
+        });
+
+        it("omit publish when not specified", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -455,6 +497,85 @@ sdks:
             expect(result.success).toBe(true);
             if (result.success) {
                 expect(result.config.targets[0]?.publish).toBeUndefined();
+            }
+        });
+    });
+
+    describe("reviewers configuration", () => {
+        it("converts git output with PR reviewers", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    python:
+      output:
+        path: ./sdks/python
+        git:
+          repository: acme/python-sdk
+          mode: pr
+          reviewers:
+            teams:
+              - sdk-team
+              - backend-team
+            users:
+              - alice
+              - bob
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = converter.convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                const git = result.config.targets[0]?.output.git;
+                expect(git).toBeDefined();
+                expect(git != null && schemas.isGitOutputGitHubRepository(git)).toBe(true);
+                if (git != null && schemas.isGitOutputGitHubRepository(git)) {
+                    expect(git.reviewers?.teams).toEqual(["sdk-team", "backend-team"]);
+                    expect(git.reviewers?.users).toEqual(["alice", "bob"]);
+                }
+            }
+        });
+    });
+
+    describe("metadata configuration", () => {
+        it("converts target metadata", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    python:
+      output:
+        path: ./sdks/python
+      metadata:
+        description: "The official Acme Python SDK"
+        authors:
+          - name: "John Doe"
+            email: "john@acme.com"
+          - name: "Jane Doe"
+            email: "jane@acme.com"
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = converter.convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                const metadata = result.config.targets[0]?.metadata;
+                expect(metadata?.description).toBe("The official Acme Python SDK");
+                expect(metadata?.authors).toHaveLength(2);
+                expect(metadata?.authors?.[0]?.name).toBe("John Doe");
+                expect(metadata?.authors?.[0]?.email).toBe("john@acme.com");
+                expect(metadata?.authors?.[1]?.name).toBe("Jane Doe");
+                expect(metadata?.authors?.[1]?.email).toBe("jane@acme.com");
             }
         });
     });

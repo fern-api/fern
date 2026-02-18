@@ -2,7 +2,7 @@ import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import fetch from "node-fetch";
 
-import { captureFernCli, runFernCli } from "../../utils/runFernCli";
+import { captureFernCli, runFernCli } from "../../utils/runFernCli.js";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 

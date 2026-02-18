@@ -1,17 +1,17 @@
 import { fail } from "assert";
-import { type Generation } from "../../context/generation-info";
-import { type Origin } from "../../context/model-navigator";
-import { is } from "../../utils/type-guards";
-import { type ClassInstantiation } from "../code/ClassInstantiation";
-import { MemberNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
-import { Access } from "../language/Access";
-import { Annotation } from "../language/Annotation";
-import { AnnotationGroup } from "../language/AnnotationGroup";
-import { CodeBlock } from "../language/CodeBlock";
-import { XmlDocBlock } from "../language/XmlDocBlock";
-import { ClassReference } from "./ClassReference";
-import { type Type } from "./IType";
+import { type Generation } from "../../context/generation-info.js";
+import { type Origin } from "../../context/model-navigator.js";
+import { is } from "../../utils/type-guards.js";
+import { type ClassInstantiation } from "../code/ClassInstantiation.js";
+import { MemberNode } from "../core/AstNode.js";
+import { Writer } from "../core/Writer.js";
+import { Access } from "../language/Access.js";
+import { Annotation } from "../language/Annotation.js";
+import { AnnotationGroup } from "../language/AnnotationGroup.js";
+import { CodeBlock } from "../language/CodeBlock.js";
+import { XmlDocBlock } from "../language/XmlDocBlock.js";
+import { ClassReference } from "./ClassReference.js";
+import { type Type } from "./IType.js";
 
 export declare namespace Field {
     export type Accessors = {
@@ -197,7 +197,7 @@ export class Field extends MemberNode {
         }
     }
 
-    public get needsIntialization(): boolean {
+    public get needsInitialization(): boolean {
         return !this.type.isOptional && this.initializer == null;
     }
 

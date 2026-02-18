@@ -22,10 +22,10 @@ import {
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
 
-import { IdGenerator } from "../utils/IdGenerator";
-import { isReferencedWebhookPayloadSchema } from "../utils/isReferencedWebhookPayloadSchema";
-import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
-import { getPropertiesByAudience } from "./getPropertiesByAudience";
+import { IdGenerator } from "../utils/IdGenerator.js";
+import { isReferencedWebhookPayloadSchema } from "../utils/isReferencedWebhookPayloadSchema.js";
+import { FilteredIr, FilteredIrImpl } from "./FilteredIr.js";
+import { getPropertiesByAudience } from "./getPropertiesByAudience.js";
 import {
     AudienceId,
     ChannelNode,
@@ -44,7 +44,7 @@ import {
     TypePropertiesNode,
     WebhookId,
     WebhookNode
-} from "./ids";
+} from "./ids.js";
 
 export class IrGraph {
     private types: Record<TypeId, TypeNode> = {};

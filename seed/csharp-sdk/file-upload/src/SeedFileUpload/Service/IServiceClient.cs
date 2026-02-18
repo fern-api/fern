@@ -56,6 +56,12 @@ public partial interface IServiceClient
         CancellationToken cancellationToken = default
     );
 
+    WithRawResponseTask<string> WithJsonPropertyAsync(
+        WithJsonPropertyRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     Task SimpleAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
 
     WithRawResponseTask<string> WithLiteralAndEnumTypesAsync(

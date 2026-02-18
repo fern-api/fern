@@ -1,7 +1,7 @@
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 
-import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<PackageId> {
     public getExportedFilepath(name: PackageId): ExportedFilePath {

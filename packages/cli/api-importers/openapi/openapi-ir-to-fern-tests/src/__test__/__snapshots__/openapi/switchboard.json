@@ -2368,6 +2368,7 @@ service:
           "SessionsEventsResponse": {
             "availability": undefined,
             "base-properties": {},
+            "context": "data",
             "discriminant": "event",
             "docs": "Each oneOf object in the array represents one possible Server Sent Events (SSE) message, serialized as UTF-8 text according to the SSE specification.",
             "encoding": undefined,
@@ -2482,6 +2483,7 @@ service:
         type: SessionsEventsResponseError
     source:
       openapi: ../openapi.yml
+    context: data
 imports:
   root: __package__.yml
 service:

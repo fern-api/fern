@@ -10,6 +10,6 @@ export namespace CreateProblemError {
     }
 
     export interface _Unknown {
-        _type: void;
+        _type: string;
     }
 }

@@ -14,9 +14,9 @@
 
 ```ruby
 client.auth.get_token(
-  client_id: 'client_id',
-  client_secret: 'client_secret'
-);
+  client_id: "client_id",
+  client_secret: "client_secret"
+)
 ```
 </dd>
 </dl>
@@ -65,7 +65,7 @@ client.auth.get_token(
 <dd>
 
 ```ruby
-client.simple.get_something();
+client.simple.get_something
 ```
 </dd>
 </dl>

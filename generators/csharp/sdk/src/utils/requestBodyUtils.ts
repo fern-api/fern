@@ -1,5 +1,10 @@
-import { HttpRequestBody, InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpRequestBody = FernIr.HttpRequestBody;
+type InlinedRequestBodyProperty = FernIr.InlinedRequestBodyProperty;
+type ObjectProperty = FernIr.ObjectProperty;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export type RequestBodyProperty = InlinedRequestBodyProperty | ObjectProperty;
 

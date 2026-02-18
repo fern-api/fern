@@ -1,7 +1,7 @@
 import { isVersionAhead } from "@fern-api/semver-utils";
 
-import { VersionMigrations } from "../types/VersionMigrations";
-import { ALL_MIGRATIONS } from "./all";
+import { VersionMigrations } from "../types/VersionMigrations.js";
+import { ALL_MIGRATIONS } from "./all.js";
 
 export function getMigrationsToRun({
     fromVersion,

@@ -6,7 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_plant",
@@ -42,6 +42,7 @@
           "description": undefined,
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.plantstore.dev/v3",
               "id": "Demo server",
             },
@@ -372,7 +373,7 @@
           "slug": undefined,
         },
       ],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "plant",
       "pointsTo": undefined,
       "subpackageId": "subpackage_plant",

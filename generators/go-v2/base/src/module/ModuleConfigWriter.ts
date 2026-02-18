@@ -2,10 +2,10 @@ import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import dedent from "dedent";
-import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
-import { FileGenerator } from "../FileGenerator";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";
+import { FileGenerator } from "../FileGenerator.js";
 
-import { ModuleConfig } from "./ModuleConfig";
+import { ModuleConfig } from "./ModuleConfig.js";
 
 export class ModuleConfigWriter extends FileGenerator<
     File,

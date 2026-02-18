@@ -52,6 +52,7 @@
           "description": "A union type with a discriminant property.",
           "discriminantProperty": "@type",
           "discriminantPropertyNameOverride": "type",
+          "discriminatorContext": "data",
           "generatedName": "UnionWithDiscriminant",
           "schemas": {
             "VariantOne": {
@@ -154,6 +155,7 @@
           "description": "Test description",
           "discriminantProperty": "@type",
           "discriminantPropertyNameOverride": "type",
+          "discriminatorContext": "data",
           "generatedName": "TestIdentity",
           "schemas": {
             "TestA": {

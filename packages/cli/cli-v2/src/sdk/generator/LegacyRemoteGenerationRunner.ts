@@ -1,18 +1,21 @@
 import type { FernToken } from "@fern-api/auth";
 import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, basename, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskResult } from "@fern-api/task-context";
-import type { AiConfig } from "../../ai/config/AiConfig";
-import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter";
-import type { ApiDefinition } from "../../api/config/ApiDefinition";
-import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
-import type { Context } from "../../context/Context";
-import type { Task } from "../../ui/Task";
-import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter";
-import type { Target } from "../config/Target";
+import { cp, mkdtemp, rm } from "fs/promises";
+import { tmpdir } from "os";
+import type { AiConfig } from "../../ai/config/AiConfig.js";
+import { LegacyFernWorkspaceAdapter } from "../../api/adapter/LegacyFernWorkspaceAdapter.js";
+import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
+import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
+import type { Context } from "../../context/Context.js";
+import type { Task } from "../../ui/Task.js";
+import { LegacyGeneratorInvocationAdapter } from "../adapter/LegacyGeneratorInvocationAdapter.js";
+import type { Target } from "../config/Target.js";
+import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
 
 /**
  * Runs remote generation using the legacy remote-generation infrastructure.
@@ -26,7 +29,7 @@ export namespace LegacyRemoteGenerationRunner {
         cliVersion: string;
     }
     export interface RunArgs {
-        /** Task for log display */
+        /** The current task */
         task: Task;
 
         /** The target to generate */
@@ -87,7 +90,11 @@ export class LegacyRemoteGenerationRunner {
     }
 
     public async run(args: LegacyRemoteGenerationRunner.RunArgs): Promise<LegacyRemoteGenerationRunner.Result> {
-        const taskContext = new TaskContextAdapter({ task: args.task, context: this.context });
+        const taskContext = new TaskContextAdapter({
+            context: this.context,
+            task: args.task,
+            logLevel: LogLevel.Info
+        });
         try {
             const generatorInvocation = await this.invocationAdapter.adapt(args.target);
             const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -104,7 +111,7 @@ export class LegacyRemoteGenerationRunner {
             });
             const fernWorkspace = await workspaceAdapter.adapt(args.apiDefinition);
 
-            const absolutePathToPreview = this.getAbsolutePathToPreview(args);
+            const absolutePathToPreview = await this.getAbsolutePathToPreview(args);
             await runRemoteGenerationForAPIWorkspace({
                 projectConfig: this.getProjectConfig(args),
                 organization: args.organization,
@@ -121,6 +128,25 @@ export class LegacyRemoteGenerationRunner {
                 dynamicIrOnly: false
             });
 
+            if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {
+                // Copy preview output to the configured output.path, then clean up the
+                // temp directory.
+                const generatorName = basename(generatorInvocation.name);
+                const previewOutputDirectory = join(absolutePathToPreview, RelativeFilePath.of(generatorName));
+                const targetOutputDirectory = generatorInvocation.absolutePathToLocalOutput;
+                if (targetOutputDirectory != null) {
+                    await cp(previewOutputDirectory, targetOutputDirectory, { recursive: true });
+
+                    // The preview output includes .git from the repository setup —- remove it
+                    // so the output is represented as plain files, not a separate repository.
+                    await rm(join(targetOutputDirectory, RelativeFilePath.of(".git")), {
+                        recursive: true,
+                        force: true
+                    });
+                }
+                await rm(absolutePathToPreview, { recursive: true, force: true });
+            }
+
             if (taskContext.getResult() === TaskResult.Failure) {
                 return {
                     success: false
@@ -129,10 +155,13 @@ export class LegacyRemoteGenerationRunner {
 
             return {
                 success: true,
-                output:
-                    absolutePathToPreview != null
-                        ? [absolutePathToPreview.toString()]
-                        : this.context.resolveTargetOutputs(args.target)
+                output: resolveTargetOutput({
+                    context: this.context,
+                    task: args.task,
+                    target: args.target,
+                    preview: args.preview,
+                    outputPath: args.outputPath
+                })
             };
         } catch (error) {
             return {
@@ -142,7 +171,15 @@ export class LegacyRemoteGenerationRunner {
         }
     }
 
-    private getAbsolutePathToPreview(args: LegacyRemoteGenerationRunner.RunArgs): AbsoluteFilePath | undefined {
+    private async getAbsolutePathToPreview(
+        args: LegacyRemoteGenerationRunner.RunArgs
+    ): Promise<AbsoluteFilePath | undefined> {
+        if (this.isLocalGitCombo(args)) {
+            const tmpPreviewDirectory = await mkdtemp(
+                join(AbsoluteFilePath.of(tmpdir()), RelativeFilePath.of("fern-preview-"))
+            );
+            return AbsoluteFilePath.of(tmpPreviewDirectory);
+        }
         if (!args.preview) {
             return undefined;
         }
@@ -175,5 +212,17 @@ export class LegacyRemoteGenerationRunner {
             }
         }
         return undefined;
+    }
+
+    /**
+     * When both `path` and `git` are configured (and not already in preview mode),
+     * we force preview mode so that the remote generation service produces a full
+     * project (i.e. CI workflows, repo URLs in package metadata, etc) without
+     * actually pushing to GitHub.
+     *
+     * The output is downloaded to a temp directory and then copied to `output.path`.
+     */
+    private isLocalGitCombo(args: LegacyRemoteGenerationRunner.RunArgs): boolean {
+        return args.target.output.path != null && args.target.output.git != null && !args.preview;
     }
 }

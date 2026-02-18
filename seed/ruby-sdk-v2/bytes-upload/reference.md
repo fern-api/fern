@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.upload();
+client.service.upload
 ```
 </dd>
 </dl>

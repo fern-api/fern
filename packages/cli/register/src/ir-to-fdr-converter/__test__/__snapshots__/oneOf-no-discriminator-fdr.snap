@@ -6,7 +6,7 @@
   "navigation": undefined,
   "rootPackage": {
     "endpoints": [],
-    "graphqlOperations": undefined,
+    "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [
       "subpackage_oneOfExamples",
@@ -44,6 +44,7 @@
           "description": "Demonstrates oneOf without discriminator or mapping.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -192,7 +193,7 @@
           "slug": undefined,
         },
       ],
-      "graphqlOperations": undefined,
+      "graphqlOperations": [],
       "name": "oneOfExamples",
       "pointsTo": undefined,
       "subpackageId": "subpackage_oneOfExamples",
@@ -317,7 +318,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "ErrorVariantA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -328,7 +329,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "ErrorVariantB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -411,7 +412,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "OneOfVariantA",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",
@@ -422,7 +423,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": "OneOfVariantB",
+            "displayName": undefined,
             "type": {
               "default": undefined,
               "type": "id",

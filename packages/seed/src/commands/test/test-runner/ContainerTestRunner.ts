@@ -4,10 +4,10 @@ import { runContainerizedGenerationForSeed } from "@fern-api/local-workspace-run
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import path from "path";
 
-import { runScript } from "../../../runScript";
-import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
-import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
-import { TestRunner } from "./TestRunner";
+import { runScript } from "../../../runScript.js";
+import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants.js";
+import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation.js";
+import { TestRunner } from "./TestRunner.js";
 
 export class ContainerTestRunner extends TestRunner {
     private readonly runner: ContainerRunner;

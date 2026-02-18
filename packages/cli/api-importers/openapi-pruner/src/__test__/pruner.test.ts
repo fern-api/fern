@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it } from "vitest";
-import { OpenAPIPruner } from "../pruner";
-import { PruneOptions } from "../types";
+import { OpenAPIPruner } from "../pruner.js";
+import { PruneOptions } from "../types.js";
 
 describe("OpenAPIPruner", () => {
     it("should prune endpoints not in the selector list", () => {

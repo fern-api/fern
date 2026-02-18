@@ -1,10 +1,10 @@
-import { BLOCK_END } from "../../utils/RubyConstants";
-import { Argument } from "../Argument";
-import { Class_ } from "../classes/Class_";
-import { AstNode } from "../core/AstNode";
-import { Import } from "../Import";
-import { Variable } from "../Variable";
-import { Function_ } from "./Function_";
+import { BLOCK_END } from "../../utils/RubyConstants.js";
+import { Argument } from "../Argument.js";
+import { Class_ } from "../classes/Class_.js";
+import { AstNode } from "../core/AstNode.js";
+import { Import } from "../Import.js";
+import { Variable } from "../Variable.js";
+import { Function_ } from "./Function_.js";
 
 export interface BlockConfiguration {
     arguments?: string;

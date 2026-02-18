@@ -1,11 +1,14 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-base";
 import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { generateModels } from "./generateModels";
-import { generateVersion } from "./generateVersion";
-import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { generateModels } from "./generateModels.js";
+import { generateVersion } from "./generateVersion.js";
+import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli {
     protected constructContext({

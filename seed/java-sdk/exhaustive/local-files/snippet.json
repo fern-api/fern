@@ -300,6 +300,19 @@
             }
         },
         {
+            "example_identifier": "ec414b48",
+            "id": {
+                "method": "GET",
+                "path": "/pagination",
+                "identifier_override": "endpoint_endpoints/pagination.listItems"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().pagination().listItems(\n            ListItemsRequest\n                .builder()\n                .cursor(\"cursor\")\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().pagination().listItems(\n            ListItemsRequest\n                .builder()\n                .cursor(\"cursor\")\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "88011d74",
             "id": {
                 "method": "GET",

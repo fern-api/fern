@@ -1,8 +1,8 @@
 import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 
-import { AbstractAPIWorkspace, FernDefinition } from "./AbstractAPIWorkspace";
-import { IdentifiableSource } from "./Source";
+import { AbstractAPIWorkspace, FernDefinition } from "./AbstractAPIWorkspace.js";
+import { IdentifiableSource } from "./Source.js";
 
 export declare namespace FernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {

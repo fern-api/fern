@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { ExternalDependency } from "../ExternalDependency";
-import { Fs } from "./Fs";
+import { ExternalDependency } from "../ExternalDependency.js";
+import { Fs } from "./Fs.js";
 
 export class FsImpl extends ExternalDependency implements Fs {
     protected override PACKAGE = { name: "fs" };

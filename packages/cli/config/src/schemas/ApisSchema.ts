@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ApiDefinitionSchema } from "./ApiDefinitionSchema";
+import { ApiDefinitionSchema } from "./ApiDefinitionSchema.js";
 
 /**
  * The apis section of fern.yml contains named API definitions.

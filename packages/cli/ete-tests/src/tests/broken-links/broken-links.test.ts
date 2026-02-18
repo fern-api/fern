@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import stripAnsi from "strip-ansi";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli } from "../../utils/runFernCli.js";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 describe("fern docs broken-links", () => {
@@ -39,5 +39,23 @@ describe("fern docs broken-links", () => {
         // redirects configured to external URLs (e.g., https://auth-platform.example.com)
         // should NOT be flagged as broken links
         expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 20_000);
+
+    it("links with Markdown snippet references should be resolved", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("snippet-link")),
+            reject: false
+        });
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 20_000);
+
+    it("broken links in sections with path property should be detected", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),
+            reject: false
+        });
+        // This fixture tests that markdown files referenced by sections with a path
+        // property are validated for broken links (not just pages)
+        expect(stripAnsi(stdout).slice(0, -15)).toMatchSnapshot();
     }, 20_000);
 });

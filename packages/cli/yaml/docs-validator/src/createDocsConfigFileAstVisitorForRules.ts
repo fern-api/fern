@@ -4,9 +4,9 @@ import {
     DocsConfigFileAstNodeTypes,
     DocsConfigFileAstNodeVisitor,
     DocsConfigFileAstVisitor
-} from "./docsAst/DocsConfigFileAstVisitor";
-import { RuleVisitor } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+} from "./docsAst/DocsConfigFileAstVisitor.js";
+import { RuleVisitor } from "./Rule.js";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export function createDocsConfigFileAstVisitorForRules({
     relativeFilepath,

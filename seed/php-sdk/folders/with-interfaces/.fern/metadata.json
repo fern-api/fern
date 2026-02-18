@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "generateClientInterfaces": true
+  },
+  "sdkVersion": "0.0.1"
+}

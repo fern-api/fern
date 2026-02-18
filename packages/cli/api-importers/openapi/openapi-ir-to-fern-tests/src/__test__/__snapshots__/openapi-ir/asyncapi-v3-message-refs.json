@@ -63,7 +63,38 @@
         {
           "queryParameters": [],
           "headers": [],
-          "messages": []
+          "messages": [
+            {
+              "messageType": "userMessage",
+              "payload": {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            {
+              "messageType": "serverResponse",
+              "payload": {
+                "properties": {
+                  "reply": {
+                    "value": {
+                      "value": "reply",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          ]
         }
       ],
       "source": {

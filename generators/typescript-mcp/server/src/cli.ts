@@ -1,7 +1,7 @@
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { SdkCustomConfig, SdkGeneratorCli } from "@fern-typescript/sdk-generator-cli";
 
-import { ServerGeneratorCLI } from "./ServerGeneratorCli";
+import { ServerGeneratorCLI } from "./ServerGeneratorCli.js";
 
 // Overrides for the SDK generator - will always take precedence
 const sdkConfigOverrides: Partial<SdkCustomConfig> = {

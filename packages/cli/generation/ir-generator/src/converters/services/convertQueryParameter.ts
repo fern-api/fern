@@ -1,8 +1,8 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { QueryParameter } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext";
-import { convertDeclaration } from "../convertDeclaration";
+import { FernFileContext } from "../../FernFileContext.js";
+import { convertDeclaration } from "../convertDeclaration.js";
 
 export function convertQueryParameter({
     file,

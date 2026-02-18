@@ -6,12 +6,12 @@ import {
     enableStackTracking,
     getFramesForTaggedObject
 } from "@fern-api/browser-compatible-base-generator";
-import { Generation } from "../../context/generation-info";
-import { type Origin } from "../../context/model-navigator";
-import { type Class } from "../types/Class";
-import { type ClassReference } from "../types/ClassReference";
-import { type Interface } from "../types/Interface";
-import { Writer } from "./Writer";
+import { Generation } from "../../context/generation-info.js";
+import { type Origin } from "../../context/model-navigator.js";
+import { type Class } from "../types/Class.js";
+import { type ClassReference } from "../types/ClassReference.js";
+import { type Interface } from "../types/Interface.js";
+import { Writer } from "./Writer.js";
 
 type Namespace = string;
 

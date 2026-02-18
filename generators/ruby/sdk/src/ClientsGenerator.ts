@@ -1,3 +1,4 @@
+import { FernIrV39 as FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratorContext } from "@fern-api/base-generator";
 import {
     Class_,
@@ -12,18 +13,6 @@ import {
 } from "@fern-api/ruby-codegen";
 
 import {
-    HttpService,
-    IntermediateRepresentation,
-    Name,
-    OAuthScheme,
-    ObjectProperty,
-    ServiceId,
-    Subpackage,
-    SubpackageId,
-    TypeId
-} from "@fern-fern/ir-sdk/api";
-
-import {
     ClientClassPair,
     generateDummyRootClient,
     generateEnvironmentConstants,
@@ -36,37 +25,37 @@ import {
     getOauthAccessTokenFunctionMetadata,
     getOauthRefreshTokenFunctionMetadata,
     getSubpackagePropertyNameFromIr
-} from "./AbstractionUtilities";
-import { ArtifactRegistry } from "./utils/ArtifactRegistry";
-import { FileUploadUtility } from "./utils/FileUploadUtility";
-import { HeadersGenerator } from "./utils/HeadersGenerator";
-import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
-import { AccessToken } from "./utils/oauth/AccessToken";
-import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
-import { RequestOptions } from "./utils/RequestOptionsClass";
-import { RootImportsFile } from "./utils/RootImportsFile";
+} from "./AbstractionUtilities.js";
+import { ArtifactRegistry } from "./utils/ArtifactRegistry.js";
+import { FileUploadUtility } from "./utils/FileUploadUtility.js";
+import { HeadersGenerator } from "./utils/HeadersGenerator.js";
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass.js";
+import { AccessToken } from "./utils/oauth/AccessToken.js";
+import { OauthTokenProvider } from "./utils/oauth/OauthTokenProvider.js";
+import { RequestOptions } from "./utils/RequestOptionsClass.js";
+import { RootImportsFile } from "./utils/RootImportsFile.js";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class ClientsGenerator {
-    private services: Map<ServiceId, HttpService>;
-    private subpackages: Map<SubpackageId, Subpackage>;
+    private services: Map<FernIr.ServiceId, FernIr.HttpService>;
+    private subpackages: Map<FernIr.SubpackageId, FernIr.Subpackage>;
     private gc: AbstractGeneratorContext;
     private irBasePath: string;
-    private generatedClasses: Map<TypeId, Class_>;
-    private flattenedProperties: Map<TypeId, ObjectProperty[]>;
-    private subpackagePaths: Map<SubpackageId, string[]>;
+    private generatedClasses: Map<FernIr.TypeId, Class_>;
+    private flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>;
+    private subpackagePaths: Map<FernIr.SubpackageId, string[]>;
 
     private apiName: string;
     private clientName: string;
     private gemName: string;
     private sdkVersion: string | undefined;
     private hasFileBasedDependencies: boolean;
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private crf: ClassReferenceFactory;
     private locationGenerator: LocationGenerator;
 
     private shouldGenerateOauth: boolean;
-    private oauthScheme: OAuthScheme | undefined;
+    private oauthScheme: FernIr.OAuthScheme | undefined;
     private artifactRegistry: ArtifactRegistry;
 
     // TODO: should this be an object instead of a string
@@ -88,10 +77,10 @@ export class ClientsGenerator {
         gemName: string;
         clientName: string;
         generatorContext: AbstractGeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         sdkVersion: string | undefined;
-        generatedClasses: Map<TypeId, Class_>;
-        flattenedProperties: Map<TypeId, ObjectProperty[]>;
+        generatedClasses: Map<FernIr.TypeId, Class_>;
+        flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>;
         hasFileBasedDependencies: boolean;
         locationGenerator: LocationGenerator | undefined;
         classReferenceFactory: ClassReferenceFactory | undefined;
@@ -141,7 +130,7 @@ export class ClientsGenerator {
         this.oauthScheme = this.gc.config.generateOauthClients
             ? this.intermediateRepresentation.auth.schemes
                   .find((scheme) => scheme.type === "oauth")
-                  ?._visit<OAuthScheme | undefined>({
+                  ?._visit<FernIr.OAuthScheme | undefined>({
                       basic: () => undefined,
                       bearer: () => undefined,
                       header: () => undefined,
@@ -262,7 +251,7 @@ export class ClientsGenerator {
             );
         }
 
-        const subpackageClassReferences = new Map<SubpackageId, ClientClassPair>();
+        const subpackageClassReferences = new Map<FernIr.SubpackageId, ClientClassPair>();
         const locationGenerator = this.locationGenerator;
         // 1. Generate service files, these are the classes that query the endpoints
         // and do the heavy lifting for API calls. While we iterate over endpoints here,
@@ -271,15 +260,15 @@ export class ClientsGenerator {
         // 2. Generate package-level files, this exists just to get dot-access functional.
         // These classes just hold instance variables of instantiated service clients.
         function getServiceClasses(
-            packageId: SubpackageId,
-            subpackage: Subpackage,
-            services: Map<ServiceId, HttpService>,
+            packageId: FernIr.SubpackageId,
+            subpackage: FernIr.Subpackage,
+            services: Map<FernIr.ServiceId, FernIr.HttpService>,
             clientName: string,
             crf: ClassReferenceFactory,
             irBasePath: string,
-            generatedClasses: Map<TypeId, Class_>,
-            flattenedProperties: Map<TypeId, ObjectProperty[]>,
-            subpackagePaths: Map<SubpackageId, string[]>,
+            generatedClasses: Map<FernIr.TypeId, Class_>,
+            flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>,
+            subpackagePaths: Map<FernIr.SubpackageId, string[]>,
             artifactRegistry: ArtifactRegistry
         ): ClientClassPair {
             if (subpackage.service === undefined) {
@@ -325,17 +314,17 @@ export class ClientsGenerator {
         }
 
         function getSubpackageClasses(
-            subpackageName: Name,
-            packageId: SubpackageId,
-            subpackage: Subpackage,
-            services: Map<ServiceId, HttpService>,
-            subpackages: Map<SubpackageId, Subpackage>,
+            subpackageName: FernIr.Name,
+            packageId: FernIr.SubpackageId,
+            subpackage: FernIr.Subpackage,
+            services: Map<FernIr.ServiceId, FernIr.HttpService>,
+            subpackages: Map<FernIr.SubpackageId, FernIr.Subpackage>,
             clientName: string,
             crf: ClassReferenceFactory,
             irBasePath: string,
-            generatedClasses: Map<TypeId, Class_>,
-            flattenedProperties: Map<TypeId, ObjectProperty[]>,
-            subpackagePaths: Map<SubpackageId, string[]>,
+            generatedClasses: Map<FernIr.TypeId, Class_>,
+            flattenedProperties: Map<FernIr.TypeId, FernIr.ObjectProperty[]>,
+            subpackagePaths: Map<FernIr.SubpackageId, string[]>,
             artifactRegistry: ArtifactRegistry
         ): ClientClassPair | undefined {
             if (subpackage.service !== undefined) {

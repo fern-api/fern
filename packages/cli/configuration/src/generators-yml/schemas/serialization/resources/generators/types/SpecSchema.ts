@@ -4,6 +4,7 @@ import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AsyncApiSpecSchema } from "./AsyncApiSpecSchema.js";
+import { GraphQlSpecSchema } from "./GraphQlSpecSchema.js";
 import { OpenApiSpecSchema } from "./OpenApiSpecSchema.js";
 import { OpenRpcSpecSchema } from "./OpenRpcSpecSchema.js";
 import { ProtobufSpecSchema } from "./ProtobufSpecSchema.js";
@@ -14,8 +15,14 @@ export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, G
         AsyncApiSpecSchema,
         ProtobufSpecSchema,
         OpenRpcSpecSchema,
+        GraphQlSpecSchema,
     ]);
 
 export declare namespace SpecSchema {
-    export type Raw = OpenApiSpecSchema.Raw | AsyncApiSpecSchema.Raw | ProtobufSpecSchema.Raw | OpenRpcSpecSchema.Raw;
+    export type Raw =
+        | OpenApiSpecSchema.Raw
+        | AsyncApiSpecSchema.Raw
+        | ProtobufSpecSchema.Raw
+        | OpenRpcSpecSchema.Raw
+        | GraphQlSpecSchema.Raw;
 }

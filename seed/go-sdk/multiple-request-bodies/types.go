@@ -58,6 +58,9 @@ func (d *DocumentMetadata) GetTitle() *string {
 }
 
 func (d *DocumentMetadata) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -124,6 +127,9 @@ func (d *DocumentMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DocumentMetadata) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -166,6 +172,9 @@ func (d *DocumentUploadResult) GetStatus() *string {
 }
 
 func (d *DocumentUploadResult) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -218,6 +227,9 @@ func (d *DocumentUploadResult) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DocumentUploadResult) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -332,4 +344,25 @@ func (u *UploadDocumentRequest) SetTags(tags []string) {
 func (u *UploadDocumentRequest) SetTitle(title *string) {
 	u.Title = title
 	u.require(uploadDocumentRequestFieldTitle)
+}
+
+func (u *UploadDocumentRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UploadDocumentRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UploadDocumentRequest(body)
+	return nil
+}
+
+func (u *UploadDocumentRequest) MarshalJSON() ([]byte, error) {
+	type embed UploadDocumentRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

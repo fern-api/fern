@@ -18,6 +18,7 @@ export * from "./FormParameterEncoding.js";
 export * from "./GeneratorsConfigurationSchema.js";
 export * from "./GeneratorsOpenApiObjectSchema.js";
 export * from "./GeneratorsOpenApiSchema.js";
+export * from "./GraphQlSpecSchema.js";
 export * from "./Language.js";
 export * from "./MessageNamingSettingsSchema.js";
 export * from "./NamespacedApiConfigurationSchema.js";

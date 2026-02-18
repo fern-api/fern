@@ -114,6 +114,9 @@ func (f *Foo) GetRequiredBar() string {
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -180,6 +183,9 @@ func (f *Foo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Foo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -244,4 +250,25 @@ func (u *UpdateFooRequest) SetNullableNumber(nullableNumber *float64) {
 func (u *UpdateFooRequest) SetNonNullableText(nonNullableText *string) {
 	u.NonNullableText = nonNullableText
 	u.require(updateFooRequestFieldNonNullableText)
+}
+
+func (u *UpdateFooRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateFooRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateFooRequest(body)
+	return nil
+}
+
+func (u *UpdateFooRequest) MarshalJSON() ([]byte, error) {
+	type embed UpdateFooRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

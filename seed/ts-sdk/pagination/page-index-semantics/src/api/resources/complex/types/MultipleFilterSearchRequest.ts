@@ -3,8 +3,8 @@
 import type * as SeedPagination from "../../../index.js";
 
 export interface MultipleFilterSearchRequest {
-    operator?: MultipleFilterSearchRequest.Operator;
-    value?: MultipleFilterSearchRequest.Value;
+    operator?: MultipleFilterSearchRequest.Operator | undefined;
+    value?: MultipleFilterSearchRequest.Value | undefined;
 }
 
 export namespace MultipleFilterSearchRequest {

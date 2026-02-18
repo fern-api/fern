@@ -16,7 +16,7 @@
 client.dummy.generate_stream(
   stream: true,
   num_events: 1
-);
+)
 ```
 </dd>
 </dl>
@@ -75,7 +75,7 @@ client.dummy.generate_stream(
 client.dummy.generate(
   stream: false,
   num_events: 5
-);
+)
 ```
 </dd>
 </dl>

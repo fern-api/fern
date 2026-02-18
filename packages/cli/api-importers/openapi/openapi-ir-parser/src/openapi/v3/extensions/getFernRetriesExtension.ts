@@ -1,7 +1,7 @@
 import { finalIr } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "./fernExtensions.js";
 
 interface RetriesFernExtensionSchema {
     disabled?: boolean;

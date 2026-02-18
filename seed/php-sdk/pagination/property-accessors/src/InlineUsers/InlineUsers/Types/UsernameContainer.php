@@ -39,6 +39,7 @@ class UsernameContainer extends JsonSerializableType
     public function setResults(array $value): self
     {
         $this->results = $value;
+        $this->_setField('results');
         return $this;
     }
 

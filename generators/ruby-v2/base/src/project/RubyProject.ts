@@ -1,14 +1,14 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import { join as pathJoin } from "path";
-import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs";
-import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
-import { RubocopFile } from "./RubocopFile";
+import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
+import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
+import { RubocopFile } from "./RubocopFile.js";
 
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
@@ -275,7 +275,7 @@ class GemspecFile {
             require_relative "lib/${moduleFolderName}/version"
             require_relative "${CUSTOM_GEMSPEC_FILENAME}"
 
-            # Note: A handful of these fields are required as part of the Ruby specification. 
+            # Note: A handful of these fields are required as part of the Ruby specification.
             #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
             spec.name = "${gemName}"
@@ -596,7 +596,7 @@ class ModuleFile {
         this.fileName = this.context.getRootFolderName() + ".rb";
     }
 
-    private getAbsoluteFilePathForTypeDeclaration(typeDeclaration: TypeDeclaration): AbsoluteFilePath {
+    private getAbsoluteFilePathForTypeDeclaration(typeDeclaration: FernIr.TypeDeclaration): AbsoluteFilePath {
         return join(
             this.project.absolutePathToOutputDirectory,
             this.context.getLocationForTypeId(typeDeclaration.name.typeId),
@@ -686,7 +686,7 @@ end`;
     }
 }
 
-function dependsOn(a: TypeDeclaration, b: TypeDeclaration): boolean {
+function dependsOn(a: FernIr.TypeDeclaration, b: FernIr.TypeDeclaration): boolean {
     if (a.name.typeId === b.name.typeId) {
         return false;
     }

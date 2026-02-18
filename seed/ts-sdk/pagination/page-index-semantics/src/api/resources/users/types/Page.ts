@@ -5,7 +5,7 @@ import type * as SeedPagination from "../../../index.js";
 export interface Page {
     /** The current page */
     page: number;
-    next?: SeedPagination.NextPage;
+    next?: SeedPagination.NextPage | undefined;
     per_page: number;
     total_page: number;
 }

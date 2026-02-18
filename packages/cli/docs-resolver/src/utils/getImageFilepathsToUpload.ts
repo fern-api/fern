@@ -328,8 +328,5 @@ async function collectIconsFromNavigationItem({
                 });
             }
             break;
-        case "pythonDocsSection":
-            // Python docs sections don't have icons in the minimal first iteration
-            break;
     }
 }

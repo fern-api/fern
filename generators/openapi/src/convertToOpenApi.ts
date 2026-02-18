@@ -1,16 +1,10 @@
-import {
-    DeclaredErrorName,
-    DeclaredTypeName,
-    ErrorDeclaration,
-    IntermediateRepresentation,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
-import { convertServices } from "./converters/servicesConverter";
-import { convertType } from "./converters/typeConverter";
-import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
-import { Mode } from "./writeOpenApi";
+import { convertServices } from "./converters/servicesConverter.js";
+import { convertType } from "./converters/typeConverter.js";
+import { constructEndpointSecurity, constructSecuritySchemes } from "./security.js";
+import { Mode } from "./writeOpenApi.js";
 
 export function convertToOpenApi({
     apiName,
@@ -18,12 +12,12 @@ export function convertToOpenApi({
     mode
 }: {
     apiName: string;
-    ir: IntermediateRepresentation;
+    ir: FernIr.IntermediateRepresentation;
     mode: Mode;
 }): OpenAPIV3.Document | undefined {
     const schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
 
-    const typesByName: Record<string, TypeDeclaration> = {};
+    const typesByName: Record<string, FernIr.TypeDeclaration> = {};
     Object.values(ir.types).forEach((typeDeclaration) => {
         // convert type to open api schema
         const convertedType = convertType(typeDeclaration, ir);
@@ -35,7 +29,7 @@ export function convertToOpenApi({
         typesByName[getDeclaredTypeNameKey(typeDeclaration.name)] = typeDeclaration;
     });
 
-    const errorsByName: Record<string, ErrorDeclaration> = {};
+    const errorsByName: Record<string, FernIr.ErrorDeclaration> = {};
     Object.values(ir.errors).forEach((errorDeclaration) => {
         errorsByName[getErrorTypeNameKey(errorDeclaration.name)] = errorDeclaration;
     });
@@ -86,14 +80,14 @@ export function convertToOpenApi({
     return openAPISpec;
 }
 
-export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
+export function getDeclaredTypeNameKey(declaredTypeName: FernIr.DeclaredTypeName): string {
     return [
         ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
         declaredTypeName.name.originalName
     ].join("-");
 }
 
-export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
+export function getErrorTypeNameKey(declaredErrorName: FernIr.DeclaredErrorName): string {
     return [
         ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
         declaredErrorName.name.originalName

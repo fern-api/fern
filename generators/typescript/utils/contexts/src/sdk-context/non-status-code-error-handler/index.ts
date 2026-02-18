@@ -1,1 +1,1 @@
-export type { NonStatusCodeErrorHandlerContext } from "./NonStatusCodeErrorHandlerContext";
+export type { NonStatusCodeErrorHandlerContext } from "./NonStatusCodeErrorHandlerContext.js";
