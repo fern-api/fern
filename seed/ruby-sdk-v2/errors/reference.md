@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.simple.foo_without_endpoint_error(bar: 'bar');
+client.simple.foo_without_endpoint_error(bar: "bar")
 ```
 </dd>
 </dl>
@@ -61,7 +61,7 @@ client.simple.foo_without_endpoint_error(bar: 'bar');
 <dd>
 
 ```ruby
-client.simple.foo(bar: 'bar');
+client.simple.foo(bar: "bar")
 ```
 </dd>
 </dl>
@@ -109,7 +109,7 @@ client.simple.foo(bar: 'bar');
 <dd>
 
 ```ruby
-client.simple.foo_with_examples(bar: 'hello');
+client.simple.foo_with_examples(bar: "hello")
 ```
 </dd>
 </dl>

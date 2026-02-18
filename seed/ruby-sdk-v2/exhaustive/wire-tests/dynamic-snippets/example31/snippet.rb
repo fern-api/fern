@@ -1,8 +1,11 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.endpoints.primitive.get_and_return_string(request: 'string');
+client.endpoints.params.modify_with_path(
+  param: "param",
+  request: "string"
+)

@@ -2133,6 +2133,88 @@
       ],
       "additionalProperties": false
     },
+    "docs.ApiReferenceOperationConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "additionalProperties": false
+    },
     "docs.LinkConfiguration": {
       "type": "object",
       "properties": {
@@ -2187,6 +2269,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceEndpointConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.ApiReferenceOperationConfiguration"
         },
         {
           "$ref": "#/definitions/docs.PageConfiguration"
@@ -2428,38 +2513,6 @@
       },
       "required": [
         "api"
-      ],
-      "additionalProperties": false
-    },
-    "docs.PythonDocsConfiguration": {
-      "type": "object",
-      "properties": {
-        "python-docs": {
-          "type": "string"
-        },
-        "title": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "slug": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "python-docs"
       ],
       "additionalProperties": false
     },
@@ -2749,9 +2802,6 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
-        },
-        {
-          "$ref": "#/definitions/docs.PythonDocsConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
@@ -4016,6 +4066,16 @@
               "type": "null"
             }
           ]
+        },
+        "basepath-aware": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4588,6 +4648,126 @@
           ]
         },
         "card-background": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-3": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-4": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-5": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-6": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-7": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-8": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-9": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-10": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-11": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-12": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.ColorConfig"

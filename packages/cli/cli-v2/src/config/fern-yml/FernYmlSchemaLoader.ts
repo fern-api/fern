@@ -1,6 +1,7 @@
 import { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { YamlConfigLoader } from "@fern-api/yaml-loader";
+import { ValidationIssue, YamlConfigLoader } from "@fern-api/yaml-loader";
+import { ValidationError } from "../../errors/ValidationError.js";
 import { FileFinder } from "../FileFinder.js";
 
 const FILENAME = "fern.yml";
@@ -13,8 +14,19 @@ export namespace FernYmlSchemaLoader {
         cwd?: string;
     }
 
-    export type Result = YamlConfigLoader.Result<FernYmlSchema>;
-    export type Success = YamlConfigLoader.Success<FernYmlSchema>;
+    export type Result = Result.NotFound | Result.Failure | Result.Success;
+    export type Success = Result.Success;
+
+    export namespace Result {
+        export interface NotFound {
+            type: "notFound";
+        }
+        export interface Failure {
+            type: "failure";
+            issues: ValidationIssue[];
+        }
+        export type Success = { type: "success" } & YamlConfigLoader.Success<FernYmlSchema>;
+    }
 }
 
 export class FernYmlSchemaLoader {
@@ -31,18 +43,38 @@ export class FernYmlSchemaLoader {
      * Finds, loads, and validates a fern.yml configuration file.
      * This also resolves and validates any `$ref` nodes in the
      * configuration.
+     */
+    public async loadOrThrow(): Promise<FernYmlSchemaLoader.Success> {
+        const loadResult = await this.load();
+        if (loadResult.type === "notFound") {
+            throw new Error(`${FILENAME} file not found in any parent directory; did you forget to run \`fern init\`?`);
+        }
+        if (loadResult.type === "failure") {
+            throw new ValidationError(loadResult.issues);
+        }
+        return loadResult;
+    }
+
+    /**
+     * Finds, loads, and validates a fern.yml configuration file.
+     * This also resolves and validates any `$ref` nodes in the
+     * configuration.
      *
-     * @returns Result with either the parsed config or validation errors.
-     * @throws Error if fern.yml is not found.
+     * @returns `not-found` if no fern.yml exists, `failure` with validation
+     *          issues, or `success` with the parsed config.
      */
     public async load(): Promise<FernYmlSchemaLoader.Result> {
         const absoluteFilePath = await this.finder.find({ filename: FILENAME });
         if (absoluteFilePath == null) {
-            throw new Error(`${FILENAME} file not found in any parent directory; did you forget to run \`fern init\`?`);
+            return { type: "notFound" };
         }
-        return await this.loader.load({
+        const result = await this.loader.load({
             absoluteFilePath,
             schema: FernYmlSchema
         });
+        if (!result.success) {
+            return { type: "failure", issues: result.issues };
+        }
+        return { type: "success", ...result };
     }
 }

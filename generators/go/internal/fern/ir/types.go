@@ -8358,9 +8358,10 @@ var (
 type UnionTypeDeclaration struct {
 	Discriminant *common.NameAndWireValue `json:"discriminant" url:"discriminant"`
 	// A list of other types to inherit from
-	Extends        []*DeclaredTypeName `json:"extends" url:"extends"`
-	Types          []*SingleUnionType  `json:"types" url:"types"`
-	BaseProperties []*ObjectProperty   `json:"baseProperties" url:"baseProperties"`
+	Extends              []*DeclaredTypeName `json:"extends" url:"extends"`
+	Types                []*SingleUnionType  `json:"types" url:"types"`
+	BaseProperties       []*ObjectProperty   `json:"baseProperties" url:"baseProperties"`
+	DiscriminatorContext *string             `json:"discriminatorContext,omitempty" url:"discriminatorContext,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

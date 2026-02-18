@@ -22,6 +22,7 @@ use Seed\Service\Requests\OptionalArgsRequest;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Seed\Service\Requests\InlineTypeRequest;
+use Seed\Service\Requests\WithJsonPropertyRequest;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Service\Requests\LiteralEnumRequest;
 
@@ -564,6 +565,54 @@ class ServiceClient
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/inline-type",
+                    method: HttpMethod::POST,
+                    body: $body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param WithJsonPropertyRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     * } $options
+     * @return string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function withJsonProperty(WithJsonPropertyRequest $request, ?array $options = null): string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        if ($request->json != null) {
+            $body->add(name: 'json', value: $request->json->toJson());
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new MultipartApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/with-json-property",
                     method: HttpMethod::POST,
                     body: $body,
                 ),

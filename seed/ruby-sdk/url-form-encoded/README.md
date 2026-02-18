@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.submit_form_data(
-  username: 'johndoe',
-  email: 'john@example.com'
-);
+  username: "johndoe",
+  email: "john@example.com"
+)
 ```
 
 ## Environments

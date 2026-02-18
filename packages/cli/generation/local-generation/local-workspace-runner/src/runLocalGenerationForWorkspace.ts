@@ -112,7 +112,7 @@ export async function runLocalGenerationForWorkspace({
                 const venus = createVenusService({ token: token?.value });
 
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    token = await getAccessToken();
+                    token ??= await getAccessToken();
                     if (token == null) {
                         interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.");
                         return;
@@ -297,7 +297,8 @@ export async function runLocalGenerationForWorkspace({
                         interactiveTaskContext,
                         selfhostedGithubConfig,
                         absolutePathToLocalOutput,
-                        autoVersioningCommitMessage
+                        autoVersioningCommitMessage,
+                        generatorInvocation.name
                     );
                 }
             });
@@ -374,7 +375,8 @@ async function findExistingUpdatablePR(
     owner: string,
     repo: string,
     baseBranch: string,
-    context: TaskContext
+    context: TaskContext,
+    branchPrefix: string
 ): Promise<ExistingPullRequest | undefined> {
     try {
         const { data: pulls } = await octokit.pulls.list({
@@ -394,8 +396,10 @@ async function findExistingUpdatablePR(
                 continue;
             }
 
-            if (!pr.head.ref.startsWith("fern-bot/")) {
-                context.logger.debug(`PR #${pr.number} skipped: branch ${pr.head.ref} does not start with fern-bot/`);
+            if (!pr.head.ref.startsWith(branchPrefix)) {
+                context.logger.debug(
+                    `PR #${pr.number} skipped: branch ${pr.head.ref} does not start with ${branchPrefix}`
+                );
                 continue;
             }
 
@@ -466,18 +470,25 @@ async function checkPRHasOnlyGenerationCommits(
     }
 }
 
+function sanitizeGeneratorNameForBranch(generatorName: string): string {
+    return generatorName.replace(/\//g, "-");
+}
+
 async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
     absolutePathToLocalOutput: AbsoluteFilePath,
-    commitMessage?: string
+    commitMessage?: string,
+    generatorName?: string
 ): Promise<void> {
     try {
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
         const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
         const now = new Date();
         const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
-        const newPrBranch = `fern-bot/${formattedDate}`;
+        const sanitizedName = generatorName != null ? sanitizeGeneratorNameForBranch(generatorName) : undefined;
+        const branchPrefix = sanitizedName != null ? `fern-bot/${sanitizedName}/` : "fern-bot/";
+        const newPrBranch = `${branchPrefix}${formattedDate}`;
         // Ensure git commits are attributed to a bot user so pushes/PRs have a consistent author.
         try {
             // Use repository helper to set git user/email if available
@@ -500,7 +511,14 @@ async function postProcessGithubSelfHosted(
                 const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
                 const { owner, repo } = parsedRepo;
 
-                const existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, context);
+                const existingPR = await findExistingUpdatablePR(
+                    octokit,
+                    owner,
+                    repo,
+                    baseBranch,
+                    context,
+                    branchPrefix
+                );
 
                 let prBranch: string;
                 let isUpdatingExistingPR = false;

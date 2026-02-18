@@ -50,6 +50,9 @@ func (d *Directory) GetDirectories() []*Directory {
 }
 
 func (d *Directory) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -109,6 +112,9 @@ func (d *Directory) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Directory) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value

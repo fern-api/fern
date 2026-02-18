@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.user.head();
+client.user.head
 ```
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.user.head();
 <dd>
 
 ```ruby
-client.user.list(limit: 1);
+client.user.list(limit: 1)
 ```
 </dd>
 </dl>

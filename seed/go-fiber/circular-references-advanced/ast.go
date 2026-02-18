@@ -30,6 +30,9 @@ func (a *Acai) GetAnimal() *Animal {
 }
 
 func (a *Acai) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -74,6 +77,9 @@ func (a *Acai) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Acai) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
@@ -163,6 +169,9 @@ func (b *Berry) GetAnimal() *Animal {
 }
 
 func (b *Berry) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -207,6 +216,9 @@ func (b *Berry) MarshalJSON() ([]byte, error) {
 }
 
 func (b *Berry) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
@@ -234,6 +246,9 @@ func (b *BranchNode) GetChildren() []*Node {
 }
 
 func (b *BranchNode) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -278,6 +293,9 @@ func (b *BranchNode) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BranchNode) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}
@@ -305,6 +323,9 @@ func (c *Cat) GetFruit() *Fruit {
 }
 
 func (c *Cat) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -349,6 +370,9 @@ func (c *Cat) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Cat) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
@@ -511,6 +535,9 @@ func (d *Dog) GetFruit() *Fruit {
 }
 
 func (d *Dog) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -555,6 +582,9 @@ func (d *Dog) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Dog) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
@@ -743,6 +773,9 @@ func (f *Fig) GetAnimal() *Animal {
 }
 
 func (f *Fig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -787,6 +820,9 @@ func (f *Fig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Fig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
@@ -864,6 +900,9 @@ type LeafNode struct {
 }
 
 func (l *LeafNode) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -901,6 +940,9 @@ func (l *LeafNode) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LeafNode) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(l); err == nil {
 		return value
 	}
@@ -990,6 +1032,9 @@ func (n *NodesWrapper) GetNodes() [][]*Node {
 }
 
 func (n *NodesWrapper) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -1034,6 +1079,9 @@ func (n *NodesWrapper) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NodesWrapper) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
@@ -1071,6 +1119,9 @@ func (o *ObjectFieldValue) GetValue() *FieldValue {
 }
 
 func (o *ObjectFieldValue) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -1122,6 +1173,9 @@ func (o *ObjectFieldValue) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectFieldValue) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
@@ -1137,6 +1191,9 @@ type ObjectValue struct {
 }
 
 func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -1174,6 +1231,9 @@ func (o *ObjectValue) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectValue) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}

@@ -944,6 +944,7 @@ channel:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSource:
     base-properties: {}
+    context: data
     discriminant: object
     docs: >-
       The payment source to take the payment from. This can be a card or a bank

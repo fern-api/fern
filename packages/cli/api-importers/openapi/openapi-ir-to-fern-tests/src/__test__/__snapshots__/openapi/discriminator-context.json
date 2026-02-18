@@ -1,0 +1,218 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "SseStream": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/sse-stream",
+              "request": {
+                "body": {
+                  "properties": {
+                    "query": {
+                      "docs": "The query to process",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "StreamRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "AdminData": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "permissions": "optional<list<string>>",
+              "username": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CompletionEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": {
+                "docs": "The completion content",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "DataLevelUnion": {
+            "availability": undefined,
+            "base-properties": {},
+            "context": "data",
+            "discriminant": "type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "admin": "AdminData",
+              "user": "UserData",
+            },
+          },
+          "ErrorEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "code": {
+                "docs": "The error code",
+                "type": "optional<integer>",
+              },
+              "error": {
+                "docs": "The error message",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SseStreamEvent": {
+            "availability": undefined,
+            "base-properties": {},
+            "context": "protocol",
+            "discriminant": "event",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "completion": "CompletionEvent",
+              "error": "ErrorEvent",
+            },
+          },
+          "UserData": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "username": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    SseStream:
+      path: /sse-stream
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: StreamRequest
+        body:
+          properties:
+            query:
+              type: optional<string>
+              docs: The query to process
+        content-type: application/json
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  SseStreamEvent:
+    discriminant: event
+    base-properties: {}
+    union:
+      completion: CompletionEvent
+      error: ErrorEvent
+    source:
+      openapi: ../openapi.yml
+    context: protocol
+  CompletionEvent:
+    properties:
+      content:
+        type: optional<string>
+        docs: The completion content
+    source:
+      openapi: ../openapi.yml
+  ErrorEvent:
+    properties:
+      error:
+        type: optional<string>
+        docs: The error message
+      code:
+        type: optional<integer>
+        docs: The error code
+    source:
+      openapi: ../openapi.yml
+  DataLevelUnion:
+    discriminant: type
+    base-properties: {}
+    union:
+      user: UserData
+      admin: AdminData
+    source:
+      openapi: ../openapi.yml
+    context: data
+  UserData:
+    properties:
+      username: optional<string>
+    source:
+      openapi: ../openapi.yml
+  AdminData:
+    properties:
+      username: optional<string>
+      permissions: optional<list<string>>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test spec for discriminator context extension",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test spec for discriminator context extension
+",
+  },
+}

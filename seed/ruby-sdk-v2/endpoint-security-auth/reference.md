@@ -14,11 +14,11 @@
 
 ```ruby
 client.auth.get_token(
-  client_id: 'client_id',
-  client_secret: 'client_secret',
-  audience: 'https://api.example.com',
-  grant_type: 'client_credentials'
-);
+  client_id: "client_id",
+  client_secret: "client_secret",
+  audience: "https://api.example.com",
+  grant_type: "client_credentials"
+)
 ```
 </dd>
 </dl>
@@ -91,7 +91,7 @@ client.auth.get_token(
 <dd>
 
 ```ruby
-client.user.get_with_bearer();
+client.user.get_with_bearer
 ```
 </dd>
 </dl>
@@ -131,7 +131,7 @@ client.user.get_with_bearer();
 <dd>
 
 ```ruby
-client.user.get_with_bearer();
+client.user.get_with_bearer
 ```
 </dd>
 </dl>
@@ -171,7 +171,7 @@ client.user.get_with_bearer();
 <dd>
 
 ```ruby
-client.user.get_with_bearer();
+client.user.get_with_bearer
 ```
 </dd>
 </dl>
@@ -211,7 +211,7 @@ client.user.get_with_bearer();
 <dd>
 
 ```ruby
-client.user.get_with_bearer();
+client.user.get_with_bearer
 ```
 </dd>
 </dl>
@@ -251,7 +251,7 @@ client.user.get_with_bearer();
 <dd>
 
 ```ruby
-client.user.get_with_bearer();
+client.user.get_with_bearer
 ```
 </dd>
 </dl>
@@ -291,7 +291,7 @@ client.user.get_with_bearer();
 <dd>
 
 ```ruby
-client.user.get_with_bearer();
+client.user.get_with_bearer
 ```
 </dd>
 </dl>
@@ -331,7 +331,7 @@ client.user.get_with_bearer();
 <dd>
 
 ```ruby
-client.user.get_with_bearer();
+client.user.get_with_bearer
 ```
 </dd>
 </dl>

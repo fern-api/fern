@@ -128,13 +128,9 @@ class ServiceWireTest < WireMockTestCase
         nodes: [{
           name: "name",
           nodes: [{
-            name: "name",
-            nodes: [],
-            trees: []
+            name: "name"
           }, {
-            name: "name",
-            nodes: [],
-            trees: []
+            name: "name"
           }],
           trees: [{
             nodes: []
@@ -144,13 +140,9 @@ class ServiceWireTest < WireMockTestCase
         }, {
           name: "name",
           nodes: [{
-            name: "name",
-            nodes: [],
-            trees: []
+            name: "name"
           }, {
-            name: "name",
-            nodes: [],
-            trees: []
+            name: "name"
           }],
           trees: [{
             nodes: []
@@ -199,13 +191,9 @@ class ServiceWireTest < WireMockTestCase
             contents: "contents"
           }],
           directories: [{
-            name: "name",
-            files: [],
-            directories: []
+            name: "name"
           }, {
-            name: "name",
-            files: [],
-            directories: []
+            name: "name"
           }]
         }, {
           name: "name",
@@ -217,13 +205,9 @@ class ServiceWireTest < WireMockTestCase
             contents: "contents"
           }],
           directories: [{
-            name: "name",
-            files: [],
-            directories: []
+            name: "name"
           }, {
-            name: "name",
-            files: [],
-            directories: []
+            name: "name"
           }]
         }]
       },

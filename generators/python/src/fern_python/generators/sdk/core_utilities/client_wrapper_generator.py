@@ -68,6 +68,9 @@ class ClientWrapperGenerator:
 
     HTTPX_CLIENT_MEMBER_NAME = "httpx_client"
 
+    LOGGING_PARAMETER_NAME = "logging"
+    LOGGING_MEMBER_NAME = "_logging"
+
     STRING_OR_SUPPLIER_TYPE_HINT = AST.TypeHint.union(
         AST.TypeHint.str_(), AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
     )
@@ -96,9 +99,11 @@ class ClientWrapperGenerator:
         constructor_info = self._get_constructor_info()
         url_constructor_param = self._get_url_storage_info()
         timeout_param = self._get_timeout_constructor_parameter()
+        logging_param = self._get_logging_constructor_parameter()
         constructor_parameters = [param for param in constructor_info.constructor_parameters]
         constructor_parameters.append(url_constructor_param)
         constructor_parameters.append(timeout_param)
+        constructor_parameters.append(logging_param)
 
         source_file.add_class_declaration(
             declaration=self._create_base_client_wrapper_class_declaration(
@@ -157,6 +162,20 @@ class ClientWrapperGenerator:
                 signature=AST.FunctionSignature(return_type=AST.TypeHint.optional(AST.TypeHint.float_())),
                 body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME}"),
             ),
+        )
+
+    def _get_logging_constructor_parameter(self) -> ConstructorParameter:
+        log_config_ref = self._context.core_utilities.get_reference_to_log_config()
+        logger_ref = self._context.core_utilities.get_reference_to_logger()
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.LOGGING_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(
+                AST.TypeHint.union(
+                    AST.TypeHint(log_config_ref),
+                    AST.TypeHint(logger_ref),
+                )
+            ),
+            private_member_name=ClientWrapperGenerator.LOGGING_MEMBER_NAME,
         )
 
     def _get_environment_constructor_parameter(self) -> ConstructorParameter:
@@ -400,6 +419,7 @@ class ClientWrapperGenerator:
                     base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=True,
                     async_base_headers=AST.Expression(f"self.{ClientWrapperGenerator.ASYNC_GET_HEADERS_METHOD_NAME}"),
+                    logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
                 )
             )
 
@@ -445,6 +465,7 @@ class ClientWrapperGenerator:
                     base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}"),
                     base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=is_async,
+                    logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
                 )
             )
 

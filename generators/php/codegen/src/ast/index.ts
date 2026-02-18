@@ -10,6 +10,7 @@ export { Writer } from "./core/Writer.js";
 export { DataClass } from "./DataClass.js";
 export { Enum } from "./Enum.js";
 export { Field } from "./Field.js";
+export { Interface } from "./Interface.js";
 export { Map } from "./Map.js";
 export { Method } from "./Method.js";
 export { MethodInvocation } from "./MethodInvocation.js";

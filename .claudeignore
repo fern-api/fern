@@ -1,0 +1,74 @@
+# Build outputs and caches
+node_modules/
+.turbo/
+.tsup/
+.nx/
+.yarn/
+.yarn-cache/
+.pnpm-cache/
+.pnpm-store/
+**/build/
+**/dist/
+**/lib/
+**/out/
+**/generated/
+**/*.tsbuildinfo
+
+# Test outputs and fixtures (seed contains massive amounts of generated test code)
+seed/
+seed-remote-local/
+test-remote-local-logs-*/
+**/__snapshots__/
+**/__test__/**/fixtures/
+**/__test__/**/output/
+
+# Python caches
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/*.egg-info/
+**/*.prof
+
+# Java/Kotlin build outputs
+**/.gradle/
+**/gradle/
+**/gradlew
+**/gradlew.bat
+**/bin/
+**/target/
+
+# .NET build outputs
+**/obj/
+
+# PHP caches
+.php-cs-fixer.cache
+
+# Lock files (pnpm-lock.yaml is 100k+ lines)
+pnpm-lock.yaml
+
+# Large generated files
+seed/python-sdk/trace/snippet-templates.json
+
+# IDE and system files
+.DS_Store
+.idea/
+.vscode/
+.cursor/
+*.code-workspace
+.local/
+.preview/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Environment files
+.env*.local
+.vercel/
+
+# Temporary files
+*.swp
+*.tmp

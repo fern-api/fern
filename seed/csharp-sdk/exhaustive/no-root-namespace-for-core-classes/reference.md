@@ -1126,6 +1126,63 @@ await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
 </dl>
 </details>
 
+## Endpoints Pagination
+<details><summary><code>client.Endpoints.Pagination.<a href="/src/SeedExhaustive/Endpoints/Pagination/PaginationClient.cs">ListItemsAsync</a>(ListItemsRequest { ... }) -> Pager&lt;ObjectWithRequiredField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Pagination.ListItemsAsync(
+    new ListItemsRequest { Cursor = "cursor", Limit = 1 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListItemsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Params
 <details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAsync</a>(param) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>

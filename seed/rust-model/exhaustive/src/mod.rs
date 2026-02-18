@@ -5,9 +5,10 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 7 types for API operations
+//! - **Request/Response Types**: 9 types for API operations
 //! - **Model Types**: 16 types for data representation
 
+pub mod endpoints_pagination_paginated_response;
 pub mod endpoints_put_error;
 pub mod endpoints_put_error_category;
 pub mod endpoints_put_error_code;
@@ -27,11 +28,13 @@ pub mod types_union_animal;
 pub mod types_union_dog;
 pub mod types_union_cat;
 pub mod post_with_object_body;
+pub mod list_items_query_request;
 pub mod get_with_query_query_request;
 pub mod get_with_allow_multiple_query_query_request;
 pub mod get_with_path_and_query_query_request;
 pub mod get_with_inline_path_and_query_query_request;
 
+pub use endpoints_pagination_paginated_response::PaginatedResponse;
 pub use endpoints_put_error::Error;
 pub use endpoints_put_error_category::ErrorCategory;
 pub use endpoints_put_error_code::ErrorCode;
@@ -51,6 +54,7 @@ pub use types_union_animal::Animal;
 pub use types_union_dog::Dog;
 pub use types_union_cat::Cat;
 pub use post_with_object_body::PostWithObjectBody;
+pub use list_items_query_request::ListItemsQueryRequest;
 pub use get_with_query_query_request::GetWithQueryQueryRequest;
 pub use get_with_allow_multiple_query_query_request::GetWithAllowMultipleQueryQueryRequest;
 pub use get_with_path_and_query_query_request::GetWithPathAndQueryQueryRequest;

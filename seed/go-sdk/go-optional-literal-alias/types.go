@@ -35,6 +35,9 @@ func (s *SearchRequest) GetQuery() string {
 }
 
 func (s *SearchRequest) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -87,6 +90,9 @@ func (s *SearchRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchRequest) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -120,6 +126,9 @@ func (s *SearchResponse) GetResult() string {
 }
 
 func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -165,6 +174,9 @@ func (s *SearchResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchResponse) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value

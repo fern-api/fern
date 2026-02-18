@@ -218,7 +218,13 @@ async function getHeaders(args: Fetcher.Args): Promise<Headers> {
 
     newHeaders.set(
         "Accept",
-        args.responseType === "json" ? "application/json" : args.responseType === "text" ? "text/plain" : "*/*",
+        args.responseType === "json"
+            ? "application/json"
+            : args.responseType === "text"
+              ? "text/plain"
+              : args.responseType === "sse"
+                ? "text/event-stream"
+                : "*/*",
     );
     if (args.body !== undefined && args.contentType != null) {
         newHeaders.set("Content-Type", args.contentType);

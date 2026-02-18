@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: Test spec for discriminator context extension
+  version: 1.0.0
+
+paths:
+  /sse-stream:
+    post:
+      operationId: SseStream
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: Server-sent events stream
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/SseStreamEvent"
+
+components:
+  schemas:
+    StreamRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The query to process
+
+    # Test protocol-level discrimination (SSE events)
+    SseStreamEvent:
+      discriminator:
+        propertyName: event
+        x-fern-discriminator-context: protocol
+        mapping:
+          completion: "#/components/schemas/CompletionEvent"
+          error: "#/components/schemas/ErrorEvent"
+      oneOf:
+        - $ref: "#/components/schemas/CompletionEvent"
+        - $ref: "#/components/schemas/ErrorEvent"
+
+    CompletionEvent:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The completion content
+
+    ErrorEvent:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The error message
+        code:
+          type: integer
+          description: The error code
+
+    # Test data-level discrimination (default behavior)
+    DataLevelUnion:
+      discriminator:
+        propertyName: type
+        mapping:
+          user: "#/components/schemas/UserData"
+          admin: "#/components/schemas/AdminData"
+      oneOf:
+        - $ref: "#/components/schemas/UserData"
+        - $ref: "#/components/schemas/AdminData"
+
+    UserData:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum: ["user"]
+        username:
+          type: string
+
+    AdminData:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum: ["admin"]
+        username:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string

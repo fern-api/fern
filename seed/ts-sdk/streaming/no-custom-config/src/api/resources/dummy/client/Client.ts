@@ -45,7 +45,7 @@ export class DummyClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: { ...request, stream: true },
-            responseType: "sse",
+            responseType: "streaming",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
