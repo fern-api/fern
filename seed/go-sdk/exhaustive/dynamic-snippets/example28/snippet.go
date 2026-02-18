@@ -16,12 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithQuery{
+    request := &endpoints.GetWithPathAndQuery{
         Query: "query",
-        Number: 1,
     }
-    client.Endpoints.Params.GetWithQuery(
+    client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
+        "param",
         request,
     )
 }

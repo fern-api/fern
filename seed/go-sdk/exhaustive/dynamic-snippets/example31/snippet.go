@@ -16,9 +16,8 @@ func do() {
         ),
     )
     request := "string"
-    client.Endpoints.Params.ModifyWithPath(
+    client.Endpoints.Primitive.GetAndReturnString(
         context.TODO(),
-        "param",
         request,
     )
 }

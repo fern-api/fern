@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    fern "github.com/exhaustive/fern"
+    uuid "github.com/google/uuid"
     context "context"
 )
 
@@ -16,10 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := fern.MustParseDateTime(
-        "2024-01-15T09:30:00Z",
+    request := uuid.MustParse(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     )
-    client.Endpoints.Primitive.GetAndReturnDatetime(
+    client.Endpoints.Primitive.GetAndReturnUuid(
         context.TODO(),
         request,
     )
