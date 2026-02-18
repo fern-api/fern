@@ -7,6 +7,7 @@ import time
 import typing
 from contextlib import asynccontextmanager, contextmanager
 from random import random
+from typing import TYPE_CHECKING
 
 import httpx
 from .file import File, convert_file_dict_to_httpx_tuples
@@ -21,6 +22,9 @@ from httpx._types import RequestFiles
 INITIAL_RETRY_DELAY_SECONDS = 1.0
 MAX_RETRY_DELAY_SECONDS = 60.0
 JITTER_FACTOR = 0.2  # 20% random jitter
+
+DEFAULT_TIMEOUT = httpx.Timeout(60.0)
+DEFAULT_CONNECTION_LIMITS = httpx.Limits(max_connections=100, max_keepalive_connections=20)
 
 
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
@@ -774,3 +778,33 @@ class AsyncHttpClient:
             timeout=timeout,
         ) as stream:
             yield stream
+
+
+# Conditional aiohttp client wrapper
+try:
+    import httpx_aiohttp
+except ImportError:
+
+    class _DefaultAioHttpClient(httpx.AsyncClient):
+        def __init__(self, **_kwargs: typing.Any) -> None:
+            raise RuntimeError(
+                "To use the aiohttp client you must have installed the package "
+                "with the `aiohttp` extra, e.g.: pip install seed[aiohttp]"
+            )
+else:
+
+    class _DefaultAioHttpClient(httpx_aiohttp.HttpxAiohttpClient):  # type: ignore
+        def __init__(self, **kwargs: typing.Any) -> None:
+            kwargs.setdefault("timeout", DEFAULT_TIMEOUT)
+            kwargs.setdefault("limits", DEFAULT_CONNECTION_LIMITS)
+            kwargs.setdefault("follow_redirects", True)
+            super().__init__(**kwargs)
+
+
+# Public exports (with TYPE_CHECKING split for type checkers)
+if TYPE_CHECKING:
+    DefaultAsyncHttpxClient = httpx.AsyncClient
+    DefaultAioHttpClient = httpx.AsyncClient
+else:
+    DefaultAsyncHttpxClient = httpx.AsyncClient
+    DefaultAioHttpClient = _DefaultAioHttpClient
