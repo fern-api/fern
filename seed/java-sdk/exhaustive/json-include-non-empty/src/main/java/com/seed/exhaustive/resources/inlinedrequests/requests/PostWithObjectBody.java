@@ -99,6 +99,8 @@ public final class PostWithObjectBody {
 
     public interface _FinalStage {
         PostWithObjectBody build();
+
+        _FinalStage additionalProperty(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -146,6 +148,12 @@ public final class PostWithObjectBody {
         @java.lang.Override
         public PostWithObjectBody build() {
             return new PostWithObjectBody(string, integer, nestedObject, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
         }
     }
 }

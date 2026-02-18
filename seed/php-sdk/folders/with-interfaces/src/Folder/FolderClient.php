@@ -10,6 +10,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Folder\Service\ServiceClientInterface;
 
 class FolderClient implements FolderClientInterface
 {
@@ -89,5 +90,13 @@ class FolderClient implements FolderClientInterface
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
         );
+    }
+
+    /**
+     * @return ServiceClientInterface
+     */
+    public function getService(): ServiceClientInterface
+    {
+        return $this->service;
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Seed;
 
+use Seed\A\AClientInterface;
+use Seed\Folder\FolderClientInterface;
+
 interface SeedClientInterface
 {
     /**
@@ -15,4 +18,14 @@ interface SeedClientInterface
      * } $options
      */
     public function foo(?array $options = null): void;
+
+    /**
+     * @return AClientInterface
+     */
+    public function getA(): AClientInterface;
+
+    /**
+     * @return FolderClientInterface
+     */
+    public function getFolder(): FolderClientInterface;
 }

@@ -63,5 +63,10 @@ public final class PutRequest {
     public PutRequest build() {
       return new PutRequest(additionalProperties);
     }
+
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
+    }
   }
 }

@@ -141,5 +141,10 @@ public final class ListItemsRequest {
     public ListItemsRequest build() {
       return new ListItemsRequest(cursor, limit, additionalProperties);
     }
+
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
+    }
   }
 }
