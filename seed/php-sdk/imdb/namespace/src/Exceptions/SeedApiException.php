@@ -46,8 +46,8 @@ class SeedApiException extends SeedException
     public function __toString(): string
     {
         if (empty($this->body)) {
-            return "$this->message; Status Code: $this->code\n";
+            return $this->message . '; Status Code: ' . $this->getCode() . "\n";
         }
-        return "$this->message; Status Code: $this->code; Body: " . $this->body . "\n";
+        return $this->message . '; Status Code: ' . $this->getCode() . '; Body: ' . print_r($this->body, true) . "\n";
     }
 }

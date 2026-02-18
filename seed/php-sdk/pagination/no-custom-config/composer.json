@@ -42,5 +42,10 @@
     ],
     "test": "phpunit",
     "analyze": "phpstan analyze src tests --memory-limit=1G"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   }
 }

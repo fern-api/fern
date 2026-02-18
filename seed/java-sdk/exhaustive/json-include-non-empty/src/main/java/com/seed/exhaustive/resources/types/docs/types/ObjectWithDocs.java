@@ -214,6 +214,8 @@ public final class ObjectWithDocs {
 
     public interface _FinalStage {
         ObjectWithDocs build();
+
+        _FinalStage additionalProperty(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -384,6 +386,12 @@ public final class ObjectWithDocs {
         @java.lang.Override
         public ObjectWithDocs build() {
             return new ObjectWithDocs(string, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
         }
     }
 }

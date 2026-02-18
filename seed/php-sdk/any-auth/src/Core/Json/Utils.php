@@ -11,7 +11,7 @@ class Utils
     /**
      * Determines if the given type represents a map.
      *
-     * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
+     * @param array<mixed> $type The type definition from the annotation.
      * @return bool True if the type is a map, false if it's a list.
      */
     public static function isMapType(array $type): bool
@@ -24,19 +24,20 @@ class Utils
      *
      * @param mixed $key The key to be cast.
      * @param string $keyType The type to cast the key to ('string', 'integer', 'float').
-     * @return mixed The casted key.
+     * @return int|string The casted key.
      * @throws JsonException
      */
-    public static function castKey(mixed $key, string $keyType): mixed
+    public static function castKey(mixed $key, string $keyType): int|string
     {
         if (!is_scalar($key)) {
             throw new JsonException("Key must be a scalar type.");
         }
         return match ($keyType) {
             'integer' => (int)$key,
-            'float' => (float)$key,
+            // PHP arrays don't support float keys; truncate to int
+            'float' => (int)$key,
             'string' => (string)$key,
-            default => $key,
+            default => is_int($key) ? $key : (string)$key,
         };
     }
 
