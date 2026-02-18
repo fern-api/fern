@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.get_resource(resource_id: 'rsc-xyz');
+client.service.get_resource(resource_id: "rsc-xyz")
 ```
 </dd>
 </dl>
@@ -63,8 +63,8 @@ client.service.get_resource(resource_id: 'rsc-xyz');
 ```ruby
 client.service.list_resources(
   page_limit: 10,
-  before_date: '2023-01-01'
-);
+  before_date: "2023-01-01"
+)
 ```
 </dd>
 </dl>

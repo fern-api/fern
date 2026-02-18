@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
-client.ec_2.boot_instance(size: 'size');
+client.ec_2.boot_instance(size: "size")
 ```
 
 ## Environments

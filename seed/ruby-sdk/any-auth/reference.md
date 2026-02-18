@@ -14,11 +14,11 @@
 
 ```ruby
 client.auth.get_token(
-  client_id: 'client_id',
-  client_secret: 'client_secret',
-  audience: 'https://api.example.com',
-  grant_type: 'client_credentials'
-);
+  client_id: "client_id",
+  client_secret: "client_secret",
+  audience: "https://api.example.com",
+  grant_type: "client_credentials"
+)
 ```
 </dd>
 </dl>
@@ -91,7 +91,7 @@ client.auth.get_token(
 <dd>
 
 ```ruby
-client.user.get();
+client.user.get
 ```
 </dd>
 </dl>
@@ -131,7 +131,7 @@ client.user.get();
 <dd>
 
 ```ruby
-client.user.get_admins();
+client.user.get_admins
 ```
 </dd>
 </dl>

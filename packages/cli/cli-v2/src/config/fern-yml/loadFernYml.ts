@@ -1,7 +1,4 @@
-import type { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { YamlConfigLoader } from "@fern-api/yaml-loader";
-import { ValidationError } from "../../errors/ValidationError.js";
 import { FernYmlSchemaLoader } from "./FernYmlSchemaLoader.js";
 
 /**
@@ -14,15 +11,7 @@ import { FernYmlSchemaLoader } from "./FernYmlSchemaLoader.js";
  * @throws ValidationError if the configuration is invalid.
  * @throws Error if fern.yml is not found.
  */
-export async function loadFernYml({
-    cwd
-}: {
-    cwd?: AbsoluteFilePath;
-}): Promise<YamlConfigLoader.Success<FernYmlSchema>> {
+export async function loadFernYml({ cwd }: { cwd?: AbsoluteFilePath }): Promise<FernYmlSchemaLoader.Success> {
     const schemaLoader = new FernYmlSchemaLoader({ cwd });
-    const result = await schemaLoader.load();
-    if (!result.success) {
-        throw new ValidationError(result.issues);
-    }
-    return result;
+    return await schemaLoader.loadOrThrow();
 }

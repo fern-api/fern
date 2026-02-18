@@ -1,6 +1,9 @@
 import {
+    ExampleObjectProperty,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
+    ExampleTypeShape,
+    FernIr,
     TypeDeclaration,
     TypeId,
     TypeReference
@@ -48,7 +51,7 @@ export function generateTypeReferenceExample({
             const visited = visitedTypes ?? new Map<string, number>();
             const count = visited.get(typeReference.typeId) ?? 0;
             if (count >= 2) {
-                return { type: "failure", message: `Detected recursive type ${typeReference.typeId}` };
+                return generateMinimalNamedExample({ typeDeclaration, typeDeclarations });
             }
             visited.set(typeReference.typeId, count + 1);
             const generatedExample = generateTypeDeclarationExample({
@@ -141,6 +144,204 @@ export function generateTypeReferenceExample({
                     shape: ExampleTypeReferenceShape.unknown(jsonExample)
                 },
                 jsonExample
+            };
+        }
+    }
+}
+
+/**
+ * Checks whether a type reference is a "leaf" — i.e. it can be generated
+ * without recursing into named object/union types that might cycle.
+ * Leaf types: primitives, enums, literals, unknown, and optional/nullable wrappers of leaves.
+ */
+function isLeafTypeReference(typeRef: TypeReference, typeDeclarations: Record<TypeId, TypeDeclaration>): boolean {
+    switch (typeRef.type) {
+        case "primitive":
+        case "unknown":
+            return true;
+        case "named": {
+            const td = typeDeclarations[typeRef.typeId];
+            return td?.shape.type === "enum";
+        }
+        case "container": {
+            switch (typeRef.container.type) {
+                case "literal":
+                    return true;
+                case "optional":
+                    return isLeafTypeReference(typeRef.container.optional, typeDeclarations);
+                case "nullable":
+                    return isLeafTypeReference(typeRef.container.nullable, typeDeclarations);
+                default:
+                    return false;
+            }
+        }
+    }
+}
+
+/**
+ * Generates a stub example for a named type when cycle detection triggers.
+ * Instead of returning failure (which cascades up and kills parent examples),
+ * this produces a valid example with all leaf (non-recursive) properties filled in:
+ * - Objects → generates all primitive/enum/literal properties, skips recursive ones
+ * - Enums → first enum value
+ * - Aliases → resolve non-recursive targets; recursive ones get empty object
+ * - Unions → first noProperties variant if available; otherwise failure
+ */
+function generateMinimalNamedExample({
+    typeDeclaration,
+    typeDeclarations
+}: {
+    typeDeclaration: TypeDeclaration;
+    typeDeclarations: Record<TypeId, TypeDeclaration>;
+}): ExampleGenerationResult<ExampleTypeReference> {
+    switch (typeDeclaration.shape.type) {
+        case "object": {
+            const jsonExample: Record<string, unknown> = {};
+            const properties: ExampleObjectProperty[] = [];
+            for (const property of [
+                ...(typeDeclaration.shape.properties ?? []),
+                ...(typeDeclaration.shape.extendedProperties ?? [])
+            ]) {
+                if (!isLeafTypeReference(property.valueType, typeDeclarations)) {
+                    continue;
+                }
+                const propertyExample = generateTypeReferenceExample({
+                    fieldName: property.name.wireValue,
+                    typeReference: property.valueType,
+                    typeDeclarations,
+                    currentDepth: 0,
+                    maxDepth: 3,
+                    skipOptionalProperties: true
+                });
+                if (propertyExample.type === "failure") {
+                    continue;
+                }
+                properties.push({
+                    name: property.name,
+                    originalTypeDeclaration: typeDeclaration.name,
+                    value: propertyExample.example,
+                    propertyAccess: property.propertyAccess
+                });
+                jsonExample[property.name.wireValue] = propertyExample.jsonExample;
+            }
+            const example = ExampleTypeShape.object({
+                properties,
+                extraProperties: undefined
+            });
+            return {
+                type: "success",
+                example: {
+                    jsonExample,
+                    shape: ExampleTypeReferenceShape.named({
+                        shape: example,
+                        typeName: typeDeclaration.name
+                    })
+                },
+                jsonExample
+            };
+        }
+        case "enum": {
+            const enumValue = typeDeclaration.shape.values[0];
+            if (enumValue == null) {
+                return { type: "failure", message: "No enum values present for recursive type stub" };
+            }
+            const jsonExample = enumValue.name.wireValue;
+            const example = ExampleTypeShape.enum({ value: enumValue.name });
+            return {
+                type: "success",
+                example: {
+                    jsonExample,
+                    shape: ExampleTypeReferenceShape.named({
+                        shape: example,
+                        typeName: typeDeclaration.name
+                    })
+                },
+                jsonExample
+            };
+        }
+        case "alias": {
+            const aliasOf = typeDeclaration.shape.aliasOf;
+            if (aliasOf.type === "primitive") {
+                const { jsonExample, example } = generatePrimitiveExample({
+                    fieldName: undefined,
+                    primitiveType: aliasOf.primitive
+                });
+                return {
+                    type: "success",
+                    example: {
+                        jsonExample,
+                        shape: ExampleTypeReferenceShape.named({
+                            shape: ExampleTypeShape.alias({
+                                value: { jsonExample, shape: ExampleTypeReferenceShape.primitive(example) }
+                            }),
+                            typeName: typeDeclaration.name
+                        })
+                    },
+                    jsonExample
+                };
+            }
+            if (aliasOf.type === "named") {
+                const aliasedDeclaration = typeDeclarations[aliasOf.typeId];
+                if (aliasedDeclaration != null && aliasedDeclaration.name.typeId !== typeDeclaration.name.typeId) {
+                    return generateMinimalNamedExample({ typeDeclaration: aliasedDeclaration, typeDeclarations });
+                }
+            }
+            const jsonExample = {};
+            return {
+                type: "success",
+                example: {
+                    jsonExample,
+                    shape: ExampleTypeReferenceShape.named({
+                        shape: ExampleTypeShape.alias({
+                            value: { jsonExample, shape: ExampleTypeReferenceShape.unknown(jsonExample) }
+                        }),
+                        typeName: typeDeclaration.name
+                    })
+                },
+                jsonExample
+            };
+        }
+        case "union": {
+            const discriminant = typeDeclaration.shape.discriminant;
+            for (const variant of typeDeclaration.shape.types) {
+                const isNoProperties = variant.shape._visit<boolean>({
+                    noProperties: () => true,
+                    samePropertiesAsObject: () => false,
+                    singleProperty: () => false,
+                    _other: () => false
+                });
+                if (isNoProperties) {
+                    const jsonExample = { [discriminant.wireValue]: variant.discriminantValue.wireValue };
+                    return {
+                        type: "success",
+                        example: {
+                            jsonExample,
+                            shape: ExampleTypeReferenceShape.named({
+                                shape: ExampleTypeShape.union({
+                                    discriminant,
+                                    singleUnionType: {
+                                        wireDiscriminantValue: variant.discriminantValue,
+                                        shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
+                                    },
+                                    baseProperties: [],
+                                    extendProperties: []
+                                }),
+                                typeName: typeDeclaration.name
+                            })
+                        },
+                        jsonExample
+                    };
+                }
+            }
+            return {
+                type: "failure",
+                message: `No simple variant available for recursive union ${typeDeclaration.name.typeId}`
+            };
+        }
+        case "undiscriminatedUnion": {
+            return {
+                type: "failure",
+                message: `Cannot generate stub for recursive undiscriminated union ${typeDeclaration.name.typeId}`
             };
         }
     }

@@ -39,6 +39,9 @@ func (c *CreateMovieRequest) GetRating() float64 {
 }
 
 func (c *CreateMovieRequest) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -90,6 +93,9 @@ func (c *CreateMovieRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateMovieRequest) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
@@ -136,6 +142,9 @@ func (m *Movie) GetRating() float64 {
 }
 
 func (m *Movie) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -194,6 +203,9 @@ func (m *Movie) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Movie) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}

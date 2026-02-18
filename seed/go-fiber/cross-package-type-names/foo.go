@@ -36,6 +36,9 @@ func (i *ImportingType) GetImported() Imported {
 }
 
 func (i *ImportingType) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
 	return i.extraProperties
 }
 
@@ -80,6 +83,9 @@ func (i *ImportingType) MarshalJSON() ([]byte, error) {
 }
 
 func (i *ImportingType) String() string {
+	if i == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}

@@ -31,6 +31,9 @@ func (a *A) GetS() string {
 }
 
 func (a *A) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (a *A) MarshalJSON() ([]byte, error) {
 }
 
 func (a *A) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value

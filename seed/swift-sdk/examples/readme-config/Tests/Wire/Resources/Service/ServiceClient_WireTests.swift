@@ -405,7 +405,14 @@ import Examples
                     nodes: [
                         Node(
                             name: "name",
-                            nodes: [],
+                            nodes: [
+                                Node(
+                                    name: "name"
+                                ),
+                                Node(
+                                    name: "name"
+                                )
+                            ],
                             trees: [
                                 Tree(
                                     nodes: []
@@ -417,7 +424,14 @@ import Examples
                         ),
                         Node(
                             name: "name",
-                            nodes: [],
+                            nodes: [
+                                Node(
+                                    name: "name"
+                                ),
+                                Node(
+                                    name: "name"
+                                )
+                            ],
                             trees: [
                                 Tree(
                                     nodes: []
@@ -484,7 +498,14 @@ import Examples
                                     contents: "contents"
                                 )
                             ],
-                            directories: []
+                            directories: [
+                                Directory(
+                                    name: "name"
+                                ),
+                                Directory(
+                                    name: "name"
+                                )
+                            ]
                         ),
                         Directory(
                             name: "name",
@@ -498,7 +519,14 @@ import Examples
                                     contents: "contents"
                                 )
                             ],
-                            directories: []
+                            directories: [
+                                Directory(
+                                    name: "name"
+                                ),
+                                Directory(
+                                    name: "name"
+                                )
+                            ]
                         )
                     ]
                 ),

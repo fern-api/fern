@@ -24,7 +24,7 @@ GEM
     minitest-rg (5.4.0)
       minitest (>= 5.0, < 7)
     parallel (1.27.0)
-    parser (3.3.10.1)
+    parser (3.3.10.2)
       ast (~> 2.4.1)
       racc
     prism (1.9.0)

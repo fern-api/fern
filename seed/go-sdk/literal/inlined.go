@@ -148,6 +148,9 @@ return a.myLiteral
 }
 
 func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
+if a == nil {
+return nil
+}
 return a.extraProperties
 }
 
@@ -197,6 +200,9 @@ return json.Marshal(explicitMarshaler)
 }
 
 func (a *ANestedLiteral) String() string {
+if a == nil {
+return "<nil>"
+}
 if len(a.rawJSON) > 0 {
 if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 return value
@@ -230,6 +236,9 @@ return a.NestedLiteral
 }
 
 func (a *ATopLevelLiteral) GetExtraProperties() map[string]interface{} {
+if a == nil {
+return nil
+}
 return a.extraProperties
 }
 
@@ -275,6 +284,9 @@ return json.Marshal(explicitMarshaler)
 }
 
 func (a *ATopLevelLiteral) String() string {
+if a == nil {
+return "<nil>"
+}
 if len(a.rawJSON) > 0 {
 if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 return value

@@ -14,9 +14,9 @@ export function getEndpointReturnType({
         return undefined;
     }
     return endpoint.response.body._visit({
-        bytes: () => undefined,
+        bytes: () => php.Type.string(),
         streamParameter: () => undefined,
-        fileDownload: () => undefined,
+        fileDownload: () => php.Type.string(),
         json: (reference) => {
             return context.phpTypeMapper.convert({ reference: reference.responseBodyType });
         },

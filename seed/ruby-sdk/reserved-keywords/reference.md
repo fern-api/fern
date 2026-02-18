@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.package.test(for_: 'for');
+client.package.test(for_: "for")
 ```
 </dd>
 </dl>

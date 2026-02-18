@@ -562,6 +562,9 @@ type ObjectValue struct {
 }
 
 func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
@@ -599,6 +602,9 @@ func (o *ObjectValue) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectValue) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
@@ -648,6 +654,9 @@ func (t *T) GetChild() *TorU {
 }
 
 func (t *T) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -692,6 +701,9 @@ func (t *T) MarshalJSON() ([]byte, error) {
 }
 
 func (t *T) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
@@ -781,6 +793,9 @@ func (u *U) GetChild() *T {
 }
 
 func (u *U) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -825,6 +840,9 @@ func (u *U) MarshalJSON() ([]byte, error) {
 }
 
 func (u *U) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}

@@ -49,6 +49,9 @@ func (n *Node) GetMetadata() *commons.Metadata {
 }
 
 func (n *Node) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -107,6 +110,9 @@ func (n *Node) MarshalJSON() ([]byte, error) {
 }
 
 func (n *Node) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
@@ -134,6 +140,9 @@ func (t *Tree) GetNodes() []*Node {
 }
 
 func (t *Tree) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -178,6 +187,9 @@ func (t *Tree) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Tree) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
