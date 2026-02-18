@@ -13,6 +13,7 @@ if typing.TYPE_CHECKING:
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
+    from .logging import LogConfig, LogLevel, Logger, create_logger
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
         UniversalBaseModel,
@@ -37,12 +38,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HttpClient": ".http_client",
     "HttpResponse": ".http_response",
     "IS_PYDANTIC_V2": ".pydantic_utilities",
+    "LogConfig": ".logging",
+    "LogLevel": ".logging",
+    "Logger": ".logging",
     "RequestOptions": ".request_options",
     "SyncClientWrapper": ".client_wrapper",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
+    "create_logger": ".logging",
     "encode_query": ".query_encoder",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
@@ -87,12 +92,16 @@ __all__ = [
     "HttpClient",
     "HttpResponse",
     "IS_PYDANTIC_V2",
+    "LogConfig",
+    "LogLevel",
+    "Logger",
     "RequestOptions",
     "SyncClientWrapper",
     "UniversalBaseModel",
     "UniversalRootModel",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
+    "create_logger",
     "encode_query",
     "jsonable_encoder",
     "parse_obj_as",
