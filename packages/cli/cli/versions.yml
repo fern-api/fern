@@ -289,10 +289,47 @@
 - version: 3.66.0
   changelogEntry:
     - summary: |
-        Add support for server URL templating in multi-URL environments. The Fern definition
-        schema now supports `url-templates`, `default-urls`, and `variables` fields on
-        `MultipleBaseUrlsEnvironmentSchema`, enabling SDKs to expose server variables as
-        constructor parameters with runtime URL interpolation.
+        Add support for server URL templating in multi-URL environments. This extends the IR
+        to support OpenAPI server variables for APIs with multiple base URLs.
+
+        **New Fern definition schema fields for `MultipleBaseUrlsEnvironmentSchema`:**
+
+        - `url-templates`: URL templates with variable placeholders for each base URL
+          ```yaml
+          url-templates:
+            base: "https://api.{region}.example.com/v1"
+            auth: "https://auth.{region}.example.com"
+          ```
+
+        - `default-urls`: Default URLs when no variables are provided (from `x-fern-default-url`)
+          ```yaml
+          default-urls:
+            base: "https://api.us-east-1.example.com/v1"
+            auth: "https://auth.us-east-1.example.com"
+          ```
+
+        - `variables`: Server variables for URL templating, keyed by base URL ID
+          ```yaml
+          variables:
+            base:
+              - id: region
+                default: us-east-1
+                values: [us-east-1, us-west-2, eu-west-1]
+          ```
+
+        **ServerVariableSchema structure:**
+        - `id`: Variable name as it appears in the URL template (e.g., `region`)
+        - `default`: Default value for the variable
+        - `values`: Optional enum of allowed values
+
+        **OpenAPI to IR conversion:**
+        Server variables from OpenAPI specs are now preserved in the IR rather than being
+        exploded into multiple environment variants. This enables SDKs to expose server
+        variables as constructor parameters with runtime URL interpolation.
+
+        **`x-fern-default-url` extension:**
+        When present on an OpenAPI server, specifies a separate default URL to use when
+        no variables are provided, allowing the template URL and default URL to differ.
       type: feat
   createdAt: "2026-02-06"
   irVersion: 63

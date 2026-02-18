@@ -4,9 +4,26 @@
   changelogEntry:
     - summary: |
         Add configurable logging support to generated Python SDKs. The SDK client constructor now
-        accepts a `logging` parameter with `LogConfig` (level, logger, silent) or a pre-configured
-        `Logger` instance. HTTP request/response metadata is logged at debug level with automatic
-        redaction of sensitive headers. Logging is silent by default.
+        accepts a `logging` parameter that can be configured in two ways:
+
+        1. **LogConfig dict**: Pass `{"level": "debug", "logger": custom_logger, "silent": False}` where:
+           - `level`: Log level threshold (`"debug"`, `"info"`, `"warn"`, or `"error"`)
+           - `logger`: Optional custom logger implementing the `ILogger` protocol (debug/info/warn/error methods)
+           - `silent`: Boolean to disable all logging (defaults to `True` for backward compatibility)
+
+        2. **Logger instance**: Pass a pre-configured `Logger` object for reuse across clients
+
+        **What gets logged:**
+        - HTTP request metadata at debug level: method, URL, redacted headers, and body presence indicator
+        - HTTP response success at debug level: method, URL, and status code
+        - HTTP errors at error level: method, URL, and status code for 4xx/5xx responses
+        - Streaming request metadata at debug level
+
+        **Security:** Sensitive headers are automatically redacted including: `authorization`, `x-api-key`,
+        `cookie`, `x-csrf-token`, `x-session-token`, and other auth-related headers.
+
+        **Default behavior:** Logging is silent by default (`silent=True`) to maintain backward compatibility.
+        Set `silent=False` to enable logging output.
       type: feat
   createdAt: "2026-02-10"
   irVersion: 65
@@ -42,9 +59,49 @@
 - version: 4.57.0
   changelogEntry:
     - summary: |
-        Add `custom_transport: true` config option for SDK developers to expose an `http_client`
-        override parameter on generated client constructors. This allows SDK developers to provide
-        custom httpx transports via custom code (e.g., factory methods like `ValidationClient`).
+        Add `custom_transport: true` generator config option that exposes an `http_client` parameter
+        on generated client constructors for custom httpx transport injection.
+
+        **Primary use case:** Enables PKCE (Proof Key for Code Exchange) OAuth flows and other
+        authentication schemes that require request interception at the transport layer.
+
+        **Configuration:**
+        ```yaml
+        generators:
+          - name: fernapi/fern-python-sdk
+            config:
+              custom_transport: true
+        ```
+
+        **Generated parameter types:**
+        - Sync client: `http_client: typing.Optional[httpx.BaseTransport]`
+        - Async client: `http_client: typing.Optional[httpx.AsyncBaseTransport]`
+
+        **Use cases:**
+        - PKCE OAuth authentication flows requiring code challenge/verifier injection
+        - Custom request signing or authentication header manipulation
+        - Request/response interception and modification
+        - Mock transports for testing without network calls
+        - Custom retry logic beyond the built-in exponential backoff
+
+        **Example pattern (Twilio SDK style):**
+        ```python
+        # SDK developer provides a factory method in custom code
+        class ValidationClient:
+            @classmethod
+            def create(cls, account_sid: str, auth_token: str) -> httpx.BaseTransport:
+                # Custom transport with PKCE or validation logic
+                return CustomValidationTransport(account_sid, auth_token)
+
+        # End-user usage
+        from myapi import MyClient, ValidationClient
+
+        validation_transport = ValidationClient.create("account_sid", "auth_token")
+        client = MyClient(http_client=validation_transport, base_url="https://api.example.com")
+        ```
+
+        This feature allows SDK developers to defer transport-specific logic to custom code while
+        the generator simply threads the transport through to `httpx.Client`/`httpx.AsyncClient`.
       type: feat
   createdAt: "2026-02-12"
   irVersion: 65
@@ -110,11 +167,49 @@
 - version: 4.55.0
   changelogEntry:
     - summary: |
-        Add support for server URL templating. Server variables defined in OpenAPI specs are
-        now exposed as optional constructor parameters (e.g., `region`, `city`) with runtime
-        URL template interpolation. When `x-fern-default-url` is present, the generated SDK
-        uses that as the environment default. Works for both single and multiple base URL
-        environments.
+        Add support for server URL templating with OpenAPI server variables. This enables
+        dynamic base URL construction at runtime based on user-provided configuration.
+
+        **OpenAPI definition example:**
+        ```yaml
+        servers:
+          - url: https://api.{region}.{environment}.example.com/v1
+            variables:
+              region:
+                default: us-east-1
+                enum: [us-east-1, us-west-2, eu-west-1]
+              environment:
+                default: prod
+                enum: [prod, staging, dev]
+        ```
+
+        **Generated constructor parameters:**
+        Server variables are exposed as optional constructor parameters with their default values:
+        - `region: typing.Optional[str]` - defaults to `"us-east-1"`
+        - `server_url_environment: typing.Optional[str]` - defaults to `"prod"` (prefixed to avoid shadowing)
+
+        **Runtime URL interpolation:**
+        When server variables are provided, the SDK performs runtime URL template interpolation:
+        ```python
+        from seed import SeedApi
+
+        # Uses default: https://api.us-east-1.prod.example.com/v1
+        client = SeedApi()
+
+        # Custom region: https://api.eu-west-1.prod.example.com/v1
+        client = SeedApi(region="eu-west-1")
+
+        # Custom region and environment: https://api.us-west-2.staging.example.com/v1
+        client = SeedApi(region="us-west-2", server_url_environment="staging")
+        ```
+
+        **Multiple base URL environments:**
+        For APIs with multiple base URLs (e.g., separate `base` and `auth` URLs), each URL
+        template is interpolated independently with the same server variables.
+
+        **`x-fern-default-url` extension:**
+        When present in the OpenAPI spec, this extension specifies which server URL should
+        be used as the default environment, overriding the first server in the list.
       type: feat
   createdAt: "2026-02-05"
   irVersion: 63
