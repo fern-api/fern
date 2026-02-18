@@ -319,6 +319,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --readme and --mintlify. Please choose one."
                 );
+            } else if (argv.openapi != null && argv["fern-definition"] === true) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --openapi and --fern-definition. Please choose one."
+                );
             } else if (argv.readme != null) {
                 await cliContext.runTask(async (context) => {
                     await initializeWithReadme({
