@@ -176,8 +176,6 @@
   createdAt: "2026-02-09"
   irVersion: 63
 
-<<<<<<< HEAD
-=======
 - version: 3.70.3
   changelogEntry:
     - summary: |
@@ -193,7 +191,6 @@
       type: fix
   createdAt: "2026-02-09"
   irVersion: 63
->>>>>>> origin/main
 - version: 3.70.1
   changelogEntry:
     - summary: |
@@ -824,6 +821,7 @@
       type: feat
   createdAt: "2026-01-21"
   irVersion: 63
+
 - version: 3.47.9
   changelogEntry:
     - summary: |
