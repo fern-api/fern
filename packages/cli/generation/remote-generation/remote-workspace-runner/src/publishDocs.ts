@@ -305,20 +305,22 @@ export async function publishDocs({
             );
             if (aiEnhancerConfig) {
                 const sources = workspace?.getSources();
-                const openApiSource = sources?.find((source) => source.type === "openapi");
-                const sourceFilePath = openApiSource?.absoluteFilePath;
+                const openApiSources = sources?.filter((source) => source.type === "openapi");
 
-                if (sourceFilePath == null) {
-                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file path available");
+                if (openApiSources == null || openApiSources.length === 0) {
+                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
                 } else {
-                    apiDefinition = await enhanceExamplesWithAI(
-                        apiDefinition,
-                        aiEnhancerConfig,
-                        context,
-                        token,
-                        organization,
-                        sourceFilePath
-                    );
+                    for (const openApiSource of openApiSources) {
+                        apiDefinition = await enhanceExamplesWithAI(
+                            apiDefinition,
+                            aiEnhancerConfig,
+                            context,
+                            token,
+                            organization,
+                            openApiSource.absoluteFilePath,
+                            openApiSource.absoluteFilePathToOverrides
+                        );
+                    }
                 }
             }
 

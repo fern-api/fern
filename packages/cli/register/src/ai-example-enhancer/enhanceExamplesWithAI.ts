@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { Examples } from "@fern-api/core-utils";
+import { Examples, mergeWithOverrides } from "@fern-api/core-utils";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { type EndpointSelector, type HttpMethod, OpenAPIPruner } from "@fern-api/openapi-pruner";
@@ -439,6 +439,7 @@ export async function enhanceExamplesWithAI(
     token: FernToken,
     organizationId: string,
     sourceFilePath?: AbsoluteFilePath,
+    sourceFilePathToOverrides?: AbsoluteFilePath,
     apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     if (!config.enabled) {
@@ -455,6 +456,7 @@ export async function enhanceExamplesWithAI(
             token,
             organizationId,
             sourceFilePath,
+            sourceFilePathToOverrides,
             apiName
         );
     } catch (error) {
@@ -477,6 +479,7 @@ async function performAIEnhancement(
     token: FernToken,
     organizationId: string,
     sourceFilePath?: AbsoluteFilePath,
+    sourceFilePathToOverrides?: AbsoluteFilePath,
     apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     const enhancer = new LambdaExampleEnhancer(config, context, token, organizationId);
@@ -487,7 +490,30 @@ async function performAIEnhancement(
 
     if (sourceFilePath != null) {
         try {
-            const specContent = await readFile(sourceFilePath, "utf-8");
+            let specContent = await readFile(sourceFilePath, "utf-8");
+
+            if (sourceFilePathToOverrides != null) {
+                try {
+                    let parsedSpec: object;
+                    try {
+                        parsedSpec = JSON.parse(specContent);
+                    } catch {
+                        parsedSpec = yaml.load(specContent, { json: true }) as object;
+                    }
+                    const overridesContent = await readFile(sourceFilePathToOverrides, "utf-8");
+                    let parsedOverrides: object;
+                    try {
+                        parsedOverrides = JSON.parse(overridesContent);
+                    } catch {
+                        parsedOverrides = yaml.load(overridesContent, { json: true }) as object;
+                    }
+                    const merged = mergeWithOverrides({ data: parsedSpec, overrides: parsedOverrides });
+                    specContent = yaml.dump(merged);
+                    context.logger.debug("Applied overrides to OpenAPI spec for AI enhancement");
+                } catch (error) {
+                    context.logger.debug(`Failed to apply overrides to spec: ${error}. Using raw spec.`);
+                }
+            }
 
             // Check if it's an OpenAPI spec
             if (!isOpenApiSpec(specContent)) {
