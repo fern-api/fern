@@ -141,10 +141,12 @@ export class RootClientGenerator {
         const initializerParams = this.getConvenienceInitializerParams({
             bearerTokenParamType
         });
-        const globalHeaders = this.sdkGeneratorContext.ir.headers.filter((header) => {
-            const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
-            return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
-        });
+        const globalHeaders = this.sdkGeneratorContext.ir.headers
+            .filter((header) => !this.isLiteralTypeReference(header.valueType))
+            .filter((header) => {
+                const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+                return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
+            });
 
         const headersArgValue =
             globalHeaders.length > 0
@@ -647,6 +649,7 @@ export class RootClientGenerator {
     private getGlobalHeaderParameters(): swift.FunctionParameter[] {
         const globalHeaders = this.sdkGeneratorContext.ir.headers;
         return globalHeaders
+            .filter((header) => !this.isLiteralTypeReference(header.valueType))
             .filter((header) => {
                 const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
                 return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
@@ -661,6 +664,24 @@ export class RootClientGenerator {
                     docsContent: header.docs
                 });
             });
+    }
+
+    private isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type === "container") {
+            if (typeReference.container.type === "literal") {
+                return true;
+            }
+            if (typeReference.container.type === "optional") {
+                return this.isLiteralTypeReference(typeReference.container.optional);
+            }
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.sdkGeneratorContext.ir.types[typeReference.typeId];
+            if (typeDeclaration != null && typeDeclaration.shape.type === "alias") {
+                return this.isLiteralTypeReference(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return false;
     }
 
     private getResolvedSwiftTypeForTypeReference(typeReference: FernIr.TypeReference): swift.TypeReference {
