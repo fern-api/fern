@@ -52,6 +52,7 @@ jobs:
               packages/seed/
               packages/ir-sdk/fern/apis/
               packages/cli/generation/ir-generator/
+              packages/commons/ir-utils/
               test-definitions/
               test-definitions-openapi/
             generator-name: seed
