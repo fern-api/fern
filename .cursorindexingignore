@@ -18,8 +18,6 @@ seed/fastapi/*
 !seed/fastapi/seed.yml
 seed/fern-cli/*
 !seed/fern-cli/seed.yml
-seed/go-fiber/*
-!seed/go-fiber/seed.yml
 seed/go-model/*
 !seed/go-model/seed.yml
 seed/go-sdk/*
@@ -58,7 +56,5 @@ seed/swift-sdk/*
 !seed/swift-sdk/seed.yml
 seed/ts-express/*
 !seed/ts-express/seed.yml
-seed/ts-mcp/*
-!seed/ts-mcp/seed.yml
 seed/ts-sdk/*
 !seed/ts-sdk/seed.yml

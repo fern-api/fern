@@ -138,6 +138,10 @@ public final class Identity {
     public interface _FinalStage {
         Identity build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage accessToken(Optional<String> accessToken);
 
         _FinalStage accessToken(String accessToken);
@@ -235,6 +239,18 @@ public final class Identity {
         @java.lang.Override
         public Identity build() {
             return new Identity(connection, userId, provider, isSocial, accessToken, expiresIn, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

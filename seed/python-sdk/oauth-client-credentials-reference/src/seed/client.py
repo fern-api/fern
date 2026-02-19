@@ -7,6 +7,7 @@ import typing
 import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
 
 if typing.TYPE_CHECKING:
@@ -83,6 +84,7 @@ class SeedOauthClientCredentialsReference:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
     ): ...
@@ -95,6 +97,7 @@ class SeedOauthClientCredentialsReference:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         token: typing.Callable[[], str],
     ): ...
     def __init__(
@@ -109,6 +112,7 @@ class SeedOauthClientCredentialsReference:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -123,6 +127,7 @@ class SeedOauthClientCredentialsReference:
                 if follow_redirects is not None
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
@@ -136,6 +141,7 @@ class SeedOauthClientCredentialsReference:
                     if follow_redirects is not None
                     else httpx.Client(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
+                    logging=logging,
                 ),
             )
             self._client_wrapper = SyncClientWrapper(
@@ -148,6 +154,7 @@ class SeedOauthClientCredentialsReference:
                 if follow_redirects is not None
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
             )
         else:
             raise ApiError(
@@ -242,6 +249,7 @@ class AsyncSeedOauthClientCredentialsReference:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
     ): ...
@@ -254,6 +262,7 @@ class AsyncSeedOauthClientCredentialsReference:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         token: typing.Callable[[], str],
     ): ...
     def __init__(
@@ -268,6 +277,7 @@ class AsyncSeedOauthClientCredentialsReference:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -282,6 +292,7 @@ class AsyncSeedOauthClientCredentialsReference:
                 if follow_redirects is not None
                 else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
@@ -295,6 +306,7 @@ class AsyncSeedOauthClientCredentialsReference:
                     if follow_redirects is not None
                     else httpx.AsyncClient(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
+                    logging=logging,
                 ),
             )
             self._client_wrapper = AsyncClientWrapper(
@@ -308,6 +320,7 @@ class AsyncSeedOauthClientCredentialsReference:
                 if follow_redirects is not None
                 else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
             )
         else:
             raise ApiError(

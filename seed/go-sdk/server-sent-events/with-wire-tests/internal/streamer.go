@@ -32,19 +32,20 @@ func NewStreamer[T any](caller *Caller) *Streamer[T] {
 
 // StreamParams represents the parameters used to issue an API streaming call.
 type StreamParams struct {
-	URL             string
-	Method          string
-	Prefix          string
-	Delimiter       string
-	Terminator      string
-	MaxAttempts     uint
-	Headers         http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	Client          HTTPClient
-	Request         interface{}
-	ErrorDecoder    ErrorDecoder
-	Format          core.StreamFormat
+	URL                string
+	Method             string
+	Prefix             string
+	Delimiter          string
+	Terminator         string
+	MaxAttempts        uint
+	Headers            http.Header
+	BodyProperties     map[string]interface{}
+	QueryParameters    url.Values
+	Client             HTTPClient
+	Request            interface{}
+	ErrorDecoder       ErrorDecoder
+	Format             core.StreamFormat
+	EventDiscriminator string
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
@@ -112,6 +113,9 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	}
 	if params.Format != core.StreamFormatEmpty {
 		opts = append(opts, core.WithFormat(params.Format))
+	}
+	if params.EventDiscriminator != "" {
+		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator))
 	}
 
 	return core.NewStream[T](resp, opts...), nil

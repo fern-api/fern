@@ -326,7 +326,14 @@ class ServiceClient:
                 nodes=[
                     Node(
                         name="name",
-                        nodes=[],
+                        nodes=[
+                            Node(
+                                name="name",
+                            ),
+                            Node(
+                                name="name",
+                            ),
+                        ],
                         trees=[
                             Tree(
                                 nodes=[],
@@ -338,7 +345,14 @@ class ServiceClient:
                     ),
                     Node(
                         name="name",
-                        nodes=[],
+                        nodes=[
+                            Node(
+                                name="name",
+                            ),
+                            Node(
+                                name="name",
+                            ),
+                        ],
                         trees=[
                             Tree(
                                 nodes=[],
@@ -405,7 +419,14 @@ class ServiceClient:
                                 contents="contents",
                             ),
                         ],
-                        directories=[],
+                        directories=[
+                            Directory(
+                                name="name",
+                            ),
+                            Directory(
+                                name="name",
+                            ),
+                        ],
                     ),
                     Directory(
                         name="name",
@@ -419,7 +440,14 @@ class ServiceClient:
                                 contents="contents",
                             ),
                         ],
-                        directories=[],
+                        directories=[
+                            Directory(
+                                name="name",
+                            ),
+                            Directory(
+                                name="name",
+                            ),
+                        ],
                     ),
                 ],
             ),
@@ -813,7 +841,14 @@ class AsyncServiceClient:
                     nodes=[
                         Node(
                             name="name",
-                            nodes=[],
+                            nodes=[
+                                Node(
+                                    name="name",
+                                ),
+                                Node(
+                                    name="name",
+                                ),
+                            ],
                             trees=[
                                 Tree(
                                     nodes=[],
@@ -825,7 +860,14 @@ class AsyncServiceClient:
                         ),
                         Node(
                             name="name",
-                            nodes=[],
+                            nodes=[
+                                Node(
+                                    name="name",
+                                ),
+                                Node(
+                                    name="name",
+                                ),
+                            ],
                             trees=[
                                 Tree(
                                     nodes=[],
@@ -892,7 +934,14 @@ class AsyncServiceClient:
                                     contents="contents",
                                 ),
                             ],
-                            directories=[],
+                            directories=[
+                                Directory(
+                                    name="name",
+                                ),
+                                Directory(
+                                    name="name",
+                                ),
+                            ],
                         ),
                         Directory(
                             name="name",
@@ -906,7 +955,14 @@ class AsyncServiceClient:
                                     contents="contents",
                                 ),
                             ],
-                            directories=[],
+                            directories=[
+                                Directory(
+                                    name="name",
+                                ),
+                                Directory(
+                                    name="name",
+                                ),
+                            ],
                         ),
                     ],
                 ),

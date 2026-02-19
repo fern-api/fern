@@ -23,10 +23,6 @@ import {
 } from "../utils/TypeLinkResolver.js";
 import { renderDocstring } from "./DocstringRenderer.js";
 
-// ============================================================================
-// Internal Helpers
-// ============================================================================
-
 interface FunctionSignature {
     code: string;
     typeStrings: string[];
@@ -98,10 +94,6 @@ function getMethodBadges(func: FdrAPI.libraryDocs.PythonFunctionIr): string[] {
     }
     return badges;
 }
-
-// ============================================================================
-// Public API
-// ============================================================================
 
 /**
  * Render a module-level function in detailed form for the API section.

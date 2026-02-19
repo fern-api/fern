@@ -788,6 +788,9 @@ export class ExampleTypeFactory {
             }
             case "unknown":
                 return schema.example != null;
+            case "nullable":
+            case "optional":
+                return this.hasExample(schema.value, depth, visitedSchemaIds, options);
             case "oneOf":
                 return Object.values(schema.value.schemas).some((schema) =>
                     this.hasExample(schema, depth, visitedSchemaIds, options)

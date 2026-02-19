@@ -49,6 +49,54 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return methods;
     }
 
+    public generateSignatures({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+    }): php.Method[] {
+        const methods: php.Method[] = [];
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(
+            php.parameter({
+                name: this.context.getRequestOptionsName(),
+                type: php.Type.optional(this.context.getRequestOptionsType({ endpoint }))
+            })
+        );
+
+        if (this.hasPagination(endpoint)) {
+            const return_ = this.getPagerReturnType(endpoint);
+            methods.push(
+                php.method({
+                    name: this.context.getPagedEndpointMethodName(endpoint),
+                    access: "public",
+                    parameters,
+                    docs: endpoint.docs,
+                    return_,
+                    noBody: true
+                })
+            );
+        } else {
+            const return_ = getEndpointReturnType({ context: this.context, endpoint });
+            methods.push(
+                php.method({
+                    name: this.context.getEndpointMethodName(endpoint),
+                    access: "public",
+                    parameters,
+                    docs: endpoint.docs,
+                    return_,
+                    noBody: true
+                })
+            );
+        }
+
+        return methods;
+    }
+
     public generateUnpagedEndpointMethod({
         serviceId,
         service,
@@ -635,9 +683,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const body = endpoint.response.body;
         return php.codeblock((writer) => {
             body._visit({
-                bytes: () => this.context.logger.error("Bytes not supported"),
+                bytes: () => {
+                    writer.controlFlow(
+                        "if",
+                        php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
+                    );
+                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    writer.endControlFlow();
+                },
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
-                fileDownload: () => this.context.logger.error("File download not supported"),
+                fileDownload: () => {
+                    writer.controlFlow(
+                        "if",
+                        php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
+                    );
+                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    writer.endControlFlow();
+                },
                 json: (_reference) => {
                     writer.controlFlow(
                         "if",

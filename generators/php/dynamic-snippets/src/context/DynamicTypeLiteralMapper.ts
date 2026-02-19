@@ -343,27 +343,172 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertObject({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): php.TypeLiteral {
+        const record = this.context.getRecord(value) ?? {};
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
+            values: record
         });
+        const fields: php.ConstructorField[] = properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return {
+                    name: this.context.getPropertyName(property.name.name),
+                    value: this.convert(property)
+                };
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
+
+        const providedKeys = new Set(Object.keys(record));
+        for (const param of object_.properties) {
+            if (!providedKeys.has(param.name.wireValue) && !this.isOptionalOrNullable(param.typeReference)) {
+                const placeholder = this.generatePlaceholderValue(param.typeReference);
+                if (!php.TypeLiteral.isNop(placeholder)) {
+                    fields.push({
+                        name: this.context.getPropertyName(param.name.name),
+                        value: placeholder
+                    });
+                }
+            }
+        }
+
         return php.TypeLiteral.class_({
             reference: php.classReference({
                 name: this.context.getClassName(object_.declaration.name),
                 namespace: this.context.getTypesNamespace(object_.declaration.fernFilepath)
             }),
-            fields: properties.map((property) => {
-                this.context.errors.scope(property.name.wireValue);
-                try {
-                    return {
-                        name: this.context.getPropertyName(property.name.name),
-                        value: this.convert(property)
-                    };
-                } finally {
-                    this.context.errors.unscope();
-                }
-            })
+            fields
         });
+    }
+
+    private isOptionalOrNullable(typeReference: FernIr.dynamic.TypeReference): boolean {
+        return this.context.isOptional(typeReference) || this.context.isNullable(typeReference);
+    }
+
+    private generatePlaceholderValue(typeReference: FernIr.dynamic.TypeReference): php.TypeLiteral {
+        switch (typeReference.type) {
+            case "primitive":
+                return this.generatePrimitivePlaceholder(typeReference.value);
+            case "list":
+            case "set": {
+                const elementPlaceholder = this.generatePlaceholderValue(typeReference.value);
+                if (php.TypeLiteral.isNop(elementPlaceholder)) {
+                    return php.TypeLiteral.list({ values: [] });
+                }
+                return php.TypeLiteral.list({ values: [elementPlaceholder] });
+            }
+            case "map": {
+                const keyPlaceholder = this.generatePlaceholderValue(typeReference.key);
+                const valuePlaceholder = this.generatePlaceholderValue(typeReference.value);
+                if (php.TypeLiteral.isNop(keyPlaceholder) || php.TypeLiteral.isNop(valuePlaceholder)) {
+                    return php.TypeLiteral.map({ entries: [] });
+                }
+                return php.TypeLiteral.map({
+                    entries: [{ key: keyPlaceholder, value: valuePlaceholder }]
+                });
+            }
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return php.TypeLiteral.nop();
+                }
+                return this.generateNamedPlaceholder(named);
+            }
+            case "optional":
+            case "nullable":
+                return php.TypeLiteral.null();
+            case "literal":
+                return this.generateLiteralPlaceholder(typeReference.value);
+            case "unknown":
+                return php.TypeLiteral.null();
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    private generatePrimitivePlaceholder(primitive: FernIr.dynamic.PrimitiveTypeV1): php.TypeLiteral {
+        switch (primitive) {
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+                return php.TypeLiteral.number(1);
+            case "FLOAT":
+            case "DOUBLE":
+                return php.TypeLiteral.float(1.0);
+            case "BOOLEAN":
+                return php.TypeLiteral.boolean(true);
+            case "STRING":
+                return php.TypeLiteral.string("value");
+            case "DATE":
+                return php.TypeLiteral.datetime("2024-01-01");
+            case "DATE_TIME":
+                return php.TypeLiteral.datetime("2024-01-01T00:00:00Z");
+            case "UUID":
+                return php.TypeLiteral.string("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+            case "BASE_64":
+                return php.TypeLiteral.string("SGVsbG8=");
+            case "BIG_INTEGER":
+                return php.TypeLiteral.string("1000000");
+            default:
+                assertNever(primitive);
+        }
+    }
+
+    private generateNamedPlaceholder(named: FernIr.dynamic.NamedType): php.TypeLiteral {
+        switch (named.type) {
+            case "alias":
+                return this.generatePlaceholderValue(named.typeReference);
+            case "enum": {
+                const firstValue = named.values[0];
+                if (firstValue == null) {
+                    return php.TypeLiteral.nop();
+                }
+                return php.TypeLiteral.reference(
+                    php.codeblock((writer) => {
+                        writer.writeNode(
+                            php.classReference({
+                                name: this.context.getClassName(named.declaration.name),
+                                namespace: this.context.getTypesNamespace(named.declaration.fernFilepath)
+                            })
+                        );
+                        writer.write("::");
+                        writer.write(this.context.getClassName(firstValue.name));
+                        writer.write("->value");
+                    })
+                );
+            }
+            case "object":
+                return this.convertObject({ object_: named, value: {} });
+            case "discriminatedUnion": {
+                const firstType = Object.values(named.types)[0];
+                if (firstType == null) {
+                    return php.TypeLiteral.nop();
+                }
+                return php.TypeLiteral.nop();
+            }
+            case "undiscriminatedUnion": {
+                const firstType = named.types[0];
+                if (firstType == null) {
+                    return php.TypeLiteral.nop();
+                }
+                return this.generatePlaceholderValue(firstType);
+            }
+            default:
+                assertNever(named);
+        }
+    }
+
+    private generateLiteralPlaceholder(literal: FernIr.dynamic.LiteralType): php.TypeLiteral {
+        switch (literal.type) {
+            case "boolean":
+                return php.TypeLiteral.boolean(literal.value);
+            case "string":
+                return php.TypeLiteral.string(literal.value);
+            default:
+                assertNever(literal);
+        }
     }
 
     private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): php.TypeLiteral {

@@ -105,6 +105,7 @@ abstract class JsonSerializableType implements \JsonSerializable
         if (!is_array($decodedJson)) {
             throw new JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
+        /** @var array<string, mixed> $decodedJson */
         return self::jsonDeserialize($decodedJson);
     }
 
@@ -169,7 +170,9 @@ abstract class JsonSerializableType implements \JsonSerializable
             // Handle object
             $type = $property->getType();
             if (is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
-                $value = JsonDeserializer::deserializeObject($value, $type->getName());
+                /** @var array<string, mixed> $arrayValue */
+                $arrayValue = $value;
+                $value = JsonDeserializer::deserializeObject($arrayValue, $type->getName());
             }
 
             $args[$property->getName()] = $value;

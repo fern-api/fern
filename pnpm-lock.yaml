@@ -250,6 +250,12 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^62.3.0
         version: 62.6.0
+      domhandler:
+        specifier: ^5.0.3
+        version: 5.0.3
+      htmlparser2:
+        specifier: ^9.0.0
+        version: 9.1.0
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1635,173 +1641,6 @@ importers:
         specifier: ^4.0.8
         version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
 
-  generators/ruby/cli:
-    dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../packages/cli/logger
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
-      '@fern-fern/ir-sdk':
-        specifier: ^39
-        version: 39.0.0
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
-
-  generators/ruby/codegen:
-    dependencies:
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1167
-        version: 0.0.1167
-      '@fern-fern/ir-sdk':
-        specifier: ^39
-        version: 39.0.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.23
-      url-join:
-        specifier: ^4.0.1
-        version: 4.0.1
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.76
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      '@types/url-join':
-        specifier: ^4.0.3
-        version: 4.0.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
-
-  generators/ruby/model:
-    devDependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
-      '@fern-api/ruby-codegen':
-        specifier: workspace:*
-        version: link:../codegen
-      '@fern-api/ruby-generator-cli':
-        specifier: workspace:*
-        version: link:../cli
-      '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1167
-        version: 0.0.1167
-      '@fern-fern/ir-sdk':
-        specifier: ^39
-        version: 39.0.0
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.76
-
-  generators/ruby/sdk:
-    devDependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@fern-api/fern-ruby-model':
-        specifier: workspace:*
-        version: link:../model
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
-      '@fern-api/ruby-codegen':
-        specifier: workspace:*
-        version: link:../codegen
-      '@fern-api/ruby-generator-cli':
-        specifier: workspace:*
-        version: link:../cli
-      '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1167
-        version: 0.0.1167
-      '@fern-fern/ir-sdk':
-        specifier: ^39
-        version: 39.0.0
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.76
-
   generators/rust/base:
     dependencies:
       '@fern-api/base-generator':
@@ -2239,126 +2078,6 @@ importers:
       zod:
         specifier: ^3.25.75
         version: 3.25.76
-
-  generators/typescript-mcp/base:
-    devDependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../../packages/cli/logger
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
-      '@fern-api/typescript-ast':
-        specifier: workspace:*
-        version: link:../../typescript-v2/ast
-      '@fern-api/typescript-formatter':
-        specifier: workspace:*
-        version: link:../../typescript-v2/formatter
-      '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.3.0
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.23
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
-
-  generators/typescript-mcp/model:
-    devDependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-api/typescript-ast':
-        specifier: workspace:*
-        version: link:../../typescript-v2/ast
-      '@fern-api/typescript-mcp-base':
-        specifier: workspace:*
-        version: link:../base
-      '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.3.0
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
-
-  generators/typescript-mcp/server:
-    devDependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-api/typescript-ast':
-        specifier: workspace:*
-        version: link:../../typescript-v2/ast
-      '@fern-api/typescript-mcp-base':
-        specifier: workspace:*
-        version: link:../base
-      '@fern-api/typescript-mcp-model':
-        specifier: workspace:*
-        version: link:../model
-      '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1167
-        version: 0.0.1167
-      '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.3.0
-      '@fern-typescript/sdk-generator-cli':
-        specifier: workspace:*
-        version: link:../../typescript/sdk/cli
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.18(@types/node@18.15.3)(tsx@4.21.0)(yaml@2.3.3)
 
   generators/typescript-v2/ast:
     dependencies:
@@ -4596,6 +4315,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/library-docs-generator':
+        specifier: workspace:*
+        version: link:../library-docs-generator
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../generation/local-generation/local-workspace-runner
@@ -4762,8 +4484,8 @@ importers:
         specifier: ^7.6.2
         version: 7.7.3
       tar:
-        specifier: ^7.5.7
-        version: 7.5.7
+        specifier: ^7.5.8
+        version: 7.5.8
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -4965,12 +4687,18 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
+      '@fern-api/configuration-loader':
+        specifier: workspace:*
+        version: link:../configuration-loader
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../core
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/docs-preview':
+        specifier: workspace:*
+        version: link:../docs-preview
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -5004,6 +4732,9 @@ importers:
       '@fern-api/oss-validator':
         specifier: workspace:*
         version: link:../workspace/oss-validator
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../project-loader
       '@fern-api/remote-workspace-runner':
         specifier: workspace:*
         version: link:../generation/remote-generation/remote-workspace-runner
@@ -5016,6 +4747,9 @@ importers:
       '@fern-api/venus-api-sdk':
         specifier: 0.17.3-3-gf696595
         version: 0.17.3-3-gf696595
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       '@fern-api/yaml-loader':
         specifier: workspace:*
         version: link:../yaml/loader
@@ -5046,6 +4780,9 @@ importers:
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
+      get-port:
+        specifier: ^7.0.0
+        version: 7.1.0
       inquirer:
         specifier: ^9.2.15
         version: 9.3.8(@types/node@18.15.3)
@@ -5055,6 +4792,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.3
+      ora:
+        specifier: ^7.0.1
+        version: 7.0.1
       tsup:
         specifier: ^8.5.0
         version: 8.5.1(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
@@ -7355,8 +7095,8 @@ importers:
         specifier: 7.0.8
         version: 7.0.8
       tar:
-        specifier: ^7.5.7
-        version: 7.5.7
+        specifier: ^7.5.8
+        version: 7.5.8
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -8289,7 +8029,7 @@ importers:
         version: 6.0.0
       minimatch:
         specifier: '>=10.2.1'
-        version: 10.2.2
+        version: 10.2.1
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
@@ -9823,14 +9563,8 @@ packages:
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
 
-  '@fern-fern/ir-sdk@39.0.0':
-    resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
-
   '@fern-fern/ir-sdk@53.9.0':
     resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
-
-  '@fern-fern/ir-sdk@58.3.0':
-    resolution: {integrity: sha512-HZXzhxk/NV70R9LMr9SD7QQClrY2YxO2xOzMvS42ODYZWxMWZ/r4MQ2/1e5HN3ROyotJZkpI9QMOmFmgNbTrTw==}
 
   '@fern-fern/ir-sdk@61.7.0':
     resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
@@ -12162,6 +11896,19 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
+  dom-serializer@2.0.0:
+    resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
+
+  domelementtype@2.3.0:
+    resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
+
+  domhandler@5.0.3:
+    resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
+    engines: {node: '>= 4'}
+
+  domutils@3.2.2:
+    resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
+
   dotenv-expand@11.0.7:
     resolution: {integrity: sha512-zIHwmZPRshsCdpMDyVsqGmgyP0yT8GAgXUnkdAoJisxvf33k7yO6OuoKmcTGuXPWSsm8Oh88nZicRLA9Y0rUeA==}
     engines: {node: '>=12'}
@@ -12229,6 +11976,10 @@ packages:
   enquirer@2.3.6:
     resolution: {integrity: sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==}
     engines: {node: '>=8.6'}
+
+  entities@4.5.0:
+    resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
+    engines: {node: '>=0.12'}
 
   entities@6.0.1:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
@@ -12902,6 +12653,9 @@ packages:
 
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
+
+  htmlparser2@9.1.0:
+    resolution: {integrity: sha512-5zfg6mHUoaer/97TxnGpxmbR7zJtPwIYFMZ/H5ucTlPZhKvtum05yiPK3Mgai3a0DyVxv7qYqoweaEd2nrYQzQ==}
 
   http-errors@2.0.1:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
@@ -13652,9 +13406,9 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  minimatch@10.2.2:
-    resolution: {integrity: sha512-+G4CpNBxa5MprY+04MbgOw1v7So6n5JY166pFi9KfYwT78fxScCeSNQSNzp6dpPSW2rONOps6Ocam1wFhCgoVw==}
-    engines: {node: 18 || 20 || >=22}
+  minimatch@10.2.1:
+    resolution: {integrity: sha512-MClCe8IL5nRRmawL6ib/eT4oLyeKMGCghibcDWK+J0hh0Q8kqSdia6BvbRMVk6mPa6WqUa5uR2oxt6C5jd533A==}
+    engines: {node: 20 || >=22}
 
   minimatch@7.4.6:
     resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==}
@@ -14828,8 +14582,8 @@ packages:
   tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
 
-  tar@7.5.7:
-    resolution: {integrity: sha512-fov56fJiRuThVFXD6o6/Q354S7pnWMJIVlDBYijsTNx6jKSE4pvrDTs6lUnmGvNyfJwFQQwWy3owKz1ucIhveQ==}
+  tar@7.5.8:
+    resolution: {integrity: sha512-SYkBtK99u0yXa+IWL0JRzzcl7RxNpvX/U08Z+8DKnysfno7M+uExnTZH8K+VGgShf2qFPKtbNr9QBl8n7WBP6Q==}
     engines: {node: '>=18'}
 
   terminal-link@3.0.0:
@@ -16797,7 +16551,7 @@ snapshots:
     dependencies:
       '@eslint/object-schema': 2.1.7
       debug: 4.4.3
-      minimatch: 10.2.2
+      minimatch: 10.2.1
     transitivePeerDependencies:
       - supports-color
 
@@ -16818,7 +16572,7 @@ snapshots:
       ignore: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.1.1
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
@@ -16967,19 +16721,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/ir-sdk@39.0.0': {}
-
   '@fern-fern/ir-sdk@53.9.0': {}
-
-  '@fern-fern/ir-sdk@58.3.0':
-    dependencies:
-      form-data: 4.0.5
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.14.2
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
 
   '@fern-fern/ir-sdk@61.7.0':
     dependencies:
@@ -17436,7 +17178,7 @@ snapshots:
       ejs: 3.1.10
       enquirer: 2.3.6
       ignore: 5.3.2
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       nx: 21.6.10
       semver: 7.7.3
       tslib: 2.8.1
@@ -17940,7 +17682,7 @@ snapshots:
       https-proxy-agent: 7.0.6
       js-levenshtein: 1.1.6
       js-yaml: 4.1.1
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       pluralize: 8.0.0
       yaml-ast-parser: 0.0.43
     transitivePeerDependencies:
@@ -18084,7 +17826,7 @@ snapshots:
 
   '@ts-morph/common@0.28.1':
     dependencies:
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       path-browserify: 1.0.1
       tinyglobby: 0.2.15
 
@@ -18257,7 +17999,7 @@ snapshots:
 
   '@types/minimatch@6.0.0':
     dependencies:
-      minimatch: 10.2.2
+      minimatch: 10.2.1
 
   '@types/minimist@1.2.5': {}
 
@@ -18424,7 +18166,7 @@ snapshots:
       '@typescript-eslint/types': 8.54.0
       '@typescript-eslint/visitor-keys': 8.54.0
       debug: 4.4.3
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       semver: 7.7.3
       tinyglobby: 0.2.15
       ts-api-utils: 2.4.0(typescript@5.9.3)
@@ -19402,6 +19144,24 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
+  dom-serializer@2.0.0:
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+      entities: 4.5.0
+
+  domelementtype@2.3.0: {}
+
+  domhandler@5.0.3:
+    dependencies:
+      domelementtype: 2.3.0
+
+  domutils@3.2.2:
+    dependencies:
+      dom-serializer: 2.0.0
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+
   dotenv-expand@11.0.7:
     dependencies:
       dotenv: 16.4.7
@@ -19457,6 +19217,8 @@ snapshots:
   enquirer@2.3.6:
     dependencies:
       ansi-colors: 4.1.3
+
+  entities@4.5.0: {}
 
   entities@6.0.1: {}
 
@@ -19631,7 +19393,7 @@ snapshots:
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
       lodash.merge: 4.6.2
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       natural-compare: 1.4.0
       optionator: 0.9.4
     transitivePeerDependencies:
@@ -19892,7 +19654,7 @@ snapshots:
 
   filelist@1.0.4:
     dependencies:
-      minimatch: 10.2.2
+      minimatch: 10.2.1
 
   fill-range@7.1.1:
     dependencies:
@@ -20087,7 +19849,7 @@ snapshots:
     dependencies:
       foreground-child: 3.3.1
       jackspeak: 4.1.1
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       minipass: 7.1.2
       package-json-from-dist: 1.0.1
       path-scurry: 2.0.1
@@ -20097,7 +19859,7 @@ snapshots:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       once: 1.4.0
       path-is-absolute: 1.0.1
 
@@ -20367,6 +20129,13 @@ snapshots:
   html-tags@3.3.1: {}
 
   html-void-elements@3.0.0: {}
+
+  htmlparser2@9.1.0:
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+      domutils: 3.2.2
+      entities: 4.5.0
 
   http-errors@2.0.1:
     dependencies:
@@ -21330,7 +21099,7 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  minimatch@10.2.2:
+  minimatch@10.2.1:
     dependencies:
       brace-expansion: 5.0.2
 
@@ -21375,7 +21144,7 @@ snapshots:
       array-differ: 3.0.0
       array-union: 2.1.0
       arrify: 2.0.1
-      minimatch: 10.2.2
+      minimatch: 10.2.1
 
   mute-stream@1.0.0: {}
 
@@ -21485,7 +21254,7 @@ snapshots:
       jest-diff: 30.2.0
       jsonc-parser: 3.2.0
       lines-and-columns: 2.0.3
-      minimatch: 10.2.2
+      minimatch: 10.2.1
       node-machine-id: 1.1.12
       npm-run-path: 4.0.1
       open: 8.4.2
@@ -22848,7 +22617,7 @@ snapshots:
       - bare-abort-controller
       - react-native-b4a
 
-  tar@7.5.7:
+  tar@7.5.8:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0

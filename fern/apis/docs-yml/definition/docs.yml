@@ -579,7 +579,6 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
-      - PythonDocsConfiguration
       - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
@@ -1180,28 +1179,6 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
-
-  PythonDocsConfiguration:
-    docs: |
-      Configuration for generating Python library documentation from source code.
-      The docs are generated from a GitHub repository and merged into the navigation.
-    availability: deprecated
-    properties:
-      python-docs:
-        type: string
-        docs: |
-          GitHub URL to the repository containing the Python library source code.
-          Example: https://github.com/django/django
-      title:
-        type: optional<string>
-        docs: |
-          Navigation title for the Python docs section.
-          @default: "Python Reference"
-      slug:
-        type: optional<string>
-        docs: |
-          URL slug for the Python docs pages.
-          @default: "python-docs"
 
   # Library Documentation Types
   LibraryName:
@@ -1903,6 +1880,10 @@ types:
         availability: pre-release
         docs: |
           Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation.
+      basepath-aware:
+        type: optional<boolean>
+        docs: |
+          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
 
   PlaygroundSettings:
     properties:

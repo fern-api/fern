@@ -172,5 +172,15 @@ public final class GeneratedFiles {
         public GeneratedFiles build() {
             return new GeneratedFiles(generatedTestCaseFiles, generatedTemplateFiles, other, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

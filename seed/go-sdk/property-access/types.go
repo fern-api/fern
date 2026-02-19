@@ -73,6 +73,9 @@ func (a *Admin) GetAdminLevel() string {
 }
 
 func (a *Admin) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -146,6 +149,9 @@ func (a *Admin) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Admin) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -197,6 +203,9 @@ func (f *Foo) GetWrite() string {
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -256,6 +265,9 @@ func (f *Foo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Foo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -321,6 +333,9 @@ func (u *User) GetProfile() *UserProfile {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -387,6 +402,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -733,6 +751,9 @@ func (u *UserProfile) GetSsn() string {
 }
 
 func (u *UserProfile) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -792,6 +813,9 @@ func (u *UserProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserProfile) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -827,6 +851,9 @@ func (u *UserProfileVerification) GetVerified() string {
 }
 
 func (u *UserProfileVerification) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -872,6 +899,9 @@ func (u *UserProfileVerification) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserProfileVerification) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
