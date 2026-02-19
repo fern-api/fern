@@ -123,6 +123,10 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         return false;
     }
 
+    protected shouldWriteBuildTestScripts(_customConfig: ExpressCustomConfig): boolean {
+        return true;
+    }
+
     protected publishToJsr(_customConfig: ExpressCustomConfig): boolean {
         return false;
     }

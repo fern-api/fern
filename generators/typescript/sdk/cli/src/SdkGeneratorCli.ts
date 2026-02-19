@@ -356,6 +356,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return customConfig.skipNpmPkgFix ?? false;
     }
 
+    protected shouldWriteBuildTestScripts(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
+        return !customConfig.noScripts;
+    }
+
     protected publishToJsr(_customConfig: SdkCustomConfig): boolean {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.publishToJsr ?? false;

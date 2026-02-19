@@ -143,10 +143,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         sdkVersion: version
                     });
                 }
-                await writeBuildTestScripts({
-                    pathToProject,
-                    packageManager: this.getPackageManager(customConfig)
-                });
+                if (this.shouldWriteBuildTestScripts(customConfig)) {
+                    await writeBuildTestScripts({
+                        pathToProject,
+                        packageManager: this.getPackageManager(customConfig)
+                    });
+                }
             });
 
             // Run npm pkg fix to normalize package.json (enabled by default)
@@ -298,6 +300,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract outputSrcOnly(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
     protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
+    protected abstract shouldWriteBuildTestScripts(customConfig: CustomConfig): boolean;
 
     private shouldGenerateFullProject(ir: FernIr.IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;
