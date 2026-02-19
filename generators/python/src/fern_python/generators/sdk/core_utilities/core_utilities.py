@@ -61,6 +61,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
             exports={"serialize_datetime"} if not self._exclude_types_from_init_exports else set(),
+            source_subdirectory="shared",
         )
         # Only copy enum.py when generating actual enum classes (not string literals)
         if not self._use_str_enums:
@@ -90,6 +91,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="jsonable_encoder"),
             ),
             exports={"jsonable_encoder"} if not self._exclude_types_from_init_exports else set(),
+            source_subdirectory="shared",
         )
         self._copy_file_to_project(
             project=project,
@@ -99,6 +101,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="remove_none_from_dict"),
             ),
             exports={"remove_none_from_dict"} if not self._exclude_types_from_init_exports else set(),
+            source_subdirectory="shared",
         )
         self._copy_file_to_project(
             project=project,
@@ -108,6 +111,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="request_options"),
             ),
             exports={"RequestOptions"} if not self._exclude_types_from_init_exports else set(),
+            source_subdirectory="shared",
         )
 
         self._copy_file_to_project(
@@ -127,6 +131,7 @@ class CoreUtilities:
                 "File",
                 "with_content_type",
             },
+            source_subdirectory="shared",
         )
         self._copy_file_to_project(
             project=project,
@@ -138,6 +143,7 @@ class CoreUtilities:
             exports={"Logger", "LogConfig", "LogLevel", "ConsoleLogger", "ILogger", "create_logger"}
             if not self._exclude_types_from_init_exports
             else set(),
+            source_subdirectory="shared",
         )
         self._copy_file_to_project(
             project=project,
@@ -154,7 +160,8 @@ class CoreUtilities:
             } if not self._exclude_types_from_init_exports else set(),
             string_replacements={
                 "__FERN_SDK_PACKAGE__": self._get_package_name()  # Template SDK name
-            }
+            },
+            source_subdirectory="shared",
         )
 
         # Add optional aiohttp dependencies for aiohttp backend support
@@ -169,6 +176,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_response"),
             ),
             exports={"HttpResponse", "AsyncHttpResponse"} if not self._exclude_types_from_init_exports else set(),
+            source_subdirectory="shared",
         )
 
         self._copy_file_to_project(
@@ -179,6 +187,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="force_multipart"),
             ),
             exports=set(),
+            source_subdirectory="shared",
         )
 
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
@@ -217,6 +226,7 @@ class CoreUtilities:
             )
             if not self._exclude_types_from_init_exports
             else set(),
+            source_subdirectory="shared",
         )
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
@@ -228,6 +238,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="query_encoder"),
             ),
             exports={"encode_query"} if not self._exclude_types_from_init_exports else set(),
+            source_subdirectory="shared",
         )
 
         self._copy_file_to_project(
@@ -243,6 +254,7 @@ class CoreUtilities:
             }
             if not self._exclude_types_from_init_exports
             else set(),
+            source_subdirectory="shared",
         )
 
         if self._has_standard_paginated_endpoints:
@@ -285,6 +297,7 @@ class CoreUtilities:
                 }
                 if not self._exclude_types_from_init_exports
                 else set(),
+                source_subdirectory="shared",
             )
 
         if self._should_generate_websocket_clients:
@@ -296,6 +309,7 @@ class CoreUtilities:
                     file=Filepath.FilepathPart(module_name="events"),
                 ),
                 exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
+                source_subdirectory="shared",
             )
             self._copy_file_to_project(
                 project=project,
@@ -339,9 +353,10 @@ class CoreUtilities:
         filepath_in_project: Filepath,
         exports: Set[str],
         string_replacements: Optional[dict[str, str]] = None,
+        source_subdirectory: str = "sdk",
     ) -> None:
         source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
+            os.path.join(os.path.dirname(__file__), f"../../../../../core_utilities/{source_subdirectory}")
             if "PYTEST_CURRENT_TEST" in os.environ
             else "/assets/core_utilities"
         )
@@ -356,7 +371,7 @@ class CoreUtilities:
     def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
         """Copy the http_sse folder using the same approach as individual file copying"""
         source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
+            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/shared")
             if "PYTEST_CURRENT_TEST" in os.environ
             else "/assets/core_utilities"
         )
