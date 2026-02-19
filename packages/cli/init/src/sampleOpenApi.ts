@@ -1,48 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`fern add > fern add <generator> --group sdk 1`] = `
-[
-  {
-    "contents": [
-      {
-        "contents": "**/.preview
-**/.definition
-",
-        "name": ".gitignore",
-        "type": "file",
-      },
-      {
-        "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-        "name": "fern.config.json",
-        "type": "file",
-      },
-      {
-        "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-api:
-  specs:
-    - openapi: openapi.yml
-default-group: local
-groups:
-  local:
-    generators:
-      - name: fern-typescript-sdk
-        output:
-          location: local-file-system
-          path: ../sdks/typescript
-        version: 3.48.2
-  typescript:
-    generators:
-      - name: fern-typescript
-        version: 3.48.2
-",
-        "name": "generators.yml",
-        "type": "file",
-      },
-      {
-        "contents": "openapi: 3.0.3
+export const SAMPLE_OPENAPI = `openapi: 3.0.3
 info:
   title: Petstore API
   version: 1.0.0
@@ -171,13 +127,4 @@ components:
         message:
           type: string
           description: Error message.
-",
-        "name": "openapi.yml",
-        "type": "file",
-      },
-    ],
-    "name": "fern",
-    "type": "directory",
-  },
-]
 `;

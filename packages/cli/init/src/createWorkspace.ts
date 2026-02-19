@@ -15,6 +15,7 @@ import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
+import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
 
 export async function createFernWorkspace({
     directoryOfWorkspace,
@@ -59,6 +60,30 @@ export async function createOpenAPIWorkspace({
         context,
         apiConfiguration: {
             specs: [{ openapi: relative(directoryOfWorkspace, openAPIFilePath) }]
+        }
+    });
+}
+
+export async function createDefaultOpenAPIWorkspace({
+    directoryOfWorkspace,
+    cliVersion,
+    context
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
+}): Promise<void> {
+    if (!(await doesPathExist(directoryOfWorkspace))) {
+        await mkdir(directoryOfWorkspace, { recursive: true });
+    }
+    const openApiFilePath = join(directoryOfWorkspace, RelativeFilePath.of("openapi.yml"));
+    await writeFile(openApiFilePath, SAMPLE_OPENAPI);
+    await writeGeneratorsConfiguration({
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        cliVersion,
+        context,
+        apiConfiguration: {
+            specs: [{ openapi: "openapi.yml" }]
         }
     });
 }
