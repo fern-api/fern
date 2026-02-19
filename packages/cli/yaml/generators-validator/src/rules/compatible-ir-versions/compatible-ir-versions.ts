@@ -37,12 +37,15 @@ export const CompatibleIrVersionsRule: Rule = {
                     }
 
                     // Pull the CLI release to get the IR version
+                    console.debug(`[FDR] compatible-ir-versions: checking CLI release for version=${cliVersion}`);
                     const cliRelease = await fdr.generators.cli.getCliRelease(cliVersion);
                     // Again, this is to allow for offline usage, and other transient errors
                     if (!cliRelease.ok) {
+                        console.debug(`[FDR] compatible-ir-versions: getCliRelease failed for ${cliVersion}`, cliRelease);
                         return [];
                     }
                     const cliIrVersion = cliRelease.body.irVersion;
+                    console.debug(`[FDR] compatible-ir-versions: CLI version=${cliVersion} has irVersion=${cliIrVersion}`);
 
                     // Pull the generator release to get the IR version
                     let invocationIrVersion: number;
@@ -58,10 +61,12 @@ export const CompatibleIrVersionsRule: Rule = {
                             name: addDefaultDockerOrgIfNotPresent(invocation.name)
                         };
                         const maybeIrVersion = await getIrVersionForGenerator(normalizedInvocation);
+                        console.debug(`[FDR] compatible-ir-versions: irVersion for ${normalizedInvocation.name}@${normalizedInvocation.version} = ${maybeIrVersion}`);
 
                         // The above returns undefined if we can't get the IR version, so we'll just return an empty array
                         // Again, this is to allow for offline usage, and other transient errors
                         if (maybeIrVersion == null) {
+                            console.debug(`[FDR] compatible-ir-versions: could not resolve irVersion for ${normalizedInvocation.name}@${normalizedInvocation.version}, skipping validation`);
                             return [];
                         }
 

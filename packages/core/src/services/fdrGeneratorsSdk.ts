@@ -7,6 +7,7 @@ export function createFdrGeneratorsSdkService({
     environment?: string;
     token: (() => string) | string | undefined;
 }): FdrClient {
+    console.debug(`[FDR] Creating generators SDK service with environment: ${environment}`);
     return new FdrClient({
         environment,
         token
@@ -20,22 +21,27 @@ export interface GeneratorInfo {
 
 export async function getIrVersionForGenerator(invocation: GeneratorInfo): Promise<number | undefined> {
     const fdr = createFdrGeneratorsSdkService({ token: undefined });
+    console.debug(`[FDR] getIrVersionForGenerator: looking up generator by image: ${invocation.name}`);
     const generatorEntity = await fdr.generators.getGeneratorByImage({
         dockerImage: invocation.name
     });
     // Again, this is to allow for offline usage, and other transient errors
     if (!generatorEntity.ok || generatorEntity.body == null) {
+        console.debug(`[FDR] getIrVersionForGenerator: getGeneratorByImage failed for ${invocation.name}`, generatorEntity);
         return undefined;
     }
+    console.debug(`[FDR] getIrVersionForGenerator: found generator id=${generatorEntity.body.id}, fetching release version=${invocation.version}`);
     const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
         generatorEntity.body.id,
         invocation.version
     );
 
     if (generatorRelease.ok) {
+        console.debug(`[FDR] getIrVersionForGenerator: got release for ${invocation.name}@${invocation.version}, irVersion=${generatorRelease.body.irVersion}`);
         // We've pulled the generator release, let's get it's IR version
         return generatorRelease.body.irVersion;
     }
 
+    console.debug(`[FDR] getIrVersionForGenerator: getGeneratorRelease failed for ${generatorEntity.body.id}@${invocation.version}`, generatorRelease);
     return undefined;
 }
