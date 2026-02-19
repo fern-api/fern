@@ -312,6 +312,9 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+    - customConfig:
+        offsetSemantics: "page-index"
+      outputFolder: page-index-semantics
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config

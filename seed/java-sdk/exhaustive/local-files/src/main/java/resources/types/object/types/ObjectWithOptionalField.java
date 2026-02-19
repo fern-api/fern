@@ -422,5 +422,10 @@ public final class ObjectWithOptionalField {
     public ObjectWithOptionalField build() {
       return new ObjectWithOptionalField(string, integer, long_, double_, bool, datetime, date, uuid, base64, list, set, map, bigint, additionalProperties);
     }
+
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
+    }
   }
 }

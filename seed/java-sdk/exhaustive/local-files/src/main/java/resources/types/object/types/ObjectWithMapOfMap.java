@@ -113,5 +113,10 @@ public final class ObjectWithMapOfMap {
     public ObjectWithMapOfMap build() {
       return new ObjectWithMapOfMap(map, additionalProperties);
     }
+
+    public Builder additionalProperty(String key, Object value) {
+      this.additionalProperties.put(key, value);
+      return this;
+    }
   }
 }

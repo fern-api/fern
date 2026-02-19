@@ -127,5 +127,10 @@ public final class PaginatedResponse {
         public PaginatedResponse build() {
             return new PaginatedResponse(items, next, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
     }
 }
