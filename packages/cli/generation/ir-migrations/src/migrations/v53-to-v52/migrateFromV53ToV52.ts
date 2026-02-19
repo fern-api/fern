@@ -35,7 +35,6 @@ export const V53_TO_V52_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "3.3.0-rc0",
         [GeneratorName.GO_MODEL]: "0.23.5",
         [GeneratorName.GO_SDK]: "0.28.3",
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: "0.5.0",

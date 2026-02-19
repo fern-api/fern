@@ -7,7 +7,6 @@ set -e
 
 # Run all validations in parallel and collect errors
 generators=(
-    ruby-model
     ruby-sdk
     ruby-sdk-v2
     pydantic
