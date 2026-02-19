@@ -245,13 +245,7 @@
       "path": "./packages/cli/yaml/docs-validator"
     },
     {
-      "path": "./generators/typescript-mcp/server"
-    },
-    {
       "path": "./generators/php/dynamic-snippets"
-    },
-    {
-      "path": "./generators/typescript-mcp/model"
     },
     {
       "path": "./packages/cli/workspace/commons"
@@ -261,9 +255,6 @@
     },
     {
       "path": "./generators/python-v2/formatter"
-    },
-    {
-      "path": "./generators/typescript-mcp/base"
     },
     {
       "path": "./generators/typescript-v2/base"
