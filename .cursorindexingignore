@@ -58,7 +58,5 @@ seed/swift-sdk/*
 !seed/swift-sdk/seed.yml
 seed/ts-express/*
 !seed/ts-express/seed.yml
-seed/ts-mcp/*
-!seed/ts-mcp/seed.yml
 seed/ts-sdk/*
 !seed/ts-sdk/seed.yml
