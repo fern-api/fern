@@ -248,6 +248,40 @@ export class ClonedRepository {
         await this.git.push("origin", branch, { "--set-upstream": null });
     }
 
+    public async forcePush(): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        const currentBranch = await this.getCurrentBranch();
+        await this.git.push("origin", currentBranch, ["--force"]);
+    }
+
+    public async createBranchFromHead(branchName: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.checkoutLocalBranch(branchName);
+    }
+
+    public async createBranchFromCommit(branchName: string, commitSha: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.raw(["checkout", "-b", branchName, commitSha]);
+    }
+
+    public async commitTree(treeSha: string, parentSha: string, message: string): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["commit-tree", treeSha, "-p", parentSha, "-m", message]);
+        return result.trim();
+    }
+
+    public async getCommitTreeHash(commitSha: string): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["rev-parse", `${commitSha}^{tree}`]);
+        return result.trim();
+    }
+
+    public async createAndPushTag(tagName: string, commitSha: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.tag(["-f", tagName, commitSha]);
+        await this.git.push("origin", `refs/tags/${tagName}`, ["--force"]);
+    }
+
     public async overwriteLocalContents(sourceDirectoryPath: string): Promise<void> {
         const [sourceContents, destContents] = await Promise.all([
             readdir(sourceDirectoryPath),

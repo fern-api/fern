@@ -4,7 +4,7 @@
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"],
-    "composite": false
+    "composite": true
   },
   "include": ["./src/**/*"]
 }

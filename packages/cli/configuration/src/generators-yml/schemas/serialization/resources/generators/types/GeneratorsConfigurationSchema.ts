@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { AiServicesSchema } from "../../ai/types/AiServicesSchema.js";
 import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema.js";
 import { GeneratorGroupSchema } from "../../group/types/GeneratorGroupSchema.js";
+import { ReplayConfigSchema } from "../../replay/types/ReplayConfigSchema.js";
 import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema.js";
 import { ApiConfigurationSchema } from "./ApiConfigurationSchema.js";
 import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema.js";
@@ -29,6 +30,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
         .optional(),
     groups: core.serialization.record(core.serialization.string(), GeneratorGroupSchema).optional(),
     reviewers: ReviewersSchema.optional(),
+    replay: ReplayConfigSchema.optional(),
     ai: AiServicesSchema.optional(),
     autorelease: core.serialization.boolean().optional(),
     openapi: GeneratorsOpenApiSchema.optional(),
@@ -49,6 +51,7 @@ export declare namespace GeneratorsConfigurationSchema {
         aliases?: Record<string, string[]> | null;
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;
+        replay?: ReplayConfigSchema.Raw | null;
         ai?: AiServicesSchema.Raw | null;
         autorelease?: boolean | null;
         openapi?: GeneratorsOpenApiSchema.Raw | null;
