@@ -62,7 +62,12 @@ export class GeneratorScriptRunner extends ScriptRunner {
 
         const workDir = id.replace(":", "_");
 
-        const copyResult = await this.copyGeneratedFiles({ taskContext, containerId: this.containerId, outputDir, workDir });
+        const copyResult = await this.copyGeneratedFiles({
+            taskContext,
+            containerId: this.containerId,
+            outputDir,
+            workDir
+        });
         if (copyResult.type === "failure") {
             return { type: "failure", phase: "build", message: copyResult.message };
         }
@@ -70,7 +75,11 @@ export class GeneratorScriptRunner extends ScriptRunner {
         let buildTimeMs: number | undefined;
         let testTimeMs: number | undefined;
 
-        const hasBuildScript = await this.hasScript({ containerId: this.containerId, workDir, script: FERN_BUILD_SCRIPT });
+        const hasBuildScript = await this.hasScript({
+            containerId: this.containerId,
+            workDir,
+            script: FERN_BUILD_SCRIPT
+        });
         if (hasBuildScript) {
             taskContext.logger.info(`Running .fern/build.sh for ${id}...`);
             const buildStartTime = Date.now();
@@ -95,7 +104,11 @@ export class GeneratorScriptRunner extends ScriptRunner {
             taskContext.logger.info(`No .fern/build.sh found for ${id}, skipping build phase`);
         }
 
-        const hasTestScript = await this.hasScript({ containerId: this.containerId, workDir, script: FERN_TEST_SCRIPT });
+        const hasTestScript = await this.hasScript({
+            containerId: this.containerId,
+            workDir,
+            script: FERN_TEST_SCRIPT
+        });
         if (hasTestScript) {
             taskContext.logger.info(`Running .fern/test.sh for ${id}...`);
             const testStartTime = Date.now();
@@ -180,12 +193,7 @@ export class GeneratorScriptRunner extends ScriptRunner {
         const startCommand = await loggingExeca(
             this.context.logger,
             this.runner,
-            [
-                "run",
-                "-dit",
-                this.buildTestConfig.image,
-                "/bin/sh"
-            ],
+            ["run", "-dit", this.buildTestConfig.image, "/bin/sh"],
             {
                 doNotPipeOutput: false
             }
@@ -275,7 +283,13 @@ export class GeneratorScriptRunner extends ScriptRunner {
         const command = await loggingExeca(
             taskContext.logger,
             this.runner,
-            ["exec", containerId, "/bin/sh", "-c", `chmod +x ${scriptPath} && cd /${workDir}/generated && ${scriptPath}`],
+            [
+                "exec",
+                containerId,
+                "/bin/sh",
+                "-c",
+                `chmod +x ${scriptPath} && cd /${workDir}/generated && ${scriptPath}`
+            ],
             {
                 doNotPipeOutput: true,
                 reject: false

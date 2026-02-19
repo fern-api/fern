@@ -41,7 +41,7 @@ function generateBuildScript(packageManager: "pnpm" | "yarn"): string {
             "  corepack yarn install",
             "fi",
             "",
-            'if grep -q \'"build":\' package.json; then',
+            "if grep -q '\"build\":' package.json; then",
             "  corepack yarn build",
             "fi",
             ""
@@ -66,7 +66,7 @@ function generateBuildScript(packageManager: "pnpm" | "yarn"): string {
         "  corepack pnpm install",
         "fi",
         "",
-        'if grep -q \'"build":\' package.json; then',
+        "if grep -q '\"build\":' package.json; then",
         "  corepack pnpm build",
         "fi",
         ""
@@ -84,7 +84,7 @@ function generateTestScript(packageManager: "pnpm" | "yarn"): string {
             "  exit 0",
             "fi",
             "",
-            'if grep -q \'"test":\' package.json; then',
+            "if grep -q '\"test\":' package.json; then",
             "  corepack yarn test",
             "fi",
             ""
@@ -100,7 +100,7 @@ function generateTestScript(packageManager: "pnpm" | "yarn"): string {
         "  exit 0",
         "fi",
         "",
-        'if grep -q \'"test":\' package.json; then',
+        "if grep -q '\"test\":' package.json; then",
         "  corepack pnpm test",
         "fi",
         ""
