@@ -315,6 +315,7 @@
                     "docs": null
                 },
                 "fileUploadPayload": null,
+                "signatureVerification": null,
                 "responses": null,
                 "examples": [
                     {

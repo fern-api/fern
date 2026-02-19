@@ -5,6 +5,11 @@ webhooks:
     display-name: User Added
     method: POST
     payload: User
+    signature:
+      header: x-webhook-signature
+      algorithm: sha256
+      encoding: hex
+      payload-format: body-only
 
   userDeleted:
     display-name: User Added

@@ -175,6 +175,28 @@ export const FernOpenAPIExtension = {
     WEBHOOK: "x-fern-webhook",
 
     /**
+     * Used to configure webhook signature verification.
+     * Can be set globally on the document root (applies to all webhooks)
+     * or per-webhook operation (overrides global config).
+     * Example usage:
+     *   # Global (document root)
+     *   x-fern-webhook-signature:
+     *     header: x-webhook-signature
+     *     algorithm: sha256
+     *     encoding: base64
+     *     payload-format: body-only
+     *
+     *   # Per-webhook override
+     *   webhooks:
+     *     paymentProcessed:
+     *       post:
+     *         x-fern-webhook-signature:
+     *           header: x-custom-signature
+     *           algorithm: sha512
+     */
+    WEBHOOK_SIGNATURE: "x-fern-webhook-signature",
+
+    /**
      * Used to detect if an endpoint has an async version of it
      * Example usage:
      *   paths:

@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Webhook } from "@fern-api/openapi-ir";
+import { Webhook, WebhookSignatureVerification } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader.js";
@@ -43,6 +43,7 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                 namespace: maybeWebhookNamespace,
                 declarationDepth: 0
             }),
+            signature: convertSignatureVerification(webhook.signatureVerification),
             examples:
                 webhook.examples != null
                     ? webhook.examples.map((exampleWebhookCall) => {
@@ -246,4 +247,18 @@ function getWebhookLocation({
         namespaceOverride: webhook.namespace,
         location: getUnresolvedWebhookLocation({ webhook, context })
     });
+}
+
+function convertSignatureVerification(
+    signatureVerification: WebhookSignatureVerification | undefined
+): RawSchemas.WebhookSignatureSchema | undefined {
+    if (signatureVerification == null) {
+        return undefined;
+    }
+    return {
+        header: signatureVerification.header,
+        algorithm: signatureVerification.algorithm ?? undefined,
+        encoding: signatureVerification.encoding ?? undefined,
+        "payload-format": signatureVerification.payloadFormat ?? undefined
+    };
 }

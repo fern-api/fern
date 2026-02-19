@@ -15,6 +15,7 @@ types:
       method: WebhookMethodSchema
       headers: optional<map<string, services.HttpHeaderSchema>>
       payload: WebhookPayloadSchema
+      signature: optional<WebhookSignatureSchema>
       response: optional<services.HttpResponseSchema>
       response-stream: optional<services.HttpResponseStreamSchema>
       examples: optional<list<examples.ExampleWebhookCallSchema>>
@@ -42,3 +43,35 @@ types:
       name: string
       extends: optional<types.ObjectExtendsSchema>
       properties: optional<map<string, types.ObjectPropertySchema>>
+
+  WebhookSignatureSchema:
+    properties:
+      header: string
+      algorithm:
+        type: optional<WebhookSignatureAlgorithmSchema>
+        docs: Defaults to sha256.
+      encoding:
+        type: optional<WebhookSignatureEncodingSchema>
+        docs: Defaults to base64.
+      payload-format:
+        type: optional<WebhookPayloadFormatSchema>
+        docs: Defaults to body-only.
+
+  WebhookSignatureAlgorithmSchema:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookSignatureEncodingSchema:
+    enum:
+      - base64
+      - hex
+
+  WebhookPayloadFormatSchema:
+    enum:
+      - name: bodyOnly
+        value: body-only
+      - name: urlPrefixed
+        value: url-prefixed

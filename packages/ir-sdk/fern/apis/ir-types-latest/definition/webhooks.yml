@@ -22,6 +22,12 @@ types:
           Optional multipart form data payload for webhooks that use multipart/form-data content type.
           This is populated when the webhook request body uses multipart/form-data encoding.
           When set, the payload field will contain a reference type as a placeholder.
+      signatureVerification:
+        type: optional<WebhookSignatureVerification>
+        docs: |
+          Optional configuration for webhook signature verification.
+          When present, generators can produce utilities to verify that
+          incoming webhook requests originate from the API provider.
       responses: optional<list<http.HttpResponse>>
       examples: optional<list<ExampleWebhookCall>>
       v2Examples: optional<examples.V2WebhookExamples>
@@ -64,3 +70,52 @@ types:
     properties:
       name: optional<commons.Name>
       payload: types.ExampleTypeReference
+
+  WebhookSignatureVerification:
+    docs: |
+      Configuration for verifying webhook signatures. When present, SDK generators
+      can produce utilities that verify the HMAC signature of incoming webhook requests.
+    properties:
+      signatureHeaderName:
+        type: commons.NameAndWireValue
+        docs: |
+          The HTTP header that contains the webhook signature
+          (e.g. x-webhook-signature, x-hub-signature-256).
+      algorithm: WebhookSignatureAlgorithm
+      encoding: WebhookSignatureEncoding
+      payloadFormat: WebhookPayloadFormat
+
+  WebhookSignatureAlgorithm:
+    docs: The HMAC algorithm used to compute the webhook signature.
+    enum:
+      - SHA256
+      - SHA1
+      - SHA384
+      - SHA512
+
+  WebhookSignatureEncoding:
+    docs: The encoding of the computed HMAC signature.
+    enum:
+      - BASE64
+      - HEX
+
+  WebhookPayloadFormat:
+    docs: How the signed payload is constructed from the webhook request.
+    union:
+      bodyOnly:
+        type: WebhookPayloadFormatBodyOnly
+        docs: The raw request body is signed directly.
+      urlPrefixed:
+        type: WebhookPayloadFormatUrlPrefixed
+        docs: |
+          The notification URL is prepended to the request body before signing.
+          Used by APIs like Square where payload = notificationUrl + requestBody.
+
+  WebhookPayloadFormatBodyOnly:
+    properties: {}
+
+  WebhookPayloadFormatUrlPrefixed:
+    docs: |
+      The notification URL is prepended to the request body before computing
+      the HMAC signature.
+    properties: {}

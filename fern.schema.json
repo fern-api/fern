@@ -3240,6 +3240,71 @@
         }
       ]
     },
+    "webhooks.WebhookSignatureAlgorithmSchema": {
+      "type": "string",
+      "enum": [
+        "sha256",
+        "sha1",
+        "sha384",
+        "sha512"
+      ]
+    },
+    "webhooks.WebhookSignatureEncodingSchema": {
+      "type": "string",
+      "enum": [
+        "base64",
+        "hex"
+      ]
+    },
+    "webhooks.WebhookPayloadFormatSchema": {
+      "type": "string",
+      "enum": [
+        "body-only",
+        "url-prefixed"
+      ]
+    },
+    "webhooks.WebhookSignatureSchema": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "algorithm": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookSignatureAlgorithmSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookSignatureEncodingSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payload-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookPayloadFormatSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "header"
+      ],
+      "additionalProperties": false
+    },
     "examples.ExampleWebhookCallSchema": {
       "type": "object",
       "properties": {
@@ -3346,6 +3411,16 @@
         },
         "payload": {
           "$ref": "#/definitions/webhooks.WebhookPayloadSchema"
+        },
+        "signature": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookSignatureSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "response": {
           "oneOf": [

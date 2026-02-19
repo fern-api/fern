@@ -1396,6 +1396,35 @@
                     "docs": null
                 },
                 "fileUploadPayload": null,
+                "signatureVerification": {
+                    "signatureHeaderName": {
+                        "name": {
+                            "originalName": "x-webhook-signature",
+                            "camelCase": {
+                                "unsafeName": "xWebhookSignature",
+                                "safeName": "xWebhookSignature"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "x_webhook_signature",
+                                "safeName": "x_webhook_signature"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "X_WEBHOOK_SIGNATURE",
+                                "safeName": "X_WEBHOOK_SIGNATURE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "XWebhookSignature",
+                                "safeName": "XWebhookSignature"
+                            }
+                        },
+                        "wireValue": "x-webhook-signature"
+                    },
+                    "algorithm": "SHA256",
+                    "encoding": "HEX",
+                    "payloadFormat": {
+                        "type": "bodyOnly"
+                    }
+                },
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,

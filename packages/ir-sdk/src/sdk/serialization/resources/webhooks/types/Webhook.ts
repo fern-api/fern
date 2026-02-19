@@ -13,6 +13,7 @@ import { ExampleWebhookCall } from "./ExampleWebhookCall.js";
 import { WebhookHttpMethod } from "./WebhookHttpMethod.js";
 import { WebhookName } from "./WebhookName.js";
 import { WebhookPayload } from "./WebhookPayload.js";
+import { WebhookSignatureVerification } from "./WebhookSignatureVerification.js";
 
 export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, FernIr.Webhook> = core.serialization
     .objectWithoutOptionalProperties({
@@ -23,6 +24,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
         headers: core.serialization.list(HttpHeader),
         payload: WebhookPayload,
         fileUploadPayload: FileUploadRequest.optional(),
+        signatureVerification: WebhookSignatureVerification.optional(),
         responses: core.serialization.list(HttpResponse).optional(),
         examples: core.serialization.list(ExampleWebhookCall).optional(),
         v2Examples: V2WebhookExamples.optional(),
@@ -38,6 +40,7 @@ export declare namespace Webhook {
         headers: HttpHeader.Raw[];
         payload: WebhookPayload.Raw;
         fileUploadPayload?: FileUploadRequest.Raw | null;
+        signatureVerification?: WebhookSignatureVerification.Raw | null;
         responses?: HttpResponse.Raw[] | null;
         examples?: ExampleWebhookCall.Raw[] | null;
         v2Examples?: V2WebhookExamples.Raw | null;

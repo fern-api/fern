@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.82.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification configuration to the IR. Webhooks can now
+        specify a `signature` block (in Fern Definition) or `x-fern-webhook-signature`
+        extension (in OpenAPI) with algorithm, encoding, header name, and payload format.
+        SDK generators can use this to produce signature verification utilities.
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 65
 - version: 3.81.0
   changelogEntry:
     - summary: |

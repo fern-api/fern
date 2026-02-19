@@ -108,6 +108,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 headers,
                 payload,
                 fileUploadPayload,
+                signatureVerification: undefined,
                 responses: responses.length > 0 ? responses : undefined,
                 examples: [],
                 availability: this.context.getAvailability({

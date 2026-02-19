@@ -17,7 +17,11 @@ import {
     StreamingResponse,
     Webhook,
     WebhookGroup,
-    WebhookPayload
+    WebhookPayload,
+    WebhookPayloadFormat,
+    WebhookSignatureAlgorithm,
+    WebhookSignatureEncoding,
+    WebhookSignatureVerification
 } from "@fern-api/ir-sdk";
 import { IdGenerator, isReferencedWebhookPayloadSchema } from "@fern-api/ir-utils";
 
@@ -61,6 +65,8 @@ export function convertWebhookGroup({
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
             fileUploadPayload: undefined,
+            signatureVerification:
+                webhook.signature != null ? convertWebhookSignature({ signature: webhook.signature, file }) : undefined,
             responses: convertWebhookResponses({ webhook, file, typeResolver }),
             examples:
                 webhook.examples != null
@@ -118,6 +124,55 @@ function convertWebhookPayloadSchema({
                       )
                     : []
         });
+    }
+}
+
+function convertWebhookSignature({
+    signature,
+    file
+}: {
+    signature: RawSchemas.WebhookSignatureSchema;
+    file: FernFileContext;
+}): WebhookSignatureVerification {
+    return {
+        signatureHeaderName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: signature.header,
+            name: signature.header
+        }),
+        algorithm: convertSignatureAlgorithm(signature.algorithm ?? "sha256"),
+        encoding: convertSignatureEncoding(signature.encoding ?? "base64"),
+        payloadFormat: convertPayloadFormat(signature["payload-format"] ?? "body-only")
+    };
+}
+
+function convertSignatureAlgorithm(algorithm: RawSchemas.WebhookSignatureAlgorithmSchema): WebhookSignatureAlgorithm {
+    switch (algorithm) {
+        case "sha256":
+            return WebhookSignatureAlgorithm.Sha256;
+        case "sha1":
+            return WebhookSignatureAlgorithm.Sha1;
+        case "sha384":
+            return WebhookSignatureAlgorithm.Sha384;
+        case "sha512":
+            return WebhookSignatureAlgorithm.Sha512;
+    }
+}
+
+function convertSignatureEncoding(encoding: RawSchemas.WebhookSignatureEncodingSchema): WebhookSignatureEncoding {
+    switch (encoding) {
+        case "base64":
+            return WebhookSignatureEncoding.Base64;
+        case "hex":
+            return WebhookSignatureEncoding.Hex;
+    }
+}
+
+function convertPayloadFormat(format: RawSchemas.WebhookPayloadFormatSchema): WebhookPayloadFormat {
+    switch (format) {
+        case "body-only":
+            return WebhookPayloadFormat.bodyOnly({});
+        case "url-prefixed":
+            return WebhookPayloadFormat.urlPrefixed({});
     }
 }
 

@@ -106,7 +106,36 @@ types:
           Optional multipart form data payload for webhooks that use multipart/form-data content type.
           This is populated when the webhook request body uses multipart/form-data encoding.
       response: optional<Response>
+      signatureVerification: optional<WebhookSignatureVerification>
       examples: list<WebhookExampleCall>
+
+  WebhookSignatureVerification:
+    docs: |
+      Configuration for verifying webhook signatures, populated from x-fern-webhook-signature.
+    properties:
+      header: string
+      algorithm: optional<WebhookSignatureAlgorithm>
+      encoding: optional<WebhookSignatureEncoding>
+      payloadFormat: optional<WebhookPayloadFormat>
+
+  WebhookSignatureAlgorithm:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookSignatureEncoding:
+    enum:
+      - base64
+      - hex
+
+  WebhookPayloadFormat:
+    enum:
+      - name: bodyOnly
+        value: body-only
+      - name: urlPrefixed
+        value: url-prefixed
 
   MultipartFormDataWebhookPayload:
     docs: |

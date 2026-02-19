@@ -15,6 +15,12 @@ export interface Webhook extends FernIr.Declaration {
      * When set, the payload field will contain a reference type as a placeholder.
      */
     fileUploadPayload: FernIr.FileUploadRequest | undefined;
+    /**
+     * Optional configuration for webhook signature verification.
+     * When present, generators can produce utilities to verify that
+     * incoming webhook requests originate from the API provider.
+     */
+    signatureVerification: FernIr.WebhookSignatureVerification | undefined;
     responses: FernIr.HttpResponse[] | undefined;
     examples: FernIr.ExampleWebhookCall[] | undefined;
     v2Examples: FernIr.V2WebhookExamples | undefined;
