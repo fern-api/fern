@@ -4,8 +4,9 @@ import type * as FernSeedConfig from "../../../index.js";
 
 /**
  * Configuration for a generator-managed build and test Docker container.
- * When specified, the generator owns its build/test lifecycle instead of
- * relying on external scripts in seed.yml.
+ * The generator writes .fern/build.sh and .fern/test.sh into the generated output,
+ * and seed runs those scripts inside this Docker container.
+ * Users can override these scripts via .fernignore.
  */
 export interface BuildTestDockerConfig {
     /** Path to the Dockerfile for the build/test image, relative to the repo root. */
@@ -16,8 +17,4 @@ export interface BuildTestDockerConfig {
     context?: string;
     /** Command(s) to build the Docker image. If not specified, a default docker build command is used. */
     buildCommand?: FernSeedConfig.DockerCommand;
-    /** Commands to run during the build phase inside the container. */
-    buildCommands?: string[];
-    /** Commands to run during the test phase inside the container. */
-    testCommands?: string[];
 }

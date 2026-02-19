@@ -69,23 +69,6 @@ export abstract class AbstractGeneratorCli<
                     assertNever(config.output.mode);
             }
 
-            const shouldBuild = process.env.FERN_BUILD_GENERATED === "true";
-            const shouldTest = process.env.FERN_TEST_GENERATED === "true";
-
-            if (shouldBuild) {
-                const buildResult = await this.buildGeneratedCode(config.output.path);
-                if (!buildResult.success) {
-                    throw new Error(`Build failed: ${buildResult.message ?? "Unknown build error"}`);
-                }
-            }
-
-            if (shouldTest) {
-                const testResult = await this.testGeneratedCode(config.output.path);
-                if (!testResult.success) {
-                    throw new Error(`Tests failed: ${testResult.message ?? "Unknown test error"}`);
-                }
-            }
-
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );

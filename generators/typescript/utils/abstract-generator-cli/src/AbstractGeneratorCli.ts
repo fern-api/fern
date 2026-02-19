@@ -23,6 +23,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage.js";
+import { writeBuildTestScripts } from "./writeBuildTestScripts.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
 
@@ -142,6 +143,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         sdkVersion: version
                     });
                 }
+                await writeBuildTestScripts({
+                    pathToProject,
+                    packageManager: this.getPackageManager(customConfig)
+                });
             });
 
             // Run npm pkg fix to normalize package.json (enabled by default)

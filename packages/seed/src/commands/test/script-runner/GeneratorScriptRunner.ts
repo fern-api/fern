@@ -3,23 +3,21 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { writeFile } from "fs/promises";
 import path from "path";
-import tmp from "tmp-promise";
 
 import { BuildTestDockerConfig } from "../../../config/api/index.js";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
 import { ScriptRunner } from "./ScriptRunner.js";
 
-interface InternalScriptResult {
-    type: "success" | "failure";
-    message?: string;
-}
+const FERN_BUILD_SCRIPT = ".fern/build.sh";
+const FERN_TEST_SCRIPT = ".fern/test.sh";
 
 /**
  * Runs build and test scripts using the generator's own Docker container.
- * This replaces the external script containers (e.g. fernapi/python-seed, fernapi/ts-seed)
- * with a Dockerfile owned by the generator itself.
+ * Instead of reading commands from seed.yml, this runner looks for
+ * .fern/build.sh and .fern/test.sh in the generated output directory.
+ * These scripts are written by the generator itself during code generation.
+ * Users can override them via .fernignore.
  */
 export class GeneratorScriptRunner extends ScriptRunner {
     private readonly runner: ContainerRunner;
@@ -62,56 +60,65 @@ export class GeneratorScriptRunner extends ScriptRunner {
             return { type: "failure", phase: "build", message: "Build/test container was not started" };
         }
 
+        const workDir = id.replace(":", "_");
+
+        const copyResult = await this.copyGeneratedFiles({ taskContext, containerId: this.containerId, outputDir, workDir });
+        if (copyResult.type === "failure") {
+            return { type: "failure", phase: "build", message: copyResult.message };
+        }
+
         let buildTimeMs: number | undefined;
         let testTimeMs: number | undefined;
 
-        const buildCommands = this.buildTestConfig.buildCommands ?? [];
-        if (buildCommands.length > 0) {
-            taskContext.logger.info(`Running generator build scripts for ${id}...`);
+        const hasBuildScript = await this.hasScript({ containerId: this.containerId, workDir, script: FERN_BUILD_SCRIPT });
+        if (hasBuildScript) {
+            taskContext.logger.info(`Running .fern/build.sh for ${id}...`);
             const buildStartTime = Date.now();
-            const result = await this.runScript({
+            const result = await this.runFernScript({
                 taskContext,
                 containerId: this.containerId,
-                outputDir,
-                commands: buildCommands,
-                id
+                workDir,
+                script: FERN_BUILD_SCRIPT
             });
             buildTimeMs = Date.now() - buildStartTime;
             if (result.type === "failure") {
-                taskContext.logger.info(`Generator build scripts failed for ${id}`);
+                taskContext.logger.info(`.fern/build.sh failed for ${id}`);
                 return {
                     type: "failure",
                     phase: "build",
-                    message: result.message ?? "Generator build script failed",
+                    message: result.message ?? "build.sh failed",
                     buildTimeMs
                 };
             }
-            taskContext.logger.info(`Generator build scripts completed for ${id}`);
+            taskContext.logger.info(`.fern/build.sh completed for ${id}`);
+        } else {
+            taskContext.logger.info(`No .fern/build.sh found for ${id}, skipping build phase`);
         }
 
-        const testCommands = this.buildTestConfig.testCommands ?? [];
-        if (testCommands.length > 0) {
-            taskContext.logger.info(`Running generator test scripts for ${id}...`);
+        const hasTestScript = await this.hasScript({ containerId: this.containerId, workDir, script: FERN_TEST_SCRIPT });
+        if (hasTestScript) {
+            taskContext.logger.info(`Running .fern/test.sh for ${id}...`);
             const testStartTime = Date.now();
-            const result = await this.runScript({
+            const result = await this.runFernScript({
                 taskContext,
                 containerId: this.containerId,
-                outputDir,
-                commands: testCommands,
-                id
+                workDir,
+                script: FERN_TEST_SCRIPT
             });
             testTimeMs = Date.now() - testStartTime;
             if (result.type === "failure") {
-                taskContext.logger.info(`Generator test scripts failed for ${id}`);
+                taskContext.logger.info(`.fern/test.sh failed for ${id}`);
                 return {
                     type: "failure",
                     phase: "test",
-                    message: result.message ?? "Generator test script failed",
+                    message: result.message ?? "test.sh failed",
                     buildTimeMs,
                     testTimeMs
                 };
             }
-            taskContext.logger.info(`Generator test scripts completed for ${id}`);
+            taskContext.logger.info(`.fern/test.sh completed for ${id}`);
+        } else {
+            taskContext.logger.info(`No .fern/test.sh found for ${id}, skipping test phase`);
         }
 
         return { type: "success", buildTimeMs, testTimeMs };
@@ -170,21 +177,12 @@ export class GeneratorScriptRunner extends ScriptRunner {
     }
 
     private async startContainer(): Promise<void> {
-        const absoluteFilePathToFernCli = await this.buildFernCli();
-        const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
-
         const startCommand = await loggingExeca(
             this.context.logger,
             this.runner,
             [
                 "run",
-                "--privileged",
-                "--cgroupns=host",
-                "-v",
-                "/sys/fs/cgroup:/sys/fs/cgroup:rw",
                 "-dit",
-                "-v",
-                cliVolumeBind,
                 this.buildTestConfig.image,
                 "/bin/sh"
             ],
@@ -195,32 +193,17 @@ export class GeneratorScriptRunner extends ScriptRunner {
         this.containerId = startCommand.stdout;
     }
 
-    private async buildFernCli(): Promise<AbsoluteFilePath> {
-        const rootDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../.."));
-        await loggingExeca(this.context.logger, "pnpm", ["fern:build"], { cwd: rootDir });
-        return join(rootDir, RelativeFilePath.of("packages/cli/cli/dist/prod"));
-    }
-
-    private async runScript({
+    private async copyGeneratedFiles({
         taskContext,
         containerId,
         outputDir,
-        commands,
-        id
+        workDir
     }: {
-        id: string;
-        outputDir: AbsoluteFilePath;
         taskContext: TaskContext;
         containerId: string;
-        commands: string[];
-    }): Promise<InternalScriptResult> {
-        const workDir = id.replace(":", "_");
-        const scriptFile = await tmp.file();
-        const scriptContents = ["set -e", `cd /${workDir}/generated`, ...commands].join("\n");
-        await writeFile(scriptFile.path, scriptContents);
-
-        taskContext.logger.debug(`Running generator script on ${id}:\n${scriptContents}`);
-
+        outputDir: AbsoluteFilePath;
+        workDir: string;
+    }): Promise<{ type: "success" } | { type: "failure"; message: string }> {
         const mkdirCommand = await loggingExeca(
             taskContext.logger,
             this.runner,
@@ -231,26 +214,10 @@ export class GeneratorScriptRunner extends ScriptRunner {
             }
         );
         if (mkdirCommand.failed) {
-            taskContext.logger.error("Failed to mkdir for scripts. See output below");
+            taskContext.logger.error("Failed to mkdir for generated files. See output below");
             taskContext.logger.error(mkdirCommand.stdout);
             taskContext.logger.error(mkdirCommand.stderr);
             return { type: "failure", message: mkdirCommand.stdout };
-        }
-
-        const copyScriptCommand = await loggingExeca(
-            undefined,
-            this.runner,
-            ["cp", scriptFile.path, `${containerId}:/${workDir}/test.sh`],
-            {
-                doNotPipeOutput: true,
-                reject: false
-            }
-        );
-        if (copyScriptCommand.failed) {
-            taskContext.logger.error("Failed to copy script. See output below");
-            taskContext.logger.error(copyScriptCommand.stdout);
-            taskContext.logger.error(copyScriptCommand.stderr);
-            return { type: "failure", message: copyScriptCommand.stdout };
         }
 
         const copyCommand = await loggingExeca(
@@ -269,22 +236,57 @@ export class GeneratorScriptRunner extends ScriptRunner {
             return { type: "failure", message: copyCommand.stdout };
         }
 
+        return { type: "success" };
+    }
+
+    private async hasScript({
+        containerId,
+        workDir,
+        script
+    }: {
+        containerId: string;
+        workDir: string;
+        script: string;
+    }): Promise<boolean> {
+        const result = await loggingExeca(
+            undefined,
+            this.runner,
+            ["exec", containerId, "test", "-f", `/${workDir}/generated/${script}`],
+            {
+                doNotPipeOutput: true,
+                reject: false
+            }
+        );
+        return !result.failed;
+    }
+
+    private async runFernScript({
+        taskContext,
+        containerId,
+        workDir,
+        script
+    }: {
+        taskContext: TaskContext;
+        containerId: string;
+        workDir: string;
+        script: string;
+    }): Promise<{ type: "success" } | { type: "failure"; message?: string }> {
+        const scriptPath = `/${workDir}/generated/${script}`;
         const command = await loggingExeca(
             taskContext.logger,
             this.runner,
-            ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
+            ["exec", containerId, "/bin/sh", "-c", `chmod +x ${scriptPath} && cd /${workDir}/generated && ${scriptPath}`],
             {
                 doNotPipeOutput: true,
                 reject: false
             }
         );
         if (command.failed) {
-            taskContext.logger.error("Failed to run generator script. See output below");
+            taskContext.logger.error(`Failed to run ${script}. See output below`);
             taskContext.logger.error(command.stdout);
             taskContext.logger.error(command.stderr);
             return { type: "failure", message: command.stdout };
-        } else {
-            return { type: "success" };
         }
+        return { type: "success" };
     }
 }
