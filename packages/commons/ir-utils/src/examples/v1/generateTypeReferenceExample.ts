@@ -9,6 +9,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample.js";
 import { generatePrimitiveExample } from "./generatePrimitiveExample.js";
@@ -181,8 +182,8 @@ function isLeafTypeReference(typeRef: TypeReference, typeDeclarations: Record<Ty
 /**
  * Generates a stub example for a named type when cycle detection triggers.
  * Instead of returning failure (which cascades up and kills parent examples),
- * this produces a valid example with all leaf (non-recursive) properties filled in:
- * - Objects → generates all primitive/enum/literal properties, skips recursive ones
+ * this produces a valid example with required properties filled in:
+ * - Objects → generates all leaf properties and required non-leaf properties, skips optional non-leaf ones
  * - Enums → first enum value
  * - Aliases → resolve non-recursive targets; recursive ones get empty object
  * - Unions → first noProperties variant if available; otherwise failure
@@ -202,7 +203,10 @@ function generateMinimalNamedExample({
                 ...(typeDeclaration.shape.properties ?? []),
                 ...(typeDeclaration.shape.extendedProperties ?? [])
             ]) {
-                if (!isLeafTypeReference(property.valueType, typeDeclarations)) {
+                if (
+                    !isLeafTypeReference(property.valueType, typeDeclarations) &&
+                    isTypeReferenceOptional({ typeReference: property.valueType, typeDeclarations })
+                ) {
                     continue;
                 }
                 const propertyExample = generateTypeReferenceExample({
