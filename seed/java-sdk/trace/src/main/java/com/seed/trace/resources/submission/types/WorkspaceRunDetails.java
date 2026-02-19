@@ -95,6 +95,10 @@ public final class WorkspaceRunDetails {
     public interface _FinalStage {
         WorkspaceRunDetails build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage exceptionV2(Optional<ExceptionV2> exceptionV2);
 
         _FinalStage exceptionV2(ExceptionV2 exceptionV2);
@@ -161,6 +165,18 @@ public final class WorkspaceRunDetails {
         @java.lang.Override
         public WorkspaceRunDetails build() {
             return new WorkspaceRunDetails(exceptionV2, exception, stdout, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
