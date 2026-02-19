@@ -201,7 +201,7 @@ function isTypeReferenceInCycle(typeRef: TypeReference, visitedTypes: Map<string
                 case "nullable":
                     return isTypeReferenceInCycle(typeRef.container.nullable, visitedTypes);
                 case "map":
-                    return isTypeReferenceInCycle(typeRef.container.map.valueType, visitedTypes);
+                    return isTypeReferenceInCycle(typeRef.container.valueType, visitedTypes);
                 default:
                     return false;
             }
