@@ -8,7 +8,7 @@ buildCli({
         AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
         DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com",
-        DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com",
+        DEFAULT_FDR_ORIGIN: "https://registry.buildwithfern.com",
         DEFAULT_FDR_LAMBDA_DOCS_ORIGIN: "https://ykq45y6fvnszd35iv5yuuatkze0rpwuz.lambda-url.us-east-1.on.aws",
         VENUS_AUDIENCE: "venus-dev",
         LOCAL_STORAGE_FOLDER: ".fern-dev",
