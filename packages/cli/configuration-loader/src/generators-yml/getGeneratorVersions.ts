@@ -39,9 +39,7 @@ export async function getLatestGeneratorVersion({
         payload.generatorMajorVersion = parsedVersion.major;
     }
 
-    context?.logger.debug(
-        `[FDR] getLatestGeneratorRelease request: ${JSON.stringify(payload)}`
-    );
+    context?.logger.debug(`[FDR] getLatestGeneratorRelease request: ${JSON.stringify(payload)}`);
     const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease(payload);
 
     if (latestReleaseResponse.ok) {
