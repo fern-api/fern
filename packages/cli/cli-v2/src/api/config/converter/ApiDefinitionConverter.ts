@@ -271,9 +271,9 @@ export class ApiDefinitionConverter {
             result.origin = spec.origin;
         }
         if (spec.overrides != null && !isNullish(sourced.overrides)) {
-            result.overrides = await this.resolvePath({
+            result.overrides = await this.resolvePathOrPaths({
                 absoluteFernYmlPath,
-                path: spec.overrides,
+                paths: spec.overrides,
                 sourced: sourced.overrides
             });
         }
@@ -306,9 +306,9 @@ export class ApiDefinitionConverter {
             asyncapi: await this.resolvePath({ absoluteFernYmlPath, path: spec.asyncapi, sourced: sourced.asyncapi })
         };
         if (spec.overrides != null && !isNullish(sourced.overrides)) {
-            result.overrides = await this.resolvePath({
+            result.overrides = await this.resolvePathOrPaths({
                 absoluteFernYmlPath,
-                path: spec.overrides,
+                paths: spec.overrides,
                 sourced: sourced.overrides
             });
         }
@@ -338,9 +338,9 @@ export class ApiDefinitionConverter {
             });
         }
         if (spec.proto.overrides != null && !isNullish(sourced.proto.overrides)) {
-            proto.overrides = await this.resolvePath({
+            proto.overrides = await this.resolvePathOrPaths({
                 absoluteFernYmlPath,
-                path: spec.proto.overrides,
+                paths: spec.proto.overrides,
                 sourced: sourced.proto.overrides
             });
         }
@@ -418,9 +418,9 @@ export class ApiDefinitionConverter {
             openrpc: await this.resolvePath({ absoluteFernYmlPath, path: spec.openrpc, sourced: sourced.openrpc })
         };
         if (spec.overrides != null && !isNullish(sourced.overrides)) {
-            result.overrides = await this.resolvePath({
+            result.overrides = await this.resolvePathOrPaths({
                 absoluteFernYmlPath,
-                path: spec.overrides,
+                paths: spec.overrides,
                 sourced: sourced.overrides
             });
         }
@@ -428,6 +428,41 @@ export class ApiDefinitionConverter {
             result.settings = spec.settings;
         }
         return result;
+    }
+
+    /**
+     * Resolves one or more override paths from fern.yml to absolute paths.
+     * Handles both single string and array-of-strings inputs.
+     */
+    private async resolvePathOrPaths({
+        absoluteFernYmlPath,
+        paths,
+        sourced
+    }: {
+        absoluteFernYmlPath: AbsoluteFilePath;
+        paths: string | string[];
+        sourced: Sourced<string> | Sourced<string[]>;
+    }): Promise<AbsoluteFilePath | AbsoluteFilePath[]> {
+        if (!Array.isArray(paths)) {
+            // When paths is a single string, sourced is Sourced<string> (SourcedString).
+            // TypeScript can't narrow sourced based on a check on paths.
+            return await this.resolvePath({
+                absoluteFernYmlPath,
+                path: paths,
+                sourced: sourced as Sourced<string>
+            });
+        }
+        const resolved: AbsoluteFilePath[] = [];
+        // When paths is an array, sourced is Sourced<string[]> (SourcedArray<string>).
+        const sourcedArray = sourced as Sourced<string[]>;
+        for (let i = 0; i < paths.length; i++) {
+            const path = paths[i];
+            const sourcedPath = sourcedArray[i];
+            if (path != null && !isNullish(sourcedPath)) {
+                resolved.push(await this.resolvePath({ absoluteFernYmlPath, path, sourced: sourcedPath }));
+            }
+        }
+        return resolved;
     }
 
     /**

@@ -12,8 +12,8 @@ export interface AsyncApiSpec {
     /** URL origin for fetching remote specs */
     origin?: string;
 
-    /** Path to the overrides file */
-    overrides?: AbsoluteFilePath;
+    /** Path to the overrides file(s) */
+    overrides?: AbsoluteFilePath | AbsoluteFilePath[];
 
     /** Namespace for the spec */
     namespace?: string;

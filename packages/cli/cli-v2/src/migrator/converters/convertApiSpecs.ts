@@ -5,20 +5,6 @@ import { readdir } from "fs/promises";
 import type { MigratorWarning } from "../types/index.js";
 import { convertOpenApiSpecSettings } from "./convertSettings.js";
 
-/**
- * Converts OverridesSchema (string | string[] | undefined) to a single string.
- * The cli-v2 config schema only supports a single override path, so we use the first one if an array is provided.
- */
-function convertOverridesToString(overrides: generatorsYml.OverridesSchema | undefined): string | undefined {
-    if (overrides == null) {
-        return undefined;
-    }
-    if (Array.isArray(overrides)) {
-        return overrides[0];
-    }
-    return overrides;
-}
-
 export interface ConvertApiSpecsResult {
     specs: schemas.ApiSpecSchema[];
     warnings: MigratorWarning[];
@@ -165,7 +151,7 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
             return {
                 ...spec,
                 openapi: adjustPath(spec.openapi, apiName),
-                overrides: spec.overrides != null ? adjustPath(spec.overrides, apiName) : undefined,
+                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined,
                 overlays: spec.overlays != null ? adjustPath(spec.overlays, apiName) : undefined
             };
         }
@@ -173,7 +159,7 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
             return {
                 ...spec,
                 asyncapi: adjustPath(spec.asyncapi, apiName),
-                overrides: spec.overrides != null ? adjustPath(spec.overrides, apiName) : undefined
+                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
             };
         }
         if ("fern" in spec) {
@@ -192,7 +178,7 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
             return {
                 ...spec,
                 openrpc: adjustPath(spec.openrpc, apiName),
-                overrides: spec.overrides != null ? adjustPath(spec.overrides, apiName) : undefined
+                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
             };
         }
         if ("proto" in spec) {
@@ -201,7 +187,8 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
                 proto: {
                     ...spec.proto,
                     root: adjustPath(spec.proto.root, apiName),
-                    overrides: spec.proto.overrides != null ? adjustPath(spec.proto.overrides, apiName) : undefined
+                    overrides:
+                        spec.proto.overrides != null ? adjustPathOrPaths(spec.proto.overrides, apiName) : undefined
                 }
             };
         }
@@ -217,6 +204,13 @@ function adjustPath(path: string, apiName: string): string {
         return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path.slice(2)}`;
     }
     return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path}`;
+}
+
+function adjustPathOrPaths(paths: string | string[], apiName: string): string | string[] {
+    if (Array.isArray(paths)) {
+        return paths.map((p) => adjustPath(p, apiName));
+    }
+    return adjustPath(paths, apiName);
 }
 
 /**
@@ -290,7 +284,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
             result.origin = openApiSpec.origin;
         }
         if (openApiSpec.overrides != null) {
-            result.overrides = convertOverridesToString(openApiSpec.overrides);
+            result.overrides = openApiSpec.overrides;
         }
         if (openApiSpec.overlays != null) {
             result.overlays = openApiSpec.overlays;
@@ -317,7 +311,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
             result.origin = asyncApiSpec.origin;
         }
         if (asyncApiSpec.overrides != null) {
-            result.overrides = convertOverridesToString(asyncApiSpec.overrides);
+            result.overrides = asyncApiSpec.overrides;
         }
         if (asyncApiSpec.namespace != null) {
             result.namespace = asyncApiSpec.namespace;
@@ -342,7 +336,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
             result.proto.target = protoDef.target;
         }
         if (protoDef.overrides != null) {
-            result.proto.overrides = convertOverridesToString(protoDef.overrides);
+            result.proto.overrides = protoDef.overrides;
         }
         if (protoDef["local-generation"] != null) {
             result.proto.localGeneration = protoDef["local-generation"];
@@ -364,7 +358,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         };
 
         if (openRpcSpec.overrides != null) {
-            result.overrides = convertOverridesToString(openRpcSpec.overrides);
+            result.overrides = openRpcSpec.overrides;
         }
 
         return result;
@@ -441,7 +435,7 @@ function convertLegacyApiConfig(
             result.proto.target = protoDef.target;
         }
         if (protoDef.overrides != null) {
-            result.proto.overrides = convertOverridesToString(protoDef.overrides);
+            result.proto.overrides = protoDef.overrides;
         }
 
         specs.push(result);
@@ -460,7 +454,7 @@ function convertLegacyApiConfig(
             result.origin = config.origin;
         }
         if (config.overrides != null) {
-            result.overrides = convertOverridesToString(config.overrides);
+            result.overrides = config.overrides;
         }
         if (Object.keys(settingsResult.settings).length > 0) {
             result.settings = settingsResult.settings;
@@ -497,7 +491,7 @@ function convertApiDefinitionSchema(
             result.origin = item.origin;
         }
         if (item.overrides != null) {
-            result.overrides = convertOverridesToString(item.overrides);
+            result.overrides = item.overrides;
         }
         if (Object.keys(settingsResult.settings).length > 0) {
             result.settings = settingsResult.settings;
