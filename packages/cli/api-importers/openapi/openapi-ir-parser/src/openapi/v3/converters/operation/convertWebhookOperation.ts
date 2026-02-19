@@ -138,9 +138,9 @@ export function convertWebhookOperation({
                     signatureExtension != null
                         ? {
                               header: signatureExtension.header,
-                              algorithm: signatureExtension.algorithm,
-                              encoding: signatureExtension.encoding,
-                              payloadFormat: signatureExtension["payload-format"]
+                              algorithm: signatureExtension.algorithm ?? "sha256",
+                              encoding: signatureExtension.encoding ?? "base64",
+                              payloadFormat: signatureExtension["payload-format"] ?? "body-only"
                           }
                         : undefined,
                 description: operation.description,
