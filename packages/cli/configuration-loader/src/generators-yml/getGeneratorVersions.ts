@@ -28,12 +28,11 @@ export async function getLatestGeneratorVersion({
 
     const payload: FernRegistry.generators.versions.GetLatestGeneratorReleaseRequest = {
         generator: getGeneratorMetadataFromName(generatorName, context),
-        releaseTypes: [channel ?? FernRegistry.generators.ReleaseType.Ga]
+        releaseTypes: [channel ?? FernRegistry.generators.ReleaseType.Ga],
+        // We get "*" as 0.0.0, so we need to handle that case for tests
+        // if we see this, then we shouldn't restrict on the CLI version
+        cliVersion: cliVersion === "0.0.0" ? undefined : cliVersion
     };
-
-    if (cliVersion !== "0.0.0") {
-        payload.cliVersion = cliVersion;
-    }
 
     if (!includeMajor && parsedVersion != null) {
         payload.generatorMajorVersion = parsedVersion.major;
