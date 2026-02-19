@@ -121,10 +121,24 @@ async function importExternalRef(
     if (baseName == null) {
         return;
     }
-    const schemaName = getUniqueSchemaName(schemas, baseName);
+
+    const existingEntry = findSchemaKeyForRecord(schemas, record);
+    const schemaName = existingEntry ?? getUniqueSchemaName(schemas, baseName);
     refToSchemaName.set(cacheKey, schemaName);
 
-    schemas[schemaName] = structuredClone(resolved);
+    if (existingEntry != null) {
+        const cloned = structuredClone(resolved) as Record<string, unknown>;
+        delete record.$ref;
+        for (const key of Object.keys(record)) {
+            delete record[key];
+        }
+        for (const [key, value] of Object.entries(cloned)) {
+            record[key] = value;
+        }
+        schemas[schemaName] = record;
+    } else {
+        schemas[schemaName] = structuredClone(resolved);
+    }
 
     if (!visited.has(cacheKey)) {
         visited.add(cacheKey);
@@ -139,7 +153,9 @@ async function importExternalRef(
         );
     }
 
-    record.$ref = `#/components/schemas/${schemaName}`;
+    if (existingEntry == null) {
+        record.$ref = `#/components/schemas/${schemaName}`;
+    }
 }
 
 async function importIntraFileRef(
@@ -238,6 +254,18 @@ function deriveSchemaName(pointer: string | undefined, filePath: string): string
     const basename = path.basename(filePath);
     const dotIndex = basename.indexOf(".");
     return dotIndex >= 0 ? basename.substring(0, dotIndex) : basename;
+}
+
+function findSchemaKeyForRecord(
+    schemas: Record<string, unknown>,
+    record: Record<string, unknown>
+): string | undefined {
+    for (const [key, value] of Object.entries(schemas)) {
+        if (value === record) {
+            return key;
+        }
+    }
+    return undefined;
 }
 
 function getUniqueSchemaName(schemas: Record<string, unknown>, baseName: string): string {

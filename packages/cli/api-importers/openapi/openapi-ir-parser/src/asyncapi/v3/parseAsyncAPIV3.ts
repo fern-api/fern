@@ -102,10 +102,12 @@ export function parseAsyncAPIV3({
                 }
                 if (context.isReferenceObject(message)) {
                     const resolved = context.resolveMessageReference(message);
-                    seenMessages[messageId].push({
-                        channelId,
-                        payload: resolved.payload
-                    });
+                    if (resolved.payload != null) {
+                        seenMessages[messageId].push({
+                            channelId,
+                            payload: resolved.payload
+                        });
+                    }
                 } else if (context.isMessageWithPayload(message)) {
                     seenMessages[messageId].push({
                         channelId,
