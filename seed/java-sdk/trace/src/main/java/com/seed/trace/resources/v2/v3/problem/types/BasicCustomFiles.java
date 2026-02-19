@@ -114,6 +114,10 @@ public final class BasicCustomFiles {
     public interface _FinalStage {
         BasicCustomFiles build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage additionalFiles(Map<Language, Files> additionalFiles);
 
         _FinalStage putAllAdditionalFiles(Map<Language, Files> additionalFiles);
@@ -196,6 +200,18 @@ public final class BasicCustomFiles {
         public BasicCustomFiles build() {
             return new BasicCustomFiles(
                     methodName, signature, additionalFiles, basicTestCaseTemplate, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

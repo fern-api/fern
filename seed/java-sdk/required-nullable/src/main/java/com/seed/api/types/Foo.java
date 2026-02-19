@@ -126,6 +126,10 @@ public final class Foo {
     public interface _FinalStage {
         Foo build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage bar(Optional<String> bar);
 
         _FinalStage bar(String bar);
@@ -240,6 +244,18 @@ public final class Foo {
         @java.lang.Override
         public Foo build() {
             return new Foo(bar, nullableBar, nullableRequiredBar, requiredBar, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

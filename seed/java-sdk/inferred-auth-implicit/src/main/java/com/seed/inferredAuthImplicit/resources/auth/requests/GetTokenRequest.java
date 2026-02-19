@@ -124,6 +124,10 @@ public final class GetTokenRequest {
     public interface _FinalStage {
         GetTokenRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage scope(Optional<String> scope);
 
         _FinalStage scope(String scope);
@@ -189,6 +193,18 @@ public final class GetTokenRequest {
         @java.lang.Override
         public GetTokenRequest build() {
             return new GetTokenRequest(xApiKey, clientId, clientSecret, scope, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

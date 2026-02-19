@@ -83,6 +83,10 @@ public final class WithJsonPropertyRequest {
     public interface _FinalStage {
         WithJsonPropertyRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage json(Optional<MyObject> json);
 
         _FinalStage json(MyObject json);
@@ -129,6 +133,18 @@ public final class WithJsonPropertyRequest {
         @java.lang.Override
         public WithJsonPropertyRequest build() {
             return new WithJsonPropertyRequest(file, json, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
