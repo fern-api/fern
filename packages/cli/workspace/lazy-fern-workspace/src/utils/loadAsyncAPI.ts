@@ -17,8 +17,10 @@ export async function loadAsyncAPI({
     absoluteFilePathToOverrides: AbsoluteFilePath | undefined;
 }): Promise<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3> {
     const contents = (await readFile(absoluteFilePath)).toString();
-    const parsed = (await yaml.load(contents)) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
-    await resolveExternalRefs(parsed, path.dirname(absoluteFilePath));
+    let parsed = (await yaml.load(contents)) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
+    parsed = (await resolveExternalRefs(parsed, path.dirname(absoluteFilePath))) as
+        | AsyncAPIV2.DocumentV2
+        | AsyncAPIV3.DocumentV3;
     if (absoluteFilePathToOverrides != null) {
         return await mergeWithOverrides<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3>({
             absoluteFilePathToOverrides,
@@ -34,16 +36,17 @@ async function resolveExternalRefs(
     basePath: string,
     resolving: Set<string> = new Set(),
     fileCache: Map<string, Record<string, unknown>> = new Map()
-): Promise<void> {
+): Promise<unknown> {
     if (obj == null || typeof obj !== "object") {
-        return;
+        return obj;
     }
 
     if (Array.isArray(obj)) {
+        const result: unknown[] = [];
         for (const item of obj) {
-            await resolveExternalRefs(item, basePath, resolving, fileCache);
+            result.push(await resolveExternalRefs(item, basePath, resolving, fileCache));
         }
-        return;
+        return result;
     }
 
     const record = obj as Record<string, unknown>;
@@ -63,7 +66,7 @@ async function resolveExternalRefs(
             try {
                 fileContent = (await readFile(absoluteRefPath)).toString();
             } catch {
-                return;
+                return obj;
             }
             fileParsed = yaml.load(fileContent) as Record<string, unknown>;
             fileCache.set(absoluteRefPath, fileParsed);
@@ -74,32 +77,32 @@ async function resolveExternalRefs(
             const keys = pointer.split("/").filter((k) => k !== "");
             for (const key of keys) {
                 if (resolved == null || typeof resolved !== "object") {
-                    return;
+                    return obj;
                 }
                 resolved = (resolved as Record<string, unknown>)[key];
             }
         }
 
         if (resolved == null || typeof resolved !== "object") {
-            return;
+            return obj;
         }
 
         const cacheKey = `${absoluteRefPath}#${pointer ?? ""}`;
-        if (!resolving.has(cacheKey)) {
-            resolving.add(cacheKey);
-            await resolveExternalRefs(resolved, path.dirname(absoluteRefPath), resolving, fileCache);
+        if (resolving.has(cacheKey)) {
+            return structuredClone(resolved);
         }
-
-        delete record.$ref;
-        for (const [key, value] of Object.entries(resolved as Record<string, unknown>)) {
-            record[key] = value;
-        }
-        return;
+        resolving.add(cacheKey);
+        return await resolveExternalRefs(
+            structuredClone(resolved),
+            path.dirname(absoluteRefPath),
+            resolving,
+            fileCache
+        );
     }
 
-    for (const value of Object.values(record)) {
-        if (typeof value === "object" && value != null) {
-            await resolveExternalRefs(value, basePath, resolving, fileCache);
-        }
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(record)) {
+        result[key] = await resolveExternalRefs(value, basePath, resolving, fileCache);
     }
+    return result;
 }
