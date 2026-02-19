@@ -408,8 +408,18 @@ public partial class ServiceClient : IServiceClient
     ///                     Name = "name",
     ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new Node { Name = "name" },
-    ///                         new Node { Name = "name" },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
@@ -422,8 +432,18 @@ public partial class ServiceClient : IServiceClient
     ///                     Name = "name",
     ///                     Nodes = new List&lt;Node&gt;()
     ///                     {
-    ///                         new Node { Name = "name" },
-    ///                         new Node { Name = "name" },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
     ///                     {
@@ -492,8 +512,18 @@ public partial class ServiceClient : IServiceClient
     ///                     },
     ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new SeedExamples.Directory { Name = "name" },
-    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
     ///                     },
     ///                 },
     ///                 new SeedExamples.Directory
@@ -506,8 +536,18 @@ public partial class ServiceClient : IServiceClient
     ///                     },
     ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new SeedExamples.Directory { Name = "name" },
-    ///                         new SeedExamples.Directory { Name = "name" },
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
     ///                     },
     ///                 },
     ///             },

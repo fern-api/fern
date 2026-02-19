@@ -510,8 +510,18 @@ await client.Service.CreateBigEntityAsync(
                     Name = "name",
                     Nodes = new List<Node>()
                     {
-                        new Node { Name = "name" },
-                        new Node { Name = "name" },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
                     },
                     Trees = new List<Tree>()
                     {
@@ -524,8 +534,18 @@ await client.Service.CreateBigEntityAsync(
                     Name = "name",
                     Nodes = new List<Node>()
                     {
-                        new Node { Name = "name" },
-                        new Node { Name = "name" },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
                     },
                     Trees = new List<Tree>()
                     {
@@ -594,8 +614,18 @@ await client.Service.CreateBigEntityAsync(
                     },
                     Directories = new List<SeedExamples.Directory>()
                     {
-                        new SeedExamples.Directory { Name = "name" },
-                        new SeedExamples.Directory { Name = "name" },
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
                     },
                 },
                 new SeedExamples.Directory
@@ -608,8 +638,18 @@ await client.Service.CreateBigEntityAsync(
                     },
                     Directories = new List<SeedExamples.Directory>()
                     {
-                        new SeedExamples.Directory { Name = "name" },
-                        new SeedExamples.Directory { Name = "name" },
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
                     },
                 },
             },

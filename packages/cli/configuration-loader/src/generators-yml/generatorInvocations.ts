@@ -89,9 +89,6 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             }
         }
     },
-    [GeneratorName.RUBY_MODEL]: {
-        version: "0.0.8"
-    },
     [GeneratorName.RUBY_SDK]: {
         version: "0.8.2",
         output: {

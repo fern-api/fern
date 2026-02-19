@@ -34,7 +34,6 @@ export const V27_TO_V26_MIGRATION: IrMigration<
         [GeneratorName.GO_FIBER]: "0.6.1-3-g94ee67a",
         [GeneratorName.GO_MODEL]: "0.6.1-3-g94ee67a",
         [GeneratorName.GO_SDK]: "0.6.1-3-g94ee67a",
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,

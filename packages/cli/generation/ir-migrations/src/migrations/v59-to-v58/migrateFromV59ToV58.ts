@@ -30,7 +30,6 @@ export const V59_TO_V58_MIGRATION: IrMigration<
         [GeneratorName.GO_FIBER]: "0.23.7",
         [GeneratorName.GO_MODEL]: "0.23.7",
         [GeneratorName.GO_SDK]: "1.7.0",
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: "1.0.0-rc26",
         [GeneratorName.CSHARP_MODEL]: "0.0.3",
         [GeneratorName.CSHARP_SDK]: "2.2.0",
