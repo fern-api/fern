@@ -861,9 +861,7 @@ export class OperationConverter extends AbstractOperationConverter {
         return undefined;
     }
 
-    private getRequestBodyV2SchemaExamples(
-        requestBody: HttpRequestBody | undefined
-    ): V2SchemaExamples | undefined {
+    private getRequestBodyV2SchemaExamples(requestBody: HttpRequestBody | undefined): V2SchemaExamples | undefined {
         if (requestBody == null) {
             return undefined;
         }
