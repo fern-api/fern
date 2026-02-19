@@ -147,8 +147,7 @@ types:
       url: optional<string>
       package-name: string
       token: optional<string>
-
-  MavenOutputLocationSchema:
+packages/cli/config/src/schemas/specs/OpenRpcSpecSchema.ts
     properties:
       url: optional<string>
       coordinate: string
