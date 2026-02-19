@@ -37,10 +37,7 @@ Options:
                        upgrade. Defaults to false, meaning major versions will
                        be skipped.                    [boolean] [default: false]
       --channel                                            [choices: "GA", "RC"]
-      --list                          When specified, a list of available
-                                      upgrades will be displayed, but no upgrade
-                                      will be taken.    [boolean] [default: false]
-      --skip-autorelease-disabled     Skip upgrading generators that have
-                                      autorelease: false set in their
-                                      configuration.    [boolean] [default: false]"
+      --list           When specified, a list of available upgrades will be
+                       displayed, but no upgrade will be taken.
+                                                      [boolean] [default: false]"
 `;

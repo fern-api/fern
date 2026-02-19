@@ -160,6 +160,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         .option("skip-autorelease-disabled", {
                             boolean: true,
                             default: false,
+                            hidden: true,
                             description:
                                 "Skip upgrading generators that have autorelease: false set in their configuration."
                         }),
