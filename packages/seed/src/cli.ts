@@ -19,7 +19,12 @@ import { publishGenerator } from "./commands/publish/publishGenerator.js";
 import { registerCliRelease } from "./commands/register/registerCliRelease.js";
 import { registerGenerator } from "./commands/register/registerGenerator.js";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture.js";
-import { ContainerScriptRunner, GeneratorScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test/index.js";
+import {
+    ContainerScriptRunner,
+    GeneratorScriptRunner,
+    LocalScriptRunner,
+    ScriptRunner
+} from "./commands/test/index.js";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner/index.js";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures.js";
