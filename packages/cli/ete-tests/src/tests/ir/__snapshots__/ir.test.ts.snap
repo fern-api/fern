@@ -43474,6 +43474,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     ]
                 },
                 "fileUploadPayload": null,
+                "signatureVerification": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
