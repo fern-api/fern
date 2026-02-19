@@ -111,11 +111,11 @@ groups:
         output:
           location: local-file-system
           path: ../sdks/typescript
-        version: 2.3.2
+        version: 3.48.2
   typescript:
     generators:
       - name: fern-typescript
-        version: 0.0.247
+        version: 3.48.2
 ",
         "name": "generators.yml",
         "type": "file",

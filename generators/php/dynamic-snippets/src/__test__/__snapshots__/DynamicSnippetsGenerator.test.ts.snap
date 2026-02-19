@@ -557,9 +557,13 @@ $client->createUser(
         'password' => 'password',
         'profile' => new UserProfile([
             'name' => 'name',
-            'verification' => new UserProfileVerification([]),
+            'verification' => new UserProfileVerification([
+                'verified' => 'value',
+            ]),
             'ssn' => 'ssn',
         ]),
+        'id' => 'value',
+        'email' => 'value',
     ]),
 );
 "
@@ -586,9 +590,12 @@ $client->createUser(
         'password' => 'password',
         'profile' => new UserProfile([
             'name' => 'name',
-            'verification' => new UserProfileVerification([]),
+            'verification' => new UserProfileVerification([
+                'verified' => 'value',
+            ]),
             'ssn' => 'ssn',
         ]),
+        'email' => 'value',
     ]),
 );
 "

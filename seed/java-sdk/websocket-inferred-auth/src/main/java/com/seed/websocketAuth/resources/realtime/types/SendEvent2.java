@@ -82,6 +82,10 @@ public final class SendEvent2 {
 
     public interface _FinalStage {
         SendEvent2 build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -119,6 +123,18 @@ public final class SendEvent2 {
         @java.lang.Override
         public SendEvent2 build() {
             return new SendEvent2(sendText2, sendParam2, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

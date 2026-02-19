@@ -16,7 +16,9 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Paths to files that will be auto-loaded when the gem is required
     // (e.g., ["custom_integration", "sentry_integration"] will load lib/<gem>/custom_integration.rb
     // and lib/<gem>/sentry_integration.rb if they exist)
-    requirePaths: z.optional(z.array(z.string()))
+    requirePaths: z.optional(z.array(z.string())),
+    // Apply IR-defined default values to query parameters and headers in request wrappers
+    useDefaultRequestParameterValues: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;
