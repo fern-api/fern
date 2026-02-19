@@ -1,5 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0
+  changelogEntry:
+    - summary: |
+        💎 The Ruby SDK generator v2 is officially stable! 🎉🥂 After 87 release candidates,
+        this ground-up rewrite ships with a modern AST-based architecture and full feature
+        parity. 🔒 Stable, production-ready, and 100% backward-compatible with the legacy
+        generator — existing configs, gem names, and modules just work. ✅
+
+        ✨ **Highlights**
+        - 🔐 Bearer, API key, OAuth 2.0 & inferred auth with automatic token refresh
+        - 🌐 Exponential-backoff retries, per-request `base_url` override, multipart uploads
+        - 📄 Discriminated & undiscriminated unions, correct non-snake_case wire serialization
+        - 📦 Cursor & offset pagination with lazy iterators, custom pager support
+        - 🏗️ YARD docs, RuboCop-clean output, CI with RubyGems OIDC publishing, wire tests
+        - ⚙️ Rich config: `moduleName`, `requirePaths`, `extraDependencies`, `enableWireTests`, and more
+        - 🌍 Multiple named environments and multi-URL environment support
+        - 🚀 RubyGems OIDC publishing and self-hosted mode with `.fernignore` support
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 61
+
 - version: 1.0.0-rc87
   changelogEntry:
     - summary: |
