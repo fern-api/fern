@@ -111,6 +111,10 @@ public final class TestSubmissionState {
     public interface _FinalStage {
         TestSubmissionState build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage defaultTestCases(List<TestCase> defaultTestCases);
 
         _FinalStage addDefaultTestCases(TestCase defaultTestCases);
@@ -213,6 +217,18 @@ public final class TestSubmissionState {
         @java.lang.Override
         public TestSubmissionState build() {
             return new TestSubmissionState(problemId, defaultTestCases, customTestCases, status, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

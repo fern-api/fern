@@ -103,5 +103,15 @@ public final class WorkspaceSubmissionStatusV2 {
         public WorkspaceSubmissionStatusV2 build() {
             return new WorkspaceSubmissionStatusV2(updates, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

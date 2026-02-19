@@ -10,8 +10,8 @@ export declare namespace SubPackageClientInterfaceGenerator {
     interface Args {
         context: SdkGeneratorContext;
         subpackage: FernIr.Subpackage;
-        serviceId: FernIr.ServiceId;
-        service: FernIr.HttpService;
+        serviceId?: FernIr.ServiceId;
+        service?: FernIr.HttpService;
     }
 }
 
@@ -21,8 +21,8 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<
     SdkGeneratorContext
 > {
     private subpackage: FernIr.Subpackage;
-    private serviceId: FernIr.ServiceId;
-    private service: FernIr.HttpService;
+    private serviceId: FernIr.ServiceId | undefined;
+    private service: FernIr.HttpService | undefined;
 
     constructor({ context, subpackage, serviceId, service }: SubPackageClientInterfaceGenerator.Args) {
         super(context);
@@ -46,13 +46,27 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<
             namespace: this.context.getLocationForSubpackage(this.subpackage).namespace
         });
 
-        for (const endpoint of this.service.endpoints) {
-            const signatures = this.context.endpointGenerator.generateSignatures({
-                serviceId: this.serviceId,
-                service: this.service,
-                endpoint
-            });
-            interface_.addMethods(signatures);
+        if (this.service != null && this.serviceId != null) {
+            for (const endpoint of this.service.endpoints) {
+                const signatures = this.context.endpointGenerator.generateSignatures({
+                    serviceId: this.serviceId,
+                    service: this.service,
+                    endpoint
+                });
+                interface_.addMethods(signatures);
+            }
+        }
+
+        for (const childSubpackage of this.getChildSubpackages()) {
+            interface_.addMethod(
+                php.method({
+                    name: this.context.getSubpackageGetterName(childSubpackage),
+                    access: "public",
+                    parameters: [],
+                    return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(childSubpackage)),
+                    noBody: true
+                })
+            );
         }
 
         return new PhpFile({
@@ -61,5 +75,11 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         });
+    }
+
+    private getChildSubpackages(): FernIr.Subpackage[] {
+        return this.subpackage.subpackages
+            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 }

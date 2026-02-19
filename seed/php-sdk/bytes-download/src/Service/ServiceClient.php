@@ -94,10 +94,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function download(string $id, ?array $options = null): void
+    public function download(string $id, ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -110,6 +111,9 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return $response->getBody()->getContents();
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

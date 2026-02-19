@@ -41,6 +41,14 @@ describe("fern docs broken-links", () => {
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
 
+    it("links with Markdown snippet references should be resolved", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("snippet-link")),
+            reject: false
+        });
+        expect(stripAnsi(stdout)).toContain("All checks passed");
+    }, 20_000);
+
     it("broken links in sections with path property should be detected", async () => {
         const { stdout } = await runFernCli(["docs", "broken-links"], {
             cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),

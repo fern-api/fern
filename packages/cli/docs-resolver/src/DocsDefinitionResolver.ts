@@ -77,6 +77,7 @@ type RegisterApiFn = (opts: {
     playgroundConfig?: PlaygroundConfig;
     apiName?: string;
     workspace?: FernWorkspace;
+    openApiSourceFilePath?: AbsoluteFilePath;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
@@ -1397,12 +1398,15 @@ export class DocsDefinitionResolver {
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
         const apiNameForRegistration = item.apiName ?? workspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
+        const openApiSource = (openapiWorkspace ?? workspace)?.getSources().find((s) => s.type === "openapi");
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
             apiName: apiNameForRegistration,
             workspace,
+            openApiSourceFilePath: openApiSource?.absoluteFilePath,
             graphqlOperations: graphqlData.operations,
             graphqlTypes: graphqlData.types
         });

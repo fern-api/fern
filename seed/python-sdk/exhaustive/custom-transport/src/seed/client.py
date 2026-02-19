@@ -6,6 +6,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
     from .endpoints.client import AsyncEndpointsClient, EndpointsClient
@@ -40,6 +41,9 @@ class SeedExhaustive:
     http_client : typing.Optional[httpx.BaseTransport]
         Override the httpx transport used by the client. This is intended for SDK developers via custom code (e.g., factory methods).
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import SeedExhaustive
@@ -60,6 +64,7 @@ class SeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         http_client: typing.Optional[httpx.BaseTransport] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -74,6 +79,7 @@ class SeedExhaustive:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout, transport=http_client),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._endpoints: typing.Optional[EndpointsClient] = None
         self._inlined_requests: typing.Optional[InlinedRequestsClient] = None
@@ -147,6 +153,9 @@ class AsyncSeedExhaustive:
     http_client : typing.Optional[httpx.AsyncBaseTransport]
         Override the httpx transport used by the client. This is intended for SDK developers via custom code (e.g., factory methods).
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import AsyncSeedExhaustive
@@ -167,6 +176,7 @@ class AsyncSeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         http_client: typing.Optional[httpx.AsyncBaseTransport] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -181,6 +191,7 @@ class AsyncSeedExhaustive:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, transport=http_client),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._endpoints: typing.Optional[AsyncEndpointsClient] = None
         self._inlined_requests: typing.Optional[AsyncInlinedRequestsClient] = None
