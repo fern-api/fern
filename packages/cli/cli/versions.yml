@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.3
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI parser failing to resolve external file `$ref` references. Previously,
+        references like `./schemas/foo.yml#/MySchema` in AsyncAPI specs were not resolved
+        during document loading, causing `Failed to resolve schema reference` errors.
+        External refs are now recursively resolved and inlined before parsing.
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 65
 - version: 3.79.2
   changelogEntry:
     - summary: |
