@@ -246,6 +246,14 @@ exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (m
       "test3"
     ],
     "message": "Expected number, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected number, got object"
   }
 ]"
 `;

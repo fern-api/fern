@@ -318,6 +318,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (m
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.types.MixedType;
+import java.util.Arrays;
 import java.util.HashMap;
 
 AcmeAcmeClient client = AcmeAcmeClient
@@ -330,6 +331,9 @@ client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(
         put("test", MixedType.of(0.0));
         put("test2", MixedType.of(true));
         put("test3", MixedType.of("Test"));
+        put("test4", MixedType.of(
+            Arrays.asList("1", "1", "1", "1")
+        ));
     }}
 );
 "

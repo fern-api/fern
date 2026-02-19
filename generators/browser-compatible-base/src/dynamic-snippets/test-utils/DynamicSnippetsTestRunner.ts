@@ -368,7 +368,8 @@ export class DynamicSnippetsTestRunner {
                         requestBody: {
                             test: 0,
                             test2: true,
-                            test3: "Test"
+                            test3: "Test",
+                            test4: ["1", "1", "1", "1"]
                         }
                     }
                 }

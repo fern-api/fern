@@ -3779,6 +3779,13 @@
                 {
                     "type": "primitive",
                     "value": "STRING"
+                },
+                {
+                    "type": "list",
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
                 }
             ]
         }

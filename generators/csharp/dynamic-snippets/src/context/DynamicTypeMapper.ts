@@ -22,7 +22,7 @@ export class DynamicTypeMapper extends WithGeneration {
     public convert(args: DynamicTypeMapper.Args): ast.Type {
         switch (args.typeReference.type) {
             case "list":
-                return this.Collection.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.Collection.list(this.convert({ typeReference: args.typeReference.value, unboxOptionals: true }));
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value });
             case "map": {
@@ -46,7 +46,7 @@ export class DynamicTypeMapper extends WithGeneration {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
-                return this.Collection.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }));
+                return this.Collection.set(this.convert({ typeReference: args.typeReference.value, unboxOptionals: true }));
             case "unknown":
                 return this.convertUnknown();
             default:

@@ -21,6 +21,7 @@ types:
       - double
       - boolean
       - string
+      - list<string>
 
 errors:
   ErrorWithUnionBody:
