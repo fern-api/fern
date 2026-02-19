@@ -23,86 +23,78 @@ export async function writeBuildTestScripts({
 
 function generateBuildScript(packageManager: "pnpm" | "yarn"): string {
     if (packageManager === "yarn") {
-        return [
-            "#!/bin/sh",
-            "set -e",
-            "",
-            'if [ ! -f "package.json" ]; then',
-            '  echo "No package.json found, skipping build"',
-            "  exit 0",
-            "fi",
-            "",
-            "corepack enable",
-            "corepack prepare yarn --activate",
-            "",
-            'if [ -f "yarn.lock" ]; then',
-            "  corepack yarn install --frozen-lockfile",
-            "else",
-            "  corepack yarn install",
-            "fi",
-            "",
-            "if grep -q '\"build\":' package.json; then",
-            "  corepack yarn build",
-            "fi",
-            ""
-        ].join("\n");
+        return `#!/bin/sh
+set -e
+
+if [ ! -f "package.json" ]; then
+  echo "No package.json found, skipping build"
+  exit 0
+fi
+
+corepack enable
+corepack prepare yarn --activate
+
+if [ -f "yarn.lock" ]; then
+  corepack yarn install --frozen-lockfile
+else
+  corepack yarn install
+fi
+
+if grep -q '"build":' package.json; then
+  corepack yarn build
+fi
+`;
     }
 
-    return [
-        "#!/bin/sh",
-        "set -e",
-        "",
-        'if [ ! -f "package.json" ]; then',
-        '  echo "No package.json found, skipping build"',
-        "  exit 0",
-        "fi",
-        "",
-        "corepack enable",
-        "corepack prepare pnpm --activate",
-        "",
-        'if [ -f "pnpm-lock.yaml" ]; then',
-        "  corepack pnpm install --frozen-lockfile",
-        "else",
-        "  corepack pnpm install",
-        "fi",
-        "",
-        "if grep -q '\"build\":' package.json; then",
-        "  corepack pnpm build",
-        "fi",
-        ""
-    ].join("\n");
+    return `#!/bin/sh
+set -e
+
+if [ ! -f "package.json" ]; then
+  echo "No package.json found, skipping build"
+  exit 0
+fi
+
+corepack enable
+corepack prepare pnpm --activate
+
+if [ -f "pnpm-lock.yaml" ]; then
+  corepack pnpm install --frozen-lockfile
+else
+  corepack pnpm install
+fi
+
+if grep -q '"build":' package.json; then
+  corepack pnpm build
+fi
+`;
 }
 
 function generateTestScript(packageManager: "pnpm" | "yarn"): string {
     if (packageManager === "yarn") {
-        return [
-            "#!/bin/sh",
-            "set -e",
-            "",
-            'if [ ! -f "package.json" ]; then',
-            '  echo "No package.json found, skipping tests"',
-            "  exit 0",
-            "fi",
-            "",
-            "if grep -q '\"test\":' package.json; then",
-            "  corepack yarn test",
-            "fi",
-            ""
-        ].join("\n");
+        return `#!/bin/sh
+set -e
+
+if [ ! -f "package.json" ]; then
+  echo "No package.json found, skipping tests"
+  exit 0
+fi
+
+if grep -q '"test":' package.json; then
+  corepack yarn test
+fi
+`;
     }
 
-    return [
-        "#!/bin/sh",
-        "set -e",
-        "",
-        'if [ ! -f "package.json" ]; then',
-        '  echo "No package.json found, skipping tests"',
-        "  exit 0",
-        "fi",
-        "",
-        "if grep -q '\"test\":' package.json; then",
-        "  corepack pnpm test",
-        "fi",
-        ""
-    ].join("\n");
+    return `#!/bin/sh
+set -e
+
+if [ ! -f "package.json" ]; then
+  echo "No package.json found, skipping tests"
+  exit 0
+fi
+
+if grep -q '"test":' package.json; then
+  corepack pnpm test
+fi
+`;
 }

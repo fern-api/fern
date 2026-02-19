@@ -71,11 +71,8 @@ jobs:
                 : ""
         }
 
-      - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
-
       - name: Compile
-        run: ${packageManager} build
+        run: .fern/build.sh
 
   test:
     runs-on: ubuntu-latest
@@ -94,11 +91,11 @@ jobs:
                 : ""
         }
 
-      - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
+      - name: Build
+        run: .fern/build.sh
 
       - name: Test
-        run: ${packageManager} test
+        run: .fern/test.sh
 `;
 
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
@@ -136,11 +133,8 @@ jobs:
                 : ""
         }
 
-      - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
-
       - name: Build
-        run: ${packageManager} build
+        run: .fern/build.sh
 
       - name: Publish to npm
         run: |${
@@ -191,11 +185,8 @@ jobs:
                 : ""
         }
       
-      - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
-      
       - name: Build
-        run: ${packageManager} build
+        run: .fern/build.sh
 
       - name: Publish to JSR
         run: npx jsr publish`;

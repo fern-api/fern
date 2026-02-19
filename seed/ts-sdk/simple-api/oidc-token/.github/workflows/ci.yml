@@ -16,11 +16,8 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: Compile
-        run: pnpm build
+        run: .fern/build.sh
 
   test:
     runs-on: ubuntu-latest
@@ -35,11 +32,11 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: .fern/build.sh
 
       - name: Test
-        run: pnpm test
+        run: .fern/test.sh
 
   publish:
     needs: [ compile, test ]
@@ -58,11 +55,8 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: Build
-        run: pnpm build
+        run: .fern/build.sh
 
       - name: Publish to npm
         run: |
