@@ -9,7 +9,6 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample.js";
 import { generatePrimitiveExample } from "./generatePrimitiveExample.js";
@@ -52,7 +51,7 @@ export function generateTypeReferenceExample({
             const visited = visitedTypes ?? new Map<string, number>();
             const count = visited.get(typeReference.typeId) ?? 0;
             if (count >= 2) {
-                return generateMinimalNamedExample({ typeDeclaration, typeDeclarations });
+                return generateMinimalNamedExample({ typeDeclaration, typeDeclarations, visitedTypes: visited });
             }
             visited.set(typeReference.typeId, count + 1);
             const generatedExample = generateTypeDeclarationExample({
@@ -180,20 +179,54 @@ function isLeafTypeReference(typeRef: TypeReference, typeDeclarations: Record<Ty
 }
 
 /**
+ * Checks whether a type reference points to a named type that is currently
+ * part of the active recursion cycle (i.e. has been visited at least once).
+ * This unwraps containers like list, set, optional, nullable, and map.
+ */
+function isTypeReferenceInCycle(typeRef: TypeReference, visitedTypes: Map<string, number> | undefined): boolean {
+    if (visitedTypes == null) {
+        return false;
+    }
+    switch (typeRef.type) {
+        case "named":
+            return (visitedTypes.get(typeRef.typeId) ?? 0) > 0;
+        case "container":
+            switch (typeRef.container.type) {
+                case "list":
+                    return isTypeReferenceInCycle(typeRef.container.list, visitedTypes);
+                case "set":
+                    return isTypeReferenceInCycle(typeRef.container.set, visitedTypes);
+                case "optional":
+                    return isTypeReferenceInCycle(typeRef.container.optional, visitedTypes);
+                case "nullable":
+                    return isTypeReferenceInCycle(typeRef.container.nullable, visitedTypes);
+                case "map":
+                    return isTypeReferenceInCycle(typeRef.container.map.valueType, visitedTypes);
+                default:
+                    return false;
+            }
+        default:
+            return false;
+    }
+}
+
+/**
  * Generates a stub example for a named type when cycle detection triggers.
  * Instead of returning failure (which cascades up and kills parent examples),
- * this produces a valid example with required properties filled in:
- * - Objects → generates all leaf properties and required non-leaf properties, skips optional non-leaf ones
+ * this produces a valid example with safe properties filled in:
+ * - Objects → generates leaf properties + required non-leaf properties that are NOT in the current cycle
  * - Enums → first enum value
  * - Aliases → resolve non-recursive targets; recursive ones get empty object
  * - Unions → first noProperties variant if available; otherwise failure
  */
 function generateMinimalNamedExample({
     typeDeclaration,
-    typeDeclarations
+    typeDeclarations,
+    visitedTypes
 }: {
     typeDeclaration: TypeDeclaration;
     typeDeclarations: Record<TypeId, TypeDeclaration>;
+    visitedTypes?: Map<string, number>;
 }): ExampleGenerationResult<ExampleTypeReference> {
     switch (typeDeclaration.shape.type) {
         case "object": {
@@ -205,7 +238,7 @@ function generateMinimalNamedExample({
             ]) {
                 if (
                     !isLeafTypeReference(property.valueType, typeDeclarations) &&
-                    isTypeReferenceOptional({ typeReference: property.valueType, typeDeclarations })
+                    isTypeReferenceInCycle(property.valueType, visitedTypes)
                 ) {
                     continue;
                 }
@@ -215,7 +248,8 @@ function generateMinimalNamedExample({
                     typeDeclarations,
                     currentDepth: 0,
                     maxDepth: 3,
-                    skipOptionalProperties: true
+                    skipOptionalProperties: true,
+                    visitedTypes
                 });
                 if (propertyExample.type === "failure") {
                     continue;
@@ -287,7 +321,11 @@ function generateMinimalNamedExample({
             if (aliasOf.type === "named") {
                 const aliasedDeclaration = typeDeclarations[aliasOf.typeId];
                 if (aliasedDeclaration != null && aliasedDeclaration.name.typeId !== typeDeclaration.name.typeId) {
-                    return generateMinimalNamedExample({ typeDeclaration: aliasedDeclaration, typeDeclarations });
+                    return generateMinimalNamedExample({
+                        typeDeclaration: aliasedDeclaration,
+                        typeDeclarations,
+                        visitedTypes
+                    });
                 }
             }
             const jsonExample = {};
