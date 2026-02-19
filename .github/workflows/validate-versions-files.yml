@@ -106,16 +106,6 @@ jobs:
         with:
           schema: "fern-versions-yml.schema.json"
           files: "generators/csharp/model/versions.yml"
-      - name: Validate ruby versions.yml
-        uses: dsanders11/json-schema-validate-action@v1.4.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/ruby/sdk/versions.yml"
-      - name: Validate ruby-model versions.yml
-        uses: dsanders11/json-schema-validate-action@v1.4.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/ruby/model/versions.yml"
       - name: Validate rust-sdk versions.yml
         uses: dsanders11/json-schema-validate-action@v1.4.0
         with:

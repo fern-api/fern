@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.80.0
+- version: 3.81.0
   changelogEntry:
     - summary: |
         Add `--skip-autorelease-disabled` flag to `fern generator upgrade`. When passed,
@@ -7,6 +7,17 @@
         the upgrade. Skipped generators are reported in the output summary.
       type: feat
   createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Make `fern init` default to OpenAPI initialization with a sample Petstore spec.
+        Previously, `fern init` created a Fern Definition workspace by default, and
+        `fern init --openapi <path>` was needed for OpenAPI. Now `fern init` creates an
+        OpenAPI workspace by default. Use `fern init --fern-definition` to get the previous
+        Fern Definition initialization behavior.
+      type: feat
+  createdAt: "2026-02-18"
   irVersion: 65
 - version: 3.79.3
   changelogEntry:
