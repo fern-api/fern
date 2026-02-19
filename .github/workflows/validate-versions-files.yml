@@ -31,11 +31,6 @@ jobs:
         with:
           schema: "fern-versions-yml.schema.json"
           files: "generators/go/fiber/versions.yml"
-      - name: Validate typescript-mcp versions.yml
-        uses: dsanders11/json-schema-validate-action@v1.4.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/typescript-mcp/model/versions.yml"
       - name: Validate python-sdk versions.yml
         uses: dsanders11/json-schema-validate-action@v1.4.0
         with:
