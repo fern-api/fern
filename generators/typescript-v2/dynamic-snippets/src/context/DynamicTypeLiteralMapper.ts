@@ -563,13 +563,16 @@ export class DynamicTypeLiteralMapper {
         convertOpts?: DynamicTypeLiteralMapper.ConvertOpts;
     }): ts.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
+            const errorsBefore = this.context.errors.size();
             try {
                 const result = this.convert({ typeReference, value, convertOpts });
                 if (ts.TypeLiteral.isNop(result)) {
+                    this.context.errors.truncate(errorsBefore);
                     continue;
                 }
                 return result;
             } catch (e) {
+                this.context.errors.truncate(errorsBefore);
                 continue;
             }
         }
