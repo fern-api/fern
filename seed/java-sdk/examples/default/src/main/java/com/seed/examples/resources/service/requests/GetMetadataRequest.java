@@ -96,6 +96,10 @@ public final class GetMetadataRequest {
     public interface _FinalStage {
         GetMetadataRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage tag(Optional<List<String>> tag);
 
         _FinalStage tag(List<String> tag);
@@ -169,6 +173,18 @@ public final class GetMetadataRequest {
         @java.lang.Override
         public GetMetadataRequest build() {
             return new GetMetadataRequest(tag, xApiVersion, shallow, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
