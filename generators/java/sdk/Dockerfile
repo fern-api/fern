@@ -70,14 +70,30 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     mv package glob && \
     rm glob-11.1.0.tgz
 
-# Patch npm's bundled tar to 7.5.7 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w (path traversal via hardlinks/symlinks)
+# Patch npm's bundled tar to 7.5.8 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx
 # Note: We use curl instead of npm pack because npm pack depends on tar itself
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     rm -rf tar && \
-    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.7.tgz -o tar-7.5.7.tgz && \
-    tar -xzf tar-7.5.7.tgz && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.8.tgz -o tar-7.5.8.tgz && \
+    tar -xzf tar-7.5.8.tgz && \
     mv package tar && \
-    rm tar-7.5.7.tgz
+    rm tar-7.5.8.tgz
+
+# Patch minimatch to 10.2.1 to fix GHSA-3ppc-4f35-3m26 (ReDoS via repeated wildcards)
+# Note: We use curl instead of npm pack because npm pack depends on minimatch itself
+# Minimatch is bundled by both npm and glob, so patch both locations
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    rm -rf minimatch && \
+    curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.1.tgz -o minimatch-10.2.1.tgz && \
+    tar -xzf minimatch-10.2.1.tgz && \
+    mv package minimatch && \
+    rm minimatch-10.2.1.tgz && \
+    cd /usr/local/lib/node_modules/glob/node_modules && \
+    rm -rf minimatch && \
+    curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.1.tgz -o minimatch-10.2.1.tgz && \
+    tar -xzf minimatch-10.2.1.tgz && \
+    mv package minimatch && \
+    rm minimatch-10.2.1.tgz
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
