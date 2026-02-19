@@ -6,7 +6,7 @@ import { init } from "../init/init.js";
 
 describe("jsonschema", () => {
     it("works with latest version", async () => {
-        const pathOfDirectory = await init();
+        const pathOfDirectory = await init({ additionalArgs: [{ name: "--fern-definition" }] });
         await runFernCli(["jsonschema", "schema.json", "--type", "imdb.Movie"], {
             cwd: pathOfDirectory,
             reject: false
