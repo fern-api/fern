@@ -1,0 +1,20 @@
+{
+  "anyOf": [
+    {
+      "type": "number"
+    },
+    {
+      "type": "boolean"
+    },
+    {
+      "type": "string"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  ],
+  "definitions": {}
+}
