@@ -78,6 +78,107 @@ describe("fern init", () => {
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 
+    it("existing openapi fern directory", async () => {
+        const pathOfDirectory = await init();
+
+        await init({
+            directory: pathOfDirectory
+        });
+        expect(
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api")
+                )
+            )
+        ).toBe(true);
+        expect(
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api"),
+                    RelativeFilePath.of("generators.yml")
+                )
+            )
+        ).toBe(true);
+        expect(
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api"),
+                    RelativeFilePath.of("openapi.yml")
+                )
+            )
+        ).toBe(true);
+        expect(
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api1")
+                )
+            )
+        ).toBe(true);
+    }, 60_000);
+
+    it("existing openapi then fern-definition", async () => {
+        const pathOfDirectory = await init();
+
+        await init({
+            directory: pathOfDirectory,
+            additionalArgs: [{ name: "--fern-definition" }]
+        });
+        expect(
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api"),
+                    RelativeFilePath.of("openapi.yml")
+                )
+            )
+        ).toBe(true);
+        expect(
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api1"),
+                    RelativeFilePath.of("definition")
+                )
+            )
+        ).toBe(true);
+    }, 60_000);
+
+    it("conflicting --openapi and --fern-definition flags", async () => {
+        const tmpDir = await tmp.dir();
+        const sourceOpenAPI = join(
+            FIXTURES_DIR,
+            RelativeFilePath.of("openapi"),
+            RelativeFilePath.of("petstore-openapi.yml")
+        );
+        const targetOpenAPI = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("petstore-openapi.yml"));
+        await copyFile(sourceOpenAPI, targetOpenAPI);
+
+        const result = await runFernCli(
+            ["init", "--organization", "fern", "--openapi", "petstore-openapi.yml", "--fern-definition"],
+            {
+                cwd: AbsoluteFilePath.of(tmpDir.path),
+                reject: false
+            }
+        );
+        expect(result.exitCode).not.toBe(0);
+    }, 60_000);
+
     it("init docs", async () => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }]
