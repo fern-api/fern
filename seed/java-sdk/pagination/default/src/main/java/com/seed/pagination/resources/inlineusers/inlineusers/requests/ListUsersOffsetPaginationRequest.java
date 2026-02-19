@@ -186,5 +186,15 @@ public final class ListUsersOffsetPaginationRequest {
         public ListUsersOffsetPaginationRequest build() {
             return new ListUsersOffsetPaginationRequest(page, perPage, order, startingAfter, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

@@ -103,6 +103,10 @@ public final class ListUsersExtendedResponse implements IUserPage {
     public interface _FinalStage {
         ListUsersExtendedResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage next(Optional<UUID> next);
 
         _FinalStage next(UUID next);
@@ -164,6 +168,18 @@ public final class ListUsersExtendedResponse implements IUserPage {
         @java.lang.Override
         public ListUsersExtendedResponse build() {
             return new ListUsersExtendedResponse(data, next, totalCount, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

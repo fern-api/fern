@@ -86,6 +86,10 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
     public interface _FinalStage {
         VoidFunctionDefinitionThatTakesActualResult build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage additionalParameters(List<Parameter> additionalParameters);
 
         _FinalStage addAdditionalParameters(Parameter additionalParameters);
@@ -145,6 +149,18 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
         @java.lang.Override
         public VoidFunctionDefinitionThatTakesActualResult build() {
             return new VoidFunctionDefinitionThatTakesActualResult(additionalParameters, code, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

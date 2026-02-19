@@ -148,6 +148,10 @@ public final class PaginatedClientResponse {
     public interface _FinalStage {
         PaginatedClientResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Total number of items (when include_totals=true)</p>
          */
@@ -286,6 +290,18 @@ public final class PaginatedClientResponse {
         @java.lang.Override
         public PaginatedClientResponse build() {
             return new PaginatedClientResponse(start, limit, length, total, clients, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
