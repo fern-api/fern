@@ -94,8 +94,6 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         // Ruby
         case "fern-ruby-sdk":
             return "ruby-sdk";
-        case "fern-ruby-model":
-            return "ruby-model";
         // Misc.
         case "fern-postman":
             return "postman";

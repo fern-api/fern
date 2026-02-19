@@ -34,7 +34,6 @@ export const V40_TO_V39_MIGRATION: IrMigration<
         [GeneratorName.GO_FIBER]: "0.20.0",
         [GeneratorName.GO_MODEL]: "0.20.0",
         [GeneratorName.GO_SDK]: "0.20.0",
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
