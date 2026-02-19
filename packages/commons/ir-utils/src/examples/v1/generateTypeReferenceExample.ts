@@ -179,8 +179,8 @@ function isLeafTypeReference(typeRef: TypeReference, typeDeclarations: Record<Ty
 }
 
 /**
- * Checks whether a type reference points to a named type that is currently
- * part of the active recursion cycle (i.e. has been visited at least once).
+ * Checks whether a type reference points to a named type that has reached
+ * the cycle limit (i.e. has been visited at least twice).
  * This unwraps containers like list, set, optional, nullable, and map.
  */
 function isTypeReferenceInCycle(typeRef: TypeReference, visitedTypes: Map<string, number> | undefined): boolean {
@@ -189,7 +189,7 @@ function isTypeReferenceInCycle(typeRef: TypeReference, visitedTypes: Map<string
     }
     switch (typeRef.type) {
         case "named":
-            return (visitedTypes.get(typeRef.typeId) ?? 0) > 0;
+            return (visitedTypes.get(typeRef.typeId) ?? 0) >= 2;
         case "container":
             switch (typeRef.container.type) {
                 case "list":
@@ -214,7 +214,7 @@ function isTypeReferenceInCycle(typeRef: TypeReference, visitedTypes: Map<string
  * Generates a stub example for a named type when cycle detection triggers.
  * Instead of returning failure (which cascades up and kills parent examples),
  * this produces a valid example with safe properties filled in:
- * - Objects → generates leaf properties + required non-leaf properties that are NOT in the current cycle
+ * - Objects → leaf properties + empty containers for list/set/map + required non-leaf properties outside cycle
  * - Enums → first enum value
  * - Aliases → resolve non-recursive targets; recursive ones get empty object
  * - Unions → first noProperties variant if available; otherwise failure
@@ -222,11 +222,13 @@ function isTypeReferenceInCycle(typeRef: TypeReference, visitedTypes: Map<string
 function generateMinimalNamedExample({
     typeDeclaration,
     typeDeclarations,
-    visitedTypes
+    visitedTypes,
+    leafOnly = false
 }: {
     typeDeclaration: TypeDeclaration;
     typeDeclarations: Record<TypeId, TypeDeclaration>;
     visitedTypes?: Map<string, number>;
+    leafOnly?: boolean;
 }): ExampleGenerationResult<ExampleTypeReference> {
     switch (typeDeclaration.shape.type) {
         case "object": {
@@ -237,9 +239,52 @@ function generateMinimalNamedExample({
                 ...(typeDeclaration.shape.extendedProperties ?? [])
             ]) {
                 if (
-                    !isLeafTypeReference(property.valueType, typeDeclarations) &&
-                    isTypeReferenceInCycle(property.valueType, visitedTypes)
+                    property.valueType.type === "container" &&
+                    (property.valueType.container.type === "list" ||
+                        property.valueType.container.type === "set" ||
+                        property.valueType.container.type === "map")
                 ) {
+                    const emptyContainer = generateEmptyContainerExample({
+                        containerType: property.valueType.container
+                    });
+                    properties.push({
+                        name: property.name,
+                        originalTypeDeclaration: typeDeclaration.name,
+                        value: {
+                            jsonExample: emptyContainer.jsonExample,
+                            shape: ExampleTypeReferenceShape.container(emptyContainer.example)
+                        },
+                        propertyAccess: property.propertyAccess
+                    });
+                    jsonExample[property.name.wireValue] = emptyContainer.jsonExample;
+                    continue;
+                }
+                const isLeaf = isLeafTypeReference(property.valueType, typeDeclarations);
+                const isInCycle = !isLeaf && isTypeReferenceInCycle(property.valueType, visitedTypes);
+                if (leafOnly && !isLeaf) {
+                    continue;
+                }
+                if (isInCycle) {
+                    if (property.valueType.type === "named") {
+                        const td = typeDeclarations[property.valueType.typeId];
+                        if (td != null) {
+                            const leafStub = generateMinimalNamedExample({
+                                typeDeclaration: td,
+                                typeDeclarations,
+                                visitedTypes,
+                                leafOnly: true
+                            });
+                            if (leafStub.type === "success") {
+                                properties.push({
+                                    name: property.name,
+                                    originalTypeDeclaration: typeDeclaration.name,
+                                    value: leafStub.example,
+                                    propertyAccess: property.propertyAccess
+                                });
+                                jsonExample[property.name.wireValue] = leafStub.jsonExample;
+                            }
+                        }
+                    }
                     continue;
                 }
                 const propertyExample = generateTypeReferenceExample({

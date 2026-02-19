@@ -123,18 +123,15 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             skipOptionalProperties: false
         });
 
-        // Now succeeds: first visit generates the object, inner "self" property
-        // hits cycle limit and gets a stub empty object instead of failing.
-        // The stub itself is an object with a "self" property that is also a stub.
         expect(result.type).toBe("success");
         if (result.type === "success") {
             const json = result.jsonExample as Record<string, unknown>;
             expect(json).toHaveProperty("self");
             const inner = json.self as Record<string, unknown>;
-            // The inner stub also has "self" because it recursed one more level
-            // before hitting the limit. At the deepest level, "self" is an empty stub.
             expect(inner).toHaveProperty("self");
-            expect(inner.self).toEqual({});
+            const innerInner = inner.self as Record<string, unknown>;
+            expect(innerInner).toHaveProperty("self");
+            expect(innerInner.self).toEqual({});
         }
     });
 
@@ -173,9 +170,8 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             expect(toB2).toHaveProperty("toC");
             const toC2 = toB2.toC as Record<string, unknown>;
             expect(toC2).toHaveProperty("value");
-            // toA gets a stub with leaf properties filled in (value is a string primitive)
-            // but recursive properties (toB) are skipped
-            expect(toC2.toA).toEqual({ value: "value" });
+            // toA gets a stub with leaf properties + leaf-only stubs for in-cycle properties
+            expect(toC2.toA).toEqual({ value: "value", toB: { value: "value" } });
         }
     });
 
