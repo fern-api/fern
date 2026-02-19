@@ -81,6 +81,10 @@ public final class FunctionImplementation {
     public interface _FinalStage {
         FunctionImplementation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage imports(Optional<String> imports);
 
         _FinalStage imports(String imports);
@@ -127,6 +131,18 @@ public final class FunctionImplementation {
         @java.lang.Override
         public FunctionImplementation build() {
             return new FunctionImplementation(impl, imports, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

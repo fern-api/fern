@@ -81,6 +81,10 @@ public final class SecondItemType {
     public interface _FinalStage {
         SecondItemType build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
@@ -127,6 +131,18 @@ public final class SecondItemType {
         @java.lang.Override
         public SecondItemType build() {
             return new SecondItemType(type, title, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
