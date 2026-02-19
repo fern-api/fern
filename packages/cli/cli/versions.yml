@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.81.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-autorelease-disabled` flag to `fern generator upgrade`. When passed,
+        generators with `autorelease: false` in their configuration are skipped during
+        the upgrade. Skipped generators are reported in the output summary.
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 65
 - version: 3.80.0
   changelogEntry:
     - summary: |

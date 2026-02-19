@@ -156,6 +156,13 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             default: false,
                             description:
                                 "When specified, a list of available upgrades will be displayed, but no upgrade will be taken."
+                        })
+                        .option("skip-autorelease-disabled", {
+                            boolean: true,
+                            default: false,
+                            hidden: true,
+                            description:
+                                "Skip upgrading generators that have autorelease: false set in their configuration."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -205,6 +212,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                                 defaultToAllApiWorkspaces: true
                             }),
                             includeMajor: argv.includeMajor,
+                            skipAutoreleaseDisabled: argv.skipAutoreleaseDisabled,
                             channel: argv.channel
                         });
                     }
