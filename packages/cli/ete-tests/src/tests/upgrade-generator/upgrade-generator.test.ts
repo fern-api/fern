@@ -218,7 +218,14 @@ describe("fern generator upgrade", () => {
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
         const result = await runFernCli(
-            ["generator", "upgrade", "--group", "autorelease-disabled", "--include-major", "--skip-autorelease-disabled"],
+            [
+                "generator",
+                "upgrade",
+                "--group",
+                "autorelease-disabled",
+                "--include-major",
+                "--skip-autorelease-disabled"
+            ],
             {
                 cwd: directory,
                 reject: false
@@ -276,12 +283,9 @@ describe("fern generator upgrade", () => {
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
-        await runFernCli(
-            ["generator", "upgrade", "--group", "autorelease-disabled", "--include-major"],
-            {
-                cwd: directory
-            }
-        );
+        await runFernCli(["generator", "upgrade", "--group", "autorelease-disabled", "--include-major"], {
+            cwd: directory
+        });
 
         const outputFile = join(directory, RelativeFilePath.of("version-no-skip.txt"));
         await runFernCli(
