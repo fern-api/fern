@@ -45,6 +45,39 @@ types:
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
 
+      buildTestDocker:
+        type: optional<BuildTestDockerConfig>
+        docs: |
+          Optional configuration for generator-managed build and test.
+          When specified, the generator's own Docker container handles build and test
+          instead of using external script containers defined in the scripts section.
+          This allows generators to own their full lifecycle: generate → build → test.
+
+  BuildTestDockerConfig:
+    docs: |
+      Configuration for a generator-managed build and test Docker container.
+      When specified, the generator owns its build/test lifecycle instead of
+      relying on external scripts in seed.yml.
+    properties:
+      dockerfile:
+        type: string
+        docs: Path to the Dockerfile for the build/test image, relative to the repo root.
+      image:
+        type: string
+        docs: The Docker image name to tag the build/test image as.
+      context:
+        type: optional<string>
+        docs: Build context for the Dockerfile. Defaults to the repo root.
+      buildCommand:
+        type: optional<DockerCommand>
+        docs: Command(s) to build the Docker image. If not specified, a default docker build command is used.
+      buildCommands:
+        type: optional<list<string>>
+        docs: Commands to run during the build phase inside the container.
+      testCommands:
+        type: optional<list<string>>
+        docs: Commands to run during the test phase inside the container.
+
   PublishDockerConfiguration:
     properties:
       context: string

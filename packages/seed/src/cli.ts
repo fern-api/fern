@@ -19,7 +19,7 @@ import { publishGenerator } from "./commands/publish/publishGenerator.js";
 import { registerCliRelease } from "./commands/register/registerCliRelease.js";
 import { registerGenerator } from "./commands/register/registerGenerator.js";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture.js";
-import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test/index.js";
+import { ContainerScriptRunner, GeneratorScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test/index.js";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner/index.js";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures.js";
@@ -238,6 +238,25 @@ function addTestCommand(cli: Argv) {
                         scriptRunner,
                         keepContainer: false, // not used for local
                         inspect: argv.inspect
+                    });
+                } else if (generator.workspaceConfig.buildTestDocker != null) {
+                    scriptRunner = new GeneratorScriptRunner(
+                        generator,
+                        argv.skipScripts,
+                        taskContextFactory.create("generator-script-runner"),
+                        argv["log-level"],
+                        generator.workspaceConfig.buildTestDocker,
+                        argv.containerRuntime as "docker" | "podman" | undefined
+                    );
+                    testRunner = new ContainerTestRunner({
+                        generator,
+                        lock,
+                        taskContextFactory,
+                        skipScripts: argv.skipScripts,
+                        keepContainer: argv.keepContainer,
+                        scriptRunner,
+                        inspect: argv.inspect,
+                        runner: argv.containerRuntime as "docker" | "podman" | undefined
                     });
                 } else {
                     scriptRunner = new ContainerScriptRunner(

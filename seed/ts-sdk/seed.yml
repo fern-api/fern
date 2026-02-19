@@ -465,6 +465,51 @@ fixtures:
     - outputFolder: .
       customConfig:
         noSerdeLayer: false
+buildTestDocker:
+  dockerfile: generators/typescript/sdk/cli/Dockerfile.buildtest
+  image: fernapi/fern-typescript-sdk-buildtest:latest
+  buildCommands:
+    - |
+      if [ ! -f "package.json" ]; then
+        echo "No package.json found, exiting..."
+        exit 0
+      fi
+      if grep -q '"packageManager": "pnpm' package.json; then
+        mkdir -p .pnpm-cache
+        echo "Preparing corepack and pnpm..."
+        corepack prepare pnpm --activate
+        echo "Running pnpm install..."
+        if [ -f "pnpm-lock.yaml" ]; then
+          corepack pnpm install --prefer-offline --frozen-lockfile
+        else
+          corepack pnpm install --prefer-offline
+        fi
+        echo "Running pnpm build..."
+        if grep -q '"build":' package.json; then corepack pnpm build; fi
+      fi
+      if grep -q '"packageManager": "yarn' package.json; then
+        mkdir -p .yarn-cache
+        echo "Preparing corepack and yarn..."
+        corepack prepare yarn --activate
+        echo "Running yarn install..."
+        if [ -f "yarn.lock" ]; then
+          corepack yarn install --prefer-offline --frozen-lockfile
+        else
+          corepack yarn install --prefer-offline
+        fi
+        echo "Running yarn build..."
+        if grep -q '"build":' package.json; then corepack yarn build; fi
+      fi
+  testCommands:
+    - |
+      if grep -q '"packageManager": "pnpm' package.json; then
+        echo "Running pnpm test..."
+        if grep -q '"test":' package.json; then corepack pnpm test; fi
+      fi
+      if grep -q '"packageManager": "yarn' package.json; then
+        echo "Running yarn test..."
+        if grep -q '"test":' package.json; then corepack yarn test; fi
+      fi
 scripts:
   - image: fernapi/ts-seed
     commands:

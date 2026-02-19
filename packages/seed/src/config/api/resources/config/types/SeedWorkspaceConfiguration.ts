@@ -26,4 +26,11 @@ export interface SeedWorkspaceConfiguration {
      */
     allowedFailures?: string[];
     features?: FernSeedConfig.GeneratorFeatures;
+    /**
+     * Optional configuration for generator-managed build and test.
+     * When specified, the generator's own Docker container handles build and test
+     * instead of using external script containers defined in the scripts section.
+     * This allows generators to own their full lifecycle: generate → build → test.
+     */
+    buildTestDocker?: FernSeedConfig.BuildTestDockerConfig;
 }

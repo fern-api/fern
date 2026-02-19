@@ -1,4 +1,5 @@
 export * from "./BuildScripts.js";
+export * from "./BuildTestDockerConfig.js";
 export * from "./CliSeedWorkspaceConfiguration.js";
 export * from "./ContainerScriptConfig.js";
 export * from "./DockerCommand.js";

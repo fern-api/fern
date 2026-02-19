@@ -10,6 +10,16 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
+export interface BuildResult {
+    success: boolean;
+    message?: string;
+}
+
+export interface TestResult {
+    success: boolean;
+    message?: string;
+}
+
 export declare namespace AbstractGeneratorCli {
     interface Options {
         /* Whether to disable notifications */
@@ -58,6 +68,24 @@ export abstract class AbstractGeneratorCli<
                 default:
                     assertNever(config.output.mode);
             }
+
+            const shouldBuild = process.env.FERN_BUILD_GENERATED === "true";
+            const shouldTest = process.env.FERN_TEST_GENERATED === "true";
+
+            if (shouldBuild) {
+                const buildResult = await this.buildGeneratedCode(config.output.path);
+                if (!buildResult.success) {
+                    throw new Error(`Build failed: ${buildResult.message ?? "Unknown build error"}`);
+                }
+            }
+
+            if (shouldTest) {
+                const testResult = await this.testGeneratedCode(config.output.path);
+                if (!testResult.success) {
+                    throw new Error(`Tests failed: ${testResult.message ?? "Unknown test error"}`);
+                }
+            }
+
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
@@ -115,7 +143,7 @@ export abstract class AbstractGeneratorCli<
     protected abstract writeForGithub(context: GeneratorContext): Promise<void>;
 
     /**
-     *Outputs generated files to be downloaded to the user's machine.
+     * Outputs generated files to be downloaded to the user's machine.
      * @param context
      */
     protected abstract writeForDownload(context: GeneratorContext): Promise<void>;
@@ -126,6 +154,26 @@ export abstract class AbstractGeneratorCli<
      * @param context
      */
     protected abstract generateMetadata(context: GeneratorContext): Promise<void>;
+
+    /**
+     * Builds/compiles the generated code to verify it is valid.
+     * Override this method in generator subclasses to provide language-specific build logic.
+     * By default, returns success (no-op) for generators that haven't implemented build support yet.
+     * @param outputDir The directory containing the generated code.
+     */
+    protected async buildGeneratedCode(_outputDir: string): Promise<BuildResult> {
+        return { success: true };
+    }
+
+    /**
+     * Runs tests against the generated code to verify it works correctly.
+     * Override this method in generator subclasses to provide language-specific test logic.
+     * By default, returns success (no-op) for generators that haven't implemented test support yet.
+     * @param outputDir The directory containing the generated code.
+     */
+    protected async testGeneratedCode(_outputDir: string): Promise<TestResult> {
+        return { success: true };
+    }
 }
 
 async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> {
