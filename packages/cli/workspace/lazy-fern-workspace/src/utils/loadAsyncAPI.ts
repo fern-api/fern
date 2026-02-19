@@ -256,10 +256,7 @@ function deriveSchemaName(pointer: string | undefined, filePath: string): string
     return dotIndex >= 0 ? basename.substring(0, dotIndex) : basename;
 }
 
-function findSchemaKeyForRecord(
-    schemas: Record<string, unknown>,
-    record: Record<string, unknown>
-): string | undefined {
+function findSchemaKeyForRecord(schemas: Record<string, unknown>, record: Record<string, unknown>): string | undefined {
     for (const [key, value] of Object.entries(schemas)) {
         if (value === record) {
             return key;
