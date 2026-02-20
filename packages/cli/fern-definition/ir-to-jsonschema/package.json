@@ -40,7 +40,7 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@types/ajv": "^1.0.0",
-    "ajv": "^8.17.1",
+    "ajv": "^8.18.0",
     "ajv-formats": "^3.0.1",
     "json-schema": "^0.4.0"
   },
