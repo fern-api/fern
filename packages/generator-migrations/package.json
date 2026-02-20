@@ -21,9 +21,7 @@
   "main": "lib/index.mjs",
   "source": "src/index.ts",
   "types": "lib/index.d.mts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -34,11 +32,7 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "keywords": [
-    "fern",
-    "generator",
-    "migration"
-  ],
+  "keywords": ["fern", "generator", "migration"],
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
