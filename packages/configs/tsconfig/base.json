@@ -17,6 +17,7 @@
     "isolatedModules": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitReturns": true,
+    "incremental": false,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true
