@@ -211,6 +211,103 @@ describe("fern generator upgrade", () => {
         ).toMatchSnapshot();
     }, 60_000);
 
+    it("fern generator upgrade --skip-autorelease-disabled skips autorelease false generators", async () => {
+        const tmpDir = await tmp.dir();
+        const directory = AbsoluteFilePath.of(tmpDir.path);
+
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        const result = await runFernCli(
+            [
+                "generator",
+                "upgrade",
+                "--group",
+                "autorelease-disabled",
+                "--include-major",
+                "--skip-autorelease-disabled"
+            ],
+            {
+                cwd: directory,
+                reject: false
+            }
+        );
+
+        expect(result.stdout).toContain("Skipped generators with autorelease disabled:");
+        expect(result.stdout).toContain("fernapi/fern-python-sdk");
+        expect(result.stdout).toContain("autorelease disabled");
+
+        const outputFile = join(directory, RelativeFilePath.of("version-autorelease.txt"));
+        await runFernCli(
+            [
+                "generator",
+                "get",
+                "--group",
+                "autorelease-disabled",
+                "--generator",
+                "fernapi/fern-python-sdk",
+                "--version",
+                "-o",
+                outputFile
+            ],
+            {
+                cwd: directory
+            }
+        );
+
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).toEqual("3.0.0");
+
+        const outputFileJava = join(directory, RelativeFilePath.of("version-autorelease-java.txt"));
+        await runFernCli(
+            [
+                "generator",
+                "get",
+                "--group",
+                "autorelease-disabled",
+                "--generator",
+                "fernapi/fern-java-sdk",
+                "--version",
+                "-o",
+                outputFileJava
+            ],
+            {
+                cwd: directory
+            }
+        );
+
+        expect(JSON.parse((await readFile(outputFileJava)).toString()).version).not.toEqual("0.0.1");
+    }, 60_000);
+
+    it("fern generator upgrade without --skip-autorelease-disabled upgrades all generators", async () => {
+        const tmpDir = await tmp.dir();
+        const directory = AbsoluteFilePath.of(tmpDir.path);
+
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        await runFernCli(["generator", "upgrade", "--group", "autorelease-disabled", "--include-major"], {
+            cwd: directory
+        });
+
+        const outputFile = join(directory, RelativeFilePath.of("version-no-skip.txt"));
+        await runFernCli(
+            [
+                "generator",
+                "get",
+                "--group",
+                "autorelease-disabled",
+                "--generator",
+                "fernapi/fern-python-sdk",
+                "--version",
+                "-o",
+                outputFile
+            ],
+            {
+                cwd: directory
+            }
+        );
+
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
+    }, 60_000);
+
     it("fern generator upgrade shows major version message", async () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);

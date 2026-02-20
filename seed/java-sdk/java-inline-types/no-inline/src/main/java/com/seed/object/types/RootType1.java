@@ -164,6 +164,10 @@ public final class RootType1 {
     public interface _FinalStage {
         RootType1 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>lorem ipsum</p>
          */
@@ -366,6 +370,18 @@ public final class RootType1 {
         @java.lang.Override
         public RootType1 build() {
             return new RootType1(foo, bar, fooMap, fooList, fooSet, ref, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

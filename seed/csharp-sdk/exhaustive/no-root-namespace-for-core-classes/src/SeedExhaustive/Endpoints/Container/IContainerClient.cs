@@ -1,3 +1,4 @@
+using OneOf;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -40,6 +41,14 @@ public partial interface IContainerClient
         Dictionary<string, ObjectWithRequiredField>
     > GetAndReturnMapOfPrimToObjectAsync(
         Dictionary<string, ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<
+        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+    > GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

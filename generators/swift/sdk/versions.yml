@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.27.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add global headers as named parameters on the client constructor.
+  createdAt: "2026-02-18"
+  irVersion: 61
+
 - version: 0.26.0
   changelogEntry:
     - type: feat

@@ -49,6 +49,14 @@ def test_endpoints_container_get_and_return_map_of_prim_to_object() -> None:
     verify_request_count(test_id, "POST", "/container/map-prim-to-object", None, 1)
 
 
+def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union() -> None:
+    """Test getAndReturnMapOfPrimToUndiscriminatedUnion endpoint with WireMock"""
+    test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
+    client = get_client(test_id)
+    client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(request={"string": 1.1})
+    verify_request_count(test_id, "POST", "/container/map-prim-to-union", None, 1)
+
+
 def test_endpoints_container_get_and_return_optional() -> None:
     """Test getAndReturnOptional endpoint with WireMock"""
     test_id = "endpoints.container.get_and_return_optional.0"

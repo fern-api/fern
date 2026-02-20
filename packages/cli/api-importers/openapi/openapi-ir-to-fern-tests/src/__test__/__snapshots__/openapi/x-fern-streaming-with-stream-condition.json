@@ -111,6 +111,7 @@
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "ChatStreamedResponse",
               },
               "source": {

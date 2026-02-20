@@ -1,5 +1,0 @@
-# frozen_string_literal: true
-
-require_relative "seed_pagination_uri_path_client/users/types/user"
-require_relative "seed_pagination_uri_path_client/users/types/list_users_uri_pagination_response"
-require_relative "seed_pagination_uri_path_client/users/types/list_users_path_pagination_response"

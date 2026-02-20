@@ -292,6 +292,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec"
                 })
+                .option("fern-definition", {
+                    boolean: true,
+                    description: "Initialize with a sample Fern Definition instead of an OpenAPI spec"
+                })
                 .option("mintlify", {
                     type: "string",
                     description: "Migrate docs from Mintlify provided a path to a mint.json file"
@@ -314,6 +318,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             } else if (argv.readme != null && argv.mintlify != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --readme and --mintlify. Please choose one."
+                );
+            } else if (argv.openapi != null && argv["fern-definition"] === true) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --openapi and --fern-definition. Please choose one."
                 );
             } else if (argv.readme != null) {
                 await cliContext.runTask(async (context) => {
@@ -366,7 +374,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         context,
-                        openApiPath: absoluteOpenApiPath
+                        openApiPath: absoluteOpenApiPath,
+                        useFernDefinition: argv["fern-definition"] === true
                     });
                 });
             }

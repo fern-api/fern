@@ -76,6 +76,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/container/map-prim-to-union",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using OneOf;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(\n    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>() { { \"string\", 1.1 } }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/container/opt-objects",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"

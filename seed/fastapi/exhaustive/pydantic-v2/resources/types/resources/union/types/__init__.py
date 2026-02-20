@@ -5,5 +5,6 @@
 from .animal import Animal
 from .cat import Cat
 from .dog import Dog
+from .mixed_type import MixedType
 
-__all__ = ["Animal", "Cat", "Dog"]
+__all__ = ["Animal", "Cat", "Dog", "MixedType"]

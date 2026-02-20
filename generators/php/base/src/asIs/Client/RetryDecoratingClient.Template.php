@@ -116,7 +116,9 @@ class RetryDecoratingClient implements ClientInterface
         if (class_exists('Symfony\Component\HttpClient\Psr18Client')
             && $this->client instanceof \Symfony\Component\HttpClient\Psr18Client
         ) {
-            return $this->client->withOptions(['timeout' => $timeout])->sendRequest($request);
+            /** @var ClientInterface $clientWithTimeout */
+            $clientWithTimeout = $this->client->withOptions(['timeout' => $timeout]);
+            return $clientWithTimeout->sendRequest($request);
         }
 
         if ($warned) {

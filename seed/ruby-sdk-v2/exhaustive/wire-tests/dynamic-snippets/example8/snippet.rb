@@ -1,11 +1,11 @@
 require "seed"
 
-client = Seed::Client.new(
+client = Seed::MyClient.new(
   token: "<token>",
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.content_type.post_json_patch_content_with_charset_type(
+client.endpoints.content_type.post_json_patch_content_type(
   string: "string",
   integer: 1,
   long: 1000000,

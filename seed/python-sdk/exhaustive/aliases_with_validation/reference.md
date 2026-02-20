@@ -360,6 +360,63 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_of_prim_to_undiscriminated_union</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, MixedType]]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+    request={"string": 1.1},
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Dict[str, MixedType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_optional</a>(...) -&gt; AsyncHttpResponse[typing.Optional[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>

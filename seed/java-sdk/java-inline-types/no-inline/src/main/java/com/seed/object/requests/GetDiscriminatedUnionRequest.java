@@ -84,6 +84,10 @@ public final class GetDiscriminatedUnionRequest {
 
     public interface _FinalStage {
         GetDiscriminatedUnionRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -121,6 +125,18 @@ public final class GetDiscriminatedUnionRequest {
         @java.lang.Override
         public GetDiscriminatedUnionRequest build() {
             return new GetDiscriminatedUnionRequest(bar, foo, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

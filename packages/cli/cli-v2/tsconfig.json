@@ -11,6 +11,9 @@
       "path": "../yaml/loader"
     },
     {
+      "path": "../workspace/loader"
+    },
+    {
       "path": "../task-context"
     },
     {
@@ -18,6 +21,9 @@
     },
     {
       "path": "../generation/remote-generation/remote-workspace-runner"
+    },
+    {
+      "path": "../project-loader"
     },
     {
       "path": "../workspace/oss-validator"
@@ -41,10 +47,10 @@
       "path": "../../commons/github"
     },
     {
-      "path": "../../commons/fs-utils"
+      "path": "../../commons/logging-execa"
     },
     {
-      "path": "../../commons/logging-execa"
+      "path": "../../commons/fs-utils"
     },
     {
       "path": "../fern-definition/validator"
@@ -56,7 +62,13 @@
       "path": "../../commons/core-utils"
     },
     {
+      "path": "../docs-preview"
+    },
+    {
       "path": "../../core"
+    },
+    {
+      "path": "../configuration-loader"
     },
     {
       "path": "../configuration"

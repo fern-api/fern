@@ -23,7 +23,7 @@ if typing.TYPE_CHECKING:
         ObjectWithRequiredFieldError,
         OptionalAlias,
     )
-    from .union import Animal, Cat, Dog, ErrorWithUnionBody
+    from .union import Animal, Cat, Dog, ErrorWithUnionBody, MixedType
 _dynamic_imports: typing.Dict[str, str] = {
     "Animal": ".union",
     "Cat": ".union",
@@ -31,6 +31,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DoubleOptional": ".object",
     "ErrorWithEnumBody": ".enum",
     "ErrorWithUnionBody": ".union",
+    "MixedType": ".union",
     "NestedObjectWithOptionalField": ".object",
     "NestedObjectWithOptionalFieldError": ".object",
     "NestedObjectWithRequiredField": ".object",
@@ -79,6 +80,7 @@ __all__ = [
     "DoubleOptional",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
+    "MixedType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",
