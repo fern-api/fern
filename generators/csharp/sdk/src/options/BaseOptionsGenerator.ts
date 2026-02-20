@@ -6,7 +6,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 type HttpHeader = FernIr.HttpHeader;
 type Literal = FernIr.Literal;
 
-import { LazyResult } from "../../../codegen/src/utils/lazy.js";
+import { type LazyResult } from "@fern-api/csharp-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export interface OptionArgs {
