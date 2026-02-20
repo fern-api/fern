@@ -42,7 +42,6 @@ type Mode uint8
 const (
 	ModeModel = iota + 1
 	ModeClient
-	ModeFiber
 )
 
 // Generator represents the Go code generator.
@@ -193,11 +192,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 					return nil, nil, err
 				}
 			case typeToGenerate.Endpoint != nil:
-				if mode == ModeFiber {
-					if err := writer.WriteFiberRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
-						return nil, nil, err
-					}
-				} else if mode == ModeClient {
+				if mode == ModeClient {
 					if err := writer.WriteRequestType(
 						typeToGenerate.FernFilepath,
 						typeToGenerate.Endpoint,
@@ -362,8 +357,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
 	switch mode {
-	case ModeFiber:
-		break
 	case ModeClient:
 		var (
 			generatedAuth        *GeneratedAuth
