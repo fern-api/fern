@@ -5,19 +5,5 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../codegen"
-    },
-    {
-      "path": "../../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../base"
-    }
-  ]
+  "include": ["./src/**/*"]
 }
