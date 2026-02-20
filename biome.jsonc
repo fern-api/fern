@@ -343,7 +343,7 @@
             }
         },
         {
-            "includes": ["**/*.json", "**/*.md", "**/*.css", "**/*.mdx"],
+            "includes": ["**/*.json", "**/*.jsonc", "**/*.md", "**/*.css", "**/*.mdx"],
             "formatter": {
                 "indentStyle": "space",
                 "indentWidth": 2
