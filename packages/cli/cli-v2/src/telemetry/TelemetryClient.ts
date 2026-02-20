@@ -92,7 +92,7 @@ export class TelemetryClient {
         try {
             if (!(await doesPathExist(distinctIdFilepath))) {
                 await mkdir(dirname(distinctIdFilepath), { recursive: true });
-                await writeFile(distinctIdFilepath, uuidv4());
+                await writeFile(distinctIdFilepath, uuidv4(), { flag: "wx" });
             }
 
             const content = (await readFile(distinctIdFilepath)).toString().trim();
