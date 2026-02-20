@@ -268,7 +268,7 @@ fixtures:
         module:
           path: github.com/go-undiscriminated-union-wire-tests/fern
   exhaustive:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       customConfig:
         enableWireTests: true
     - outputFolder: omit-empty-request-wrappers

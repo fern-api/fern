@@ -93,7 +93,6 @@ jobs:
               generators/go-v2/
               seed/go-sdk/seed.yml
               seed/go-model/seed.yml
-              seed/go-fiber/seed.yml
             generator-name: go
           - files: |
               generators/csharp/
@@ -213,7 +212,6 @@ jobs:
       java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
       ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
-      go-fiber: ${{ steps.create-dynamic-matrix.outputs.go-fiber-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
       go-sdk: ${{ steps.create-dynamic-matrix.outputs.go-sdk-test-matrix }}
       csharp-model: ${{ steps.create-dynamic-matrix.outputs.csharp-model-test-matrix }}
@@ -253,7 +251,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do
@@ -602,35 +600,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  go-fiber:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
-    if: >-
-      ${{
-        ((needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.go-fiber != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: go-fiber
-          generator-path: generators/go generators/go-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -919,7 +888,6 @@ jobs:
         java-spring,
         ts-sdk,
         ts-express,
-        go-fiber,
         go-model,
         go-sdk,
         csharp-model,
@@ -950,8 +918,7 @@ jobs:
             java-spring,
             ts-sdk,
             ts-express,
-            go-fiber,
-            go-model,
+                go-model,
             go-sdk,
             csharp-model,
             csharp-sdk,
@@ -973,7 +940,6 @@ jobs:
       java-spring-passing: ${{ steps.report-results.outputs.java-spring-passing }}
       ts-sdk-passing: ${{ steps.report-results.outputs.ts-sdk-passing }}
       ts-express-passing: ${{ steps.report-results.outputs.ts-express-passing }}
-      go-fiber-passing: ${{ steps.report-results.outputs.go-fiber-passing }}
       go-model-passing: ${{ steps.report-results.outputs.go-model-passing }}
       go-sdk-passing: ${{ steps.report-results.outputs.go-sdk-passing }}
       csharp-model-passing: ${{ steps.report-results.outputs.csharp-model-passing }}
@@ -1031,8 +997,7 @@ jobs:
             java-spring,
             ts-sdk,
             ts-express,
-            go-fiber,
-            go-model,
+                go-model,
             go-sdk,
             csharp-model,
             csharp-sdk,
@@ -1087,9 +1052,6 @@ jobs:
       ts-express-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures }}
       ts-express-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures-count }}
 
-      go-fiber-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-fiber-total-fixtures-count }}
-      go-fiber-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.go-fiber-allowed-failures }}
-      go-fiber-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.go-fiber-allowed-failures-count }}
 
       go-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-model-total-fixtures-count }}
       go-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.go-model-allowed-failures }}
@@ -1200,7 +1162,6 @@ jobs:
         java-spring,
         ts-sdk,
         ts-express,
-        go-fiber,
         go-model,
         go-sdk,
         csharp-model,
@@ -1229,8 +1190,7 @@ jobs:
             java-spring,
             ts-sdk,
             ts-express,
-            go-fiber,
-            go-model,
+                go-model,
             go-sdk,
             csharp-model,
             csharp-sdk,
