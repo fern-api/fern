@@ -12,7 +12,7 @@ export async function writeGeneratorOutput({
     config: FernGeneratorExec.GeneratorConfig;
     buildTestDockerImage: string | undefined;
 }): Promise<void> {
-    const generatorOutputFilepath = (config.output as Record<string, unknown>).generatorOutputFilepath as
+    const generatorOutputFilepath = (config.output as unknown as Record<string, unknown>).generatorOutputFilepath as
         | string
         | undefined;
     if (generatorOutputFilepath == null) {
