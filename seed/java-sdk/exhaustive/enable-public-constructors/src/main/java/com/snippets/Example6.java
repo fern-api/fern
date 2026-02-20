@@ -1,8 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
-import java.util.Optional;
+import com.seed.exhaustive.resources.types.union.types.MixedType;
+import java.util.HashMap;
 
 public class Example6 {
     public static void main(String[] args) {
@@ -11,9 +11,10 @@ public class Example6 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .container()
-                .getAndReturnOptional(Optional.of(
-                        ObjectWithRequiredField.builder().string("string").build()));
+        client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(new HashMap<String, MixedType>() {
+            {
+                put("string", MixedType.of(1.1));
+            }
+        });
     }
 }

@@ -178,6 +178,9 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+    - customConfig:
+        redact-response-body-on-error: true
+      outputFolder: redact-response-body-on-error
   optional:
     - customConfig: null
       outputFolder: no-custom-config
@@ -281,6 +284,12 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: with-undiscriminated-unions
+  streaming:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        redact-response-body-on-error: true
+      outputFolder: redact-response-body-on-error
 allowedFailures:
   - enum:forward-compatible-enums
   - enum:plain-enums

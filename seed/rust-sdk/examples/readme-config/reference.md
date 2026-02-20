@@ -589,7 +589,18 @@ async fn main() {
                     nodes: Some(vec![
                         Node {
                             name: "name".to_string(),
-                            nodes: Some(vec![]),
+                            nodes: Some(vec![
+                                Node {
+                                    name: "name".to_string(),
+                                    nodes: None,
+                                    trees: None,
+                                },
+                                Node {
+                                    name: "name".to_string(),
+                                    nodes: None,
+                                    trees: None,
+                                },
+                            ]),
                             trees: Some(vec![
                                 Tree {
                                     nodes: Some(vec![]),
@@ -601,7 +612,18 @@ async fn main() {
                         },
                         Node {
                             name: "name".to_string(),
-                            nodes: Some(vec![]),
+                            nodes: Some(vec![
+                                Node {
+                                    name: "name".to_string(),
+                                    nodes: None,
+                                    trees: None,
+                                },
+                                Node {
+                                    name: "name".to_string(),
+                                    nodes: None,
+                                    trees: None,
+                                },
+                            ]),
                             trees: Some(vec![
                                 Tree {
                                     nodes: Some(vec![]),
@@ -668,7 +690,18 @@ async fn main() {
                                     contents: "contents".to_string(),
                                 },
                             ]),
-                            directories: Some(vec![]),
+                            directories: Some(vec![
+                                Directory {
+                                    name: "name".to_string(),
+                                    files: None,
+                                    directories: None,
+                                },
+                                Directory {
+                                    name: "name".to_string(),
+                                    files: None,
+                                    directories: None,
+                                },
+                            ]),
                         },
                         Directory {
                             name: "name".to_string(),
@@ -682,7 +715,18 @@ async fn main() {
                                     contents: "contents".to_string(),
                                 },
                             ]),
-                            directories: Some(vec![]),
+                            directories: Some(vec![
+                                Directory {
+                                    name: "name".to_string(),
+                                    files: None,
+                                    directories: None,
+                                },
+                                Directory {
+                                    name: "name".to_string(),
+                                    files: None,
+                                    directories: None,
+                                },
+                            ]),
                         },
                     ]),
                 }),

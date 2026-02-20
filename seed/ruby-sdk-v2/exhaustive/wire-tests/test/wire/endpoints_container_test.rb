@@ -6,7 +6,7 @@ class EndpointsContainerWireTest < WireMockTestCase
   def setup
     super
 
-    @client = Seed::Client.new(
+    @client = Seed::MyClient.new(
       token: "<token>",
       base_url: WIREMOCK_BASE_URL
     )
@@ -145,6 +145,29 @@ class EndpointsContainerWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/container/map-prim-to-object",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union_with_wiremock
+    test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
+
+    @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+      request: {
+        string: 1.1
+      },
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/map-prim-to-union",
       query_params: nil,
       expected: 1
     )

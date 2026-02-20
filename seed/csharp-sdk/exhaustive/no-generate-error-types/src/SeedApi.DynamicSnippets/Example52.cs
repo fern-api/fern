@@ -12,7 +12,7 @@ public class Example52
             }
         );
 
-        await client.NoReqBody.PostWithNoRequestBodyAsync();
+        await client.NoReqBody.GetWithNoRequestBodyAsync();
     }
 
 }

@@ -6,8 +6,10 @@ import { addAuthCommand } from "./commands/auth/index.js";
 import { addCacheCommand } from "./commands/cache/index.js";
 import { addCheckCommand } from "./commands/check/index.js";
 import { addConfigCommand } from "./commands/config/index.js";
+import { addDocsCommand } from "./commands/docs/index.js";
 import { addInitCommand } from "./commands/init/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
+import { addTelemetryCommand } from "./commands/telemetry/index.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
 import { Icons } from "./ui/format.js";
 import { Version } from "./version.js";
@@ -57,8 +59,10 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     addCacheCommand(cli);
     addCheckCommand(cli);
     addConfigCommand(cli);
+    addDocsCommand(cli);
     addInitCommand(cli);
     addSdkCommand(cli);
+    addTelemetryCommand(cli);
 
     return cli;
 }

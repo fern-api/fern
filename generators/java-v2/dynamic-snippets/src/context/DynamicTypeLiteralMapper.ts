@@ -499,6 +499,7 @@ export class DynamicTypeLiteralMapper {
         const variantErrors: string[] = [];
 
         for (const typeReference of undiscriminatedUnion.types) {
+            const errorsBefore = this.context.errors.size();
             try {
                 attemptedVariants.push(JSON.stringify(typeReference));
                 const typeInstantiation = this.convert({
@@ -507,8 +508,14 @@ export class DynamicTypeLiteralMapper {
                     inUndiscriminatedUnion: true
                 });
 
+                if (java.TypeLiteral.isNop(typeInstantiation)) {
+                    this.context.errors.truncate(errorsBefore);
+                    continue;
+                }
+
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
+                this.context.errors.truncate(errorsBefore);
                 variantErrors.push(
                     `Type ${JSON.stringify(typeReference)}: ${e instanceof Error ? e.message : String(e)}`
                 );

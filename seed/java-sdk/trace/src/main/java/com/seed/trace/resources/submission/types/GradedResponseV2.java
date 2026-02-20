@@ -83,6 +83,10 @@ public final class GradedResponseV2 {
     public interface _FinalStage {
         GradedResponseV2 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage testCases(Map<String, TestCaseGrade> testCases);
 
         _FinalStage putAllTestCases(Map<String, TestCaseGrade> testCases);
@@ -142,6 +146,18 @@ public final class GradedResponseV2 {
         @java.lang.Override
         public GradedResponseV2 build() {
             return new GradedResponseV2(submissionId, testCases, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

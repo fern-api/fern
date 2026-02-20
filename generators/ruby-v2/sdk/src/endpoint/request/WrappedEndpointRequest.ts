@@ -1,6 +1,7 @@
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { RawClient } from "../http/RawClient.js";
 import {
@@ -55,6 +56,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
+        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
+            ? new DefaultValueExtractor(this.context)
+            : undefined;
+
         return {
             code: ruby.codeblock((writer) => {
                 writer.write(`${QUERY_PARAM_NAMES_VN} = `);
@@ -63,9 +68,21 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 for (const queryParam of this.endpoint.queryParameters) {
                     const snakeCaseName = queryParam.name.name.snakeCase.safeName;
                     const wireValue = queryParam.name.wireValue;
-                    writer.writeLine(
-                        `${queryParameterBagName}["${wireValue}"] = params[:${snakeCaseName}] if params.key?(:${snakeCaseName})`
-                    );
+
+                    const extracted =
+                        defaultExtractor != null && !queryParam.allowMultiple
+                            ? defaultExtractor.extractDefault(queryParam.valueType)
+                            : undefined;
+
+                    if (extracted != null) {
+                        writer.writeLine(
+                            `${queryParameterBagName}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${extracted.value})`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `${queryParameterBagName}["${wireValue}"] = params[:${snakeCaseName}] if params.key?(:${snakeCaseName})`
+                        );
+                    }
                 }
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
@@ -78,15 +95,28 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
+        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
+            ? new DefaultValueExtractor(this.context)
+            : undefined;
+
         return {
             code: ruby.codeblock((writer) => {
                 writer.writeLine(`${HEADER_BAG_NAME} = {}`);
                 for (const header of this.endpoint.headers) {
                     const snakeCaseName = header.name.name.snakeCase.safeName;
                     const wireValue = header.name.wireValue;
-                    writer.writeLine(
-                        `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] if params[:${snakeCaseName}]`
-                    );
+
+                    const extracted = defaultExtractor?.extractDefault(header.valueType);
+
+                    if (extracted != null) {
+                        writer.writeLine(
+                            `${HEADER_BAG_NAME}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${extracted.value})`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] if params[:${snakeCaseName}]`
+                        );
+                    }
                 }
             }),
             headerParameterBagReference: HEADER_BAG_NAME

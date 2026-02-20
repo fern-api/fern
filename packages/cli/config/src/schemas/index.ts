@@ -6,6 +6,7 @@ export { ApisSchema } from "./ApisSchema.js";
 export { AuthSchemesSchema } from "./AuthSchemesSchema.js";
 export { CliSchema } from "./CliSchema.js";
 export { CratesPublishSchema } from "./CratesPublishSchema.js";
+export * from "./docs/index.js";
 export { EnvironmentSchema } from "./EnvironmentSchema.js";
 export { FernYmlSchema } from "./FernYmlSchema.js";
 export {

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.union.get(request: 'string');
+client.union.get(request: "string")
 ```
 </dd>
 </dl>
@@ -61,7 +61,7 @@ client.union.get(request: 'string');
 <dd>
 
 ```ruby
-client.union.get_metadata();
+client.union.get_metadata
 ```
 </dd>
 </dl>
@@ -101,7 +101,7 @@ client.union.get_metadata();
 <dd>
 
 ```ruby
-client.union.update_metadata(request: {});
+client.union.update_metadata(request: {})
 ```
 </dd>
 </dl>
@@ -149,7 +149,7 @@ client.union.update_metadata(request: {});
 <dd>
 
 ```ruby
-client.union.call(union: {});
+client.union.call(union: {})
 ```
 </dd>
 </dl>
@@ -197,7 +197,7 @@ client.union.call(union: {});
 <dd>
 
 ```ruby
-client.union.duplicate_types_union(request: 'string');
+client.union.duplicate_types_union(request: "string")
 ```
 </dd>
 </dl>
@@ -245,7 +245,7 @@ client.union.duplicate_types_union(request: 'string');
 <dd>
 
 ```ruby
-client.union.nested_unions(request: 'string');
+client.union.nested_unions(request: "string")
 ```
 </dd>
 </dl>
@@ -294,9 +294,9 @@ client.union.nested_unions(request: 'string');
 
 ```ruby
 client.union.test_camel_case_properties(payment_method: {
-  method_: 'card',
-  card_number: '1234567890123456'
-});
+  method_: "card",
+  card_number: "1234567890123456"
+})
 ```
 </dd>
 </dl>

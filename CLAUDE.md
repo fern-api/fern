@@ -64,7 +64,7 @@ pnpm seed:build                 # Build seed CLI for generator testing
 
 **Running Individual Package Commands**: For commands in subfolder packages, use `pnpm turbo run <command> --filter @fern-api/cli` (e.g., `pnpm turbo run test --filter @fern-api/cli`)
 
-**Dependency Management**: Run `pnpm depcheck` to check for unused dependencies
+**Dependency Management**: Run `pnpm check:knip` to check for unused dependencies (or `pnpm depcheck` which delegates to knip via turbo)
 
 ## Architecture Overview
 

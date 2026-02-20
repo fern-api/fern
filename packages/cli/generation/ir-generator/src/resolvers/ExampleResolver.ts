@@ -60,7 +60,10 @@ export class ExampleResolverImpl implements ExampleResolver {
                 if (resolvedExampleValue == null) {
                     return undefined;
                 }
-                newExample[exampleKey] = resolvedExampleValue.resolvedExample;
+                const unescapedKey = exampleKey.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)
+                    ? exampleKey.slice(1)
+                    : exampleKey;
+                newExample[unescapedKey] = resolvedExampleValue.resolvedExample;
             }
             return { resolvedExample: newExample };
         } else if (Array.isArray(example)) {

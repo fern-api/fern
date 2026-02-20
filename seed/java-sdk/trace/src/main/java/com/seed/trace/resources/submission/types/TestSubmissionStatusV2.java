@@ -115,6 +115,10 @@ public final class TestSubmissionStatusV2 {
     public interface _FinalStage {
         TestSubmissionStatusV2 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage updates(List<TestSubmissionUpdate> updates);
 
         _FinalStage addUpdates(TestSubmissionUpdate updates);
@@ -194,6 +198,18 @@ public final class TestSubmissionStatusV2 {
         @java.lang.Override
         public TestSubmissionStatusV2 build() {
             return new TestSubmissionStatusV2(updates, problemId, problemVersion, problemInfo, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

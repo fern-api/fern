@@ -115,6 +115,10 @@ public final class GetSubmissionStateResponse {
     public interface _FinalStage {
         GetSubmissionStateResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage timeSubmitted(Optional<OffsetDateTime> timeSubmitted);
 
         _FinalStage timeSubmitted(OffsetDateTime timeSubmitted);
@@ -183,6 +187,18 @@ public final class GetSubmissionStateResponse {
         public GetSubmissionStateResponse build() {
             return new GetSubmissionStateResponse(
                     timeSubmitted, submission, language, submissionTypeState, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -1,10 +1,10 @@
 require "seed"
 
-client = Seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: "https://api.fern.com")
 
 client.nullable_optional.update_complex_profile(
-  profile_id: 'profileId',
-  nullable_role: 'ADMIN',
-  nullable_status: 'active',
-  nullable_array: ['nullableArray', 'nullableArray']
-);
+  profile_id: "profileId",
+  nullable_role: "ADMIN",
+  nullable_status: "active",
+  nullable_array: %w[nullableArray nullableArray]
+)

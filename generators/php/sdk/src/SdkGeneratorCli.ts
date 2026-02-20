@@ -130,24 +130,20 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     }
 
     private generateRootClientInterface(context: SdkGeneratorContext) {
-        const rootServiceId = context.ir.rootPackage.service;
-        if (rootServiceId == null) {
-            return;
-        }
         const rootClientInterface = new RootClientInterfaceGenerator(context);
         context.project.addSourceFiles(rootClientInterface.generate());
     }
 
     private generateSubpackageInterfaces(context: SdkGeneratorContext) {
         for (const subpackage of Object.values(context.ir.subpackages)) {
-            if (subpackage.service == null) {
+            if (!context.shouldGenerateSubpackageClient(subpackage)) {
                 continue;
             }
-            const service = context.getHttpServiceOrThrow(subpackage.service);
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subClientInterface = new SubPackageClientInterfaceGenerator({
                 context,
                 subpackage,
-                serviceId: subpackage.service,
+                serviceId: subpackage.service ?? undefined,
                 service
             });
             context.project.addSourceFiles(subClientInterface.generate());

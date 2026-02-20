@@ -74,6 +74,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
 
+    LOGGING_CONSTRUCTOR_PARAMETER_NAME = "logging"
+    LOGGING_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), "
+        "'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. "
+        "You can also pass a pre-configured Logger instance."
+    )
+
     _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
         "base_url",
         "environment",
@@ -86,6 +93,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "client_secret",
         "token",
         "_token_getter_override",
+        "logging",
     }
 
     def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
@@ -742,6 +750,23 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
             )
+
+        log_config_ref = self._context.core_utilities.get_reference_to_log_config()
+        logger_ref = self._context.core_utilities.get_reference_to_logger()
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint.union(
+                        AST.TypeHint(log_config_ref),
+                        AST.TypeHint(logger_ref),
+                    )
+                ),
+                private_member_name=None,
+                initializer=AST.Expression(AST.TypeHint.none()),
+                docs=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
 
         parameters.extend(self._get_literal_header_parameters())
 
@@ -1405,6 +1430,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             (
                 ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
                 AST.Expression(timeout_local_variable),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.LOGGING_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME),
             )
         )
 
