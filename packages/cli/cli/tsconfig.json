@@ -50,16 +50,19 @@
       "path": "../login"
     },
     {
+      "path": "../../migrations-base"
+    },
+    {
       "path": "../../commons/logging-execa"
     },
     {
       "path": "../logger"
     },
     {
-      "path": "../../migrations-base"
+      "path": "../generation/local-generation/local-workspace-runner"
     },
     {
-      "path": "../generation/local-generation/local-workspace-runner"
+      "path": "../library-docs-generator"
     },
     {
       "path": "../workspace/lazy-fern-workspace"
@@ -119,7 +122,7 @@
       "path": "../configuration"
     },
     {
-      "path": "../ai"
+      "path": "../cli-v2"
     },
     {
       "path": "../cli-source-resolver"
@@ -131,7 +134,7 @@
       "path": "../cli-logger"
     },
     {
-      "path": "../cli-v2"
+      "path": "../ai"
     },
     {
       "path": "../../commons/casings-generator"
