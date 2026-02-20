@@ -4,19 +4,5 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../commons/core-utils"
-    },
-    {
-      "path": "../auth"
-    },
-    {
-      "path": "../posthog-manager"
-    },
-    {
-      "path": "../task-context"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

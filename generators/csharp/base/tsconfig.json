@@ -5,22 +5,5 @@
     "rootDir": "src",
     "noImplicitOverride": true
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../../packages/commons/logging-execa"
-    },
-    {
-      "path": "../../base"
-    },
-    {
-      "path": "../codegen"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

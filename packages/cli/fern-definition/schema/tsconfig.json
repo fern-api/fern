@@ -7,13 +7,5 @@
     "rootDir": "src",
     "types": ["vitest/globals", "node"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../../ir-sdk"
-    }
-  ]
+  "include": ["./src/**/*"]
 }
