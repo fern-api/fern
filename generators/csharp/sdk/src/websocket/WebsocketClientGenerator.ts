@@ -759,9 +759,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 body: this.csharp.codeblock((writer) => {
                     if (isBinaryMessage) {
-                        writer.writeTextStatement(
-                            `await _client.SendInstant(message).ConfigureAwait(false)`
-                        );
+                        writer.writeTextStatement(`await _client.SendInstant(message).ConfigureAwait(false)`);
                     } else {
                         writer.writeLine(`await _client.SendInstant(`);
                         writer.writeNode(this.Types.JsonUtils);
