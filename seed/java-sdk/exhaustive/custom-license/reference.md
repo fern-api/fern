@@ -277,6 +277,50 @@ client.endpoints().container().getAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(request) -> Map&amp;lt;String, MixedType&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(
+    new HashMap<String, MixedType>() {{
+        put("string", MixedType.of(1.1));
+    }}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Map<String, MixedType>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
