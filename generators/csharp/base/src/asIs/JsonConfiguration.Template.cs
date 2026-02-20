@@ -305,16 +305,7 @@ internal static class JsonUtils
         try
         {
             result = json.Deserialize<T>(JsonOptions.JsonSerializerOptions);
-            if (result == null)
-            {
-                return false;
-            }
-            if (!ValidateRoundTrip(json, result))
-            {
-                result = null;
-                return false;
-            }
-            return true;
+            return result != null;
         }
         catch (global::System.Exception)
         {
@@ -329,68 +320,12 @@ internal static class JsonUtils
         try
         {
             result = json.Deserialize<T>(JsonOptions.JsonSerializerOptions);
-            if (result == null)
-            {
-                return false;
-            }
-            if (!ValidateRoundTrip(json, result))
-            {
-                result = null;
-                return false;
-            }
-            return true;
+            return result != null;
         }
         catch (global::System.Exception)
         {
             result = null;
             return false;
-        }
-    }
-
-    private static bool ValidateRoundTrip<T>(JsonDocument original, T deserialized)
-    {
-        try
-        {
-            var reserialized = JsonSerializer.SerializeToElement(
-                deserialized,
-                JsonOptions.JsonSerializerOptions
-            );
-            if (reserialized.ValueKind != JsonValueKind.Object)
-            {
-                return true;
-            }
-            foreach (var prop in reserialized.EnumerateObject())
-            {
-                if (
-                    original.RootElement.TryGetProperty(prop.Name, out var originalProp)
-                    && prop.Value.ValueKind == JsonValueKind.String
-                    && originalProp.ValueKind == JsonValueKind.String
-                )
-                {
-                    if (prop.Value.GetString() != originalProp.GetString())
-                    {
-                        return false;
-                    }
-                }
-            }
-            if (original.RootElement.ValueKind == JsonValueKind.Object)
-            {
-                foreach (var prop in original.RootElement.EnumerateObject())
-                {
-                    if (
-                        prop.Value.ValueKind == JsonValueKind.String
-                        && !reserialized.TryGetProperty(prop.Name, out _)
-                    )
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        catch
-        {
-            return true;
         }
     }
     <% } %>
