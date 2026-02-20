@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.82.0
+  changelogEntry:
+    - summary: |
+        Add `terminator` field support for SSE streaming throughout the OpenAPI to Fern pipeline.
+        The field was already present in the Fern definition schema but missing from the OpenAPI
+        extension parsing, OpenAPI-IR schema, and the OpenAPI-IR to Fern conversion layers.
+      type: feat
+  createdAt: "2026-02-20"
+  irVersion: 65
 - version: 3.81.1
   changelogEntry:
     - summary: |
