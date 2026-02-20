@@ -1,3 +1,0 @@
-{
-  "buildTestDockerImage": "fernapi/fern-typescript-sdk-buildtest:latest"
-}
