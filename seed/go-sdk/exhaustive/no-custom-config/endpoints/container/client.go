@@ -128,6 +128,22 @@ func (c *Client) GetAndReturnMapOfPrimToObject(
 	return response.Body, nil
 }
 
+func (c *Client) GetAndReturnMapOfPrimToUndiscriminatedUnion(
+	ctx context.Context,
+	request map[string]*types.MixedType,
+	opts ...option.RequestOption,
+) (map[string]*types.MixedType, error) {
+	response, err := c.WithRawResponse.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) GetAndReturnOptional(
 	ctx context.Context,
 	request *types.ObjectWithRequiredField,

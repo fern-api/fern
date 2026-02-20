@@ -3,7 +3,6 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
     context "context"
 )
 
@@ -16,11 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithRequiredField{
-        FieldString: "string",
-    }
-    client.Endpoints.HttpMethods.TestPost(
+    client.Endpoints.HttpMethods.TestGet(
         context.TODO(),
-        request,
+        "id",
     )
 }

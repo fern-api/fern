@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
+    fern "github.com/exhaustive/fern"
     context "context"
 )
 
@@ -16,8 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    request := types.WeatherReportSunny.Ptr()
-    client.Endpoints.Enum.GetAndReturnEnum(
+    request := &fern.ReqWithHeaders{
+        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
+        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        Body: "string",
+    }
+    client.ReqWithHeaders.GetWithCustomHeader(
         context.TODO(),
         request,
     )

@@ -18,8 +18,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.NestedObjectWithRequiredField{
-        FieldString: "string",
+    request := &types.NestedObjectWithOptionalField{
+        FieldString: fern.String(
+            "string",
+        ),
         NestedObject: &types.ObjectWithOptionalField{
             FieldString: fern.String(
                 "string",
@@ -69,9 +71,8 @@ func do() {
             ),
         },
     }
-    client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
+    client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
         context.TODO(),
-        "string",
         request,
     )
 }
