@@ -5,12 +5,11 @@
     ".prettierrc.json",
     ".stylelintrc.json",
     "babel.config.json",
-    "package.json",
     "shared/.prettierignore",
     "shared/stylelintrc.shared.json",
-    "tsconfig.json",
-    "turbo.json"
+    "tsconfig.json"
   ],
+  "globalEnv": ["CI", "NODE_ENV"],
   "tasks": {
     "clean": {
       "cache": false
