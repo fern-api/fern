@@ -69,7 +69,7 @@ describe("getAvailableFixtures", () => {
 
         it("returns empty array when all fixtures are for other languages", () => {
             const generator = createGenerator("python-sdk");
-            const allFixtures = ["java-special", "ts-custom", "go-fiber"];
+            const allFixtures = ["java-special", "ts-custom", "csharp-special"];
 
             const result = getAvailableFixturesFromList(generator, allFixtures, false);
 
@@ -171,11 +171,11 @@ describe("getAvailableFixtures", () => {
 
         it("handles go prefix", () => {
             const generator = createGenerator("go-sdk");
-            const allFixtures = ["alias", "go-fiber", "java-special"];
+            const allFixtures = ["alias", "go-special", "java-special"];
 
             const result = getAvailableFixturesFromList(generator, allFixtures, false);
 
-            expect(result).toEqual(["alias", "go-fiber"]);
+            expect(result).toEqual(["alias", "go-special"]);
         });
 
         it("handles ruby prefix", () => {

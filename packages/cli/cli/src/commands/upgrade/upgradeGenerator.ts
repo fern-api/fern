@@ -39,6 +39,12 @@ interface AlreadyUpToDate {
     version: string;
 }
 
+interface SkippedAutoreleaseDisabled {
+    generatorName: string;
+    groupName: string;
+    version: string;
+}
+
 function getChangelogUrl(generatorName: string): string | undefined {
     const changelogMap: Record<string, string> = {
         "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
@@ -61,6 +67,7 @@ export async function loadAndUpdateGenerators({
     generatorFilter,
     groupFilter,
     includeMajor,
+    skipAutoreleaseDisabled,
     channel,
     cliVersion
 }: {
@@ -69,6 +76,7 @@ export async function loadAndUpdateGenerators({
     generatorFilter: string | undefined;
     groupFilter: string | undefined;
     includeMajor: boolean;
+    skipAutoreleaseDisabled: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
 }): Promise<{
@@ -76,12 +84,19 @@ export async function loadAndUpdateGenerators({
     skippedMajorUpgrades: SkippedMajorUpgrade[];
     appliedUpgrades: AppliedUpgrade[];
     alreadyUpToDate: AlreadyUpToDate[];
+    skippedAutoreleaseDisabled: SkippedAutoreleaseDisabled[];
 }> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
 
     if (filepath == null || !(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
+        return {
+            updatedConfiguration: undefined,
+            skippedMajorUpgrades: [],
+            appliedUpgrades: [],
+            alreadyUpToDate: [],
+            skippedAutoreleaseDisabled: []
+        };
     }
     const contents = await readFile(filepath);
     context.logger.debug(`Found generators: ${contents.toString()}`);
@@ -92,17 +107,30 @@ export async function loadAndUpdateGenerators({
     const generatorGroups = parsedDocument.get("groups");
     if (generatorGroups == null) {
         context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
+        return {
+            updatedConfiguration: undefined,
+            skippedMajorUpgrades: [],
+            appliedUpgrades: [],
+            alreadyUpToDate: [],
+            skippedAutoreleaseDisabled: []
+        };
     }
     if (!YAML.isMap(generatorGroups)) {
         context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
+        return {
+            updatedConfiguration: undefined,
+            skippedMajorUpgrades: [],
+            appliedUpgrades: [],
+            alreadyUpToDate: [],
+            skippedAutoreleaseDisabled: []
+        };
     }
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
 
     const skippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const appliedUpgrades: AppliedUpgrade[] = [];
     const alreadyUpToDate: AlreadyUpToDate[] = [];
+    const skippedAutoreleaseDisabled: SkippedAutoreleaseDisabled[] = [];
 
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
@@ -157,6 +185,19 @@ export async function loadAndUpdateGenerators({
                 context.logger.debug(
                     `Skipping generator ${generatorName} as it does not match the filter: ${generatorFilter}`
                 );
+                continue;
+            }
+
+            if (skipAutoreleaseDisabled && generator.get("autorelease") === false) {
+                const currentVersion = generator.get("version") as string;
+                context.logger.debug(
+                    `Skipping generator ${generatorName} (autorelease disabled, version ${currentVersion})`
+                );
+                skippedAutoreleaseDisabled.push({
+                    generatorName,
+                    groupName,
+                    version: currentVersion
+                });
                 continue;
             }
 
@@ -272,7 +313,13 @@ export async function loadAndUpdateGenerators({
         }
     }
 
-    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades, appliedUpgrades, alreadyUpToDate };
+    return {
+        updatedConfiguration: parsedDocument.toString(),
+        skippedMajorUpgrades,
+        appliedUpgrades,
+        alreadyUpToDate,
+        skippedAutoreleaseDisabled
+    };
 }
 
 export async function upgradeGenerator({
@@ -281,6 +328,7 @@ export async function upgradeGenerator({
     group,
     project: { apiWorkspaces },
     includeMajor,
+    skipAutoreleaseDisabled,
     channel
 }: {
     cliContext: CliContext;
@@ -288,11 +336,16 @@ export async function upgradeGenerator({
     group: string | undefined;
     project: Project;
     includeMajor: boolean;
+    skipAutoreleaseDisabled: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
     const allAlreadyUpToDate: Array<{ workspace: string | undefined; upToDate: AlreadyUpToDate[] }> = [];
+    const allSkippedAutoreleaseDisabled: Array<{
+        workspace: string | undefined;
+        skipped: SkippedAutoreleaseDisabled[];
+    }> = [];
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -321,6 +374,7 @@ export async function upgradeGenerator({
                     generatorFilter: generator,
                     groupFilter: group,
                     includeMajor,
+                    skipAutoreleaseDisabled,
                     channel,
                     cliVersion: cliContext.environment.packageVersion
                 });
@@ -344,6 +398,12 @@ export async function upgradeGenerator({
                     allAlreadyUpToDate.push({
                         workspace: workspace.workspaceName,
                         upToDate: result.alreadyUpToDate
+                    });
+                }
+                if (result.skippedAutoreleaseDisabled.length > 0) {
+                    allSkippedAutoreleaseDisabled.push({
+                        workspace: workspace.workspaceName,
+                        skipped: result.skippedAutoreleaseDisabled
                     });
                 }
             });
@@ -418,6 +478,31 @@ export async function upgradeGenerator({
             group != null ? ` for group ${group}` : generator != null ? ` for generator ${generator}` : "";
         cliContext.logger.info("");
         cliContext.logger.info(chalk.gray(`No generators found${filterMessage}.`));
+    }
+
+    if (allSkippedAutoreleaseDisabled.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.dim("Skipped generators with autorelease disabled:"));
+
+        for (const { workspace, skipped } of allSkippedAutoreleaseDisabled) {
+            const skippedByGroup = new Map<string, SkippedAutoreleaseDisabled[]>();
+            for (const item of skipped) {
+                const existing = skippedByGroup.get(item.groupName) ?? [];
+                existing.push(item);
+                skippedByGroup.set(item.groupName, existing);
+            }
+
+            for (const [groupName, groupItems] of skippedByGroup) {
+                const workspacePrefix = workspace != null ? `[${workspace}] ` : "";
+                cliContext.logger.info(chalk.dim(`${workspacePrefix}Group ${groupName}:`));
+
+                for (const item of groupItems) {
+                    cliContext.logger.info(
+                        chalk.dim(`  - ${item.generatorName}: ${item.version} (autorelease disabled)`)
+                    );
+                }
+            }
+        }
     }
 
     if (allSkippedMajorUpgrades.length > 0) {

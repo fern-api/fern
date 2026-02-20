@@ -33,7 +33,7 @@ cd "$test_dir"
 echo "Running Fern Commands in $test_dir!"
 set -x
 
-node "$cli_path" init --organization fern
+node "$cli_path" init --organization fern --fern-definition
 
 node "$cli_path" add fern-java-sdk
 node "$cli_path" add fern-python-sdk

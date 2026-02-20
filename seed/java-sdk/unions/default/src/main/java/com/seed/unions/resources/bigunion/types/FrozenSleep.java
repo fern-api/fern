@@ -70,6 +70,10 @@ public final class FrozenSleep {
 
     public interface _FinalStage {
         FrozenSleep build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +101,18 @@ public final class FrozenSleep {
         @java.lang.Override
         public FrozenSleep build() {
             return new FrozenSleep(value, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

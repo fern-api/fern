@@ -87,6 +87,10 @@ public final class StoreTracedWorkspaceRequest {
     public interface _FinalStage {
         StoreTracedWorkspaceRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage traceResponses(List<TraceResponse> traceResponses);
 
         _FinalStage addTraceResponses(TraceResponse traceResponses);
@@ -147,6 +151,18 @@ public final class StoreTracedWorkspaceRequest {
         @java.lang.Override
         public StoreTracedWorkspaceRequest build() {
             return new StoreTracedWorkspaceRequest(workspaceRunDetails, traceResponses, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

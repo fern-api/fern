@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.59.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` custom config option. When set to `"page-index"`, offset pagination
+        increments by 1 each page instead of by the number of items returned (`"item-index"`, the default).
+      type: feat
+  createdAt: "2026-02-17"
+  irVersion: 65
+
 - version: 4.58.1
   changelogEntry:
     - summary: |

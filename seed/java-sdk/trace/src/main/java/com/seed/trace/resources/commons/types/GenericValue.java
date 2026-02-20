@@ -82,6 +82,10 @@ public final class GenericValue {
     public interface _FinalStage {
         GenericValue build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage stringifiedType(Optional<String> stringifiedType);
 
         _FinalStage stringifiedType(String stringifiedType);
@@ -128,6 +132,18 @@ public final class GenericValue {
         @java.lang.Override
         public GenericValue build() {
             return new GenericValue(stringifiedType, stringifiedValue, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

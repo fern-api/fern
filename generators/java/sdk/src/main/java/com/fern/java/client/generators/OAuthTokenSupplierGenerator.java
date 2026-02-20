@@ -17,7 +17,6 @@ import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ObjectProperty;
-import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
@@ -196,18 +195,15 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             if (isOptional) {
                 // Optional expires_in needs .orElse(default) unwrapping.
                 // Use Long literal (e.g. 3600L) when the inner type is long/uint64
+                var optionalInnerType =
+                        expiresInType.getContainer().get().getOptional().get();
+                boolean isInnerTypeLong = isLongType(optionalInnerType);
                 getMethodSpecBuilder.addStatement(
                         "this.$L = $L(authResponse.get$L().orElse($L))",
                         EXPIRES_AT_FIELD_NAME,
                         GET_EXPIRES_AT_METHOD_NAME,
                         tokenPropertyName,
-                        isLongType(expiresInType
-                                        .getContainer()
-                                        .get()
-                                        .getOptional()
-                                        .get())
-                                ? DEFAULT_EXPIRES_IN_SECONDS + "L"
-                                : DEFAULT_EXPIRES_IN_SECONDS);
+                        isInnerTypeLong ? DEFAULT_EXPIRES_IN_SECONDS + "L" : DEFAULT_EXPIRES_IN_SECONDS);
             } else {
                 getMethodSpecBuilder.addStatement(
                         "this.$L = $L(authResponse.get$L())",
@@ -376,11 +372,26 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     private boolean isLongType(TypeReference typeReference) {
-        if (!typeReference.isPrimitive()) {
-            return false;
+        // Use the existing type mapper to resolve the IR type to Java TypeName
+        TypeName resolvedTypeName =
+                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference);
+
+        TypeName typeToCheck = resolvedTypeName;
+
+        // If it's a ParameterizedTypeName (like Optional<Long>), extract the inner type
+        if (resolvedTypeName instanceof ParameterizedTypeName) {
+            ParameterizedTypeName parameterizedType = (ParameterizedTypeName) resolvedTypeName;
+            // If it's Optional<T>, get the T
+            if (parameterizedType.rawType.equals(ClassName.get("java.util", "Optional"))) {
+                if (!parameterizedType.typeArguments.isEmpty()) {
+                    typeToCheck = parameterizedType.typeArguments.get(0);
+                }
+            }
         }
-        PrimitiveTypeV1 primitiveV1 = typeReference.getPrimitive().get().getV1();
-        return primitiveV1 == PrimitiveTypeV1.LONG || primitiveV1 == PrimitiveTypeV1.UINT_64;
+
+        // Check if the type (or inner type) is Long (wrapper class) or long (primitive)
+        String typeString = typeToCheck.toString();
+        return typeString.equals("java.lang.Long") || typeString.equals("Long") || typeString.equals("long");
     }
 
     private boolean isLiteralProperty(RequestProperty requestProperty) {
