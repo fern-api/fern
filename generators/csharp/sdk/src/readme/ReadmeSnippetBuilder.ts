@@ -12,7 +12,7 @@ type EndpointId = FernIr.EndpointId;
 type FeatureId = FernIr.FeatureId;
 type Type = FernIr.Type;
 
-import { Generation } from "../../../codegen/src/context/generation-info.js";
+import { Generation } from "@fern-api/csharp-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {

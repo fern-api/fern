@@ -35,6 +35,18 @@ jobs:
       - name: Compile
         run: pnpm compile
 
+  boundaries:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Check turbo boundaries
+        run: pnpm boundaries
+
   depcheck:
     runs-on: ubuntu-latest
     steps:

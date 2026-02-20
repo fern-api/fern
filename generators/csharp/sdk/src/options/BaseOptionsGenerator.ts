@@ -1,12 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast, lazy, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, lazy, type LazyResult, WithGeneration } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type HttpHeader = FernIr.HttpHeader;
 type Literal = FernIr.Literal;
-
-import { LazyResult } from "../../../codegen/src/utils/lazy.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export interface OptionArgs {
