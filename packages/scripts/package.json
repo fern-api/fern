@@ -27,8 +27,8 @@
   "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../knip.json --no-config-hints",
     "generate": "fern generate --api ir-types-latest --local",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../.eslintignore",

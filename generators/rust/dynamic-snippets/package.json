@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
+    "compile": "tsc",
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "dist": "node build.mjs",
     "organize-imports": "organize-imports-cli tsconfig.json",

@@ -24,8 +24,8 @@
   "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "dist:cli:dev": "node build.dev.mjs",
     "dist:bin": "node build.compile.mjs",
