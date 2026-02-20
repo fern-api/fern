@@ -68,6 +68,17 @@
         },
         {
             "id": {
+                "path": "/container/map-prim-to-union",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({\n    \"string\": 1.1\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/container/opt-objects",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
