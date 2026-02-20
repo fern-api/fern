@@ -32,7 +32,6 @@ export const V28_TO_V27_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: "0.9.0-2-g6b0be0e",
         [GeneratorName.GO_MODEL]: "0.9.0-2-g6b0be0e",
         [GeneratorName.GO_SDK]: "0.9.0-2-g6b0be0e",
         [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,

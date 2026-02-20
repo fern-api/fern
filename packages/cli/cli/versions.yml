@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.81.1
+  changelogEntry:
+    - summary: |
+        Fix example object keys starting with `$` (e.g. `$ref`) not being unescaped when
+        generating the IR `jsonExample`. The Fern definition escapes `$`-prefixed keys with
+        a backslash to avoid collision with example references, but the backslash was not
+        removed when building the wire-format JSON example, causing generators to emit
+        invalid code (e.g. `"\$ref"` in Go).
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 65
 - version: 3.81.0
   changelogEntry:
     - summary: |
