@@ -6,5 +6,16 @@
     "types": ["vitest/globals"]
   },
   "include": ["./src/**/*", "./__test__/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"]
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../task-context"
+    },
+    {
+      "path": "../../../workspace/loader"
+    }
+  ]
 }

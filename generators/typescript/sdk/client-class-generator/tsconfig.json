@@ -4,5 +4,19 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/contexts"
+    },
+    {
+      "path": "../../utils/resolvers"
+    }
+  ]
 }

@@ -5,5 +5,13 @@
     "rootDir": "src",
     "types": ["node"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../cli/generation/ir-migrations"
+    },
+    {
+      "path": "../commons/fs-utils"
+    }
+  ]
 }

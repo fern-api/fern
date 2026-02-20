@@ -5,5 +5,22 @@
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../cli/configuration"
+    },
+    {
+      "path": "../../cli/fern-definition/schema"
+    },
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../casings-generator"
+    },
+    {
+      "path": "../core-utils"
+    }
+  ]
 }

@@ -4,5 +4,16 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../configuration"
+    },
+    {
+      "path": "../../task-context"
+    }
+  ]
 }

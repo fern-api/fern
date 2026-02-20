@@ -5,5 +5,13 @@
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": []
+  "exclude": [],
+  "references": [
+    {
+      "path": "../cli/configuration"
+    },
+    {
+      "path": "../cli/logger"
+    }
+  ]
 }

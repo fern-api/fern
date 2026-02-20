@@ -4,5 +4,25 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../model/union-schema-generator"
+    },
+    {
+      "path": "../../utils/abstract-schema-generator"
+    },
+    {
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/contexts"
+    },
+    {
+      "path": "../../utils/resolvers"
+    }
+  ]
 }

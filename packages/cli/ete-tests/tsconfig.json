@@ -5,5 +5,19 @@
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated", "./src/tests/generate/fixtures/**"]
+  "exclude": ["./src/**/__test__/**/generated", "./src/tests/generate/fixtures/**"],
+  "references": [
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../../commons/logging-execa"
+    },
+    {
+      "path": "../configuration"
+    },
+    {
+      "path": "../logger"
+    }
+  ]
 }

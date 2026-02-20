@@ -5,5 +5,22 @@
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"]
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    {
+      "path": "../../../../packages/cli/logger"
+    },
+    {
+      "path": "../generator"
+    },
+    {
+      "path": "../../utils/contexts"
+    },
+    {
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/abstract-generator-cli"
+    }
+  ]
 }

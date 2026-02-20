@@ -5,5 +5,19 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../packages/commons/path-utils"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    },
+    {
+      "path": "../ast"
+    }
+  ]
 }

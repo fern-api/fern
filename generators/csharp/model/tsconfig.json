@@ -5,5 +5,25 @@
     "rootDir": "src",
     "noImplicitOverride": true
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../formatter"
+    }
+  ]
 }

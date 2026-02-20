@@ -4,5 +4,28 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../project-loader"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../generation/ir-generator"
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../cli-source-resolver"
+    }
+  ]
 }

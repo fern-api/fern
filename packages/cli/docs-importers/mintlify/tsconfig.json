@@ -5,5 +5,25 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../configuration"
+    },
+    {
+      "path": "../../logger"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../commons"
+    }
+  ]
 }

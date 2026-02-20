@@ -5,5 +5,19 @@
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../../commons/path-utils"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../../configuration"
+    }
+  ]
 }

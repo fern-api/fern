@@ -6,5 +6,22 @@
     "types": ["node", "vitest/globals"]
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"]
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../task-context"
+    },
+    {
+      "path": "../../../workspace/browser-compatible-fern-workspace"
+    },
+    {
+      "path": "../../../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../../../workspace/loader"
+    }
+  ]
 }

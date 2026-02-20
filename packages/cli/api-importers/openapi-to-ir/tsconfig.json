@@ -5,5 +5,25 @@
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"]
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    {
+      "path": "../openapi/openapi-ir-parser"
+    },
+    {
+      "path": "../v3-importer-commons"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    }
+  ]
 }

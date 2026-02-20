@@ -6,5 +6,13 @@
     "types": ["node", "vitest/globals"],
     "noImplicitOverride": true
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    }
+  ]
 }

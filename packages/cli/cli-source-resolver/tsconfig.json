@@ -5,5 +5,22 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../fern-definition/schema"
+    },
+    {
+      "path": "../generation/source-resolver"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../workspace/commons"
+    }
+  ]
 }
