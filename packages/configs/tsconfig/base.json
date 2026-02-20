@@ -18,7 +18,6 @@
     "baseUrl": ".",
     "noUncheckedIndexedAccess": true,
     "noImplicitReturns": true,
-    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true

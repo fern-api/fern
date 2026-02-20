@@ -25,7 +25,7 @@
     "lib"
   ],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib",
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../../knip.json --no-config-hints",
