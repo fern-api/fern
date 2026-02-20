@@ -5,7 +5,7 @@ import * as os from "os";
 import { homedir } from "os";
 import { dirname } from "path";
 import { PostHog } from "posthog-node";
-import { v4 as uuidv4 } from "uuid";
+import { validate as isValidUUID, v4 as uuidv4 } from "uuid";
 import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
 import { Version } from "../version.js";
 import type { LifecycleEvent } from "./LifecycleEvent.js";
@@ -96,18 +96,30 @@ export class TelemetryClient {
         if (this.cachedDistinctId != null) {
             return this.cachedDistinctId;
         }
+
         try {
             if (!(await doesPathExist(DISTINCT_ID_FILE))) {
                 await mkdir(dirname(DISTINCT_ID_FILE), { recursive: true });
                 await writeFile(DISTINCT_ID_FILE, uuidv4());
             }
-            this.cachedDistinctId = (await readFile(DISTINCT_ID_FILE)).toString().trim();
+
+            const content = (await readFile(DISTINCT_ID_FILE)).toString().trim();
+            this.cachedDistinctId = content;
+
+            if (!isValidUUID(content)) {
+                // Update the cached ID if it was corrupted.
+                const newId = uuidv4();
+                await writeFile(DISTINCT_ID_FILE, newId);
+                this.cachedDistinctId = newId;
+            }
         } catch {
-            this.cachedDistinctId = uuidv4(); // fallback
+            this.cachedDistinctId = uuidv4(); // Fallback to a new ID.
         }
-        if (this.cachedDistinctId == null) {
+
+        if (this.cachedDistinctId == null || this.cachedDistinctId.length === 0) {
             this.cachedDistinctId = uuidv4();
         }
+
         return this.cachedDistinctId;
     }
 

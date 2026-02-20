@@ -23,19 +23,19 @@ export class StatusCommand {
 
         if (isEnvDisabled) {
             context.stderr.info(
-                `Telemetry: ${chalk.yellow("disabled")} ${chalk.dim("(FERN_TELEMETRY_DISABLED is set)")}`
+                `Telemetry ${chalk.yellow("disabled")} ${chalk.dim("(FERN_TELEMETRY_DISABLED is set).")}`
             );
             return;
         }
 
         if (enabled) {
-            context.stderr.info(`Telemetry: ${chalk.green("enabled")}`);
+            context.stderr.info(`Telemetry ${chalk.green("enabled")}.`);
             context.stderr.info("");
             context.stderr.info(chalk.dim("  Run 'fern telemetry disable' to opt out."));
             return;
         }
 
-        context.stderr.info(`Telemetry: ${chalk.red("disabled")}`);
+        context.stderr.info(`Telemetry ${chalk.red("disabled")}.`);
         context.stderr.info("");
         context.stderr.info(chalk.dim("  Run 'fern telemetry enable' to opt in."));
     }
