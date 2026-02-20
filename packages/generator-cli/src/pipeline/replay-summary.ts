@@ -5,7 +5,7 @@ function plural(n: number, word: string): string {
     return `${n} ${word}${n === 1 ? "" : "s"}`;
 }
 
-function formatConflictReason(reason: string | undefined): string {
+export function formatConflictReason(reason: string | undefined): string {
     switch (reason) {
         case "same-line-edit":
             return "The new generation changed the same lines you edited";
@@ -20,7 +20,7 @@ function formatConflictReason(reason: string | undefined): string {
     }
 }
 
-function patchDescription(detail: { patchMessage: string; files: Array<{ file: string }> }): string {
+export function patchDescription(detail: { patchMessage: string; files: Array<{ file: string }> }): string {
     if (detail.patchMessage && detail.patchMessage !== "update") {
         return detail.patchMessage;
     }
@@ -38,16 +38,14 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     }
 
     const applied = result.patchesApplied ?? 0;
-    const rebased = result.patchesContentRebased ?? 0;
-    const userOwned = result.patchesKeptAsUserOwned ?? 0;
-    const repointed = result.patchesRepointed ?? 0;
     const absorbed = result.patchesAbsorbed ?? 0;
     const conflicts = result.patchesWithConflicts ?? 0;
-    const preserved = applied + rebased + userOwned + repointed;
+    // rebased/userOwned/repointed are sub-categories of applied, not additive
+    const preserved = applied - absorbed;
 
     // Debug: full stats
     logger.debug(
-        `Replay: flow=${result.flow}, detected=${result.patchesDetected ?? 0}, applied=${applied}, rebased=${rebased}, userOwned=${userOwned}, repointed=${repointed}, absorbed=${absorbed}, conflicts=${conflicts}`
+        `Replay: flow=${result.flow}, detected=${result.patchesDetected ?? 0}, applied=${applied}, absorbed=${absorbed}, conflicts=${conflicts}`
     );
 
     // Info: happy-path summary
@@ -56,14 +54,6 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
         logger.info(`Replay: ${plural(preserved, "customization")} preserved${absorbedNote}`);
     } else if (absorbed > 0) {
         logger.info(`Replay: ${plural(absorbed, "customization")} now part of generated code`);
-    }
-
-    // Debug: breakdown
-    if (rebased > 0) {
-        logger.debug(`Replay: ${plural(rebased, "customization")} rebased to current generation`);
-    }
-    if (userOwned > 0) {
-        logger.debug(`Replay: ${plural(userOwned, "user-owned file")} preserved`);
     }
 
     // Warn: conflicts
@@ -98,11 +88,9 @@ export function formatReplayPrBody(
     }
 
     const applied = result.patchesApplied ?? 0;
-    const rebased = result.patchesContentRebased ?? 0;
-    const userOwned = result.patchesKeptAsUserOwned ?? 0;
-    const repointed = result.patchesRepointed ?? 0;
+    const absorbed = result.patchesAbsorbed ?? 0;
     const conflicts = result.patchesWithConflicts ?? 0;
-    const preserved = applied + rebased + userOwned + repointed;
+    const preserved = applied - absorbed;
 
     if (preserved === 0 && conflicts === 0) {
         return undefined;
@@ -129,7 +117,7 @@ export function formatReplayPrBody(
             `You previously customized ${totalFiles === 1 ? "a file" : "files"} in this SDK. This generation changed the same code, so your ${totalFiles === 1 ? "edit" : "edits"} couldn't be applied automatically.\n`
         );
         parts.push(
-            `> This PR is in **draft** to prevent merging before you resolve the conflicts. After fixing, mark it as **Ready for review**.\n`
+            `> \u26a0\ufe0f **Label guide:** In GitHub's conflict editor, \`<<<<<<< HEAD\` ("Accept current") = new generated code. \`>>>>>>> main\` ("Accept incoming") = your customization.\n`
         );
 
         parts.push(`| File | Your customization | Why it conflicted |`);
@@ -141,29 +129,31 @@ export function formatReplayPrBody(
             }
         }
 
-        // Resolution instructions — open by default, no details/summary wrapper
+        // Resolution instructions
         const branch = options?.branchName ?? "<branch-name>";
         parts.push(`\n#### How to fix\n`);
-        parts.push(`1. Check out this branch:`);
+
+        parts.push(`**Option A: Resolve in GitHub (recommended for simple conflicts)**\n`);
+        parts.push(`1. Click the **Resolve conflicts** button below`);
+        parts.push(`2. For each file, choose which code to keep:`);
+        parts.push(`   - \`<<<<<<< HEAD\` / "Accept current changes" = **new generated code**`);
+        parts.push(`   - \`>>>>>>> main\` / "Accept incoming changes" = **your customization**`);
+        parts.push(`   - Or manually combine both, then delete the conflict markers`);
+        parts.push(`3. Click **Mark as resolved** for each file, then **Commit merge**\n`);
+
+        parts.push(`**Option B: Resolve locally**\n`);
+        parts.push(`1. Fetch and check out this branch:`);
         parts.push(`   \`\`\`sh`);
         parts.push(`   git fetch origin && git checkout ${branch}`);
         parts.push(`   \`\`\``);
-        parts.push(
-            `2. Open the conflicting ${totalFiles === 1 ? "file" : "files"} listed above. Look for conflict markers like this:`
-        );
+        parts.push(`2. Merge the base branch and resolve conflicts in your editor:`);
+        parts.push(`   \`\`\`sh`);
+        parts.push(`   git merge origin/main`);
         parts.push(`   \`\`\``);
-        parts.push(`   <<<<<<< Your customization`);
-        parts.push(`   // your code`);
-        parts.push(`   =======`);
-        parts.push(`   // newly generated code`);
-        parts.push(`   >>>>>>> Generated`);
-        parts.push(`   \`\`\``);
-        parts.push(`   Keep the code you want (usually a combination of both), and delete the marker lines.`);
         parts.push(`3. Commit and push:`);
         parts.push(`   \`\`\`sh`);
         parts.push(`   git add -A && git commit -m "resolve conflicts" && git push`);
-        parts.push(`   \`\`\``);
-        parts.push(`4. On this PR, click **Ready for review** to enable merging.\n`);
+        parts.push(`   \`\`\`\n`);
         parts.push(`Your resolved changes will be remembered on future SDK generations.`);
     }
 

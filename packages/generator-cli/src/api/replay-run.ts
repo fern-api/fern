@@ -27,6 +27,8 @@ export interface ReplayRunResult {
     previousGenerationSha: string | null;
     /** SHA of the [fern-generated] commit created by this replay run (null if replay didn't run or unreadable) */
     currentGenerationSha: string | null;
+    /** SHA of main's HEAD before replay ran. Always on main's lineage, stable after squash merges. */
+    baseBranchHead: string | null;
 }
 
 /**
@@ -41,16 +43,31 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
     const lockfilePath = join(outputDir, ".fern", "replay.lock");
 
     if (!existsSync(lockfilePath)) {
-        return { report: null, fernignoreUpdated: false, previousGenerationSha: null, currentGenerationSha: null };
+        return {
+            report: null,
+            fernignoreUpdated: false,
+            previousGenerationSha: null,
+            currentGenerationSha: null,
+            baseBranchHead: null
+        };
     }
 
+    // Capture main's HEAD before replay modifies anything.
+    // This is always on main's lineage, unlike generation SHAs which
+    // may end up on dead branches after squash merges.
+    const baseBranchHead = gitRevParse(outputDir, "HEAD");
+
     // Read the lockfile before replay to capture the previous generation SHA
+    // and the previous base_branch_head for divergent merge detection.
     let previousGenerationSha: string | null = null;
+    let prevBaseBranchHead: string | null = null;
     try {
         const lockManager = new LockfileManager(outputDir);
         if (lockManager.exists()) {
             const lock = lockManager.read();
             previousGenerationSha = lock.current_generation;
+            const latestGen = lock.generations.find((g) => g.commit_sha === lock.current_generation);
+            prevBaseBranchHead = latestGen?.base_branch_head ?? null;
         }
     } catch {
         // If lockfile can't be read, proceed without SHA
@@ -75,17 +92,15 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
 
         if (tagSha != null) {
             const tagParent = gitRevParse(outputDir, `${tagSha}^`);
-            if (tagParent === previousGenerationSha) {
-                // Tag belongs to this generation cycle (its parent is our current_generation).
-                // Use tree distance to determine if the divergent PR was merged or abandoned.
+            if (tagParent === prevBaseBranchHead || tagParent === previousGenerationSha) {
+                // Tag belongs to this generation cycle (its parent is our baseBranchHead
+                // or previousGenerationSha). Use tree distance to determine if the
+                // divergent PR was merged or abandoned.
                 const tagDistance = gitDiffNameOnly(outputDir, tagSha, "HEAD").length;
-                const lockDistance = gitDiffNameOnly(outputDir, previousGenerationSha, "HEAD").length;
+                // Use prevBaseBranchHead (always on main's lineage) as fallback when
+                // previousGenerationSha is unreachable after squash merge + GC.
+                const lockDistance = gitDiffNameOnly(outputDir, prevBaseBranchHead ?? previousGenerationSha, "HEAD").length;
                 shouldSync = tagDistance < lockDistance;
-            } else if (!gitRevExists(outputDir, previousGenerationSha)) {
-                // Legacy fallback: SHA is unreachable and parent check didn't match.
-                // This handles old lockfile format where current_generation was rewritten
-                // to the synthetic commit SHA. Use tag as best-effort recovery.
-                shouldSync = true;
             }
         }
 
@@ -93,7 +108,8 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             const syncService = new ReplayService(outputDir, { enabled: true });
             await syncService.syncFromDivergentMerge(tagSha, {
                 cliVersion,
-                generatorVersions
+                generatorVersions,
+                baseBranchHead: baseBranchHead ?? undefined
             });
 
             // Re-read previousGenerationSha since syncFromDivergentMerge updated it
@@ -118,44 +134,46 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             cliVersion,
             generatorVersions,
             stageOnly,
-            skipApplication
+            skipApplication,
+            baseBranchHead: baseBranchHead ?? undefined
         });
     } catch {
         // Don't fail generation because of replay errors
-        return { report: null, fernignoreUpdated: false, previousGenerationSha, currentGenerationSha: null };
+        return {
+            report: null,
+            fernignoreUpdated: false,
+            previousGenerationSha,
+            currentGenerationSha: null,
+            baseBranchHead
+        };
     }
 
-    // Read the lockfile again to capture the current generation SHA (updated by replay)
+    // Read the lockfile again to capture the current generation SHA and resolved baseBranchHead
     let currentGenerationSha: string | null = null;
+    let resolvedBaseBranchHead: string | null = baseBranchHead;
     try {
         const freshLockManager = new LockfileManager(outputDir);
         if (freshLockManager.exists()) {
             const freshLock = freshLockManager.read();
             currentGenerationSha = freshLock.current_generation;
+            const latestGen = freshLock.generations.find((g) => g.commit_sha === freshLock.current_generation);
+            if (latestGen?.base_branch_head) {
+                resolvedBaseBranchHead = latestGen.base_branch_head;
+            }
         }
     } catch {
-        // If lockfile can't be read, proceed without SHA
+        // If lockfile can't be read, proceed with captured values
     }
 
     const fernignoreUpdated = await ensureReplayFernignoreEntries(outputDir);
 
-    return { report, fernignoreUpdated, previousGenerationSha, currentGenerationSha };
-}
-
-/**
- * Checks if a git revision (SHA, tag, branch) exists in the repo.
- */
-function gitRevExists(cwd: string, rev: string): boolean {
-    try {
-        execFileSync("git", ["rev-parse", "--verify", rev], {
-            cwd,
-            encoding: "utf-8",
-            stdio: "pipe"
-        });
-        return true;
-    } catch {
-        return false;
-    }
+    return {
+        report,
+        fernignoreUpdated,
+        previousGenerationSha,
+        currentGenerationSha,
+        baseBranchHead: resolvedBaseBranchHead
+    };
 }
 
 /**

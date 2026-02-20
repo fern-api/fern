@@ -69,6 +69,7 @@ export interface GithubStepConfig {
         previousGenerationSha: string;
         currentGenerationSha: string;
         hasConflicts: boolean;
+        baseBranchHead?: string;
     };
 }
 
@@ -100,6 +101,7 @@ export interface ReplayStepResult extends StepResult {
     patchesKeptAsUserOwned?: number;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
+    baseBranchHead?: string;
     conflicts?: ConflictInfo[];
     conflictDetails?: Array<{
         patchId: string;

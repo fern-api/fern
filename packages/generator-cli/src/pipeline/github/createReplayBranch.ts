@@ -5,17 +5,20 @@ import type { PipelineLogger } from "../PipelineLogger";
 /**
  * Creates the PR branch for replay commits.
  *
- * When replay detected conflicts, uses the current HEAD tree (which contains
- * conflict markers from the replay commit) so users can see and resolve them
- * directly in the PR "Files changed" view. The PR is created as a draft to
- * prevent merging before conflicts are resolved.
+ * **Conflict path**: Creates a synthetic divergent commit using the pure
+ * generation tree, parented off previousGenerationSha. This creates a fork
+ * in history so GitHub computes a real 3-way merge:
+ *   base = previousGen, main = previousGen + user edits, PR = new generation.
+ * GitHub shows real merge conflicts in the PR "Files changed" view. The PR
+ * is created as a draft so users resolve conflicts before merging.
  *
- * When there are no conflicts, creates a synthetic divergent commit using the
- * pure generation tree, so GitHub's 3-way merge can cleanly apply patches in
- * non-squash workflows.
+ * **No-conflict path**: Creates the branch directly from HEAD (which includes
+ * replay-applied patches and correct lockfile). A separate synthetic commit
+ * with the pure generation tree is created only for tagging — it enables the
+ * sync mechanism to detect customer patches via tree diff after squash merges.
  *
- * Returns the synthetic/generation-base commit SHA so the caller can push a
- * persistent tag for squash merge compatibility.
+ * Returns the generation-base commit SHA so the caller can push a persistent
+ * tag for squash merge compatibility.
  */
 export async function createReplayBranch(
     repository: ClonedRepository,
@@ -26,57 +29,73 @@ export async function createReplayBranch(
               previousGenerationSha: string;
               currentGenerationSha: string;
               hasConflicts: boolean;
+              baseBranchHead?: string;
           }
         | undefined,
     logger: PipelineLogger
 ): Promise<string | undefined> {
     if (replayConflictInfo?.hasConflicts) {
-        logger.debug(
-            `Creating PR branch with conflict markers from HEAD (previous generation: ${replayConflictInfo.previousGenerationSha.substring(0, 7)})`
-        );
+        // Parent must be previousGenerationSha to create a divergent fork in history.
+        // GitHub computes merge base = previousGen, then shows real 3-way diff between
+        // main's path (previousGen → mainHEAD) and the branch (previousGen → synthetic).
+        // Using baseBranchHead (= main HEAD) would make the branch linear, showing
+        // conflict markers as plain text instead of real merge conflicts.
+        const parentSha = replayConflictInfo.previousGenerationSha;
+        // Use baseBranchHead for lockfile restore — it's on main's lineage and has the
+        // correct lockfile state (pre-replay). Fall back to previousGenerationSha.
+        const lockfileRestoreSha = replayConflictInfo.baseBranchHead ?? replayConflictInfo.previousGenerationSha;
 
-        // Use HEAD's tree — this is the replay commit that contains conflict markers
-        // in files where user customizations overlap with generation changes. Users
-        // see these markers in the PR diff and can resolve them directly.
-        const headTreeHash = await repository.getHeadTreeHash();
+        logger.debug(`Creating divergent PR branch with generation tree (parent: ${parentSha.substring(0, 7)})`);
+
+        // Use the pure generation tree — NOT HEAD's tree (which has conflict markers as text).
+        // With the generation tree parented off previousGenerationSha, GitHub computes a real
+        // 3-way merge: base=previousGen, main=previousGen+user edits, PR=newGen. Files where
+        // both sides diverged show as real merge conflicts in the PR "Files changed" view.
+        const genTreeHash = await repository.getCommitTreeHash(replayConflictInfo.currentGenerationSha);
         const syntheticCommitSha = await repository.commitTree(
-            headTreeHash,
-            replayConflictInfo.previousGenerationSha,
+            genTreeHash,
+            parentSha,
             `[fern-generated] ${commitMessage ?? "Update SDK"}`
         );
 
         await repository.createBranchFromCommit(branchName, syntheticCommitSha);
 
-        // Restore the lockfile from the previous generation so it matches main.
+        // Restore the lockfile from the base branch so it matches main.
         // The HEAD tree has a replay-updated lockfile which would cause a spurious
         // lockfile conflict in the PR. Main's lockfile is the source of truth.
         try {
-            await repository.restoreFilesFromCommit(replayConflictInfo.previousGenerationSha, ".fern/replay.lock");
+            await repository.restoreFilesFromCommit(lockfileRestoreSha, ".fern/replay.lock");
             await repository.commitAllChanges(`[fern-generated] ${commitMessage ?? "Update SDK"}`);
         } catch (error) {
             logger.debug(
-                `Could not restore lockfile from previous generation: ${error instanceof Error ? error.message : String(error)}`
+                `Could not restore lockfile from base branch: ${error instanceof Error ? error.message : String(error)}`
             );
         }
 
         return syntheticCommitSha;
     } else if (replayConflictInfo != null) {
-        logger.debug(
-            `Creating divergent PR branch from previous generation ${replayConflictInfo.previousGenerationSha.substring(0, 7)} (no conflicts)`
-        );
+        const parentSha = replayConflictInfo.previousGenerationSha;
 
-        // No conflicts — use the pure generation tree so GitHub's 3-way merge
-        // can cleanly apply patches in non-squash workflows.
+        logger.debug(`Creating linear PR branch from HEAD (no conflicts)`);
+
+        // No conflicts — create branch directly from HEAD, which includes
+        // replay-applied patches and the correct lockfile (with patches recorded).
+        // This ensures squash merges preserve customizations and lockfile state
+        // without requiring manual conflict resolution.
+        await repository.createBranchFromHead(branchName);
+
+        // Create a separate synthetic commit with the pure generation tree for
+        // the generation-base tag. This commit is NOT the branch head — it only
+        // exists as a tag target so the sync mechanism can detect customer patches
+        // via tree diff (pure generation vs HEAD) after squash merges.
         const genTreeHash = await repository.getCommitTreeHash(replayConflictInfo.currentGenerationSha);
-        const syntheticCommitSha = await repository.commitTree(
+        const tagCommitSha = await repository.commitTree(
             genTreeHash,
-            replayConflictInfo.previousGenerationSha,
+            parentSha,
             `[fern-generated] ${commitMessage ?? "Update SDK"}`
         );
 
-        await repository.createBranchFromCommit(branchName, syntheticCommitSha);
-
-        return syntheticCommitSha;
+        return tagCommitSha;
     } else {
         // No previous generation info — use existing linear behavior
         await repository.createBranchFromHead(branchName);

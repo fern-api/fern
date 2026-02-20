@@ -7,6 +7,7 @@ import { createReplayBranch } from "../github/createReplayBranch";
 import type { ExistingPullRequest } from "../github/findExistingUpdatablePR";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
+import { postConflictComments } from "../github/postConflictComments";
 import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
@@ -93,7 +94,12 @@ export class GithubStep extends BaseStep {
         newPrBranch: string,
         skipCommit: boolean,
         replayConflictInfo:
-            | { previousGenerationSha: string; currentGenerationSha: string; hasConflicts: boolean }
+            | {
+                  previousGenerationSha: string;
+                  currentGenerationSha: string;
+                  hasConflicts: boolean;
+                  baseBranchHead?: string;
+              }
             | undefined,
         replayResult: ReplayStepResult | undefined
     ): Promise<GithubStepResult> {
@@ -247,6 +253,30 @@ export class GithubStep extends BaseStep {
             }
         }
 
+        // Post per-file conflict resolution guidance as a single PR comment
+        if (!this.config.previewMode && replayConflictInfo?.hasConflicts === true && result.prNumber != null) {
+            await postConflictComments(octokit, owner, repo, result.prNumber, replayResult, this.logger);
+        }
+
+        // Check if GitHub's web conflict editor is likely disabled for this PR
+        // and post a fallback comment with local-only resolution instructions.
+        if (
+            !this.config.previewMode &&
+            result.prNumber != null &&
+            replayConflictInfo?.hasConflicts === true &&
+            replayResult != null
+        ) {
+            await this.postWebEditorFallbackComment(
+                octokit,
+                owner,
+                repo,
+                result.prNumber,
+                prBranch,
+                baseBranch,
+                replayResult
+            );
+        }
+
         return result;
     }
 
@@ -312,17 +342,27 @@ export class GithubStep extends BaseStep {
     /**
      * Derive replay conflict info from replay step result.
      */
-    private deriveReplayConflictInfo(
-        replayResult: ReplayStepResult | undefined
-    ): { previousGenerationSha: string; currentGenerationSha: string; hasConflicts: boolean } | undefined {
+    private deriveReplayConflictInfo(replayResult: ReplayStepResult | undefined):
+        | {
+              previousGenerationSha: string;
+              currentGenerationSha: string;
+              hasConflicts: boolean;
+              baseBranchHead?: string;
+          }
+        | undefined {
         if (replayResult == null) {
             return undefined;
         }
         const hasConflicts = (replayResult.patchesWithConflicts ?? 0) > 0;
         const previousGenerationSha = replayResult.previousGenerationSha;
         const currentGenerationSha = replayResult.currentGenerationSha;
-        if (hasConflicts && previousGenerationSha != null && currentGenerationSha != null) {
-            return { previousGenerationSha, currentGenerationSha, hasConflicts: true };
+        if (previousGenerationSha != null && currentGenerationSha != null) {
+            return {
+                previousGenerationSha,
+                currentGenerationSha,
+                hasConflicts,
+                baseBranchHead: replayResult.baseBranchHead
+            };
         }
         return undefined;
     }
@@ -336,7 +376,12 @@ export class GithubStep extends BaseStep {
         octokit: Octokit,
         existingPR: ExistingPullRequest,
         replayConflictInfo:
-            | { previousGenerationSha: string; currentGenerationSha: string; hasConflicts: boolean }
+            | {
+                  previousGenerationSha: string;
+                  currentGenerationSha: string;
+                  hasConflicts: boolean;
+                  baseBranchHead?: string;
+              }
             | undefined
     ): Promise<void> {
         const hasConflicts = replayConflictInfo?.hasConflicts === true;
@@ -398,7 +443,12 @@ export class GithubStep extends BaseStep {
         repo: string,
         sha: string,
         replayConflictInfo:
-            | { previousGenerationSha: string; currentGenerationSha: string; hasConflicts: boolean }
+            | {
+                  previousGenerationSha: string;
+                  currentGenerationSha: string;
+                  hasConflicts: boolean;
+                  baseBranchHead?: string;
+              }
             | undefined,
         replayResult: ReplayStepResult | undefined
     ): Promise<void> {
@@ -433,4 +483,195 @@ export class GithubStep extends BaseStep {
             );
         }
     }
+
+    /**
+     * Check whether GitHub's web-based conflict editor is likely disabled for a PR
+     * and post a fallback comment with local-only resolution instructions if so.
+     *
+     * GitHub disables the web conflict editor for PRs with file deletions
+     * (modify/delete conflicts), very large numbers of conflicting files, binary
+     * file conflicts, or conflicts it cannot compute (mergeable stays null).
+     *
+     * We use heuristics from our own conflict data plus the GitHub mergeable-state
+     * API. Only posts when there is strong signal -- false positives (posting when
+     * the web editor works) are worse than false negatives.
+     */
+    private async postWebEditorFallbackComment(
+        octokit: Octokit,
+        owner: string,
+        repo: string,
+        prNumber: number,
+        branchName: string,
+        baseBranch: string,
+        replayResult: ReplayStepResult
+    ): Promise<void> {
+        try {
+            const webEditorLikelyDisabled = await this.isWebEditorLikelyDisabled(
+                octokit,
+                owner,
+                repo,
+                prNumber,
+                replayResult
+            );
+
+            if (!webEditorLikelyDisabled) {
+                this.logger.debug(`PR #${prNumber}: web conflict editor appears usable, skipping fallback comment`);
+                return;
+            }
+
+            const comment = buildWebEditorFallbackComment(branchName, baseBranch);
+            await octokit.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body: comment
+            });
+            this.logger.info(`Posted web-editor fallback comment on PR #${prNumber}`);
+        } catch (error) {
+            this.logger.debug(
+                `Could not post web-editor fallback comment: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+    }
+
+    /**
+     * Determine whether GitHub's web conflict editor is likely disabled for this PR.
+     *
+     * Returns true only when there is strong signal. Heuristics (any one sufficient):
+     *   1. Any conflicting file has a status suggesting a file deletion (modify/delete).
+     *   2. The total number of conflicting files exceeds a threshold.
+     *   3. The total number of conflict hunks exceeds a threshold.
+     *   4. GitHub cannot compute the mergeable state after polling (stays null).
+     */
+    private async isWebEditorLikelyDisabled(
+        octokit: Octokit,
+        owner: string,
+        repo: string,
+        prNumber: number,
+        replayResult: ReplayStepResult
+    ): Promise<boolean> {
+        const conflictDetails = replayResult.conflictDetails ?? [];
+        const allConflictFiles = conflictDetails.flatMap((d) => d.files);
+        const totalConflictFiles = allConflictFiles.length;
+
+        // Heuristic 1: File deletions (modify/delete conflicts).
+        // GitHub's web editor cannot handle these.
+        const hasFileDeletionConflict = allConflictFiles.some((f) => {
+            const status = (f.status ?? "").toLowerCase();
+            const reason = (f.conflictReason ?? "").toLowerCase();
+            return status === "skipped" || reason.includes("delete") || reason.includes("removed");
+        });
+
+        if (hasFileDeletionConflict) {
+            this.logger.debug(`PR #${prNumber}: detected file deletion conflict, web editor likely disabled`);
+            return true;
+        }
+
+        // Heuristic 2: Large number of conflicting files.
+        if (totalConflictFiles >= WEB_EDITOR_FILE_THRESHOLD) {
+            this.logger.debug(
+                `PR #${prNumber}: ${totalConflictFiles} conflicting files exceeds threshold (${WEB_EDITOR_FILE_THRESHOLD}), web editor likely disabled`
+            );
+            return true;
+        }
+
+        // Heuristic 3: Large number of conflict hunks across all files.
+        const totalHunks = (replayResult.conflicts ?? []).reduce(
+            (sum, fileConflict) => sum + fileConflict.conflicts.length,
+            0
+        );
+        if (totalHunks >= WEB_EDITOR_HUNK_THRESHOLD) {
+            this.logger.debug(
+                `PR #${prNumber}: ${totalHunks} conflict hunks exceeds threshold (${WEB_EDITOR_HUNK_THRESHOLD}), web editor likely disabled`
+            );
+            return true;
+        }
+
+        // Heuristic 4: GitHub cannot compute mergeable state after polling.
+        // When `mergeable` stays null after several attempts, the conflict may be
+        // too complex for GitHub to analyze (and hence for the web editor).
+        const mergeableState = await this.pollMergeableState(octokit, owner, repo, prNumber);
+        if (mergeableState.mergeable === null) {
+            this.logger.debug(`PR #${prNumber}: mergeable state still null after polling, web editor likely disabled`);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Poll the GitHub API for the PR's mergeable state, retrying briefly if it
+     * hasn't been computed yet (mergeable === null).
+     */
+    private async pollMergeableState(
+        octokit: Octokit,
+        owner: string,
+        repo: string,
+        prNumber: number
+    ): Promise<{ mergeable: boolean | null; mergeableState: string }> {
+        for (let attempt = 0; attempt < MERGEABLE_POLL_MAX_ATTEMPTS; attempt++) {
+            const { data: pr } = await octokit.pulls.get({
+                owner,
+                repo,
+                pull_number: prNumber
+            });
+
+            if (pr.mergeable != null) {
+                return {
+                    mergeable: pr.mergeable,
+                    mergeableState: pr.mergeable_state
+                };
+            }
+
+            // mergeable is still null -- GitHub is still computing. Wait and retry.
+            if (attempt < MERGEABLE_POLL_MAX_ATTEMPTS - 1) {
+                await sleep(MERGEABLE_POLL_DELAY_MS);
+            }
+        }
+
+        // Exhausted retries, return null state.
+        return { mergeable: null, mergeableState: "unknown" };
+    }
+}
+
+/** Maximum number of conflicting files before we consider the conflict too complex for the web editor. */
+const WEB_EDITOR_FILE_THRESHOLD = 20;
+
+/** Maximum number of conflict hunks across all files before posting the fallback comment. */
+const WEB_EDITOR_HUNK_THRESHOLD = 50;
+
+/** Number of polls to wait for GitHub to compute the mergeable state. */
+const MERGEABLE_POLL_MAX_ATTEMPTS = 3;
+
+/** Delay between mergeable-state polls in milliseconds. */
+const MERGEABLE_POLL_DELAY_MS = 1500;
+
+/**
+ * Build the markdown comment body for the web-editor fallback.
+ */
+function buildWebEditorFallbackComment(branchName: string, baseBranch: string): string {
+    const lines = [
+        `> **Note:** These conflicts may be too complex for GitHub's web editor. To resolve locally:`,
+        `>`,
+        `> 1. Check out this branch:`,
+        `>    \`\`\`sh`,
+        `>    git fetch origin && git checkout ${branchName}`,
+        `>    \`\`\``,
+        `> 2. Merge the base branch:`,
+        `>    \`\`\`sh`,
+        `>    git merge origin/${baseBranch}`,
+        `>    \`\`\``,
+        `> 3. Resolve conflicts in your editor (VS Code, IntelliJ, etc. have built-in merge tools)`,
+        `> 4. Commit and push:`,
+        `>    \`\`\`sh`,
+        `>    git add -A && git commit -m "resolve conflicts" && git push`,
+        `>    \`\`\``,
+        `>`,
+        `> **Label guide:** In your editor's merge view, "current" = new generated code, "incoming" = your customization.`
+    ];
+    return lines.join("\n");
+}
+
+function sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
