@@ -26,6 +26,8 @@ export interface ReplayInitParams {
     prBody?: string;
     /** Overwrite existing lockfile if present. Default: false */
     force?: boolean;
+    /** Scan git history for existing patches (migration). Default: false */
+    importHistory?: boolean;
 }
 
 export interface ReplayInitResult {
@@ -82,7 +84,8 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         dryRun,
         fernignoreAction: "skip",
         maxCommitsToScan: params.maxCommitsToScan,
-        force: params.force ?? false
+        force: params.force ?? false,
+        importHistory: params.importHistory
     });
 
     if (!bootstrapResult.generationCommit) {
@@ -223,15 +226,22 @@ export function formatBootstrapSummary(result: ReplayInitResult): BootstrapLogEn
             message: `Skipped ${bs.staleGenerationsSkipped} older generation(s) — only tracking recent commits`
         });
     }
-    entries.push({ level: "info", message: `Patches created: ${bs.patchesCreated}` });
+    if (bs.patchesCreated === 0 && bs.patches.length === 0) {
+        entries.push({
+            level: "info",
+            message: "Clean start — tracking future edits only"
+        });
+    } else {
+        entries.push({ level: "info", message: `Patches created: ${bs.patchesCreated}` });
 
-    if (bs.patches.length > 0) {
-        entries.push({ level: "info", message: "\nPatches:" });
-        for (const patch of bs.patches) {
-            entries.push({
-                level: "info",
-                message: `  ${patch.id}: "${patch.original_message.slice(0, 50)}" (${patch.files.length} files)`
-            });
+        if (bs.patches.length > 0) {
+            entries.push({ level: "info", message: "\nPatches:" });
+            for (const patch of bs.patches) {
+                entries.push({
+                    level: "info",
+                    message: `  ${patch.id}: "${patch.original_message.slice(0, 50)}" (${patch.files.length} files)`
+                });
+            }
         }
     }
 
@@ -259,28 +269,36 @@ function buildPrBody(result: BootstrapResult): string {
         "This PR initializes [Fern Replay](https://buildwithfern.com) for this SDK repository.",
         "Replay automatically preserves your customizations across SDK regenerations.",
         "",
-        `**Base generation commit:** \`${result.generationCommit?.sha.slice(0, 7)}\``,
-        `**Customization patches tracked:** ${result.patchesCreated}`,
-        ""
+        `**Base generation commit:** \`${result.generationCommit?.sha.slice(0, 7)}\``
     ];
 
-    if (result.staleGenerationsSkipped > 0) {
+    if (result.patchesCreated === 0 && result.patches.length === 0) {
         lines.push(
-            `> **Note:** Replay tracks customizations made since the last generation commit (\`${result.scannedSinceGeneration.slice(0, 7)}\`).`,
-            `> ${result.staleGenerationsSkipped} older generation(s) were skipped — commits regenerated over multiple times are not tracked.`,
+            "",
+            "Clean start — no historical patches imported. Future customizations will be tracked automatically.",
             ""
         );
-    }
+    } else {
+        lines.push(`**Customization patches tracked:** ${result.patchesCreated}`, "");
 
-    if (result.patches.length > 0) {
-        lines.push("### Tracked Patches");
-        lines.push("");
-        for (const patch of result.patches) {
+        if (result.staleGenerationsSkipped > 0) {
             lines.push(
-                `- **${patch.id}**: ${patch.original_message.slice(0, 60)} (${patch.files.length} file${patch.files.length === 1 ? "" : "s"})`
+                `> **Note:** Replay tracks customizations made since the last generation commit (\`${result.scannedSinceGeneration.slice(0, 7)}\`).`,
+                `> ${result.staleGenerationsSkipped} older generation(s) were skipped — commits regenerated over multiple times are not tracked.`,
+                ""
             );
         }
-        lines.push("");
+
+        if (result.patches.length > 0) {
+            lines.push("### Tracked Patches");
+            lines.push("");
+            for (const patch of result.patches) {
+                lines.push(
+                    `- **${patch.id}**: ${patch.original_message.slice(0, 60)} (${patch.files.length} file${patch.files.length === 1 ? "" : "s"})`
+                );
+            }
+            lines.push("");
+        }
     }
 
     if (result.warnings.length > 0) {

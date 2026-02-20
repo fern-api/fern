@@ -26,6 +26,7 @@ import {
     replayForget,
     replayInit,
     replayReset,
+    replayResetRemote,
     replayStatusRemote
 } from "@fern-api/generator-cli";
 import {
@@ -2370,6 +2371,14 @@ function addReplayResetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
         "Remove all Replay state (patches will no longer be preserved)",
         (yargs) =>
             yargs
+                .option("group", {
+                    type: "string",
+                    description: "Generator group from generators.yml (reads github config automatically)"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "If multiple APIs, specify which API workspace to use"
+                })
                 .option("dry-run", {
                     type: "boolean",
                     default: false,
@@ -2384,12 +2393,71 @@ function addReplayResetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 command: "fern replay reset"
             });
 
+            // --group takes precedence over --path
+            if (argv.group != null) {
+                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api);
+
+                cliContext.logger.info(`Resetting Replay for: ${resolved.githubRepo}`);
+                if (argv.dryRun) {
+                    cliContext.logger.info("(dry-run mode)");
+                }
+
+                if (!argv.dryRun) {
+                    const shouldContinue = await cliContext.confirmPrompt(
+                        "This will remove ALL tracked customizations. Your code changes will NOT be deleted, but they will no longer be automatically preserved across regenerations.\nAre you sure you want to continue?",
+                        false
+                    );
+                    if (!shouldContinue) {
+                        cliContext.logger.info("Reset cancelled.");
+                        return;
+                    }
+                }
+
+                try {
+                    const result = await replayResetRemote({
+                        githubRepo: resolved.githubRepo,
+                        token: resolved.token,
+                        branch: resolved.branch,
+                        dryRun: argv.dryRun
+                    });
+
+                    if (result.reset.nothingToReset) {
+                        cliContext.logger.info("Replay is not initialized. Nothing to reset.");
+                        return;
+                    }
+
+                    cliContext.logger.info(
+                        `${argv.dryRun ? "Would remove" : "Removed"} ${result.reset.patchesRemoved} patch(es).`
+                    );
+                    cliContext.logger.info(`${argv.dryRun ? "Would delete" : "Deleted"} replay.lock.`);
+
+                    if (result.branch != null) {
+                        cliContext.logger.info(`Pushed to branch: ${result.branch}`);
+                    }
+
+                    if (!argv.dryRun) {
+                        cliContext.logger.info("\nTo re-initialize, run: fern replay init");
+                    }
+                } catch (error) {
+                    cliContext.failAndThrow(
+                        `Failed to reset Replay: ${error instanceof Error ? error.message : String(error)}`
+                    );
+                }
+                return;
+            }
+
+            // Local path mode (existing behavior)
             const sdkPath = argv.path ?? process.cwd();
 
             if (!argv.dryRun) {
-                cliContext.logger.warn("WARNING: This will remove ALL tracked customizations.");
-                cliContext.logger.warn("Your code changes will NOT be deleted, but they will no longer");
-                cliContext.logger.warn("be automatically preserved across regenerations.");
+                const shouldContinue = await cliContext.confirmPrompt(
+                    "This will remove ALL tracked customizations. Your code changes will NOT be deleted, but they will no longer be automatically preserved across regenerations.\nAre you sure you want to continue?",
+                    false
+                );
+                if (!shouldContinue) {
+                    cliContext.logger.info("Reset cancelled.");
+                    return;
+                }
             }
 
             try {

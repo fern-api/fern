@@ -287,6 +287,11 @@ void yargs(hideBin(process.argv))
                             type: "boolean",
                             default: false,
                             description: "Overwrite existing lockfile if Replay is already initialized"
+                        })
+                        .option("import-history", {
+                            type: "boolean",
+                            default: false,
+                            description: "Scan git history for existing patches (migration)"
                         });
                 },
                 async (argv) => {
@@ -303,7 +308,8 @@ void yargs(hideBin(process.argv))
                             maxCommitsToScan: argv["max-commits"],
                             prTitle: argv["pr-title"],
                             prBody: argv["pr-body"],
-                            force: argv.force
+                            force: argv.force,
+                            importHistory: argv["import-history"]
                         });
 
                         const logEntries = formatBootstrapSummary(result);
@@ -349,6 +355,11 @@ void yargs(hideBin(process.argv))
                             choices: ["migrate", "delete", "skip"],
                             default: "skip",
                             description: "How to handle .fernignore: migrate, delete, or skip"
+                        })
+                        .option("import-history", {
+                            type: "boolean",
+                            default: false,
+                            description: "Scan git history for existing patches (migration)"
                         });
                 },
                 async (argv) => {
@@ -364,7 +375,8 @@ void yargs(hideBin(process.argv))
                         const fernignoreAction = argv["fernignore-action"] as "migrate" | "delete" | "skip" | undefined;
                         const result = await bootstrap(outputDir, {
                             dryRun: argv["dry-run"],
-                            fernignoreAction
+                            fernignoreAction,
+                            importHistory: argv["import-history"]
                         });
 
                         if (result.generationCommit) {

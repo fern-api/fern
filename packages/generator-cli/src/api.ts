@@ -23,6 +23,11 @@ export {
     replayInit
 } from "./api/replay-init.js";
 export { type ReplayResetParams, type ResetResult, replayReset } from "./api/replay-reset.js";
+export {
+    type ReplayResetRemoteParams,
+    type ReplayResetRemoteResult,
+    replayResetRemote
+} from "./api/replay-reset-remote.js";
 export { type ReplayRunParams, type ReplayRunResult, replayRun } from "./api/replay-run.js";
 export {
     type ReplayStatusParams,
