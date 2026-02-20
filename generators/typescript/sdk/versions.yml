@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.3
+  changelogEntry:
+    - summary: |
+        Switch Docker base image from `node:22.12-alpine3.20` to `node:22.12-slim` (Debian).
+        Alpine uses musl instead of glibc, causing a ~14x performance regression for Biome
+        due to musl's allocator being significantly slower for allocation-heavy workloads like AST parsing.
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 63
+
 - version: 3.48.2
   changelogEntry:
     - summary: |
