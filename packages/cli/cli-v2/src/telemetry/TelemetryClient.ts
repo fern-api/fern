@@ -10,16 +10,6 @@ import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
 import { Version } from "../version.js";
 import type { LifecycleEvent } from "./LifecycleEvent.js";
 
-// The file that stores the distinct ID for the user (stored in ~/.fern/id).
-//
-// Note that all telemetry is anonymous, but we still use a shared distinct ID
-// to correlate metrics from the same user/machine across multiple CLI invocations.
-const DISTINCT_ID_FILE: AbsoluteFilePath = join(
-    AbsoluteFilePath.of(homedir()),
-    RelativeFilePath.of(".fern"),
-    RelativeFilePath.of("id")
-);
-
 export class TelemetryClient {
     private readonly posthog: PostHog | undefined;
     private readonly baseProperties: Record<string, unknown>;
@@ -97,19 +87,21 @@ export class TelemetryClient {
             return this.cachedDistinctId;
         }
 
+        const distinctIdFilepath = this.getDistinctIdFilepath();
+
         try {
-            if (!(await doesPathExist(DISTINCT_ID_FILE))) {
-                await mkdir(dirname(DISTINCT_ID_FILE), { recursive: true });
-                await writeFile(DISTINCT_ID_FILE, uuidv4());
+            if (!(await doesPathExist(distinctIdFilepath))) {
+                await mkdir(dirname(distinctIdFilepath), { recursive: true });
+                await writeFile(distinctIdFilepath, uuidv4());
             }
 
-            const content = (await readFile(DISTINCT_ID_FILE)).toString().trim();
+            const content = (await readFile(distinctIdFilepath)).toString().trim();
             this.cachedDistinctId = content;
 
             if (!isValidUUID(content)) {
                 // Update the cached ID if it was corrupted.
                 const newId = uuidv4();
-                await writeFile(DISTINCT_ID_FILE, newId);
+                await writeFile(distinctIdFilepath, newId);
                 this.cachedDistinctId = newId;
             }
         } catch {
@@ -121,6 +113,16 @@ export class TelemetryClient {
         }
 
         return this.cachedDistinctId;
+    }
+
+    /**
+     * The file that stores the distinct ID for the user (stored in ~/.fern/id).
+     *
+     * Note that all telemetry is anonymous, but we still use a shared distinct ID
+     * to correlate metrics from the same user/machine across multiple CLI invocations.
+     */
+    private getDistinctIdFilepath(): AbsoluteFilePath {
+        return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(".fern"), RelativeFilePath.of("id"));
     }
 
     /**
