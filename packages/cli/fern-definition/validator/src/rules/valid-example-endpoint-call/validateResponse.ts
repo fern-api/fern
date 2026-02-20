@@ -1,6 +1,10 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
-import { isRawDiscriminatedUnionDefinition, RawSchemas, visitExampleResponseSchema } from "@fern-api/fern-definition-schema";
+import {
+    isRawDiscriminatedUnionDefinition,
+    RawSchemas,
+    visitExampleResponseSchema
+} from "@fern-api/fern-definition-schema";
 import {
     ErrorResolver,
     ExampleResolver,
