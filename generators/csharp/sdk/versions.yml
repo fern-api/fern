@@ -5,7 +5,7 @@
         Fix WebSocket binary message sending. Binary messages (e.g. audio bytes) are now sent as raw bytes instead of being JSON-serialized, which caused servers to reject them with CONFIG_DENIED.
       type: fix
     - summary: |
-        Fix WebSocket incoming message deserialization. TryDeserialize now validates that string properties in the deserialized object match the original JSON via round-trip comparison, preventing messages with const discriminator fields (e.g. `type: "transcript"`) from being incorrectly matched to other event types (e.g. `type: "flushed"`).
+        Fix WebSocket incoming message deserialization. TryDeserialize(JsonDocument) now passes JsonSerializerOptions so the custom type info resolver is active, enabling the generated literal property setters to correctly validate const discriminator fields (e.g. `type: "transcript"` vs `type: "flushed"`) during deserialization.
       type: fix
     - summary: |
         Set the default environment on the WebSocket Options class when environments are defined, so the Environment property is pre-populated with the configured default. Previously the property had no default, which could lead to misconfiguration.
