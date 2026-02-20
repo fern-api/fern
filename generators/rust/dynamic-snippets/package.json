@@ -20,11 +20,13 @@
   "module": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "dist": "node build.mjs",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "test": "vitest run --passWithNoTests",
@@ -41,7 +43,6 @@
     "@fern-api/dynamic-ir-sdk": "^59.6.1",
     "@fern-api/path-utils": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }
