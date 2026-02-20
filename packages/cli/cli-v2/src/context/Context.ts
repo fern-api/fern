@@ -69,7 +69,7 @@ export class Context {
         const schemaLoader = new FernYmlSchemaLoader({ cwd: this.cwd });
         const fernYml = await schemaLoader.loadOrThrow();
 
-        this.telemetry.addProperties({ org: fernYml.data.org });
+        this.telemetry.tag({ org: fernYml.data.org });
 
         const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
         return await loader.loadOrThrow({ fernYml });
@@ -86,7 +86,7 @@ export class Context {
             return { success: false, issues: loadResult.issues };
         }
 
-        this.telemetry.addProperties({ org: loadResult.data.org });
+        this.telemetry.tag({ org: loadResult.data.org });
 
         const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
         return await loader.load({ fernYml: loadResult });

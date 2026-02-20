@@ -9,18 +9,17 @@ import { validate as isValidUUID, v4 as uuidv4 } from "uuid";
 import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
 import { Version } from "../version.js";
 import type { LifecycleEvent } from "./LifecycleEvent.js";
+import type { Tags } from "./Tags.js";
 
 export class TelemetryClient {
     private readonly posthog: PostHog | undefined;
-    private readonly baseProperties: Record<string, unknown>;
-    private readonly accumulatedProperties: Record<string, unknown> = {};
+    private readonly baseTags: Tags;
+    private readonly accumulatedTags: Tags = {};
     private cachedDistinctId: string | undefined;
 
     constructor({ isTTY }: { isTTY: boolean }) {
         const apiKey = process.env.POSTHOG_API_KEY;
-        this.posthog =
-            apiKey != null && apiKey.length > 0 && this.isTelemetryEnabled() ? new PostHog(apiKey) : undefined;
-        this.baseProperties = {
+        this.baseTags = {
             version: Version,
             arch: os.arch(),
             ci: IS_CI,
@@ -28,25 +27,30 @@ export class TelemetryClient {
             tty: isTTY,
             usingAccessToken: process.env.FERN_TOKEN != null
         };
+        this.posthog =
+            apiKey != null && apiKey.length > 0 && this.isTelemetryEnabled() ? new PostHog(apiKey) : undefined;
     }
 
-    /** Emit a separate named event that inherits base + accumulated properties. */
-    public async track(eventName: string, properties?: Record<string, unknown>): Promise<void> {
+    /** Send a named event that inherits base + accumulated properties. */
+    public async sendEvent(event: string, tags?: Tags): Promise<void> {
         if (this.posthog == null) {
             return;
         }
         try {
             this.posthog.capture({
                 distinctId: await this.getDistinctId(),
-                event: eventName,
-                properties: { ...this.baseProperties, ...this.accumulatedProperties, ...properties }
+                event,
+                properties: { ...this.baseTags, ...this.accumulatedTags, ...tags }
             });
         } catch {
             // no-op
         }
     }
 
-    /** Send the primary lifecycle event. Called after the command handler resolves. */
+    /** Send the primary lifecycle event. This is automatically called after the command handler resolves.
+     *
+     * This is not meant to be called directly by command handlers.
+     */
     public async sendLifecycleEvent(event: LifecycleEvent): Promise<void> {
         if (this.posthog == null) {
             return;
@@ -56,8 +60,8 @@ export class TelemetryClient {
                 distinctId: await this.getDistinctId(),
                 event: "CLI",
                 properties: {
-                    ...this.baseProperties,
-                    ...this.accumulatedProperties,
+                    ...this.baseTags,
+                    ...this.accumulatedTags,
                     ...event
                 }
             });
@@ -66,9 +70,9 @@ export class TelemetryClient {
         }
     }
 
-    /** Enrich the lifecycle event with additional context. Called by command handlers. */
-    public addProperties(properties: Record<string, unknown>): void {
-        Object.assign(this.accumulatedProperties, properties);
+    /** Tag the current event with additional context. Called by command handlers. */
+    public tag(tags: Tags): void {
+        Object.assign(this.accumulatedTags, tags);
     }
 
     public async flush(): Promise<void> {

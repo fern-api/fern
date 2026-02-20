@@ -69,9 +69,9 @@ describe("TelemetryClient", () => {
             );
         });
 
-        it("merges addProperties() into the event", async () => {
+        it("merges tag() into the event", async () => {
             const client = new TelemetryClient({ isTTY: false });
-            client.addProperties({ generators: ["typescript", "python"] });
+            client.tag({ generator: "typescript" });
 
             await client.sendLifecycleEvent({
                 command: "sdk generate",
@@ -82,19 +82,19 @@ describe("TelemetryClient", () => {
             expect(mockCapture).toHaveBeenCalledWith(
                 expect.objectContaining({
                     properties: expect.objectContaining({
-                        generators: ["typescript", "python"]
+                        generator: "typescript"
                     })
                 })
             );
         });
     });
 
-    describe("track", () => {
+    describe("sendEvent", () => {
         it("captures a named event inheriting base and accumulated properties", async () => {
             const client = new TelemetryClient({ isTTY: false });
-            client.addProperties({ org: "acme" });
+            client.tag({ org: "acme" });
 
-            await client.track("generator:run", { language: "typescript" });
+            await client.sendEvent("generator:run", { language: "typescript" });
 
             expect(mockCapture).toHaveBeenCalledOnce();
             expect(mockCapture).toHaveBeenCalledWith(
