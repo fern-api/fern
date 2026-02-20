@@ -51,7 +51,13 @@ export function generateTypeReferenceExample({
             const visited = visitedTypes ?? new Map<string, number>();
             const count = visited.get(typeReference.typeId) ?? 0;
             if (count >= 2) {
-                return generateMinimalNamedExample({ typeDeclaration, typeDeclarations });
+                // Pass current type to prevent infinite recursion in minimal generation
+                const visitedMinimalTypes = new Set<string>([typeReference.typeId]);
+                return generateMinimalNamedExample({
+                    typeDeclaration,
+                    typeDeclarations,
+                    visitedMinimalTypes
+                });
             }
             visited.set(typeReference.typeId, count + 1);
             const generatedExample = generateTypeDeclarationExample({
@@ -189,11 +195,15 @@ function isLeafTypeReference(typeRef: TypeReference, typeDeclarations: Record<Ty
  */
 function generateMinimalNamedExample({
     typeDeclaration,
-    typeDeclarations
+    typeDeclarations,
+    visitedMinimalTypes
 }: {
     typeDeclaration: TypeDeclaration;
     typeDeclarations: Record<TypeId, TypeDeclaration>;
+    visitedMinimalTypes?: Set<string>;
 }): ExampleGenerationResult<ExampleTypeReference> {
+    const visited = visitedMinimalTypes ?? new Set<string>();
+    visited.add(typeDeclaration.name.typeId);
     switch (typeDeclaration.shape.type) {
         case "object": {
             const jsonExample: Record<string, unknown> = {};
@@ -202,27 +212,62 @@ function generateMinimalNamedExample({
                 ...(typeDeclaration.shape.properties ?? []),
                 ...(typeDeclaration.shape.extendedProperties ?? [])
             ]) {
-                if (!isLeafTypeReference(property.valueType, typeDeclarations)) {
-                    continue;
+                if (isLeafTypeReference(property.valueType, typeDeclarations)) {
+                    const propertyExample = generateTypeReferenceExample({
+                        fieldName: property.name.wireValue,
+                        typeReference: property.valueType,
+                        typeDeclarations,
+                        currentDepth: 0,
+                        maxDepth: 3,
+                        skipOptionalProperties: true
+                    });
+                    if (propertyExample.type === "failure") {
+                        continue;
+                    }
+                    properties.push({
+                        name: property.name,
+                        originalTypeDeclaration: typeDeclaration.name,
+                        value: propertyExample.example,
+                        propertyAccess: property.propertyAccess
+                    });
+                    jsonExample[property.name.wireValue] = propertyExample.jsonExample;
+                } else if (property.valueType.type === "named" && !visited.has(property.valueType.typeId)) {
+                    // For non-leaf named types, try to generate a minimal example recursively.
+                    // This ensures required object properties (like `memo`) are included in stubs.
+                    const nestedDeclaration = typeDeclarations[property.valueType.typeId];
+                    if (nestedDeclaration != null) {
+                        const nestedExample = generateMinimalNamedExample({
+                            typeDeclaration: nestedDeclaration,
+                            typeDeclarations,
+                            visitedMinimalTypes: visited
+                        });
+                        if (nestedExample.type === "success") {
+                            properties.push({
+                                name: property.name,
+                                originalTypeDeclaration: typeDeclaration.name,
+                                value: nestedExample.example,
+                                propertyAccess: property.propertyAccess
+                            });
+                            jsonExample[property.name.wireValue] = nestedExample.jsonExample;
+                        }
+                    }
+                } else if (property.valueType.type === "container") {
+                    // For container types (list, set, map), generate empty containers
+                    // so that round-trip serialization is consistent.
+                    const { example: emptyExample, jsonExample: emptyJson } = generateEmptyContainerExample({
+                        containerType: property.valueType.container
+                    });
+                    properties.push({
+                        name: property.name,
+                        originalTypeDeclaration: typeDeclaration.name,
+                        value: {
+                            jsonExample: emptyJson,
+                            shape: ExampleTypeReferenceShape.container(emptyExample)
+                        },
+                        propertyAccess: property.propertyAccess
+                    });
+                    jsonExample[property.name.wireValue] = emptyJson;
                 }
-                const propertyExample = generateTypeReferenceExample({
-                    fieldName: property.name.wireValue,
-                    typeReference: property.valueType,
-                    typeDeclarations,
-                    currentDepth: 0,
-                    maxDepth: 3,
-                    skipOptionalProperties: true
-                });
-                if (propertyExample.type === "failure") {
-                    continue;
-                }
-                properties.push({
-                    name: property.name,
-                    originalTypeDeclaration: typeDeclaration.name,
-                    value: propertyExample.example,
-                    propertyAccess: property.propertyAccess
-                });
-                jsonExample[property.name.wireValue] = propertyExample.jsonExample;
             }
             const example = ExampleTypeShape.object({
                 properties,
@@ -283,7 +328,11 @@ function generateMinimalNamedExample({
             if (aliasOf.type === "named") {
                 const aliasedDeclaration = typeDeclarations[aliasOf.typeId];
                 if (aliasedDeclaration != null && aliasedDeclaration.name.typeId !== typeDeclaration.name.typeId) {
-                    return generateMinimalNamedExample({ typeDeclaration: aliasedDeclaration, typeDeclarations });
+                    return generateMinimalNamedExample({
+                        typeDeclaration: aliasedDeclaration,
+                        typeDeclarations,
+                        visitedMinimalTypes: visited
+                    });
                 }
             }
             const jsonExample = {};

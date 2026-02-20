@@ -44,6 +44,7 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+        clientModuleName: MyClient
   pagination-custom:
     - customConfig:
         customPagerName: FooPager
