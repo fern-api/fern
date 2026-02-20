@@ -2042,6 +2042,7 @@ service:
               "response-stream": {
                 "docs": "OK",
                 "format": "sse",
+                "terminator": undefined,
                 "type": "SessionsEventsResponse",
               },
               "source": {
