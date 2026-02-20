@@ -37,8 +37,8 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "@types/node": "18.15.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

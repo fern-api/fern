@@ -53,11 +53,11 @@
     "@fern-api/rust-dynamic-snippets": "workspace:*",
     "@fern-api/rust-model": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@fern-fern/generator-exec-sdk": "catalog:",
     "@fern-fern/ir-sdk": "^61.7.0",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "zod": "^3.22.4"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "zod": "catalog:"
   }
 }

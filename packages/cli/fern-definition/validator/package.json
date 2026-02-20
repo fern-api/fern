@@ -44,17 +44,17 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "chalk": "^5.3.0",
-    "lodash-es": "^4.17.21",
-    "strip-ansi": "^7.1.0",
-    "url-join": "^5.0.0"
+    "chalk": "catalog:",
+    "lodash-es": "catalog:",
+    "strip-ansi": "catalog:",
+    "url-join": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
     "@types/url-join": "^4.0.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

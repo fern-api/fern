@@ -33,18 +33,18 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "glob": "^11.1.0",
-    "json-stream-stringify": "^3.1.4",
-    "stream-json": "^1.8.0",
-    "tmp-promise": "^3.0.3"
+    "glob": "catalog:",
+    "json-stream-stringify": "catalog:",
+    "stream-json": "catalog:",
+    "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@types/node": "18.15.3",
-    "@types/stream-json": "^1.7.7",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "@types/stream-json": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

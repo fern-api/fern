@@ -34,15 +34,15 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@fern-fern/generator-exec-sdk": "catalog:",
     "@fern-fern/ir-sdk": "^64.0.0",
     "@fern-typescript/commons": "workspace:*",
-    "ts-morph": "^27.0.2"
+    "ts-morph": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -36,15 +36,15 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
-    "jsonwebtoken": "^9.0.2",
-    "jwks-rsa": "^3.1.0"
+    "@fern-api/venus-api-sdk": "catalog:",
+    "jsonwebtoken": "catalog:",
+    "jwks-rsa": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/jsonwebtoken": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -2,11 +2,13 @@
   "name": "@fern-api/migrations-base",
   "version": "0.0.0",
   "description": "Base types and utilities for Fern generator migrations",
+  "keywords": ["fern", "generator", "migration", "base"],
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/migrations-base"
   },
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -31,8 +33,6 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "keywords": ["fern", "generator", "migration", "base"],
-  "license": "MIT",
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -40,8 +40,8 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

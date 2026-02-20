@@ -32,32 +32,32 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
+    "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "estree-walker": "^3.0.3",
-    "gray-matter": "^4.0.3",
-    "mdast-util-from-markdown": "^2.0.2",
-    "mdast-util-gfm": "^3.0.0",
-    "mdast-util-math": "^3.0.0",
-    "mdast-util-mdx": "^3.0.0",
-    "mdast-util-mdx-expression": "^2.0.1",
+    "estree-walker": "catalog:",
+    "gray-matter": "catalog:",
+    "mdast-util-from-markdown": "catalog:",
+    "mdast-util-gfm": "catalog:",
+    "mdast-util-math": "catalog:",
+    "mdast-util-mdx": "catalog:",
+    "mdast-util-mdx-expression": "catalog:",
     "mdast-util-mdx-jsx": "^3.2.0",
-    "micromark-extension-gfm": "^3.0.0",
-    "micromark-extension-math": "^3.1.0",
-    "micromark-extension-mdxjs": "^3.0.0",
-    "unist-util-visit": "^5.0.0"
+    "micromark-extension-gfm": "catalog:",
+    "micromark-extension-math": "catalog:",
+    "micromark-extension-mdxjs": "catalog:",
+    "unist-util-visit": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/diff": "^5.2.1",
-    "@types/estree": "^1.0.6",
-    "@types/estree-jsx": "^1.0.5",
-    "@types/mdast": "^4.0.4",
-    "@types/node": "18.15.3",
-    "diff": "^8.0.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "zod": "^3.22.3"
+    "@types/diff": "catalog:",
+    "@types/estree": "catalog:",
+    "@types/estree-jsx": "catalog:",
+    "@types/mdast": "catalog:",
+    "@types/node": "catalog:",
+    "diff": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "zod": "catalog:"
   }
 }

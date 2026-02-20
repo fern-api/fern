@@ -48,11 +48,11 @@
     "@fern-api/rust-base": "workspace:*",
     "@fern-api/rust-codegen": "workspace:*",
     "@fern-api/test-utils": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@fern-fern/generator-exec-sdk": "catalog:",
     "@fern-fern/ir-sdk": "^61.7.0",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "zod": "^3.22.4"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "zod": "catalog:"
   }
 }

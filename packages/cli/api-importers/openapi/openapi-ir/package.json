@@ -35,13 +35,13 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "lodash-es": "^4.17.21"
+    "lodash-es": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

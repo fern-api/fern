@@ -32,16 +32,16 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
-    "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
-    "@fern-fern/fdr-test-sdk": "^0.0.5297",
-    "@fern-fern/fiddle-sdk": "0.0.775",
-    "@fern-fern/generators-sdk": "0.114.0-5745f9e74"
+    "@fern-api/fdr-sdk": "catalog:",
+    "@fern-api/venus-api-sdk": "catalog:",
+    "@fern-fern/fdr-test-sdk": "catalog:",
+    "@fern-fern/fiddle-sdk": "catalog:",
+    "@fern-fern/generators-sdk": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

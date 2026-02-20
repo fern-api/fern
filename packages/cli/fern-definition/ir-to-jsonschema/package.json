@@ -39,16 +39,16 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@types/ajv": "^1.0.0",
+    "@types/ajv": "catalog:",
     "ajv": "^8.18.0",
-    "ajv-formats": "^3.0.1",
-    "json-schema": "^0.4.0"
+    "ajv-formats": "catalog:",
+    "json-schema": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/json-schema": "^7.0.15",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/json-schema": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

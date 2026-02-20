@@ -38,10 +38,10 @@
     "@fern-api/dynamic-ir-sdk": "^61.7.0",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
-    "lodash-es": "^4.17.21",
-    "typescript": "5.9.2",
-    "vitest": "^4.0.8"
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "lodash-es": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

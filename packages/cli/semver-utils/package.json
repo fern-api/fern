@@ -32,12 +32,12 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "semver-diff": "^4.0.0"
+    "semver-diff": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
