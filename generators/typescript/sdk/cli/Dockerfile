@@ -13,7 +13,7 @@ RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.7.2 \
   prettier@3.7.4 \
   oxfmt@0.27.0 \
-  @biomejs/biome@2.3.11 \
+  @biomejs/biome@2.4.3 \
   oxlint@1.42.0 \
   oxlint-tsgolint@0.11.4 \
   @fern-api/generator-cli@0.5.3 \
