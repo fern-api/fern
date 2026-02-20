@@ -75,6 +75,12 @@ export class ClonedRepository {
         await this.git.raw([...args, ...(Array.isArray(files) ? files : [files])]);
     }
 
+    public async restoreFilesFromCommit(commitSha: string, files: string | string[]): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        const fileList = Array.isArray(files) ? files : [files];
+        await this.git.raw(["checkout", commitSha, "--", ...fileList]);
+    }
+
     public async commit(message?: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.commit(message ?? `Automated commit`, undefined, {
@@ -267,6 +273,18 @@ export class ClonedRepository {
     public async commitTree(treeSha: string, parentSha: string, message: string): Promise<string> {
         await this.git.cwd(this.clonePath);
         const result = await this.git.raw(["commit-tree", treeSha, "-p", parentSha, "-m", message]);
+        return result.trim();
+    }
+
+    public async getHeadSha(): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.revparse(["HEAD"]);
+        return result.trim();
+    }
+
+    public async getHeadTreeHash(): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["rev-parse", "HEAD^{tree}"]);
         return result.trim();
     }
 

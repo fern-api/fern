@@ -4,6 +4,7 @@ import { access, writeFile } from "fs/promises";
 import { join } from "path";
 import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "../github/constants";
 import { createReplayBranch } from "../github/createReplayBranch";
+import type { ExistingPullRequest } from "../github/findExistingUpdatablePR";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
 import type { PipelineLogger } from "../PipelineLogger";
@@ -183,6 +184,17 @@ export class GithubStep extends BaseStep {
             }
         }
 
+        // Post commit status and toggle draft state based on replay conflicts.
+        // This runs after push so the head SHA is available on the remote.
+        if (!this.config.previewMode) {
+            const headSha = await repository.getHeadSha();
+            await this.postReplayConflictStatus(octokit, owner, repo, headSha, replayConflictInfo, replayResult);
+
+            if (isUpdatingExistingPR && existingPR != null) {
+                await this.togglePrDraftState(octokit, existingPR, replayConflictInfo);
+            }
+        }
+
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
         const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch });
@@ -210,6 +222,7 @@ export class GithubStep extends BaseStep {
         } else {
             const head = `${owner}:${prBranch}`;
 
+            const hasConflicts = replayConflictInfo?.hasConflicts === true;
             try {
                 const { data: pullRequest } = await octokit.pulls.create({
                     owner,
@@ -218,7 +231,7 @@ export class GithubStep extends BaseStep {
                     body: enrichedBody,
                     head,
                     base: baseBranch,
-                    draft: false
+                    draft: hasConflicts
                 });
 
                 this.logger.info(`Created pull request: ${pullRequest.html_url}`);
@@ -312,5 +325,112 @@ export class GithubStep extends BaseStep {
             return { previousGenerationSha, currentGenerationSha, hasConflicts: true };
         }
         return undefined;
+    }
+
+    /**
+     * Toggle an existing PR's draft state based on replay conflicts.
+     * Converts to draft when conflicts are detected (blocks merge),
+     * marks as ready when a previously-conflicting PR is now clean.
+     */
+    private async togglePrDraftState(
+        octokit: Octokit,
+        existingPR: ExistingPullRequest,
+        replayConflictInfo:
+            | { previousGenerationSha: string; currentGenerationSha: string; hasConflicts: boolean }
+            | undefined
+    ): Promise<void> {
+        const hasConflicts = replayConflictInfo?.hasConflicts === true;
+
+        if (hasConflicts && !existingPR.isDraft) {
+            await this.convertPrToDraft(octokit, existingPR.nodeId, existingPR.number);
+        } else if (!hasConflicts && existingPR.isDraft) {
+            await this.markPrReady(octokit, existingPR.nodeId, existingPR.number);
+        }
+    }
+
+    /**
+     * Convert a PR to draft via GraphQL so the merge button is disabled.
+     */
+    private async convertPrToDraft(octokit: Octokit, nodeId: string, prNumber: number): Promise<void> {
+        try {
+            await octokit.graphql(
+                `mutation($id: ID!) {
+                    convertPullRequestToDraft(input: {pullRequestId: $id}) {
+                        pullRequest { isDraft }
+                    }
+                }`,
+                { id: nodeId }
+            );
+            this.logger.info(`Converted PR #${prNumber} to draft due to replay conflicts`);
+        } catch (error) {
+            this.logger.debug(
+                `Could not convert PR to draft: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+    }
+
+    /**
+     * Mark a draft PR as ready for review via GraphQL (conflicts resolved).
+     */
+    private async markPrReady(octokit: Octokit, nodeId: string, prNumber: number): Promise<void> {
+        try {
+            await octokit.graphql(
+                `mutation($id: ID!) {
+                    markPullRequestReadyForReview(input: {pullRequestId: $id}) {
+                        pullRequest { isDraft }
+                    }
+                }`,
+                { id: nodeId }
+            );
+            this.logger.info(`Marked PR #${prNumber} as ready (conflicts resolved)`);
+        } catch (error) {
+            this.logger.debug(`Could not mark PR as ready: ${error instanceof Error ? error.message : String(error)}`);
+        }
+    }
+
+    /**
+     * Post a commit status check indicating replay conflict state.
+     * Namespaced per generator to support multi-generator repos.
+     */
+    private async postReplayConflictStatus(
+        octokit: Octokit,
+        owner: string,
+        repo: string,
+        sha: string,
+        replayConflictInfo:
+            | { previousGenerationSha: string; currentGenerationSha: string; hasConflicts: boolean }
+            | undefined,
+        replayResult: ReplayStepResult | undefined
+    ): Promise<void> {
+        if (replayResult == null || !replayResult.executed) {
+            return;
+        }
+
+        const hasConflicts = replayConflictInfo?.hasConflicts === true;
+        const conflictFileCount = (replayResult.conflictDetails ?? []).reduce(
+            (sum, detail) => sum + detail.files.length,
+            0
+        );
+        const sanitizedName = this.config.generatorName?.replace(/\//g, "--");
+        const context =
+            sanitizedName != null ? `fern / sdk customizations / ${sanitizedName}` : "fern / sdk customizations";
+
+        try {
+            await octokit.repos.createCommitStatus({
+                owner,
+                repo,
+                sha,
+                state: hasConflicts ? "failure" : "success",
+                context,
+                description: hasConflicts
+                    ? `${conflictFileCount} file(s) need manual conflict resolution — see PR description`
+                    : "All customizations applied"
+            });
+            this.logger.debug(`Posted ${hasConflicts ? "failing" : "passing"} commit status (${context})`);
+        } catch (error) {
+            this.logger.debug(
+                `Could not post commit status: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
     }
 }

@@ -7,6 +7,8 @@ export interface ExistingPullRequest {
     number: number;
     headBranch: string;
     htmlUrl: string;
+    isDraft: boolean;
+    nodeId: string;
 }
 
 export async function findExistingUpdatablePR(
@@ -53,7 +55,9 @@ export async function findExistingUpdatablePR(
                 return {
                     number: pr.number,
                     headBranch: pr.head.ref,
-                    htmlUrl: pr.html_url
+                    htmlUrl: pr.html_url,
+                    isDraft: pr.draft ?? false,
+                    nodeId: pr.node_id
                 };
             } else {
                 logger.debug(`PR #${pr.number} skipped: contains non-generation commits`);

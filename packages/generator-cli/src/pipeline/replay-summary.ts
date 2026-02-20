@@ -8,15 +8,15 @@ function plural(n: number, word: string): string {
 function formatConflictReason(reason: string | undefined): string {
     switch (reason) {
         case "same-line-edit":
-            return "both sides changed the same lines";
+            return "The new generation changed the same lines you edited";
         case "new-file-both":
-            return "both you and the generator created this file";
+            return "You and the generator both created this file";
         case "base-generation-mismatch":
-            return "the generated code changed significantly around your edit";
+            return "The generated code changed significantly around your edit";
         case "patch-apply-failed":
-            return "patch could not be applied";
+            return "Your change could not be applied to the new generated code";
         default:
-            return "merge conflict";
+            return "Your edit overlaps with changes in the new generation";
     }
 }
 
@@ -112,10 +112,10 @@ export function formatReplayPrBody(
 
     // Happy-path summary
     if (preserved > 0 && conflicts === 0) {
-        parts.push(`**Replay:** ${plural(preserved, "customization")} preserved \u2713`);
+        parts.push(`\u2705 ${plural(preserved, "customization")} automatically preserved in this update.`);
     } else if (preserved > 0) {
         parts.push(
-            `**Replay:** ${plural(preserved, "customization")} preserved, ${plural(conflicts, "file")} with conflicts`
+            `\u2705 ${plural(preserved, "customization")} automatically preserved, but ${plural(conflicts, "file")} ${conflicts === 1 ? "needs" : "need"} your attention.`
         );
     }
 
@@ -124,10 +124,16 @@ export function formatReplayPrBody(
         const allFiles = (result.conflictDetails ?? []).flatMap((d) => d.files);
         const totalFiles = allFiles.length;
 
-        parts.push(`\n### \u26a0\ufe0f Replay: Merge Conflicts\n`);
-        parts.push(`${plural(totalFiles, "file")} ${totalFiles === 1 ? "needs" : "need"} manual resolution.\n`);
-        parts.push(`| File | Customization | Conflict |`);
-        parts.push(`|------|--------------|----------|`);
+        parts.push(`\n### \u26a0\ufe0f Action required: ${plural(totalFiles, "file")} with customization conflicts\n`);
+        parts.push(
+            `You previously customized ${totalFiles === 1 ? "a file" : "files"} in this SDK. This generation changed the same code, so your ${totalFiles === 1 ? "edit" : "edits"} couldn't be applied automatically.\n`
+        );
+        parts.push(
+            `> This PR is in **draft** to prevent merging before you resolve the conflicts. After fixing, mark it as **Ready for review**.\n`
+        );
+
+        parts.push(`| File | Your customization | Why it conflicted |`);
+        parts.push(`|------|-------------------|-------------------|`);
         for (const detail of result.conflictDetails ?? []) {
             const description = patchDescription(detail);
             for (const f of detail.files) {
@@ -135,22 +141,30 @@ export function formatReplayPrBody(
             }
         }
 
-        // Resolution instructions
+        // Resolution instructions — open by default, no details/summary wrapper
         const branch = options?.branchName ?? "<branch-name>";
-        parts.push(`\n#### How to resolve\n`);
-        parts.push(`<details>`);
-        parts.push(`<summary>Fix manually</summary>\n`);
+        parts.push(`\n#### How to fix\n`);
         parts.push(`1. Check out this branch:`);
-        parts.push(`   \`\`\``);
+        parts.push(`   \`\`\`sh`);
         parts.push(`   git fetch origin && git checkout ${branch}`);
         parts.push(`   \`\`\``);
-        parts.push(`2. Open the conflicting files and resolve the \`<<<<<<<\` / \`>>>>>>>\` markers`);
-        parts.push(`3. Commit and push your changes:`);
+        parts.push(
+            `2. Open the conflicting ${totalFiles === 1 ? "file" : "files"} listed above. Look for conflict markers like this:`
+        );
         parts.push(`   \`\`\``);
-        parts.push(`   git add -A && git commit -m "resolve replay conflicts" && git push`);
+        parts.push(`   <<<<<<< Your customization`);
+        parts.push(`   // your code`);
+        parts.push(`   =======`);
+        parts.push(`   // newly generated code`);
+        parts.push(`   >>>>>>> Generated`);
         parts.push(`   \`\`\``);
-        parts.push(`\nReplay will remember your resolved changes on future generations.\n`);
-        parts.push(`</details>`);
+        parts.push(`   Keep the code you want (usually a combination of both), and delete the marker lines.`);
+        parts.push(`3. Commit and push:`);
+        parts.push(`   \`\`\`sh`);
+        parts.push(`   git add -A && git commit -m "resolve conflicts" && git push`);
+        parts.push(`   \`\`\``);
+        parts.push(`4. On this PR, click **Ready for review** to enable merging.\n`);
+        parts.push(`Your resolved changes will be remembered on future SDK generations.`);
     }
 
     return parts.join("\n");
