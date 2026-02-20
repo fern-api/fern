@@ -1101,6 +1101,8 @@ describe("${serviceName}", () => {
             ir: this.ir
         });
         const mockBodyMethod = this.getMockBodyMethod(endpoint);
+        const isSSEStreaming =
+            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
 
         const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
 
@@ -1360,30 +1362,41 @@ describe("${serviceName}", () => {
             }.respondWith()
             .statusCode(${responseStatusCode})${
                 rawResponseBody
-                    ? code`.jsonBody(rawResponseBody)
+                    ? isSSEStreaming
+                        ? code`.sseBody(rawResponseBody)
+                `
+                        : code`.jsonBody(rawResponseBody)
                 `
                     : ""
             }.build();
 
         ${
-            willThrowError
+            isSSEStreaming
                 ? code`
+            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+            const events: unknown[] = [];
+            for await (const event of response) {
+                events.push(event);
+            }
+            expect(events.length).toBeGreaterThan(0);`
+                : willThrowError
+                    ? code`
             await expect(async () => {
                 return ${getTextOfTsNode(generatedExample.endpointInvocation)}
             }).rejects.toThrow(${literalOf(expected)});`
-                : isHeadersResponse
-                  ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                    : isHeadersResponse
+                      ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                  : code`
-                    ${
-                        endpoint.pagination !== undefined
-                            ? paginationBlock
-                            : code`
-                            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                            expect(response).toEqual(${expected});
-                          `
-                    }
-                `
+                      : code`
+                        ${
+                            endpoint.pagination !== undefined
+                                ? paginationBlock
+                                : code`
+                                const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                                expect(response).toEqual(${expected});
+                              `
+                        }
+                    `
         }
     });
           `;
@@ -1438,9 +1451,15 @@ describe("${serviceName}", () => {
             case "fileDownload":
             case "text":
             case "bytes":
-            case "streaming":
             case "streamParameter":
                 return false; // not supported
+            case "streaming": {
+                const body = endpoint.response?.body;
+                if (body != null && body.type === "streaming" && body.value.type === "sse") {
+                    break; // SSE streaming is supported
+                }
+                return false;
+            }
             case "json":
             case "undefined":
                 break; // supported
@@ -1530,8 +1549,12 @@ describe("${serviceName}", () => {
                     stream: () => {
                         throw new Error("Stream not supported in wire tests");
                     },
-                    sse: () => {
-                        throw new Error("SSE not supported in wire tests");
+                    sse: (events) => {
+                        const sseLines = events.map((event) => {
+                            const dataJson = JSON.stringify(event.data.jsonExample);
+                            return `event: ${event.event}\ndata: ${dataJson}\n`;
+                        });
+                        return code`${literalOf(sseLines.join("\n") + "\n")}`;
                     },
                     _other: () => {
                         throw new Error("Unsupported response type");
@@ -1897,12 +1920,15 @@ function getExpectedResponse({
                     throw new Error("Stream not supported in wire tests");
                 },
                 sse: () => {
-                    throw new Error("SSE not supported in wire tests");
+                    return undefined;
                 },
                 _other: () => {
                     throw new Error("Unsupported response type");
                 }
             });
+            if (result === undefined) {
+                return code`undefined`;
+            }
             if (neverThrowErrors) {
                 return code`{
                     body: ${result},

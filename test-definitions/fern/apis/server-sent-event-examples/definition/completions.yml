@@ -64,3 +64,12 @@ service:
         type: StreamEvent
         format: sse
         terminator: "[DONE]"
+      examples:
+        - name: "Stream events"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  content: "content"
