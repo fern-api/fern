@@ -39,12 +39,6 @@ types:
       path: string
       snippetFilepath: optional<string>
       snippetTemplateFilepath: optional<string>
-      generatorOutputFilepath:
-        type: optional<string>
-        docs: |
-          Path where the generator should write its output metadata (GeneratorOutput).
-          This is a separate file from the generated code, mounted as a Docker volume.
-          The caller reads this file after generation to get metadata like buildTestDockerImage.
       publishingMetadata: optional<PublishingMetadata>
       mode: OutputMode
   OutputMode:
@@ -235,11 +229,10 @@ types:
       workspaceId: string
   GeneratorOutput:
     docs: |
-      Output metadata written by the generator to the path specified by
-      GeneratorOutputConfig.generatorOutputFilepath. This allows generators
-      to communicate build/test capabilities and other metadata back to
-      the caller (seed, Fern CLI, autorelease) via a separate Docker volume,
-      keeping it out of the generated code delivered to customers.
+      Output metadata written by the generator to config.json in the output directory.
+      This allows generators to communicate build/test capabilities and other metadata
+      back to the caller (seed, Fern CLI, autorelease). The output directory is already
+      mounted as a Docker volume, so no additional volume mount is needed.
     properties:
       buildTestDockerImage:
         type: optional<string>

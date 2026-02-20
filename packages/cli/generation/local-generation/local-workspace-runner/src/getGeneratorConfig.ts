@@ -95,7 +95,6 @@ export declare namespace getGeneratorConfig {
         paths: {
             snippetPath: AbsoluteFilePath | undefined;
             snippetTemplatePath: AbsoluteFilePath | undefined;
-            generatorOutputPath: AbsoluteFilePath | undefined;
             irPath: AbsoluteFilePath;
             outputDirectory: AbsoluteFilePath;
         };
@@ -191,7 +190,7 @@ export function getGeneratorConfig({
     paths
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
     const licenseInfo = extractLicenseInfo(generatorInvocation, absolutePathToFernConfig);
-    const { snippetPath, snippetTemplatePath, generatorOutputPath, irPath, outputDirectory } = paths;
+    const { snippetPath, snippetTemplatePath, irPath, outputDirectory } = paths;
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
             return {
@@ -265,9 +264,6 @@ export function getGeneratorConfig({
             throw new Error("Output type did not match any of the types supported by Fern");
         }
     });
-    if (generatorOutputPath != null) {
-        (output as unknown as Record<string, unknown>).generatorOutputFilepath = generatorOutputPath;
-    }
     return {
         irFilepath: irPath,
         output,

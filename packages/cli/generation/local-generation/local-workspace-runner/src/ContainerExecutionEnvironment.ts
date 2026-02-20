@@ -3,7 +3,6 @@ import { runContainer } from "@fern-api/docker-utils";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
     CONTAINER_GENERATOR_CONFIG_PATH,
-    CONTAINER_PATH_TO_GENERATOR_OUTPUT,
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
@@ -43,7 +42,6 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         outputPath,
         snippetPath,
         snippetTemplatePath,
-        generatorOutputPath,
         licenseFilePath,
         context,
         inspect,
@@ -63,10 +61,6 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         if (snippetTemplatePath) {
             binds.push(`${snippetTemplatePath}:${CONTAINER_PATH_TO_SNIPPET_TEMPLATES}`);
         }
-        if (generatorOutputPath) {
-            binds.push(`${generatorOutputPath}:${CONTAINER_PATH_TO_GENERATOR_OUTPUT}`);
-        }
-
         if (licenseFilePath) {
             binds.push(`${licenseFilePath}:/tmp/LICENSE:ro`);
         }

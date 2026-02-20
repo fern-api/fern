@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.79.4
+  changelogEntry:
+    - summary: |
+        Fix zip extraction in output directory to properly handle additional metadata files
+        alongside output.zip. Previously, zip detection only checked the first directory entry,
+        which could fail when other files (like config.json) sorted before the zip file.
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 65
 - version: 3.79.3
   changelogEntry:
     - summary: |

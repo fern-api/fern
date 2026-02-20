@@ -375,19 +375,15 @@ export class LocalTaskHandler {
     }
 
     private async copyGeneratedFilesToDirectory(outputPath: AbsoluteFilePath): Promise<void> {
-        const [firstLocalOutputItem, ...remaininglocalOutputItems] = await readdir(
-            this.absolutePathToTmpOutputDirectory
-        );
-        if (firstLocalOutputItem == null) {
+        const localOutputItems = await readdir(this.absolutePathToTmpOutputDirectory);
+        if (localOutputItems.length === 0) {
             return;
         }
         this.context.logger.debug(`Copying generated files to ${outputPath}`);
-        if (firstLocalOutputItem.endsWith(".zip")) {
-            await decompress(
-                join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(firstLocalOutputItem)),
-                outputPath
-            );
-            for (const localOutputItem of remaininglocalOutputItems) {
+        const zipItem = localOutputItems.find((item) => item.endsWith(".zip"));
+        if (zipItem != null) {
+            await decompress(join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(zipItem)), outputPath);
+            for (const localOutputItem of localOutputItems.filter((item) => item !== zipItem)) {
                 await cp(
                     join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(localOutputItem)),
                     join(outputPath, RelativeFilePath.of(localOutputItem)),

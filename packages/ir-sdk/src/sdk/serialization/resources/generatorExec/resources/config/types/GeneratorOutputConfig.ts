@@ -13,7 +13,6 @@ export const GeneratorOutputConfig: core.serialization.ObjectSchema<
     path: core.serialization.string(),
     snippetFilepath: core.serialization.string().optional(),
     snippetTemplateFilepath: core.serialization.string().optional(),
-    generatorOutputFilepath: core.serialization.string().optional(),
     publishingMetadata: PublishingMetadata.optional(),
     mode: OutputMode,
 });
@@ -23,7 +22,6 @@ export declare namespace GeneratorOutputConfig {
         path: string;
         snippetFilepath?: string | null;
         snippetTemplateFilepath?: string | null;
-        generatorOutputFilepath?: string | null;
         publishingMetadata?: PublishingMetadata.Raw | null;
         mode: OutputMode.Raw;
     }

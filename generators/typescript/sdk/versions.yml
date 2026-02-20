@@ -2,9 +2,10 @@
 - version: 3.49.0
   changelogEntry:
     - summary: |
-        Add buildTestDockerImage to generator output protocol. The generator now communicates
-        which Docker image to use for build/test verification through a dedicated Docker volume
-        output, decoupling the image from seed.yml and making it available to the Fern CLI.
+        Add buildTestDockerImage to generator output protocol. The generator now writes
+        config.json to the output directory with the Docker image name for build/test
+        verification, decoupling the image from seed.yml and making it available to the
+        Fern CLI and autorelease.
       type: feat
   createdAt: "2026-02-20"
   irVersion: 63
