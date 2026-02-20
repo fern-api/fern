@@ -31,10 +31,12 @@ export function convertResponse({
     responseBreadcrumbs,
     responseStatusCode,
     streamFormat,
+    streamTerminator,
     source
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
+    streamTerminator?: string;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -62,6 +64,7 @@ export function convertResponse({
                 context,
                 responseBreadcrumbs,
                 streamFormat,
+                streamTerminator,
                 source,
                 namespace: context.namespace,
                 statusCode: typeof statusCode === "string" ? parseInt(statusCode) : statusCode
@@ -77,6 +80,7 @@ export function convertResponse({
             context,
             responseBreadcrumbs,
             streamFormat,
+            streamTerminator,
             source,
             namespace: context.namespace
         });
@@ -117,6 +121,7 @@ export function convertResponse({
 function convertResolvedResponse({
     operationContext,
     streamFormat,
+    streamTerminator,
     response,
     context,
     responseBreadcrumbs,
@@ -126,6 +131,7 @@ function convertResolvedResponse({
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
+    streamTerminator?: string;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -165,6 +171,7 @@ function convertResolvedResponse({
                         operationContext.operation,
                         FernOpenAPIExtension.RESPONSE_PROPERTY
                     ),
+                    terminator: streamTerminator,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -181,6 +188,7 @@ function convertResolvedResponse({
                 return ResponseWithExample.streamingSse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
+                    terminator: streamTerminator,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -208,6 +216,7 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingJson({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
+                        terminator: streamTerminator,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -225,6 +234,7 @@ function convertResolvedResponse({
                     return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
+                        terminator: streamTerminator,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -252,6 +262,7 @@ function convertResolvedResponse({
                 namespace
             ),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
+            terminator: undefined,
             fullExamples: jsonMediaObject.examples,
             source,
             statusCode

@@ -5,7 +5,42 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.object.get_and_return_with_datetime_like_string(
-  datetime_like_string: "2023-08-31T14:15:22Z",
-  actual_datetime: "2023-08-31T14:15:22Z"
-)
+client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
+  string: "string",
+  nested_object: {
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base_64: "SGVsbG8gd29ybGQh",
+    list: %w[list list],
+    set: Set.new(["set"]),
+    map: {
+      1 => "map"
+    },
+    bigint: "1000000"
+  }
+}, {
+  string: "string",
+  nested_object: {
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base_64: "SGVsbG8gd29ybGQh",
+    list: %w[list list],
+    set: Set.new(["set"]),
+    map: {
+      1 => "map"
+    },
+    bigint: "1000000"
+  }
+}])

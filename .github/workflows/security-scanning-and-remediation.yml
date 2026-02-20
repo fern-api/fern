@@ -30,6 +30,10 @@ on:
         default: true
         type: boolean
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
 jobs:
   create-dependabot-prs:
     name: Check Dependabot alerts

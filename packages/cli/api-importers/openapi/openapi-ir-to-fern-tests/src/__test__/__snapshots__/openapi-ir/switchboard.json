@@ -3110,6 +3110,7 @@
       "generatedRequestName": "SessionsEventsRequest",
       "response": {
         "description": "OK",
+        "terminator": "[DONE]",
         "fullExamples": [],
         "schema": {
           "value": {

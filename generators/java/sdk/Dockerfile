@@ -33,6 +33,10 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # base image's pinned repo snapshot (2023.10.20260120) for CVE-2025-15467,
 # CVE-2025-13151, CVE-2025-61726, CVE-2026-21441, CVE-2026-0990, CVE-2026-0992,
 # CVE-2026-0989, CVE-2026-22695, CVE-2026-22801, CVE-2019-13232
+# Security update 2026-02-20: add gnupg2-minimal (CVE-2026-24882),
+# curl-minimal/libcurl-minimal (CVE-2025-13034, CVE-2025-14017, CVE-2025-14524,
+# CVE-2025-14819, CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068),
+# expat (CVE-2026-25210), openssh/openssh-clients (CVE-2025-61984, CVE-2025-61985)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -41,7 +45,14 @@ RUN dnf --releasever=latest update -y \
     python3-pip-wheel \
     libxml2 \
     libpng \
-    unzip && \
+    unzip \
+    gnupg2-minimal \
+    curl-minimal \
+    libcurl-minimal \
+    alsa-lib \
+    expat \
+    openssh \
+    openssh-clients && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
@@ -70,14 +81,14 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     mv package glob && \
     rm glob-11.1.0.tgz
 
-# Patch npm's bundled tar to 7.5.7 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w (path traversal via hardlinks/symlinks)
+# Patch npm's bundled tar to 7.5.8 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx
 # Note: We use curl instead of npm pack because npm pack depends on tar itself
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     rm -rf tar && \
-    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.7.tgz -o tar-7.5.7.tgz && \
-    tar -xzf tar-7.5.7.tgz && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.8.tgz -o tar-7.5.8.tgz && \
+    tar -xzf tar-7.5.8.tgz && \
     mv package tar && \
-    rm tar-7.5.7.tgz
+    rm tar-7.5.8.tgz
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2

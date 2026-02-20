@@ -180,6 +180,7 @@ types:
     properties:
       schema: SchemaWithExample
       responseProperty: optional<string>
+      terminator: optional<string>
       fullExamples: optional<list<NamedFullExample>>
 
   PathParameterWithExample:

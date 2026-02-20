@@ -308,6 +308,20 @@ public abstract class AbstractHttpResponseParserGenerator {
                                     }
 
                                     @Override
+                                    public ClassName visitUri(UriPagination uri) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
+                                    public ClassName visitPath(PathPagination path) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
                                     public ClassName _visitUnknown(Object unknownType) {
                                         return clientGeneratorContext
                                                 .getPoetClassNameFactory()
@@ -403,6 +417,50 @@ public abstract class AbstractHttpResponseParserGenerator {
                                                         .map(PropertyPathItem::getName)
                                                         .collect(Collectors.toList())),
                                         customPagination.getResults().getProperty(),
+                                        body.getResponseBodyType());
+                                com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                        .typeReference
+                                        .getContainer()
+                                        .orElseThrow(() -> new RuntimeException(
+                                                "Unexpected non-container pagination result type"));
+                                com.fern.ir.model.types.TypeReference resultUnderlyingType = resultContainerType.visit(
+                                        new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+                                return ParameterizedTypeName.get(
+                                        pagerClassName,
+                                        clientGeneratorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(true, resultUnderlyingType));
+                            }
+
+                            @Override
+                            public TypeName visitUri(UriPagination uri) {
+                                SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                        uri.getResults().getPropertyPath().map(path -> path.stream()
+                                                .map(PropertyPathItem::getName)
+                                                .collect(Collectors.toList())),
+                                        uri.getResults().getProperty(),
+                                        body.getResponseBodyType());
+                                com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                        .typeReference
+                                        .getContainer()
+                                        .orElseThrow(() -> new RuntimeException(
+                                                "Unexpected non-container pagination result type"));
+                                com.fern.ir.model.types.TypeReference resultUnderlyingType = resultContainerType.visit(
+                                        new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+                                return ParameterizedTypeName.get(
+                                        pagerClassName,
+                                        clientGeneratorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(true, resultUnderlyingType));
+                            }
+
+                            @Override
+                            public TypeName visitPath(PathPagination path) {
+                                SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                        path.getResults().getPropertyPath().map(pathItems -> pathItems.stream()
+                                                .map(PropertyPathItem::getName)
+                                                .collect(Collectors.toList())),
+                                        path.getResults().getProperty(),
                                         body.getResponseBodyType());
                                 com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
                                         .typeReference
@@ -794,23 +852,29 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                         CodeBlock.of("$L", variables.getResponseBodyStringName()),
                         Optional.of(body.getResponseBodyType())));
-                ParameterSpec requestParameterSpec = variables
-                        .requestParameterSpec()
-                        .orElseThrow(() -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
                 String endpointName =
                         httpEndpoint.getName().get().getCamelCase().getSafeName();
-                String methodParameters = endpointMethodBuilder.parameters.stream()
-                        .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
-                                ? variables.getNextRequestVariableName()
-                                : parameterSpec.name)
-                        .collect(Collectors.joining(", "));
+                Optional<ParameterSpec> maybeRequestParameterSpec = variables.requestParameterSpec();
+                String methodParameters;
+                if (maybeRequestParameterSpec.isPresent()) {
+                    ParameterSpec requestParameterSpec = maybeRequestParameterSpec.get();
+                    methodParameters = endpointMethodBuilder.parameters.stream()
+                            .map(parameterSpec -> parameterSpec.name.equals(requestParameterSpec.name)
+                                    ? variables.getNextRequestVariableName()
+                                    : parameterSpec.name)
+                            .collect(Collectors.joining(", "));
+                } else {
+                    methodParameters = endpointMethodBuilder.parameters.stream()
+                            .map(parameterSpec -> parameterSpec.name)
+                            .collect(Collectors.joining(", "));
+                }
                 httpEndpoint
                         .getPagination()
                         .get()
                         .visit(new JsonResponsePaginationVisitor(
                                 httpResponseBuilder,
                                 endpointMethodBuilder,
-                                requestParameterSpec,
+                                maybeRequestParameterSpec.orElse(null),
                                 body,
                                 endpointName,
                                 methodParameters));
@@ -1393,6 +1457,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         private final CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
+        // Null for URI/path pagination endpoints that have no request parameter
         private final ParameterSpec requestParameterSpec;
         private final JsonResponseBodyWithProperty body;
         private final String endpointName;
@@ -1823,6 +1888,123 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .build();
 
             handleSuccessfulResult(httpResponseBuilder, customPagerCreation);
+            endpointMethodBuilder.returns(responseType);
+            return null;
+        }
+
+        @Override
+        public Void visitUri(UriPagination uri) {
+            return visitUriOrPathPagination(uri.getNextUri(), uri.getResults(), true);
+        }
+
+        @Override
+        public Void visitPath(PathPagination path) {
+            return visitUriOrPathPagination(path.getNextPath(), path.getResults(), false);
+        }
+
+        private Void visitUriOrPathPagination(
+                ResponseProperty nextProperty, ResponseProperty resultsProperty, boolean isUri) {
+            // Extract next token from response
+            SnippetAndResultType nextSnippet = getNestedPropertySnippet(
+                    nextProperty.getPropertyPath().map(path -> path.stream()
+                            .map(PropertyPathItem::getName)
+                            .collect(Collectors.toList())),
+                    nextProperty.getProperty(),
+                    body.getResponseBodyType());
+            CodeBlock nextBlock = CodeBlock.builder()
+                    .add(
+                            "$T $L = $L",
+                            nextSnippet.typeName,
+                            variables.getStartingAfterVariableName(),
+                            variables.getParsedResponseVariableName())
+                    .add(nextSnippet.codeBlock)
+                    .build();
+            httpResponseBuilder.addStatement(nextBlock);
+
+            // Extract result items from response
+            SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                    resultsProperty.getPropertyPath().map(path -> path.stream()
+                            .map(PropertyPathItem::getName)
+                            .collect(Collectors.toList())),
+                    resultsProperty.getProperty(),
+                    body.getResponseBodyType());
+            CodeBlock resultBlock = CodeBlock.builder()
+                    .add(
+                            "$T $L = $L",
+                            resultSnippet.typeName,
+                            variables.getResultVariableName(),
+                            variables.getParsedResponseVariableName())
+                    .add(resultSnippet.codeBlock)
+                    .build();
+            httpResponseBuilder.addStatement(resultBlock);
+
+            TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
+            TypeName responseBodyTypeName =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
+
+            // Build the getNext lambda: _response -> _response.getNext()
+            CodeBlock getNextLambda = CodeBlock.builder()
+                    .add("_response -> _response")
+                    .add(nextSnippet.codeBlock)
+                    .build();
+
+            // Build the getItems lambda: _response -> _response.getData()
+            CodeBlock getItemsLambda = CodeBlock.builder()
+                    .add("_response -> _response")
+                    .add(resultSnippet.codeBlock)
+                    .build();
+
+            // Determine HTTP method
+            String httpMethod = httpEndpoint.getMethod().toString();
+
+            // Build request body expression based on HTTP method
+            ClassName requestBodyClass = ClassName.get("okhttp3", "RequestBody");
+            CodeBlock requestBodyExpression;
+            if (httpEndpoint.getMethod().equals(HttpMethod.POST)
+                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)) {
+                requestBodyExpression = CodeBlock.of("$T.create($S, null)", requestBodyClass, "");
+            } else {
+                requestBodyExpression = CodeBlock.of("null");
+            }
+
+            // Build additional headers
+            ClassName headersClass = ClassName.get("okhttp3", "Headers");
+            Optional<CodeBlock> acceptHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
+            CodeBlock additionalHeadersExpression;
+            if (acceptHeader.isPresent()) {
+                // Extract the header value from the .addHeader("Accept", "...") CodeBlock
+                // Simpler: just build Headers.of with Accept header
+                additionalHeadersExpression = CodeBlock.of("$T.of($S, $S)", headersClass, "Accept", "application/json");
+            } else {
+                additionalHeadersExpression = CodeBlock.of("new $T.Builder().build()", headersClass);
+            }
+
+            // Select UriPage or PathPage class
+            ClassName pageHelperClass = clientGeneratorContext
+                    .getPoetClassNameFactory()
+                    .getPaginationClassName(isUri ? "UriPage" : "PathPage");
+
+            // Build the XxxPage.create(...) call
+            CodeBlock paginationConstructor = CodeBlock.builder()
+                    .add("$T.create(\n", pageHelperClass)
+                    .indent()
+                    .indent()
+                    .add("$L,\n", variables.getParsedResponseVariableName())
+                    .add("$L,\n", variables.getStartingAfterVariableName())
+                    .add("$L,\n", variables.getResultVariableName())
+                    .add("$T.class,\n", responseBodyTypeName)
+                    .add("$L,\n", getNextLambda)
+                    .add("$L,\n", getItemsLambda)
+                    .add("$S,\n", httpMethod)
+                    .add("$L,\n", requestBodyExpression)
+                    .add("$L,\n", additionalHeadersExpression)
+                    .add("$N,\n", clientOptionsField)
+                    .add("$L)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                    .unindent()
+                    .unindent()
+                    .build();
+
+            handleSuccessfulResult(httpResponseBuilder, paginationConstructor);
             endpointMethodBuilder.returns(responseType);
             return null;
         }

@@ -143,6 +143,7 @@
   ],
   "pnpm": {
     "overrides": {
+      "ajv": "8.18.0",
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "minimatch": ">=10.2.1",
       "qs": "6.14.2",

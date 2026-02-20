@@ -15,7 +15,7 @@ public class Example8
             }
         );
 
-        await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
+        await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
             new ObjectWithOptionalField {
                 String = "string",
                 Integer = 1,
