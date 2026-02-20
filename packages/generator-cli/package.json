@@ -15,7 +15,7 @@
   },
   "files": ["bin", "dist"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist",
     "depcheck": "knip --config ../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",

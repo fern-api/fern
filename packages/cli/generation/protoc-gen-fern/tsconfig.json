@@ -1,7 +1,6 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "paths": {
@@ -10,7 +9,9 @@
       ]
     }
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
     {
       "path": "../../api-importers/v3-importer-commons"

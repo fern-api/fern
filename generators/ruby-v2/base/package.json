@@ -22,7 +22,7 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib",
     "compile": "tsc",
     "postcompile": "rsync -a --delete ./src/asIs/ ./lib/asIs/",
     "compile:debug": "tsc --sourceMap",

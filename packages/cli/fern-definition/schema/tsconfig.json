@@ -1,7 +1,6 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "isolatedModules": true,
     "isolatedDeclarations": true,
     "outDir": "lib",

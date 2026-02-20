@@ -1,7 +1,6 @@
 {
   "extends": "@fern-api/configs/tsconfig/test.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
