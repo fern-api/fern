@@ -1380,14 +1380,14 @@ describe("${serviceName}", () => {
             }
             expect(events.length).toBeGreaterThan(0);`
                 : willThrowError
-                    ? code`
+                  ? code`
             await expect(async () => {
                 return ${getTextOfTsNode(generatedExample.endpointInvocation)}
             }).rejects.toThrow(${literalOf(expected)});`
-                    : isHeadersResponse
-                      ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                  : isHeadersResponse
+                    ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                      : code`
+                    : code`
                         ${
                             endpoint.pagination !== undefined
                                 ? paginationBlock
