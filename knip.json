@@ -45,12 +45,5 @@
     "@open-rpc/meta-schema",
     "readable-stream"
   ],
-  "ignore": [
-    "node_modules/**",
-    "**/dist/**",
-    "**/lib/**",
-    "**/generated/**",
-    "**/docker/**",
-    "**/__test__/**"
-  ]
+  "ignore": ["node_modules/**", "**/dist/**", "**/lib/**", "**/generated/**", "**/docker/**", "**/__test__/**"]
 }
