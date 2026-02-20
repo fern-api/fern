@@ -121,9 +121,13 @@ export async function publishDocs({
         editThisPage,
         uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
+            // Create mapping from original relative paths to sanitized relative paths
+            const sanitizedPathsMap = new Map(
+                files.map((file) => [file.relativeFilePath, sanitizeRelativePathForS3(file.relativeFilePath)])
+            );
             // Create mapping from sanitized relative paths to original absolute paths
             const sanitizedToAbsoluteMap = new Map(
-                files.map((file) => [sanitizeRelativePathForS3(file.relativeFilePath), file.absoluteFilePath])
+                files.map((file) => [sanitizedPathsMap.get(file.relativeFilePath)!, file.absoluteFilePath])
             );
             const filesWithMimeType: FileWithMimeType[] = files
                 .map((fileMetadata) => ({
@@ -151,10 +155,9 @@ export async function publishDocs({
                         return null;
                     }
 
+                    const sanitizedPath = sanitizedPathsMap.get(filePath.relativeFilePath)!;
                     const obj = {
-                        filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                            convertToFernHostRelativeFilePath(sanitizeRelativePathForS3(filePath.relativeFilePath))
-                        ),
+                        filePath: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(sanitizedPath)),
                         width: image.width,
                         height: image.height,
                         blurDataUrl: image.blurDataUrl,
@@ -180,12 +183,13 @@ export async function publishDocs({
             const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = await asyncPool(
                 HASH_CONCURRENCY,
                 nonImageFiles,
-                async (file) => ({
-                    path: CjsFdrSdk.docs.v1.write.FilePath(
-                        convertToFernHostRelativeFilePath(sanitizeRelativePathForS3(file.relativeFilePath))
-                    ),
-                    fileHash: await calculateFileHash(file.absoluteFilePath)
-                })
+                async (file) => {
+                    const sanitizedPath = sanitizedPathsMap.get(file.relativeFilePath)!;
+                    return {
+                        path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(sanitizedPath)),
+                        fileHash: await calculateFileHash(file.absoluteFilePath)
+                    };
+                }
             );
             const hashNonImageTime = performance.now() - hashNonImageStart;
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
