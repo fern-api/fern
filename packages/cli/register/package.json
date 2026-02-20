@@ -24,8 +24,8 @@
   "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --run --passWithNoTests",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",

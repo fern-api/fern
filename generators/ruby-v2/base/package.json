@@ -23,9 +23,9 @@
   "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
+    "compile": "tsc",
     "postcompile": "rsync -a --delete ./src/asIs/ ./lib/asIs/",
-    "compile:debug": "tsc --build --sourceMap",
+    "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
