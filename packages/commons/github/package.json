@@ -24,7 +24,7 @@
   "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
+    "compile": "tsc",
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",

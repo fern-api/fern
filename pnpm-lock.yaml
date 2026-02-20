@@ -4434,6 +4434,9 @@ importers:
       '@types/inquirer':
         specifier: ^9.0.7
         version: 9.0.9
+      '@types/is-ci':
+        specifier: ^3.0.4
+        version: 3.0.4
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.9
@@ -4443,6 +4446,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/uuid':
+        specifier: ^9.0.7
+        version: 9.0.8
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.35
@@ -4458,6 +4464,9 @@ importers:
       inquirer:
         specifier: ^9.2.15
         version: 9.3.8(@types/node@18.15.3)
+      is-ci:
+        specifier: ^3.0.1
+        version: 3.0.1
       js-yaml:
         specifier: ^4.1.1
         version: 4.1.1
@@ -4467,12 +4476,18 @@ importers:
       ora:
         specifier: ^7.0.1
         version: 7.0.1
+      posthog-node:
+        specifier: ^4.3.2
+        version: 4.18.0
       tsup:
         specifier: ^8.5.0
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       vitest:
         specifier: ^4.0.8
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
@@ -13396,6 +13411,10 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
+  posthog-node@4.18.0:
+    resolution: {integrity: sha512-XROs1h+DNatgKh/AlIlCtDxWzwrKdYDb2mOs58n4yN8BkGN9ewqeQwG5ApS4/IzwCb7HPttUkOVulkYatd2PIw==}
+    engines: {node: '>=15.0.0'}
+
   posthog-node@5.24.7:
     resolution: {integrity: sha512-IJ0Zj+v+eg/JQMZ75n0Hcp4NzuQzWcZjqFjcUQs6RhW2l5FiQIq09sKJMleXX33hYxD6sfjFsDTqugJlgeAohg==}
     engines: {node: ^20.20.0 || >=22.22.0}
@@ -21112,6 +21131,12 @@ snapshots:
       nanoid: 3.3.8
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  posthog-node@4.18.0:
+    dependencies:
+      axios: 1.13.5
+    transitivePeerDependencies:
+      - debug
 
   posthog-node@5.24.7:
     dependencies:
