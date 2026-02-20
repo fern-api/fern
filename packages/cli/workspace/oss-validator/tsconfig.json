@@ -5,25 +5,5 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*", "./src/*.json"],
-  "references": [
-    {
-      "path": "../loader"
-    },
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../lazy-fern-workspace"
-    },
-    {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../commons"
-    }
-  ]
+  "include": ["./src/**/*", "./src/*.json"]
 }

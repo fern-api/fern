@@ -4,22 +4,5 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../base"
-    },
-    {
-      "path": "../base"
-    },
-    {
-      "path": "../codegen"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

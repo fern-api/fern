@@ -4,28 +4,5 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../../packages/cli/logger"
-    },
-    {
-      "path": "../../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../base"
-    },
-    {
-      "path": "../dynamic-snippets"
-    },
-    {
-      "path": "../base"
-    },
-    {
-      "path": "../ast"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

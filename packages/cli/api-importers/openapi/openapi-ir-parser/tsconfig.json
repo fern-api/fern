@@ -6,25 +6,5 @@
     "types": ["node", "vitest/globals"]
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    {
-      "path": "../../../../commons/core-utils"
-    },
-    {
-      "path": "../../../configuration"
-    },
-    {
-      "path": "../../../fern-definition/schema"
-    },
-    {
-      "path": "../../../logger"
-    },
-    {
-      "path": "../../../task-context"
-    },
-    {
-      "path": "../openapi-ir"
-    }
-  ]
+  "exclude": ["./src/**/__test__/**/generated"]
 }

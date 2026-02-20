@@ -11,22 +11,5 @@
   },
   "include": [
     "./src/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../api-importers/v3-importer-commons"
-    },
-    {
-      "path": "../../logger"
-    },
-    {
-      "path": "../../../commons/ir-utils"
-    },
-    {
-      "path": "../../../ir-sdk"
-    },
-    {
-      "path": "../../../commons/casings-generator"
-    }
   ]
 }

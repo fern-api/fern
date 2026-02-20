@@ -5,22 +5,5 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../packages/cli/logger"
-    },
-    {
-      "path": "../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../packages/commons/logging-execa"
-    },
-    {
-      "path": "../browser-compatible-base"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

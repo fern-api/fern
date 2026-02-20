@@ -4,22 +4,5 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src"],
-  "references": [
-    {
-      "path": "../../cli/logger"
-    },
-    {
-      "path": "../../commons/fs-utils"
-    },
-    {
-      "path": "../../commons/logging-execa"
-    },
-    {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../commons"
-    }
-  ]
+  "include": ["./src"]
 }

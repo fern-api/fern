@@ -5,19 +5,5 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../packages/cli/fern-definition/schema"
-    },
-    {
-      "path": "../../packages/cli/logger"
-    },
-    {
-      "path": "../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../packages/commons/path-utils"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

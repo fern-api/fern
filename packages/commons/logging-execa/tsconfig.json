@@ -5,10 +5,5 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../cli/logger"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

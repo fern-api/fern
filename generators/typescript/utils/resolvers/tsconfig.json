@@ -5,10 +5,5 @@
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    {
-      "path": "../commons"
-    }
-  ]
+  "exclude": ["./src/**/__test__/**/generated"]
 }

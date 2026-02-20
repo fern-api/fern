@@ -4,22 +4,5 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../conjure-sdk"
-    },
-    {
-      "path": "../../commons"
-    },
-    {
-      "path": "../../../../commons/core-utils"
-    },
-    {
-      "path": "../../../../commons/fs-utils"
-    },
-    {
-      "path": "../../../fern-definition/schema"
-    }
-  ]
+  "include": ["./src/**/*"]
 }
