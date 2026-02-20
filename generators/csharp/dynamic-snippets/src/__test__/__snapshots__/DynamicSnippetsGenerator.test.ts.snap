@@ -275,6 +275,35 @@ await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
 "
 `;
 
+exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test2"
+    ],
+    "message": "Expected number, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected number, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected number, got object"
+  }
+]"
+`;
+
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "using Acme;
 using Acme.Service;
