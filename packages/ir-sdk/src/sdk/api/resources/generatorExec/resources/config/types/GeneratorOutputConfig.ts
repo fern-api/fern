@@ -6,6 +6,12 @@ export interface GeneratorOutputConfig {
     path: string;
     snippetFilepath: string | undefined;
     snippetTemplateFilepath: string | undefined;
+    /**
+     * Path where the generator should write its output metadata (GeneratorOutput).
+     * This is a separate file from the generated code, mounted as a Docker volume.
+     * The caller reads this file after generation to get metadata like buildTestDockerImage.
+     */
+    generatorOutputFilepath: string | undefined;
     publishingMetadata: FernIr.generatorExec.PublishingMetadata | undefined;
     mode: FernIr.generatorExec.OutputMode;
 }

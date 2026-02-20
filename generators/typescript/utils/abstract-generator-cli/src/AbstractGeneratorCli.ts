@@ -25,6 +25,7 @@ import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage.js";
 import { writeBuildTestScripts } from "./writeBuildTestScripts.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
+import { writeGeneratorOutput } from "./writeGeneratorOutput.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
@@ -146,8 +147,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 if (this.shouldWriteBuildTestScripts(customConfig)) {
                     await writeBuildTestScripts({
                         pathToProject,
-                        packageManager: this.getPackageManager(customConfig),
-                        buildTestDockerImage: this.getBuildTestDockerImage(customConfig)
+                        packageManager: this.getPackageManager(customConfig)
                     });
                 }
             });
@@ -258,6 +258,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
                 }
+            });
+
+            await writeGeneratorOutput({
+                config,
+                buildTestDockerImage: this.getBuildTestDockerImage(customConfig)
             });
 
             await generatorNotificationService.sendUpdate(

@@ -15,11 +15,13 @@ import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
     CONTAINER_GENERATOR_CONFIG_PATH,
+    CONTAINER_PATH_TO_GENERATOR_OUTPUT,
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
     CONTAINER_SOURCES_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
+    GENERATOR_OUTPUT_FILENAME,
     IR_FILENAME
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
@@ -153,6 +155,11 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
 
+    const generatorOutputFile = join(workspaceTempDir.path, GENERATOR_OUTPUT_FILENAME);
+    const absolutePathToTmpGeneratorOutput = AbsoluteFilePath.of(generatorOutputFile);
+    await writeFile(generatorOutputFile, "");
+    context.logger.debug("Will write generator-output.json to: " + absolutePathToTmpGeneratorOutput);
+
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
@@ -167,14 +174,16 @@ export async function writeFilesToDiskAndRunGenerator({
               irPath: AbsoluteFilePath.of(CONTAINER_PATH_TO_IR),
               configPath: AbsoluteFilePath.of(CONTAINER_GENERATOR_CONFIG_PATH),
               snippetPath: AbsoluteFilePath.of(CONTAINER_PATH_TO_SNIPPET),
-              snippetTemplatePath: AbsoluteFilePath.of(CONTAINER_PATH_TO_SNIPPET_TEMPLATES)
+              snippetTemplatePath: AbsoluteFilePath.of(CONTAINER_PATH_TO_SNIPPET_TEMPLATES),
+              generatorOutputPath: AbsoluteFilePath.of(CONTAINER_PATH_TO_GENERATOR_OUTPUT)
           } as const)
         : ({
               outputDirectory: absolutePathToTmpOutputDirectory,
               configPath: absolutePathToWriteConfigJson,
               irPath: absolutePathToIr,
               snippetPath: absolutePathToTmpSnippetJSON,
-              snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON
+              snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON,
+              generatorOutputPath: absolutePathToTmpGeneratorOutput
           } as const);
 
     const config = getGeneratorConfig({
@@ -208,6 +217,7 @@ export async function writeFilesToDiskAndRunGenerator({
         outputPath: absolutePathToTmpOutputDirectory,
         snippetPath: absolutePathToTmpSnippetJSON,
         snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON,
+        generatorOutputPath: absolutePathToTmpGeneratorOutput,
         licenseFilePath: absolutePathToLicenseFile,
         context,
         inspect,
