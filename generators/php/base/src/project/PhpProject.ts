@@ -349,6 +349,9 @@ class ComposerJson {
             }
         };
         composerJson = mergeExtraConfigs(composerJson, this.context.customConfig.composerJson);
+        if (this.context.version != null) {
+            composerJson.version = this.context.version;
+        }
         return composerJson;
     }
 
