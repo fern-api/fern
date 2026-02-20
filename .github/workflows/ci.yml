@@ -45,7 +45,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Check dependencies
-        run: pnpm check:knip
+        run: pnpm depcheck
 
   validate-cli-dependencies:
     runs-on: ubuntu-latest
