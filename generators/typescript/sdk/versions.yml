@@ -7,6 +7,7 @@
         SSE `event:` field value into the JSON data as the discriminator key before deserialization.
         This matches the Go SDK's approach and supports proper SSE event-level discrimination,
         multiline `data:` concatenation, and blank-line event boundaries per the SSE spec.
+        Also adds wire test generation support for SSE streaming endpoints.
       type: feat
   createdAt: "2026-02-24"
   irVersion: 65

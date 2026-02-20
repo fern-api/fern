@@ -20,6 +20,20 @@ service:
         type: StreamedCompletion
         format: sse
         terminator: "[[DONE]]"
+      examples:
+        - name: "Stream completions"
+          request:
+            query: "foo"
+          response:
+            stream:
+              - event: completion
+                data:
+                  delta: "hello"
+                  tokens: 1
+              - event: completion
+                data:
+                  delta: " world"
+                  tokens: 2
 
     streamWithoutTerminator:
       method: POST
