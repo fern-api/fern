@@ -1,6 +1,6 @@
-FROM node:22.12-alpine3.20
+FROM node:22.12-slim
 
-RUN apk --no-cache add git zip
+RUN apt-get update && apt-get install -y --no-install-recommends git zip && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
 ENV PNPM_STORE_PATH=/.pnpm-cache
@@ -13,7 +13,7 @@ RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.7.2 \
   prettier@3.7.4 \
   oxfmt@0.27.0 \
-  @biomejs/biome@2.3.11 \
+  @biomejs/biome@2.4.3 \
   oxlint@1.42.0 \
   oxlint-tsgolint@0.11.4 \
   @fern-api/generator-cli@0.5.3 \

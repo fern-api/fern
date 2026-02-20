@@ -370,6 +370,59 @@ func do() {
 "
 `;
 
+exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test2"
+    ],
+    "message": "Expected number, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected number, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected boolean, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected number, got object"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected boolean, got object"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected string, got object"
+  }
+]"
+`;
+
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "package example
 
@@ -1219,6 +1272,59 @@ func do() {
 "
 `;
 
+exports[`snippets (exportAllRequestsAtRoot) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test2"
+    ],
+    "message": "Expected number, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected number, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected boolean, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected number, got object"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected boolean, got object"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected string, got object"
+  }
+]"
+`;
+
 exports[`snippets (exportAllRequestsAtRoot) > file-upload > 'POST /' 1`] = `
 "package example
 
@@ -2066,6 +2172,59 @@ func do() {
 	)
 }
 "
+`;
+
+exports[`snippets (exportedClientName) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test2"
+    ],
+    "message": "Expected number, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected number, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected boolean, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected number, got object"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected boolean, got object"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected string, got object"
+  }
+]"
 `;
 
 exports[`snippets (exportedClientName) > file-upload > 'POST /' 1`] = `

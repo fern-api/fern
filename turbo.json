@@ -27,7 +27,7 @@
     },
     "depcheck": {
       "outputs": [],
-      "inputs": ["src/**", "tests/**", "package.json", ".depcheckrc.json", "$TURBO_ROOT$/.depcheckrc.json"]
+      "inputs": ["src/**", "tests/**", "package.json", "$TURBO_ROOT$/knip.json"]
     },
     "lint:eslint": {
       "outputs": [],

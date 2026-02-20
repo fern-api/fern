@@ -19,30 +19,36 @@ export async function getLatestGeneratorVersion({
 }): Promise<string | undefined> {
     const parsedVersion = semver.parse(currentGeneratorVersion);
     // We're just using unauthed endpoints, so we don't need to pass in a token
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const client = new GeneratorsClient({
-        environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
+        environment: fdrOrigin
     });
     context?.logger.debug(
-        `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion}`
+        `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion}, FDR origin: ${fdrOrigin}`
     );
 
     const payload: FernRegistry.generators.versions.GetLatestGeneratorReleaseRequest = {
         generator: getGeneratorMetadataFromName(generatorName, context),
         releaseTypes: [channel ?? FernRegistry.generators.ReleaseType.Ga],
-        // We get "*" as 0.0.0, so we need to handle that case for tests
-        // if we see this, then we shouldn't restrict on the CLI version
-        cliVersion: cliVersion === "0.0.0" ? undefined : cliVersion
+        cliVersion
     };
 
     if (!includeMajor && parsedVersion != null) {
         payload.generatorMajorVersion = parsedVersion.major;
     }
 
+    context?.logger.debug(`[FDR] getLatestGeneratorRelease request: ${JSON.stringify(payload)}`);
     const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease(payload);
 
     if (latestReleaseResponse.ok) {
+        context?.logger.debug(
+            `[FDR] getLatestGeneratorRelease response for ${generatorName}: version=${latestReleaseResponse.body.version}, irVersion=${latestReleaseResponse.body.irVersion}`
+        );
         return latestReleaseResponse.body.version;
     }
+    context?.logger.debug(
+        `[FDR] getLatestGeneratorRelease failed for ${generatorName}: ${JSON.stringify(latestReleaseResponse)}`
+    );
     return undefined;
 }
 

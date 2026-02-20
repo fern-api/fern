@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.1
+  changelogEntry:
+    - summary: |
+        Update container packages to fix 8 security vulnerabilities: gnupg2-minimal (CVE-2026-24882),
+        curl-minimal and libcurl-minimal (CVE-2025-13034, CVE-2025-14017, CVE-2025-14524, CVE-2025-14819,
+        CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068), expat (CVE-2026-25210),
+        openssh and openssh-clients (CVE-2025-61984, CVE-2025-61985), and npm tar (GHSA-83g3-92jg-28cx).
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 63
+
 - version: 3.37.0
   changelogEntry:
     - summary: |
