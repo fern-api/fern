@@ -1,0 +1,11 @@
+{
+    "name": "biome-docker-repro",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.3.11"
+    }
+}
