@@ -260,6 +260,48 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_map_of_prim_to_undiscriminated_union</a>(request: std::collections::HashMap&lt;String, MixedType&gt;) -> Result&lt;std::collections::HashMap&lt;String, MixedType&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .container
+        .get_and_return_map_of_prim_to_undiscriminated_union(
+            &HashMap::from([("string".to_string(), MixedType::Double(1.1))]),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_optional</a>(request: Option&lt;ObjectWithRequiredField&gt;) -> Result&lt;Option&lt;ObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>

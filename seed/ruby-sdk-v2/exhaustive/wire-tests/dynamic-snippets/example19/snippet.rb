@@ -5,8 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.object.get_and_return_nested_with_required_field(
-  string: "string",
+client.endpoints.object.get_and_return_nested_with_optional_field(
   string: "string",
   nested_object: {
     string: "string",

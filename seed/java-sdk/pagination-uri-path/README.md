@@ -11,6 +11,7 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Base Url](#base-url)
+- [Pagination](#pagination)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -80,6 +81,46 @@ SeedPaginationUriPathClient client = SeedPaginationUriPathClient
     .builder()
     .url("https://example.com")
     .build();
+```
+
+## Pagination
+
+Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. You can also call
+`nextPage` to perform the pagination manually
+
+```java
+import com.seed.paginationUriPath.SeedPaginationUriPathClient;
+import com.seed.paginationUriPath.core.SyncPagingIterable;
+import com.seed.paginationUriPath.resources.users.types.ListUsersUriPaginationResponse;
+import java.util.List;
+
+SeedPaginationUriPathClient client = SeedPaginationUriPathClient
+    .builder()
+    .build();
+
+SyncPagingIterable<ListUsersUriPaginationResponse> response = client.users().listWithUriPagination(...);
+
+// Iterator
+for (item : response){
+    // Do something with item
+}
+
+// Streaming
+response.streamItems().map(item -> ...);
+
+// Manual pagination
+for (
+        List<ListUsersUriPaginationResponse> items = response.getItems;
+        response.hasNext();
+        items = items.nextPage().getItems()) {
+    // Do something with items
+}
+
+// Access pagination metadata
+response.getResponse().ifPresent(r -> {
+    String cursor = r.getNext();
+    // Use cursor for stateless pagination
+});
 ```
 
 ## Exception Handling

@@ -11,11 +11,10 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_nested_with_required_field(
-            &"string".to_string(),
-            &NestedObjectWithRequiredField {
-                string: "string".to_string(),
-                nested_object: ObjectWithOptionalField {
+        .get_and_return_nested_with_optional_field(
+            &NestedObjectWithOptionalField {
+                string: Some("string".to_string()),
+                nested_object: Some(ObjectWithOptionalField {
                     string: Some("string".to_string()),
                     integer: Some(1),
                     long: Some(1000000),
@@ -33,7 +32,7 @@ async fn main() {
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
-                },
+                }),
             },
             None,
         )

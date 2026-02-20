@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.48.5
+  changelogEntry:
+    - summary: |
+        Add timing logs for each phase of SDK generation: code generation, package manager install,
+        lockfile generation, formatting/linting, build, and publish. Each phase logs its duration
+        in milliseconds with a `[TIMING]` prefix for easy identification.
+      type: chore
+  createdAt: "2026-02-20"
+  irVersion: 63
+
 - version: 3.48.4
   changelogEntry:
     - summary: |

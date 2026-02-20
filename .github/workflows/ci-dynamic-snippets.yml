@@ -15,6 +15,10 @@ on:
 permissions:
   contents: read
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
 jobs:
   test-typescript:
     runs-on: ubuntu-latest

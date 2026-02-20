@@ -7,6 +7,10 @@ on:
     branches:
       - main
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
 jobs:
   run:
     runs-on: ubuntu-latest
