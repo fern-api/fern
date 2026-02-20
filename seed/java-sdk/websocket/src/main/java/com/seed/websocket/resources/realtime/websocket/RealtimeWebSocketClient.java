@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
+import com.seed.websocket.resources.realtime.types.FlushedEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent2;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent3;
@@ -15,6 +16,7 @@ import com.seed.websocket.resources.realtime.types.ReceiveSnakeCase;
 import com.seed.websocket.resources.realtime.types.SendEvent;
 import com.seed.websocket.resources.realtime.types.SendEvent2;
 import com.seed.websocket.resources.realtime.types.SendSnakeCase;
+import com.seed.websocket.resources.realtime.types.TranscriptEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -67,6 +69,10 @@ public class RealtimeWebSocketClient {
     private Consumer<ReceiveEvent2> receive2Handler;
 
     private Consumer<ReceiveEvent3> receive3Handler;
+
+    private Consumer<TranscriptEvent> receiveTranscriptHandler;
+
+    private Consumer<FlushedEvent> receiveFlushedHandler;
 
     /**
      * Creates a new async WebSocket client for the realtime channel.
@@ -263,6 +269,22 @@ public class RealtimeWebSocketClient {
     }
 
     /**
+     * Registers a handler for receive_transcript messages from the server.
+     * @param handler the handler to invoke when a message is received
+     */
+    public void onReceiveTranscript(Consumer<TranscriptEvent> handler) {
+        this.receiveTranscriptHandler = handler;
+    }
+
+    /**
+     * Registers a handler for receive_flushed messages from the server.
+     * @param handler the handler to invoke when a message is received
+     */
+    public void onReceiveFlushed(Consumer<FlushedEvent> handler) {
+        this.receiveFlushedHandler = handler;
+    }
+
+    /**
      * Registers a handler called when the connection is established.
      * @param handler the handler to invoke when connected
      */
@@ -368,6 +390,22 @@ public class RealtimeWebSocketClient {
                         ReceiveEvent3 event = objectMapper.treeToValue(body, ReceiveEvent3.class);
                         if (event != null) {
                             receive3Handler.accept(event);
+                        }
+                    }
+                    break;
+                case "receive_transcript":
+                    if (receiveTranscriptHandler != null) {
+                        TranscriptEvent event = objectMapper.treeToValue(body, TranscriptEvent.class);
+                        if (event != null) {
+                            receiveTranscriptHandler.accept(event);
+                        }
+                    }
+                    break;
+                case "receive_flushed":
+                    if (receiveFlushedHandler != null) {
+                        FlushedEvent event = objectMapper.treeToValue(body, FlushedEvent.class);
+                        if (event != null) {
+                            receiveFlushedHandler.accept(event);
                         }
                     }
                     break;

@@ -82,4 +82,30 @@ components:
           type: string
       required:
         - receiveText3
+    TranscriptEvent:
+      title: TranscriptEvent
+      type: object
+      properties:
+        type:
+          type: string
+          const: transcript
+        data:
+          type: string
+      required:
+        - type
+        - data
+    FlushedEvent:
+      title: FlushedEvent
+      type: object
+      properties:
+        type:
+          type: string
+          const: flushed
+      required:
+        - type
   securitySchemes: {}
+servers:
+  - url: https://production.example.com
+    description: Production
+  - url: https://staging.example.com
+    description: Staging

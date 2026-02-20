@@ -3,6 +3,7 @@
 # isort: skip_file
 
 from .resources import (
+    FlushedEvent,
     ReceiveEvent,
     ReceiveEvent2,
     ReceiveEvent3,
@@ -10,10 +11,12 @@ from .resources import (
     SendEvent,
     SendEvent2,
     SendSnakeCase,
+    TranscriptEvent,
     realtime,
 )
 
 __all__ = [
+    "FlushedEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
@@ -21,5 +24,6 @@ __all__ = [
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
+    "TranscriptEvent",
     "realtime",
 ]

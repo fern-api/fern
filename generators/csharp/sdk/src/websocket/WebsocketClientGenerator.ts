@@ -633,8 +633,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                         reference: each.body.bodyType
                     });
 
-                    // if the body type is just a string, this is probably a binary message...
-                    if (bodyType.type === "primitive" && bodyType.primitive.v2?.type === "string") {
+                    // if the body type is a string or base64 primitive, this is a binary message
+                    if (
+                        bodyType.type === "primitive" &&
+                        (bodyType.primitive.v2?.type === "string" || bodyType.primitive.v2?.type === "base64")
+                    ) {
                         type = this.Value.binary;
                     }
                     return {

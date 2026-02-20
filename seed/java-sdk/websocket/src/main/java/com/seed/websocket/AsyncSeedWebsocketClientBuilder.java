@@ -17,9 +17,14 @@ public class AsyncSeedWebsocketClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private Environment environment;
+    private Environment environment = Environment.PRODUCTION;
 
     private OkHttpClient httpClient;
+
+    public AsyncSeedWebsocketClientBuilder environment(Environment environment) {
+        this.environment = environment;
+        return this;
+    }
 
     public AsyncSeedWebsocketClientBuilder url(String url) {
         this.environment = Environment.custom(url);

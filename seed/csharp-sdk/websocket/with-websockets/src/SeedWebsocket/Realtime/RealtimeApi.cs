@@ -45,6 +45,18 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
 
     /// <summary>
+    /// Event handler for TranscriptEvent.
+    /// Use TranscriptEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<TranscriptEvent> TranscriptEvent = new();
+
+    /// <summary>
+    /// Event handler for FlushedEvent.
+    /// Use FlushedEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<FlushedEvent> FlushedEvent = new();
+
+    /// <summary>
     /// Constructor with options
     /// </summary>
     public RealtimeApi(RealtimeApi.Options options)
@@ -91,6 +103,8 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         ReceiveSnakeCase.Dispose();
         ReceiveEvent2.Dispose();
         ReceiveEvent3.Dispose();
+        TranscriptEvent.Dispose();
+        FlushedEvent.Dispose();
     }
 
     /// <summary>
@@ -136,6 +150,22 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
             if (JsonUtils.TryDeserialize(json, out ReceiveEvent3? message))
             {
                 await ReceiveEvent3.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        {
+            if (JsonUtils.TryDeserialize(json, out TranscriptEvent? message))
+            {
+                await TranscriptEvent.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        {
+            if (JsonUtils.TryDeserialize(json, out FlushedEvent? message))
+            {
+                await FlushedEvent.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }

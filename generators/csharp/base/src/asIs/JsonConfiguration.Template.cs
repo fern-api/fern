@@ -373,6 +373,19 @@ internal static class JsonUtils
                     }
                 }
             }
+            if (original.RootElement.ValueKind == JsonValueKind.Object)
+            {
+                foreach (var prop in original.RootElement.EnumerateObject())
+                {
+                    if (
+                        prop.Value.ValueKind == JsonValueKind.String
+                        && !reserialized.TryGetProperty(prop.Name, out _)
+                    )
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
         catch
