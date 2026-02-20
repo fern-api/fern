@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.0
+  changelogEntry:
+    - summary: |
+        Fix WebSocket binary message sending. Binary messages (e.g. audio bytes) are now sent as raw bytes instead of being JSON-serialized, which caused servers to reject them with CONFIG_DENIED.
+      type: fix
+    - summary: |
+        Fix WebSocket incoming message deserialization. TryDeserialize now validates that string properties in the deserialized object match the original JSON via round-trip comparison, preventing messages with const discriminator fields (e.g. `type: "transcript"`) from being incorrectly matched to other event types (e.g. `type: "flushed"`).
+      type: fix
+    - summary: |
+        Make Environment a required property on WebSocket Options class when environments are defined, matching the behavior of the TypeScript SDK and preventing misconfiguration.
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 62
+
 - version: 2.22.0
   changelogEntry:
     - summary: |

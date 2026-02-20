@@ -366,6 +366,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: "The Environment for the API connection.",
                 get: true,
                 set: true,
+                useRequired: true,
                 accessors: {
                     set: (writer: Writer) => {
                         writer.write(`_baseUrl = value`);
@@ -420,7 +421,9 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns True if any path or query parameters are required
      */
     private static hasRequiredOptions(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
+        const hasEnvironments = context.ir.environments != null;
         return (
+            hasEnvironments ||
             websocketChannel.pathParameters.some(
                 (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             ) ||
@@ -739,6 +742,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      */
     private createSendMessageMethods(cls: ast.Class): void {
         this.messages.forEach((each) => {
+            const isBinaryMessage = is.Value.byte(each.type);
             cls.addMethod({
                 access: ast.Access.Public,
                 isAsync: true,
@@ -754,9 +758,15 @@ export class WebSocketClientGenerator extends WithGeneration {
                 }),
 
                 body: this.csharp.codeblock((writer) => {
-                    writer.writeLine(`await _client.SendInstant(`);
-                    writer.writeNode(this.Types.JsonUtils);
-                    writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
+                    if (isBinaryMessage) {
+                        writer.writeTextStatement(
+                            `await _client.SendInstant(message).ConfigureAwait(false)`
+                        );
+                    } else {
+                        writer.writeLine(`await _client.SendInstant(`);
+                        writer.writeNode(this.Types.JsonUtils);
+                        writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
+                    }
                 })
             });
         });
