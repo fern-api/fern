@@ -94,6 +94,19 @@ jobs:
       - name: check:biome
         run: pnpm check:biome
 
+  boundaries:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Check boundaries
+        run: pnpm turbo boundaries
+
   test:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
