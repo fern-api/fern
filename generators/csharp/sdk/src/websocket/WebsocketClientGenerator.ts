@@ -366,7 +366,11 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: "The Environment for the API connection.",
                 get: true,
                 set: true,
-                useRequired: true,
+                initializer: this.defaultEnvironment
+                    ? this.csharp.codeblock((writer) => {
+                          writer.write(`"${this.defaultEnvironment?.replace(/"/g, '\\"')}"`);
+                      })
+                    : undefined,
                 accessors: {
                     set: (writer: Writer) => {
                         writer.write(`_baseUrl = value`);
@@ -421,9 +425,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @returns True if any path or query parameters are required
      */
     private static hasRequiredOptions(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
-        const hasEnvironments = context.ir.environments != null;
         return (
-            hasEnvironments ||
             websocketChannel.pathParameters.some(
                 (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             ) ||

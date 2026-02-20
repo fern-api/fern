@@ -8,7 +8,7 @@
         Fix WebSocket incoming message deserialization. TryDeserialize now validates that string properties in the deserialized object match the original JSON via round-trip comparison, preventing messages with const discriminator fields (e.g. `type: "transcript"`) from being incorrectly matched to other event types (e.g. `type: "flushed"`).
       type: fix
     - summary: |
-        Make Environment a required property on WebSocket Options class when environments are defined, matching the behavior of the TypeScript SDK and preventing misconfiguration.
+        Set the default environment on the WebSocket Options class when environments are defined, so the Environment property is pre-populated with the configured default. Previously the property had no default, which could lead to misconfiguration.
       type: fix
   createdAt: "2026-02-20"
   irVersion: 62
