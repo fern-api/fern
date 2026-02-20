@@ -361,6 +361,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return !customConfig.noScripts;
     }
 
+    protected getBuildTestDockerImage(_customConfig: SdkCustomConfig): string | undefined {
+        return "fernapi/fern-typescript-sdk-buildtest:latest";
+    }
+
     protected publishToJsr(_customConfig: SdkCustomConfig): boolean {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.publishToJsr ?? false;

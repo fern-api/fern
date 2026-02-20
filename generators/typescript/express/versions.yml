@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add buildTestDockerImage support to generator output protocol. The Express generator
+        now implements the getBuildTestDockerImage abstract method (returns undefined since
+        Express does not yet have a build/test Docker image).
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-20"
+  version: 0.19.2
+
+- changelogEntry:
+    - summary: |
         Fix `outputSrcOnly` to take priority over `shouldGenerateFullProject` so that organizations
         with self-hosted SDKs correctly receive only source files instead of the full project.
       type: fix

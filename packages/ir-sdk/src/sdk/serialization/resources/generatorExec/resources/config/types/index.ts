@@ -5,6 +5,7 @@ export * from "./CustomLicense.js";
 export * from "./EnvironmentVariable.js";
 export * from "./GeneratorConfig.js";
 export * from "./GeneratorEnvironment.js";
+export * from "./GeneratorOutput.js";
 export * from "./GeneratorOutputConfig.js";
 export * from "./GeneratorPublishConfig.js";
 export * from "./GeneratorPublishTarget.js";

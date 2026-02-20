@@ -127,6 +127,10 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         return true;
     }
 
+    protected getBuildTestDockerImage(_customConfig: ExpressCustomConfig): string | undefined {
+        return undefined;
+    }
+
     protected publishToJsr(_customConfig: ExpressCustomConfig): boolean {
         return false;
     }

@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.0
+  changelogEntry:
+    - summary: |
+        Add buildTestDockerImage to generator output protocol. The generator now writes
+        .fern/output.json containing the Docker image name for build/test verification,
+        decoupling the image from seed.yml and making it available to the Fern CLI.
+      type: feat
+  createdAt: "2026-02-20"
+  irVersion: 63
+
 - version: 3.48.2
   changelogEntry:
     - summary: |

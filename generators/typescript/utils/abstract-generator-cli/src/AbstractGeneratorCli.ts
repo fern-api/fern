@@ -146,7 +146,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 if (this.shouldWriteBuildTestScripts(customConfig)) {
                     await writeBuildTestScripts({
                         pathToProject,
-                        packageManager: this.getPackageManager(customConfig)
+                        packageManager: this.getPackageManager(customConfig),
+                        buildTestDockerImage: this.getBuildTestDockerImage(customConfig)
                     });
                 }
             });
@@ -301,6 +302,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
     protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
     protected abstract shouldWriteBuildTestScripts(customConfig: CustomConfig): boolean;
+    protected abstract getBuildTestDockerImage(customConfig: CustomConfig): string | undefined;
 
     private shouldGenerateFullProject(ir: FernIr.IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;

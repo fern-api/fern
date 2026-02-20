@@ -227,6 +227,19 @@ types:
     properties:
       apiKey: string
       workspaceId: string
+  GeneratorOutput:
+    docs: |
+      Output metadata written by the generator to .fern/output.json.
+      This allows generators to communicate build/test capabilities
+      and other metadata back to the caller (seed, Fern CLI, autorelease).
+    properties:
+      buildTestDockerImage:
+        type: optional<string>
+        docs: |
+          The Docker image to use for building and testing the generated code.
+          When specified, the caller should use this image to run .fern/build.sh
+          and .fern/test.sh. This decouples the build/test image from seed.yml
+          and makes it available to any caller (seed, Fern CLI, autorelease).
   GeneratorEnvironment:
     discriminant:
       value: _type
