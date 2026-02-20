@@ -18,8 +18,6 @@ seed/fastapi/*
 !seed/fastapi/seed.yml
 seed/fern-cli/*
 !seed/fern-cli/seed.yml
-seed/go-fiber/*
-!seed/go-fiber/seed.yml
 seed/go-model/*
 !seed/go-model/seed.yml
 seed/go-sdk/*

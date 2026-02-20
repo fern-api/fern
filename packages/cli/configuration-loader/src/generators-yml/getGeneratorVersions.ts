@@ -84,8 +84,6 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
             return "go-sdk";
         case "fern-go-model":
             return "go-model";
-        case "fern-go-fiber":
-            return "go-fiber";
         // C#
         case "fern-csharp-sdk":
             return "csharp-sdk";

@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.0
+  changelogEntry:
+    - summary: |
+        Add `redact-response-body-on-error` option to prevent raw response bodies from leaking into exception messages and logs. When enabled, deserialization error exceptions pass `null` instead of the raw response body, streaming errors use a fixed message with the original exception as an inner exception, and the base API exception class includes a custom `ToString()` override that excludes the response body.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-csharp-sdk
+            config:
+              redact-response-body-on-error: true
+        ```
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 62
+
 - version: 2.21.0
   changelogEntry:
     - summary: |
