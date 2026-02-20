@@ -163,6 +163,29 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
+    public function testGetAndReturnMapOfPrimToUndiscriminatedUnion(): void {
+        $testId = 'endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0';
+        $this->client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+            [
+                'string' => 1.1,
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/container/map-prim-to-union",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     public function testGetAndReturnOptional(): void {
         $testId = 'endpoints.container.get_and_return_optional.0';
         $this->client->endpoints->container->getAndReturnOptional(
