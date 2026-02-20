@@ -87,6 +87,30 @@ export class FernRcSchemaLoader {
     }
 
     /**
+     * Synchronously loads the telemetry enabled setting from ~/.fernrc.
+     *
+     * @returns The enabled boolean if explicitly configured, or undefined (meaning enabled).
+     */
+    public loadTelemetryEnabledSync(): boolean | undefined {
+        try {
+            if (!existsSync(this.absoluteFilePath)) {
+                return undefined;
+            }
+            const contents = readFileSync(this.absoluteFilePath, "utf-8");
+            if (contents.trim().length === 0) {
+                return undefined;
+            }
+            const result = FernRcSchema.safeParse(yaml.load(contents));
+            if (!result.success) {
+                return undefined;
+            }
+            return result.data.telemetry?.enabled;
+        } catch {
+            return undefined;
+        }
+    }
+
+    /**
      * Saves the configuration to ~/.fernrc.
      */
     public async save(config: FernRcSchema): Promise<void> {
@@ -104,6 +128,9 @@ export class FernRcSchemaLoader {
         }
         if (config.cache != null) {
             toSerialize.cache = config.cache;
+        }
+        if (config.telemetry != null) {
+            toSerialize.telemetry = config.telemetry;
         }
         const yamlContent = yaml.dump(toSerialize, {
             indent: 2,
