@@ -26,7 +26,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -49,7 +49,6 @@
     "@types/inquirer": "^9.0.7",
     "@types/node": "18.15.3",
     "@types/qs": "6.9.15",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

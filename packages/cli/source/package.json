@@ -26,7 +26,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck --ignores=readable-stream",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -35,7 +35,6 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

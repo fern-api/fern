@@ -25,7 +25,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint:eslint": "eslint --max-warnings 0 .",
@@ -42,7 +42,6 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "^22.0.0",
-    "depcheck": "^1.4.7",
     "simple-git": "^3.24.0",
     "stylelint": "^16.1.0",
     "typescript": "5.9.3",

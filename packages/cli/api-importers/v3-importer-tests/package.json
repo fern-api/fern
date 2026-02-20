@@ -26,7 +26,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
@@ -49,7 +49,6 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

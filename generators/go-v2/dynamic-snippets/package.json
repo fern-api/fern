@@ -25,7 +25,7 @@
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "dist": "node build.mjs",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
@@ -40,7 +40,6 @@
     "@fern-api/go-formatter": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

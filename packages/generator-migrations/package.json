@@ -27,7 +27,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "dist": "node build.mjs",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -41,7 +41,6 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "tsdown": "0.20.1",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"

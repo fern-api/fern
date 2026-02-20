@@ -26,7 +26,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -42,7 +42,6 @@
     "@types/is-ci": "^3.0.4",
     "@types/node": "18.15.3",
     "ansi-escapes": "^5.0.0",
-    "depcheck": "^1.4.7",
     "chalk": "^5.3.0",
     "is-ci": "^3.0.1",
     "ora": "^7.0.1",

@@ -26,7 +26,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
@@ -80,7 +80,6 @@
     "@types/object-hash": "^3.0.6",
     "@types/swagger2openapi": "^7.0.4",
     "@types/tar": "^6.1.11",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

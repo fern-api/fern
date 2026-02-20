@@ -25,7 +25,7 @@
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "dist": "node build.mjs",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
@@ -40,7 +40,6 @@
     "@fern-api/swift-codegen": "workspace:*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
     "typescript": "5.9.2",
     "vitest": "^4.0.8"

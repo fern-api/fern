@@ -25,7 +25,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -38,7 +38,6 @@
     "@fern-api/swift-codegen": "workspace:*",
     "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.2",
     "vitest": "^4.0.8"
   }

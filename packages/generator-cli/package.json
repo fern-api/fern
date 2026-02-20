@@ -16,7 +16,7 @@
   "files": ["bin", "dist"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
@@ -29,7 +29,6 @@
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
-    "depcheck": "^1.4.7",
     "es-toolkit": "^1.32.0",
     "esbuild": "^0.25.0",
     "execa": "^9.5.1",

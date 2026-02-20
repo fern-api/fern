@@ -25,7 +25,7 @@
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-fastapi-server-v2:latest ../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -41,7 +41,6 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

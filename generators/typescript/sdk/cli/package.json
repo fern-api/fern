@@ -25,7 +25,7 @@
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../..",
     "podmanTagLatest": "podman build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
@@ -43,7 +43,6 @@
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/sdk-generator": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
     "typescript": "5.9.3"
   }
 }
