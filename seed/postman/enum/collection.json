@@ -511,8 +511,7 @@
                     {
                       "key": "maybeOperand",
                       "description": null,
-                      "value": ">",
-                      "disabled": true
+                      "value": ">"
                     },
                     {
                       "key": "operandOrColor",
@@ -522,8 +521,7 @@
                     {
                       "key": "maybeOperandOrColor",
                       "description": null,
-                      "value": "red",
-                      "disabled": true
+                      "value": "red"
                     }
                   ],
                   "variable": []
@@ -567,8 +565,7 @@
                 {
                   "key": "maybeOperand",
                   "description": null,
-                  "value": ">",
-                  "disabled": true
+                  "value": ">"
                 },
                 {
                   "key": "operandOrColor",
@@ -578,8 +575,7 @@
                 {
                   "key": "maybeOperandOrColor",
                   "description": null,
-                  "value": "red",
-                  "disabled": true
+                  "value": "red"
                 }
               ],
               "variable": []
@@ -619,8 +615,7 @@
                     {
                       "key": "maybeOperand",
                       "description": null,
-                      "value": ">",
-                      "disabled": true
+                      "value": ">"
                     },
                     {
                       "key": "operandOrColor",
@@ -630,8 +625,7 @@
                     {
                       "key": "maybeOperandOrColor",
                       "description": null,
-                      "value": "red",
-                      "disabled": true
+                      "value": "red"
                     }
                   ],
                   "variable": []

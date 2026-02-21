@@ -61,56 +61,47 @@
             {
               "key": "userList",
               "description": null,
-              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-              "disabled": true
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
             },
             {
               "key": "optionalDeadline",
               "description": null,
-              "value": "2024-01-15T09:30:00Z",
-              "disabled": true
+              "value": "2024-01-15T09:30:00Z"
             },
             {
               "key": "keyValue",
               "description": null,
-              "value": "{\"keyValue\":\"keyValue\"}",
-              "disabled": true
+              "value": "{\"keyValue\":\"keyValue\"}"
             },
             {
               "key": "optionalString",
               "description": null,
-              "value": "optionalString",
-              "disabled": true
+              "value": "optionalString"
             },
             {
               "key": "nestedUser",
               "description": null,
-              "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}",
-              "disabled": true
+              "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}"
             },
             {
               "key": "optionalUser",
               "description": null,
-              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-              "disabled": true
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
             },
             {
               "key": "excludeUser",
               "description": null,
-              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-              "disabled": true
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
             },
             {
               "key": "filter",
               "description": null,
-              "value": "filter",
-              "disabled": true
+              "value": "filter"
             },
             {
               "key": "neighbor",
               "description": null,
-              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-              "disabled": true
+              "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
             },
             {
               "key": "neighborRequired",
@@ -181,56 +172,47 @@
                 {
                   "key": "userList",
                   "description": null,
-                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-                  "disabled": true
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
                 },
                 {
                   "key": "optionalDeadline",
                   "description": null,
-                  "value": "2024-01-15T09:30:00Z",
-                  "disabled": true
+                  "value": "2024-01-15T09:30:00Z"
                 },
                 {
                   "key": "keyValue",
                   "description": null,
-                  "value": "{\"keyValue\":\"keyValue\"}",
-                  "disabled": true
+                  "value": "{\"keyValue\":\"keyValue\"}"
                 },
                 {
                   "key": "optionalString",
                   "description": null,
-                  "value": "optionalString",
-                  "disabled": true
+                  "value": "optionalString"
                 },
                 {
                   "key": "nestedUser",
                   "description": null,
-                  "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}",
-                  "disabled": true
+                  "value": "{\"name\":\"name\",\"user\":{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}}"
                 },
                 {
                   "key": "optionalUser",
                   "description": null,
-                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-                  "disabled": true
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
                 },
                 {
                   "key": "excludeUser",
                   "description": null,
-                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-                  "disabled": true
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
                 },
                 {
                   "key": "filter",
                   "description": null,
-                  "value": "filter",
-                  "disabled": true
+                  "value": "filter"
                 },
                 {
                   "key": "neighbor",
                   "description": null,
-                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
-                  "disabled": true
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
                 },
                 {
                   "key": "neighborRequired",
