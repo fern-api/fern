@@ -38,7 +38,7 @@ export abstract class AbstractGeneratorCli<
             );
             const irStartTime = Date.now();
             const ir = await this.parseIntermediateRepresentation(config.irFilepath);
-            console.log(`[TIMING] parseIntermediateRepresentation took ${Date.now() - irStartTime}ms`);
+            const irElapsed = Date.now() - irStartTime;
             const customConfig = this.parseCustomConfigOrThrow(config.customConfig);
             const contextStartTime = Date.now();
             const context = this.constructContext({
@@ -47,10 +47,11 @@ export abstract class AbstractGeneratorCli<
                 generatorConfig: config,
                 generatorNotificationService
             });
-            console.log(`[TIMING] constructContext took ${Date.now() - contextStartTime}ms`);
+            context.logger.info(`[TIMING] parseIntermediateRepresentation took ${irElapsed}ms`);
+            context.logger.info(`[TIMING] constructContext took ${Date.now() - contextStartTime}ms`);
             const metadataStartTime = Date.now();
             await this.generateMetadata(context);
-            console.log(`[TIMING] generateMetadata took ${Date.now() - metadataStartTime}ms`);
+            context.logger.info(`[TIMING] generateMetadata took ${Date.now() - metadataStartTime}ms`);
             const outputStartTime = Date.now();
             switch (config.output.mode.type) {
                 case "publish":
@@ -65,7 +66,7 @@ export abstract class AbstractGeneratorCli<
                 default:
                     assertNever(config.output.mode);
             }
-            console.log(`[TIMING] output (${config.output.mode.type}) took ${Date.now() - outputStartTime}ms`);
+            context.logger.info(`[TIMING] output (${config.output.mode.type}) took ${Date.now() - outputStartTime}ms`);
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
