@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
   "packages": [
     "nodejs@22",
-    "pnpm_9@9.15.9",
+    "pnpm@10.28.0",
     "go@1.23",
     "python@3.10",
     "poetry@1.8",
