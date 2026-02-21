@@ -448,7 +448,8 @@
                 {
                   "key": "optional_prompt",
                   "description": null,
-                  "value": "You are a helpful assistant"
+                  "value": "You are a helpful assistant",
+                  "disabled": true
                 },
                 {
                   "key": "alias_prompt",
@@ -458,7 +459,8 @@
                 {
                   "key": "alias_optional_prompt",
                   "description": null,
-                  "value": "You are a helpful assistant"
+                  "value": "You are a helpful assistant",
+                  "disabled": true
                 },
                 {
                   "key": "stream",
@@ -468,7 +470,8 @@
                 {
                   "key": "optional_stream",
                   "description": null,
-                  "value": "false"
+                  "value": "false",
+                  "disabled": true
                 },
                 {
                   "key": "alias_stream",
@@ -478,7 +481,8 @@
                 {
                   "key": "alias_optional_stream",
                   "description": null,
-                  "value": "false"
+                  "value": "false",
+                  "disabled": true
                 },
                 {
                   "key": "query",
@@ -523,7 +527,8 @@
                     {
                       "key": "optional_prompt",
                       "description": null,
-                      "value": "You are a helpful assistant"
+                      "value": "You are a helpful assistant",
+                      "disabled": true
                     },
                     {
                       "key": "alias_prompt",
@@ -533,7 +538,8 @@
                     {
                       "key": "alias_optional_prompt",
                       "description": null,
-                      "value": "You are a helpful assistant"
+                      "value": "You are a helpful assistant",
+                      "disabled": true
                     },
                     {
                       "key": "stream",
@@ -543,7 +549,8 @@
                     {
                       "key": "optional_stream",
                       "description": null,
-                      "value": "false"
+                      "value": "false",
+                      "disabled": true
                     },
                     {
                       "key": "alias_stream",
@@ -553,7 +560,8 @@
                     {
                       "key": "alias_optional_stream",
                       "description": null,
-                      "value": "false"
+                      "value": "false",
+                      "disabled": true
                     },
                     {
                       "key": "query",
@@ -601,7 +609,8 @@
                     {
                       "key": "optional_prompt",
                       "description": null,
-                      "value": "You are a helpful assistant"
+                      "value": "You are a helpful assistant",
+                      "disabled": true
                     },
                     {
                       "key": "alias_prompt",
@@ -611,7 +620,8 @@
                     {
                       "key": "alias_optional_prompt",
                       "description": null,
-                      "value": "You are a helpful assistant"
+                      "value": "You are a helpful assistant",
+                      "disabled": true
                     },
                     {
                       "key": "query",
@@ -626,7 +636,8 @@
                     {
                       "key": "optional_stream",
                       "description": null,
-                      "value": "false"
+                      "value": "false",
+                      "disabled": true
                     },
                     {
                       "key": "alias_stream",
@@ -636,7 +647,8 @@
                     {
                       "key": "alias_optional_stream",
                       "description": null,
-                      "value": "false"
+                      "value": "false",
+                      "disabled": true
                     }
                   ],
                   "variable": []
