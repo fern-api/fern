@@ -36,15 +36,22 @@ export abstract class AbstractGeneratorCli<
                     publishingToRegistry: "MAVEN"
                 })
             );
+            const irStartTime = Date.now();
             const ir = await this.parseIntermediateRepresentation(config.irFilepath);
+            console.log(`[TIMING] parseIntermediateRepresentation took ${Date.now() - irStartTime}ms`);
             const customConfig = this.parseCustomConfigOrThrow(config.customConfig);
+            const contextStartTime = Date.now();
             const context = this.constructContext({
                 ir,
                 customConfig,
                 generatorConfig: config,
                 generatorNotificationService
             });
+            console.log(`[TIMING] constructContext took ${Date.now() - contextStartTime}ms`);
+            const metadataStartTime = Date.now();
             await this.generateMetadata(context);
+            console.log(`[TIMING] generateMetadata took ${Date.now() - metadataStartTime}ms`);
+            const outputStartTime = Date.now();
             switch (config.output.mode.type) {
                 case "publish":
                     await this.publishPackage(context);
@@ -58,6 +65,7 @@ export abstract class AbstractGeneratorCli<
                 default:
                     assertNever(config.output.mode);
             }
+            console.log(`[TIMING] output (${config.output.mode.type}) took ${Date.now() - outputStartTime}ms`);
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
