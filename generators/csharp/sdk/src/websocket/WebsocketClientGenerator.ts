@@ -368,7 +368,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 set: true,
                 initializer: this.defaultEnvironment
                     ? this.csharp.codeblock((writer) => {
-                          writer.write(`"${this.defaultEnvironment?.replace(/"/g, '\\"')}"`);
+                          writer.write(`"${this.defaultEnvironment}"`);
                       })
                     : undefined,
                 accessors: {
