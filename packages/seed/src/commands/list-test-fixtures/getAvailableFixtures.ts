@@ -71,37 +71,33 @@ export interface FixtureGroup {
 
 /**
  * Calculate the recommended number of groups for a generator based on fixture count.
- * Uses a heuristic: 1 group per 10 fixtures, with a minimum of 1 and maximum of 15.
+ * Uses a heuristic: 1 group per 5 fixtures, with a minimum of 1 and maximum of 30.
  * Returns 0 if the fixture count is small enough to run in a single job.
  *
  * @param fixtureCount - Number of fixtures for the generator
  * @returns Recommended number of groups (0 means run all in single job)
  */
 export function calculateRecommendedGroups(fixtureCount: number): number {
-    // If fixture count is small, run all in a single job
-    if (fixtureCount <= 20) {
+    if (fixtureCount <= 10) {
         return 0;
     }
 
-    // Calculate groups: 1 group per 10 fixtures, min 2, max 15
-    const groups = Math.ceil(fixtureCount / 10);
-    return Math.min(Math.max(groups, 2), 15);
+    const groups = Math.ceil(fixtureCount / 5);
+    return Math.min(Math.max(groups, 2), 30);
 }
 
 /**
  * Split fixtures into groups for parallel test execution.
- * If numGroups is 0 or fixtures.length <= 20, returns a single group with ["all"].
+ * If numGroups is 0 or fixtures.length <= 10, returns a single group with ["all"].
  *
  * @param fixtures - Array of fixture names to split
  * @param numGroups - Number of groups to split into (0 means single group, -1 means auto-calculate)
  * @returns Array of fixture groups
  */
 export function splitFixturesIntoGroups(fixtures: string[], numGroups: number): FixtureGroup[] {
-    // Auto-calculate groups if numGroups is -1
     const effectiveNumGroups = numGroups === -1 ? calculateRecommendedGroups(fixtures.length) : numGroups;
 
-    // If number-of-groups is not set or is 0, or fixture count is small, run all tests in a single runner
-    if (effectiveNumGroups === 0 || fixtures.length <= 20) {
+    if (effectiveNumGroups === 0 || fixtures.length <= 10) {
         return [{ fixtures: ["all"] }];
     }
 

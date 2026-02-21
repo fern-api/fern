@@ -282,7 +282,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
@@ -313,7 +313,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
@@ -343,7 +343,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     steps:
@@ -374,7 +374,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
     steps:
@@ -404,7 +404,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
@@ -434,7 +434,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
     steps:
@@ -464,7 +464,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     steps:
@@ -494,7 +494,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     steps:
@@ -524,7 +524,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
     steps:
@@ -554,7 +554,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
@@ -585,7 +585,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
     steps:
@@ -616,7 +616,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
@@ -646,7 +646,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
@@ -676,7 +676,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
@@ -706,7 +706,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
@@ -736,7 +736,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
@@ -766,7 +766,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
@@ -796,7 +796,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
@@ -826,7 +826,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
@@ -856,7 +856,7 @@ jobs:
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
+      max-parallel: 30 # Limit the number of runners for this job
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
