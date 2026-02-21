@@ -32,10 +32,10 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@types/lodash-es": "^4.17.12",
-    "lodash-es": "^4.17.21",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@fern-fern/generator-exec-sdk": "catalog:",
+    "@types/lodash-es": "catalog:",
+    "lodash-es": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

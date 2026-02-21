@@ -37,9 +37,9 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/csharp-base": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "catalog:",
     "execa": "^5.1.1",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

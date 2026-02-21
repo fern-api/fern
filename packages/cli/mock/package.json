@@ -34,18 +34,18 @@
   "dependencies": {
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "express": "^4.22.0",
+    "@types/lodash-es": "catalog:",
+    "express": "catalog:",
     "get-port": "^7.1.0",
-    "lodash-es": "^4.17.21",
-    "url-join": "^5.0.0"
+    "lodash-es": "catalog:",
+    "url-join": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/express": "^4.17.21",
-    "@types/node": "18.15.3",
+    "@types/express": "catalog:",
+    "@types/node": "catalog:",
     "@types/url-join": "4.0.1",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

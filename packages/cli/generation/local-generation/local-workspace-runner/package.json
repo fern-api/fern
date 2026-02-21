@@ -32,7 +32,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@boundaryml/baml": "^0.211.2",
+    "@boundaryml/baml": "catalog:",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
@@ -60,22 +60,22 @@
     "@fern-api/swift-dynamic-snippets": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/typescript-dynamic-snippets": "workspace:*",
-    "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
+    "@fern-api/venus-api-sdk": "catalog:",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.775",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@octokit/rest": "^20.1.2",
-    "chalk": "^5.3.0",
-    "decompress": "^4.2.1",
+    "@fern-fern/fiddle-sdk": "catalog:",
+    "@fern-fern/generator-exec-sdk": "catalog:",
+    "@octokit/rest": "catalog:",
+    "chalk": "catalog:",
+    "decompress": "catalog:",
     "semver": "^7.6.3",
-    "tmp-promise": "^3.0.3"
+    "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/decompress": "^4.2.7",
-    "@types/node": "18.15.3",
-    "@types/semver": "^7.5.8",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/decompress": "catalog:",
+    "@types/node": "catalog:",
+    "@types/semver": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

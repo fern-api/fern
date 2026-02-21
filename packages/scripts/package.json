@@ -41,11 +41,11 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "catalog:",
     "@types/yargs": "^17.0.32",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "yaml": "^2.4.5",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "yaml": "catalog:",
     "yargs": "^17.7.2"
   }
 }

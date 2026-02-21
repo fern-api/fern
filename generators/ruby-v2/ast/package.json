@@ -33,15 +33,15 @@
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "zod": "^3.22.3"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "zod": "^3.22.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "zod": "catalog:"
   }
 }

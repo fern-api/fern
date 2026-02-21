@@ -50,12 +50,12 @@
     "@fern-typescript/type-reference-converters": "workspace:*",
     "@fern-typescript/type-reference-example-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*",
-    "ts-morph": "^27.0.2"
+    "ts-morph": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

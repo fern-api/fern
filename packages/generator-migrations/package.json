@@ -2,11 +2,13 @@
   "name": "@fern-api/generator-migrations",
   "version": "0.0.0",
   "description": "Unified migration package for all Fern generator configurations",
+  "keywords": ["fern", "generator", "migration"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fern-api/fern.git",
     "directory": "packages/generator-migrations"
   },
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -26,23 +28,21 @@
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
-    "dist": "node build.mjs",
     "depcheck": "knip --config ../../knip.json --no-config-hints",
+    "dist": "node build.mjs",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "keywords": ["fern", "generator", "migration"],
-  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@fern-api/configuration": "workspace:*",
-    "@fern-api/migrations-base": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@types/node": "18.15.3",
-    "tsdown": "0.20.1",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@fern-api/migrations-base": "workspace:*",
+    "@types/node": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

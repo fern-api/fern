@@ -32,13 +32,13 @@
   },
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
-    "@wasm-fmt/gofmt": "^0.4.9"
+    "@wasm-fmt/gofmt": "catalog:"
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

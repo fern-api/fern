@@ -36,10 +36,10 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/source": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "yaml": "^2.4.5",
-    "zod": "^4.3.5"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "yaml": "catalog:",
+    "zod": "^4.3.6"
   }
 }

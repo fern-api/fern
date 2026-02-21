@@ -33,16 +33,16 @@
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "lodash-es": "^4.17.21",
-    "number-to-words": "1.2.4",
-    "zod": "^3.25.75"
+    "lodash-es": "catalog:",
+    "number-to-words": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
-    "@types/number-to-words": "1.2.3",
-    "typescript": "5.9.2",
-    "vitest": "^4.0.8"
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "@types/number-to-words": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -35,14 +35,14 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "^64.0.0",
     "@fern-fern/ir-sdk": "^62.3.0",
-    "domhandler": "^5.0.3",
-    "htmlparser2": "^9.0.0",
-    "zod": "^3.22.3"
+    "domhandler": "catalog:",
+    "htmlparser2": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

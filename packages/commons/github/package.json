@@ -36,15 +36,15 @@
   },
   "dependencies": {
     "octokit": "^4.1.4",
-    "simple-git": "^3.24.0",
-    "tmp-promise": "^3.0.3"
+    "simple-git": "catalog:",
+    "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "^22.0.0",
-    "simple-git": "^3.24.0",
+    "@types/node": "catalog:",
+    "simple-git": "catalog:",
     "stylelint": "^16.1.0",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

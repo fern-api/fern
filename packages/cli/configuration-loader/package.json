@@ -34,30 +34,30 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
+    "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fiddle-sdk": "0.0.775",
-    "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
-    "find-up": "^6.3.0",
-    "gray-matter": "^4.0.3",
-    "js-yaml": "^4.1.1",
-    "lodash-es": "^4.17.21",
+    "@fern-fern/fiddle-sdk": "catalog:",
+    "@fern-fern/generators-sdk": "catalog:",
+    "find-up": "catalog:",
+    "gray-matter": "catalog:",
+    "js-yaml": "catalog:",
+    "lodash-es": "catalog:",
     "semver": "^7.6.2",
-    "tinycolor2": "^1.6.0",
-    "tmp-promise": "^3.0.3",
-    "zod": "^3.22.3"
+    "tinycolor2": "catalog:",
+    "tmp-promise": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@types/js-yaml": "^4.0.8",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
-    "@types/semver": "^7.5.8",
-    "@types/tinycolor2": "^1.4.6",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/js-yaml": "catalog:",
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "@types/semver": "catalog:",
+    "@types/tinycolor2": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -33,13 +33,13 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@boundaryml/baml": "^0.211.2",
+    "@boundaryml/baml": "catalog:",
     "@fern-api/configuration": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

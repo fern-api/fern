@@ -41,15 +41,15 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "chalk": "^5.3.0",
-    "js-yaml": "^4.1.1",
-    "zod": "^3.22.3"
+    "chalk": "catalog:",
+    "js-yaml": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/js-yaml": "^4.0.8",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/js-yaml": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

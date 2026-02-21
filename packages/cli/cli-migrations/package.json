@@ -37,23 +37,23 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/docs-config": "0.0.80",
-    "@fern-fern/legacy-docs-config": "0.0.58",
-    "chalk": "^5.3.0",
-    "find-up": "^6.3.0",
-    "glob": "^11.1.0",
+    "@fern-fern/docs-config": "catalog:",
+    "@fern-fern/legacy-docs-config": "catalog:",
+    "chalk": "catalog:",
+    "find-up": "catalog:",
+    "glob": "catalog:",
     "inquirer": "^9.2.23",
-    "js-yaml": "^4.1.1",
-    "yaml": "^2.4.5",
-    "zod": "^3.22.3"
+    "js-yaml": "catalog:",
+    "yaml": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/inquirer": "^9.0.7",
-    "@types/js-yaml": "^4.0.8",
-    "@types/node": "18.15.3",
-    "tmp-promise": "^3.0.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/inquirer": "catalog:",
+    "@types/js-yaml": "catalog:",
+    "@types/node": "catalog:",
+    "tmp-promise": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

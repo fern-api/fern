@@ -37,13 +37,13 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/importer-commons": "workspace:*",
-    "js-yaml": "^4.1.1"
+    "js-yaml": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/js-yaml": "^4.0.8",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/js-yaml": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

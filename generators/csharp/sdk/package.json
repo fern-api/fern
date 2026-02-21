@@ -49,12 +49,12 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
-    "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@fern-fern/generator-exec-sdk": "catalog:",
     "@fern-fern/ir-sdk": "^62.3.0",
-    "@types/node": "18.15.3",
+    "@types/node": "catalog:",
     "@types/url-join": "4.0.1",
-    "typescript": "5.9.3",
-    "url-join": "^5.0.0",
-    "vitest": "^4.0.8"
+    "typescript": "catalog:",
+    "url-join": "catalog:",
+    "vitest": "catalog:"
   }
 }

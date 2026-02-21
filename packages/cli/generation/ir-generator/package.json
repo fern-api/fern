@@ -43,14 +43,14 @@
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/source-resolver": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
     "@types/url-join": "4.0.1",
     "@types/uuid": "^9.0.8",
-    "lodash-es": "^4.17.21",
-    "typescript": "5.9.3",
-    "url-join": "^5.0.0",
-    "uuid": "^9.0.1",
-    "vitest": "^4.0.8"
+    "lodash-es": "catalog:",
+    "typescript": "catalog:",
+    "url-join": "catalog:",
+    "uuid": "catalog:",
+    "vitest": "catalog:"
   }
 }

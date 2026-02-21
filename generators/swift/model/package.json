@@ -38,7 +38,7 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/swift-base": "workspace:*",
     "@fern-fern/ir-sdk": "^61.7.0",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
@@ -46,10 +46,10 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
     "@fern-api/test-utils": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.2",
-    "vitest": "^4.0.8",
-    "zod": "^3.22.3"
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "zod": "catalog:"
   }
 }

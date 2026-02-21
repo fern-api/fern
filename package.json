@@ -4,10 +4,10 @@
   "repository": "https://github.com/fern-api/fern",
   "author": "Birch Solutions, Inc.",
   "private": true,
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.15.9",
   "engines": {
     "npm": "please-use-pnpm",
-    "pnpm": "^9.4.0",
+    "pnpm": "^9.15.9",
     "node": ">=20.0.0"
   },
   "scripts": {
@@ -29,6 +29,7 @@
     "lint:style:fix": "pnpm lint:style --fix",
     "lint:spelling": "cspell **",
     "lint:versions-yml": "ajv validate -s fern-versions-yml.schema.json -d \"**/versions.yml\" --strict=false",
+    "format:all": "pnpm format:yaml:fix && pnpm format:package-json && pnpm format",
     "format": "biome format --write",
     "format:fix": "biome format --write",
     "format:check": "biome format",
@@ -96,28 +97,28 @@
     "typescript:build": "turbo run dockerTagLatest --filter @fern-typescript/sdk-generator-cli"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/preset-typescript": "^7.26.0",
-    "@biomejs/biome": "2.3.11",
-    "@blueprintjs/eslint-plugin": "^6.1.6",
-    "@blueprintjs/stylelint-plugin": "^4.1.14",
+    "@babel/core": "catalog:",
+    "@babel/preset-env": "catalog:",
+    "@babel/preset-typescript": "catalog:",
+    "@biomejs/biome": "catalog:",
+    "@blueprintjs/eslint-plugin": "catalog:",
+    "@blueprintjs/stylelint-plugin": "catalog:",
     "@fern-api/configs": "workspace:*",
-    "@rolldown/binding-darwin-arm64": "1.0.0-rc.2",
-    "cross-env": "^7.0.3",
-    "cspell": "^8.17.2",
-    "husky": "^9.1.7",
-    "knip": "^5.84.1",
-    "prettier": "^3.7.4",
-    "sort-package-json": "3.3.1",
+    "@rolldown/binding-darwin-arm64": "catalog:",
+    "cross-env": "catalog:",
+    "cspell": "catalog:",
+    "husky": "catalog:",
+    "knip": "catalog:",
+    "prettier": "catalog:",
+    "sort-package-json": "catalog:",
     "stylelint": "^14.11.0",
-    "stylelint-config-prettier-scss": "^0.0.1",
-    "stylelint-config-standard-scss": "^5.0.0",
-    "tsup": "^8.5.0",
-    "tsx": "^4.20.3",
-    "turbo": "^2.7.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "stylelint-config-prettier-scss": "catalog:",
+    "stylelint-config-standard-scss": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
@@ -153,13 +154,7 @@
       "@fern-api/ui-core-utils": "0.145.12-b50d999d1"
     }
   },
-  "catalog": {
-    "es-toolkit": "^1.39.10",
-    "qs": "^6.14.2",
-    "ts-essentials": "^10.1.1",
-    "url-join": "^4.0.1"
-  },
   "dependencies": {
-    "js-yaml": "^4.1.1"
+    "js-yaml": "catalog:"
   }
 }
