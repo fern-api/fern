@@ -7,7 +7,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
  */
 export interface PackageManagerRunner {
     /** The type of package manager */
-    type: "npm" | "pnpm" | "yarn" | "bun" | "vlt";
+    type: "npm" | "pnpm" | "yarn" | "bun" | "deno";
     /** The command to execute (e.g., "npx", "pnpm", "bunx") */
     command: string;
     /**
@@ -55,12 +55,12 @@ const RUNNERS: PackageManagerRunner[] = [
         label: "bunx (bun)"
     },
     {
-        type: "vlt",
-        command: "vlt",
+        type: "deno",
+        command: "deno",
         buildArgs(packageAtVersion: string, args: string[]): string[] {
-            return ["exec", packageAtVersion, "--", ...args];
+            return ["run", "-A", `npm:${packageAtVersion}`, ...args];
         },
-        label: "vlt exec"
+        label: "deno run"
     }
 ];
 
@@ -82,7 +82,7 @@ async function commandExists(logger: Logger, command: string): Promise<boolean> 
 /**
  * Detect the first available package manager runner on the system.
  *
- * Checks in order: npx, pnpm, yarn, bunx, vlt.
+ * Checks in order: npx, pnpm, yarn, bunx, deno.
  * Returns the first runner whose command is found on PATH.
  *
  * @param logger - Logger instance for debug output

@@ -129,7 +129,7 @@ describe("packageManagerRunner", () => {
             expect(runner?.label).toBe("bunx (bun)");
         });
 
-        it("should fall back to vlt when npx, pnpm, yarn, and bunx are not available", async () => {
+        it("should fall back to deno when npx, pnpm, yarn, and bunx are not available", async () => {
             vi.mocked(loggingExeca)
                 // npx not found
                 .mockResolvedValueOnce({
@@ -155,9 +155,9 @@ describe("packageManagerRunner", () => {
                     stderr: "",
                     failed: true
                 } as loggingExeca.ReturnValue)
-                // vlt found
+                // deno found
                 .mockResolvedValueOnce({
-                    stdout: "/usr/local/bin/vlt",
+                    stdout: "/usr/local/bin/deno",
                     stderr: "",
                     failed: false
                 } as loggingExeca.ReturnValue);
@@ -165,9 +165,9 @@ describe("packageManagerRunner", () => {
             const runner = await detectPackageManagerRunner(mockLogger);
 
             expect(runner).toBeDefined();
-            expect(runner?.type).toBe("vlt");
-            expect(runner?.command).toBe("vlt");
-            expect(runner?.label).toBe("vlt exec");
+            expect(runner?.type).toBe("deno");
+            expect(runner?.command).toBe("deno");
+            expect(runner?.label).toBe("deno run");
         });
 
         it("should return undefined when no package manager is available", async () => {
@@ -254,13 +254,13 @@ describe("packageManagerRunner", () => {
             expect(args).toEqual(["fern-api@1.2.3", "upgrade", "--from", "1.0.0"]);
         });
 
-        it("should build correct args for vlt", () => {
+        it("should build correct args for deno", () => {
             const runners = getAllRunners();
-            const vltRunner = runners.find((r) => r.type === "vlt");
-            expect(vltRunner).toBeDefined();
+            const denoRunner = runners.find((r) => r.type === "deno");
+            expect(denoRunner).toBeDefined();
 
-            const args = vltRunner?.buildArgs("fern-api@1.2.3", ["upgrade", "--from", "1.0.0"]);
-            expect(args).toEqual(["exec", "fern-api@1.2.3", "--", "upgrade", "--from", "1.0.0"]);
+            const args = denoRunner?.buildArgs("fern-api@1.2.3", ["upgrade", "--from", "1.0.0"]);
+            expect(args).toEqual(["run", "-A", "npm:fern-api@1.2.3", "upgrade", "--from", "1.0.0"]);
         });
 
         it("should handle empty args array", () => {
@@ -268,7 +268,9 @@ describe("packageManagerRunner", () => {
             for (const runner of runners) {
                 const args = runner.buildArgs("fern-api@1.0.0", []);
                 expect(args.length).toBeGreaterThan(0);
-                expect(args).toContain("fern-api@1.0.0");
+                // The package specifier should appear in at least one arg
+                // (for deno it's prefixed with "npm:")
+                expect(args.some((a) => a.includes("fern-api@1.0.0"))).toBe(true);
             }
         });
     });
@@ -286,7 +288,7 @@ describe("packageManagerRunner", () => {
             expect(types).toContain("pnpm");
             expect(types).toContain("yarn");
             expect(types).toContain("bun");
-            expect(types).toContain("vlt");
+            expect(types).toContain("deno");
         });
 
         it("should have npx as the first runner (highest priority)", () => {

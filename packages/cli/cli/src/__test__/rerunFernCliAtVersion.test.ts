@@ -155,14 +155,14 @@ describe("rerunFernCliAtVersion", () => {
             expect(vi.mocked(loggingExeca).mock.calls[0]?.[2]).toEqual(["fern-api@1.2.3", "upgrade"]);
         });
 
-        it("should use vlt when detected", async () => {
-            const vltRunner: PackageManagerRunner = {
-                type: "vlt",
-                command: "vlt",
-                buildArgs: (pkg: string, args: string[]) => ["exec", pkg, "--", ...args],
-                label: "vlt exec"
+        it("should use deno when detected", async () => {
+            const denoRunner: PackageManagerRunner = {
+                type: "deno",
+                command: "deno",
+                buildArgs: (pkg: string, args: string[]) => ["run", "-A", `npm:${pkg}`, ...args],
+                label: "deno run"
             };
-            vi.mocked(detectPackageManagerRunner).mockResolvedValue(vltRunner);
+            vi.mocked(detectPackageManagerRunner).mockResolvedValue(denoRunner);
             vi.mocked(loggingExeca).mockResolvedValueOnce({
                 stdout: "",
                 stderr: "",
@@ -175,8 +175,8 @@ describe("rerunFernCliAtVersion", () => {
                 args: ["upgrade"]
             });
 
-            expect(vi.mocked(loggingExeca).mock.calls[0]?.[1]).toBe("vlt");
-            expect(vi.mocked(loggingExeca).mock.calls[0]?.[2]).toEqual(["exec", "fern-api@1.2.3", "--", "upgrade"]);
+            expect(vi.mocked(loggingExeca).mock.calls[0]?.[1]).toBe("deno");
+            expect(vi.mocked(loggingExeca).mock.calls[0]?.[2]).toEqual(["run", "-A", "npm:fern-api@1.2.3", "upgrade"]);
         });
     });
 
