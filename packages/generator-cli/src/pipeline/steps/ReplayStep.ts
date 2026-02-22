@@ -3,13 +3,6 @@ import type { PipelineLogger } from "../PipelineLogger";
 import type { PipelineContext, ReplayStepConfig, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
 
-/**
- * Step that applies user customizations using the Replay system.
- * Delegates to replayRun() from the API layer.
- *
- * Conflicts are surfaced as standard git conflict markers in the committed
- * code, visible in the PR for human resolution.
- */
 export class ReplayStep extends BaseStep {
     readonly name = "replay";
 

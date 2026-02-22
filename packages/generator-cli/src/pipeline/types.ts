@@ -1,6 +1,3 @@
-/**
- * Configuration for the post-generation pipeline.
- */
 export interface PipelineConfig {
     outputDir: string;
 
@@ -15,10 +12,6 @@ export interface PipelineConfig {
     generatorName?: string;
 }
 
-/**
- * Context accumulated during pipeline execution.
- * Passed to each step so downstream steps can read upstream results.
- */
 export interface PipelineContext {
     previousStepResults: {
         replay?: ReplayStepResult;
@@ -26,26 +19,17 @@ export interface PipelineContext {
     };
 }
 
-/**
- * Configuration for the Replay step.
- */
 export interface ReplayStepConfig {
     enabled: boolean;
     stageOnly?: boolean;
     skipApplication?: boolean;
 }
 
-/**
- * Configuration for the Fernignore step (Phase 2 - future).
- */
 export interface FernignoreStepConfig {
     enabled: boolean;
     customContents?: string;
 }
 
-/**
- * Configuration for the GitHub step.
- */
 export interface GithubStepConfig {
     enabled: boolean;
     /** GitHub repository URI (e.g. "owner/repo") */
@@ -73,9 +57,6 @@ export interface GithubStepConfig {
     };
 }
 
-/**
- * Result from the post-generation pipeline execution.
- */
 export interface PipelineResult {
     success: boolean;
     steps: {
@@ -87,9 +68,6 @@ export interface PipelineResult {
     warnings?: string[];
 }
 
-/**
- * Result from the Replay step.
- */
 export interface ReplayStepResult extends StepResult {
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
     patchesDetected?: number;
@@ -116,9 +94,6 @@ export interface ReplayStepResult extends StepResult {
     warnings?: string[];
 }
 
-/**
- * Information about a conflict in a file.
- */
 export interface ConflictInfo {
     filePath: string;
     conflicts: Array<{
@@ -129,16 +104,10 @@ export interface ConflictInfo {
     }>;
 }
 
-/**
- * Result from the Fernignore step (Phase 2 - future).
- */
 export interface FernignoreStepResult extends StepResult {
     pathsPreserved?: string[];
 }
 
-/**
- * Result from the GitHub step.
- */
 export interface GithubStepResult extends StepResult {
     commitSha?: string;
     branchUrl?: string;
@@ -148,9 +117,6 @@ export interface GithubStepResult extends StepResult {
     generationBaseTagSha?: string;
 }
 
-/**
- * Base result interface for pipeline steps.
- */
 export interface StepResult {
     executed: boolean;
     success: boolean;

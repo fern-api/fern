@@ -28,10 +28,6 @@ export function patchDescription(detail: { patchMessage: string; files: Array<{ 
     return firstFile != null ? `changes in ${firstFile}` : "customization";
 }
 
-/**
- * Log a human-readable replay summary via the given logger.
- * All logic lives here — callers just pass a PipelineLogger (optionally with chalk-wrapping).
- */
 export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogger): void {
     if (!result.executed) {
         return;
@@ -40,15 +36,12 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     const applied = result.patchesApplied ?? 0;
     const absorbed = result.patchesAbsorbed ?? 0;
     const conflicts = result.patchesWithConflicts ?? 0;
-    // rebased/userOwned/repointed are sub-categories of applied, not additive
     const preserved = applied - absorbed;
 
-    // Debug: full stats
     logger.debug(
         `Replay: flow=${result.flow}, detected=${result.patchesDetected ?? 0}, applied=${applied}, absorbed=${absorbed}, conflicts=${conflicts}`
     );
 
-    // Info: happy-path summary
     if (preserved > 0) {
         const absorbedNote = absorbed > 0 ? ` (${plural(absorbed, "customization")} now part of generated code)` : "";
         logger.info(`Replay: ${plural(preserved, "customization")} preserved${absorbedNote}`);
@@ -56,7 +49,6 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
         logger.info(`Replay: ${plural(absorbed, "customization")} now part of generated code`);
     }
 
-    // Warn: conflicts
     if (conflicts > 0) {
         const totalFiles = (result.conflictDetails ?? []).reduce((sum, d) => sum + d.files.length, 0);
         logger.warn(
@@ -70,15 +62,11 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
         }
     }
 
-    // Warnings from replay engine
     for (const warning of result.warnings ?? []) {
         logger.warn(`Replay: ${warning}`);
     }
 }
 
-/**
- * Format the replay section for a PR body. Returns undefined if there's nothing to add.
- */
 export function formatReplayPrBody(
     result: ReplayStepResult | undefined,
     options?: { branchName?: string }
@@ -98,7 +86,6 @@ export function formatReplayPrBody(
 
     const parts: string[] = [];
 
-    // Happy-path summary
     if (preserved > 0 && conflicts === 0) {
         parts.push(`\u2705 ${plural(preserved, "customization")} automatically preserved in this update.`);
     } else if (preserved > 0) {
@@ -129,7 +116,6 @@ export function formatReplayPrBody(
             }
         }
 
-        // Resolution instructions
         const branch = options?.branchName ?? "<branch-name>";
         parts.push(`\n#### How to fix\n`);
 

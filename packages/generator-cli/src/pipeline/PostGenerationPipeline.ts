@@ -4,10 +4,6 @@ import { GithubStep } from "./steps/GithubStep";
 import { ReplayStep } from "./steps/ReplayStep";
 import type { PipelineConfig, PipelineContext, PipelineResult, ReplayStepResult } from "./types";
 
-/**
- * Orchestrates post-generation pipeline steps.
- * Steps run sequentially; upstream results flow to downstream steps via PipelineContext.
- */
 export class PostGenerationPipeline {
     private steps: BaseStep[] = [];
 
@@ -38,10 +34,6 @@ export class PostGenerationPipeline {
         }
     }
 
-    /**
-     * Run all enabled pipeline steps in sequence.
-     * Results accumulate in PipelineContext so downstream steps can read upstream results.
-     */
     async run(): Promise<PipelineResult> {
         const result: PipelineResult = {
             success: true,

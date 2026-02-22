@@ -96,8 +96,6 @@ export async function checkPRHasOnlyGenerationCommits(
                 authorEmail === "115122769+fern-api[bot]@users.noreply.github.com" ||
                 commit.commit.author?.name === "fern-api";
 
-            // Recognize [fern-generated] and [fern-replay] commit message prefixes
-            // as Fern-managed commits (created by replay's commit structure)
             const isFernCommitMessage =
                 commitMessage.startsWith("[fern-generated]") || commitMessage.startsWith("[fern-replay]");
 

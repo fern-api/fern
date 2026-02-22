@@ -31,13 +31,6 @@ export interface ReplayRunResult {
     baseBranchHead: string | null;
 }
 
-/**
- * Run Replay to apply user customizations on top of freshly generated SDK files.
- * Only runs if .fern/replay.lock exists (indicating Replay has been initialized).
- *
- * Unexpected replay failures are returned as null report — generation should
- * not fail because of replay bugs.
- */
 export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResult> {
     const { outputDir, cliVersion, generatorVersions, stageOnly = false, generatorName, skipApplication } = params;
     const lockfilePath = join(outputDir, ".fern", "replay.lock");
@@ -57,8 +50,6 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
     // may end up on dead branches after squash merges.
     const baseBranchHead = gitRevParse(outputDir, "HEAD");
 
-    // Read the lockfile before replay to capture the previous generation SHA
-    // and the previous base_branch_head for divergent merge detection.
     let previousGenerationSha: string | null = null;
     let prevBaseBranchHead: string | null = null;
     try {
@@ -73,14 +64,7 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         // If lockfile can't be read, proceed without SHA
     }
 
-    // Detect merged divergent PRs via the fern-generation-base tag.
-    // After a divergent PR is squash-merged, the lockfile's current_generation still
-    // points to the old generation (the [fern-generated] commit's tree preserves the
-    // pre-replay lockfile). We must detect this and call syncFromDivergentMerge() so
-    // replay knows the new generation happened.
-    //
-    // We do NOT gate on !isReachable because the old generation SHA IS reachable
-    // (it's a real commit on main's history). Instead we always check for the tag.
+    // Always check tag — old generation IS reachable, so !isReachable is not a valid gate
     if (previousGenerationSha != null) {
         const sanitizedName = generatorName?.replace(/\//g, "--");
         const namespacedTag = sanitizedName != null ? `fern-generation-base--${sanitizedName}` : null;
@@ -93,12 +77,7 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         if (tagSha != null) {
             const tagParent = gitRevParse(outputDir, `${tagSha}^`);
             if (tagParent === prevBaseBranchHead || tagParent === previousGenerationSha) {
-                // Tag belongs to this generation cycle (its parent is our baseBranchHead
-                // or previousGenerationSha). Use tree distance to determine if the
-                // divergent PR was merged or abandoned.
                 const tagDistance = gitDiffNameOnly(outputDir, tagSha, "HEAD").length;
-                // Use prevBaseBranchHead (always on main's lineage) as fallback when
-                // previousGenerationSha is unreachable after squash merge + GC.
                 const lockDistance = gitDiffNameOnly(outputDir, prevBaseBranchHead ?? previousGenerationSha, "HEAD").length;
                 shouldSync = tagDistance < lockDistance;
             }
@@ -112,7 +91,6 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
                 baseBranchHead: baseBranchHead ?? undefined
             });
 
-            // Re-read previousGenerationSha since syncFromDivergentMerge updated it
             try {
                 const freshLockManager = new LockfileManager(outputDir);
                 if (freshLockManager.exists()) {
@@ -148,7 +126,6 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         };
     }
 
-    // Read the lockfile again to capture the current generation SHA and resolved baseBranchHead
     let currentGenerationSha: string | null = null;
     let resolvedBaseBranchHead: string | null = baseBranchHead;
     try {
@@ -176,9 +153,6 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
     };
 }
 
-/**
- * Resolves a git revision to its full SHA. Returns null if the revision doesn't exist.
- */
 function gitRevParse(cwd: string, rev: string): string | null {
     try {
         return execFileSync("git", ["rev-parse", "--verify", rev], {
@@ -191,9 +165,6 @@ function gitRevParse(cwd: string, rev: string): string | null {
     }
 }
 
-/**
- * Returns the list of files changed between two git revisions.
- */
 function gitDiffNameOnly(cwd: string, from: string, to: string): string[] {
     try {
         const output = execFileSync("git", ["diff", "--name-only", from, to], {

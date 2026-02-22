@@ -13,14 +13,6 @@ import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
 
-/**
- * Step that handles GitHub operations: commit, push, branch creation, and PR management.
- * Supports both "push" and "pull-request" modes.
- *
- * When run after ReplayStep in the pipeline, reads replay results from PipelineContext
- * to determine whether to skip committing (replay already committed) and whether to
- * create divergent branches for conflict visualization.
- */
 export class GithubStep extends BaseStep {
     readonly name = "github";
 
@@ -34,8 +26,6 @@ export class GithubStep extends BaseStep {
 
     async execute(context: PipelineContext): Promise<GithubStepResult> {
         const replayResult = context.previousStepResults.replay;
-
-        // Derive skipCommit and replayConflictInfo from pipeline context if not explicitly set
         const skipCommit = this.config.skipCommit ?? this.deriveSkipCommit(replayResult);
         const replayConflictInfo = this.config.replayConflictInfo ?? this.deriveReplayConflictInfo(replayResult);
 
@@ -52,7 +42,6 @@ export class GithubStep extends BaseStep {
                 .replace(".", "_");
             const newPrBranch = `fern-bot/${formattedDate}`;
 
-            // Ensure git commits are attributed to a bot user
             try {
                 await repository.setUserAndEmail({
                     name: FERN_BOT_NAME,
@@ -163,7 +152,6 @@ export class GithubStep extends BaseStep {
 
         if (!this.config.previewMode) {
             if (skipCommit && isUpdatingExistingPR) {
-                // Replay commits replace the old PR branch entirely
                 await repository.forcePush();
             } else {
                 await repository.push();
@@ -172,8 +160,6 @@ export class GithubStep extends BaseStep {
             result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
 
-            // Push a persistent tag pointing to the [fern-generated] synthetic commit.
-            // This ensures the commit is reachable even after squash merges.
             if (generationBaseSha != null) {
                 try {
                     const sanitizedName = this.config.generatorName?.replace(/\//g, "--");
@@ -190,8 +176,7 @@ export class GithubStep extends BaseStep {
             }
         }
 
-        // Post commit status and toggle draft state based on replay conflicts.
-        // This runs after push so the head SHA is available on the remote.
+        // Runs after push so head SHA is available on remote
         if (!this.config.previewMode) {
             const headSha = await repository.getHeadSha();
             await this.postReplayConflictStatus(octokit, owner, repo, headSha, replayConflictInfo, replayResult);
@@ -253,13 +238,10 @@ export class GithubStep extends BaseStep {
             }
         }
 
-        // Post per-file conflict resolution guidance as a single PR comment
         if (!this.config.previewMode && replayConflictInfo?.hasConflicts === true && result.prNumber != null) {
             await postConflictComments(octokit, owner, repo, result.prNumber, replayResult, this.logger);
         }
 
-        // Check if GitHub's web conflict editor is likely disabled for this PR
-        // and post a fallback comment with local-only resolution instructions.
         if (
             !this.config.previewMode &&
             result.prNumber != null &&
@@ -327,21 +309,13 @@ export class GithubStep extends BaseStep {
         }
     }
 
-    /**
-     * Derive skipCommit from replay step result.
-     * When replay ran and produced a report (i.e. lockfile existed), it created its own commits.
-     */
     private deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {
         if (replayResult == null) {
             return false;
         }
-        // Replay creates commits when it actually ran (report != null equivalent: flow is set)
         return replayResult.executed && replayResult.flow != null && replayResult.flow !== "first-generation";
     }
 
-    /**
-     * Derive replay conflict info from replay step result.
-     */
     private deriveReplayConflictInfo(replayResult: ReplayStepResult | undefined):
         | {
               previousGenerationSha: string;
@@ -367,11 +341,6 @@ export class GithubStep extends BaseStep {
         return undefined;
     }
 
-    /**
-     * Toggle an existing PR's draft state based on replay conflicts.
-     * Converts to draft when conflicts are detected (blocks merge),
-     * marks as ready when a previously-conflicting PR is now clean.
-     */
     private async togglePrDraftState(
         octokit: Octokit,
         existingPR: ExistingPullRequest,
@@ -393,9 +362,6 @@ export class GithubStep extends BaseStep {
         }
     }
 
-    /**
-     * Convert a PR to draft via GraphQL so the merge button is disabled.
-     */
     private async convertPrToDraft(octokit: Octokit, nodeId: string, prNumber: number): Promise<void> {
         try {
             await octokit.graphql(
@@ -414,9 +380,6 @@ export class GithubStep extends BaseStep {
         }
     }
 
-    /**
-     * Mark a draft PR as ready for review via GraphQL (conflicts resolved).
-     */
     private async markPrReady(octokit: Octokit, nodeId: string, prNumber: number): Promise<void> {
         try {
             await octokit.graphql(
@@ -433,10 +396,6 @@ export class GithubStep extends BaseStep {
         }
     }
 
-    /**
-     * Post a commit status check indicating replay conflict state.
-     * Namespaced per generator to support multi-generator repos.
-     */
     private async postReplayConflictStatus(
         octokit: Octokit,
         owner: string,
@@ -484,18 +443,6 @@ export class GithubStep extends BaseStep {
         }
     }
 
-    /**
-     * Check whether GitHub's web-based conflict editor is likely disabled for a PR
-     * and post a fallback comment with local-only resolution instructions if so.
-     *
-     * GitHub disables the web conflict editor for PRs with file deletions
-     * (modify/delete conflicts), very large numbers of conflicting files, binary
-     * file conflicts, or conflicts it cannot compute (mergeable stays null).
-     *
-     * We use heuristics from our own conflict data plus the GitHub mergeable-state
-     * API. Only posts when there is strong signal -- false positives (posting when
-     * the web editor works) are worse than false negatives.
-     */
     private async postWebEditorFallbackComment(
         octokit: Octokit,
         owner: string,
@@ -534,15 +481,6 @@ export class GithubStep extends BaseStep {
         }
     }
 
-    /**
-     * Determine whether GitHub's web conflict editor is likely disabled for this PR.
-     *
-     * Returns true only when there is strong signal. Heuristics (any one sufficient):
-     *   1. Any conflicting file has a status suggesting a file deletion (modify/delete).
-     *   2. The total number of conflicting files exceeds a threshold.
-     *   3. The total number of conflict hunks exceeds a threshold.
-     *   4. GitHub cannot compute the mergeable state after polling (stays null).
-     */
     private async isWebEditorLikelyDisabled(
         octokit: Octokit,
         owner: string,
@@ -554,8 +492,6 @@ export class GithubStep extends BaseStep {
         const allConflictFiles = conflictDetails.flatMap((d) => d.files);
         const totalConflictFiles = allConflictFiles.length;
 
-        // Heuristic 1: File deletions (modify/delete conflicts).
-        // GitHub's web editor cannot handle these.
         const hasFileDeletionConflict = allConflictFiles.some((f) => {
             const status = (f.status ?? "").toLowerCase();
             const reason = (f.conflictReason ?? "").toLowerCase();
@@ -567,7 +503,6 @@ export class GithubStep extends BaseStep {
             return true;
         }
 
-        // Heuristic 2: Large number of conflicting files.
         if (totalConflictFiles >= WEB_EDITOR_FILE_THRESHOLD) {
             this.logger.debug(
                 `PR #${prNumber}: ${totalConflictFiles} conflicting files exceeds threshold (${WEB_EDITOR_FILE_THRESHOLD}), web editor likely disabled`
@@ -575,7 +510,6 @@ export class GithubStep extends BaseStep {
             return true;
         }
 
-        // Heuristic 3: Large number of conflict hunks across all files.
         const totalHunks = (replayResult.conflicts ?? []).reduce(
             (sum, fileConflict) => sum + fileConflict.conflicts.length,
             0
@@ -587,9 +521,6 @@ export class GithubStep extends BaseStep {
             return true;
         }
 
-        // Heuristic 4: GitHub cannot compute mergeable state after polling.
-        // When `mergeable` stays null after several attempts, the conflict may be
-        // too complex for GitHub to analyze (and hence for the web editor).
         const mergeableState = await this.pollMergeableState(octokit, owner, repo, prNumber);
         if (mergeableState.mergeable === null) {
             this.logger.debug(`PR #${prNumber}: mergeable state still null after polling, web editor likely disabled`);
@@ -599,10 +530,6 @@ export class GithubStep extends BaseStep {
         return false;
     }
 
-    /**
-     * Poll the GitHub API for the PR's mergeable state, retrying briefly if it
-     * hasn't been computed yet (mergeable === null).
-     */
     private async pollMergeableState(
         octokit: Octokit,
         owner: string,
@@ -623,32 +550,20 @@ export class GithubStep extends BaseStep {
                 };
             }
 
-            // mergeable is still null -- GitHub is still computing. Wait and retry.
             if (attempt < MERGEABLE_POLL_MAX_ATTEMPTS - 1) {
                 await sleep(MERGEABLE_POLL_DELAY_MS);
             }
         }
 
-        // Exhausted retries, return null state.
         return { mergeable: null, mergeableState: "unknown" };
     }
 }
 
-/** Maximum number of conflicting files before we consider the conflict too complex for the web editor. */
 const WEB_EDITOR_FILE_THRESHOLD = 20;
-
-/** Maximum number of conflict hunks across all files before posting the fallback comment. */
 const WEB_EDITOR_HUNK_THRESHOLD = 50;
-
-/** Number of polls to wait for GitHub to compute the mergeable state. */
 const MERGEABLE_POLL_MAX_ATTEMPTS = 3;
-
-/** Delay between mergeable-state polls in milliseconds. */
 const MERGEABLE_POLL_DELAY_MS = 1500;
 
-/**
- * Build the markdown comment body for the web-editor fallback.
- */
 function buildWebEditorFallbackComment(branchName: string, baseBranch: string): string {
     const lines = [
         `> **Note:** These conflicts may be too complex for GitHub's web editor. To resolve locally:`,

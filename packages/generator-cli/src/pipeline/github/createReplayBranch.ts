@@ -2,24 +2,6 @@ import type { ClonedRepository } from "@fern-api/github";
 
 import type { PipelineLogger } from "../PipelineLogger";
 
-/**
- * Creates the PR branch for replay commits.
- *
- * **Conflict path**: Creates a synthetic divergent commit using the pure
- * generation tree, parented off previousGenerationSha. This creates a fork
- * in history so GitHub computes a real 3-way merge:
- *   base = previousGen, main = previousGen + user edits, PR = new generation.
- * GitHub shows real merge conflicts in the PR "Files changed" view. The PR
- * is created as a draft so users resolve conflicts before merging.
- *
- * **No-conflict path**: Creates the branch directly from HEAD (which includes
- * replay-applied patches and correct lockfile). A separate synthetic commit
- * with the pure generation tree is created only for tagging — it enables the
- * sync mechanism to detect customer patches via tree diff after squash merges.
- *
- * Returns the generation-base commit SHA so the caller can push a persistent
- * tag for squash merge compatibility.
- */
 export async function createReplayBranch(
     repository: ClonedRepository,
     branchName: string,
@@ -78,16 +60,8 @@ export async function createReplayBranch(
 
         logger.debug(`Creating linear PR branch from HEAD (no conflicts)`);
 
-        // No conflicts — create branch directly from HEAD, which includes
-        // replay-applied patches and the correct lockfile (with patches recorded).
-        // This ensures squash merges preserve customizations and lockfile state
-        // without requiring manual conflict resolution.
         await repository.createBranchFromHead(branchName);
 
-        // Create a separate synthetic commit with the pure generation tree for
-        // the generation-base tag. This commit is NOT the branch head — it only
-        // exists as a tag target so the sync mechanism can detect customer patches
-        // via tree diff (pure generation vs HEAD) after squash merges.
         const genTreeHash = await repository.getCommitTreeHash(replayConflictInfo.currentGenerationSha);
         const tagCommitSha = await repository.commitTree(
             genTreeHash,
