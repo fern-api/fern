@@ -1,5 +1,8 @@
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { mkdtemp, rm, writeFile } from "fs/promises";
+import { tmpdir } from "os";
+import { join } from "path";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -11,6 +14,7 @@ import { describe, expect, it } from "vitest";
  */
 
 const TIMEOUT = 120_000;
+const MODULE_INSTALL_TIMEOUT = 300_000;
 
 const WHICH_COMMAND = process.platform === "win32" ? "where" : "which";
 
@@ -97,6 +101,12 @@ async function isCommandAvailable(command: string): Promise<boolean> {
     } catch {
         return false;
     }
+}
+
+async function createTempProjectDir(): Promise<string> {
+    const dir = await mkdtemp(join(tmpdir(), "fern-pm-install-"));
+    await writeFile(join(dir, "package.json"), JSON.stringify({ name: "fern-pm-install", private: true }, null, 2));
+    return dir;
 }
 
 describe("package-manager-runner e2e", () => {
@@ -349,5 +359,78 @@ describe("package-manager-runner e2e", () => {
             },
             TIMEOUT
         );
+    });
+
+    describe("module install + import", () => {
+        const PACKAGE_AT_VERSION = "is-number@7.0.0";
+
+        const installers = [
+            {
+                label: "npm install",
+                command: "npm",
+                args: ["install", PACKAGE_AT_VERSION, "--ignore-scripts", "--no-audit", "--no-fund"],
+                env: undefined
+            },
+            {
+                label: "pnpm add",
+                command: "pnpm",
+                args: ["add", PACKAGE_AT_VERSION, "--ignore-scripts", "--no-fund"],
+                env: undefined
+            },
+            {
+                label: "yarn add",
+                command: "yarn",
+                args: ["add", PACKAGE_AT_VERSION, "--ignore-scripts"],
+                env: { ...process.env, YARN_NODE_LINKER: "node-modules" }
+            },
+            {
+                label: "bun add",
+                command: "bun",
+                args: ["add", PACKAGE_AT_VERSION],
+                env: undefined
+            }
+        ];
+
+        for (const installer of installers) {
+            it(
+                `${installer.label} can install and import a module-only package`,
+                async () => {
+                    const available = await isCommandAvailable(installer.command);
+                    if (!available) {
+                        console.log(`Skipping: ${installer.command} not available`);
+                        return;
+                    }
+
+                    const dir = await createTempProjectDir();
+                    try {
+                        const installResult = await loggingExeca(CONSOLE_LOGGER, installer.command, installer.args, {
+                            cwd: dir,
+                            doNotPipeOutput: true,
+                            reject: false,
+                            env: installer.env
+                        });
+
+                        expect(installResult.failed).toBe(false);
+
+                        const importResult = await loggingExeca(
+                            CONSOLE_LOGGER,
+                            "node",
+                            ["-e", "console.log(typeof require('is-number'))"],
+                            {
+                                cwd: dir,
+                                doNotPipeOutput: true,
+                                reject: false
+                            }
+                        );
+
+                        expect(importResult.failed).toBe(false);
+                        expect(importResult.stdout.trim()).toBe("function");
+                    } finally {
+                        await rm(dir, { recursive: true, force: true });
+                    }
+                },
+                MODULE_INSTALL_TIMEOUT
+            );
+        }
     });
 });

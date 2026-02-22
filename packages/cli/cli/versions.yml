@@ -8,6 +8,11 @@
         bunx (bun), deno run, and uses the first one found. If no supported runner is available,
         a clear error message is shown.
       type: feat
+    - summary: |
+        Generator migration package installation now falls back across package managers
+        (npm, pnpm, yarn, bun) instead of requiring npm. Security flags like `--ignore-scripts`
+        are applied where supported.
+      type: feat
   createdAt: "2026-02-22"
   irVersion: 65
 - version: 3.82.0

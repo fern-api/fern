@@ -1,9 +1,10 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { mkdir, readFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import { createRequire } from "module";
 import { homedir } from "os";
-import { join } from "path";
+import { dirname, join } from "path";
 import semver from "semver";
 
 import { Migration, MigrationModule, MigratorResult } from "./types.js";
@@ -23,6 +24,95 @@ const MIGRATION_PACKAGE_NAME = "@fern-api/generator-migrations";
  */
 function getMigrationCacheDir(): string {
     return join(homedir(), ".fern", "migration-cache");
+}
+
+type InstallAttempt = {
+    label: string;
+    command: string;
+    args: string[];
+    env?: NodeJS.ProcessEnv;
+};
+
+async function ensureCacheDirHasPackageJson(cacheDir: string): Promise<void> {
+    const packageJsonPath = join(cacheDir, "package.json");
+    try {
+        await readFile(packageJsonPath, "utf-8");
+    } catch {
+        await writeFile(packageJsonPath, JSON.stringify({ name: "fern-migration-cache", private: true }, null, 2));
+    }
+}
+
+function isCommandNotFound(error: unknown): boolean {
+    if (typeof error !== "object" || error == null) {
+        return false;
+    }
+
+    if ("code" in error && (error as { code?: unknown }).code === "ENOENT") {
+        return true;
+    }
+
+    if ("message" in error && typeof (error as { message?: unknown }).message === "string") {
+        return (error as { message: string }).message.includes("ENOENT");
+    }
+
+    return false;
+}
+
+async function installPackageWithFallback(params: {
+    logger: Logger;
+    cacheDir: string;
+    packageAtVersion: string;
+}): Promise<void> {
+    const { logger, cacheDir, packageAtVersion } = params;
+
+    const attempts: InstallAttempt[] = [
+        {
+            label: "npm install",
+            command: "npm",
+            args: ["install", packageAtVersion, "--ignore-scripts", "--no-audit", "--no-fund"]
+        },
+        {
+            label: "pnpm add",
+            command: "pnpm",
+            args: ["add", packageAtVersion, "--ignore-scripts", "--no-fund"]
+        },
+        {
+            label: "yarn add",
+            command: "yarn",
+            args: ["add", packageAtVersion, "--ignore-scripts"],
+            // Force yarn berry to use node_modules instead of PnP so we can resolve imports.
+            env: { ...process.env, YARN_NODE_LINKER: "node-modules" }
+        },
+        {
+            label: "bun add",
+            command: "bun",
+            args: ["add", packageAtVersion]
+        }
+    ];
+
+    let lastError: unknown;
+    for (const attempt of attempts) {
+        try {
+            await loggingExeca(logger, attempt.command, attempt.args, {
+                cwd: cacheDir,
+                env: attempt.env
+            });
+            return;
+        } catch (error) {
+            lastError = error;
+            if (isCommandNotFound(error)) {
+                logger.debug(`${attempt.label} unavailable (command not found). Trying next package manager...`);
+                continue;
+            }
+            throw error;
+        }
+    }
+
+    throw new Error(
+        `No supported package manager found to install ${packageAtVersion}. ` +
+            `Please install one of: npm, pnpm, yarn, or bun. ` +
+            `Last error: ${lastError instanceof Error ? lastError.message : String(lastError)}`
+    );
 }
 
 /**
@@ -58,25 +148,24 @@ export async function loadMigrationModule(params: {
     await mkdir(cacheDir, { recursive: true });
 
     try {
-        // Install/update the unified migration package to the cache directory
-        // npm will check if @latest is already installed and skip reinstallation if so
-        // --ignore-scripts: Security - prevent running arbitrary code during install
-        // --no-audit: Skip audit checks for faster installation
-        // --no-fund: Skip funding messages
-        await loggingExeca(logger, "npm", [
-            "install",
-            `${MIGRATION_PACKAGE_NAME}@latest`,
-            "--prefix",
-            cacheDir,
-            "--ignore-scripts",
-            "--no-audit",
-            "--no-fund"
-        ]);
+        await ensureCacheDirHasPackageJson(cacheDir);
 
-        // Read the package.json to get the entry point from the main field
-        const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
-        const packageJsonPath = join(packageDir, "package.json");
-        const packageJsonContent = await readFile(packageJsonPath, "utf-8");
+        // Install/update the unified migration package to the cache directory.
+        // We fallback across package managers to reduce hard dependency on npm.
+        // Security: for package managers that support it, we disable lifecycle scripts.
+        await installPackageWithFallback({
+            logger,
+            cacheDir,
+            packageAtVersion: `${MIGRATION_PACKAGE_NAME}@latest`
+        });
+
+        // Resolve the installed package directory without assuming node_modules layout.
+        const require = createRequire(join(cacheDir, "package.json"));
+        const resolvedPackageJsonPath = require.resolve(`${MIGRATION_PACKAGE_NAME}/package.json`);
+        const packageDir = dirname(resolvedPackageJsonPath);
+
+        // Read the package.json to get the entry point from the main field.
+        const packageJsonContent = await readFile(resolvedPackageJsonPath, "utf-8");
         const packageJson = JSON.parse(packageJsonContent) as { main?: string };
 
         if (packageJson.main == null) {
@@ -116,9 +205,9 @@ export async function loadMigrationModule(params: {
             `Failed to load generator migrations for ${generatorName}.\n\n` +
                 `Reason: ${errorMessage}\n\n` +
                 `This error occurred while trying to install the migration package (${MIGRATION_PACKAGE_NAME}). ` +
-                `Please check your internet connection and npm configuration, then try again.\n\n` +
+                `Please check your internet connection and package manager configuration, then try again.\n\n` +
                 `If the problem persists, you can:\n` +
-                `  1. Check if npm is working: npm --version\n` +
+                `  1. Check a package manager is working (any one): npm --version / pnpm --version / yarn --version / bun --version\n` +
                 `  2. Clear the migration cache: rm -rf ~/.fern/migration-cache\n` +
                 `  3. Try the upgrade again: fern generator upgrade`
         );
