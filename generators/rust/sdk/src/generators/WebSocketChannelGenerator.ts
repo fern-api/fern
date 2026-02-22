@@ -65,11 +65,15 @@ export class WebSocketChannelGenerator {
 
         const rawDeclarations: string[] = [];
 
-        rawDeclarations.push(this.generateServerMessageEnum(channel, serverMessages));
+        const serverEnum = this.generateServerMessageEnum(channel, serverMessages);
+        if (serverEnum) {
+            rawDeclarations.push(serverEnum);
+        }
         rawDeclarations.push(this.generateClientStruct(clientName));
         rawDeclarations.push(this.generateImplBlock(clientName, channel, clientMessages, serverMessages));
 
-        const useStatements = this.generateImports();
+        const hasMessages = clientMessages.length > 0 || serverMessages.length > 0;
+        const useStatements = this.generateImports(hasMessages);
 
         const module = rust.module({
             useStatements,
@@ -83,29 +87,38 @@ export class WebSocketChannelGenerator {
         });
     }
 
-    private generateImports(): UseStatement[] {
-        return [
+    private generateImports(hasServerMessages: boolean): UseStatement[] {
+        const imports: UseStatement[] = [
             new UseStatement({
                 path: "crate",
                 items: ["ApiError", "WebSocketClient", "WebSocketOptions"]
-            }),
-            new UseStatement({
-                path: "serde",
-                items: ["Deserialize", "Serialize"]
             }),
             new UseStatement({
                 path: "tokio::sync",
                 items: ["mpsc"]
             })
         ];
+        if (hasServerMessages) {
+            imports.push(
+                new UseStatement({
+                    path: "crate::prelude",
+                    items: ["*"]
+                }),
+                new UseStatement({
+                    path: "serde",
+                    items: ["Deserialize", "Serialize"]
+                })
+            );
+        }
+        return imports;
     }
 
     private generateServerMessageEnum(
         channel: FernIr.WebSocketChannel,
         serverMessages: FernIr.WebSocketMessage[]
-    ): string {
+    ): string | undefined {
         if (serverMessages.length === 0) {
-            return "";
+            return undefined;
         }
 
         const channelName = channel.name.pascalCase.safeName;
@@ -114,11 +127,13 @@ export class WebSocketChannelGenerator {
         const variants = serverMessages
             .map((msg) => {
                 const variantName = this.getMessageVariantName(msg);
+                const wireValue = msg.type;
                 const bodyType = this.getMessageBodyType(msg);
+                const renameAttr = variantName !== wireValue ? `    #[serde(rename = "${wireValue}")]\n` : "";
                 if (bodyType) {
-                    return `    ${variantName}(${bodyType}),`;
+                    return `${renameAttr}    ${variantName}(${bodyType}),`;
                 }
-                return `    ${variantName},`;
+                return `${renameAttr}    ${variantName},`;
             })
             .join("\n");
 
@@ -150,14 +165,15 @@ ${variants}
         const receiveMethod = this.generateReceiveMethod(channelName, serverMessages);
         const closeMethod = this.generateCloseMethod();
 
+        const methods = [connectMethod];
+        if (sendMethods) {
+            methods.push(sendMethods);
+        }
+        methods.push(receiveMethod);
+        methods.push(closeMethod);
+
         return `impl ${clientName} {
-${connectMethod}
-
-${sendMethods}
-
-${receiveMethod}
-
-${closeMethod}
+${methods.join("\n\n")}
 }`;
     }
 
@@ -203,9 +219,12 @@ ${closeMethod}
             queryParams = queryInserts;
         }
 
+        const needsMut = channel.headers.length > 0 || channel.queryParameters.length > 0;
+        const optionsBinding = needsMut ? "let mut options" : "let options";
+
         return `    pub async fn connect(${params.join(", ")}) -> Result<Self, ApiError> {
         let full_url = format!("{}${pathExpression}", url);
-        let mut options = WebSocketOptions::default();
+        ${optionsBinding} = WebSocketOptions::default();
 ${headerInserts}
 ${queryParams}
         let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
@@ -257,15 +276,12 @@ ${queryParams}
     }
 
     private buildPathExpression(channel: FernIr.WebSocketChannel): string {
-        let path = "";
+        let path = channel.path.head ?? "";
         for (const part of channel.path.parts) {
-            path += `/{${part.pathParameter}}`;
+            path += `{${part.pathParameter}}`;
             if (part.tail) {
                 path += part.tail;
             }
-        }
-        if (channel.path.head) {
-            path = channel.path.head + path;
         }
         return path;
     }
@@ -279,9 +295,18 @@ ${queryParams}
     }
 
     private getMessageVariantName(msg: FernIr.WebSocketMessage): string {
-        return msg.body.type === "inlinedBody"
-            ? msg.body.name.pascalCase.safeName
-            : msg.type;
+        if (msg.body.type === "inlinedBody") {
+            return msg.body.name.pascalCase.safeName;
+        }
+        // For reference body types, derive variant name from the referenced type
+        if (msg.body.type === "reference") {
+            const typeRef = msg.body.bodyType;
+            if (typeRef.type === "named") {
+                return typeRef.name.pascalCase.safeName;
+            }
+        }
+        // Fallback: capitalize the message type ID
+        return msg.type.charAt(0).toUpperCase() + msg.type.slice(1);
     }
 
     private getMessageMethodName(msg: FernIr.WebSocketMessage, prefix: string): string {

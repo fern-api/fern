@@ -118,40 +118,30 @@ export abstract class AbstractRustGeneratorContext<
         // Track auto-detected default features
         const autoDetectedDefaults: string[] = [];
 
-        // Always declare multipart feature (empty if not used, to avoid cfg warnings)
+        // Only declare multipart feature when file upload endpoints exist
         if (hasFileUpload) {
-            // Add multipart feature that enables reqwest/multipart
             this.dependencyManager.addFeature("multipart", ["reqwest/multipart"]);
             autoDetectedDefaults.push("multipart");
-        } else {
-            // Add empty multipart feature to satisfy cfg checks
-            this.dependencyManager.addFeature("multipart", []);
         }
 
         const hasWebSocket = this.hasWebSocketChannels();
 
+        // Only declare websocket feature when WebSocket channels exist
         if (hasWebSocket) {
             this.dependencyManager.add("tokio-tungstenite", { version: "0.24", features: ["native-tls"], optional: true });
             this.dependencyManager.add("urlencoding", { version: "2.1", optional: true });
 
             this.dependencyManager.addFeature("websocket", ["tokio-tungstenite", "urlencoding"]);
             autoDetectedDefaults.push("websocket");
-        } else {
-            this.dependencyManager.addFeature("websocket", []);
         }
 
-        // Always declare sse feature (empty if not used, to avoid cfg warnings)
+        // Only declare sse feature when streaming endpoints exist
         if (hasStreaming) {
-            // Add SSE-specific dependencies as optional
             this.dependencyManager.add("reqwest-sse", { version: "0.1", optional: true });
             this.dependencyManager.add("pin-project", { version: "1.1", optional: true });
 
-            // Add sse feature that enables SSE dependencies
             this.dependencyManager.addFeature("sse", ["reqwest-sse", "pin-project"]);
             autoDetectedDefaults.push("sse");
-        } else {
-            // Add empty sse feature to satisfy cfg checks
-            this.dependencyManager.addFeature("sse", []);
         }
 
         // Add custom features from configuration
@@ -385,7 +375,11 @@ export abstract class AbstractRustGeneratorContext<
      * Check if IR has any streaming endpoints
      */
     public hasWebSocketChannels(): boolean {
-        return this.ir.websocketChannels != null && Object.keys(this.ir.websocketChannels).length > 0;
+        return (
+            this.customConfig.enableWebsockets &&
+            this.ir.websocketChannels != null &&
+            Object.keys(this.ir.websocketChannels).length > 0
+        );
     }
 
     public hasStreamingEndpoints(): boolean {
