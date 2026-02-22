@@ -39,7 +39,7 @@ export function hashJSON(obj: unknown): string {
             buffer += "{";
             const keys = Object.keys(value).sort();
             for (let i = 0; i < keys.length; i++) {
-                const key = keys[i]!;
+                const key = keys[i] ?? "";
                 if (i > 0) {
                     buffer += ",";
                 }
