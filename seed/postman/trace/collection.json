@@ -1764,7 +1764,8 @@
                 {
                   "key": "optionalDatetime",
                   "description": null,
-                  "value": "2024-01-15T09:30:00Z"
+                  "value": "2024-01-15T09:30:00Z",
+                  "disabled": true
                 }
               ],
               "variable": [
@@ -1821,7 +1822,8 @@
                     {
                       "key": "optionalDatetime",
                       "description": null,
-                      "value": "2024-01-15T09:30:00Z"
+                      "value": "2024-01-15T09:30:00Z",
+                      "disabled": true
                     }
                   ],
                   "variable": [
@@ -1877,7 +1879,8 @@
                 {
                   "key": "limit",
                   "description": null,
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "otherField",
@@ -1892,7 +1895,8 @@
                 {
                   "key": "optionalMultipleField",
                   "description": null,
-                  "value": "optionalMultipleField"
+                  "value": "optionalMultipleField",
+                  "disabled": true
                 },
                 {
                   "key": "multipleField",
@@ -1941,7 +1945,8 @@
                     {
                       "key": "limit",
                       "description": null,
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "otherField",
@@ -1956,7 +1961,8 @@
                     {
                       "key": "optionalMultipleField",
                       "description": null,
-                      "value": "optionalMultipleField"
+                      "value": "optionalMultipleField",
+                      "disabled": true
                     },
                     {
                       "key": "multipleField",
