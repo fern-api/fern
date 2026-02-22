@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Support multiple package manager runners with automatic fallback in the CLI version
+        redirection flow. Previously, `rerunFernCliAtVersion` was hardcoded to use `npx`.
+        Now the CLI detects available package managers in order: npx (npm), pnpm dlx, yarn dlx,
+        bunx (bun), vlt exec, and uses the first one found. If no supported runner is available,
+        a clear error message is shown.
+      type: feat
+  createdAt: "2026-02-22"
+  irVersion: 65
 - version: 3.82.0
   changelogEntry:
     - summary: |
