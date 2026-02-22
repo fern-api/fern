@@ -1,4 +1,5 @@
 import { loggingExeca } from "@fern-api/logging-execa";
+import { Logger } from "@fern-api/logger";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CliContext } from "../cli-context/CliContext.js";
@@ -20,22 +21,19 @@ import { detectPackageManagerRunner } from "../utils/packageManagerRunner.js";
 
 describe("rerunFernCliAtVersion", () => {
     let mockCliContext: CliContext;
-    let mockLogger: {
-        info: ReturnType<typeof vi.fn>;
-        error: ReturnType<typeof vi.fn>;
-        warn: ReturnType<typeof vi.fn>;
-        debug: ReturnType<typeof vi.fn>;
+    const mockLogger: Logger = {
+        disable: vi.fn(),
+        enable: vi.fn(),
+        trace: vi.fn(),
+        debug: vi.fn(),
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+        log: vi.fn()
     };
 
     beforeEach(() => {
         vi.clearAllMocks();
-
-        mockLogger = {
-            info: vi.fn(),
-            error: vi.fn(),
-            warn: vi.fn(),
-            debug: vi.fn()
-        };
 
         mockCliContext = {
             logger: mockLogger,
