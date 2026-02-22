@@ -38,7 +38,7 @@ export async function rerunFernCliAtVersion({
     if (runner == null) {
         const message =
             "No supported package manager runner found. " +
-            "Please install one of: npm (npx), pnpm, yarn, bun, or vlt.";
+            "Please install one of: npm (npx), pnpm, yarn, bun, or deno.";
         if (throwOnError) {
             throw new RerunCliError({ version, stdout: "", stderr: message });
         }

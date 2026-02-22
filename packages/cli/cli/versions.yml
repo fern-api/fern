@@ -5,7 +5,7 @@
         Support multiple package manager runners with automatic fallback in the CLI version
         redirection flow. Previously, `rerunFernCliAtVersion` was hardcoded to use `npx`.
         Now the CLI detects available package managers in order: npx (npm), pnpm dlx, yarn dlx,
-        bunx (bun), vlt exec, and uses the first one found. If no supported runner is available,
+        bunx (bun), deno run, and uses the first one found. If no supported runner is available,
         a clear error message is shown.
       type: feat
   createdAt: "2026-02-22"
