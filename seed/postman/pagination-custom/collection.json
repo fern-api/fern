@@ -49,8 +49,7 @@
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "starting_after",
-                  "disabled": true
+                  "value": "starting_after"
                 }
               ],
               "variable": []
@@ -85,8 +84,7 @@
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after",
-                      "disabled": true
+                      "value": "starting_after"
                     }
                   ],
                   "variable": []
