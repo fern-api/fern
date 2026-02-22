@@ -1,5 +1,5 @@
-import { loggingExeca } from "@fern-api/logging-execa";
 import { Logger } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { detectPackageManagerRunner, getAllRunners } from "../packageManagerRunner.js";
