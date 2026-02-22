@@ -1,52 +1,63 @@
+import { createHash } from "crypto";
+
 const MAX_DEPTH = 64;
+const BUFFER_FLUSH_SIZE = 65536;
 
 export function hashJSON(obj: unknown): string {
-    let hash = 0x811c9dc5;
+    const hash = createHash("md5");
+    let buffer = "";
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    function traverse(value: any, currentDepth: number) {
-        if (typeof value === "object" && value != null) {
-            if (currentDepth > MAX_DEPTH) {
-                updateHash("[MaxDepthExceeded]");
-                return;
+    function traverse(value: any, currentDepth: number): void {
+        if (typeof value !== "object" || value == null) {
+            buffer += String(value);
+            if (buffer.length >= BUFFER_FLUSH_SIZE) {
+                hash.update(buffer);
+                buffer = "";
             }
-
-            if (Array.isArray(value)) {
-                updateHash("[");
-                for (let i = 0; i < value.length; i++) {
-                    if (i > 0) {
-                        updateHash(",");
-                    }
-                    traverse(value[i], currentDepth + 1);
-                }
-                updateHash("]");
-            } else {
-                updateHash("{");
-                const keys = Object.keys(value).sort();
-                keys.forEach((key, index) => {
-                    if (index > 0) {
-                        updateHash(",");
-                    }
-                    updateHash(key);
-                    updateHash(":");
-                    traverse(value[key], currentDepth + 1);
-                });
-                updateHash("}");
-            }
-        } else {
-            updateHash(String(value));
+            return;
         }
-    }
+        if (currentDepth > MAX_DEPTH) {
+            buffer += "[MaxDepthExceeded]";
+            if (buffer.length >= BUFFER_FLUSH_SIZE) {
+                hash.update(buffer);
+                buffer = "";
+            }
+            return;
+        }
 
-    function updateHash(str: string) {
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash ^= char;
-            hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-            hash >>>= 0;
+        if (Array.isArray(value)) {
+            buffer += "[";
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0) {
+                    buffer += ",";
+                }
+                traverse(value[i], currentDepth + 1);
+            }
+            buffer += "]";
+        } else {
+            buffer += "{";
+            const keys = Object.keys(value).sort();
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i]!;
+                if (i > 0) {
+                    buffer += ",";
+                }
+                buffer += key;
+                buffer += ":";
+                traverse(value[key], currentDepth + 1);
+            }
+            buffer += "}";
+        }
+        if (buffer.length >= BUFFER_FLUSH_SIZE) {
+            hash.update(buffer);
+            buffer = "";
         }
     }
 
     traverse(obj, 0);
-    return hash.toString(16);
+    if (buffer.length > 0) {
+        hash.update(buffer);
+    }
+    return hash.digest("hex");
 }

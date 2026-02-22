@@ -1471,7 +1471,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "48494c14",
+                "id": "c60ec03ba05d6e4008fe97f9fd874745",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -2258,7 +2258,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "410bff94",
+                "id": "a4943a814abeb60368943d27a0669770",
                 "name": null,
                 "queryParameters": [
                   {
@@ -3524,7 +3524,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "8fc7fcdb",
+                "id": "03e027c332ff46df8443b608eb9c246e",
                 "name": null,
                 "queryParameters": [
                   {
@@ -4166,7 +4166,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "d57372fe",
+                "id": "2057f598592801ab0732d0beb6ffb181",
                 "name": null,
                 "queryParameters": [
                   {
