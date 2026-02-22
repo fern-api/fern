@@ -75,14 +75,12 @@
                 {
                   "key": "fields",
                   "description": "Comma-separated list of fields to include",
-                  "value": "fields",
-                  "disabled": true
+                  "value": "fields"
                 },
                 {
                   "key": "search",
                   "description": "Search query",
-                  "value": "search",
-                  "disabled": true
+                  "value": "search"
                 }
               ],
               "variable": []
@@ -143,14 +141,12 @@
                     {
                       "key": "fields",
                       "description": "Comma-separated list of fields to include",
-                      "value": "fields",
-                      "disabled": true
+                      "value": "fields"
                     },
                     {
                       "key": "search",
                       "description": "Search query",
-                      "value": "search",
-                      "disabled": true
+                      "value": "search"
                     }
                   ],
                   "variable": []
@@ -394,50 +390,42 @@
                 {
                   "key": "page",
                   "description": "Page index of the results to return. First page is 0.",
-                  "value": "1",
-                  "disabled": true
+                  "value": "1"
                 },
                 {
                   "key": "per_page",
                   "description": "Number of results per page.",
-                  "value": "1",
-                  "disabled": true
+                  "value": "1"
                 },
                 {
                   "key": "include_totals",
                   "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 },
                 {
                   "key": "sort",
                   "description": "Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.",
-                  "value": "sort",
-                  "disabled": true
+                  "value": "sort"
                 },
                 {
                   "key": "connection",
                   "description": "Connection filter",
-                  "value": "connection",
-                  "disabled": true
+                  "value": "connection"
                 },
                 {
                   "key": "q",
                   "description": "Query string following Lucene query string syntax",
-                  "value": "q",
-                  "disabled": true
+                  "value": "q"
                 },
                 {
                   "key": "search_engine",
                   "description": "Search engine version (v1, v2, or v3)",
-                  "value": "search_engine",
-                  "disabled": true
+                  "value": "search_engine"
                 },
                 {
                   "key": "fields",
                   "description": "Comma-separated list of fields to include or exclude",
-                  "value": "fields",
-                  "disabled": true
+                  "value": "fields"
                 }
               ],
               "variable": []
@@ -473,50 +461,42 @@
                     {
                       "key": "page",
                       "description": "Page index of the results to return. First page is 0.",
-                      "value": "1",
-                      "disabled": true
+                      "value": "1"
                     },
                     {
                       "key": "per_page",
                       "description": "Number of results per page.",
-                      "value": "1",
-                      "disabled": true
+                      "value": "1"
                     },
                     {
                       "key": "include_totals",
                       "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     },
                     {
                       "key": "sort",
                       "description": "Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.",
-                      "value": "sort",
-                      "disabled": true
+                      "value": "sort"
                     },
                     {
                       "key": "connection",
                       "description": "Connection filter",
-                      "value": "connection",
-                      "disabled": true
+                      "value": "connection"
                     },
                     {
                       "key": "q",
                       "description": "Query string following Lucene query string syntax",
-                      "value": "q",
-                      "disabled": true
+                      "value": "q"
                     },
                     {
                       "key": "search_engine",
                       "description": "Search engine version (v1, v2, or v3)",
-                      "value": "search_engine",
-                      "disabled": true
+                      "value": "search_engine"
                     },
                     {
                       "key": "fields",
                       "description": "Comma-separated list of fields to include or exclude",
-                      "value": "fields",
-                      "disabled": true
+                      "value": "fields"
                     }
                   ],
                   "variable": []
@@ -557,14 +537,12 @@
                 {
                   "key": "fields",
                   "description": "Comma-separated list of fields to include or exclude",
-                  "value": "fields",
-                  "disabled": true
+                  "value": "fields"
                 },
                 {
                   "key": "include_fields",
                   "description": "true to include the fields specified, false to exclude them",
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 }
               ],
               "variable": [
@@ -607,14 +585,12 @@
                     {
                       "key": "fields",
                       "description": "Comma-separated list of fields to include or exclude",
-                      "value": "fields",
-                      "disabled": true
+                      "value": "fields"
                     },
                     {
                       "key": "include_fields",
                       "description": "true to include the fields specified, false to exclude them",
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     }
                   ],
                   "variable": [
@@ -912,20 +888,17 @@
                 {
                   "key": "strategy",
                   "description": "Filter by strategy type (e.g., auth0, google-oauth2, samlp)",
-                  "value": "strategy",
-                  "disabled": true
+                  "value": "strategy"
                 },
                 {
                   "key": "name",
                   "description": "Filter by connection name",
-                  "value": "name",
-                  "disabled": true
+                  "value": "name"
                 },
                 {
                   "key": "fields",
                   "description": "Comma-separated list of fields to include",
-                  "value": "fields",
-                  "disabled": true
+                  "value": "fields"
                 }
               ],
               "variable": []
@@ -961,20 +934,17 @@
                     {
                       "key": "strategy",
                       "description": "Filter by strategy type (e.g., auth0, google-oauth2, samlp)",
-                      "value": "strategy",
-                      "disabled": true
+                      "value": "strategy"
                     },
                     {
                       "key": "name",
                       "description": "Filter by connection name",
-                      "value": "name",
-                      "disabled": true
+                      "value": "name"
                     },
                     {
                       "key": "fields",
                       "description": "Comma-separated list of fields to include",
-                      "value": "fields",
-                      "disabled": true
+                      "value": "fields"
                     }
                   ],
                   "variable": []
@@ -1015,8 +985,7 @@
                 {
                   "key": "fields",
                   "description": "Comma-separated list of fields to include",
-                  "value": "fields",
-                  "disabled": true
+                  "value": "fields"
                 }
               ],
               "variable": [
@@ -1059,8 +1028,7 @@
                     {
                       "key": "fields",
                       "description": "Comma-separated list of fields to include",
-                      "value": "fields",
-                      "disabled": true
+                      "value": "fields"
                     }
                   ],
                   "variable": [
@@ -1106,50 +1074,42 @@
                 {
                   "key": "fields",
                   "description": "Comma-separated list of fields to include",
-                  "value": "fields",
-                  "disabled": true
+                  "value": "fields"
                 },
                 {
                   "key": "include_fields",
                   "description": "Whether specified fields are included or excluded",
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 },
                 {
                   "key": "page",
                   "description": "Page number (zero-based)",
-                  "value": "1",
-                  "disabled": true
+                  "value": "1"
                 },
                 {
                   "key": "per_page",
                   "description": "Number of results per page",
-                  "value": "1",
-                  "disabled": true
+                  "value": "1"
                 },
                 {
                   "key": "include_totals",
                   "description": "Include total count in response",
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 },
                 {
                   "key": "is_global",
                   "description": "Filter by global clients",
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 },
                 {
                   "key": "is_first_party",
                   "description": "Filter by first party clients",
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 },
                 {
                   "key": "app_type",
                   "description": "Filter by application type (spa, native, regular_web, non_interactive)",
-                  "value": "[\"app_type\",\"app_type\"]",
-                  "disabled": true
+                  "value": "[\"app_type\",\"app_type\"]"
                 }
               ],
               "variable": []
@@ -1185,50 +1145,42 @@
                     {
                       "key": "fields",
                       "description": "Comma-separated list of fields to include",
-                      "value": "fields",
-                      "disabled": true
+                      "value": "fields"
                     },
                     {
                       "key": "include_fields",
                       "description": "Whether specified fields are included or excluded",
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     },
                     {
                       "key": "page",
                       "description": "Page number (zero-based)",
-                      "value": "1",
-                      "disabled": true
+                      "value": "1"
                     },
                     {
                       "key": "per_page",
                       "description": "Number of results per page",
-                      "value": "1",
-                      "disabled": true
+                      "value": "1"
                     },
                     {
                       "key": "include_totals",
                       "description": "Include total count in response",
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     },
                     {
                       "key": "is_global",
                       "description": "Filter by global clients",
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     },
                     {
                       "key": "is_first_party",
                       "description": "Filter by first party clients",
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     },
                     {
                       "key": "app_type",
                       "description": "Filter by application type (spa, native, regular_web, non_interactive)",
-                      "value": "[\"app_type\",\"app_type\"]",
-                      "disabled": true
+                      "value": "[\"app_type\",\"app_type\"]"
                     }
                   ],
                   "variable": []
@@ -1269,14 +1221,12 @@
                 {
                   "key": "fields",
                   "description": "Comma-separated list of fields to include",
-                  "value": "fields",
-                  "disabled": true
+                  "value": "fields"
                 },
                 {
                   "key": "include_fields",
                   "description": "Whether specified fields are included or excluded",
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 }
               ],
               "variable": [
@@ -1319,14 +1269,12 @@
                     {
                       "key": "fields",
                       "description": "Comma-separated list of fields to include",
-                      "value": "fields",
-                      "disabled": true
+                      "value": "fields"
                     },
                     {
                       "key": "include_fields",
                       "description": "Whether specified fields are included or excluded",
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     }
                   ],
                   "variable": [

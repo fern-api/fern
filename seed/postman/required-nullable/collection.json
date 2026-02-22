@@ -35,8 +35,7 @@
             {
               "key": "required_nullable_baz",
               "description": "A required baz",
-              "value": "required_nullable_baz",
-              "disabled": true
+              "value": "required_nullable_baz"
             }
           ],
           "variable": []
@@ -76,8 +75,7 @@
                 {
                   "key": "required_nullable_baz",
                   "description": "A required baz",
-                  "value": "required_nullable_baz",
-                  "disabled": true
+                  "value": "required_nullable_baz"
                 }
               ],
               "variable": []
@@ -115,14 +113,12 @@
                 {
                   "key": "optional_baz",
                   "description": "An optional baz",
-                  "value": "optional_baz",
-                  "disabled": true
+                  "value": "optional_baz"
                 },
                 {
                   "key": "optional_nullable_baz",
                   "description": "An optional baz",
-                  "value": "optional_nullable_baz",
-                  "disabled": true
+                  "value": "optional_nullable_baz"
                 },
                 {
                   "key": "required_baz",
@@ -132,8 +128,7 @@
                 {
                   "key": "required_nullable_baz",
                   "description": "A required baz",
-                  "value": "required_nullable_baz",
-                  "disabled": true
+                  "value": "required_nullable_baz"
                 }
               ],
               "variable": []
