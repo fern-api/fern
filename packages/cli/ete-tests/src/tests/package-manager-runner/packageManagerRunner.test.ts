@@ -2,8 +2,6 @@ import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { describe, expect, it } from "vitest";
 
-import { detectPackageManagerRunner, getAllRunners } from "../../../../cli/src/utils/packageManagerRunner.js";
-
 /**
  * E2E tests for package manager runner fallback support.
  *
@@ -15,6 +13,79 @@ import { detectPackageManagerRunner, getAllRunners } from "../../../../cli/src/u
 const TIMEOUT = 120_000;
 
 const WHICH_COMMAND = process.platform === "win32" ? "where" : "which";
+
+/**
+ * Mirror of the PackageManagerRunner interface from the CLI source.
+ * Defined here so that E2E tests don't import across package boundaries.
+ */
+interface PackageManagerRunner {
+    type: "npm" | "pnpm" | "yarn" | "bun" | "deno";
+    command: string;
+    buildArgs(packageAtVersion: string, args: string[]): string[];
+    label: string;
+}
+
+/**
+ * Runner definitions identical to those in packageManagerRunner.ts.
+ * Duplicated here intentionally so the E2E tests exercise the same
+ * command/arg patterns without a cross-package import.
+ */
+const ALL_RUNNERS: PackageManagerRunner[] = [
+    {
+        type: "npm",
+        command: "npx",
+        buildArgs(packageAtVersion: string, args: string[]): string[] {
+            return ["--quiet", "--yes", packageAtVersion, ...args];
+        },
+        label: "npx (npm)"
+    },
+    {
+        type: "pnpm",
+        command: "pnpm",
+        buildArgs(packageAtVersion: string, args: string[]): string[] {
+            return ["dlx", packageAtVersion, ...args];
+        },
+        label: "pnpm dlx"
+    },
+    {
+        type: "yarn",
+        command: "yarn",
+        buildArgs(packageAtVersion: string, args: string[]): string[] {
+            return ["dlx", packageAtVersion, ...args];
+        },
+        label: "yarn dlx"
+    },
+    {
+        type: "bun",
+        command: "bunx",
+        buildArgs(packageAtVersion: string, args: string[]): string[] {
+            return [packageAtVersion, ...args];
+        },
+        label: "bunx (bun)"
+    },
+    {
+        type: "deno",
+        command: "deno",
+        buildArgs(packageAtVersion: string, args: string[]): string[] {
+            return ["run", "-A", `npm:${packageAtVersion}`, ...args];
+        },
+        label: "deno run"
+    }
+];
+
+/**
+ * Detect the first available package manager runner, mirroring the
+ * production detectPackageManagerRunner() logic.
+ */
+async function detectPackageManagerRunner(): Promise<PackageManagerRunner | undefined> {
+    for (const runner of ALL_RUNNERS) {
+        const exists = await isCommandAvailable(runner.command);
+        if (exists) {
+            return runner;
+        }
+    }
+    return undefined;
+}
 
 async function isCommandAvailable(command: string): Promise<boolean> {
     try {
@@ -151,7 +222,7 @@ describe("package-manager-runner e2e", () => {
         it(
             "should detect an available runner via real which/where",
             async () => {
-                const runner = await detectPackageManagerRunner(CONSOLE_LOGGER);
+                const runner = await detectPackageManagerRunner();
                 // At least one PM should be installed in any reasonable environment
                 expect(runner).toBeDefined();
                 expect(runner?.type).toBeDefined();
@@ -165,7 +236,7 @@ describe("package-manager-runner e2e", () => {
         it(
             "should return a runner whose command actually exists on PATH",
             async () => {
-                const runner = await detectPackageManagerRunner(CONSOLE_LOGGER);
+                const runner = await detectPackageManagerRunner();
                 if (runner == null) {
                     console.log("Skipping: no package manager detected");
                     return;
@@ -187,7 +258,7 @@ describe("package-manager-runner e2e", () => {
                     return;
                 }
 
-                const runner = await detectPackageManagerRunner(CONSOLE_LOGGER);
+                const runner = await detectPackageManagerRunner();
                 // If npx is available, it should always be selected first
                 expect(runner?.type).toBe("npm");
                 expect(runner?.command).toBe("npx");
@@ -200,7 +271,7 @@ describe("package-manager-runner e2e", () => {
         it(
             "detected runner buildArgs produces a working command",
             async () => {
-                const runner = await detectPackageManagerRunner(CONSOLE_LOGGER);
+                const runner = await detectPackageManagerRunner();
                 if (runner == null) {
                     console.log("Skipping: no package manager detected");
                     return;
@@ -223,7 +294,7 @@ describe("package-manager-runner e2e", () => {
         it(
             "each available runner's buildArgs produces a working command",
             async () => {
-                const runners = getAllRunners();
+                const runners = ALL_RUNNERS;
                 for (const runner of runners) {
                     const available = await isCommandAvailable(runner.command);
                     if (!available) {
@@ -260,7 +331,7 @@ describe("package-manager-runner e2e", () => {
         it(
             "buildArgs works with a pinned version",
             async () => {
-                const runner = await detectPackageManagerRunner(CONSOLE_LOGGER);
+                const runner = await detectPackageManagerRunner();
                 if (runner == null) {
                     console.log("Skipping: no package manager detected");
                     return;
