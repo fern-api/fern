@@ -12,9 +12,11 @@ import { describe, expect, it } from "vitest";
 
 const TIMEOUT = 120_000;
 
+const WHICH_COMMAND = process.platform === "win32" ? "where" : "which";
+
 async function isCommandAvailable(command: string): Promise<boolean> {
     try {
-        const { failed } = await loggingExeca(CONSOLE_LOGGER, "which", [command], {
+        const { failed } = await loggingExeca(CONSOLE_LOGGER, WHICH_COMMAND, [command], {
             doNotPipeOutput: true,
             reject: false
         });
