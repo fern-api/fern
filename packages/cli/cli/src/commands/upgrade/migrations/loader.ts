@@ -74,7 +74,7 @@ async function installPackageWithFallback(params: {
         {
             label: "pnpm add",
             command: "pnpm",
-            args: ["add", packageAtVersion, "--ignore-scripts", "--no-fund"]
+            args: ["add", packageAtVersion, "--ignore-scripts"]
         },
         {
             label: "yarn add",

@@ -374,7 +374,7 @@ describe("package-manager-runner e2e", () => {
             {
                 label: "pnpm add",
                 command: "pnpm",
-                args: ["add", PACKAGE_AT_VERSION, "--ignore-scripts", "--no-fund"],
+                args: ["add", PACKAGE_AT_VERSION, "--ignore-scripts"],
                 env: undefined
             },
             {
