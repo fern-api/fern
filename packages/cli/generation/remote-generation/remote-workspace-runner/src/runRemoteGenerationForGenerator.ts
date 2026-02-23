@@ -12,6 +12,7 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
+import { execSync } from "child_process";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
@@ -100,7 +101,8 @@ export async function runRemoteGenerationForGenerator({
             cliVersion: workspace.cliVersion,
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
-            generatorConfig: generatorInvocation.config
+            generatorConfig: generatorInvocation.config,
+            originGitCommit: getOriginGitCommitHash()
         }
     });
 
@@ -428,6 +430,25 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
  * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
  * generates the dynamic IR, and uploads it.
  */
+/**
+ * Resolves the current git commit hash of the working directory.
+ * Returns undefined if not in a git repo or if git is not available.
+ */
+function getOriginGitCommitHash(): string | undefined {
+    try {
+        const commit = execSync("git rev-parse HEAD", {
+            encoding: "utf-8",
+            stdio: ["pipe", "pipe", "pipe"]
+        }).trim();
+        if (/^[0-9a-f]{40}$/.test(commit)) {
+            return commit;
+        }
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
 async function uploadDynamicIRForSdkGeneration({
     fdr,
     organization,

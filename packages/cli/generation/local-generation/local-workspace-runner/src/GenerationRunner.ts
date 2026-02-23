@@ -9,6 +9,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { getOriginGitCommit } from "./getOriginGitCommit.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
 
@@ -155,7 +156,8 @@ export class GenerationRunner {
                 cliVersion: workspace.cliVersion,
                 generatorName: generatorInvocation.name,
                 generatorVersion: generatorInvocation.version,
-                generatorConfig: generatorInvocation.config
+                generatorConfig: generatorInvocation.config,
+                originGitCommit: getOriginGitCommit()
             }
         });
 

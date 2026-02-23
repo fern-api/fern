@@ -88,6 +88,9 @@ types:
       generatorConfig:
         type: optional<unknown>
         docs: The custom configuration passed to the generator from generators.yml.
+      originGitCommit:
+        type: optional<string>
+        docs: The git commit hash of the origin repo at the time of generation.
 
   ReadmeConfig:
     docs: |

@@ -21,6 +21,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { getOriginGitCommit } from "./getOriginGitCommit.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -92,7 +93,8 @@ export async function runLocalGenerationForWorkspace({
                         cliVersion: workspace.cliVersion,
                         generatorName: generatorInvocation.name,
                         generatorVersion: generatorInvocation.version,
-                        generatorConfig: generatorInvocation.config
+                        generatorConfig: generatorInvocation.config,
+                        originGitCommit: getOriginGitCommit()
                     }
                 });
 

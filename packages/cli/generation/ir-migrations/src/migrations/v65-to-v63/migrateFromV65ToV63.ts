@@ -49,8 +49,11 @@ export const V65_TO_V63_MIGRATION: IrMigration<
         v65: IrVersions.V65.IntermediateRepresentation,
         context: IrMigrationContext
     ): IrVersions.V63.ir.IntermediateRepresentation => {
+        const { originGitCommit: _, ...generationMetadataWithoutOriginGitCommit } =
+            v65.generationMetadata ?? ({} as IrVersions.V65.GenerationMetadata);
         return {
             ...v65,
+            generationMetadata: v65.generationMetadata != null ? generationMetadataWithoutOriginGitCommit : undefined,
             services: mapValues(v65.services, (service) => convertHttpService(service, context))
         };
     }

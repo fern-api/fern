@@ -9,6 +9,7 @@ import {
 } from "@fern-api/ir-migrations";
 import { IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { getOriginGitCommit } from "./getOriginGitCommit.js";
 
 export declare namespace getIntermediateRepresentation {
     interface Return {
@@ -61,7 +62,8 @@ export async function getIntermediateRepresentation({
                 cliVersion: workspace.cliVersion,
                 generatorName: generatorInvocation.name,
                 generatorVersion: generatorInvocation.version,
-                generatorConfig: generatorInvocation.config
+                generatorConfig: generatorInvocation.config,
+                originGitCommit: getOriginGitCommit()
             }
         });
     if (sourceConfig != null) {
@@ -71,7 +73,8 @@ export async function getIntermediateRepresentation({
         cliVersion: workspace.cliVersion,
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version,
-        generatorConfig: generatorInvocation.config
+        generatorConfig: generatorInvocation.config,
+        originGitCommit: getOriginGitCommit()
     };
 
     context.logger.debug("Generated IR");

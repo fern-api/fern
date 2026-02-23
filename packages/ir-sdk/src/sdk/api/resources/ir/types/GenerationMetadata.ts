@@ -13,4 +13,6 @@ export interface GenerationMetadata {
     generatorVersion: string;
     /** The custom configuration passed to the generator from generators.yml. */
     generatorConfig: unknown | undefined;
+    /** The git commit hash of the origin repo at the time of generation. */
+    originGitCommit: string | undefined;
 }
