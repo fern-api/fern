@@ -9,6 +9,7 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.union.types.mixed_type import MixedType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -240,6 +241,43 @@ class RawContainerClient:
                     typing.Dict[str, ObjectWithRequiredField],
                     construct_type(
                         type_=typing.Dict[str, ObjectWithRequiredField],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_and_return_map_of_prim_to_undiscriminated_union(
+        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.Dict[str, MixedType]]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[str, MixedType]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Dict[str, MixedType]]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "container/map-prim-to-union",
+            method="POST",
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[str, MixedType],
+                    construct_type(
+                        type_=typing.Dict[str, MixedType],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -518,6 +556,43 @@ class AsyncRawContainerClient:
                     typing.Dict[str, ObjectWithRequiredField],
                     construct_type(
                         type_=typing.Dict[str, ObjectWithRequiredField],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_map_of_prim_to_undiscriminated_union(
+        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.Dict[str, MixedType]]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[str, MixedType]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Dict[str, MixedType]]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "container/map-prim-to-union",
+            method="POST",
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[str, MixedType],
+                    construct_type(
+                        type_=typing.Dict[str, MixedType],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

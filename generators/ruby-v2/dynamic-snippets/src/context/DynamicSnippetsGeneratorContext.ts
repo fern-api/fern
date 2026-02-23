@@ -46,11 +46,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootModuleName(): string {
-        // Use moduleName config first, then clientModuleName, then organization
+        // Use moduleName config first, then organization
         // This aligns with AbstractRubyGeneratorContext.getRootModuleName()
-        return upperFirst(
-            this.customConfig?.moduleName ?? this.customConfig?.clientModuleName ?? this.config.organization
-        );
+        return upperFirst(this.customConfig?.moduleName ?? this.config.organization);
     }
 
     public isSingleEnvironmentID(

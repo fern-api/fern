@@ -633,7 +633,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         list: FernIr.dynamic.TypeReference.List;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: list });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: list.value });
         if (fieldName == null) {
             return undefined;
         }
@@ -657,7 +657,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: typeReference.value });
         if (fieldName == null) {
             return undefined;
         }
@@ -669,7 +669,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         set: FernIr.dynamic.TypeReference.Set;
     }): string | undefined {
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set });
+        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: set.value });
         if (fieldName == null) {
             return undefined;
         }

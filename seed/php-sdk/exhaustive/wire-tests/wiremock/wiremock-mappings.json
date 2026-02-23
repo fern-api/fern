@@ -157,6 +157,32 @@
       }
     },
     {
+      "id": "eaf9315d-55c4-4434-8004-a70c25af5656",
+      "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default",
+      "request": {
+        "urlPathTemplate": "/container/map-prim-to-union",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": 1.1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "eaf9315d-55c4-4434-8004-a70c25af5656",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e5271904-de0a-425f-940d-d6f6bde34755",
       "name": "getAndReturnOptional - default",
       "request": {
@@ -1396,6 +1422,6 @@
     }
   ],
   "meta": {
-    "total": 51
+    "total": 52
   }
 }

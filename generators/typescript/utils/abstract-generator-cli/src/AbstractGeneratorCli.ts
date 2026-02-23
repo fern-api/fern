@@ -118,6 +118,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
+            const codeGenStartTime = Date.now();
             const typescriptProject = await this.generateTypescriptProject({
                 config,
                 customConfig,
@@ -125,6 +126,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 generatorContext,
                 intermediateRepresentation: ir
             });
+            logger.info(`[TIMING] code generation took ${Date.now() - codeGenStartTime}ms`);
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
             }

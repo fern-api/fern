@@ -95,40 +95,35 @@ describe("GraphQL Operation Layout", () => {
         );
         expect(userOperationsSection).toBeDefined();
 
-        if (userOperationsSection && userOperationsSection.type === "apiPackage") {
-            // Should contain getUserProfile, createUser, updateUserProfile operations
-            expect(userOperationsSection.children).toHaveLength(3);
+        expect.assert(userOperationsSection?.type === "apiPackage");
+        // Should contain getUserProfile, createUser, updateUserProfile operations
+        expect(userOperationsSection.children).toHaveLength(3);
 
-            const getUserProfileOp = userOperationsSection.children.find(
-                (child) => child.type === "graphql" && child.title === "Get User Profile"
-            );
-            expect(getUserProfileOp).toBeDefined();
+        const getUserProfileOp = userOperationsSection.children.find(
+            (child) => child.type === "graphql" && child.title === "Get User Profile"
+        );
+        expect(getUserProfileOp).toBeDefined();
 
-            const createUserOp = userOperationsSection.children.find(
-                (child) => child.type === "graphql" && child.title === "Create New User"
-            );
-            expect(createUserOp).toBeDefined();
-
-            if (createUserOp && createUserOp.type === "graphql") {
-                // Should use custom slug
-                expect(createUserOp.slug).toContain("create-user");
-            }
-        }
+        const createUserOp = userOperationsSection.children.find(
+            (child) => child.type === "graphql" && child.title === "Create New User"
+        );
+        expect.assert(createUserOp?.type === "graphql");
+        // Should use custom slug
+        expect(createUserOp.slug).toContain("create-user");
 
         const adminOperationsSection = node.children.find(
             (child) => child.type === "apiPackage" && child.title === "Admin Operations"
         );
         expect(adminOperationsSection).toBeDefined();
 
-        if (adminOperationsSection && adminOperationsSection.type === "apiPackage") {
-            // Should contain getSystemInfo operation (resetSystem is hidden)
-            expect(adminOperationsSection.children.length).toBeGreaterThan(0);
+        expect.assert(adminOperationsSection?.type === "apiPackage");
+        // Should contain getSystemInfo operation (resetSystem is hidden)
+        expect(adminOperationsSection.children.length).toBeGreaterThan(0);
 
-            const getSystemInfoOp = adminOperationsSection.children.find(
-                (child) => child.type === "graphql" && child.title === "System Information"
-            );
-            expect(getSystemInfoOp).toBeDefined();
-        }
+        const getSystemInfoOp = adminOperationsSection.children.find(
+            (child) => child.type === "graphql" && child.title === "System Information"
+        );
+        expect(getSystemInfoOp).toBeDefined();
 
         // Check for the subscription operation at root level
         const userUpdatesOp = node.children.find(
@@ -136,9 +131,8 @@ describe("GraphQL Operation Layout", () => {
         );
         expect(userUpdatesOp).toBeDefined();
 
-        if (userUpdatesOp && userUpdatesOp.type === "graphql") {
-            expect(userUpdatesOp.availability).toBe("beta");
-        }
+        expect.assert(userUpdatesOp?.type === "graphql");
+        expect(userUpdatesOp.availability).toBe("beta");
     });
 
     it("should handle invalid operation format", async () => {

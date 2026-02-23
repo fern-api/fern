@@ -1,5 +1,6 @@
 imports:
   objects: ../types/object.yml
+  unions: ../types/union.yml
 
 service:
   auth: true
@@ -40,6 +41,12 @@ service:
       method: POST
       request: map<string, objects.ObjectWithRequiredField>
       response: map<string, objects.ObjectWithRequiredField>
+
+    getAndReturnMapOfPrimToUndiscriminatedUnion:
+      path: /map-prim-to-union
+      method: POST
+      request: map<string, unions.MixedType>
+      response: map<string, unions.MixedType>
 
     getAndReturnOptional:
       path: /opt-objects

@@ -1,4 +1,0 @@
-{
-  "ignores": ["@types/lodash-es", "lodash-es"],
-  "ignore-patterns": ["lib", "dist"]
-}

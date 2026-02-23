@@ -85,6 +85,7 @@
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
+                "terminator": undefined,
                 "type": "string",
               },
               "source": {

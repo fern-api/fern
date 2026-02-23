@@ -13,6 +13,7 @@ import { HttpResponseSchema } from "../../service/types/HttpResponseSchema.js";
 import { HttpResponseStreamSchema } from "../../service/types/HttpResponseStreamSchema.js";
 import { WebhookMethodSchema } from "./WebhookMethodSchema.js";
 import { WebhookPayloadSchema } from "./WebhookPayloadSchema.js";
+import { WebhookSignatureSchema } from "./WebhookSignatureSchema.js";
 
 export const WebhookSchema: core.serialization.ObjectSchema<
     serializers.WebhookSchema.Raw,
@@ -22,6 +23,7 @@ export const WebhookSchema: core.serialization.ObjectSchema<
         method: WebhookMethodSchema,
         headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         payload: WebhookPayloadSchema,
+        signature: WebhookSignatureSchema.optional(),
         response: HttpResponseSchema.optional(),
         "response-stream": HttpResponseStreamSchema.optional(),
         examples: core.serialization.list(ExampleWebhookCallSchema).optional(),
@@ -36,6 +38,7 @@ export declare namespace WebhookSchema {
         method: WebhookMethodSchema.Raw;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
         payload: WebhookPayloadSchema.Raw;
+        signature?: WebhookSignatureSchema.Raw | null;
         response?: HttpResponseSchema.Raw | null;
         "response-stream"?: HttpResponseStreamSchema.Raw | null;
         examples?: ExampleWebhookCallSchema.Raw[] | null;

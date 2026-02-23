@@ -16,14 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithMapOfMap{
-        Map: map[string]map[string]string{
-            "map": map[string]string{
-                "map": "map",
-            },
-        },
+    request := &types.ObjectWithRequiredField{
+        FieldString: "string",
     }
-    client.Endpoints.Object.GetAndReturnWithMapOfMap(
+    client.Endpoints.Object.GetAndReturnWithRequiredField(
         context.TODO(),
         request,
     )

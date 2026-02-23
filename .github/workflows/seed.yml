@@ -19,6 +19,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 60
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -46,7 +51,7 @@ jobs:
     needs: [setup]
     strategy:
       matrix:
-        generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
+        generator-name: [seed, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
         include:
           - files: |
               packages/seed/
@@ -55,11 +60,6 @@ jobs:
               test-definitions/
               test-definitions-openapi/
             generator-name: seed
-          - files: |
-              generators/ruby/
-              seed/ruby-sdk/seed.yml
-              seed/ruby-model/seed.yml
-            generator-name: ruby
           - files: |
               generators/ruby-v2/
               seed/ruby-sdk-v2/seed.yml
@@ -98,7 +98,6 @@ jobs:
               generators/go-v2/
               seed/go-sdk/seed.yml
               seed/go-model/seed.yml
-              seed/go-fiber/seed.yml
             generator-name: go
           - files: |
               generators/csharp/
@@ -121,7 +120,6 @@ jobs:
             generator-name: rust
     outputs:
       seed: ${{ steps.set-output.outputs.seed-changes }}
-      ruby: ${{ steps.set-output.outputs.ruby-changes }}
       ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
       openapi: ${{ steps.set-output.outputs.openapi-changes }}
       python: ${{ steps.set-output.outputs.python-changes }}
@@ -208,8 +206,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
-      ruby-model: ${{ steps.create-dynamic-matrix.outputs.ruby-model-test-matrix }}
-      ruby-sdk: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-test-matrix }}
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
       pydantic: ${{ steps.create-dynamic-matrix.outputs.pydantic-test-matrix }}
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
@@ -221,7 +217,6 @@ jobs:
       java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
       ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
-      go-fiber: ${{ steps.create-dynamic-matrix.outputs.go-fiber-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
       go-sdk: ${{ steps.create-dynamic-matrix.outputs.go-sdk-test-matrix }}
       csharp-model: ${{ steps.create-dynamic-matrix.outputs.csharp-model-test-matrix }}
@@ -261,7 +256,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-model ruby-sdk ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-fiber go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do
@@ -276,66 +271,6 @@ jobs:
             echo "${GEN}-test-matrix=$MATRIX" >> $GITHUB_OUTPUT
             echo "Set output for $GEN: $MATRIX"
           done
-
-  ruby-model:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
-    if: >-
-      ${{
-        ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ruby-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: ruby-model
-          generator-path: generators/ruby
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
-  ruby-sdk:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
-    if: >-
-      ${{
-        ((needs.changes.outputs.ruby == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.ruby-sdk != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: ruby-sdk
-          generator-path: generators/ruby
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   ruby-sdk-v2:
     runs-on: ubuntu-latest
@@ -670,35 +605,6 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
-  go-fiber:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    needs: [setup, changes, get-all-test-matrices]
-    if: >-
-      ${{
-        ((needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.go-fiber != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: go-fiber
-          generator-path: generators/go generators/go-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -976,8 +882,6 @@ jobs:
     timeout-minutes: 3
     needs:
       [
-        ruby-model,
-        ruby-sdk,
         ruby-sdk-v2,
         pydantic,
         python-sdk,
@@ -989,7 +893,6 @@ jobs:
         java-spring,
         ts-sdk,
         ts-express,
-        go-fiber,
         go-model,
         go-sdk,
         csharp-model,
@@ -1009,8 +912,6 @@ jobs:
       matrix:
         job-name:
           [
-            ruby-model,
-            ruby-sdk,
             ruby-sdk-v2,
             pydantic,
             python-sdk,
@@ -1022,8 +923,7 @@ jobs:
             java-spring,
             ts-sdk,
             ts-express,
-            go-fiber,
-            go-model,
+                go-model,
             go-sdk,
             csharp-model,
             csharp-sdk,
@@ -1034,8 +934,6 @@ jobs:
             rust-sdk
           ]
     outputs:
-      ruby-model-passing: ${{ steps.report-results.outputs.ruby-model-passing }}
-      ruby-sdk-passing: ${{ steps.report-results.outputs.ruby-sdk-passing }}
       ruby-sdk-v2-passing: ${{ steps.report-results.outputs.ruby-sdk-v2-passing }}
       pydantic-passing: ${{ steps.report-results.outputs.pydantic-passing }}
       python-sdk-passing: ${{ steps.report-results.outputs.python-sdk-passing }}
@@ -1047,7 +945,6 @@ jobs:
       java-spring-passing: ${{ steps.report-results.outputs.java-spring-passing }}
       ts-sdk-passing: ${{ steps.report-results.outputs.ts-sdk-passing }}
       ts-express-passing: ${{ steps.report-results.outputs.ts-express-passing }}
-      go-fiber-passing: ${{ steps.report-results.outputs.go-fiber-passing }}
       go-model-passing: ${{ steps.report-results.outputs.go-model-passing }}
       go-sdk-passing: ${{ steps.report-results.outputs.go-sdk-passing }}
       csharp-model-passing: ${{ steps.report-results.outputs.csharp-model-passing }}
@@ -1094,8 +991,6 @@ jobs:
       matrix:
         seed-generator-alias:
           [
-            ruby-model,
-            ruby-sdk,
             ruby-sdk-v2,
             pydantic,
             python-sdk,
@@ -1107,8 +1002,7 @@ jobs:
             java-spring,
             ts-sdk,
             ts-express,
-            go-fiber,
-            go-model,
+                go-model,
             go-sdk,
             csharp-model,
             csharp-sdk,
@@ -1119,14 +1013,6 @@ jobs:
             rust-sdk
           ]
     outputs:
-      ruby-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-model-total-fixtures-count }}
-      ruby-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ruby-model-allowed-failures }}
-      ruby-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-model-allowed-failures-count }}
-
-      ruby-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-total-fixtures-count }}
-      ruby-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-allowed-failures }}
-      ruby-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-allowed-failures-count }}
-
       ruby-sdk-v2-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-total-fixtures-count }}
       ruby-sdk-v2-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-allowed-failures }}
       ruby-sdk-v2-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-allowed-failures-count }}
@@ -1171,9 +1057,6 @@ jobs:
       ts-express-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures }}
       ts-express-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures-count }}
 
-      go-fiber-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-fiber-total-fixtures-count }}
-      go-fiber-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.go-fiber-allowed-failures }}
-      go-fiber-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.go-fiber-allowed-failures-count }}
 
       go-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-model-total-fixtures-count }}
       go-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.go-model-allowed-failures }}
@@ -1273,8 +1156,6 @@ jobs:
       [
         setup,
         seed-test-results,
-        ruby-model,
-        ruby-sdk,
         ruby-sdk-v2,
         pydantic,
         python-sdk,
@@ -1286,7 +1167,6 @@ jobs:
         java-spring,
         ts-sdk,
         ts-express,
-        go-fiber,
         go-model,
         go-sdk,
         csharp-model,
@@ -1304,8 +1184,6 @@ jobs:
       matrix:
         seed-generator-alias:
           [
-            ruby-model,
-            ruby-sdk,
             ruby-sdk-v2,
             pydantic,
             python-sdk,
@@ -1317,8 +1195,7 @@ jobs:
             java-spring,
             ts-sdk,
             ts-express,
-            go-fiber,
-            go-model,
+                go-model,
             go-sdk,
             csharp-model,
             csharp-sdk,

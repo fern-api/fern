@@ -5,6 +5,7 @@
 "/container/set-of-objects"
 "/container/map-prim-to-prim"
 "/container/map-prim-to-object"
+"/container/map-prim-to-union"
 "/container/opt-objects"
 
 // service_endpoints/content-type

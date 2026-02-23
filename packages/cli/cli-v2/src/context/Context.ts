@@ -11,25 +11,29 @@ import { Cache } from "../cache/index.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
 import { CliError } from "../errors/CliError.js";
 import { Target } from "../sdk/config/Target.js";
+import { TelemetryClient } from "../telemetry/index.js";
 import { Icons } from "../ui/format.js";
 import type { Workspace } from "../workspace/Workspace.js";
 import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 import { TaskContextAdapter } from "./adapter/TaskContextAdapter.js";
+import { CommandInfo, parseCommandInfo } from "./CommandInfo.js";
 import { LogFileWriter } from "./LogFileWriter.js";
 
 export class Context {
-    private ttyAwareLogger: TtyAwareLogger;
     private shutdownCallbacks: Array<() => void> = [];
     private isShuttingDown = false;
     private logFilePathPrinted = false;
 
     public readonly cwd: AbsoluteFilePath;
     public readonly logLevel: LogLevel;
+    public readonly info: CommandInfo;
     public readonly stdout: Logger;
     public readonly stderr: Logger;
     public readonly cache: Cache;
-    public readonly logFileWriter: LogFileWriter;
+    public readonly logs: LogFileWriter;
+    public readonly telemetry: TelemetryClient;
     public readonly tokenService: TokenService;
+    public readonly ttyAwareLogger: TtyAwareLogger;
 
     constructor({
         stdout,
@@ -44,11 +48,13 @@ export class Context {
     }) {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
-        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
+        this.info = parseCommandInfo(process.argv);
         this.stdout = createLogger((level: LogLevel, ...args: string[]) => this.log(level, ...args));
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
         this.cache = new Cache({ logger: this.stderr });
-        this.logFileWriter = new LogFileWriter(this.cache.logs.absoluteFilePath);
+        this.logs = new LogFileWriter(this.cache.logs.absoluteFilePath);
+        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
+        this.telemetry = new TelemetryClient({ isTTY: this.isTTY });
         this.tokenService = new TokenService({ credential: new CredentialStore() });
     }
 
@@ -59,30 +65,19 @@ export class Context {
         return this.ttyAwareLogger.isTTY;
     }
 
-    /**
-     * Get the TtyAwareLogger for coordinated task display.
-     * Use this to register tasks that need TTY-aware rendering.
-     */
-    public getTtyAwareLogger(): TtyAwareLogger {
-        return this.ttyAwareLogger;
-    }
-
-    /**
-     * Finish the TtyAwareLogger (call when exiting the CLI).
-     */
-    public finish(): void {
-        this.ttyAwareLogger.finish();
-    }
-
     public async loadWorkspaceOrThrow(): Promise<Workspace> {
         const schemaLoader = new FernYmlSchemaLoader({ cwd: this.cwd });
         const fernYml = await schemaLoader.loadOrThrow();
+
+        this.telemetry.tag({ org: fernYml.data.org });
+
         const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
         return await loader.loadOrThrow({ fernYml });
     }
 
     public async loadWorkspace(): Promise<WorkspaceLoader.Result | undefined> {
         const schemaLoader = new FernYmlSchemaLoader({ cwd: this.cwd });
+
         const loadResult = await schemaLoader.load();
         if (loadResult.type === "notFound") {
             return undefined;
@@ -90,6 +85,9 @@ export class Context {
         if (loadResult.type === "failure") {
             return { success: false, issues: loadResult.issues };
         }
+
+        this.telemetry.tag({ org: loadResult.data.org });
+
         const loader = new WorkspaceLoader({ cwd: this.cwd, logger: this.stderr });
         return await loader.load({ fernYml: loadResult });
     }
@@ -143,91 +141,6 @@ export class Context {
         return { type: "user", value: token };
     }
 
-    /**
-     * Register a callback to run during graceful shutdown (e.g. SIGINT).
-     * Callbacks are invoked synchronously in registration order.
-     */
-    public onShutdown(callback: () => void): void {
-        this.shutdownCallbacks.push(callback);
-    }
-
-    /**
-     * Run all registered shutdown callbacks, then finish the logger.
-     */
-    public shutdown(): void {
-        if (this.isShuttingDown) {
-            return;
-        }
-        this.isShuttingDown = true;
-        for (const callback of this.shutdownCallbacks) {
-            try {
-                callback();
-            } catch {
-                // Swallow errors to ensure we always restore the terminal.
-            }
-        }
-        this.finish();
-    }
-
-    /**
-     * Print the log file path to the given stream (defaults to stderr).
-     */
-    public printLogFilePath(stream: NodeJS.WriteStream): void {
-        if (this.logFilePathPrinted) {
-            return;
-        }
-        const logFilePath = this.getLogFilePath();
-        if (logFilePath == null) {
-            return;
-        }
-        this.logFilePathPrinted = true;
-        stream.write(`\n${chalk.dim(`Logs written to: ${logFilePath}`)}\n`);
-    }
-
-    /**
-     * Get the log file path if logs have been written.
-     */
-    public getLogFilePath(): AbsoluteFilePath | undefined {
-        if (this.logFileWriter.hasLogs()) {
-            return this.logFileWriter.logFilePath;
-        }
-        return undefined;
-    }
-
-    public resolveTargetOutputs(target: Target): string[] | undefined {
-        const outputs: string[] = [];
-        if (target.output.path != null) {
-            const outputPath = this.resolveOutputFilePath(target.output.path);
-            if (outputPath != null) {
-                outputs.push(outputPath.toString());
-            }
-        }
-        if (target.output.git != null && target.output.path == null) {
-            const git = target.output.git;
-            outputs.push(schemas.isGitOutputSelfHosted(git) ? git.uri : git.repository);
-        }
-        return outputs;
-    }
-
-    /**
-     * Resolve an output file path relative to the current working directory.
-     *
-     * If the path starts with "/", it's treated as absolute.
-     * Otherwise, it's resolved relative to cwd.
-     *
-     * @param outputPath - The output path to resolve (or undefined)
-     * @returns Absolute path, or undefined if outputPath is undefined
-     */
-    public resolveOutputFilePath(outputPath: string | undefined): AbsoluteFilePath | undefined {
-        if (outputPath == null) {
-            return undefined;
-        }
-        if (outputPath.startsWith("/")) {
-            return AbsoluteFilePath.of(outputPath);
-        }
-        return join(this.cwd, RelativeFilePath.of(outputPath));
-    }
-
     private async promptAndLogin(): Promise<FernUserToken> {
         const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
             {
@@ -268,6 +181,87 @@ export class Context {
         this.stderr.info(`${Icons.success} Logged in as ${chalk.bold(email)}`);
 
         return { type: "user", value: accessToken };
+    }
+
+    public resolveTargetOutputs(target: Target): string[] | undefined {
+        const outputs: string[] = [];
+        if (target.output.path != null) {
+            const outputPath = this.resolveOutputFilePath(target.output.path);
+            if (outputPath != null) {
+                outputs.push(outputPath.toString());
+            }
+        }
+        if (target.output.git != null && target.output.path == null) {
+            const git = target.output.git;
+            outputs.push(schemas.isGitOutputSelfHosted(git) ? git.uri : git.repository);
+        }
+        return outputs;
+    }
+
+    /**
+     * Resolve an output file path relative to the current working directory.
+     *
+     * If the path starts with "/", it's treated as absolute.
+     * Otherwise, it's resolved relative to cwd.
+     *
+     * @param outputPath - The output path to resolve (or undefined)
+     * @returns Absolute path, or undefined if outputPath is undefined
+     */
+    public resolveOutputFilePath(outputPath: string | undefined): AbsoluteFilePath | undefined {
+        if (outputPath == null) {
+            return undefined;
+        }
+        if (outputPath.startsWith("/")) {
+            return AbsoluteFilePath.of(outputPath);
+        }
+        return join(this.cwd, RelativeFilePath.of(outputPath));
+    }
+
+    /**
+     * Run all registered shutdown callbacks, then finish the logger.
+     */
+    public shutdown(): void {
+        if (this.isShuttingDown) {
+            return;
+        }
+        this.isShuttingDown = true;
+        for (const callback of this.shutdownCallbacks) {
+            try {
+                callback();
+            } catch {
+                // Swallow errors to ensure we always restore the terminal.
+            }
+        }
+        this.finish();
+    }
+
+    /**
+     * Register a callback to run during graceful shutdown (e.g. SIGINT).
+     * Callbacks are invoked synchronously in registration order.
+     */
+    public onShutdown(callback: () => void): void {
+        this.shutdownCallbacks.push(callback);
+    }
+
+    /**
+     * Print the log file path to the given stream (defaults to stderr).
+     */
+    public printLogFilePath(stream: NodeJS.WriteStream): void {
+        if (this.logFilePathPrinted) {
+            return;
+        }
+        if (this.logs.empty()) {
+            return;
+        }
+        this.logFilePathPrinted = true;
+        stream.write(`\n${chalk.dim(`Logs written to: ${this.logs.absoluteFilePath}`)}\n`);
+    }
+
+    /**
+     * Finish the command execution (called when exiting the CLI).
+     */
+    public finish(): void {
+        this.ttyAwareLogger.finish();
     }
 
     private log(level: LogLevel, ...parts: string[]) {
