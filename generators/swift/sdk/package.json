@@ -10,17 +10,16 @@
   "type": "module",
   "exports": {
     ".": {
-      "development": "./src/index.ts",
-      "source": "./src/index.ts",
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
     }
   },
   "main": "lib/cli.js",
-  "source": "src/cli.ts",
   "types": "lib/cli.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",

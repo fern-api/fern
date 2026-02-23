@@ -11,22 +11,21 @@
   "type": "module",
   "exports": {
     ".": {
-      "development": "./src/index.ts",
-      "source": "./src/index.ts",
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
     }
   },
   "main": "lib/index.js",
-  "source": "src/index.ts",
   "types": "lib/index.d.ts",
   "bin": {
     "fern:dev": "./dist/cli.cjs",
     "fern:local": "./dist/cli.cjs",
     "fern:prod": "./dist/cli.cjs"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",

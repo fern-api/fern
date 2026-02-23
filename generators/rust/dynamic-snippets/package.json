@@ -9,8 +9,6 @@
   },
   "exports": {
     ".": {
-      "development": "./src/index.ts",
-      "source": "./src/index.ts",
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
@@ -18,7 +16,6 @@
   },
   "main": "lib/index.js",
   "module": "lib/index.js",
-  "source": "src/index.ts",
   "types": "lib/index.d.ts",
   "files": [
     "lib"

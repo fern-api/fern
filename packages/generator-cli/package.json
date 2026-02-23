@@ -8,12 +8,14 @@
   },
   "type": "commonjs",
   "main": "dist/api.js",
-  "source": "src/index.ts",
   "types": "dist/api.d.ts",
   "bin": {
     "generator-cli": "bin/cli"
   },
-  "files": ["bin", "dist"],
+  "files": [
+    "bin",
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "depcheck": "knip --config ../../knip.json --no-config-hints",

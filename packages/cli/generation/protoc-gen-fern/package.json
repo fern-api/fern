@@ -11,15 +11,12 @@
   "type": "module",
   "exports": {
     ".": {
-      "development": "./src/index.ts",
-      "source": "./src/index.ts",
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
     }
   },
   "main": "lib/index.js",
-  "source": "src/index.ts",
   "types": "lib/index.d.ts",
   "bin": {
     "protoc-gen-fern": "bin/protoc-gen-fern"
