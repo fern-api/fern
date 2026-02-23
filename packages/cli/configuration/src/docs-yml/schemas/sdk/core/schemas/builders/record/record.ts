@@ -1,12 +1,10 @@
 import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
+import { entries } from "../../utils/entries.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 import { isPlainObject } from "../../utils/isPlainObject.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 import type { BaseRecordSchema, RecordSchema } from "./types.js";
-
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const _hasOwn = Object.prototype.hasOwnProperty;
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
@@ -81,42 +79,51 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
         };
     }
 
-    const result = {} as Record<TransformedKey, TransformedValue>;
-    const errors: ValidationError[] = [];
-
-    for (const stringKey in value) {
-        if (!_hasOwn.call(value, stringKey)) {
-            continue;
-        }
-        const entryValue = (value as Record<string, unknown>)[stringKey];
-        if (entryValue === undefined) {
-            continue;
-        }
-
-        let key: string | number = stringKey;
-        if (isKeyNumeric) {
-            const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
-            if (!Number.isNaN(numberKey)) {
-                key = numberKey;
+    return entries(value).reduce<MaybeValid<Record<TransformedKey, TransformedValue>>>(
+        (accPromise, [stringKey, value]) => {
+            if (value === undefined) {
+                return accPromise;
             }
-        }
-        const transformedKey = transformKey(key);
-        const transformedValue = transformValue(entryValue, key);
 
-        if (transformedKey.ok && transformedValue.ok) {
-            result[transformedKey.value] = transformedValue.value;
-        } else {
+            const acc = accPromise;
+
+            let key: string | number = stringKey;
+            if (isKeyNumeric) {
+                const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
+                if (!Number.isNaN(numberKey)) {
+                    key = numberKey;
+                }
+            }
+            const transformedKey = transformKey(key);
+
+            const transformedValue = transformValue(value, key);
+
+            if (acc.ok && transformedKey.ok && transformedValue.ok) {
+                return {
+                    ok: true,
+                    value: {
+                        ...acc.value,
+                        [transformedKey.value]: transformedValue.value,
+                    },
+                };
+            }
+
+            const errors: ValidationError[] = [];
+            if (!acc.ok) {
+                errors.push(...acc.errors);
+            }
             if (!transformedKey.ok) {
                 errors.push(...transformedKey.errors);
             }
             if (!transformedValue.ok) {
                 errors.push(...transformedValue.errors);
             }
-        }
-    }
 
-    if (errors.length === 0) {
-        return { ok: true, value: result };
-    }
-    return { ok: false, errors };
+            return {
+                ok: false,
+                errors,
+            };
+        },
+        { ok: true, value: {} as Record<TransformedKey, TransformedValue> },
+    );
 }

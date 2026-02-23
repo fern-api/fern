@@ -16,9 +16,6 @@ import type {
     UnionSubtypes,
 } from "./types.js";
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const _hasOwn = Object.prototype.hasOwnProperty;
-
 export function union<D extends string | Discriminant<any, any>, U extends UnionSubtypes<any>>(
     discriminant: D,
     union: U,
@@ -115,13 +112,7 @@ function transformAndValidateUnion<
         };
     }
 
-    const discriminantValue = value[discriminant];
-    const additionalProperties: Record<string, unknown> = {};
-    for (const key in value) {
-        if (_hasOwn.call(value, key) && key !== discriminant) {
-            additionalProperties[key] = value[key];
-        }
-    }
+    const { [discriminant]: discriminantValue, ...additionalProperties } = value;
 
     if (discriminantValue == null) {
         return {

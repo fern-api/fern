@@ -4,11 +4,14 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
         return false;
     }
 
-    const proto = Object.getPrototypeOf(value);
-    if (proto === null) {
+    if (Object.getPrototypeOf(value) === null) {
         return true;
     }
 
-    // Check that the prototype chain has exactly one level (i.e., proto is Object.prototype)
-    return Object.getPrototypeOf(proto) === null;
+    let proto = value;
+    while (Object.getPrototypeOf(proto) !== null) {
+        proto = Object.getPrototypeOf(proto);
+    }
+
+    return Object.getPrototypeOf(value) === proto;
 }
