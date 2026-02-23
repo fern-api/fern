@@ -438,7 +438,8 @@ export class LocalTaskHandler {
             }
             return !contents.includes("README.md");
         } catch {
-            return false;
+            // If we can't check the generated output, preserve the existing README to be safe
+            return true;
         }
     }
 
