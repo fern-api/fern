@@ -1,21 +1,49 @@
 import { exec } from "child_process";
+import { readFileSync } from "fs";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
+import YAML from "yaml";
 import packageJson from "./package.json" with { type: "json" };
 
 const execAsync = promisify(exec);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Read the pnpm catalog from pnpm-workspace.yaml to resolve "catalog:" references
+const workspaceYamlPath = path.join(__dirname, "../../../pnpm-workspace.yaml");
+const workspaceYaml = YAML.parse(readFileSync(workspaceYamlPath, "utf-8"));
+const pnpmCatalog = workspaceYaml.catalog ?? {};
+
+/**
+ * Resolve a version string, replacing pnpm "catalog:" protocol references
+ * with the actual version from the pnpm-workspace.yaml catalog.
+ */
+function resolveCatalogVersion(packageName, version) {
+    if (version === "catalog:") {
+        const catalogVersion = pnpmCatalog[packageName];
+        if (!catalogVersion) {
+            throw new Error(
+                `Package "${packageName}" uses "catalog:" protocol but is not defined in the pnpm-workspace.yaml catalog.`
+            );
+        }
+        return catalogVersion;
+    }
+    return version;
+}
+
 /**
  * Get a dependency version from package.json, preferring dependencies over devDependencies.
- * This ensures we don't miss runtime dependencies regardless of where they're declared.
+ * Resolves pnpm "catalog:" protocol references to actual versions.
  */
 function getDependencyVersion(packageName) {
-    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+    const version = packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+    if (version == null) {
+        return undefined;
+    }
+    return resolveCatalogVersion(packageName, version);
 }
 
 /**
