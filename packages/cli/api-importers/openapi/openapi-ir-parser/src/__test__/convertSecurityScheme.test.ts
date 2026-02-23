@@ -65,7 +65,7 @@ describe("convertSecurityScheme", () => {
         expect(result.tokenEnvVar).toBeUndefined();
     });
 
-    it("should throw an error when resolving reference without context",() => {
+    it("should throw an error when resolving reference without context", () => {
         const securitySchemeRef: OpenAPIV3.ReferenceObject = {
             $ref: "#/components/securitySchemes/BearerAuth"
         };

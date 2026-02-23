@@ -1103,7 +1103,7 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
         });
     });
 
-    it("should use index.md as section overview for subdirectories",async () => {
+    it("should use index.md as section overview for subdirectories", async () => {
         let callCount = 0;
         const mockGetDir = async (path: AbsoluteFilePath) => {
             callCount++;
@@ -1157,7 +1157,7 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
         });
     });
 
-    it("should exclude index.mdx from section contents",async () => {
+    it("should exclude index.mdx from section contents", async () => {
         let callCount = 0;
         const mockGetDir = async (path: AbsoluteFilePath) => {
             callCount++;
@@ -1211,7 +1211,7 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
         expect(titles).toContain("Errors");
     });
 
-    it("should handle nested subdirectories with index.mdx",async () => {
+    it("should handle nested subdirectories with index.mdx", async () => {
         let callCount = 0;
         const mockGetDir = async (path: AbsoluteFilePath) => {
             callCount++;

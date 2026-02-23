@@ -179,9 +179,7 @@ describe("convertGeneratorsConfiguration", () => {
         expect.assert(output?.type === "githubV2");
         const publishInfo = output.githubV2.publishInfo;
         expect.assert(publishInfo?.type === "maven");
-        expect(publishInfo.registryUrl).toEqual(
-            "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-        );
+        expect(publishInfo.registryUrl).toEqual("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/");
     });
 
     it("License Metadata", async () => {
