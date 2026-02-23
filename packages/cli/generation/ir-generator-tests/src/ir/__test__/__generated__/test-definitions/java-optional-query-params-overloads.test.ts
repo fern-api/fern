@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-optional-query-params-overloads", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-optional-query-params-overloads"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-optional-query-params-overloads"
+    });
 }, 30000);

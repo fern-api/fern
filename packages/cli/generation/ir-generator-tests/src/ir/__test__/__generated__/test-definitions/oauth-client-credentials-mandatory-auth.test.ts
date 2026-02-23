@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("oauth-client-credentials-mandatory-auth", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "oauth-client-credentials-mandatory-auth"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "oauth-client-credentials-mandatory-auth"
+    });
 }, 30000);

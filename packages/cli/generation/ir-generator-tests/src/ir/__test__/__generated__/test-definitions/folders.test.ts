@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("folders", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "folders"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "folders"
+    });
 }, 30000);

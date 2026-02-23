@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("inferred-auth-explicit", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "inferred-auth-explicit"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "inferred-auth-explicit"
+    });
 }, 30000);

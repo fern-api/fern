@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-path-param-key-conflict", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-path-param-key-conflict"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-path-param-key-conflict"
+    });
 }, 30000);

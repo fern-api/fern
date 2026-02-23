@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("csharp-grpc-proto", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "csharp-grpc-proto"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "csharp-grpc-proto"
+    });
 }, 30000);

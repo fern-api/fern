@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("csharp-namespace-collision", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "csharp-namespace-collision"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "csharp-namespace-collision"
+    });
 }, 30000);

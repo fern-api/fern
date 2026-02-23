@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("java-nullable-named-request-types", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-nullable-named-request-types"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-nullable-named-request-types"
+    });
 }, 30000);

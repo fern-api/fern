@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("ruby-reserved-word-properties", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "ruby-reserved-word-properties"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "ruby-reserved-word-properties"
+    });
 }, 30000);

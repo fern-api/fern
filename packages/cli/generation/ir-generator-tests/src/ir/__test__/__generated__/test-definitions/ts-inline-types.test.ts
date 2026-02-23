@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("ts-inline-types", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "ts-inline-types"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "ts-inline-types"
+    });
 }, 30000);

@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("websocket", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "websocket"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "websocket"
+    });
 }, 30000);

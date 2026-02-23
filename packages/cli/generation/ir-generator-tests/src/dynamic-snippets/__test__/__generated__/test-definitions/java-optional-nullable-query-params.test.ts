@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("java-optional-nullable-query-params", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-optional-nullable-query-params"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-optional-nullable-query-params"
+    });
 }, 30000);

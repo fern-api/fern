@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("dollar-string-examples", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "dollar-string-examples"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "dollar-string-examples"
+    });
 }, 30000);

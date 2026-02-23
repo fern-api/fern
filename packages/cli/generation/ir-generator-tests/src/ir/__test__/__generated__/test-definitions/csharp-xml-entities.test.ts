@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("csharp-xml-entities", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "csharp-xml-entities"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "csharp-xml-entities"
+    });
 }, 30000);

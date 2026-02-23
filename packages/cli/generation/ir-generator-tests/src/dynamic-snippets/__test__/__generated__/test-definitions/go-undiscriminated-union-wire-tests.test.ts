@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("go-undiscriminated-union-wire-tests", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "go-undiscriminated-union-wire-tests"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "go-undiscriminated-union-wire-tests"
+    });
 }, 30000);

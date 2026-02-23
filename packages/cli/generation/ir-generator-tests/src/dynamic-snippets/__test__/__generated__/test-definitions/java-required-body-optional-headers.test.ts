@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("java-required-body-optional-headers", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-required-body-optional-headers"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-required-body-optional-headers"
+    });
 }, 30000);

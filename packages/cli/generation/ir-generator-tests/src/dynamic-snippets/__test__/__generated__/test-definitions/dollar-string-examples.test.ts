@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("dollar-string-examples", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "dollar-string-examples"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "dollar-string-examples"
+    });
 }, 30000);

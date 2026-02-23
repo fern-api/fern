@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("enum", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "enum"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "enum"
+    });
 }, 30000);

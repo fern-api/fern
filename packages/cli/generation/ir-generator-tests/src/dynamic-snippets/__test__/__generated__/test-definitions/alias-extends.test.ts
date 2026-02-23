@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("alias-extends", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "alias-extends"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "alias-extends"
+    });
 }, 30000);

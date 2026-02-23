@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("undiscriminated-union-with-response-property", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "undiscriminated-union-with-response-property"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "undiscriminated-union-with-response-property"
+    });
 }, 30000);

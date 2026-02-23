@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-required-body-optional-headers", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-required-body-optional-headers"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-required-body-optional-headers"
+    });
 }, 30000);

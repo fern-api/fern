@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("enum-casing", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions-openapi",
-            "fixtureName": "enum-casing"
-        });
+        testDefinitionsSource: "test-definitions-openapi",
+        fixtureName: "enum-casing"
+    });
 }, 10000);

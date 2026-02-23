@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("csharp-grpc-proto-exhaustive", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "csharp-grpc-proto-exhaustive"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "csharp-grpc-proto-exhaustive"
+    });
 }, 30000);

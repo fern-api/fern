@@ -46,14 +46,20 @@ export function generateTestsFromDirectory({
 
         const fixtureArgs = getFixtureArgs ? getFixtureArgs(name) : {};
         const allArgs = { ...statics, ...fixtureArgs, fixtureName: name };
-        // Indent JSON args with 8 spaces (2 levels of 4-space indent) for biome formatting
-        const argsJson = JSON.stringify(allArgs, null, 4).replace(/\n/g, "\n        ");
+
+        // Serialize as a JS object literal (unquoted keys, no trailing commas for biome)
+        const entries = Object.entries(allArgs).filter(([, v]) => v !== undefined);
+        const argsLines = entries.map(([k, v], i) => {
+            const comma = i < entries.length - 1 ? "," : "";
+            return `        ${k}: ${JSON.stringify(v)}${comma}`;
+        });
+        const argsBlock = `{\n${argsLines.join("\n")}\n    }`;
 
         const content = `${GENERATED_HEADER}
 import { ${testRunnerFunction} } from "${testRunnerImport}";
 
 it(${JSON.stringify(name)}, async () => {
-    await ${testRunnerFunction}(${argsJson});
+    await ${testRunnerFunction}(${argsBlock});
 }, ${timeout});
 `;
 

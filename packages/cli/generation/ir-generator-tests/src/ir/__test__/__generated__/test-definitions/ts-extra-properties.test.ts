@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("ts-extra-properties", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "ts-extra-properties"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "ts-extra-properties"
+    });
 }, 30000);

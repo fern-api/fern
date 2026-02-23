@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("oauth-client-credentials", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "oauth-client-credentials"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "oauth-client-credentials"
+    });
 }, 30000);

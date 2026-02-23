@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("accept-header", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "accept-header"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "accept-header"
+    });
 }, 30000);

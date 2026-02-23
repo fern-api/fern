@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("multi-line-docs", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "multi-line-docs"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "multi-line-docs"
+    });
 }, 30000);

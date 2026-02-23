@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("accept-header", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "accept-header"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "accept-header"
+    });
 }, 30000);

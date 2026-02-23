@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("python-positional-single-property", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "python-positional-single-property"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "python-positional-single-property"
+    });
 }, 30000);

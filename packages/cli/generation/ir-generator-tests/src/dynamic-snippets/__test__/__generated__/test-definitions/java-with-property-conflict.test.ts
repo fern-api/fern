@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("java-with-property-conflict", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-with-property-conflict"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-with-property-conflict"
+    });
 }, 30000);

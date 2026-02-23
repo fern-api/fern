@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("multiple-request-bodies", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions-openapi",
-            "fixtureName": "multiple-request-bodies"
-        });
+        testDefinitionsSource: "test-definitions-openapi",
+        fixtureName: "multiple-request-bodies"
+    });
 }, 10000);

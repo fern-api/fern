@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("bearer-token-environment-variable", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "bearer-token-environment-variable"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "bearer-token-environment-variable"
+    });
 }, 30000);

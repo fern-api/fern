@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("objects-with-imports", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "objects-with-imports"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "objects-with-imports"
+    });
 }, 30000);

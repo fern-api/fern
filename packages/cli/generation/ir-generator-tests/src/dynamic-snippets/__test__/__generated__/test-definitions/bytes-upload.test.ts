@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("bytes-upload", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "bytes-upload"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "bytes-upload"
+    });
 }, 30000);

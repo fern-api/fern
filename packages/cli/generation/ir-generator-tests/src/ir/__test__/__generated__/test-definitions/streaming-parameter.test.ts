@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("streaming-parameter", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "streaming-parameter"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "streaming-parameter"
+    });
 }, 30000);

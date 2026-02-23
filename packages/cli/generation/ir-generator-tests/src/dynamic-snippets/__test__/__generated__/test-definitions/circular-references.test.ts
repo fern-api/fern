@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("circular-references", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "circular-references"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "circular-references"
+    });
 }, 30000);

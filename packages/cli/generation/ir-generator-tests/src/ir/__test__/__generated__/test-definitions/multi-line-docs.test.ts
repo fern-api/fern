@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("multi-line-docs", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "multi-line-docs"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "multi-line-docs"
+    });
 }, 30000);

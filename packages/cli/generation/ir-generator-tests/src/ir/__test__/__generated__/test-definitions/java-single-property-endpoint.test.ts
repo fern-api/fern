@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-single-property-endpoint", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-single-property-endpoint"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-single-property-endpoint"
+    });
 }, 30000);

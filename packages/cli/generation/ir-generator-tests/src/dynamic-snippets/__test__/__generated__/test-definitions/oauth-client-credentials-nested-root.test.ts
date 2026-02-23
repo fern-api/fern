@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("oauth-client-credentials-nested-root", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "oauth-client-credentials-nested-root"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "oauth-client-credentials-nested-root"
+    });
 }, 30000);

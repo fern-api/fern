@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("python-streaming-parameter-openapi", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "python-streaming-parameter-openapi"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "python-streaming-parameter-openapi"
+    });
 }, 30000);

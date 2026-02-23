@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("any-auth", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "any-auth"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "any-auth"
+    });
 }, 30000);

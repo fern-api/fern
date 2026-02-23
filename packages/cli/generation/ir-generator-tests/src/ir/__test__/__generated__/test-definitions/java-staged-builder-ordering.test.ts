@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-staged-builder-ordering", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-staged-builder-ordering"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-staged-builder-ordering"
+    });
 }, 30000);

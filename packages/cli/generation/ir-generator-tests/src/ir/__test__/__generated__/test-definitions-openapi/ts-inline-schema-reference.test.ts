@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("ts-inline-schema-reference", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions-openapi",
-            "fixtureName": "ts-inline-schema-reference"
-        });
+        testDefinitionsSource: "test-definitions-openapi",
+        fixtureName: "ts-inline-schema-reference"
+    });
 }, 10000);

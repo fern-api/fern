@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("websocket-inferred-auth", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "websocket-inferred-auth"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "websocket-inferred-auth"
+    });
 }, 30000);

@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("undiscriminated-unions", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "undiscriminated-unions"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "undiscriminated-unions"
+    });
 }, 30000);

@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("idempotency-headers", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "idempotency-headers"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "idempotency-headers"
+    });
 }, 30000);

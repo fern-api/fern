@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("java-output-directory", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-output-directory"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-output-directory"
+    });
 }, 30000);

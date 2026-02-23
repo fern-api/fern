@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("mixed-file-directory", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "mixed-file-directory"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "mixed-file-directory"
+    });
 }, 30000);

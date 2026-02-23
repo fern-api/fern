@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("nullable-optional", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "nullable-optional"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "nullable-optional"
+    });
 }, 30000);

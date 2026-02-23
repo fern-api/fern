@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("webhook-audience", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "webhook-audience"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "webhook-audience"
+    });
 }, 30000);

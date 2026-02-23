@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("multi-url-environment", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "multi-url-environment"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "multi-url-environment"
+    });
 }, 30000);

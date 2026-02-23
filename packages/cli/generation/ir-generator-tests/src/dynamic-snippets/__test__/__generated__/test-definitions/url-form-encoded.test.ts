@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("url-form-encoded", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "url-form-encoded"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "url-form-encoded"
+    });
 }, 30000);

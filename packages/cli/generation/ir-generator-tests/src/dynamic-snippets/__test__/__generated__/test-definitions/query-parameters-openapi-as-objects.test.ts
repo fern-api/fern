@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("query-parameters-openapi-as-objects", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "query-parameters-openapi-as-objects"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "query-parameters-openapi-as-objects"
+    });
 }, 30000);

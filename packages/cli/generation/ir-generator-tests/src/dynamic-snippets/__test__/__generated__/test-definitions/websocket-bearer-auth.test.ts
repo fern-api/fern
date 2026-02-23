@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("websocket-bearer-auth", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "websocket-bearer-auth"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "websocket-bearer-auth"
+    });
 }, 30000);

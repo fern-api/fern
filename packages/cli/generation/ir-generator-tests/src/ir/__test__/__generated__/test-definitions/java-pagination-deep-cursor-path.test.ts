@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-pagination-deep-cursor-path", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-pagination-deep-cursor-path"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-pagination-deep-cursor-path"
+    });
 }, 30000);

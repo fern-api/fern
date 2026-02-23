@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("single-url-environment-no-default", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "single-url-environment-no-default"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "single-url-environment-no-default"
+    });
 }, 30000);

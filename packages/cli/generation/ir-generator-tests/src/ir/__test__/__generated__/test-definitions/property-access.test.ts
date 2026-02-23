@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("property-access", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "property-access"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "property-access"
+    });
 }, 30000);

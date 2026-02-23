@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("nullable-request-body", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "nullable-request-body"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "nullable-request-body"
+    });
 }, 30000);

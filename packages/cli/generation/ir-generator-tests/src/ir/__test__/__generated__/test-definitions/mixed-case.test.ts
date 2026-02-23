@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("mixed-case", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "mixed-case"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "mixed-case"
+    });
 }, 30000);

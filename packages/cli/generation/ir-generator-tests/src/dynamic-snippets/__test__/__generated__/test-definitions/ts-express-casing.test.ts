@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("ts-express-casing", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "ts-express-casing"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "ts-express-casing"
+    });
 }, 30000);

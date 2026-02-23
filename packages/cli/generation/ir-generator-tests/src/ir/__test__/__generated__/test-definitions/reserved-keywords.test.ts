@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("reserved-keywords", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "reserved-keywords"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "reserved-keywords"
+    });
 }, 30000);

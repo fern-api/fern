@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("bytes-download", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "bytes-download"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "bytes-download"
+    });
 }, 30000);

@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("python-mypy-exclude", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "python-mypy-exclude"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "python-mypy-exclude"
+    });
 }, 30000);

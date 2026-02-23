@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("go-content-type", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "go-content-type"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "go-content-type"
+    });
 }, 30000);

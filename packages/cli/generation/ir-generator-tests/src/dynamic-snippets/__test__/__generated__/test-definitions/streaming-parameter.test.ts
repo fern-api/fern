@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("streaming-parameter", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "streaming-parameter"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "streaming-parameter"
+    });
 }, 30000);

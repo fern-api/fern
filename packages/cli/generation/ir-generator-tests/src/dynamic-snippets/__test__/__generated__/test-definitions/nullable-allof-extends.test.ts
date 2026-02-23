@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("nullable-allof-extends", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "nullable-allof-extends"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "nullable-allof-extends"
+    });
 }, 30000);

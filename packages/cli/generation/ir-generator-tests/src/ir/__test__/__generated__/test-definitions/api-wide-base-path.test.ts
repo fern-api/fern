@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("api-wide-base-path", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "api-wide-base-path"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "api-wide-base-path"
+    });
 }, 30000);

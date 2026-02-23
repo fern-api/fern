@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("go-bytes-request", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "go-bytes-request"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "go-bytes-request"
+    });
 }, 30000);

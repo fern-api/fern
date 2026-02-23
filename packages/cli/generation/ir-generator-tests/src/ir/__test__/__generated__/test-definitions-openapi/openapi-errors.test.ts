@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("openapi-errors", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions-openapi",
-            "fixtureName": "openapi-errors"
-        });
+        testDefinitionsSource: "test-definitions-openapi",
+        fixtureName: "openapi-errors"
+    });
 }, 10000);

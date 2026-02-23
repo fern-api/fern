@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-default-timeout", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-default-timeout"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-default-timeout"
+    });
 }, 30000);

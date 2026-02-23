@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-streaming-accept-header", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-streaming-accept-header"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-streaming-accept-header"
+    });
 }, 30000);

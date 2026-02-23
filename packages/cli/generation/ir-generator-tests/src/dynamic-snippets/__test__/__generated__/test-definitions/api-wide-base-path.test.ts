@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("api-wide-base-path", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "api-wide-base-path"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "api-wide-base-path"
+    });
 }, 30000);

@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("basic-auth", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "basic-auth"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "basic-auth"
+    });
 }, 30000);

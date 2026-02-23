@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-inline-types", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-inline-types"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-inline-types"
+    });
 }, 30000);

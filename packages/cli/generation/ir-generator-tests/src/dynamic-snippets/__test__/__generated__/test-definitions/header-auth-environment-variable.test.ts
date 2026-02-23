@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("header-auth-environment-variable", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "header-auth-environment-variable"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "header-auth-environment-variable"
+    });
 }, 30000);

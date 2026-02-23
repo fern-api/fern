@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-custom-package-prefix", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-custom-package-prefix"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-custom-package-prefix"
+    });
 }, 30000);

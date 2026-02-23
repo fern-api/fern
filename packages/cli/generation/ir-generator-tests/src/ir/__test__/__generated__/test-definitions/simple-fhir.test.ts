@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("simple-fhir", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "simple-fhir"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "simple-fhir"
+    });
 }, 30000);

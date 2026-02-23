@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("ts-express-casing", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "ts-express-casing"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "ts-express-casing"
+    });
 }, 30000);

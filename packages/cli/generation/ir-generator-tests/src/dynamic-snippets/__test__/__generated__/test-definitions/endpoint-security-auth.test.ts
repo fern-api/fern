@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("endpoint-security-auth", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "endpoint-security-auth"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "endpoint-security-auth"
+    });
 }, 30000);

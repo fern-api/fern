@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("pagination-custom", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "pagination-custom"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "pagination-custom"
+    });
 }, 30000);

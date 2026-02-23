@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("csharp-namespace-collision", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "csharp-namespace-collision"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "csharp-namespace-collision"
+    });
 }, 30000);

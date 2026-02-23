@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("websocket", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "websocket"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "websocket"
+    });
 }, 30000);

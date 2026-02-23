@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("csharp-readonly-request", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "csharp-readonly-request"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "csharp-readonly-request"
+    });
 }, 30000);

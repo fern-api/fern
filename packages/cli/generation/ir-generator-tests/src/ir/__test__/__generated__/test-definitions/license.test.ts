@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("license", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "license"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "license"
+    });
 }, 30000);

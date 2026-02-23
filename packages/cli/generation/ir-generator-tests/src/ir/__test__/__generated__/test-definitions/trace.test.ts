@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("trace", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "trace"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "trace"
+    });
 }, 30000);

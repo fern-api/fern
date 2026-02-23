@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("cross-package-type-names", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "cross-package-type-names"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "cross-package-type-names"
+    });
 }, 30000);

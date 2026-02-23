@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("unions-with-local-date", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "unions-with-local-date"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "unions-with-local-date"
+    });
 }, 30000);

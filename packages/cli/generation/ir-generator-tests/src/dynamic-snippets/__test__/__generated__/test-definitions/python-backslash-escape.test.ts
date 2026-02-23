@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("python-backslash-escape", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "python-backslash-escape"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "python-backslash-escape"
+    });
 }, 30000);

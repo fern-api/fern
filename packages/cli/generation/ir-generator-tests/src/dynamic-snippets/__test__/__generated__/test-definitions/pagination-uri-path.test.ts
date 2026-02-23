@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("pagination-uri-path", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "pagination-uri-path"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "pagination-uri-path"
+    });
 }, 30000);

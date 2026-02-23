@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("multiple-request-bodies", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "multiple-request-bodies"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "multiple-request-bodies"
+    });
 }, 30000);

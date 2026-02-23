@@ -6,7 +6,7 @@ import { runIRTestDefinition } from "../../runIRTestDefinition.js";
 
 it("java-builder-extension", async () => {
     await runIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "java-builder-extension"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "java-builder-extension"
+    });
 }, 30000);

@@ -6,7 +6,7 @@ import { runDynamicIRTestDefinition } from "../../runDynamicIRTestDefinition.js"
 
 it("file-upload-openapi", async () => {
     await runDynamicIRTestDefinition({
-            "testDefinitionsSource": "test-definitions",
-            "fixtureName": "file-upload-openapi"
-        });
+        testDefinitionsSource: "test-definitions",
+        fixtureName: "file-upload-openapi"
+    });
 }, 30000);
