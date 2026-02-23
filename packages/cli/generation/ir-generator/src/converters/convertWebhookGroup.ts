@@ -9,8 +9,8 @@ import {
 } from "@fern-api/fern-definition-schema";
 import {
     AsymmetricAlgorithm,
-    AsymmetricKeySource,
     AsymmetricKeySignatureVerification,
+    AsymmetricKeySource,
     Availability,
     ExampleWebhookCall,
     HmacAlgorithm,
@@ -437,9 +437,7 @@ function convertAsymmetricSignature({
     };
 }
 
-function convertHmacAlgorithm(
-    algorithm: RawSchemas.WebhookSignatureAlgorithmSchema | undefined
-): HmacAlgorithm {
+function convertHmacAlgorithm(algorithm: RawSchemas.WebhookSignatureAlgorithmSchema | undefined): HmacAlgorithm {
     switch (algorithm) {
         case "sha1":
             return HmacAlgorithm.Sha1;
@@ -465,9 +463,7 @@ function convertSignatureEncoding(
     }
 }
 
-function convertAsymmetricAlgorithm(
-    algorithm: RawSchemas.AsymmetricAlgorithmSchema
-): AsymmetricAlgorithm {
+function convertAsymmetricAlgorithm(algorithm: RawSchemas.AsymmetricAlgorithmSchema): AsymmetricAlgorithm {
     switch (algorithm) {
         case "rsa-sha256":
             return AsymmetricAlgorithm.RsaSha256;
@@ -486,9 +482,7 @@ function convertAsymmetricAlgorithm(
     }
 }
 
-function convertKeySource(
-    asymmetric: RawSchemas.AsymmetricSignatureSchema
-): AsymmetricKeySource {
+function convertKeySource(asymmetric: RawSchemas.AsymmetricSignatureSchema): AsymmetricKeySource {
     if (asymmetric["jwks-url"] != null) {
         return AsymmetricKeySource.jwks({
             url: asymmetric["jwks-url"],
@@ -498,10 +492,22 @@ function convertKeySource(
                           wireValue: asymmetric["key-id-header"],
                           name: {
                               originalName: asymmetric["key-id-header"],
-                              camelCase: { safeName: asymmetric["key-id-header"], unsafeName: asymmetric["key-id-header"] },
-                              snakeCase: { safeName: asymmetric["key-id-header"], unsafeName: asymmetric["key-id-header"] },
-                              screamingSnakeCase: { safeName: asymmetric["key-id-header"], unsafeName: asymmetric["key-id-header"] },
-                              pascalCase: { safeName: asymmetric["key-id-header"], unsafeName: asymmetric["key-id-header"] }
+                              camelCase: {
+                                  safeName: asymmetric["key-id-header"],
+                                  unsafeName: asymmetric["key-id-header"]
+                              },
+                              snakeCase: {
+                                  safeName: asymmetric["key-id-header"],
+                                  unsafeName: asymmetric["key-id-header"]
+                              },
+                              screamingSnakeCase: {
+                                  safeName: asymmetric["key-id-header"],
+                                  unsafeName: asymmetric["key-id-header"]
+                              },
+                              pascalCase: {
+                                  safeName: asymmetric["key-id-header"],
+                                  unsafeName: asymmetric["key-id-header"]
+                              }
                           }
                       }
                     : undefined
@@ -510,9 +516,7 @@ function convertKeySource(
     return AsymmetricKeySource.static({});
 }
 
-function convertPayloadFormat(
-    payloadFormat: RawSchemas.WebhookPayloadFormatSchema | undefined
-): WebhookPayloadFormat {
+function convertPayloadFormat(payloadFormat: RawSchemas.WebhookPayloadFormatSchema | undefined): WebhookPayloadFormat {
     if (payloadFormat == null) {
         return {
             components: [WebhookPayloadComponent.Body],
@@ -525,9 +529,7 @@ function convertPayloadFormat(
     };
 }
 
-function convertPayloadComponent(
-    component: RawSchemas.WebhookPayloadComponentSchema
-): WebhookPayloadComponent {
+function convertPayloadComponent(component: RawSchemas.WebhookPayloadComponentSchema): WebhookPayloadComponent {
     switch (component) {
         case "body":
             return WebhookPayloadComponent.Body;
@@ -560,9 +562,7 @@ function convertTimestampConfig({
     };
 }
 
-function convertTimestampFormat(
-    format: RawSchemas.WebhookTimestampFormatSchema | undefined
-): WebhookTimestampFormat {
+function convertTimestampFormat(format: RawSchemas.WebhookTimestampFormatSchema | undefined): WebhookTimestampFormat {
     switch (format) {
         case "unix-millis":
             return WebhookTimestampFormat.UnixMillis;

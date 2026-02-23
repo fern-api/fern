@@ -97,9 +97,7 @@ function convertAlgorithm(
     }
 }
 
-function convertEncoding(
-    encoding: "base64" | "hex" | undefined
-): finalIr.WebhookSignatureEncoding | undefined {
+function convertEncoding(encoding: "base64" | "hex" | undefined): finalIr.WebhookSignatureEncoding | undefined {
     if (encoding == null) {
         return undefined;
     }
@@ -111,9 +109,7 @@ function convertEncoding(
     }
 }
 
-function convertAsymmetricAlgorithm(
-    algorithm: string | undefined
-): finalIr.AsymmetricAlgorithm | undefined {
+function convertAsymmetricAlgorithm(algorithm: string | undefined): finalIr.AsymmetricAlgorithm | undefined {
     if (algorithm == null) {
         return undefined;
     }

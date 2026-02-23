@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `AsymmetricAlgorithm`, `WebhookSignatureEncoding`, `WebhookPayloadFormat`, `WebhookPayloadComponent`,
   `WebhookTimestampConfig`, `WebhookTimestampFormat`, `AsymmetricKeySource`, `JwksKeySource`, `StaticKeySource`.
 
+## [v65.1.0] - 2026-02-23
+- Feature: Add optional `signatureVerification` field to the `Webhook` type for webhook signature verification.
+  Includes algorithm (SHA256/SHA1/SHA384/SHA512), encoding (base64/hex), signature header name, and payload format (bodyOnly/urlPrefixed).
+
 ## [v65.0.0] - 2026-02-03
 - Feature: Add new pagination types where the cursor is to be consumed as the full URI, or full path (HATEOS-style)
 

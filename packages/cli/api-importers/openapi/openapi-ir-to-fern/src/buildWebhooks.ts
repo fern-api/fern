@@ -309,9 +309,7 @@ function convertSignatureAlgorithm(
     }
 }
 
-function convertSignatureEncoding(
-    encoding: string | undefined
-): RawSchemas.WebhookSignatureEncodingSchema | undefined {
+function convertSignatureEncoding(encoding: string | undefined): RawSchemas.WebhookSignatureEncodingSchema | undefined {
     if (encoding == null) {
         return undefined;
     }
@@ -325,9 +323,7 @@ function convertSignatureEncoding(
     }
 }
 
-function convertAsymmetricAlgorithm(
-    algorithm: string
-): RawSchemas.AsymmetricAlgorithmSchema {
+function convertAsymmetricAlgorithm(algorithm: string): RawSchemas.AsymmetricAlgorithmSchema {
     switch (algorithm) {
         case "rsa-sha256":
             return "rsa-sha256";
@@ -360,9 +356,7 @@ function convertPayloadFormat(
     };
 }
 
-function convertPayloadComponent(
-    component: string
-): RawSchemas.WebhookPayloadComponentSchema {
+function convertPayloadComponent(component: string): RawSchemas.WebhookPayloadComponentSchema {
     switch (component) {
         case "body":
             return "body";
