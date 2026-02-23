@@ -2,10 +2,7 @@
 - version: 3.83.1
   changelogEntry:
     - summary: |
-        Parallelize workspace loading operations with `Promise.all` for improved CLI startup
-        performance. Sequential file reads, path existence checks, spec parsing, and config
-        conversions are now concurrent where safe. Operations with state dependencies (e.g.
-        protobuf buf.lock accumulation) remain sequential.
+        Improve CLI startup performance by loading workspace files concurrently.
       type: chore
   createdAt: "2026-02-23"
   irVersion: 65
