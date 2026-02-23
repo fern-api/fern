@@ -79,51 +79,38 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
         };
     }
 
-    return entries(value).reduce<MaybeValid<Record<TransformedKey, TransformedValue>>>(
-        (accPromise, [stringKey, value]) => {
-            if (value === undefined) {
-                return accPromise;
+    const result = {} as Record<TransformedKey, TransformedValue>;
+    const errors: ValidationError[] = [];
+
+    for (const [stringKey, entryValue] of entries(value)) {
+        if (entryValue === undefined) {
+            continue;
+        }
+
+        let key: string | number = stringKey as string;
+        if (isKeyNumeric) {
+            const numberKey = (stringKey as string).length > 0 ? Number(stringKey) : NaN;
+            if (!Number.isNaN(numberKey)) {
+                key = numberKey;
             }
+        }
+        const transformedKey = transformKey(key);
+        const transformedValue = transformValue(entryValue, key);
 
-            const acc = accPromise;
-
-            let key: string | number = stringKey;
-            if (isKeyNumeric) {
-                const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
-                if (!Number.isNaN(numberKey)) {
-                    key = numberKey;
-                }
-            }
-            const transformedKey = transformKey(key);
-
-            const transformedValue = transformValue(value, key);
-
-            if (acc.ok && transformedKey.ok && transformedValue.ok) {
-                return {
-                    ok: true,
-                    value: {
-                        ...acc.value,
-                        [transformedKey.value]: transformedValue.value,
-                    },
-                };
-            }
-
-            const errors: ValidationError[] = [];
-            if (!acc.ok) {
-                errors.push(...acc.errors);
-            }
+        if (transformedKey.ok && transformedValue.ok) {
+            result[transformedKey.value] = transformedValue.value;
+        } else {
             if (!transformedKey.ok) {
                 errors.push(...transformedKey.errors);
             }
             if (!transformedValue.ok) {
                 errors.push(...transformedValue.errors);
             }
+        }
+    }
 
-            return {
-                ok: false,
-                errors,
-            };
-        },
-        { ok: true, value: {} as Record<TransformedKey, TransformedValue> },
-    );
+    if (errors.length === 0) {
+        return { ok: true, value: result };
+    }
+    return { ok: false, errors };
 }

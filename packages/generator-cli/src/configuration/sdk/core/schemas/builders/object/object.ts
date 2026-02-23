@@ -28,6 +28,33 @@ interface ObjectPropertyWithRawKey {
 export function object<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(
     schemas: T,
 ): inferObjectSchemaFromPropertySchemas<T> {
+    // Pre-compute property metadata once at schema construction time
+    const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
+    const parseRequiredKeys: string[] = [];
+    const jsonRequiredKeys: string[] = [];
+
+    for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
+        const rawKey = isProperty(schemaOrObjectProperty)
+            ? schemaOrObjectProperty.rawKey
+            : (parsedKey as string);
+        const valueSchema: Schema<any, any> = isProperty(schemaOrObjectProperty)
+            ? schemaOrObjectProperty.valueSchema
+            : schemaOrObjectProperty;
+
+        const property: ObjectPropertyWithRawKey = {
+            rawKey,
+            parsedKey: parsedKey as string,
+            valueSchema,
+        };
+
+        rawKeyToProperty[rawKey] = property;
+
+        if (isSchemaRequired(valueSchema)) {
+            parseRequiredKeys.push(rawKey);
+            jsonRequiredKeys.push(parsedKey as string);
+        }
+    }
+
     const baseSchema: BaseObjectSchema<
         inferRawObjectFromPropertySchemas<T>,
         inferParsedObjectFromPropertySchemas<T>
@@ -39,31 +66,9 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         _getParsedProperties: () => keys(schemas) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[],
 
         parse: (raw, opts) => {
-            const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
-            const requiredKeys: string[] = [];
-
-            for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
-                const rawKey = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.rawKey : parsedKey;
-                const valueSchema: Schema<any, any> = isProperty(schemaOrObjectProperty)
-                    ? schemaOrObjectProperty.valueSchema
-                    : schemaOrObjectProperty;
-
-                const property: ObjectPropertyWithRawKey = {
-                    rawKey,
-                    parsedKey: parsedKey as string,
-                    valueSchema,
-                };
-
-                rawKeyToProperty[rawKey] = property;
-
-                if (isSchemaRequired(valueSchema)) {
-                    requiredKeys.push(rawKey);
-                }
-            }
-
             return validateAndTransformObject({
                 value: raw,
-                requiredKeys,
+                requiredKeys: parseRequiredKeys,
                 getProperty: (rawKey) => {
                     const property = rawKeyToProperty[rawKey];
                     if (property == null) {
@@ -86,21 +91,9 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         },
 
         json: (parsed, opts) => {
-            const requiredKeys: string[] = [];
-
-            for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
-                const valueSchema: Schema<any, any> = isProperty(schemaOrObjectProperty)
-                    ? schemaOrObjectProperty.valueSchema
-                    : schemaOrObjectProperty;
-
-                if (isSchemaRequired(valueSchema)) {
-                    requiredKeys.push(parsedKey as string);
-                }
-            }
-
             return validateAndTransformObject({
                 value: parsed,
-                requiredKeys,
+                requiredKeys: jsonRequiredKeys,
                 getProperty: (
                     parsedKey,
                 ): { transformedKey: string; transform: (propertyValue: object) => MaybeValid<any> } | undefined => {
