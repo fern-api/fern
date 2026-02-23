@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0-rc2
+  changelogEntry:
+    - summary: |
+        Fix literal property doc comments leaking into the next field's comments in generated
+        Go structs. When a property has a literal type (e.g. stream boolean) and is excluded
+        from the struct, its documentation was still being written, causing it to appear as
+        part of the next field's comments.
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 61
+
 - version: 1.25.0-rc1
   changelogEntry:
     - summary: |
