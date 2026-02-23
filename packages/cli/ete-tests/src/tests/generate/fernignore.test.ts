@@ -28,7 +28,7 @@ Practice schema-first API design with Fern
 
 describe("fern generate --local", () => {
     // eslint-disable-next-line jest/expect-expect
-    it("Keep files listed in .fernignore from unmodified", async () => {
+    it.concurrent("Keep files listed in .fernignore from unmodified", async () => {
         const pathOfDirectory = await init();
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory
@@ -61,7 +61,7 @@ describe("fern generate --local", () => {
     }, 360_000);
 
     // eslint-disable-next-line jest/expect-expect
-    it("Prevent initial generation of files listed in .fernignore", async () => {
+    it.concurrent("Prevent initial generation of files listed in .fernignore", async () => {
         const pathOfDirectory = await init();
 
         // Create output directory with .fernignore BEFORE first generation
