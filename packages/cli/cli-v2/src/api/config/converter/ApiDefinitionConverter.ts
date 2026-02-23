@@ -152,14 +152,19 @@ export class ApiDefinitionConverter {
         if (isNullish(sourcedApis)) {
             return {};
         }
-        const apiEntries = Object.entries(apis).filter(([apiName]) => !isNullish(sourcedApis[apiName]));
+        const apiEntries = Object.entries(apis)
+            .filter(([apiName]) => !isNullish(sourcedApis[apiName]))
+            .map(([apiName, apiDef]) => ({ apiName, apiDef, sourcedApiDef: sourcedApis[apiName] }))
+            .filter(
+                (entry): entry is typeof entry & { sourcedApiDef: NonNullable<typeof entry.sourcedApiDef> } =>
+                    !isNullish(entry.sourcedApiDef)
+            );
         const convertedEntries = await Promise.all(
-            apiEntries.map(async ([apiName, apiDef]) => {
-                const sourcedApiDef = sourcedApis[apiName];
+            apiEntries.map(async ({ apiName, apiDef, sourcedApiDef }) => {
                 const specs = await this.convertSpecs({
                     absoluteFernYmlPath,
                     specs: apiDef.specs,
-                    sourced: sourcedApiDef?.specs
+                    sourced: sourcedApiDef.specs
                 });
                 const definition: ApiDefinition = {
                     specs,
