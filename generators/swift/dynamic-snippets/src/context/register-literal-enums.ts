@@ -7,12 +7,14 @@ export function registerLiteralEnums({
     parentSymbol,
     registry,
     namedType,
-    context
+    context,
+    standaloneVariantDiscriminantWireValues
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
     namedType: FernIr.dynamic.NamedType;
     context: DynamicSnippetsGeneratorContext;
+    standaloneVariantDiscriminantWireValues?: Set<string>;
 }) {
     visitDiscriminatedUnion(namedType, "type")._visit({
         object: (otd) => {
@@ -24,6 +26,9 @@ export function registerLiteralEnums({
         },
         discriminatedUnion: (utd) => {
             Object.values(utd.types).forEach((singleUnionType) => {
+                if (standaloneVariantDiscriminantWireValues?.has(singleUnionType.discriminantValue.wireValue)) {
+                    return;
+                }
                 const variantSymbol = registry.getDiscriminatedUnionVariantSymbolOrThrow(
                     parentSymbol,
                     singleUnionType.discriminantValue.wireValue

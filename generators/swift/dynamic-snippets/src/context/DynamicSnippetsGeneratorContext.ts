@@ -88,16 +88,18 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
 
         registeredSchemaTypes.forEach(({ namedType, registeredSymbol }) => {
-            registerDiscriminatedUnionVariants({
+            const standaloneVariantDiscriminantWireValues = registerDiscriminatedUnionVariants({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
-                namedType
+                namedType,
+                context: this
             });
             registerLiteralEnums({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 namedType,
-                context: this
+                context: this,
+                standaloneVariantDiscriminantWireValues
             });
             registerUndiscriminatedUnionVariants({
                 parentSymbol: registeredSymbol,
