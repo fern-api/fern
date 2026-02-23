@@ -2,11 +2,7 @@
   "name": "@fern-api/generator-migrations",
   "version": "0.0.0",
   "description": "Unified migration package for all Fern generator configurations",
-  "keywords": [
-    "fern",
-    "generator",
-    "migration"
-  ],
+  "keywords": ["fern", "generator", "migration"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fern-api/fern.git",
@@ -24,9 +20,7 @@
   },
   "main": "lib/index.mjs",
   "types": "lib/index.d.mts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",

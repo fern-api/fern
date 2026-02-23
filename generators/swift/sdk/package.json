@@ -17,9 +17,7 @@
   },
   "main": "lib/cli.js",
   "types": "lib/cli.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",

@@ -12,10 +12,7 @@
   "bin": {
     "generator-cli": "bin/cli"
   },
-  "files": [
-    "bin",
-    "dist"
-  ],
+  "files": ["bin", "dist"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "depcheck": "knip --config ../../knip.json --no-config-hints",
